@@ -1,6 +1,6 @@
 # Relay Design System
 
-Relay プロダクトのための、Tailwind CSS v4 ベースのフレームワーク非依存デザインシステムです。
+relay プロダクトのための、Tailwind CSS v4 ベースのフレームワーク非依存デザインシステムです。
 **デザイントークン + 14 コンポーネント** を HTML スニペット集として提供します。
 トークンは Figma ファイル `hJcKE8FkiyXtB1F9SuuE08` の `semantic tokens` コレクションと同期されています。
 
