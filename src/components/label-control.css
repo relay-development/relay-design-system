@@ -1,0 +1,84 @@
+/*
+ * Label Control — recreated from Figma node 3120:638 (ラベルコントロール)
+ *
+ *   フィールドの上に置く「ラベル + バッジ群 + サポートテキスト」のまとまり。
+ *
+ *   sizes:    default (label 16/24) / sm (label 14/20)
+ *   badges:   required / optional / disabled / private / support
+ *
+ * Usage:
+ *   <div class="label-control">
+ *     <div class="label-control-row">
+ *       <span class="label-control-text">ラベル</span>
+ *       <span class="label-badge label-badge-required">必須</span>
+ *       <span class="label-badge label-badge-disabled">編集不可</span>
+ *       <span class="label-badge label-badge-support">
+ *         <svg viewBox="0 0 12 12" fill="currentColor"><path d="…"/></svg>
+ *         入力サポート
+ *       </span>
+ *     </div>
+ *     <p class="label-control-support">サポートテキスト</p>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .label-control {
+    @apply flex flex-col gap-1;
+  }
+  .label-control-row {
+    @apply flex items-center gap-2 flex-wrap;
+  }
+
+  /* ============================================================
+   * Label text — default size 16 / small size 14
+   * ============================================================ */
+  .label-control-text {
+    @apply text-base font-bold leading-6 text-fg-high;
+  }
+  .label-control-sm .label-control-text {
+    @apply text-sm leading-6;
+  }
+
+  /* Support text below */
+  .label-control-support {
+    @apply text-sm leading-6 text-fg-low;
+  }
+  .label-control-sm .label-control-support {
+    @apply text-xs leading-4;
+  }
+
+  /* ============================================================
+   * Badges — height 24, p4/8, text-xs (12) / mono not used
+   * ============================================================ */
+  .label-badge {
+    @apply inline-flex items-center gap-1
+           h-6 px-2 py-1
+           text-xs font-semibold leading-4 whitespace-nowrap
+           rounded-xs border border-transparent;
+  }
+  .label-badge > svg { @apply w-3 h-3; }
+
+  /* required — red outlined (text+border: negative/500) */
+  .label-badge-required {
+    @apply bg-white text-negative-500 border-negative-500;
+  }
+  /* optional — gray outlined (text+border: neutral/400) */
+  .label-badge-optional {
+    @apply bg-white text-neutral-400 border-neutral-400;
+  }
+  /* disabled — filled neutral/400 with white text */
+  .label-badge-disabled {
+    @apply bg-neutral-400 text-white;
+  }
+  /* private — white with gray outline (text+border: neutral/400) */
+  .label-badge-private {
+    @apply bg-white text-neutral-400 border-neutral-400;
+  }
+  /* support — warning/50 bg + warning/500 text + icon */
+  .label-badge-support {
+    @apply bg-warning-50 text-warning-500;
+  }
+}

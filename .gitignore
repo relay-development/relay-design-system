@@ -1,0 +1,8 @@
+node_modules/
+dist/
+site/
+.DS_Store
+*.log
+.vite/
+.netlify/
+.claude/

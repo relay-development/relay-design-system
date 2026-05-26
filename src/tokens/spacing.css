@@ -1,0 +1,10 @@
+/*
+ * Relay Design System — Spacing base
+ * Figma uses a 4px base scale (p-1 = 4, p-2 = 8, p-4 = 16, ...).
+ * Tailwind v4 derives all `p-*` / `m-*` / `gap-*` / `space-*` utilities
+ * from this single `--spacing` token.
+ */
+
+@theme {
+  --spacing: 0.25rem;
+}

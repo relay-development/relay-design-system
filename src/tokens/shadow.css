@@ -1,0 +1,17 @@
+/*
+ * Relay Design System — Shadow tokens
+ * Source: Figma effect styles "Box Shadow/*" and "Box Shadow/Focus ring"
+ */
+
+@theme {
+  --shadow-none: 0 0 #0000;
+  --shadow-sm:   0 1px 3px 0 rgb(0 0 0 / 0.10);
+  --shadow-md:   0 2px 4px -2px rgb(0 0 0 / 0.05),
+                 0 4px 6px -1px rgb(0 0 0 / 0.05);
+  --shadow-lg:   0 4px 10px -4px rgb(0 0 0 / 0.05),
+                 0 10px 15px -3px rgb(0 0 0 / 0.05);
+
+  /* Ring shadows — applied via `box-shadow` on focus / destructive states */
+  --shadow-focus-ring:  0 0 0 3px rgb(37 99 235 / 1);   /* outline/focus = blue/600 */
+  --shadow-destructive: 0 0 0 3px rgb(239 68 68 / 1);   /* negative/500 = red/500 */
+}

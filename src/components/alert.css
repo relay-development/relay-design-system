@@ -1,0 +1,106 @@
+/*
+ * Alert — recreated from Figma component set 3088:585 (アラート)
+ *
+ *   インラインメッセージ。5 テーマ × icon + title + (optional body)
+ *
+ *   props: thema (neutral / success / negative / warning / info)
+ *
+ *   container:  padding 12, gap 8 (icon ↔ content), radius 8, 1px border
+ *   icon slot:  24×24 (svg 20×20 内)
+ *   title:      16/24 semibold
+ *   body:       14/24
+ *
+ *   colors (semantic tokens):
+ *     neutral:  bg neutral/50,  border neutral/300, title fg/high,         body fg/low
+ *     success:  bg success/50,  border primary/300, title + body primary/600
+ *     negative: bg negative/50, border negative/200, title + body negative/600
+ *     warning:  bg warning/50,  border warning/300,  title + body secondary/700
+ *     info:     bg info/50,     border info/300,     title + body info/600
+ *
+ * Usage:
+ *   <div class="alert alert-info">
+ *     <span class="alert-icon"><svg viewBox="0 0 24 24">…</svg></span>
+ *     <div class="alert-content">
+ *       <p class="alert-title">タイトル</p>
+ *       <p class="alert-body">補足文が入ります。</p>
+ *     </div>
+ *   </div>
+ *
+ *   Optional close (dismissible variant):
+ *     <button type="button" class="alert-close" aria-label="閉じる">…×…</button>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .alert {
+    @apply flex items-start gap-2
+           p-3
+           rounded-sm border border-solid;
+  }
+
+  .alert-icon {
+    @apply shrink-0 inline-flex items-center justify-center
+           w-6 h-6;
+    color: currentColor;
+  }
+  .alert-icon > svg { @apply w-5 h-5; }
+
+  .alert-content {
+    @apply flex-1 min-w-0 flex flex-col gap-1;
+  }
+
+  .alert-title { @apply text-base leading-6 font-semibold; }
+  .alert-body  { @apply text-sm leading-6; }
+
+  /* Close button — filled neutral/900 circle with white ×, rendered at 30% opacity
+   * (Figma: lucide frame has bg neutral/900 + opacity 0.3 → visual light gray) */
+  .alert-close {
+    @apply shrink-0 inline-flex items-center justify-center
+           w-6 h-6 rounded-full
+           bg-transparent border-0 cursor-pointer
+           text-neutral-900
+           opacity-30 hover:opacity-40
+           transition-opacity duration-150
+           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+  }
+  .alert-close > svg { @apply w-5 h-5; }
+
+  /* ============================================================
+   * Theme — neutral / success / negative / warning / info
+   * Background + border + color (title and body inherit color
+   * except neutral which has a softer body color)
+   * ============================================================ */
+  .alert-neutral {
+    background-color: var(--color-neutral-50);
+    border-color: var(--color-neutral-300);
+    color: var(--color-fg-high);
+  }
+  .alert-neutral .alert-body { color: var(--color-fg-low); }
+
+  .alert-success {
+    background-color: var(--color-success-50);
+    border-color: var(--color-primary-300);
+    color: var(--color-primary-600);
+  }
+
+  .alert-negative,
+  .alert-danger {
+    background-color: var(--color-negative-50);
+    border-color: var(--color-negative-300);
+    color: var(--color-negative-600);
+  }
+
+  .alert-warning {
+    background-color: var(--color-warning-50);
+    border-color: var(--color-warning-300);
+    color: var(--color-secondary-700);
+  }
+
+  .alert-info {
+    background-color: var(--color-info-50);
+    border-color: var(--color-info-300);
+    color: var(--color-info-600);
+  }
+}

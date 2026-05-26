@@ -1,0 +1,132 @@
+/*
+ * Icon Button — recreated from Figma component set 3119:2860 (アイコンボタン)
+ *
+ *   thema:   primary / neutral / negative   (no secondary)
+ *   size:    sm (32) / md (40) / lg (48)
+ *   variant: solid / outline / ghost        (no subtle, no loading state)
+ *   icon:    24×24 (lucide / heroicons / etc., always constant)
+ *   radius:  8px (rounded-sm in our scale)
+ *
+ * Usage:
+ *   <button class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ">
+ *     <svg viewBox="0 0 24 24">…</svg>
+ *   </button>
+ */
+
+@layer components {
+  /* ============================================================
+   * Base
+   * ============================================================ */
+  .icon-btn {
+    @apply inline-flex items-center justify-center shrink-0
+           rounded-sm border border-transparent
+           transition-colors duration-150 cursor-pointer
+           focus:outline-none
+           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600
+           disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+
+  /* icon is always 24×24 regardless of button size */
+  .icon-btn > svg { @apply w-6 h-6; }
+
+  /* ============================================================
+   * Size — square box, icon stays 24, padding varies
+   * ============================================================ */
+  .icon-btn-sm { @apply h-8  w-8  p-1; }   /* 32×32 + p4  */
+  .icon-btn-md { @apply h-10 w-10 p-2; }   /* 40×40 + p8  */
+  .icon-btn-lg { @apply h-12 w-12 p-3; }   /* 48×48 + p12 */
+
+  /* ============================================================
+   * PRIMARY
+   * ============================================================ */
+  .icon-btn-primary.icon-btn-solid {
+    background-color: var(--color-primary-500);
+    color: var(--color-white);
+  }
+  .icon-btn-primary.icon-btn-solid:hover:not(:disabled),
+  .icon-btn-primary.icon-btn-solid:active:not(:disabled) { background-color: var(--color-primary-600); }
+  .icon-btn-primary.icon-btn-solid:disabled              { background-color: var(--color-primary-200); }
+
+  .icon-btn-primary.icon-btn-outline {
+    background-color: var(--color-white);
+    color: var(--color-primary-500);
+    border-color: var(--color-primary-500);
+  }
+  .icon-btn-primary.icon-btn-outline:hover:not(:disabled),
+  .icon-btn-primary.icon-btn-outline:active:not(:disabled) { background-color: var(--color-primary-50); }
+  .icon-btn-primary.icon-btn-outline:disabled {
+    color: var(--color-primary-200);
+    border-color: var(--color-primary-200);
+  }
+
+  .icon-btn-primary.icon-btn-ghost {
+    background-color: transparent;
+    color: var(--color-primary-500);
+  }
+  .icon-btn-primary.icon-btn-ghost:hover:not(:disabled),
+  .icon-btn-primary.icon-btn-ghost:active:not(:disabled) { background-color: var(--color-primary-50); }
+  .icon-btn-primary.icon-btn-ghost:disabled { color: var(--color-primary-200); }
+
+  /* ============================================================
+   * NEUTRAL — solid uses neutral/900, outline uses border/high
+   * ============================================================ */
+  .icon-btn-neutral.icon-btn-solid {
+    background-color: var(--color-neutral-900);
+    color: var(--color-white);
+  }
+  .icon-btn-neutral.icon-btn-solid:hover:not(:disabled),
+  .icon-btn-neutral.icon-btn-solid:active:not(:disabled) { background-color: var(--color-neutral-800); }
+  .icon-btn-neutral.icon-btn-solid:disabled              { background-color: var(--color-neutral-200); }
+
+  .icon-btn-neutral.icon-btn-outline {
+    background-color: var(--color-white);
+    color: var(--color-neutral-600);
+    border-color: var(--color-stroke-high);
+  }
+  .icon-btn-neutral.icon-btn-outline:hover:not(:disabled),
+  .icon-btn-neutral.icon-btn-outline:active:not(:disabled) { background-color: var(--color-neutral-50); }
+  .icon-btn-neutral.icon-btn-outline:disabled {
+    color: var(--color-neutral-200);
+    border-color: var(--color-stroke-high);
+  }
+
+  .icon-btn-neutral.icon-btn-ghost {
+    background-color: transparent;
+    color: var(--color-neutral-600);
+  }
+  .icon-btn-neutral.icon-btn-ghost:hover:not(:disabled),
+  .icon-btn-neutral.icon-btn-ghost:active:not(:disabled) { background-color: var(--color-neutral-50); }
+  .icon-btn-neutral.icon-btn-ghost:disabled { color: var(--color-neutral-400); }
+
+  /* ============================================================
+   * NEGATIVE — outline bg uses negative/50 (special, matches Button)
+   * ============================================================ */
+  .icon-btn-negative.icon-btn-solid {
+    background-color: var(--color-negative-500);
+    color: var(--color-white);
+  }
+  .icon-btn-negative.icon-btn-solid:hover:not(:disabled),
+  .icon-btn-negative.icon-btn-solid:active:not(:disabled) { background-color: var(--color-negative-600); }
+  .icon-btn-negative.icon-btn-solid:disabled              { background-color: var(--color-negative-200); }
+
+  .icon-btn-negative.icon-btn-outline {
+    background-color: var(--color-negative-50);
+    color: var(--color-negative-500);
+    border-color: var(--color-negative-500);
+  }
+  .icon-btn-negative.icon-btn-outline:hover:not(:disabled),
+  .icon-btn-negative.icon-btn-outline:active:not(:disabled) { background-color: var(--color-negative-100); }
+  .icon-btn-negative.icon-btn-outline:disabled {
+    background-color: var(--color-negative-50);
+    color: var(--color-negative-200);
+    border-color: var(--color-negative-200);
+  }
+
+  .icon-btn-negative.icon-btn-ghost {
+    background-color: transparent;
+    color: var(--color-negative-500);
+  }
+  .icon-btn-negative.icon-btn-ghost:hover:not(:disabled),
+  .icon-btn-negative.icon-btn-ghost:active:not(:disabled) { background-color: var(--color-negative-50); }
+  .icon-btn-negative.icon-btn-ghost:disabled { color: var(--color-negative-200); }
+}

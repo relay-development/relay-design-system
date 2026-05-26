@@ -1,0 +1,54 @@
+{
+  "name": "@relay/design-system",
+  "version": "0.1.0",
+  "description": "Relay Design System — Tailwind CSS v4 based design tokens & HTML snippet library",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/<org>/relay-design-system.git"
+  },
+  "homepage": "https://<netlify-subdomain>.netlify.app",
+  "bugs": {
+    "url": "https://github.com/<org>/relay-design-system/issues"
+  },
+  "keywords": [
+    "design-system",
+    "tailwindcss",
+    "css",
+    "relay",
+    "ui",
+    "tokens"
+  ],
+  "files": [
+    "dist",
+    "snippets",
+    "src",
+    "README.md"
+  ],
+  "exports": {
+    "./css": "./dist/relay.css",
+    "./tokens": "./dist/tokens.css",
+    "./source": "./src/index.css",
+    "./snippets/*": "./snippets/*"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && vite build --config vite.tokens.config.ts",
+    "build:site": "vite build --config vite.site.config.ts",
+    "preview:site": "vite preview --config vite.site.config.ts",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.0.0",
+    "tailwindcss": "^4.0.0",
+    "vite": "^5.4.0"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.0.0"
+  }
+}

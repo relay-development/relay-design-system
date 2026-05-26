@@ -1,0 +1,137 @@
+/*
+ * Checkbox — recreated from Figma component set 3129:2450 (チェックボックス)
+ *
+ *   props: size (sm 16 / md 24) × body (none/checked/indeterminate) × state × isInvalid
+ *   radius: 4px (rounded-xs)  /  border-width: 2px
+ *
+ *   colors (semantic tokens):
+ *     valid + body=none
+ *       enable:   bg white,        border 2px neutral/400
+ *       hover:    bg white,        border 2px neutral/500
+ *       focus:    + box-shadow focus-ring (info/600)
+ *       disabled: bg white,        border 2px neutral/200
+ *     valid + body=checked / indeterminate
+ *       enable:   bg primary/500, icon white
+ *       hover:    bg primary/600
+ *       disabled: bg primary/200
+ *     invalid + body=none
+ *       enable:   border 2px negative/500
+ *       hover:    border 2px negative/600
+ *       disabled: border 2px negative/200
+ *     invalid + body=checked / indeterminate
+ *       enable:   bg negative/500
+ *       hover:    bg negative/600
+ *       disabled: bg negative/200
+ *
+ *   label color:
+ *     enable / hover / focus: text/high
+ *     disabled: text/disabled
+ *
+ * Usage:
+ *   <label class="checkbox-label">
+ *     <input type="checkbox" class="checkbox" />
+ *     選択肢
+ *   </label>
+ *   <input type="checkbox" class="checkbox checkbox-sm" />     ← small (16)
+ *   <input type="checkbox" class="checkbox checkbox-error" />  ← error
+ *
+ *   Indeterminate state is set via JS: `el.indeterminate = true`
+ */
+
+@layer components {
+  /* ============================================================
+   * Body — base (medium 24×24)
+   * ============================================================ */
+  .checkbox {
+    @apply inline-block shrink-0
+           appearance-none cursor-pointer
+           bg-white
+           border-2 border-solid border-neutral-400
+           rounded-xs
+           transition-colors duration-150
+           focus:outline-none
+           disabled:cursor-not-allowed;
+    width: 16px;
+    height: 16px;
+  }
+  .checkbox-sm { width: 16px; height: 16px; }
+
+  /* Hover (valid) — border neutral/500 */
+  .checkbox:hover:not(:disabled):not(.checkbox-error) {
+    @apply border-neutral-500;
+  }
+
+  /* Focus ring — Figma effect "Box Shadow/Focus ring" (0 0 0 3px info/600) */
+  .checkbox:focus-visible {
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  /* Disabled (valid, body=none) — border neutral/200 */
+  .checkbox:disabled:not(.checkbox-error) {
+    @apply border-neutral-200;
+  }
+
+  /* ============================================================
+   * Checked / Indeterminate body fill (valid) — primary
+   * ============================================================ */
+  .checkbox:checked:not(:disabled):not(.checkbox-error),
+  .checkbox:indeterminate:not(:disabled):not(.checkbox-error) {
+    @apply bg-primary-500 border-primary-500;
+  }
+  .checkbox:checked:hover:not(:disabled):not(.checkbox-error),
+  .checkbox:indeterminate:hover:not(:disabled):not(.checkbox-error) {
+    @apply bg-primary-600 border-primary-600;
+  }
+  .checkbox:disabled:checked:not(.checkbox-error),
+  .checkbox:disabled:indeterminate:not(.checkbox-error) {
+    @apply bg-primary-200 border-primary-200;
+  }
+
+  /* ============================================================
+   * Glyph (✓ for checked, − for indeterminate)
+   * white stroke icons drawn via SVG background
+   * ============================================================ */
+  .checkbox:checked {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 11 8 15 16 5'/></svg>");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .checkbox:indeterminate {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='white' stroke-width='3' stroke-linecap='round'><line x1='5' y1='10' x2='15' y2='10'/></svg>");
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  /* ============================================================
+   * Error state (.checkbox-error) — red border / red fill when checked
+   * ============================================================ */
+  .checkbox-error                                            { @apply border-negative-500; }
+  .checkbox-error:hover:not(:disabled)                       { @apply border-negative-600; }
+  .checkbox-error:disabled                                   { @apply border-negative-200; }
+
+  .checkbox-error:checked:not(:disabled),
+  .checkbox-error:indeterminate:not(:disabled)               { @apply bg-negative-500 border-negative-500; }
+  .checkbox-error:checked:hover:not(:disabled),
+  .checkbox-error:indeterminate:hover:not(:disabled)         { @apply bg-negative-600 border-negative-600; }
+  .checkbox-error:disabled:checked,
+  .checkbox-error:disabled:indeterminate                     { @apply bg-negative-200 border-negative-200; }
+
+  /* ============================================================
+   * Label wrapper — keeps box + text aligned with 8px gap
+   * Label color: text/high (enable) → text/disabled
+   * Sizes: sm (14/24) / md (16/24)
+   * ============================================================ */
+  .checkbox-label {
+    @apply inline-flex items-center gap-2 cursor-pointer text-fg-high;
+  }
+  .checkbox-label-sm { @apply text-xs leading-4; }     /* Figma: 12/16 (box=16) */
+  .checkbox-label-md { @apply text-base leading-6; }   /* Figma: 16/24 (box=24) */
+  .checkbox-label:not(.checkbox-label-sm):not(.checkbox-label-md) {
+    @apply text-base leading-6;
+  }
+  .checkbox-label:has(input.checkbox:disabled) {
+    @apply text-fg-disabled cursor-not-allowed;
+  }
+}

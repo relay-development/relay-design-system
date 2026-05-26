@@ -1,0 +1,146 @@
+/*
+ * Filter Chip — recreated from Figma component set 3139:2327 (フィルターチップ)
+ *
+ *   タグや単語を用いてコンテンツをフィルタリングするためのコンポーネント。
+ *   ボタンとして使うことを想定し、`<button type="button">` ベースで実装する。
+ *
+ *   構造:
+ *     <button class="filter-chip" aria-pressed="true|false">
+ *       <span class="filter-chip-main">
+ *         <span class="filter-chip-icon"><svg>#</svg></span>
+ *         <span class="filter-chip-label">自治体連携</span>
+ *       </span>
+ *       <span class="filter-chip-count">124件</span>
+ *       <span class="filter-chip-check"><svg>✓</svg></span>   (selected のみ表示)
+ *     </button>
+ *
+ *   props: isSelected (aria-pressed) × state (enable / hover / disabled)
+ *
+ *   width:    198px (Figma)
+ *   padding:  8px (p-2)
+ *   radius:   8px (rounded-sm)
+ *   border:   1px solid
+ *   font:     14/24 (label bold, count medium)
+ *
+ *   colors (semantic tokens):
+ *     not-selected:
+ *       enable    → bg white,        border stroke/middle
+ *       hover     → bg neutral/50,   border stroke/high
+ *       disabled  → bg neutral/100,  border stroke/middle, text fg/disabled
+ *     selected:
+ *       enable    → bg primary/50,   border primary/500
+ *       hover     → bg success/100,  border primary/500
+ *       disabled  → bg primary/50,   border primary/300, text fg/disabled
+ *
+ *   selected の右側チェックマーク:
+ *     enable/hover → primary/500 の塗りまる + 白チェック
+ *     disabled     → primary/200 の塗りまる + 白チェック
+ */
+
+@layer components {
+  /* ============================================================
+   * Container — base (not-selected enable)
+   * ============================================================ */
+  .filter-chip {
+    @apply inline-flex items-center justify-between
+           bg-white border border-solid border-stroke-middle
+           rounded-sm
+           cursor-pointer
+           transition-colors duration-150
+           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+    width: 198px;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .filter-chip:hover:not(:disabled):not([aria-pressed="true"]),
+  .filter-chip.is-hover-preview:not(:disabled):not([aria-pressed="true"]) {
+    @apply bg-neutral-50 border-stroke-high;
+  }
+
+  .filter-chip:disabled,
+  .filter-chip.is-disabled {
+    @apply bg-neutral-100 border-stroke-middle cursor-not-allowed;
+  }
+
+  /* ============================================================
+   * Selected (aria-pressed="true")
+   * ============================================================ */
+  .filter-chip[aria-pressed="true"] {
+    background-color: var(--color-primary-50);
+    border-color: var(--color-primary-500);
+  }
+  .filter-chip[aria-pressed="true"]:hover:not(:disabled):not(.is-disabled),
+  .filter-chip[aria-pressed="true"].is-hover-preview:not(:disabled):not(.is-disabled) {
+    background-color: var(--color-success-100);
+    border-color: var(--color-primary-500);
+  }
+  .filter-chip[aria-pressed="true"]:disabled,
+  .filter-chip[aria-pressed="true"].is-disabled {
+    background-color: var(--color-primary-50);
+    border-color: var(--color-primary-300);
+  }
+
+  /* ============================================================
+   * Left side — icon + label
+   * ============================================================ */
+  .filter-chip-main {
+    @apply inline-flex items-center min-w-0;
+  }
+
+  .filter-chip-icon {
+    @apply shrink-0 inline-flex items-center justify-center
+           w-6 h-6
+           text-neutral-600;
+  }
+  .filter-chip-icon > svg { @apply w-4 h-4; }
+
+  .filter-chip-label {
+    @apply truncate text-sm leading-6 font-bold text-neutral-600;
+  }
+
+  /* Disabled — gray out icon + label */
+  .filter-chip:disabled .filter-chip-icon,
+  .filter-chip.is-disabled .filter-chip-icon,
+  .filter-chip:disabled .filter-chip-label,
+  .filter-chip.is-disabled .filter-chip-label {
+    @apply text-fg-disabled;
+  }
+
+  /* ============================================================
+   * Right side — count + (selected) check icon
+   * ============================================================ */
+  .filter-chip-count {
+    @apply shrink-0 text-sm leading-6 font-medium text-fg-low;
+  }
+  .filter-chip:disabled .filter-chip-count,
+  .filter-chip.is-disabled .filter-chip-count {
+    @apply text-fg-disabled;
+  }
+
+  /* Check icon — filled circle with white check, only shown when selected */
+  .filter-chip-check {
+    @apply shrink-0 inline-flex items-center justify-center
+           w-6 h-6;
+    display: none;
+  }
+  .filter-chip[aria-pressed="true"] .filter-chip-check {
+    @apply inline-flex;
+  }
+  .filter-chip-check > .filter-chip-check-circle {
+    @apply inline-flex items-center justify-center
+           w-4 h-4 rounded-full
+           text-white;
+    background-color: var(--color-primary-500);
+  }
+  .filter-chip[aria-pressed="true"]:disabled .filter-chip-check > .filter-chip-check-circle,
+  .filter-chip[aria-pressed="true"].is-disabled .filter-chip-check > .filter-chip-check-circle {
+    background-color: var(--color-primary-200);
+  }
+  .filter-chip-check-circle > svg {
+    width: 10px;
+    height: 10px;
+    stroke: currentColor;
+    fill: none;
+  }
+}

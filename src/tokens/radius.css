@@ -1,0 +1,14 @@
+/*
+ * Relay Design System — Radius tokens
+ * Source: Figma node 3114:409 "radius-grid" (Semantic Token section)
+ * Scale reduced from 10 → 6: none / xs / sm / md / lg / full
+ */
+
+@theme {
+  --radius-none: 0;
+  --radius-xs:   0.25rem;   /* 4px */
+  --radius-sm:   0.5rem;    /* 8px */
+  --radius-md:   1rem;      /* 16px */
+  --radius-lg:   1.5rem;    /* 24px */
+  --radius-full: 9999px;
+}

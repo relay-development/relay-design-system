@@ -1,0 +1,90 @@
+/*
+ * Input — recreated from Figma component set 3120:1917 (インプット)
+ *
+ *   props: size × state × isInvalid × isEmpty
+ *
+ *   sizes (h=container, font/line-height=text):
+ *     sm: h32 · p4/8  · 14/24
+ *     md: h40 · p8/8  · 16/24   (default)
+ *     lg: h48 · p12/12 · 16/24
+ *
+ *   colors (all from semantic tokens):
+ *     valid enable    → bg white,        border neutral/400 (1px), text text/high
+ *     valid hover     → bg white,        border neutral/500 (1px)
+ *     valid focus     → same as hover
+ *     valid disabled  → bg neutral/50,   border neutral/200 (1px), text text/disabled
+ *     invalid enable  → bg negative/50,  border negative/500 (2px)
+ *     invalid hover   → bg negative/50,  border negative/600 (2px)
+ *     invalid disabled→ bg neutral/50,   border negative/200 (2px), text text/disabled
+ *
+ *   placeholder color: text/placeholder
+ *
+ * Usage:
+ *   <input type="text" class="input input-md" placeholder="入力内容" />
+ *   <input type="email" class="input input-md input-error" />
+ *   <input type="text" class="input input-lg" disabled />
+ */
+
+@layer components {
+  /* ============================================================
+   * Base
+   * ============================================================ */
+  .input {
+    @apply block w-full
+           bg-white text-fg-high
+           placeholder:text-fg-placeholder
+           border border-solid border-neutral-400
+           rounded-sm
+           transition-colors duration-150
+           focus:outline-none
+           disabled:bg-neutral-50 disabled:border-neutral-200 disabled:text-fg-disabled
+           disabled:cursor-not-allowed;
+  }
+
+  /* Hover / focus deepen the border to neutral/500 */
+  .input:hover:not(:disabled):not(.input-error)  { @apply border-neutral-500; }
+  .input:focus:not(:disabled):not(.input-error) { @apply border-neutral-500; }
+
+  /* ============================================================
+   * Size — height / padding / font (Figma exact)
+   * ============================================================ */
+  .input-sm { @apply h-8  px-2 py-1 text-sm leading-6; }
+  .input-md { @apply h-10 px-2 py-2 text-base leading-6; }
+  .input-lg { @apply h-12 px-3 py-3 text-base leading-6; }
+
+  /* If used without explicit size, default to medium */
+  .input:not(.input-sm):not(.input-md):not(.input-lg) {
+    @apply h-10 px-2 py-2 text-base leading-6;
+  }
+
+  /* ============================================================
+   * Error (isInvalid=true) — 2px border, red tint background
+   * ============================================================ */
+  .input-error {
+    @apply bg-negative-50 border-2 border-negative-500;
+  }
+  .input-error:hover:not(:disabled),
+  .input-error:focus:not(:disabled) {
+    @apply border-negative-600;
+  }
+  .input-error:disabled {
+    @apply bg-neutral-50 border-negative-200 text-fg-disabled;
+  }
+
+  /* ============================================================
+   * Helpers used by labels around the input
+   * (kept for backward compatibility — Label Control is preferred)
+   * ============================================================ */
+  .field {
+    @apply flex flex-col gap-1.5;
+  }
+  .field-label {
+    @apply text-sm font-medium text-fg-high;
+  }
+  .field-hint {
+    @apply text-xs text-fg-low;
+  }
+  .field-error {
+    @apply text-xs text-negative-700;
+  }
+}

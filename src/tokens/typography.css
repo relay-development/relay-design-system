@@ -1,0 +1,50 @@
+/*
+ * Relay Design System — Typography tokens
+ * Source: Figma file (Primitive Token view, Text styles)
+ *
+ * Two layers:
+ *   - Primitive: font-family / size / weight (full 100-900 scale) / leading / tracking
+ *   - Semantic:  none yet (typography in Figma is used directly via primitive)
+ */
+
+@theme {
+  /* family */
+  --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* size (px → rem at 16px base) + paired line-heights from Figma */
+  --text-xs:   0.75rem;    /* 12px */
+  --text-sm:   0.875rem;   /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg:   1.25rem;    /* 20px */
+  --text-xl:   1.5rem;     /* 24px */
+  --text-2xl:  2rem;       /* 32px */
+  --text-3xl:  2.5rem;     /* 40px */
+
+  --text-xs--line-height:   1rem;     /* 16px */
+  --text-sm--line-height:   1.5rem;   /* 24px */
+  --text-base--line-height: 1.5rem;   /* 24px */
+  --text-lg--line-height:   2rem;     /* 32px */
+  --text-xl--line-height:   2rem;     /* 32px */
+  --text-2xl--line-height:  2.5rem;   /* 40px */
+  --text-3xl--line-height:  3rem;     /* 48px */
+
+  /* weight (canonical 100-900 scale) */
+  --font-weight-thin:        100;
+  --font-weight-extralight:  200;
+  --font-weight-light:       300;
+  --font-weight-normal:      400;
+  --font-weight-medium:      500;
+  --font-weight-semibold:    600;
+  --font-weight-bold:        700;
+  --font-weight-extrabold:   800;
+  --font-weight-black:       900;
+
+  /* tracking (letter-spacing) */
+  --tracking-tighter: -0.05em;
+  --tracking-tight:   -0.025em;
+  --tracking-normal:  0em;
+  --tracking-wide:    0.025em;
+  --tracking-wider:   0.05em;
+  --tracking-widest:  0.1em;
+}

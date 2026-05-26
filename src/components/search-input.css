@@ -1,0 +1,176 @@
+/*
+ * Search Input — recreated from Figma component set 3120:3582 (インプット（検索）)
+ *
+ *   構造:
+ *     [container]
+ *       [text input field]
+ *       [optional clear icon button (×) — only when filled]
+ *       [optional submit button (検索) — only on md / lg sizes]
+ *
+ *   container: padding 4px / radius 8 / same border colors as .input
+ *   submit ボタン:
+ *     md: h32 px12/py4 font14   (primary/solid 縮小版)
+ *     lg: h40 px24/py8 font14
+ *   clear icon: 16-20px の filled gray circle with white ×
+ *   search icon (small empty): lucide search 16-20px
+ *
+ *   isInvalid=true で container bg=negative/50, border 2px negative/500
+ *
+ * Usage:
+ *   <div class="search-input search-input-md">
+ *     <input type="search" class="search-input-field" placeholder="フリーワードで検索" />
+ *     <button type="button" class="search-input-clear" aria-label="クリア">
+ *       <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="currentColor"/>…</svg>
+ *     </button>
+ *     <button type="submit" class="search-input-submit">検索</button>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .search-input {
+    @apply flex items-center w-full
+           bg-white border border-solid border-neutral-400 rounded-sm
+           transition-colors duration-150;
+    padding: 4px;
+  }
+
+  /* Hover (only when not disabled / not error) */
+  .search-input:hover:not(.is-disabled):not(.search-input-error),
+  .search-input:focus-within:not(.is-disabled):not(.search-input-error) {
+    @apply border-neutral-500;
+  }
+
+  /* Disabled (use .is-disabled class on container) */
+  .search-input.is-disabled {
+    @apply bg-neutral-50 border-neutral-200 cursor-not-allowed;
+  }
+  .search-input.is-disabled .search-input-field {
+    @apply text-fg-disabled cursor-not-allowed;
+  }
+  .search-input.is-disabled .search-input-submit {
+    @apply bg-primary-200 cursor-not-allowed pointer-events-none;
+  }
+  .search-input.is-disabled .search-input-clear {
+    @apply pointer-events-none opacity-50;
+  }
+
+  /* ============================================================
+   * Error (isInvalid=true)
+   * ============================================================ */
+  .search-input-error {
+    @apply bg-negative-50 border-2 border-negative-500;
+    padding: 3px;   /* compensate 1px for thicker border */
+  }
+  .search-input-error:hover:not(.is-disabled),
+  .search-input-error:focus-within:not(.is-disabled) {
+    @apply border-negative-600;
+  }
+  .search-input-error.is-disabled {
+    @apply bg-neutral-50 border-negative-200;
+  }
+
+  /* ============================================================
+   * Text field — fills remaining space
+   * ============================================================ */
+  .search-input-field {
+    @apply flex-1 min-w-0 bg-transparent
+           border-0 outline-none
+           text-fg-high placeholder:text-fg-placeholder;
+  }
+  /* Suppress the browser's native clear (×) button on type="search" —
+   * we render our own .search-input-clear instead. */
+  .search-input-field::-webkit-search-cancel-button,
+  .search-input-field::-webkit-search-decoration,
+  .search-input-field::-webkit-search-results-button,
+  .search-input-field::-webkit-search-results-decoration {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+  }
+
+  /* ============================================================
+   * Auto-toggle icons based on input value (CSS-only, no JS)
+   *
+   * Empty (placeholder showing):
+   *   - clear button → invisible but slot reserved
+   *     (so md / lg width doesn't change when clear button appears)
+   *   - search icon → visible
+   * Filled (has value):
+   *   - clear button → visible
+   *   - search icon → hidden (shares slot with clear on sm)
+   *
+   * Exception: on size=sm the clear button and the search icon share
+   * the same physical slot — when empty we fully remove clear with
+   * display:none so the icon fills the slot.
+   *
+   * Requires the input to have a `placeholder` attribute so
+   * `:placeholder-shown` can detect emptiness.
+   * ============================================================ */
+  .search-input:has(.search-input-field:placeholder-shown) .search-input-clear {
+    visibility: hidden;
+    pointer-events: none;
+  }
+  .search-input-sm:has(.search-input-field:placeholder-shown) .search-input-clear {
+    display: none;
+  }
+  .search-input:not(:has(.search-input-field:placeholder-shown)) .search-input-icon {
+    display: none;
+  }
+
+  /* ============================================================
+   * Size — controls overall height + inner font / submit dims
+   * ============================================================ */
+  .search-input-sm { height: 32px; }
+  .search-input-md { height: 40px; }
+  .search-input-lg { height: 48px; }
+
+  .search-input-sm .search-input-field { @apply h-6 px-1 text-sm leading-6; }
+  .search-input-md .search-input-field { @apply h-6 px-1 text-base leading-6; }
+  .search-input-lg .search-input-field { @apply h-6 px-2 text-base leading-6; }
+
+  /* ============================================================
+   * Clear icon button (× on filled state)
+   * ============================================================ */
+  .search-input-clear {
+    @apply shrink-0 inline-flex items-center justify-center
+           bg-transparent border-0 cursor-pointer
+           text-neutral-400 hover:text-neutral-500
+           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600
+           rounded-full;
+  }
+  /* button hit area follows size scale */
+  .search-input-sm .search-input-clear { @apply h-6 w-6; }
+  .search-input-md .search-input-clear { @apply h-8 w-8; }
+  .search-input-lg .search-input-clear { @apply h-10 w-10; }
+  /* icon (filled circle-x) size — Figma: 16 / 20 / 24 */
+  .search-input-sm .search-input-clear > svg { @apply w-4 h-4; }
+  .search-input-md .search-input-clear > svg { @apply w-5 h-5; }
+  .search-input-lg .search-input-clear > svg { @apply w-6 h-6; }
+
+  /* ============================================================
+   * Search icon (small size, empty state) — pure decoration
+   * ============================================================ */
+  .search-input-icon {
+    @apply shrink-0 inline-flex items-center justify-center
+           text-neutral-600;
+  }
+  .search-input-sm .search-input-icon { @apply h-6 w-6; }
+  .search-input-icon > svg { @apply w-5 h-5; }
+
+  /* ============================================================
+   * Submit button (検索) — primary solid, shown on md / lg
+   * ============================================================ */
+  .search-input-submit {
+    @apply shrink-0 inline-flex items-center justify-center
+           font-bold text-white whitespace-nowrap
+           bg-primary-500 hover:bg-primary-600
+           border-0 rounded-sm cursor-pointer
+           transition-colors duration-150
+           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+  }
+  .search-input-md .search-input-submit { @apply h-8 px-3 py-1 text-sm leading-6; }
+  .search-input-lg .search-input-submit { @apply h-10 px-6 py-2 text-sm leading-6; }
+}

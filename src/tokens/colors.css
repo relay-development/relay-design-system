@@ -1,0 +1,234 @@
+/*
+ * Relay Design System — Color tokens
+ * Source of truth: Figma file hJcKE8FkiyXtB1F9SuuE08
+ *
+ * Two layers:
+ *   1. Primitive   — raw color ramps (brand-green, brand-yellow, slate, red, amber, green, blue).
+ *                    Reference layer only; do NOT use directly in components.
+ *   2. Semantic    — role-based aliases (primary, secondary, neutral, success, warning, negative, info,
+ *                    plus text/*, bg/*, border/*). Components MUST use these.
+ */
+
+@theme {
+  /* =====================================================================
+   *  Primitive layer — raw Tailwind-style color ramps + brand customs
+   * ===================================================================== */
+
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  /* brand-green (Relay primary brand) */
+  --color-brand-green-50:  #effaf5;
+  --color-brand-green-100: #d7f4e4;
+  --color-brand-green-200: #b3e7ce;
+  --color-brand-green-300: #81d4b1;
+  --color-brand-green-400: #4cbb90;
+  --color-brand-green-500: #30b686;
+  --color-brand-green-600: #1b805e;
+  --color-brand-green-700: #16664d;
+  --color-brand-green-800: #14513e;
+  --color-brand-green-900: #114334;
+  --color-brand-green-950: #08261e;
+
+  /* brand-yellow (Relay secondary brand) */
+  --color-brand-yellow-50:  #fefee8;
+  --color-brand-yellow-100: #ffffc2;
+  --color-brand-yellow-200: #fffa87;
+  --color-brand-yellow-300: #fff043;
+  --color-brand-yellow-400: #ffe004;
+  --color-brand-yellow-500: #efc803;
+  --color-brand-yellow-600: #ce9b00;
+  --color-brand-yellow-700: #a46f04;
+  --color-brand-yellow-800: #88570b;
+  --color-brand-yellow-900: #734710;
+  --color-brand-yellow-950: #432505;
+
+  /* slate */
+  --color-slate-50:  #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-300: #cbd5e1;
+  --color-slate-400: #94a3b8;
+  --color-slate-500: #64748b;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-slate-950: #020617;
+
+  /* red */
+  --color-red-50:  #fef2f2;
+  --color-red-100: #fee2e2;
+  --color-red-200: #fecaca;
+  --color-red-300: #fca5a5;
+  --color-red-400: #f87171;
+  --color-red-500: #ef4444;
+  --color-red-600: #dc2626;
+  --color-red-700: #b91c1c;
+  --color-red-800: #991b1b;
+  --color-red-900: #7f1d1d;
+  --color-red-950: #450a0a;
+
+  /* amber */
+  --color-amber-50:  #fffbeb;
+  --color-amber-100: #fef3c7;
+  --color-amber-200: #fde68a;
+  --color-amber-300: #fcd34d;
+  --color-amber-400: #fbbf24;
+  --color-amber-500: #f59e0b;
+  --color-amber-600: #d97706;
+  --color-amber-700: #b45309;
+  --color-amber-800: #92400e;
+  --color-amber-900: #78350f;
+  --color-amber-950: #451a03;
+
+  /* green */
+  --color-green-50:  #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-200: #bbf7d0;
+  --color-green-300: #86efac;
+  --color-green-400: #4ade80;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+  --color-green-800: #166534;
+  --color-green-900: #14532d;
+  --color-green-950: #052e16;
+
+  /* blue */
+  --color-blue-50:  #eff6ff;
+  --color-blue-100: #dbeafe;
+  --color-blue-200: #bfdbfe;
+  --color-blue-300: #93c5fd;
+  --color-blue-400: #60a5fa;
+  --color-blue-500: #3b82f6;
+  --color-blue-600: #2563eb;
+  --color-blue-700: #1d4ed8;
+  --color-blue-800: #1e40af;
+  --color-blue-900: #1e3a8a;
+  --color-blue-950: #172554;
+
+
+  /* =====================================================================
+   *  Semantic layer — role-based aliases. Components reference these.
+   *  Each value is a var() to the primitive above (single source of truth).
+   * ===================================================================== */
+
+  /* Primary (= brand-green) */
+  --color-primary-50:  var(--color-brand-green-50);
+  --color-primary-100: var(--color-brand-green-100);
+  --color-primary-200: var(--color-brand-green-200);
+  --color-primary-300: var(--color-brand-green-300);
+  --color-primary-400: var(--color-brand-green-400);
+  --color-primary-500: var(--color-brand-green-500);
+  --color-primary-600: var(--color-brand-green-600);
+  --color-primary-700: var(--color-brand-green-700);
+  --color-primary-800: var(--color-brand-green-800);
+  --color-primary-900: var(--color-brand-green-900);
+  --color-primary-950: var(--color-brand-green-950);
+
+  /* Secondary (= brand-yellow) */
+  --color-secondary-50:  var(--color-brand-yellow-50);
+  --color-secondary-100: var(--color-brand-yellow-100);
+  --color-secondary-200: var(--color-brand-yellow-200);
+  --color-secondary-300: var(--color-brand-yellow-300);
+  --color-secondary-400: var(--color-brand-yellow-400);
+  --color-secondary-500: var(--color-brand-yellow-500);
+  --color-secondary-600: var(--color-brand-yellow-600);
+  --color-secondary-700: var(--color-brand-yellow-700);
+  --color-secondary-800: var(--color-brand-yellow-800);
+  --color-secondary-900: var(--color-brand-yellow-900);
+  --color-secondary-950: var(--color-brand-yellow-950);
+
+  /* Neutral (= slate) */
+  --color-neutral-50:  var(--color-slate-50);
+  --color-neutral-100: var(--color-slate-100);
+  --color-neutral-200: var(--color-slate-200);
+  --color-neutral-300: var(--color-slate-300);
+  --color-neutral-400: var(--color-slate-400);
+  --color-neutral-500: var(--color-slate-500);
+  --color-neutral-600: var(--color-slate-600);
+  --color-neutral-700: var(--color-slate-700);
+  --color-neutral-800: var(--color-slate-800);
+  --color-neutral-900: var(--color-slate-900);
+  --color-neutral-950: var(--color-slate-950);
+
+  /* Success (= green) */
+  --color-success-50:  var(--color-green-50);
+  --color-success-100: var(--color-green-100);
+  --color-success-200: var(--color-green-200);
+  --color-success-300: var(--color-green-300);
+  --color-success-400: var(--color-green-400);
+  --color-success-500: var(--color-green-500);
+  --color-success-600: var(--color-green-600);
+  --color-success-700: var(--color-green-700);
+  --color-success-800: var(--color-green-800);
+  --color-success-900: var(--color-green-900);
+  --color-success-950: var(--color-green-950);
+
+  /* Warning (= amber) */
+  --color-warning-50:  var(--color-amber-50);
+  --color-warning-100: var(--color-amber-100);
+  --color-warning-200: var(--color-amber-200);
+  --color-warning-300: var(--color-amber-300);
+  --color-warning-400: var(--color-amber-400);
+  --color-warning-500: var(--color-amber-500);
+  --color-warning-600: var(--color-amber-600);
+  --color-warning-700: var(--color-amber-700);
+  --color-warning-800: var(--color-amber-800);
+  --color-warning-900: var(--color-amber-900);
+  --color-warning-950: var(--color-amber-950);
+
+  /* Negative (= red) */
+  --color-negative-50:  var(--color-red-50);
+  --color-negative-100: var(--color-red-100);
+  --color-negative-200: var(--color-red-200);
+  --color-negative-300: var(--color-red-300);
+  --color-negative-400: var(--color-red-400);
+  --color-negative-500: var(--color-red-500);
+  --color-negative-600: var(--color-red-600);
+  --color-negative-700: var(--color-red-700);
+  --color-negative-800: var(--color-red-800);
+  --color-negative-900: var(--color-red-900);
+  --color-negative-950: var(--color-red-950);
+
+  /* Info (= blue) */
+  --color-info-50:  var(--color-blue-50);
+  --color-info-100: var(--color-blue-100);
+  --color-info-200: var(--color-blue-200);
+  --color-info-300: var(--color-blue-300);
+  --color-info-400: var(--color-blue-400);
+  --color-info-500: var(--color-blue-500);
+  --color-info-600: var(--color-blue-600);
+  --color-info-700: var(--color-blue-700);
+  --color-info-800: var(--color-blue-800);
+  --color-info-900: var(--color-blue-900);
+  --color-info-950: var(--color-blue-950);
+
+  /* Surface */
+  --color-page:       var(--color-white);
+  --color-page-green: var(--color-brand-green-50);
+  --color-surface:    var(--color-white);
+  --color-overlay:    rgb(15 23 42 / 0.6);
+
+  /* Text */
+  --color-fg-high:         var(--color-slate-900);
+  --color-fg-middle:       var(--color-slate-700);
+  --color-fg-low:          var(--color-slate-500);
+  --color-fg-placeholder:  var(--color-slate-400);
+  --color-fg-disabled:     var(--color-slate-400);
+  --color-fg-high-inverse:   var(--color-white);
+  --color-fg-middle-inverse: var(--color-slate-200);
+  --color-fg-low-inverse:    var(--color-slate-300);
+
+  /* Border */
+  --color-stroke-high:   var(--color-slate-300);
+  --color-stroke-middle: var(--color-slate-200);
+  --color-stroke-low:    var(--color-slate-100);
+  --color-stroke-high-inverse:   var(--color-slate-100);
+  --color-stroke-middle-inverse: var(--color-slate-200);
+  --color-stroke-low-inverse:    var(--color-slate-300);
+
+  /* Focus ring */
+  --color-outline-focus: var(--color-blue-600);
+}

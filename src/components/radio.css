@@ -1,0 +1,120 @@
+/*
+ * Radio — recreated from Figma component set 3131:3328 (ラジオボタン)
+ *
+ *   props: size (sm 16 / md 24) × body (none / checked) × state × isInvalid
+ *   shape: circle (border-radius: full) / border-width: 2px
+ *
+ *   colors (semantic tokens):
+ *     valid + body=none
+ *       enable / hover: bg white, border 2px neutral/400
+ *       focus:          + box-shadow focus-ring (info/600)
+ *       disabled:       bg white, border 2px neutral/200
+ *     valid + body=checked
+ *       enable:   border + dot primary/500
+ *       hover:    border + dot primary/600
+ *       disabled: border + dot primary/200
+ *     invalid + body=none
+ *       enable:   border 2px negative/500
+ *       hover:    border 2px negative/600
+ *       disabled: border 2px negative/200
+ *     invalid + body=checked
+ *       enable:   border + dot negative/500
+ *       hover:    border + dot negative/600
+ *       disabled: border + dot negative/200
+ *
+ *   label color: text/high (enable/hover/focus) → text/disabled (disabled)
+ *   sizes (font / line-height):
+ *     sm: 12/16 (box 16, dot 10)
+ *     md: 16/24 (box 24, dot 14)
+ *
+ * Usage:
+ *   <label class="radio-label">
+ *     <input type="radio" name="plan" class="radio" />
+ *     選択肢
+ *   </label>
+ *   <input type="radio" class="radio radio-sm" />     ← small (16)
+ *   <input type="radio" class="radio radio-error" /> ← invalid
+ */
+
+@layer components {
+  /* ============================================================
+   * Body — base (medium 24×24)
+   * `color` carries the dot/border tint so hover/error/disabled
+   * only need to override one property.
+   * ============================================================ */
+  .radio {
+    @apply inline-block shrink-0
+           appearance-none cursor-pointer
+           bg-white
+           border-2 border-solid border-neutral-400
+           rounded-full
+           transition-colors duration-150
+           focus:outline-none
+           disabled:cursor-not-allowed;
+    width: 16px;
+    height: 16px;
+    color: var(--color-primary-500);
+  }
+  .radio-sm { width: 16px; height: 16px; }
+
+  /* Focus ring */
+  .radio:focus-visible { box-shadow: var(--shadow-focus-ring); }
+
+  /* Disabled (none body) */
+  .radio:disabled:not(.radio-error) { @apply border-neutral-200; }
+
+  /* ============================================================
+   * Checked (valid) — colored border + inner dot via radial-gradient
+   * Inner dot occupies ~60% of the radius (14/24 = 58.3%, 10/16 = 62.5%
+   * — 60% is a clean middle that matches both sizes visually)
+   * ============================================================ */
+  .radio:checked:not(:disabled):not(.radio-error) {
+    @apply border-primary-500;
+    color: var(--color-primary-500);
+  }
+  .radio:checked:hover:not(:disabled):not(.radio-error) {
+    @apply border-primary-600;
+    color: var(--color-primary-600);
+  }
+  .radio:disabled:checked:not(.radio-error) {
+    @apply border-primary-200;
+    color: var(--color-primary-200);
+  }
+
+  .radio:checked {
+    background-image: radial-gradient(circle, currentColor 60%, transparent 62%);
+  }
+
+  /* ============================================================
+   * Error state (.radio-error)
+   * ============================================================ */
+  .radio-error                                 { @apply border-negative-500; color: var(--color-negative-500); }
+  .radio-error:hover:not(:disabled)            { @apply border-negative-600; color: var(--color-negative-600); }
+  .radio-error:disabled                        { @apply border-negative-200; color: var(--color-negative-200); }
+
+  .radio-error:checked:not(:disabled)          { @apply border-negative-500; color: var(--color-negative-500); }
+  .radio-error:checked:hover:not(:disabled)    { @apply border-negative-600; color: var(--color-negative-600); }
+  .radio-error:disabled:checked                { @apply border-negative-200; color: var(--color-negative-200); }
+
+  /* ============================================================
+   * Label wrapper — box + text with 8px gap
+   * Sizes: sm (12/16) / md (16/24)
+   * ============================================================ */
+  .radio-label {
+    @apply inline-flex items-center gap-2 cursor-pointer text-fg-high;
+  }
+  .radio-label-sm { @apply text-xs leading-4; }     /* Figma: 12/16 */
+  .radio-label-md { @apply text-base leading-6; }   /* Figma: 16/24 */
+  .radio-label:not(.radio-label-sm):not(.radio-label-md) {
+    @apply text-base leading-6;
+  }
+  .radio-label:has(input.radio:disabled) {
+    @apply text-fg-disabled cursor-not-allowed;
+  }
+
+  /* ============================================================
+   * Layout helpers — radio groups stack vertically (Figma rule)
+   * ============================================================ */
+  .radio-group { @apply flex flex-col gap-2; }
+  .radio-group-horizontal { @apply flex flex-row flex-wrap gap-4; }
+}

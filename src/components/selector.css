@@ -1,0 +1,135 @@
+/*
+ * Selector — recreated from Figma component set 3120:5008 (セレクター)
+ *
+ *   構造:
+ *     [container]
+ *       [optional left icon slot — primary/500 colored]
+ *       [native <select> field]
+ *       [right chevron up/down — via CSS, neutral/600]
+ *
+ *   props: size × state × isInvalid × isEmpty (same as Input)
+ *
+ *   sizes (h / padding-x):
+ *     sm: 32 / 4
+ *     md: 40 / 8
+ *     lg: 48 / 12
+ *
+ *   font: sm 14/24 ・ md/lg 16/24
+ *
+ *   colors (all from semantic tokens — identical to Input):
+ *     valid enable    → bg white,       border neutral/400 (1px)
+ *     valid hover     → bg white,       border neutral/500 (1px)
+ *     valid disabled  → bg neutral/50,  border neutral/200 (1px), text/disabled
+ *     invalid enable  → bg negative/50, border negative/500 (2px)
+ *     invalid hover   → bg negative/50, border negative/600 (2px)
+ *     invalid disabled→ bg neutral/50,  border negative/200 (2px)
+ *
+ *   placeholder (empty option) color: text/placeholder
+ *
+ * Usage:
+ *   <div class="selector selector-md">
+ *     <span class="selector-icon"><svg>…</svg></span>   (optional)
+ *     <select class="selector-field">
+ *       <option value="">選択内容</option>
+ *       <option value="a">A</option>
+ *     </select>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .selector {
+    @apply flex items-center gap-1 w-full
+           bg-white border border-solid border-neutral-400 rounded-sm
+           transition-colors duration-150 cursor-pointer;
+  }
+  .selector:hover:not(.is-disabled):not(.selector-error),
+  .selector:focus-within:not(.is-disabled):not(.selector-error) {
+    @apply border-neutral-500;
+  }
+
+  /* Disabled — use .is-disabled class on the wrapper to mirror the
+   * <select disabled> state without relying on :has() everywhere. */
+  .selector.is-disabled {
+    @apply bg-neutral-50 border-neutral-200 cursor-not-allowed;
+  }
+  .selector.is-disabled .selector-field { @apply text-fg-disabled cursor-not-allowed; }
+  .selector.is-disabled .selector-icon { @apply text-neutral-400; }
+
+  /* ============================================================
+   * Error (isInvalid=true)
+   * ============================================================ */
+  .selector-error {
+    @apply bg-negative-50 border-2 border-negative-500;
+  }
+  .selector-error:hover:not(.is-disabled),
+  .selector-error:focus-within:not(.is-disabled) {
+    @apply border-negative-600;
+  }
+  .selector-error.is-disabled {
+    @apply bg-neutral-50 border-negative-200;
+  }
+
+  /* ============================================================
+   * Sizes — Figma exact
+   * ============================================================ */
+  .selector-sm { height: 32px; padding-left: 4px;  padding-right: 4px;  }
+  .selector-md { height: 40px; padding-left: 8px;  padding-right: 8px;  }
+  .selector-lg { height: 48px; padding-left: 12px; padding-right: 12px; }
+  /* Compensate the extra 1px border when error */
+  .selector-sm.selector-error { padding-left: 3px;  padding-right: 3px;  }
+  .selector-md.selector-error { padding-left: 7px;  padding-right: 7px;  }
+  .selector-lg.selector-error { padding-left: 11px; padding-right: 11px; }
+
+  /* ============================================================
+   * Left icon slot — colored primary/500
+   * ============================================================ */
+  .selector-icon {
+    @apply shrink-0 inline-flex items-center justify-center
+           w-6 h-6 text-primary-500;
+  }
+  .selector-icon > svg { @apply w-5 h-5; }
+
+  /* ============================================================
+   * Native <select> field — appearance reset, transparent
+   * ============================================================ */
+  .selector-field {
+    @apply flex-1 min-w-0 bg-transparent border-0 outline-none cursor-pointer
+           text-fg-high appearance-none;
+    /* Remove default arrow on some browsers */
+    background-image: none;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  .selector-sm .selector-field { @apply text-sm leading-6; }
+  .selector-md .selector-field { @apply text-base leading-6; }
+  .selector-lg .selector-field { @apply text-base leading-6; }
+  .selector-lg .selector-field { padding-left: 8px; padding-right: 8px; }
+
+  /* Empty (placeholder) — option[value=""] selected */
+  .selector:has(.selector-field option[value=""]:checked) .selector-field {
+    @apply text-fg-placeholder;
+  }
+
+  /* ============================================================
+   * Right chevron-up-down — Lucide icon via inline SVG mask
+   * ============================================================ */
+  .selector::after {
+    content: "";
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-neutral-600);
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg>");
+            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+            mask-position: center;
+    -webkit-mask-size: contain;
+            mask-size: contain;
+  }
+  .selector.is-disabled::after { background-color: var(--color-neutral-400); }
+}

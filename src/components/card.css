@@ -1,0 +1,30 @@
+@layer components {
+  .card {
+    @apply bg-surface border border-stroke-middle rounded-md overflow-hidden;
+  }
+
+  .card-elevated {
+    @apply border-0 shadow-md;
+  }
+
+  .card-header {
+    @apply px-5 py-4 border-b border-stroke-middle;
+  }
+
+  .card-title {
+    @apply text-base font-semibold text-fg-high;
+  }
+
+  .card-subtitle {
+    @apply text-sm text-fg-low mt-0.5;
+  }
+
+  .card-body {
+    @apply px-5 py-4 text-sm text-fg-middle;
+  }
+
+  .card-footer {
+    @apply px-5 py-3 border-t border-stroke-middle bg-neutral-50
+           flex items-center justify-end gap-2;
+  }
+}

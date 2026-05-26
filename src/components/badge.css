@@ -1,0 +1,24 @@
+@layer components {
+  .badge {
+    @apply inline-flex items-center gap-1
+           h-5 px-2
+           text-xs font-medium leading-4
+           rounded-full border border-transparent;
+  }
+
+  /* Solid */
+  .badge-solid-neutral { @apply bg-neutral-900   text-fg-high-inverse; }
+  .badge-solid-primary { @apply bg-primary-500   text-fg-high-inverse; }
+  .badge-solid-info    { @apply bg-info-500      text-fg-high-inverse; }
+  .badge-solid-success { @apply bg-success-500   text-fg-high-inverse; }
+  .badge-solid-warning { @apply bg-warning-500   text-fg-high-inverse; }
+  .badge-solid-danger  { @apply bg-negative-500  text-fg-high-inverse; }
+
+  /* Soft */
+  .badge-soft-neutral  { @apply bg-neutral-100   text-fg-high; }
+  .badge-soft-primary  { @apply bg-primary-50    text-primary-700; }
+  .badge-soft-info     { @apply bg-info-50       text-info-700; }
+  .badge-soft-success  { @apply bg-success-50    text-success-700; }
+  .badge-soft-warning  { @apply bg-warning-50    text-warning-700; }
+  .badge-soft-danger   { @apply bg-negative-50   text-negative-700; }
+}

@@ -1,0 +1,112 @@
+/*
+ * Textarea — recreated from Figma component set 3123:1853 (テキストエリア)
+ *
+ *   構造:
+ *     <div class="textarea-control">
+ *       <textarea class="textarea textarea-md" placeholder="入力内容" maxlength="100"></textarea>
+ *       <div class="textarea-footer">
+ *         <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+ *         <span class="textarea-counter">0/100</span>
+ *       </div>
+ *     </div>
+ *
+ *   props: size (sm/md) × state (enable/hover/disabled) × isInvalid × isEmpty
+ *
+ *   sizes (font / line-height):
+ *     sm: 14/24
+ *     md: 16/24
+ *
+ *   colors (semantic tokens):
+ *     valid enable    → bg white,        border neutral/400 (1px), text text/high
+ *     valid hover     → bg white,        border neutral/500 (1px)
+ *     valid focus     → same as hover
+ *     valid disabled  → bg neutral/50,   border neutral/200 (1px), text text/disabled
+ *     invalid enable  → bg negative/50,  border negative/500 (2px)
+ *     invalid hover   → bg negative/50,  border negative/600 (2px)
+ *     invalid disabled→ bg neutral/50,   border negative/200 (2px)
+ *
+ *   placeholder color: text/placeholder
+ *   counter: text/high (valid) or negative/500 (invalid)
+ */
+
+@layer components {
+  /* ============================================================
+   * Wrapper — textarea + footer (error + counter)
+   * ============================================================ */
+  .textarea-control {
+    @apply flex flex-col gap-1 w-full;
+  }
+
+  /* ============================================================
+   * Base textarea
+   * ============================================================ */
+  .textarea {
+    @apply block w-full
+           bg-white text-fg-high
+           placeholder:text-fg-placeholder
+           border border-solid border-neutral-400
+           rounded-sm
+           transition-colors duration-150
+           focus:outline-none
+           disabled:bg-neutral-50 disabled:border-neutral-200 disabled:text-fg-disabled
+           disabled:cursor-not-allowed;
+
+    /* padding 4px (vertical) / 8px (horizontal) — matches Input md */
+    padding: 4px 8px;
+    /* Allow vertical resize only; default min-height ≈ 3 lines */
+    resize: vertical;
+    min-height: 80px;
+  }
+
+  .textarea:hover:not(:disabled):not(.textarea-error),
+  .textarea:focus:not(:disabled):not(.textarea-error) {
+    @apply border-neutral-500;
+  }
+
+  /* ============================================================
+   * Size — font-size + line-height (8-multiple)
+   * ============================================================ */
+  .textarea-sm { @apply text-sm leading-6; }
+  .textarea-md { @apply text-base leading-6; }
+  /* default to sm if no size class given */
+  .textarea:not(.textarea-sm):not(.textarea-md) { @apply text-sm leading-6; }
+
+  /* ============================================================
+   * Error (isInvalid=true) — 2px border
+   * ============================================================ */
+  .textarea-error {
+    @apply bg-negative-50 border-2 border-negative-500;
+    /* compensate the extra 1px so total visual size stays the same */
+    padding: 3px 7px;
+  }
+  .textarea-error:hover:not(:disabled),
+  .textarea-error:focus:not(:disabled) {
+    @apply border-negative-600;
+  }
+  .textarea-error:disabled {
+    @apply bg-neutral-50 border-negative-200 text-fg-disabled;
+  }
+
+  /* ============================================================
+   * Footer — error text on left, counter on right
+   * ============================================================ */
+  .textarea-footer {
+    @apply flex items-start justify-between gap-4;
+  }
+  /* When only counter (no error), push it to the right */
+  .textarea-footer > .textarea-counter:only-child {
+    @apply ml-auto;
+  }
+
+  .textarea-error-text {
+    @apply flex-1 text-xs leading-4 text-negative-500;
+  }
+  .textarea-counter {
+    @apply shrink-0 text-xs leading-4 text-fg-high font-mono;
+  }
+  /* When parent has error class on counter, switch to red */
+  .textarea-control.is-invalid .textarea-counter,
+  .textarea-counter.is-invalid {
+    @apply text-negative-500;
+  }
+}

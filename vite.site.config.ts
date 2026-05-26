@@ -1,0 +1,23 @@
+/*
+ * Static-site build for the preview page (examples/index.html).
+ *   - bundles src/index.css via Tailwind v4
+ *   - outputs ./site/index.html  (flat layout, ready for Netlify)
+ */
+import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
+import { resolve } from "node:path";
+
+export default defineConfig({
+  root: resolve(__dirname, "examples"),
+  plugins: [tailwindcss()],
+  server: {
+    port: 5173,
+    fs: {
+      allow: [resolve(__dirname)],
+    },
+  },
+  build: {
+    outDir: resolve(__dirname, "site"),
+    emptyOutDir: true,
+  },
+});
