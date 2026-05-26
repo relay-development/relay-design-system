@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/relay-development/relay-design-system.git"
   },
-  "homepage": "https://<netlify-subdomain>.netlify.app",
+  "homepage": "https://relaydesign.netlify.app",
   "bugs": {
     "url": "https://github.com/relay-development/relay-design-system/issues"
   },

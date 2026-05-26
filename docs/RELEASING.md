@@ -62,5 +62,5 @@ publish 完了後、Slack / Notion などで一度告知する。テンプレ:
 🚀 @relay/design-system v0.x.y を公開しました
 - 変更点: …
 - リリースノート: https://github.com/relay-development/relay-design-system/releases/tag/v0.x.y
-- プレビュー: https://<netlify>.netlify.app
+- プレビュー: https://relaydesign.netlify.app
 ```
