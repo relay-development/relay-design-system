@@ -37,7 +37,7 @@ git push --follow-tags
 npm publish
 
 # 6) GitHub Releases にリリースノート
-#    https://github.com/<org>/relay-design-system/releases/new
+#    https://github.com/relay-development/relay-design-system/releases/new
 #    → 作られた tag を選択 → 変更点を箇条書きで記載
 ```
 
@@ -61,6 +61,6 @@ publish 完了後、Slack / Notion などで一度告知する。テンプレ:
 ```
 🚀 @relay/design-system v0.x.y を公開しました
 - 変更点: …
-- リリースノート: https://github.com/<org>/relay-design-system/releases/tag/v0.x.y
+- リリースノート: https://github.com/relay-development/relay-design-system/releases/tag/v0.x.y
 - プレビュー: https://<netlify>.netlify.app
 ```

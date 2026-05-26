@@ -6,11 +6,11 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/<org>/relay-design-system.git"
+    "url": "git+https://github.com/relay-development/relay-design-system.git"
   },
   "homepage": "https://<netlify-subdomain>.netlify.app",
   "bugs": {
-    "url": "https://github.com/<org>/relay-design-system/issues"
+    "url": "https://github.com/relay-development/relay-design-system/issues"
   },
   "keywords": [
     "design-system",

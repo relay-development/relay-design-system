@@ -57,7 +57,7 @@ import "@relay/design-system/css";
 
 ### 6. Issue / 要望
 
-https://github.com/<org>/relay-design-system/issues
+https://github.com/relay-development/relay-design-system/issues
 
 ---
 
