@@ -1085,69 +1085,90 @@
       </div>
 
       <!-- =========================================================
-           タイポグラフィー (Typography)
+           タイポグラフィー (Typography) — semantic .typo-* layer
+           Figma 3111:1902 と 1:1 対応するクラス
            ========================================================= -->
-      <div class="mb-12">
+      <section id="typography" class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
           <h3 class="text-lg font-semibold">タイポグラフィー</h3>
           <p class="text-xs text-fg-low font-mono">Math.ceil((size × 1.3) / 8) × 8</p>
         </div>
-        <p class="text-sm text-fg-low mb-4">8 の倍数の行間で 8×8 ベースグリッドに揃える。</p>
+        <p class="text-sm text-fg-low mb-4">
+          8 の倍数の行間で 8×8 ベースグリッドに揃える。weight は body サイズが <code class="px-1 bg-neutral-100 rounded">medium</code>、display サイズが <code class="px-1 bg-neutral-100 rounded">bold</code>（<code class="px-1 bg-neutral-100 rounded">font-bold</code> / <code class="px-1 bg-neutral-100 rounded">font-medium</code> で上書き可）。
+        </p>
 
         <div class="card overflow-hidden">
           <div class="card-body !p-0">
             <!-- Header row -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-3 text-xs font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
-              <div>token</div>
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-3 text-xs font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
+              <div>class</div>
               <div>size</div>
               <div>line-height</div>
               <div>preview</div>
             </div>
-            <!-- small 14/24 -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
-              <div><p class="font-semibold text-sm">small</p></div>
+            <!-- .typo-small 14/24 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono text-sm">.typo-small</p>
+                <p class="text-xs text-fg-low">medium</p>
+              </div>
               <div class="text-fg-low text-sm font-mono">14</div>
               <div class="text-fg-low text-sm font-mono">24</div>
-              <div style="font-size:14px;line-height:24px;">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</div>
+              <p class="typo-small">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
-            <!-- medium 16/24 -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
-              <div><p class="font-semibold text-sm">medium <span class="text-fg-low font-normal text-xs">(base)</span></p></div>
+            <!-- .typo-medium 16/24 medium (base) -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono text-sm">.typo-medium <span class="text-fg-low font-normal text-xs">(base)</span></p>
+                <p class="text-xs text-fg-low">medium</p>
+              </div>
               <div class="text-fg-low text-sm font-mono">16</div>
               <div class="text-fg-low text-sm font-mono">24</div>
-              <div style="font-size:16px;line-height:24px;">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</div>
+              <p class="typo-medium">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
-            <!-- large 20/32 -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
-              <div><p class="font-semibold text-sm">large</p></div>
+            <!-- .typo-large 20/32 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono text-sm">.typo-large</p>
+                <p class="text-xs text-fg-low">medium</p>
+              </div>
               <div class="text-fg-low text-sm font-mono">20</div>
               <div class="text-fg-low text-sm font-mono">32</div>
-              <div style="font-size:20px;line-height:32px;">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</div>
+              <p class="typo-large">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
-            <!-- xlarge 24/40 -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
-              <div><p class="font-semibold text-sm">Xlarge</p></div>
+            <!-- .typo-xlarge 24/32 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono text-sm">.typo-xlarge</p>
+                <p class="text-xs text-fg-low">medium</p>
+              </div>
               <div class="text-fg-low text-sm font-mono">24</div>
-              <div class="text-fg-low text-sm font-mono">40</div>
-              <div style="font-size:24px;line-height:40px;">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</div>
+              <div class="text-fg-low text-sm font-mono">32</div>
+              <p class="typo-xlarge">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
-            <!-- 2xlarge 32/40 -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
-              <div><p class="font-semibold text-sm">2Xlarge</p></div>
+            <!-- .typo-2xlarge 32/40 bold -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono text-sm">.typo-2xlarge</p>
+                <p class="text-xs text-fg-low">bold</p>
+              </div>
               <div class="text-fg-low text-sm font-mono">32</div>
               <div class="text-fg-low text-sm font-mono">40</div>
-              <div style="font-size:32px;line-height:40px;">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</div>
+              <p class="typo-2xlarge">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</p>
             </div>
-            <!-- 3xlarge 40/48 -->
-            <div class="grid grid-cols-[140px_80px_80px_1fr] gap-4 px-6 py-4 items-center">
-              <div><p class="font-semibold text-sm">3Xlarge</p></div>
+            <!-- .typo-3xlarge 40/48 bold -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center">
+              <div>
+                <p class="font-mono text-sm">.typo-3xlarge</p>
+                <p class="text-xs text-fg-low">bold</p>
+              </div>
               <div class="text-fg-low text-sm font-mono">40</div>
               <div class="text-fg-low text-sm font-mono">48</div>
-              <div style="font-size:40px;line-height:48px;">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</div>
+              <p class="typo-3xlarge">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       <!-- =========================================================
            角丸 (Radius)
@@ -1255,120 +1276,6 @@
               <div class="text-center"><p class="text-sm font-semibold font-mono">destructive</p><p class="text-xs text-fg-low">0 0 0 3 · negative/500</p></div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================================
-         TYPOGRAPHY — semantic text-style layer (Figma 3111:1902)
-         6 named sizes (small / medium / large / xlarge / 2xlarge / 3xlarge)
-         line-height は 8x8 ベースグリッドに合わせて 8 の倍数。
-         ===================================================================== -->
-    <section id="typography">
-      <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">タイポグラフィー</h2>
-        <span class="badge badge-soft-neutral">foundation</span>
-      </div>
-      <p class="text-sm text-fg-low mb-6">
-        Figma の <code class="px-1 bg-neutral-100 rounded">small</code> ～ <code class="px-1 bg-neutral-100 rounded">3xlarge</code> のテキストスタイルに対応する 6 サイズ。
-        UI の 8×8 ベースグリッドに揃うよう、line-height は常に 8 の倍数。
-      </p>
-
-      <!-- ===== Size showcase: 6 styles ===== -->
-      <div class="card mb-6">
-        <div class="card-header">
-          <h3 class="card-title">サイズ一覧</h3>
-          <p class="card-subtitle">.typo-small / .typo-medium / .typo-large / .typo-xlarge / .typo-2xlarge / .typo-3xlarge</p>
-        </div>
-        <div class="card-body">
-          <div class="grid grid-cols-[120px_120px_1fr] gap-x-6 gap-y-4 items-center">
-            <span class="text-xs font-mono text-fg-low">class</span>
-            <span class="text-xs font-mono text-fg-low">size / line</span>
-            <span class="text-xs font-mono text-fg-low">プレビュー</span>
-
-            <code class="text-sm font-mono">.typo-small</code>
-            <span class="text-xs text-fg-low font-mono">14 / 24</span>
-            <p class="typo-small">日本語 にほんご ニホンゴ 0123 — 補助テキスト</p>
-
-            <code class="text-sm font-mono">.typo-medium</code>
-            <span class="text-xs text-fg-low font-mono">16 / 24</span>
-            <p class="typo-medium">日本語 にほんご ニホンゴ 0123 — 本文（base）</p>
-
-            <code class="text-sm font-mono">.typo-large</code>
-            <span class="text-xs text-fg-low font-mono">20 / 32</span>
-            <p class="typo-large">日本語 にほんご ニホンゴ 0123 — サブ見出し</p>
-
-            <code class="text-sm font-mono">.typo-xlarge</code>
-            <span class="text-xs text-fg-low font-mono">24 / 32</span>
-            <p class="typo-xlarge">日本語 にほんご ニホンゴ 0123 — セクション見出し</p>
-
-            <code class="text-sm font-mono">.typo-2xlarge</code>
-            <span class="text-xs text-fg-low font-mono">32 / 40</span>
-            <p class="typo-2xlarge">日本語 にほんご 0123 — ページタイトル</p>
-
-            <code class="text-sm font-mono">.typo-3xlarge</code>
-            <span class="text-xs text-fg-low font-mono">40 / 48</span>
-            <p class="typo-3xlarge">日本語 にほんご 0123 — Display</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- ===== Default weight rule ===== -->
-      <div class="card mb-6">
-        <div class="card-header">
-          <h3 class="card-title">デフォルトの weight</h3>
-          <p class="card-subtitle">body サイズは medium、display サイズは bold。<code class="px-1 bg-neutral-100 rounded">font-bold</code> / <code class="px-1 bg-neutral-100 rounded">font-medium</code> 等で上書き可能</p>
-        </div>
-        <div class="card-body">
-          <table class="w-full text-sm">
-            <thead>
-              <tr class="border-b border-stroke-low text-left text-xs text-fg-low font-mono">
-                <th class="py-2 pr-4 font-normal">class</th>
-                <th class="py-2 pr-4 font-normal">size</th>
-                <th class="py-2 pr-4 font-normal">line-height</th>
-                <th class="py-2 pr-4 font-normal">font-weight</th>
-                <th class="py-2 font-normal">用途</th>
-              </tr>
-            </thead>
-            <tbody class="font-mono text-xs">
-              <tr class="border-b border-stroke-low">
-                <td class="py-2 pr-4">.typo-small</td><td class="py-2 pr-4">14</td><td class="py-2 pr-4">24</td><td class="py-2 pr-4">medium (500)</td><td class="py-2 font-sans text-fg-middle">補助テキスト・キャプション</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="py-2 pr-4">.typo-medium</td><td class="py-2 pr-4">16</td><td class="py-2 pr-4">24</td><td class="py-2 pr-4">medium (500)</td><td class="py-2 font-sans text-fg-middle">本文（base）</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="py-2 pr-4">.typo-large</td><td class="py-2 pr-4">20</td><td class="py-2 pr-4">32</td><td class="py-2 pr-4">medium (500)</td><td class="py-2 font-sans text-fg-middle">サブ見出し</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="py-2 pr-4">.typo-xlarge</td><td class="py-2 pr-4">24</td><td class="py-2 pr-4">32</td><td class="py-2 pr-4">medium (500)</td><td class="py-2 font-sans text-fg-middle">セクション見出し</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="py-2 pr-4">.typo-2xlarge</td><td class="py-2 pr-4">32</td><td class="py-2 pr-4">40</td><td class="py-2 pr-4">bold (700)</td><td class="py-2 font-sans text-fg-middle">ページタイトル</td>
-              </tr>
-              <tr>
-                <td class="py-2 pr-4">.typo-3xlarge</td><td class="py-2 pr-4">40</td><td class="py-2 pr-4">48</td><td class="py-2 pr-4">bold (700)</td><td class="py-2 font-sans text-fg-middle">Display・ヒーロー</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- ===== Base grid rule ===== -->
-      <div class="card mb-8">
-        <div class="card-header">
-          <h3 class="card-title">8×8 ベースグリッドのルール</h3>
-          <p class="card-subtitle">テキストが UI の 8px グリッドに収まるよう、line-height は常に 8 の倍数</p>
-        </div>
-        <div class="card-body">
-          <p class="text-sm text-fg-middle mb-3">
-            ライン高は次の式で求める:
-          </p>
-          <pre class="text-sm font-mono bg-neutral-50 border border-stroke-low rounded p-3 mb-3">line-height = Math.ceil((size × 1.3) / 8) × 8</pre>
-          <p class="text-sm text-fg-middle">
-            この計算結果が、各サイズの推奨 line-height（24 / 24 / 32 / 32 / 40 / 48）と一致します。
-            自前のテキスト要素を作る場合もこのルールに従ってください。
-          </p>
         </div>
       </div>
     </section>
