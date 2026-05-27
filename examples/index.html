@@ -259,8 +259,40 @@
       min-width: 0;
     }
 
-    /* Scroll offset for anchor jumps */
-    section[id] { scroll-margin-top: 16px; }
+    /* Top header — sticky bar inside main column, holds request button */
+    .docs-header {
+      position: sticky;
+      top: 0;
+      z-index: 9;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      height: 56px;
+      padding: 0 24px;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-stroke-low);
+      backdrop-filter: saturate(180%) blur(8px);
+      -webkit-backdrop-filter: saturate(180%) blur(8px);
+    }
+    .docs-header-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-fg-low);
+      letter-spacing: 0.02em;
+    }
+    .docs-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .docs-header-actions .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Scroll offset for anchor jumps — increased to clear the sticky header */
+    section[id] { scroll-margin-top: 72px; }
 
     /* Hide sidebar on small screens */
     @media (max-width: 768px) {
@@ -317,6 +349,18 @@
     </aside>
 
     <div class="docs-main">
+      <header class="docs-header">
+        <div class="docs-header-title">Components</div>
+        <div class="docs-header-actions">
+          <a class="btn btn-sm btn-primary"
+             href="https://github.com/relay-development/relay-design-system/issues/new?template=feature_request.yml"
+             target="_blank"
+             rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+            要望をリクエスト
+          </a>
+        </div>
+      </header>
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
 
     <!-- =====================================================================

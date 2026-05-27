@@ -1,0 +1,46 @@
+name: バグ報告
+description: 表示崩れ / 動作不良 / Figma と実装の差分など
+title: "[バグ] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 何が起きている？
+      description: どんな現象が起きていますか？
+      placeholder: "例: Filter Chip が disabled なのに hover で色が変わる"
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期待していた動作
+      placeholder: "disabled 状態は hover でも色変化なしであってほしい"
+    validations:
+      required: true
+
+  - type: input
+    id: component
+    attributes:
+      label: 関連コンポーネント
+      description: どのコンポーネントですか？
+      placeholder: "例: filter-chip / button / alert"
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: スクリーンショット / 再現手順
+      description: 画像をドラッグ＆ドロップで貼り付けできます
+    validations:
+      required: false
+
+  - type: input
+    id: env
+    attributes:
+      label: 環境（任意）
+      placeholder: "例: macOS 14 / Chrome 132 / @light-right/design-system v0.1.0"
+    validations:
+      required: false

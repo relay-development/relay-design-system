@@ -1,0 +1,67 @@
+name: 要望・新規コンポーネント
+description: 新しいコンポーネントの追加、既存コンポーネントの改善、新機能の要望
+title: "[要望] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        プレビューサイト ([relaydesign.netlify.app](https://relaydesign.netlify.app)) からのリクエストありがとうございます。
+        以下を埋めるとデザイナー・エンジニアが対応しやすくなります。
+
+  - type: textarea
+    id: what
+    attributes:
+      label: 何が欲しい？
+      description: どんなコンポーネントや機能が欲しいですか？
+      placeholder: "例: 日付範囲を選べる Date Range Picker"
+    validations:
+      required: true
+
+  - type: textarea
+    id: why
+    attributes:
+      label: なぜ必要？（用途・背景）
+      description: どの画面・どのシーンで使いますか？解決したい課題は？
+      placeholder: "例: ダッシュボードでデータの集計期間を絞り込むのに使いたい。今は自前で実装していてデザインがバラついている。"
+    validations:
+      required: true
+
+  - type: input
+    id: figma
+    attributes:
+      label: 関連 Figma リンク（あれば）
+      description: 該当箇所がある Figma ページの URL
+      placeholder: "https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 参考画像 / 既存実装のスクリーンショット
+      description: 画像はそのまま貼り付けできます
+      placeholder: "ここに画像をドラッグ＆ドロップ"
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 優先度（主観で OK）
+      options:
+        - 急いでいない（あったら嬉しい）
+        - そのうち欲しい
+        - 直近のリリースで欲しい
+      default: 0
+    validations:
+      required: true
+
+  - type: input
+    id: who
+    attributes:
+      label: 関係者 / 自分の役割
+      description: 誰が困っている？（チーム名・役割など）
+      placeholder: "例: PM / 集計画面チーム"
+    validations:
+      required: false

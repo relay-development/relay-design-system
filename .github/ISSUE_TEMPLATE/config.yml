@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: プレビューサイト
+    url: https://relaydesign.netlify.app
+    about: 既存のコンポーネント一覧を確認する
+  - name: Figma
+    url: https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/relay-Design-System
+    about: デザイン原本（デザイナー向け）
