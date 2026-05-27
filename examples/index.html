@@ -1188,70 +1188,224 @@
       </section>
 
       <!-- =========================================================
-           角丸 (Radius)
+           余白 (Spacing) — 8px ベースグリッドの 9 段階スケール
+           Figma 3300:1395 と 1:1 対応
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">余白</h3>
+          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: p-* / m-* / gap-* / space-*</code>
+        </div>
+        <p class="typo-small text-fg-low mb-4">8px グリッドを基本単位とする 9 段階。<code class="px-1 bg-neutral-100 rounded">spacing/N</code> は Tailwind の <code class="px-1 bg-neutral-100 rounded">p-N</code> / <code class="px-1 bg-neutral-100 rounded">m-N</code> / <code class="px-1 bg-neutral-100 rounded">gap-N</code> 等に対応。</p>
+
+        <div class="card overflow-hidden">
+          <div class="card-body !p-0">
+            <!-- Header row -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
+              <div>token</div>
+              <div>value</div>
+              <div>preview</div>
+            </div>
+
+            <!-- spacing/0 — 0px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/0</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-0 / m-0 / gap-0</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">0px</div>
+              <div class="text-fg-low typo-xsmall">—</div>
+            </div>
+
+            <!-- spacing/1 — 4px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/1</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-1 / m-1 / gap-1</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">4px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:4px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/2 — 8px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/2</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-2 / m-2 / gap-2</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">8px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:8px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/3 — 12px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/3</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-3 / m-3 / gap-3</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">12px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:12px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/4 — 16px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/4</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-4 / m-4 / gap-4</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">16px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:16px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/6 — 24px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/6</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-6 / m-6 / gap-6</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">24px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:24px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/8 — 32px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/8</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-8 / m-8 / gap-8</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">32px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:32px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/12 — 48px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/12</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-12 / m-12 / gap-12</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">48px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:48px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/16 — 64px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center">
+              <div>
+                <p class="typo-small font-mono">spacing/16</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-16 / m-16 / gap-16</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">64px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:64px;height:20px;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="typo-xsmall text-fg-low mt-3">
+          ※ 8 の倍数を基本（2, 4, 8, 16, 24, 32, 48, 64）、<code class="px-1 bg-neutral-100 rounded">spacing/3 = 12</code> と <code class="px-1 bg-neutral-100 rounded">spacing/1 = 4</code> は微調整用。
+        </p>
+      </div>
+
+      <!-- =========================================================
+           角丸 (Radius) — none / xs / sm / md / lg / full の 6 段階
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
           <h3 class="typo-large font-semibold">角丸</h3>
           <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: rounded-*</code>
         </div>
-        <p class="typo-small text-fg-low mb-4">none / xs / sm / md / lg / full の 6 段階。full はピル/円形用。</p>
+        <p class="typo-small text-fg-low mb-4">none / xs / sm / md / lg / full の 6 段階。<code class="px-1 bg-neutral-100 rounded">full</code> はピル / 円形用。</p>
 
-        <div class="grid lg:grid-cols-[1fr_280px] gap-6">
-          <!-- Scale -->
-          <div class="card">
-            <div class="card-body grid grid-cols-2 sm:grid-cols-3 gap-6">
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:0;"></div>
-                <div class="text-center"><p class="typo-small font-semibold font-mono">none</p><p class="typo-xsmall text-fg-low">→ 0</p></div>
+        <div class="card overflow-hidden mb-8">
+          <div class="card-body !p-0">
+            <!-- Header row -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
+              <div>token</div>
+              <div>value</div>
+              <div>preview</div>
+            </div>
+
+            <!-- rounded-none — 0 -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">rounded-none</p>
+                <p class="typo-xsmall text-fg-low font-mono">なし</p>
               </div>
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:4px;"></div>
-                <div class="text-center"><p class="typo-small font-semibold font-mono">xs</p><p class="typo-xsmall text-fg-low">→ 4</p></div>
+              <div class="text-fg-low typo-small font-mono">0</div>
+              <div><div class="w-12 h-12 bg-info-50 border-2 border-info-300" style="border-radius:0;"></div></div>
+            </div>
+
+            <!-- rounded-xs — 4 -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">rounded-xs</p>
+                <p class="typo-xsmall text-fg-low font-mono">細部</p>
               </div>
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:8px;"></div>
-                <div class="text-center"><p class="typo-small font-semibold font-mono">sm</p><p class="typo-xsmall text-fg-low">→ 8</p></div>
+              <div class="text-fg-low typo-small font-mono">4</div>
+              <div><div class="w-12 h-12 bg-info-50 border-2 border-info-300" style="border-radius:4px;"></div></div>
+            </div>
+
+            <!-- rounded-sm — 8 -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">rounded-sm</p>
+                <p class="typo-xsmall text-fg-low font-mono">小</p>
               </div>
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:16px;"></div>
-                <div class="text-center"><p class="typo-small font-semibold font-mono">md</p><p class="typo-xsmall text-fg-low">→ 16</p></div>
+              <div class="text-fg-low typo-small font-mono">8</div>
+              <div><div class="w-12 h-12 bg-info-50 border-2 border-info-300" style="border-radius:8px;"></div></div>
+            </div>
+
+            <!-- rounded-md — 16 -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">rounded-md</p>
+                <p class="typo-xsmall text-fg-low font-mono">中</p>
               </div>
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:24px;"></div>
-                <div class="text-center"><p class="typo-small font-semibold font-mono">lg</p><p class="typo-xsmall text-fg-low">→ 24</p></div>
+              <div class="text-fg-low typo-small font-mono">16</div>
+              <div><div class="w-12 h-12 bg-info-50 border-2 border-info-300" style="border-radius:16px;"></div></div>
+            </div>
+
+            <!-- rounded-lg — 24 -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">rounded-lg</p>
+                <p class="typo-xsmall text-fg-low font-mono">外側</p>
               </div>
-              <div class="flex flex-col items-center gap-3">
-                <div class="w-20 h-20 bg-info-50 border-2 border-info-300 rounded-full"></div>
-                <div class="text-center"><p class="typo-small font-semibold font-mono">full</p><p class="typo-xsmall text-fg-low">→ 9999</p></div>
+              <div class="text-fg-low typo-small font-mono">24</div>
+              <div><div class="w-12 h-12 bg-info-50 border-2 border-info-300" style="border-radius:24px;"></div></div>
+            </div>
+
+            <!-- rounded-full — 9999 -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center">
+              <div>
+                <p class="typo-small font-mono">rounded-full</p>
+                <p class="typo-xsmall text-fg-low font-mono">ピル・円形</p>
               </div>
+              <div class="text-fg-low typo-small font-mono">9999</div>
+              <div><div class="w-12 h-12 bg-info-50 border-2 border-info-300 rounded-full"></div></div>
             </div>
           </div>
+        </div>
 
-          <!-- Hierarchy diagram -->
-          <div class="card">
-            <div class="card-header">
-              <h4 class="card-title typo-small">ヒエラルキー</h4>
+        <!-- Hierarchy diagram — design guidance -->
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title typo-small">ヒエラルキー</h4>
+            <p class="card-subtitle typo-xsmall">入れ子では外側ほど大きく、内側ほど小さく揃える（lg → md → sm → xs）と、角が同心円状になって整って見える。</p>
+          </div>
+          <div class="card-body grid sm:grid-cols-[1fr_auto] gap-6 items-center">
+            <div class="relative h-44 flex items-center justify-center">
+              <div class="absolute w-36 h-36 bg-info-50 border border-info-300" style="border-radius:24px;"></div>
+              <div class="absolute w-28 h-28 bg-info-100 border border-info-300" style="border-radius:16px;"></div>
+              <div class="absolute w-20 h-20 bg-info-200 border border-info-400" style="border-radius:8px;"></div>
+              <div class="absolute w-12 h-12 bg-info-300 border border-info-500" style="border-radius:4px;"></div>
+              <div class="absolute w-5 h-5 bg-info-500 rounded-full"></div>
             </div>
-            <div class="card-body">
-              <div class="relative w-full h-44 flex items-center justify-center">
-                <div class="absolute w-36 h-36 bg-info-50 border border-info-300" style="border-radius:24px;"></div>
-                <div class="absolute w-28 h-28 bg-info-100 border border-info-300" style="border-radius:16px;"></div>
-                <div class="absolute w-20 h-20 bg-info-200 border border-info-400" style="border-radius:8px;"></div>
-                <div class="absolute w-12 h-12 bg-info-300 border border-info-500" style="border-radius:4px;"></div>
-                <div class="absolute w-5 h-5 bg-info-500 rounded-full"></div>
-              </div>
-              <p class="typo-xsmall text-fg-middle leading-relaxed mt-2">
-                外側のコンテナほど大きな radius、内側の要素ほど小さく揃えると、入れ子の角が同心円のように整って美しく見える。
-              </p>
-              <ul class="text-[11px] text-fg-low mt-3 space-y-1 font-mono">
-                <li>外側 → lg (24)</li>
-                <li>中 → md (16)</li>
-                <li>小 → sm (8)</li>
-                <li>細部 → xs (4)</li>
-                <li>中心 → full (●)</li>
-              </ul>
-            </div>
+            <ul class="typo-xsmall text-fg-middle font-mono space-y-1">
+              <li>外側 → <span class="text-fg-high font-semibold">lg (24)</span></li>
+              <li>中  → <span class="text-fg-high font-semibold">md (16)</span></li>
+              <li>小  → <span class="text-fg-high font-semibold">sm (8)</span></li>
+              <li>細部 → <span class="text-fg-high font-semibold">xs (4)</span></li>
+              <li>中心 → <span class="text-fg-high font-semibold">full (●)</span></li>
+            </ul>
           </div>
         </div>
       </div>

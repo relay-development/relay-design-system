@@ -1,8 +1,21 @@
 /*
- * Relay Design System — Spacing base
- * Figma uses a 4px base scale (p-1 = 4, p-2 = 8, p-4 = 16, ...).
- * Tailwind v4 derives all `p-*` / `m-*` / `gap-*` / `space-*` utilities
- * from this single `--spacing` token.
+ * Relay Design System — Spacing
+ *
+ * Tailwind v4 single-base: --spacing = 0.25rem (4px)
+ * から全 p-* / m-* / gap-* / space-* ユーティリティが自動派生する。
+ *
+ * デザインシステムが祝福する 9 段階のスケール (Figma 3300:1395 と一致):
+ *   spacing/0  =  0  px   →  p-0  / gap-0
+ *   spacing/1  =  4  px   →  p-1  / gap-1
+ *   spacing/2  =  8  px   →  p-2  / gap-2
+ *   spacing/3  = 12  px   →  p-3
+ *   spacing/4  = 16  px   →  p-4  / gap-4
+ *   spacing/6  = 24  px   →  gap-6
+ *   spacing/8  = 32  px   →  p-8
+ *   spacing/12 = 48  px   →  mb-12
+ *   spacing/16 = 64  px   →  py-16
+ *
+ * 8 の倍数を基本（2, 4, 8, 16, 24, 32, 48, 64）、4 / 12 は微調整用。
  */
 
 @theme {

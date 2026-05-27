@@ -156,6 +156,22 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 | Line-height | 16 / 24 / 24 / 32 / 32 / 40 / 48 px |
 | `--font-weight-{thin..black}` | 100 / 300 / 400 / 500 / 700 / 700 / 900 |
 
+### Spacing
+
+8px グリッドを基本単位とする 9 段階。Tailwind v4 の `--spacing: 0.25rem` から全 `p-*` / `m-*` / `gap-*` / `space-*` ユーティリティが派生。
+
+| Token | px | Tailwind 例 |
+|---|---|---|
+| `spacing/0`  | 0  | `p-0`, `gap-0` |
+| `spacing/1`  | 4  | `p-1`, `gap-1` |
+| `spacing/2`  | 8  | `p-2`, `gap-2` |
+| `spacing/3`  | 12 | `p-3` |
+| `spacing/4`  | 16 | `p-4`, `gap-4` |
+| `spacing/6`  | 24 | `gap-6` |
+| `spacing/8`  | 32 | `p-8` |
+| `spacing/12` | 48 | `mb-12` |
+| `spacing/16` | 64 | `py-16` |
+
 ### Radius / Shadow
 
 | キー | 値 |
