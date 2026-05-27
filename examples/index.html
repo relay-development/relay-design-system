@@ -326,14 +326,14 @@
          ===================================================================== -->
     <section id="primitive-token">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">Primitive Token</h2>
+        <h2 class="typo-2xlarge font-semibold">Primitive Token</h2>
         <span class="badge badge-soft-neutral">primitive</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">セマンティック層から参照される生のスケール。コンポーネントから直接は使わない。</p>
+      <p class="typo-small text-fg-low mb-6">セマンティック層から参照される生のスケール。コンポーネントから直接は使わない。</p>
 
       <!-- Rules summary -->
       <div class="card mb-12">
-        <div class="card-body grid sm:grid-cols-3 gap-6 text-sm">
+        <div class="card-body grid sm:grid-cols-3 gap-6 typo-small">
           <div>
             <p class="text-xs font-semibold text-fg-low uppercase tracking-wide mb-2">概要</p>
             <p class="text-fg-middle">Tailwind ベースのカラースケール。50〜950 の最大 11 段階。</p>
@@ -354,10 +354,10 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">color</h3>
+          <h3 class="typo-large font-semibold">color</h3>
           <p class="text-xs text-fg-low">9 系統 × 11 段階 ＋ white / black</p>
         </div>
-        <p class="text-sm text-fg-low mb-4">brand-green / brand-yellow は relay 固有。slate / red / amber / green / blue は Tailwind 標準と一致。</p>
+        <p class="typo-small text-fg-low mb-4">brand-green / brand-yellow は relay 固有。slate / red / amber / green / blue は Tailwind 標準と一致。</p>
 
         <!-- white / black token list -->
         <div class="token-list mb-4">
@@ -523,10 +523,10 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">opacity</h3>
+          <h3 class="typo-large font-semibold">opacity</h3>
           <code class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: opacity-*</code>
         </div>
-        <p class="text-sm text-fg-low mb-4">0 から 100 まで 5% 刻みの 21 段階。市松模様の上に blue/600 を重ねて表示。</p>
+        <p class="typo-small text-fg-low mb-4">0 から 100 まで 5% 刻みの 21 段階。市松模様の上に blue/600 を重ねて表示。</p>
 
         <div class="card">
           <div class="card-body">
@@ -562,85 +562,85 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">font</h3>
+          <h3 class="typo-large font-semibold">font</h3>
           <p class="text-xs text-fg-low">size / weight / leading / tracking / family / style</p>
         </div>
-        <p class="text-sm text-fg-low mb-4">タイポグラフィの基本ユニット。組み合わせて semantic 層の型を作る。</p>
+        <p class="typo-small text-fg-low mb-4">タイポグラフィの基本ユニット。組み合わせて semantic 層の型を作る。</p>
 
         <!-- size -->
         <div class="card mb-4">
-          <div class="card-header"><h4 class="card-title text-sm">size</h4></div>
+          <div class="card-header"><h4 class="card-title typo-small">size</h4></div>
           <div class="card-body grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
             <div class="flex flex-col items-center gap-2">
               <div class="h-12 flex items-end"><span class="text-xs">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">xs</p><p class="text-xs text-fg-low">12px</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">xs</p><p class="text-xs text-fg-low">12px</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <div class="h-12 flex items-end"><span class="text-sm">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">sm</p><p class="text-xs text-fg-low">14px</p></div>
+              <div class="h-12 flex items-end"><span class="typo-small">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">sm</p><p class="text-xs text-fg-low">14px</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <div class="h-12 flex items-end"><span class="text-base">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">base</p><p class="text-xs text-fg-low">16px</p></div>
+              <div class="h-12 flex items-end"><span class="typo-medium">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">base</p><p class="text-xs text-fg-low">16px</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <div class="h-12 flex items-end"><span class="text-lg">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">lg</p><p class="text-xs text-fg-low">20px</p></div>
+              <div class="h-12 flex items-end"><span class="typo-large">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">lg</p><p class="text-xs text-fg-low">20px</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <div class="h-12 flex items-end"><span class="text-xl">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">xl</p><p class="text-xs text-fg-low">24px</p></div>
+              <div class="h-12 flex items-end"><span class="typo-xlarge">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">xl</p><p class="text-xs text-fg-low">24px</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <div class="h-12 flex items-end"><span class="text-2xl">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">2xl</p><p class="text-xs text-fg-low">32px</p></div>
+              <div class="h-12 flex items-end"><span class="typo-2xlarge">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">2xl</p><p class="text-xs text-fg-low">32px</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <div class="h-12 flex items-end"><span class="text-3xl leading-none">Aa</span></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">3xl</p><p class="text-xs text-fg-low">40px</p></div>
+              <div class="h-12 flex items-end"><span class="typo-3xlarge leading-none">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">3xl</p><p class="text-xs text-fg-low">40px</p></div>
             </div>
           </div>
         </div>
 
         <!-- weight -->
         <div class="card mb-4">
-          <div class="card-header"><h4 class="card-title text-sm">weight</h4></div>
+          <div class="card-header"><h4 class="card-title typo-small">weight</h4></div>
           <div class="card-body grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-4">
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-thin">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">thin</p><p class="text-xs text-fg-low">100</p></div>
+              <span class="typo-2xlarge font-thin">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">thin</p><p class="text-xs text-fg-low">100</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-extralight">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">extralight</p><p class="text-xs text-fg-low">200</p></div>
+              <span class="typo-2xlarge font-extralight">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">extralight</p><p class="text-xs text-fg-low">200</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-light">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">light</p><p class="text-xs text-fg-low">300</p></div>
+              <span class="typo-2xlarge font-light">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">light</p><p class="text-xs text-fg-low">300</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-normal">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">normal</p><p class="text-xs text-fg-low">400</p></div>
+              <span class="typo-2xlarge font-normal">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">normal</p><p class="text-xs text-fg-low">400</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-medium">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">medium</p><p class="text-xs text-fg-low">500</p></div>
+              <span class="typo-2xlarge font-medium">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">medium</p><p class="text-xs text-fg-low">500</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-semibold">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">semibold</p><p class="text-xs text-fg-low">600</p></div>
+              <span class="typo-2xlarge font-semibold">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">semibold</p><p class="text-xs text-fg-low">600</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-bold">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">bold</p><p class="text-xs text-fg-low">700</p></div>
+              <span class="typo-2xlarge font-bold">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">bold</p><p class="text-xs text-fg-low">700</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-extrabold">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">extrabold</p><p class="text-xs text-fg-low">800</p></div>
+              <span class="typo-2xlarge font-extrabold">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">extrabold</p><p class="text-xs text-fg-low">800</p></div>
             </div>
             <div class="flex flex-col items-center gap-2">
-              <span class="text-2xl font-black">Ag</span>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">black</p><p class="text-xs text-fg-low">900</p></div>
+              <span class="typo-2xlarge font-black">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">black</p><p class="text-xs text-fg-low">900</p></div>
             </div>
           </div>
         </div>
@@ -649,63 +649,63 @@
         <div class="grid lg:grid-cols-2 gap-4 mb-4">
           <!-- leading -->
           <div class="card">
-            <div class="card-header"><h4 class="card-title text-sm">leading</h4></div>
+            <div class="card-header"><h4 class="card-title typo-small">leading</h4></div>
             <div class="card-body grid grid-cols-5 gap-3">
               <div class="flex flex-col items-center gap-2">
-                <div class="text-sm leading-4 text-center">Text<br>Text<br>Text</div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">4</p><p class="text-xs text-fg-low">16px</p></div>
+                <div class="typo-small leading-4 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">4</p><p class="text-xs text-fg-low">16px</p></div>
               </div>
               <div class="flex flex-col items-center gap-2">
-                <div class="text-sm leading-6 text-center">Text<br>Text<br>Text</div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">6</p><p class="text-xs text-fg-low">24px</p></div>
+                <div class="typo-small leading-6 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">6</p><p class="text-xs text-fg-low">24px</p></div>
               </div>
               <div class="flex flex-col items-center gap-2">
-                <div class="text-sm leading-8 text-center">Text<br>Text<br>Text</div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">8</p><p class="text-xs text-fg-low">32px</p></div>
+                <div class="typo-small leading-8 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">8</p><p class="text-xs text-fg-low">32px</p></div>
               </div>
               <div class="flex flex-col items-center gap-2">
-                <div class="text-sm leading-10 text-center">Text<br>Text<br>Text</div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">10</p><p class="text-xs text-fg-low">40px</p></div>
+                <div class="typo-small leading-10 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">10</p><p class="text-xs text-fg-low">40px</p></div>
               </div>
               <div class="flex flex-col items-center gap-2">
-                <div class="text-sm leading-12 text-center">Text<br>Text<br>Text</div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">12</p><p class="text-xs text-fg-low">48px</p></div>
+                <div class="typo-small leading-12 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">12</p><p class="text-xs text-fg-low">48px</p></div>
               </div>
             </div>
           </div>
 
           <!-- tracking -->
           <div class="card">
-            <div class="card-header"><h4 class="card-title text-sm">tracking</h4></div>
+            <div class="card-header"><h4 class="card-title typo-small">tracking</h4></div>
             <div class="card-body space-y-3">
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
-                <p class="text-sm font-semibold font-mono">tighter</p>
-                <div class="text-sm tracking-tighter">HELLO TYPO</div>
+                <p class="typo-small font-semibold font-mono">tighter</p>
+                <div class="typo-small tracking-tighter">HELLO TYPO</div>
                 <p class="text-xs text-fg-low text-right">-0.05em</p>
               </div>
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
-                <p class="text-sm font-semibold font-mono">tight</p>
-                <div class="text-sm tracking-tight">HELLO TYPO</div>
+                <p class="typo-small font-semibold font-mono">tight</p>
+                <div class="typo-small tracking-tight">HELLO TYPO</div>
                 <p class="text-xs text-fg-low text-right">-0.025em</p>
               </div>
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
-                <p class="text-sm font-semibold font-mono">normal</p>
-                <div class="text-sm tracking-normal">HELLO TYPO</div>
+                <p class="typo-small font-semibold font-mono">normal</p>
+                <div class="typo-small tracking-normal">HELLO TYPO</div>
                 <p class="text-xs text-fg-low text-right">0em</p>
               </div>
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
-                <p class="text-sm font-semibold font-mono">wide</p>
-                <div class="text-sm tracking-wide">HELLO TYPO</div>
+                <p class="typo-small font-semibold font-mono">wide</p>
+                <div class="typo-small tracking-wide">HELLO TYPO</div>
                 <p class="text-xs text-fg-low text-right">0.025em</p>
               </div>
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
-                <p class="text-sm font-semibold font-mono">wider</p>
-                <div class="text-sm tracking-wider">HELLO TYPO</div>
+                <p class="typo-small font-semibold font-mono">wider</p>
+                <div class="typo-small tracking-wider">HELLO TYPO</div>
                 <p class="text-xs text-fg-low text-right">0.05em</p>
               </div>
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
-                <p class="text-sm font-semibold font-mono">widest</p>
-                <div class="text-sm tracking-widest">HELLO TYPO</div>
+                <p class="typo-small font-semibold font-mono">widest</p>
+                <div class="typo-small tracking-widest">HELLO TYPO</div>
                 <p class="text-xs text-fg-low text-right">0.1em</p>
               </div>
             </div>
@@ -715,22 +715,22 @@
         <!-- family + style -->
         <div class="grid lg:grid-cols-2 gap-4">
           <div class="card">
-            <div class="card-header"><h4 class="card-title text-sm">family</h4></div>
+            <div class="card-header"><h4 class="card-title typo-small">family</h4></div>
             <div class="card-body">
-              <p class="text-2xl font-medium font-sans mb-2">事業承継をオープンに</p>
+              <p class="typo-2xlarge font-medium font-sans mb-2">事業承継をオープンに</p>
               <p class="text-xs text-fg-low font-mono">Noto Sans JP</p>
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><h4 class="card-title text-sm">style</h4></div>
+            <div class="card-header"><h4 class="card-title typo-small">style</h4></div>
             <div class="card-body grid grid-cols-2 gap-4">
               <div class="flex flex-col items-center gap-2">
-                <span class="text-3xl not-italic">Aa</span>
-                <p class="text-sm font-semibold font-mono">normal</p>
+                <span class="typo-3xlarge not-italic">Aa</span>
+                <p class="typo-small font-semibold font-mono">normal</p>
               </div>
               <div class="flex flex-col items-center gap-2">
-                <span class="text-3xl italic">Aa</span>
-                <p class="text-sm font-semibold font-mono">italic</p>
+                <span class="typo-3xlarge italic">Aa</span>
+                <p class="typo-small font-semibold font-mono">italic</p>
               </div>
             </div>
           </div>
@@ -744,20 +744,20 @@
          ===================================================================== -->
     <section id="semantic-token">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">Semantic Token</h2>
+        <h2 class="typo-2xlarge font-semibold">Semantic Token</h2>
         <span class="badge badge-soft-primary">semantic</span>
       </div>
-      <p class="text-sm text-fg-low mb-8">用途・役割で定義したトークン。コンポーネントは必ずこの層を参照する。</p>
+      <p class="typo-small text-fg-low mb-8">用途・役割で定義したトークン。コンポーネントは必ずこの層を参照する。</p>
 
       <!-- =========================================================
            ステータス (Status)
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">ステータス</h3>
+          <h3 class="typo-large font-semibold">ステータス</h3>
           <p class="text-xs text-fg-low">7 系統 × 11 段階 — 用途で色を選ぶ</p>
         </div>
-        <p class="text-sm text-fg-low mb-4">primary / secondary は relay ブランドの 2 色、それ以外は意味ベース（成功・警告・エラー・情報・中立）。</p>
+        <p class="typo-small text-fg-low mb-4">primary / secondary は relay ブランドの 2 色、それ以外は意味ベース（成功・警告・エラー・情報・中立）。</p>
 
         <div class="status-grid">
           <!-- Column header — steps shown once -->
@@ -910,10 +910,10 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">背景</h3>
+          <h3 class="typo-large font-semibold">背景</h3>
           <code class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: bg-*</code>
         </div>
-        <p class="text-sm text-fg-low mb-4">ページ全体・サーフェス・オーバーレイの 3 レイヤー構造。</p>
+        <p class="typo-small text-fg-low mb-4">ページ全体・サーフェス・オーバーレイの 3 レイヤー構造。</p>
 
         <div class="grid lg:grid-cols-[1fr_320px] gap-6">
           <div class="token-list">
@@ -942,7 +942,7 @@
           <!-- Hierarchy diagram -->
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title text-sm">レイヤー構造</h4>
+              <h4 class="card-title typo-small">レイヤー構造</h4>
             </div>
             <div class="card-body">
               <div class="relative h-32 flex items-center justify-center">
@@ -965,10 +965,10 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">テキスト</h3>
+          <h3 class="typo-large font-semibold">テキスト</h3>
           <code class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: text-*</code>
         </div>
-        <p class="text-sm text-fg-low mb-4">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。</p>
+        <p class="typo-small text-fg-low mb-4">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。</p>
 
         <div class="grid lg:grid-cols-2 gap-6">
           <!-- Light tokens -->
@@ -978,27 +978,27 @@
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-high);"></div>
                 <div class="meta"><p class="token-name">fg-high</p><p class="token-ref">→ slate/900</p></div>
-                <span class="text-fg-high font-semibold text-sm">見出し</span>
+                <span class="text-fg-high font-semibold typo-small">見出し</span>
               </div>
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-middle);"></div>
                 <div class="meta"><p class="token-name">fg-middle</p><p class="token-ref">→ slate/700</p></div>
-                <span class="text-fg-middle text-sm">本文テキスト</span>
+                <span class="text-fg-middle typo-small">本文テキスト</span>
               </div>
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-low);"></div>
                 <div class="meta"><p class="token-name">fg-low</p><p class="token-ref">→ slate/500</p></div>
-                <span class="text-fg-low text-sm">補助テキスト</span>
+                <span class="text-fg-low typo-small">補助テキスト</span>
               </div>
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-placeholder);"></div>
                 <div class="meta"><p class="token-name">fg-placeholder</p><p class="token-ref">→ slate/400</p></div>
-                <span class="text-fg-placeholder text-sm">placeholder</span>
+                <span class="text-fg-placeholder typo-small">placeholder</span>
               </div>
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-disabled);"></div>
                 <div class="meta"><p class="token-name">fg-disabled</p><p class="token-ref">→ slate/400</p></div>
-                <span class="text-fg-disabled text-sm">disabled</span>
+                <span class="text-fg-disabled typo-small">disabled</span>
               </div>
             </div>
           </div>
@@ -1010,17 +1010,17 @@
               <div class="token-row">
                 <div class="swatch is-circle bg-white"></div>
                 <div class="meta"><p class="token-name">fg-high-inverse</p><p class="token-ref">→ white</p></div>
-                <span class="text-fg-high-inverse font-semibold text-sm">見出し</span>
+                <span class="text-fg-high-inverse font-semibold typo-small">見出し</span>
               </div>
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-middle-inverse);"></div>
                 <div class="meta"><p class="token-name">fg-middle-inverse</p><p class="token-ref">→ slate/200</p></div>
-                <span class="text-fg-middle-inverse text-sm">本文テキスト</span>
+                <span class="text-fg-middle-inverse typo-small">本文テキスト</span>
               </div>
               <div class="token-row">
                 <div class="swatch is-circle" style="background:var(--color-fg-low-inverse);"></div>
                 <div class="meta"><p class="token-name">fg-low-inverse</p><p class="token-ref">→ slate/300</p></div>
-                <span class="text-fg-low-inverse text-sm">補助テキスト</span>
+                <span class="text-fg-low-inverse typo-small">補助テキスト</span>
               </div>
             </div>
           </div>
@@ -1032,10 +1032,10 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">境界線</h3>
+          <h3 class="typo-large font-semibold">境界線</h3>
           <code class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: border-*</code>
         </div>
-        <p class="text-sm text-fg-low mb-4">階層に応じて 3 段階。inverse はダーク背景の上で使う。</p>
+        <p class="typo-small text-fg-low mb-4">階層に応じて 3 段階。inverse はダーク背景の上で使う。</p>
 
         <div class="grid lg:grid-cols-2 gap-6">
           <!-- Light -->
@@ -1089,10 +1089,10 @@
            ========================================================= -->
       <section id="typography" class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">タイポグラフィー</h3>
+          <h3 class="typo-large font-semibold">タイポグラフィー</h3>
           <p class="text-xs text-fg-low font-mono">Math.ceil((size × 1.3) / 8) × 8</p>
         </div>
-        <p class="text-sm text-fg-low mb-4">
+        <p class="typo-small text-fg-low mb-4">
           8 の倍数の行間で 8×8 ベースグリッドに揃える。weight は body サイズが <code class="px-1 bg-neutral-100 rounded">medium</code>、display サイズが <code class="px-1 bg-neutral-100 rounded">bold</code>（<code class="px-1 bg-neutral-100 rounded">font-bold</code> / <code class="px-1 bg-neutral-100 rounded">font-medium</code> で上書き可）。
         </p>
 
@@ -1108,61 +1108,61 @@
             <!-- .typo-small 14/24 medium -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
               <div>
-                <p class="font-mono text-sm">.typo-small</p>
+                <p class="font-mono typo-small">.typo-small</p>
                 <p class="text-xs text-fg-low">medium</p>
               </div>
-              <div class="text-fg-low text-sm font-mono">14</div>
-              <div class="text-fg-low text-sm font-mono">24</div>
+              <div class="text-fg-low typo-small font-mono">14</div>
+              <div class="text-fg-low typo-small font-mono">24</div>
               <p class="typo-small">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
             <!-- .typo-medium 16/24 medium (base) -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
               <div>
-                <p class="font-mono text-sm">.typo-medium <span class="text-fg-low font-normal text-xs">(base)</span></p>
+                <p class="font-mono typo-small">.typo-medium <span class="text-fg-low font-normal text-xs">(base)</span></p>
                 <p class="text-xs text-fg-low">medium</p>
               </div>
-              <div class="text-fg-low text-sm font-mono">16</div>
-              <div class="text-fg-low text-sm font-mono">24</div>
+              <div class="text-fg-low typo-small font-mono">16</div>
+              <div class="text-fg-low typo-small font-mono">24</div>
               <p class="typo-medium">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
             <!-- .typo-large 20/32 medium -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
               <div>
-                <p class="font-mono text-sm">.typo-large</p>
+                <p class="font-mono typo-small">.typo-large</p>
                 <p class="text-xs text-fg-low">medium</p>
               </div>
-              <div class="text-fg-low text-sm font-mono">20</div>
-              <div class="text-fg-low text-sm font-mono">32</div>
+              <div class="text-fg-low typo-small font-mono">20</div>
+              <div class="text-fg-low typo-small font-mono">32</div>
               <p class="typo-large">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
             <!-- .typo-xlarge 24/32 medium -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
               <div>
-                <p class="font-mono text-sm">.typo-xlarge</p>
+                <p class="font-mono typo-small">.typo-xlarge</p>
                 <p class="text-xs text-fg-low">medium</p>
               </div>
-              <div class="text-fg-low text-sm font-mono">24</div>
-              <div class="text-fg-low text-sm font-mono">32</div>
+              <div class="text-fg-low typo-small font-mono">24</div>
+              <div class="text-fg-low typo-small font-mono">32</div>
               <p class="typo-xlarge">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
             </div>
             <!-- .typo-2xlarge 32/40 bold -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
               <div>
-                <p class="font-mono text-sm">.typo-2xlarge</p>
+                <p class="font-mono typo-small">.typo-2xlarge</p>
                 <p class="text-xs text-fg-low">bold</p>
               </div>
-              <div class="text-fg-low text-sm font-mono">32</div>
-              <div class="text-fg-low text-sm font-mono">40</div>
+              <div class="text-fg-low typo-small font-mono">32</div>
+              <div class="text-fg-low typo-small font-mono">40</div>
               <p class="typo-2xlarge">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</p>
             </div>
             <!-- .typo-3xlarge 40/48 bold -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center">
               <div>
-                <p class="font-mono text-sm">.typo-3xlarge</p>
+                <p class="font-mono typo-small">.typo-3xlarge</p>
                 <p class="text-xs text-fg-low">bold</p>
               </div>
-              <div class="text-fg-low text-sm font-mono">40</div>
-              <div class="text-fg-low text-sm font-mono">48</div>
+              <div class="text-fg-low typo-small font-mono">40</div>
+              <div class="text-fg-low typo-small font-mono">48</div>
               <p class="typo-3xlarge">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</p>
             </div>
           </div>
@@ -1174,10 +1174,10 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">角丸</h3>
+          <h3 class="typo-large font-semibold">角丸</h3>
           <code class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: rounded-*</code>
         </div>
-        <p class="text-sm text-fg-low mb-4">none / xs / sm / md / lg / full の 6 段階。full はピル/円形用。</p>
+        <p class="typo-small text-fg-low mb-4">none / xs / sm / md / lg / full の 6 段階。full はピル/円形用。</p>
 
         <div class="grid lg:grid-cols-[1fr_280px] gap-6">
           <!-- Scale -->
@@ -1185,27 +1185,27 @@
             <div class="card-body grid grid-cols-2 sm:grid-cols-3 gap-6">
               <div class="flex flex-col items-center gap-3">
                 <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:0;"></div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">none</p><p class="text-xs text-fg-low">→ 0</p></div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">none</p><p class="text-xs text-fg-low">→ 0</p></div>
               </div>
               <div class="flex flex-col items-center gap-3">
                 <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:4px;"></div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">xs</p><p class="text-xs text-fg-low">→ 4</p></div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">xs</p><p class="text-xs text-fg-low">→ 4</p></div>
               </div>
               <div class="flex flex-col items-center gap-3">
                 <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:8px;"></div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">sm</p><p class="text-xs text-fg-low">→ 8</p></div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">sm</p><p class="text-xs text-fg-low">→ 8</p></div>
               </div>
               <div class="flex flex-col items-center gap-3">
                 <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:16px;"></div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">md</p><p class="text-xs text-fg-low">→ 16</p></div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">md</p><p class="text-xs text-fg-low">→ 16</p></div>
               </div>
               <div class="flex flex-col items-center gap-3">
                 <div class="w-20 h-20 bg-info-50 border-2 border-info-300" style="border-radius:24px;"></div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">lg</p><p class="text-xs text-fg-low">→ 24</p></div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">lg</p><p class="text-xs text-fg-low">→ 24</p></div>
               </div>
               <div class="flex flex-col items-center gap-3">
                 <div class="w-20 h-20 bg-info-50 border-2 border-info-300 rounded-full"></div>
-                <div class="text-center"><p class="text-sm font-semibold font-mono">full</p><p class="text-xs text-fg-low">→ 9999</p></div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">full</p><p class="text-xs text-fg-low">→ 9999</p></div>
               </div>
             </div>
           </div>
@@ -1213,7 +1213,7 @@
           <!-- Hierarchy diagram -->
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title text-sm">ヒエラルキー</h4>
+              <h4 class="card-title typo-small">ヒエラルキー</h4>
             </div>
             <div class="card-body">
               <div class="relative w-full h-44 flex items-center justify-center">
@@ -1243,36 +1243,36 @@
            ========================================================= -->
       <div class="mb-12">
         <div class="flex items-baseline justify-between mb-1">
-          <h3 class="text-lg font-semibold">ドロップシャドウ</h3>
+          <h3 class="typo-large font-semibold">ドロップシャドウ</h3>
           <code class="text-xs px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: shadow-*</code>
         </div>
-        <p class="text-sm text-fg-low mb-4">none / sm / md / lg の 4 段階＋focus-ring / destructive のリング用 2 種。</p>
+        <p class="typo-small text-fg-low mb-4">none / sm / md / lg の 4 段階＋focus-ring / destructive のリング用 2 種。</p>
 
         <div class="card">
           <div class="card-body grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-none);"></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">none</p><p class="text-xs text-fg-low">no shadow</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">none</p><p class="text-xs text-fg-low">no shadow</p></div>
             </div>
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-sm);"></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">sm</p><p class="text-xs text-fg-low">0 1 3 · 10%</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">sm</p><p class="text-xs text-fg-low">0 1 3 · 10%</p></div>
             </div>
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-md);"></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">md</p><p class="text-xs text-fg-low">2 layers · 5%</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">md</p><p class="text-xs text-fg-low">2 layers · 5%</p></div>
             </div>
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-lg);"></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">lg</p><p class="text-xs text-fg-low">2 layers · 5%</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">lg</p><p class="text-xs text-fg-low">2 layers · 5%</p></div>
             </div>
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-focus-ring);"></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">focus-ring</p><p class="text-xs text-fg-low">0 0 0 3 · info/600</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">focus-ring</p><p class="text-xs text-fg-low">0 0 0 3 · info/600</p></div>
             </div>
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-destructive);"></div>
-              <div class="text-center"><p class="text-sm font-semibold font-mono">destructive</p><p class="text-xs text-fg-low">0 0 0 3 · negative/500</p></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">destructive</p><p class="text-xs text-fg-low">0 0 0 3 · negative/500</p></div>
             </div>
           </div>
         </div>
@@ -1282,10 +1282,10 @@
     <!-- ===== Button (Figma spec recreation) ===== -->
     <section id="button">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">ボタン</h2>
+        <h2 class="typo-2xlarge font-semibold">ボタン</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> × <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">variant</code> × <code class="px-1 bg-neutral-100 rounded">state</code></p>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> × <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">variant</code> × <code class="px-1 bg-neutral-100 rounded">state</code></p>
 
       <!-- ===== Variant × Theme matrix (size = medium) ===== -->
       <div class="card mb-8">
@@ -1305,28 +1305,28 @@
             </thead>
             <tbody class="text-center">
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">primary</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">primary</th>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-solid">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-outline">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-subtle">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-ghost">ボタン</button></td>
               </tr>
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">secondary</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">secondary</th>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-solid">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-outline">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-subtle">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-ghost">ボタン</button></td>
               </tr>
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">neutral</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">neutral</th>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-solid">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-outline">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-subtle">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-ghost">ボタン</button></td>
               </tr>
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">negative</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">negative</th>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-solid">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-outline">ボタン</button></td>
                 <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-subtle">ボタン</button></td>
@@ -1430,7 +1430,7 @@
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">
         <div class="flex items-baseline justify-between mb-3">
-          <h3 class="text-lg font-semibold">NG パターン</h3>
+          <h3 class="typo-large font-semibold">NG パターン</h3>
           <span class="text-xs text-fg-low">ボタンを並べる時の注意点</span>
         </div>
 
@@ -1443,13 +1443,13 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <div class="flex items-center gap-3 mb-4">
                 <button type="button" class="btn btn-sm btn-primary btn-outline">キャンセル</button>
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
               </div>
-              <p class="text-sm text-fg-middle">サイズが異なるボタンを隣り合わせで使用することは避けてください。</p>
+              <p class="typo-small text-fg-middle">サイズが異なるボタンを隣り合わせで使用することは避けてください。</p>
             </div>
             <!-- Good -->
             <div class="p-6">
@@ -1457,13 +1457,13 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <div class="flex items-center gap-3 mb-4">
                 <button type="button" class="btn btn-md btn-primary btn-outline">キャンセル</button>
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
               </div>
-              <p class="text-sm text-fg-middle">並ぶボタンは同じサイズで揃え、ヒエラルキーは variant（solid / outline）で表現する。</p>
+              <p class="typo-small text-fg-middle">並ぶボタンは同じサイズで揃え、ヒエラルキーは variant（solid / outline）で表現する。</p>
             </div>
           </div>
         </div>
@@ -1477,13 +1477,13 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <div class="flex items-center gap-3 mb-4">
                 <button type="button" class="btn btn-md btn-secondary btn-solid">確認する</button>
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
               </div>
-              <p class="text-sm text-fg-middle">塗りつぶしの色が異なる場合、2 つの solid ボタンを隣り合わせで使用することは避けてください。</p>
+              <p class="typo-small text-fg-middle">塗りつぶしの色が異なる場合、2 つの solid ボタンを隣り合わせで使用することは避けてください。</p>
             </div>
             <!-- Good -->
             <div class="p-6">
@@ -1491,13 +1491,13 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <div class="flex items-center gap-3 mb-4">
                 <button type="button" class="btn btn-md btn-neutral btn-subtle">確認する</button>
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
               </div>
-              <p class="text-sm text-fg-middle">主アクション 1 つだけを solid にして強調し、副アクションは neutral / subtle で抑える。</p>
+              <p class="typo-small text-fg-middle">主アクション 1 つだけを solid にして強調し、副アクションは neutral / subtle で抑える。</p>
             </div>
           </div>
         </div>
@@ -1509,7 +1509,7 @@
           <h3 class="card-title">プロパティ</h3>
         </div>
         <div class="card-body">
-          <table class="w-full text-sm">
+          <table class="w-full typo-small">
             <thead>
               <tr class="text-fg-low text-xs border-b border-stroke-low">
                 <th class="text-left px-3 py-2 font-medium w-24">prop</th>
@@ -1552,10 +1552,10 @@
     <!-- ===== Icon Button (Figma spec recreation) ===== -->
     <section id="icon-button">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">アイコンボタン</h2>
+        <h2 class="typo-2xlarge font-semibold">アイコンボタン</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">アイコン単体のボタン。プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> × <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">variant</code> × <code class="px-1 bg-neutral-100 rounded">state</code> — secondary / subtle / loading は除外。</p>
+      <p class="typo-small text-fg-low mb-6">アイコン単体のボタン。プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> × <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">variant</code> × <code class="px-1 bg-neutral-100 rounded">state</code> — secondary / subtle / loading は除外。</p>
 
       <!-- Variant × Theme matrix (size = medium) -->
       <div class="card mb-8">
@@ -1574,19 +1574,19 @@
             </thead>
             <tbody class="text-center">
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">primary</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">primary</th>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-outline" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-ghost" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
               </tr>
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">neutral</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">neutral</th>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-outline" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
               </tr>
               <tr class="border-t border-stroke-low">
-                <th class="text-left px-3 py-3 text-sm font-semibold">negative</th>
+                <th class="text-left px-3 py-3 typo-small font-semibold">negative</th>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-solid" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></td>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-outline" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></td>
                 <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></td>
@@ -1658,7 +1658,7 @@
           <h3 class="card-title">プロパティ</h3>
         </div>
         <div class="card-body">
-          <table class="w-full text-sm">
+          <table class="w-full typo-small">
             <thead>
               <tr class="text-fg-low text-xs border-b border-stroke-low">
                 <th class="text-left px-3 py-2 font-medium w-24">prop</th>
@@ -1701,10 +1701,10 @@
     <!-- ===== Label Control (Figma 3120:638) ===== -->
     <section id="label-control">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">ラベルコントロール</h2>
+        <h2 class="typo-2xlarge font-semibold">ラベルコントロール</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">フォーム項目の上に置く、ラベル + バッジ + サポートテキストのセット。</p>
+      <p class="typo-small text-fg-low mb-6">フォーム項目の上に置く、ラベル + バッジ + サポートテキストのセット。</p>
 
       <!-- Size comparison -->
       <div class="card mb-6">
@@ -1822,10 +1822,10 @@
     <!-- ===== Input (Figma 3120:1917) ===== -->
     <section id="input">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">インプット</h2>
+        <h2 class="typo-2xlarge font-semibold">インプット</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
 
       <!-- Size + State matrix -->
       <div class="card mb-6 overflow-hidden">
@@ -1919,10 +1919,10 @@
     <!-- ===== Search Input (Figma 3120:3582) ===== -->
     <section id="search-input">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">インプット（検索）</h2>
+        <h2 class="typo-2xlarge font-semibold">インプット（検索）</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">small サイズは検索アイコンのみ、medium / large は <strong>検索ボタン</strong> 付き。入力済みのときは <strong>×</strong> でクリア。</p>
+      <p class="typo-small text-fg-low mb-6">small サイズは検索アイコンのみ、medium / large は <strong>検索ボタン</strong> 付き。入力済みのときは <strong>×</strong> でクリア。</p>
 
       <!-- Size + State matrix -->
       <div class="card mb-6 overflow-hidden">
@@ -2077,10 +2077,10 @@
     <!-- ===== Selector (Figma 3120:5008) ===== -->
     <section id="selector">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">セレクター</h2>
+        <h2 class="typo-2xlarge font-semibold">セレクター</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">ネイティブ <code class="px-1 bg-neutral-100 rounded">&lt;select&gt;</code> をラップして、左アイコン・chevron・状態色を統一したコンポーネント。プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code> × <code class="px-1 bg-neutral-100 rounded">icon</code></p>
+      <p class="typo-small text-fg-low mb-6">ネイティブ <code class="px-1 bg-neutral-100 rounded">&lt;select&gt;</code> をラップして、左アイコン・chevron・状態色を統一したコンポーネント。プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code> × <code class="px-1 bg-neutral-100 rounded">icon</code></p>
 
       <!-- Size + state matrix (valid) -->
       <div class="card mb-6 overflow-hidden">
@@ -2207,10 +2207,10 @@
     <!-- ===== Textarea (Figma 3123:1853) ===== -->
     <section id="textarea">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">テキストエリア</h2>
+        <h2 class="typo-2xlarge font-semibold">テキストエリア</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">複数行入力欄。プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code>。エラーテキスト＋文字カウンターを下に併設。</p>
+      <p class="typo-small text-fg-low mb-6">複数行入力欄。プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code>。エラーテキスト＋文字カウンターを下に併設。</p>
 
       <!-- Size × state matrix (valid) -->
       <div class="card mb-6 overflow-hidden">
@@ -2368,10 +2368,10 @@
     <!-- ===== Checkbox (Figma 3129:2450) ===== -->
     <section id="checkbox">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">チェックボックス</h2>
+        <h2 class="typo-2xlarge font-semibold">チェックボックス</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">body</code> (none / checked / indeterminate) × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">body</code> (none / checked / indeterminate) × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
 
       <!-- Body × State matrix (valid, medium) -->
       <div class="card mb-6 overflow-hidden">
@@ -2462,7 +2462,7 @@
         <!-- standalone -->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title text-sm">standalone checkbox</h3>
+            <h3 class="card-title typo-small">standalone checkbox</h3>
           </div>
           <div class="card-body">
             <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />利用規約に同意する</label>
@@ -2472,7 +2472,7 @@
         <!-- checkbox list -->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title text-sm">checkbox list</h3>
+            <h3 class="card-title typo-small">checkbox list</h3>
           </div>
           <div class="card-body">
             <div class="flex flex-col gap-2 mb-3">
@@ -2490,7 +2490,7 @@
         <!-- nested checkbox -->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title text-sm">nested checkbox</h3>
+            <h3 class="card-title typo-small">nested checkbox</h3>
           </div>
           <div class="card-body">
             <div class="flex flex-col gap-2 mb-3" data-nested-checkbox>
@@ -2513,7 +2513,7 @@
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">
         <div class="flex items-baseline justify-between mb-3">
-          <h3 class="text-lg font-semibold">NG パターン</h3>
+          <h3 class="typo-large font-semibold">NG パターン</h3>
           <span class="text-xs text-fg-low">チェックボックスのレイアウト原則</span>
         </div>
 
@@ -2525,7 +2525,7 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <div class="flex flex-wrap items-center gap-6 mb-4">
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />選択肢A</label>
@@ -2533,7 +2533,7 @@
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢C</label>
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢D</label>
               </div>
-              <p class="text-sm text-fg-middle">チェックボックスを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなる上、選択肢の追加・改行で崩れやすくなります。</p>
+              <p class="typo-small text-fg-middle">チェックボックスを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなる上、選択肢の追加・改行で崩れやすくなります。</p>
             </div>
             <!-- Good: vertical -->
             <div class="p-6">
@@ -2541,7 +2541,7 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <div class="flex flex-col gap-2 mb-4">
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />選択肢A</label>
@@ -2549,7 +2549,7 @@
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢C</label>
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢D</label>
               </div>
-              <p class="text-sm text-fg-middle">チェックボックスは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
+              <p class="typo-small text-fg-middle">チェックボックスは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
             </div>
           </div>
         </div>
@@ -2559,10 +2559,10 @@
     <!-- ===== Radio (Figma 3131:3328) ===== -->
     <section id="radio">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">ラジオボタン</h2>
+        <h2 class="typo-2xlarge font-semibold">ラジオボタン</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">body</code> (none / checked) × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">body</code> (none / checked) × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
 
       <!-- Body × State matrix (valid, medium) -->
       <div class="card mb-6 overflow-hidden">
@@ -2670,7 +2670,7 @@
       <!-- NG patterns -->
       <div class="mb-8">
         <div class="flex items-baseline justify-between mb-3">
-          <h3 class="text-lg font-semibold">NG パターン</h3>
+          <h3 class="typo-large font-semibold">NG パターン</h3>
           <span class="text-xs text-fg-low">ラジオボタンのレイアウト原則</span>
         </div>
 
@@ -2682,7 +2682,7 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <div class="flex flex-wrap items-center gap-6 mb-4">
                 <label class="radio-label"><input type="radio" name="ng-r" class="radio" checked />選択肢A</label>
@@ -2690,7 +2690,7 @@
                 <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢C</label>
                 <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢D</label>
               </div>
-              <p class="text-sm text-fg-middle">ラジオボタンを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなり、選択肢の追加・改行で崩れやすくなります。</p>
+              <p class="typo-small text-fg-middle">ラジオボタンを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなり、選択肢の追加・改行で崩れやすくなります。</p>
             </div>
             <!-- Good: vertical -->
             <div class="p-6">
@@ -2698,7 +2698,7 @@
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
                 </span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <div class="flex flex-col gap-2 mb-4">
                 <label class="radio-label"><input type="radio" name="ok-r" class="radio" checked />選択肢A</label>
@@ -2706,7 +2706,7 @@
                 <label class="radio-label"><input type="radio" name="ok-r" class="radio" />選択肢C</label>
                 <label class="radio-label"><input type="radio" name="ok-r" class="radio" />選択肢D</label>
               </div>
-              <p class="text-sm text-fg-middle">ラジオボタンは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
+              <p class="typo-small text-fg-middle">ラジオボタンは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
             </div>
           </div>
         </div>
@@ -2720,11 +2720,11 @@
          ===================================================================== -->
     <section id="filter-chip">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">フィルターチップ</h2>
+        <h2 class="typo-2xlarge font-semibold">フィルターチップ</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">isSelected</code> × <code class="px-1 bg-neutral-100 rounded">state</code> (enable / hover / disabled)</p>
-      <p class="text-sm text-fg-middle mb-6">タグや単語を用いてコンテンツをフィルタリングするためのコンポーネント。</p>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">isSelected</code> × <code class="px-1 bg-neutral-100 rounded">state</code> (enable / hover / disabled)</p>
+      <p class="typo-small text-fg-middle mb-6">タグや単語を用いてコンテンツをフィルタリングするためのコンポーネント。</p>
 
       <!-- isSelected × State matrix -->
       <div class="card mb-6 overflow-hidden">
@@ -2917,7 +2917,7 @@
     <section id="guidelines">
       <div class="mb-8">
         <div class="flex items-baseline justify-between mb-3">
-          <h3 class="text-lg font-semibold">NG パターン</h3>
+          <h3 class="typo-large font-semibold">NG パターン</h3>
           <span class="text-xs text-fg-low">チェックボックス / ラジオの設計ガイドライン</span>
         </div>
         <div class="space-y-4">
@@ -2928,7 +2928,7 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">複数選択なのに ◯ を使う</p>
               <div class="flex flex-col gap-2 mb-4">
@@ -2936,12 +2936,12 @@
                 <label class="radio-label"><input type="radio" name="dont-shape" class="radio" />SMS</label>
                 <label class="radio-label"><input type="radio" name="dont-shape" class="radio" />プッシュ</label>
               </div>
-              <p class="text-sm text-fg-middle">形状を入れ替えたり独自シェイプにすると、何個選べるのか直感的に判断できなくなる。</p>
+              <p class="typo-small text-fg-middle">形状を入れ替えたり独自シェイプにすると、何個選べるのか直感的に判断できなくなる。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">複数=□ チェック、単一=◯ ラジオ</p>
               <div class="flex flex-col gap-2 mb-4">
@@ -2949,7 +2949,7 @@
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />SMS</label>
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />プッシュ</label>
               </div>
-              <p class="text-sm text-fg-middle">形状で「複数選択可」「単一選択」が一目でわかる。標準を守ることが最大の親切。</p>
+              <p class="typo-small text-fg-middle">形状で「複数選択可」「単一選択」が一目でわかる。標準を守ることが最大の親切。</p>
             </div>
           </div>
         </div>
@@ -2960,7 +2960,7 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">見出し無しで複数グループを並列に</p>
               <div class="flex flex-col gap-2 mb-4">
@@ -2969,12 +2969,12 @@
                 <label class="radio-label"><input type="radio" name="dont-grp2" class="radio" checked />クレジットカード</label>
                 <label class="radio-label"><input type="radio" name="dont-grp2" class="radio" />代引き</label>
               </div>
-              <p class="text-sm text-fg-middle">どこまでが 1 グループか判別できず、誤選択や混乱の原因に。</p>
+              <p class="typo-small text-fg-middle">どこまでが 1 グループか判別できず、誤選択や混乱の原因に。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">見出しと余白で明確に区切る</p>
               <div class="space-y-3 mb-4">
@@ -2993,7 +2993,7 @@
                   </fieldset>
                 </div>
               </div>
-              <p class="text-sm text-fg-middle"><code class="text-xs">fieldset/legend</code> や Label Control で囲い、別グループは余白で離す。</p>
+              <p class="typo-small text-fg-middle"><code class="text-xs">fieldset/legend</code> や Label Control で囲い、別グループは余白で離す。</p>
             </div>
           </div>
         </div>
@@ -3005,26 +3005,26 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">否定形のラベルで二重否定が発生</p>
               <div class="flex flex-col gap-2 mb-4">
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />メール通知を受け取らない</label>
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />マーケティング配信を停止しない</label>
               </div>
-              <p class="text-sm text-fg-middle">「チェックする = 受け取らない」のような二重否定はユーザを混乱させる。</p>
+              <p class="typo-small text-fg-middle">「チェックする = 受け取らない」のような二重否定はユーザを混乱させる。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">能動的・肯定的に書く</p>
               <div class="flex flex-col gap-2 mb-4">
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />メール通知を受け取る</label>
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />マーケティング配信を受け取る</label>
               </div>
-              <p class="text-sm text-fg-middle">チェック = 効く側に意味を寄せる。結果が明快になる。</p>
+              <p class="typo-small text-fg-middle">チェック = 効く側に意味を寄せる。結果が明快になる。</p>
             </div>
           </div>
         </div>
@@ -3035,7 +3035,7 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">3 個の選択肢を dropdown に隠す</p>
               <div class="mb-4">
@@ -3043,12 +3043,12 @@
                   <select class="selector-field"><option value="">配送方法を選択</option><option value="std">通常配送</option><option value="exp">お急ぎ便</option><option value="bulk">まとめ便</option></select>
                 </div>
               </div>
-              <p class="text-sm text-fg-middle">クリックして開くまで選択肢が見えず、比較もしづらい。</p>
+              <p class="typo-small text-fg-middle">クリックして開くまで選択肢が見えず、比較もしづらい。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">少数 (2〜7) は radio で並べる</p>
               <fieldset class="radio-group mb-4">
@@ -3056,7 +3056,7 @@
                 <label class="radio-label"><input type="radio" name="g5-good" class="radio" />お急ぎ便</label>
                 <label class="radio-label"><input type="radio" name="g5-good" class="radio" />まとめ便</label>
               </fieldset>
-              <p class="text-sm text-fg-middle">全選択肢が同時に見え、クリック数も減る。8 個以上ならドロップダウンを検討。</p>
+              <p class="typo-small text-fg-middle">全選択肢が同時に見え、クリック数も減る。8 個以上ならドロップダウンを検討。</p>
             </div>
           </div>
         </div>
@@ -3067,7 +3067,7 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">何も選択されていない初期状態</p>
               <fieldset class="radio-group mb-4">
@@ -3075,12 +3075,12 @@
                 <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />詳細プラン</label>
                 <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />カスタム</label>
               </fieldset>
-              <p class="text-sm text-fg-middle">「常に 1 つ選ばれている」という radio の規約を破ってしまう。</p>
+              <p class="typo-small text-fg-middle">「常に 1 つ選ばれている」という radio の規約を破ってしまう。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">最も安全 / 標準的な値を初期選択</p>
               <fieldset class="radio-group mb-4">
@@ -3088,7 +3088,7 @@
                 <label class="radio-label"><input type="radio" name="g6-good" class="radio" />詳細プラン</label>
                 <label class="radio-label"><input type="radio" name="g6-good" class="radio" />カスタム</label>
               </fieldset>
-              <p class="text-sm text-fg-middle">ユーザの 80% が選ぶ値をデフォルトに。空状態が必要ならトグル等を検討。</p>
+              <p class="typo-small text-fg-middle">ユーザの 80% が選ぶ値をデフォルトに。空状態が必要ならトグル等を検討。</p>
             </div>
           </div>
         </div>
@@ -3099,7 +3099,7 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">想定したケースだけで網羅性が低い</p>
               <fieldset class="radio-group mb-4">
@@ -3107,12 +3107,12 @@
                 <label class="radio-label"><input type="radio" name="g7-bad" class="radio" />検索エンジン</label>
                 <label class="radio-label"><input type="radio" name="g7-bad" class="radio" />友人の紹介</label>
               </fieldset>
-              <p class="text-sm text-fg-middle">該当なしのユーザは適当な選択肢を選ぶしかなく、データが歪む。</p>
+              <p class="typo-small text-fg-middle">該当なしのユーザは適当な選択肢を選ぶしかなく、データが歪む。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">「その他」を最後に置く</p>
               <fieldset class="radio-group mb-4">
@@ -3121,7 +3121,7 @@
                 <label class="radio-label"><input type="radio" name="g7-good" class="radio" />友人の紹介</label>
                 <label class="radio-label"><input type="radio" name="g7-good" class="radio" />その他</label>
               </fieldset>
-              <p class="text-sm text-fg-middle">「その他」選択時は自由入力欄を表示するとデータの質も上がる。</p>
+              <p class="typo-small text-fg-middle">「その他」選択時は自由入力欄を表示するとデータの質も上がる。</p>
             </div>
           </div>
         </div>
@@ -3132,23 +3132,23 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">input だけクリック可、ラベルは別要素</p>
               <div class="flex items-center gap-2 mb-4">
                 <input type="checkbox" class="checkbox" id="dont-08" />
-                <span class="text-sm">利用規約に同意する</span>
+                <span class="typo-small">利用規約に同意する</span>
               </div>
-              <p class="text-sm text-fg-middle">小さな box しかクリックターゲットがなく、フィッツの法則を無視。スマホで特に押しにくい。</p>
+              <p class="typo-small text-fg-middle">小さな box しかクリックターゲットがなく、フィッツの法則を無視。スマホで特に押しにくい。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3"><code class="text-xs">&lt;label&gt;</code> でラップ</p>
               <div class="mb-4"><label class="checkbox-label"><input type="checkbox" class="checkbox" />利用規約に同意する</label></div>
-              <p class="text-sm text-fg-middle">テキスト部分をクリックしても切り替わる。<code class="text-xs">.checkbox-label</code> / <code class="text-xs">.radio-label</code> で本デザインシステムは自動対応。</p>
+              <p class="typo-small text-fg-middle">テキスト部分をクリックしても切り替わる。<code class="text-xs">.checkbox-label</code> / <code class="text-xs">.radio-label</code> で本デザインシステムは自動対応。</p>
             </div>
           </div>
         </div>
@@ -3159,24 +3159,24 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">input だけ、ラベル関連なし</p>
               <pre class="text-[11px] font-mono bg-white border border-stroke-low rounded-sm p-3 leading-5 text-fg-middle overflow-x-auto mb-4"><code>&lt;input type="checkbox"&gt;
 &lt;span&gt;Mail&lt;/span&gt;</code></pre>
-              <p class="text-sm text-fg-middle">スクリーンリーダーが選択肢名を読み上げず、Tab で辿る順序も保証されない。</p>
+              <p class="typo-small text-fg-middle">スクリーンリーダーが選択肢名を読み上げず、Tab で辿る順序も保証されない。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3"><code class="text-xs">&lt;label&gt;</code> + <code class="text-xs">accesskey</code></p>
               <pre class="text-[11px] font-mono bg-white border border-stroke-low rounded-sm p-3 leading-5 text-fg-middle overflow-x-auto mb-4"><code>&lt;label&gt;
   &lt;input type="checkbox" accesskey="m"&gt;
   &lt;u&gt;M&lt;/u&gt;ail
 &lt;/label&gt;</code></pre>
-              <p class="text-sm text-fg-middle">キーボード操作と支援技術の両方に対応。Native input + <code class="text-xs">&lt;label&gt;</code> でほぼ自動。</p>
+              <p class="typo-small text-fg-middle">キーボード操作と支援技術の両方に対応。Native input + <code class="text-xs">&lt;label&gt;</code> でほぼ自動。</p>
             </div>
           </div>
         </div>
@@ -3187,7 +3187,7 @@
             <div class="p-6 bg-negative-50">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-negative-600">Don't</span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <p class="font-semibold mb-3">クリックで即フォーム送信</p>
               <fieldset class="radio-group mb-4">
@@ -3196,12 +3196,12 @@
                 <label class="radio-label"><input type="radio" name="g10-bad" class="radio" />Enterprise</label>
               </fieldset>
               <p class="text-xs text-fg-low mb-4">(選択した瞬間に切替・送信)</p>
-              <p class="text-sm text-fg-middle">誤クリックがそのまま意図しないアクションに繋がり、取り消しが効かない。</p>
+              <p class="typo-small text-fg-middle">誤クリックがそのまま意図しないアクションに繋がり、取り消しが効かない。</p>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="text-base font-bold text-success-700">Good</span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
               <p class="font-semibold mb-3">選択 → 確定用ボタンでアクション</p>
               <fieldset class="radio-group mb-3">
@@ -3210,7 +3210,7 @@
                 <label class="radio-label"><input type="radio" name="g10-good" class="radio" />Enterprise</label>
               </fieldset>
               <button type="button" class="btn btn-sm btn-primary btn-solid mb-4">プランを変更する</button>
-              <p class="text-sm text-fg-middle">設定変更だけにとどめ、画面遷移や送信は <strong>ボタン</strong> で。ユーザの意志を待つ。</p>
+              <p class="typo-small text-fg-middle">設定変更だけにとどめ、画面遷移や送信は <strong>ボタン</strong> で。ユーザの意志を待つ。</p>
             </div>
           </div>
         </div>
@@ -3221,7 +3221,7 @@
 
     <!-- ===== Card ===== -->
     <section id="card">
-      <h2 class="text-2xl font-semibold mb-4">Card</h2>
+      <h2 class="typo-2xlarge font-semibold mb-4">Card</h2>
       <div class="grid sm:grid-cols-2 gap-4">
         <div class="card">
           <div class="card-header">
@@ -3247,7 +3247,7 @@
 
     <!-- ===== Badge ===== -->
     <section id="badge">
-      <h2 class="text-2xl font-semibold mb-4">Badge</h2>
+      <h2 class="typo-2xlarge font-semibold mb-4">Badge</h2>
       <div class="card">
         <div class="card-body space-y-4">
           <div class="flex flex-wrap gap-2">
@@ -3273,10 +3273,10 @@
     <!-- ===== Alert (Figma 3088:585) ===== -->
     <section id="alert">
       <div class="flex items-baseline justify-between mb-2">
-        <h2 class="text-2xl font-semibold">アラート</h2>
+        <h2 class="typo-2xlarge font-semibold">アラート</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="text-sm text-fg-low mb-6">画面内に直接埋め込む静的なインラインメッセージ。プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> (neutral / success / negative / warning / info)</p>
+      <p class="typo-small text-fg-low mb-6">画面内に直接埋め込む静的なインラインメッセージ。プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> (neutral / success / negative / warning / info)</p>
 
       <div class="card mb-6">
         <div class="card-header">
@@ -3394,7 +3394,7 @@
   </main>
 
   <footer class="border-t border-stroke-middle mt-16">
-    <div class="max-w-5xl mx-auto px-6 py-6 text-sm text-fg-low">
+    <div class="max-w-5xl mx-auto px-6 py-6 typo-small text-fg-low">
       Relay Design System — v0.1.0 · Figma-synced tokens
     </div>
   </footer>
