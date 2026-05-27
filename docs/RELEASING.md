@@ -1,10 +1,10 @@
 # リリース手順
 
-このドキュメントは `@relay/design-system` の新バージョン公開フローを定義する。
+このドキュメントは `@light-right/design-system` の新バージョン公開フローを定義する。
 
 ## 前提
 
-- npm に publish 権限を持っている（`npm whoami` が通る、`@relay` 組織のメンバー）
+- npm に publish 権限を持っている（`npm whoami` が通る、`@light-right` 組織のメンバー）
 - GitHub の repo に push 権限を持っている
 - `main` ブランチが最新の状態
 
@@ -59,7 +59,7 @@ npm publish
 publish 完了後、Slack / Notion などで一度告知する。テンプレ:
 
 ```
-🚀 @relay/design-system v0.x.y を公開しました
+🚀 @light-right/design-system v0.x.y を公開しました
 - 変更点: …
 - リリースノート: https://github.com/relay-development/relay-design-system/releases/tag/v0.x.y
 - プレビュー: https://relaydesign.netlify.app

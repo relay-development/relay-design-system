@@ -4,7 +4,7 @@ relay プロダクトのための、Tailwind CSS v4 ベースのフレームワ�
 **デザイントークン + 14 コンポーネント** を HTML スニペット集として提供します。
 トークンは Figma ファイル `hJcKE8FkiyXtB1F9SuuE08` の `semantic tokens` コレクションと同期されています。
 
-- 📦 npm: `@relay/design-system`
+- 📦 npm: `@light-right/design-system`
 - 🌐 プレビューサイト: https://relaydesign.netlify.app
 - 🎨 Figma: `hJcKE8FkiyXtB1F9SuuE08`
 
@@ -15,14 +15,14 @@ relay プロダクトのための、Tailwind CSS v4 ベースのフレームワ�
 ### 1. インストール
 
 ```bash
-npm install @relay/design-system
+npm install @light-right/design-system
 ```
 
 ### 2. CSS を 1 行 import
 
 ```ts
 // 任意のエントリ（例: main.ts / _app.tsx / app.css）
-import "@relay/design-system/css";
+import "@light-right/design-system/css";
 ```
 
 これだけで `.btn / .input / .card / .badge / .alert / .filter-chip ...` などのクラスが
@@ -44,13 +44,13 @@ import "@relay/design-system/css";
 ### 4. コンポーネント一覧と HTML スニペット
 
 - 全コンポーネントの状態網羅プレビュー: https://relaydesign.netlify.app
-- コピペ用 HTML: `node_modules/@relay/design-system/snippets/*.html`
+- コピペ用 HTML: `node_modules/@light-right/design-system/snippets/*.html`
 
 ### 5. トークンだけ使いたい（自前 Tailwind 環境がある場合）
 
 ```css
 @import "tailwindcss";
-@import "@relay/design-system/tokens";
+@import "@light-right/design-system/tokens";
 
 /* 以降、bg-primary-500 / text-fg-high / shadow-md などが利用可能 */
 ```
@@ -89,7 +89,7 @@ npm run build    # dist/relay.css と dist/tokens.css を生成
 ### A. プリビルド CSS をそのまま使う（最もシンプル）
 
 ```html
-<link rel="stylesheet" href="node_modules/@relay/design-system/dist/relay.css" />
+<link rel="stylesheet" href="node_modules/@light-right/design-system/dist/relay.css" />
 
 <button class="btn btn-md btn-primary">保存</button>
 ```
@@ -97,7 +97,7 @@ npm run build    # dist/relay.css と dist/tokens.css を生成
 または bundler 経由:
 
 ```js
-import "@relay/design-system/css";
+import "@light-right/design-system/css";
 ```
 
 ### B. 利用側で Tailwind v4 を使い、トークンだけ取り込む
@@ -105,7 +105,7 @@ import "@relay/design-system/css";
 ```css
 /* app.css */
 @import "tailwindcss";
-@import "@relay/design-system/tokens";
+@import "@light-right/design-system/tokens";
 
 /* 以降、bg-primary-500 / text-text-high / shadow-md などが利用可能 */
 ```
