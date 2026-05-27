@@ -25,7 +25,7 @@ relay プロダクトの UI を、誰が作っても **同じ見た目・同じ�
 
 ### 🌐 3. プレビューサイト — 見た目のカタログ
 
-- **URL**: https://relaydesign.netlify.app
+- **URL**: https://relay-development.github.io/relay-design-system
 - **主に使う人**: 👥 全員（特にデザイナー・PM）
 - **ここで何をする**: 全コンポーネントの状態（通常 / hover / disabled / エラーなど）を一覧で確認
 
@@ -44,7 +44,7 @@ relay プロダクトの UI を、誰が作っても **同じ見た目・同じ�
 
 ### まず最初にやること（全員）
 
-👉 https://relaydesign.netlify.app を開いて、どんなコンポーネントがあるかザッと眺めてください。左サイドナビから各コンポーネントへ飛べます。
+👉 https://relay-development.github.io/relay-design-system を開いて、どんなコンポーネントがあるかザッと眺めてください。左サイドナビから各コンポーネントへ飛べます。
 
 ### 🎨 デザイナーの方へ
 

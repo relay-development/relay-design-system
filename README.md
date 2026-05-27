@@ -5,7 +5,7 @@ relay プロダクトのための、Tailwind CSS v4 ベースのフレームワ�
 トークンは Figma ファイル `hJcKE8FkiyXtB1F9SuuE08` の `semantic tokens` コレクションと同期されています。
 
 - 📦 npm: `@light-right/design-system`
-- 🌐 プレビューサイト: https://relaydesign.netlify.app
+- 🌐 プレビューサイト: https://relay-development.github.io/relay-design-system
 - 🎨 Figma: `hJcKE8FkiyXtB1F9SuuE08`
 
 ---
@@ -43,7 +43,7 @@ import "@light-right/design-system/css";
 
 ### 4. コンポーネント一覧と HTML スニペット
 
-- 全コンポーネントの状態網羅プレビュー: https://relaydesign.netlify.app
+- 全コンポーネントの状態網羅プレビュー: https://relay-development.github.io/relay-design-system
 - コピペ用 HTML: `node_modules/@light-right/design-system/snippets/*.html`
 
 ### 5. トークンだけ使いたい（自前 Tailwind 環境がある場合）
