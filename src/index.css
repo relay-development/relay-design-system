@@ -6,6 +6,7 @@
 @import "./tokens/radius.css";
 @import "./tokens/shadow.css";
 
+@import "./components/typography.css";
 @import "./components/button.css";
 @import "./components/icon-button.css";
 @import "./components/label-control.css";
