@@ -1,9 +1,0 @@
-# Netlify deployment config — publishes the static preview site
-# (examples/index.html + bundled CSS) built by `npm run build:site`.
-
-[build]
-  command = "npm run build:site"
-  publish = "site"
-
-[build.environment]
-  NODE_VERSION = "20"
