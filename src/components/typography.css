@@ -12,7 +12,7 @@
  *   ┌──────────┬──────┬──────┬─────────┬─────────────────────┐
  *   │ class    │ size │ line │ weight  │ 用途                │
  *   ├──────────┼──────┼──────┼─────────┼─────────────────────┤
- *   │ xs       │  12  │  16  │ medium  │ キャプション・注釈  │
+ *   │ xsmall   │  12  │  16  │ medium  │ キャプション・注釈  │
  *   │ small    │  14  │  24  │ medium  │ 補助テキスト        │
  *   │ medium   │  16  │  24  │ medium  │ 本文 (base)         │
  *   │ large    │  20  │  32  │ medium  │ サブ見出し          │
@@ -29,7 +29,7 @@
 
 @layer components {
   /* Body sizes — Medium weight by default */
-  .typo-xs      { @apply text-xs   leading-4  font-medium; }   /* 12 / 16 */
+  .typo-xsmall  { @apply text-xs   leading-4  font-medium; }   /* 12 / 16 */
   .typo-small   { @apply text-sm   leading-6  font-medium; }   /* 14 / 24 */
   .typo-medium  { @apply text-base leading-6  font-medium; }   /* 16 / 24 */
   .typo-large   { @apply text-lg   leading-8  font-medium; }   /* 20 / 32 */
