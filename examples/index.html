@@ -1188,6 +1188,123 @@
       </section>
 
       <!-- =========================================================
+           余白 (Spacing) — 8px ベースグリッドの 9 段階スケール
+           Figma 3300:1395 と 1:1 対応
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">余白</h3>
+          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: p-* / m-* / gap-* / space-*</code>
+        </div>
+        <p class="typo-small text-fg-low mb-4">8px グリッドを基本単位とする 9 段階。<code class="px-1 bg-neutral-100 rounded">spacing/N</code> は Tailwind の <code class="px-1 bg-neutral-100 rounded">p-N</code> / <code class="px-1 bg-neutral-100 rounded">m-N</code> / <code class="px-1 bg-neutral-100 rounded">gap-N</code> 等に対応。</p>
+
+        <div class="card overflow-hidden">
+          <div class="card-body !p-0">
+            <!-- Header row -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
+              <div>token</div>
+              <div>value</div>
+              <div>preview</div>
+            </div>
+
+            <!-- spacing/0 — 0px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/0</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-0 / m-0 / gap-0</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">0px</div>
+              <div class="text-fg-low typo-xsmall">—</div>
+            </div>
+
+            <!-- spacing/1 — 4px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/1</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-1 / m-1 / gap-1</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">4px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:4px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/2 — 8px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/2</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-2 / m-2 / gap-2</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">8px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:8px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/3 — 12px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/3</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-3 / m-3 / gap-3</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">12px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:12px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/4 — 16px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/4</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-4 / m-4 / gap-4</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">16px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:16px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/6 — 24px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/6</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-6 / m-6 / gap-6</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">24px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:24px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/8 — 32px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/8</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-8 / m-8 / gap-8</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">32px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:32px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/12 — 48px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center border-b border-stroke-low">
+              <div>
+                <p class="typo-small font-mono">spacing/12</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-12 / m-12 / gap-12</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">48px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:48px;height:20px;"></div></div>
+            </div>
+
+            <!-- spacing/16 — 64px -->
+            <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 items-center">
+              <div>
+                <p class="typo-small font-mono">spacing/16</p>
+                <p class="typo-xsmall text-fg-low font-mono">p-16 / m-16 / gap-16</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">64px</div>
+              <div><div class="bg-primary-500 rounded-xs" style="width:64px;height:20px;"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="typo-xsmall text-fg-low mt-3">
+          ※ 8 の倍数を基本（2, 4, 8, 16, 24, 32, 48, 64）、<code class="px-1 bg-neutral-100 rounded">spacing/3 = 12</code> と <code class="px-1 bg-neutral-100 rounded">spacing/1 = 4</code> は微調整用。
+        </p>
+      </div>
+
+      <!-- =========================================================
            角丸 (Radius)
            ========================================================= -->
       <div class="mb-12">
