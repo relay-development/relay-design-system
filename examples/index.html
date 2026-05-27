@@ -1385,9 +1385,33 @@
           </div>
         </div>
 
-        <p class="typo-xsmall text-fg-low mt-3">
+        <p class="typo-xsmall text-fg-low mt-3 mb-4">
           ※ 入れ子では外側ほど大きく、内側ほど小さく揃える（lg → md → sm → xs）と、角が同心円状になって整って見える。
         </p>
+
+        <!-- Hierarchy diagram — design guidance -->
+        <div class="card">
+          <div class="card-header">
+            <h4 class="card-title typo-small">ヒエラルキー</h4>
+            <p class="card-subtitle typo-xsmall">入れ子構造での radius の組み合わせ例</p>
+          </div>
+          <div class="card-body grid sm:grid-cols-[1fr_auto] gap-6 items-center">
+            <div class="relative h-44 flex items-center justify-center">
+              <div class="absolute w-36 h-36 bg-info-50 border border-info-300" style="border-radius:24px;"></div>
+              <div class="absolute w-28 h-28 bg-info-100 border border-info-300" style="border-radius:16px;"></div>
+              <div class="absolute w-20 h-20 bg-info-200 border border-info-400" style="border-radius:8px;"></div>
+              <div class="absolute w-12 h-12 bg-info-300 border border-info-500" style="border-radius:4px;"></div>
+              <div class="absolute w-5 h-5 bg-info-500 rounded-full"></div>
+            </div>
+            <ul class="typo-xsmall text-fg-middle font-mono space-y-1">
+              <li>外側 → <span class="text-fg-high font-semibold">lg (24)</span></li>
+              <li>中  → <span class="text-fg-high font-semibold">md (16)</span></li>
+              <li>小  → <span class="text-fg-high font-semibold">sm (8)</span></li>
+              <li>細部 → <span class="text-fg-high font-semibold">xs (4)</span></li>
+              <li>中心 → <span class="text-fg-high font-semibold">full (●)</span></li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       <!-- =========================================================
