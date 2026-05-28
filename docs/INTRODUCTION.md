@@ -97,6 +97,7 @@ import "@light-right/design-system/css";
 - **入っているもの**: Button / Icon Button / Label Control / Input / Search Input / Selector / Textarea / Checkbox / Radio / Filter Chip / Card / Badge / Alert / ガイドライン
 - **ライセンス**: MIT
 - **更新**: Figma 側で変更があれば随時反映 → 新バージョンを npm に publish
+- **リリース通知**: 新バージョンを publish すると Slack `#dev_information` に自動でアナウンスが流れます 📣
 
 ---
 
