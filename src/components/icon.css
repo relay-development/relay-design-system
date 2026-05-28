@@ -1,0 +1,36 @@
+/*
+ * Icon helper — for rendering icons from the Lucide sprite shipped at
+ *   @light-right/design-system/icons (dist/icons.svg)
+ *
+ * Usage:
+ *
+ *   <svg class="icon icon-md">
+ *     <use href="path/to/icons.svg#lucide-search"></use>
+ *   </svg>
+ *
+ * The sprite's <symbol> elements carry stroke / fill / linecap / linejoin
+ * attributes from Lucide itself, so we don't need to repeat them here —
+ * this class only handles display + sizing.
+ *
+ * Color: <use> inherits `currentColor`, so combine with text utilities
+ * such as `text-primary-500` to colorize.
+ *
+ * Sizes follow the typography scale:
+ *   xs → 12px
+ *   sm → 16px
+ *   md → 20px  (default for inline UI)
+ *   lg → 24px
+ *   xl → 32px
+ */
+
+@layer components {
+  .icon {
+    @apply inline-block flex-shrink-0 align-middle;
+  }
+
+  .icon-xs { @apply w-3 h-3; }   /* 12 */
+  .icon-sm { @apply w-4 h-4; }   /* 16 */
+  .icon-md { @apply w-5 h-5; }   /* 20 */
+  .icon-lg { @apply w-6 h-6; }   /* 24 */
+  .icon-xl { @apply w-8 h-8; }   /* 32 */
+}
