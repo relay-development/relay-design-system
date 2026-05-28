@@ -1,0 +1,117 @@
+name: Notify Slack on release
+
+# GitHub Release が published されたら #dev_information に通知。
+# 通知内容:
+#   - バージョン
+#   - リリースノート (release.body)
+#   - 前回 Release 以降に close された Issue 一覧
+#   - リリースノート / プレビューサイトへのリンク
+#   - npm install コマンド
+#
+# 事前準備:
+#   - Slack で Incoming Webhook を作成 (#dev_information 指定)
+#   - GitHub Secrets に SLACK_WEBHOOK_URL を登録
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  issues: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      # 前回 Release 以降に close された Issue 一覧 (PR は除外)
+      - name: Collect closed issues since previous release
+        id: issues
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          CURRENT_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -e
+          # 現在の Release を除いた直前の Release を取得
+          prev=$(gh api "repos/$REPO/releases" \
+            --jq "[.[] | select(.tag_name != \"$CURRENT_TAG\")][0].tag_name // empty")
+
+          if [ -z "$prev" ]; then
+            echo "Previous release not found — listing all closed issues (max 50)"
+            list=$(gh issue list --repo "$REPO" --state closed --limit 50 \
+              --json number,title,url \
+              --jq '.[] | "• <\(.url)|#\(.number)> \(.title)"')
+          else
+            since=$(gh api "repos/$REPO/releases/tags/$prev" --jq '.published_at')
+            echo "Listing issues closed since $since (after release $prev)"
+            list=$(gh api "repos/$REPO/issues?state=closed&since=$since&per_page=100" \
+              --jq ".[]
+                | select(.pull_request | not)
+                | select(.closed_at >= \"$since\")
+                | \"• <\(.html_url)|#\(.number)> \(.title)\"")
+          fi
+
+          if [ -z "$list" ]; then
+            list="_この期間に close された Issue はありません_"
+          fi
+
+          {
+            echo "LIST<<EOF"
+            echo "$list"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Post to Slack
+        env:
+          WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TAG: ${{ github.event.release.tag_name }}
+          URL: ${{ github.event.release.html_url }}
+          BODY: ${{ github.event.release.body }}
+          ISSUES: ${{ steps.issues.outputs.LIST }}
+        run: |
+          set -e
+          if [ -z "$WEBHOOK" ]; then
+            echo "::error::SLACK_WEBHOOK_URL secret is not set."
+            exit 1
+          fi
+
+          payload=$(jq -n \
+            --arg tag "$TAG" \
+            --arg url "$URL" \
+            --arg body "$BODY" \
+            --arg issues "$ISSUES" \
+            '{
+              blocks: [
+                {
+                  type: "header",
+                  text: { type: "plain_text", text: "🚀 @light-right/design-system \($tag) を公開しました", emoji: true }
+                },
+                {
+                  type: "section",
+                  text: { type: "mrkdwn",
+                          text: (if $body == "" then "_変更点の記載なし_" else "*変更点*\n" + $body end) }
+                },
+                {
+                  type: "section",
+                  text: { type: "mrkdwn", text: "*対応した Issue*\n" + $issues }
+                },
+                {
+                  type: "section",
+                  fields: [
+                    { type: "mrkdwn", text: "*リリースノート*\n<\($url)|GitHub Release>" },
+                    { type: "mrkdwn", text: "*プレビューサイト*\n<https://relay-development.github.io/relay-design-system/|カタログ>" }
+                  ]
+                },
+                {
+                  type: "section",
+                  text: { type: "mrkdwn",
+                          text: "*インストール*\n`npm install @light-right/design-system@\($tag | sub("^v"; ""))`" }
+                }
+              ]
+            }')
+
+          curl -sSf -X POST \
+            -H "Content-Type: application/json" \
+            -d "$payload" \
+            "$WEBHOOK"

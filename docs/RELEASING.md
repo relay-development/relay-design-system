@@ -54,13 +54,26 @@ npm publish
 - `npm publish` でエラー（403 / 404 等）が出たら publish 自体は失敗で取り消しは不要
 - 既に publish した直後に重大な不具合が見つかった場合: **新しい patch バージョンを出す**（`npm unpublish` は 72 時間以内のみ可だが推奨しない）
 
-## 通知
+## 通知（自動）
 
-publish 完了後、Slack / Notion などで一度告知する。テンプレ:
+GitHub で Release を **publish** すると、[.github/workflows/notify-slack-on-release.yml](../.github/workflows/notify-slack-on-release.yml) が自動で `#dev_information` に通知を投稿します。**手動で Slack に貼る必要はありません。**
 
-```
-🚀 @light-right/design-system v0.x.y を公開しました
-- 変更点: …
-- リリースノート: https://github.com/relay-development/relay-design-system/releases/tag/v0.x.y
-- プレビュー: https://relay-development.github.io/relay-design-system
-```
+通知に含まれる情報:
+
+- バージョン（タグ名）
+- リリースノート（Release 本文をそのまま）
+- このリリース期間に close された Issue 一覧（`Fixes #N` で PR 経由 close したものも含む）
+- リリースノート / プレビューサイトへのリンク
+- `npm install` コマンド
+
+### 通知が動かない時のチェック
+
+- GitHub → Actions タブで `Notify Slack on release` ワークフローのログ確認
+- 通知先チャンネル変更や Webhook 失効時は repo の Secrets `SLACK_WEBHOOK_URL` を更新
+  - https://github.com/relay-development/relay-design-system/settings/secrets/actions
+
+### 初期セットアップ（一度だけ）
+
+1. https://api.slack.com/apps で App を作成
+2. **Incoming Webhooks** → Add New Webhook → 投稿先に `#dev_information` を選択
+3. 生成された URL を repo Secrets に `SLACK_WEBHOOK_URL` として登録
