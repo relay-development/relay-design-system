@@ -298,6 +298,7 @@
           <div class="docs-sidebar-group-title">Foundations</div>
           <a href="#primitive-token">Primitive Token</a>
           <a href="#semantic-token">Semantic Token</a>
+          <a href="#icons">Icons</a>
         </div>
 
         <div class="docs-sidebar-group">
@@ -1447,6 +1448,151 @@
               <div class="text-center"><p class="typo-small font-semibold font-mono">destructive</p><p class="typo-xsmall text-fg-low">0 0 0 3 · negative/500</p></div>
             </div>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         ICONS — Lucide subset shipped as a sprite at dist/icons.svg
+         All 38 icons rendered from the same sprite via <use href="…#name">.
+         ===================================================================== -->
+    <section id="icons">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">Icons</h2>
+        <span class="badge badge-soft-neutral">foundation</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">
+        Lucide から 38 アイコンを SVG sprite として同梱（<code class="px-1 bg-neutral-100 rounded">dist/icons.svg</code> / npm export <code class="px-1 bg-neutral-100 rounded">@light-right/design-system/icons</code>）。JS 不要、<code class="px-1 bg-neutral-100 rounded">currentColor</code> で着色追従。
+      </p>
+
+      <!-- Size variants -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">サイズ</h3>
+          <p class="card-subtitle">.icon-xs (12) / .icon-sm (16) / .icon-md (20) / .icon-lg (24) / .icon-xl (32)</p>
+        </div>
+        <div class="card-body flex items-end gap-8">
+          <div class="flex flex-col items-center gap-2 text-fg-middle">
+            <svg class="icon icon-xs"><use href="./icons.svg#lucide-search"></use></svg>
+            <span class="typo-xsmall font-mono">xs</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 text-fg-middle">
+            <svg class="icon icon-sm"><use href="./icons.svg#lucide-search"></use></svg>
+            <span class="typo-xsmall font-mono">sm</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 text-fg-middle">
+            <svg class="icon icon-md"><use href="./icons.svg#lucide-search"></use></svg>
+            <span class="typo-xsmall font-mono">md</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 text-fg-middle">
+            <svg class="icon icon-lg"><use href="./icons.svg#lucide-search"></use></svg>
+            <span class="typo-xsmall font-mono">lg</span>
+          </div>
+          <div class="flex flex-col items-center gap-2 text-fg-middle">
+            <svg class="icon icon-xl"><use href="./icons.svg#lucide-search"></use></svg>
+            <span class="typo-xsmall font-mono">xl</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Color -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">着色</h3>
+          <p class="card-subtitle">currentColor を継承するので <code class="px-1 bg-neutral-100 rounded">text-*</code> ユーティリティで色付け可能</p>
+        </div>
+        <div class="card-body flex items-center gap-8">
+          <svg class="icon icon-lg text-fg-high"><use href="./icons.svg#lucide-bell"></use></svg>
+          <svg class="icon icon-lg text-primary-500"><use href="./icons.svg#lucide-bell"></use></svg>
+          <svg class="icon icon-lg text-info-600"><use href="./icons.svg#lucide-bell"></use></svg>
+          <svg class="icon icon-lg text-warning-600"><use href="./icons.svg#lucide-bell"></use></svg>
+          <svg class="icon icon-lg text-negative-500"><use href="./icons.svg#lucide-bell"></use></svg>
+          <svg class="icon icon-lg text-fg-disabled"><use href="./icons.svg#lucide-bell"></use></svg>
+        </div>
+      </div>
+
+      <!-- Full icon list -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">同梱されているアイコン</h3>
+          <p class="card-subtitle">アイコンが足りない場合は <code class="px-1 bg-neutral-100 rounded">scripts/build-icons.mjs</code> の <code class="px-1 bg-neutral-100 rounded">ICONS</code> 配列に追加</p>
+        </div>
+        <div class="card-body grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4">
+          <!-- Status / Feedback -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-info"></use></svg><span class="typo-xsmall font-mono">info</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-check-circle"></use></svg><span class="typo-xsmall font-mono">check-circle</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-alert-triangle"></use></svg><span class="typo-xsmall font-mono">alert-triangle</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-alert-circle"></use></svg><span class="typo-xsmall font-mono">alert-circle</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-x-circle"></use></svg><span class="typo-xsmall font-mono">x-circle</span></div>
+
+          <!-- Action -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-plus"></use></svg><span class="typo-xsmall font-mono">plus</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-minus"></use></svg><span class="typo-xsmall font-mono">minus</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-x"></use></svg><span class="typo-xsmall font-mono">x</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-check"></use></svg><span class="typo-xsmall font-mono">check</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-pencil"></use></svg><span class="typo-xsmall font-mono">pencil</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-trash-2"></use></svg><span class="typo-xsmall font-mono">trash-2</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-copy"></use></svg><span class="typo-xsmall font-mono">copy</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-download"></use></svg><span class="typo-xsmall font-mono">download</span></div>
+
+          <!-- Navigation -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-chevron-up"></use></svg><span class="typo-xsmall font-mono">chevron-up</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-chevron-down"></use></svg><span class="typo-xsmall font-mono">chevron-down</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-chevron-left"></use></svg><span class="typo-xsmall font-mono">chevron-left</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-chevron-right"></use></svg><span class="typo-xsmall font-mono">chevron-right</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg><span class="typo-xsmall font-mono">chevrons-up-down</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-arrow-left"></use></svg><span class="typo-xsmall font-mono">arrow-left</span></div>
+
+          <!-- Object -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-file"></use></svg><span class="typo-xsmall font-mono">file</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-folder"></use></svg><span class="typo-xsmall font-mono">folder</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-link"></use></svg><span class="typo-xsmall font-mono">link</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-external-link"></use></svg><span class="typo-xsmall font-mono">external-link</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-image"></use></svg><span class="typo-xsmall font-mono">image</span></div>
+
+          <!-- User -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-user"></use></svg><span class="typo-xsmall font-mono">user</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-users"></use></svg><span class="typo-xsmall font-mono">users</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-settings"></use></svg><span class="typo-xsmall font-mono">settings</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-help-circle"></use></svg><span class="typo-xsmall font-mono">help-circle</span></div>
+
+          <!-- Search / Filter -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-search"></use></svg><span class="typo-xsmall font-mono">search</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-filter"></use></svg><span class="typo-xsmall font-mono">filter</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-hash"></use></svg><span class="typo-xsmall font-mono">hash</span></div>
+
+          <!-- Visibility -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-eye"></use></svg><span class="typo-xsmall font-mono">eye</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-eye-off"></use></svg><span class="typo-xsmall font-mono">eye-off</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-lock"></use></svg><span class="typo-xsmall font-mono">lock</span></div>
+
+          <!-- Time / Date -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-calendar"></use></svg><span class="typo-xsmall font-mono">calendar</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-clock"></use></svg><span class="typo-xsmall font-mono">clock</span></div>
+
+          <!-- Communication -->
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-mail"></use></svg><span class="typo-xsmall font-mono">mail</span></div>
+          <div class="flex flex-col items-center gap-2 p-3 rounded border border-stroke-low"><svg class="icon icon-lg text-fg-middle"><use href="./icons.svg#lucide-bell"></use></svg><span class="typo-xsmall font-mono">bell</span></div>
+        </div>
+      </div>
+
+      <!-- Usage snippet -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使い方</h3>
+          <p class="card-subtitle">consumer のプロダクトコードから</p>
+        </div>
+        <div class="card-body">
+          <p class="typo-small text-fg-middle mb-3"><strong>Vite / Next.js 等のバンドラ</strong></p>
+          <pre class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 mb-4 overflow-x-auto">import iconsUrl from "@light-right/design-system/icons";
+
+&lt;svg class="icon icon-md"&gt;
+  &lt;use href={`${iconsUrl}#lucide-search`} /&gt;
+&lt;/svg&gt;</pre>
+          <p class="typo-small text-fg-middle mb-3"><strong>vanilla HTML</strong></p>
+          <pre class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto">&lt;svg class="icon icon-md"&gt;
+  &lt;use href="./node_modules/@light-right/design-system/dist/icons.svg#lucide-search"&gt;&lt;/use&gt;
+&lt;/svg&gt;</pre>
         </div>
       </div>
     </section>
