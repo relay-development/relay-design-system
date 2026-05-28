@@ -90,11 +90,11 @@ jobs:
                 {
                   type: "section",
                   text: { type: "mrkdwn",
-                          text: (if $body == "" then "_変更点の記載なし_" else "*変更点*\n" + $body end) }
+                          text: (if $body == "" then "_変更点の記載なし_" else "*変更点*\n\($body)" end) }
                 },
                 {
                   type: "section",
-                  text: { type: "mrkdwn", text: "*対応した Issue*\n" + $issues }
+                  text: { type: "mrkdwn", text: "*対応した Issue*\n\($issues)" }
                 },
                 {
                   type: "section",
