@@ -302,11 +302,52 @@ SemVer 運用:
 
 ## 🔒 Git / PR 運用ルール
 
-- **main は保護**: 直接 push 不可、PR + セルフマージで運用
-- **squash merge** で main に 1 PR = 1 commit を保つ
-- **マージは必ずユーザー承認後**: 「マージして」と明示されてから `gh pr merge` を叩く（Auto Mode classifier に弾かれる動作と一致）
-- ブランチ名: `<verb>-<scope>` (例: `add-tab-component`, `fix-slack-notify-jq`)
-- コミットメッセージ: Conventional Commits (`feat:` / `fix:` / `refactor:` / `docs:` / `chore:` / `style:` / `ci:`)
+`main` は **保護ブランチ**。直接 push できません。すべての変更は PR 経由で。
+人間チームメンバー向けの説明は [README.md の「コントリビューション」セクション](README.md#コントリビューション) にあります。
+
+### 保護設定（GitHub Settings → Branches）
+
+| ルール | 状態 |
+|---|---|
+| Require a pull request before merging | ✅ ON（レビュー 0 人で OK） |
+| Block force pushes | ✅ ON |
+| Block deletions | ✅ ON |
+| Enforce for admins (オーナーにも適用) | ✅ ON |
+
+### Claude Code が守るべき行動規範
+
+- **main へ直接 push しない** — 保護で弾かれるが意図しないこと
+- **マージは必ずユーザー承認後** — 「マージして」と明示されてから `gh pr merge` を叩く（Auto Mode classifier の挙動と一致）
+- **PR を作る時は self-contained** に — 単一の concern を扱う。複数の変更を 1 PR に混ぜない（過去事例: Tab と CLAUDE.md は別 PR に分けた）
+- **squash merge を使う**（`gh pr merge <N> --squash --delete-branch`）— main は 1 PR = 1 commit を保つ
+
+### ブランチ命名
+
+`<verb>-<scope>` 形式:
+
+| 例 | パターン |
+|---|---|
+| `add-tab-component` | add-<name> |
+| `fix-slack-notify-jq` | fix-<bug> |
+| `refactor-catalog-radius-section` | refactor-<area> |
+| `release-v0.2.0` | release-<version> |
+| `move-guidelines-below-alert` | move-<what>-<destination> |
+
+### コミットメッセージ
+
+[Conventional Commits](https://www.conventionalcommits.org/) 必須:
+
+| プレフィックス | 用途 | 例 |
+|---|---|---|
+| `feat:`     | 新機能・新コンポーネント | `feat(tab): add Tab component` |
+| `fix:`      | バグ修正 | `fix(ci): use string interpolation in jq` |
+| `refactor:` | 動作を変えずに構造を整える | `refactor(typography): rename .typo-xs → .typo-xsmall` |
+| `style:`    | 見た目・コード整形のみ | `style(hero): widen title gap` |
+| `docs:`     | ドキュメント変更のみ | `docs: add CLAUDE.md` |
+| `chore:`    | ビルド設定 / 依存更新 / version bump | `chore(release): 0.2.0` |
+| `ci:`       | GitHub Actions / リリース系 | `ci: migrate preview hosting to GH Pages` |
+
+ボディには **なぜ** その変更が必要だったかを書く（what は diff で見える）。Co-Authored-By: で AI 生成を明示。
 
 ---
 
