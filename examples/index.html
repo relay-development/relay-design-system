@@ -267,8 +267,94 @@
       min-width: 0;
     }
 
+    /* Hero banner — full-width inside docs-main.
+     * Three layers, back to front:
+     *   1. base radial gradient (subtle teal wash)
+     *   2. left / right blur blobs (green / yellow color clouds)
+     *   3. flex children: cutout illustrations + centered HTML title + CTA
+     * Bottom edge curves via asymmetric border-radius.
+     *
+     * Spacing values are all `calc(var(--spacing) * N)` where N maps to
+     * the blessed Tailwind scale (4 / 8 / 16 / 32 / 64 px). Hero gradient
+     * colors are bespoke (sampled from the Figma artwork) and stay raw.
+     */
+    .docs-hero {
+      display: flex;
+      align-items: end;
+      justify-content: center;
+      gap: 0;
+      width: 100%;
+      background:
+        url('./assets/bg-blur-left.png')  no-repeat 5%  center / auto 120%,
+        url('./assets/bg-blur-right.png') no-repeat 95% center / auto 120%,
+        radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
+      border-bottom-left-radius:  50% calc(var(--spacing) * 16);  /* 64 */
+      border-bottom-right-radius: 50% calc(var(--spacing) * 16);
+      padding-top: calc(var(--spacing) * 16) ;
+      padding-left: calc(var(--spacing) * 16) ;
+      padding-right: calc(var(--spacing) * 16) ;
+      overflow: hidden;
+    }
+    .docs-hero-illust {
+      flex-shrink: 0;
+      width: 28%;
+      max-width: calc(var(--spacing) * 90);   /* 360 */
+      height: auto;
+      pointer-events: none;
+      user-select: none;
+      image-rendering: -webkit-optimize-contrast;
+    }
+    .docs-hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      max-width: 640px;
+      gap: calc(var(--spacing) * 10);          /* 40 — off-scale, hero 専用調整値 */
+      padding:
+        calc(var(--spacing) * 16)             /* top 64 — clears curve cut-off */
+        calc(var(--spacing) * 4)              /* x   16 */
+        calc(var(--spacing) * 16);            /* bot 64 */
+      text-align: center;
+    }
+    /* Hero title is shipped as an SVG (assets/hero-center.svg, 563×131).
+     * .docs-hero-title styles the <img>. The semantic <h1> still exists
+     * adjacent to it for screen readers, hidden via .sr-only. */
+    .docs-hero-title {
+      display: block;
+      width: 80%;
+      max-width: calc(var(--spacing) * 140);   /* 560 ≈ natural SVG 563 */
+      height: auto;
+      margin: 0;
+    }
+    /* Visually hidden but still announced by screen readers */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    .docs-hero-content .btn svg {
+      width:  calc(var(--spacing) * 4);       /* 16 */
+      height: calc(var(--spacing) * 4);
+    }
+    /* Compact mode for narrow viewports — hide illustrations + blurs */
+    @media (max-width: 640px) {
+      .docs-hero { background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%); }
+      .docs-hero-illust { display: none; }
+      .docs-hero-content {
+        padding: calc(var(--spacing) * 12) calc(var(--spacing) * 4);   /* 48 16 */
+      }
+    }
+
     /* Scroll offset for anchor jumps */
-    section[id] { scroll-margin-top: 16px; }
+    section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 
     /* Hide sidebar on small screens */
     @media (max-width: 768px) {
@@ -327,6 +413,36 @@
     </aside>
 
     <div class="docs-main">
+      <!-- =====================================================================
+           HERO — welcome banner (Figma node 3375:1562)
+           Lives outside <main> so it spans the full content column width
+           (not constrained by max-w-5xl). Left / right illustrations are
+           PNGs cropped out of the Figma render; the title + GitHub CTA
+           live as real HTML in the middle so they're selectable,
+           translatable, and the button is actually a link.
+           ===================================================================== -->
+      <section class="docs-hero">
+        <img class="docs-hero-illust docs-hero-illust-left"
+             src="./assets/hero-left.png" alt="" aria-hidden="true"
+             width="921" height="750">
+        <div class="docs-hero-content">
+          <h1 class="sr-only">relay Design System へようこそ</h1>
+          <img class="docs-hero-title"
+               src="./assets/hero-center.svg"
+               alt="relay Design System へようこそ"
+               width="563" height="131">
+          <a class="btn btn-md btn-primary btn-outline"
+             href="https://github.com/relay-development/relay-design-system"
+             target="_blank" rel="noopener noreferrer">
+            GitHub
+            <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+          </a>
+        </div>
+        <img class="docs-hero-illust docs-hero-illust-right"
+             src="./assets/hero-right.png" alt="" aria-hidden="true"
+             width="998" height="750">
+      </section>
+
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
 
     <!-- =====================================================================
