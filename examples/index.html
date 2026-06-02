@@ -268,7 +268,7 @@
     }
 
     /* Hero banner — full-width inside docs-main, left / right illustrations
-     * bracket an HTML title + CTA */
+     * bracket an HTML title + CTA. Bottom edge curves via border-radius. */
     .docs-hero {
       display: flex;
       align-items: center;
@@ -276,7 +276,12 @@
       gap: 0;
       width: 100%;
       background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
-      border-bottom: 1px solid var(--color-stroke-low);
+      /* 円形状の底辺トリミング — 左右対称の浅い U 字カーブ。
+       * horizontal radius 50% × vertical radius 64px で
+       * 全幅で滑らかな弧を描く。 */
+      border-bottom-left-radius: 50% 64px;
+      border-bottom-right-radius: 50% 64px;
+      overflow: hidden;
     }
     .docs-hero-illust {
       flex-shrink: 0;
@@ -285,14 +290,8 @@
       height: auto;
       pointer-events: none;
       user-select: none;
-      /* fade the inner edge into the gradient so the cropped illustration
-       * doesn't show a hard seam against the CSS background */
-      -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
-              mask-image: linear-gradient(to right, black 70%, transparent 100%);
-    }
-    .docs-hero-illust-right {
-      -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
-              mask-image: linear-gradient(to left, black 70%, transparent 100%);
+      /* hi-DPI ダウンスケール時のシャープネス維持 */
+      image-rendering: -webkit-optimize-contrast;
     }
     .docs-hero-content {
       flex: 1;
@@ -301,7 +300,7 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      padding: 32px 16px;
+      padding: 32px 16px 64px;   /* extra bottom pad accounts for the curve */
       text-align: center;
     }
     .docs-hero-title {
@@ -319,7 +318,7 @@
     /* Compact mode for narrow viewports — hide illustrations, keep content */
     @media (max-width: 640px) {
       .docs-hero-illust { display: none; }
-      .docs-hero-content { padding: 32px 16px; }
+      .docs-hero-content { padding: 40px 16px 56px; }
     }
 
     /* Scroll offset for anchor jumps */
@@ -392,7 +391,8 @@
            ===================================================================== -->
       <section class="docs-hero">
         <img class="docs-hero-illust docs-hero-illust-left"
-             src="./assets/hero-left.png" alt="" aria-hidden="true">
+             src="./assets/hero-left.png" alt="" aria-hidden="true"
+             width="1080" height="597">
         <div class="docs-hero-content">
           <h1 class="docs-hero-title">relay Design System<br>へようこそ</h1>
           <a class="btn btn-sm btn-primary btn-outline"
@@ -403,7 +403,8 @@
           </a>
         </div>
         <img class="docs-hero-illust docs-hero-illust-right"
-             src="./assets/hero-right.png" alt="" aria-hidden="true">
+             src="./assets/hero-right.png" alt="" aria-hidden="true"
+             width="1080" height="597">
       </section>
 
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
