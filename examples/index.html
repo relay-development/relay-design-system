@@ -267,6 +267,21 @@
       min-width: 0;
     }
 
+    /* Hero banner — full-width clickable image at the top of content */
+    .docs-hero a {
+      display: block;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: opacity 0.2s ease;
+    }
+    .docs-hero a:hover { opacity: 0.95; }
+    .docs-hero a:focus-visible { outline: 2px solid var(--color-info-600); outline-offset: 2px; }
+    .docs-hero img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     /* Scroll offset for anchor jumps */
     section[id] { scroll-margin-top: 16px; }
 
@@ -328,6 +343,21 @@
 
     <div class="docs-main">
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+
+    <!-- =====================================================================
+         HERO — welcome banner with illustrations + title + GitHub call-to-action
+         Sourced from Figma node 3375:1562. The whole banner is a single
+         clickable link to the GitHub repo so the visible "GitHub" pill in
+         the artwork actually does something.
+         ===================================================================== -->
+    <section class="docs-hero">
+      <a href="https://github.com/relay-development/relay-design-system"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="relay Design System へようこそ — GitHub で詳細を見る">
+        <img src="./assets/hero.png" alt="relay Design System へようこそ" width="2648" height="597">
+      </a>
+    </section>
 
     <!-- =====================================================================
          PRIMITIVE TOKEN
