@@ -267,30 +267,33 @@
       min-width: 0;
     }
 
-    /* Hero banner — full-width inside docs-main, left / right illustrations
-     * bracket an HTML title + CTA. Bottom edge curves via border-radius. */
+    /* Hero banner — full-width inside docs-main.
+     * Three layers, back to front:
+     *   1. base radial gradient (subtle teal wash)
+     *   2. left / right blur blobs (green / yellow color clouds)
+     *   3. flex children: cutout illustrations + centered HTML title + CTA
+     * Bottom edge curves via asymmetric border-radius. */
     .docs-hero {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 0;
       width: 100%;
-      background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
-      /* 円形状の底辺トリミング — 左右対称の浅い U 字カーブ。
-       * horizontal radius 50% × vertical radius 64px で
-       * 全幅で滑らかな弧を描く。 */
+      background:
+        url('./assets/bg-blur-left.png')  no-repeat 5%  center / auto 120%,
+        url('./assets/bg-blur-right.png') no-repeat 95% center / auto 120%,
+        radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
       border-bottom-left-radius: 50% 64px;
       border-bottom-right-radius: 50% 64px;
       overflow: hidden;
     }
     .docs-hero-illust {
       flex-shrink: 0;
-      width: 30%;
+      width: 28%;
       max-width: 360px;
       height: auto;
       pointer-events: none;
       user-select: none;
-      /* hi-DPI ダウンスケール時のシャープネス維持 */
       image-rendering: -webkit-optimize-contrast;
     }
     .docs-hero-content {
@@ -300,7 +303,7 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      padding: 32px 16px 64px;   /* extra bottom pad accounts for the curve */
+      padding: 32px 16px 64px;   /* extra bottom pad clears the curve cut-off */
       text-align: center;
     }
     .docs-hero-title {
@@ -315,8 +318,9 @@
       width: 16px;
       height: 16px;
     }
-    /* Compact mode for narrow viewports — hide illustrations, keep content */
+    /* Compact mode for narrow viewports — hide illustrations + blurs */
     @media (max-width: 640px) {
+      .docs-hero { background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%); }
       .docs-hero-illust { display: none; }
       .docs-hero-content { padding: 40px 16px 56px; }
     }
@@ -392,7 +396,7 @@
       <section class="docs-hero">
         <img class="docs-hero-illust docs-hero-illust-left"
              src="./assets/hero-left.png" alt="" aria-hidden="true"
-             width="1080" height="597">
+             width="921" height="750">
         <div class="docs-hero-content">
           <h1 class="docs-hero-title">relay Design System<br>へようこそ</h1>
           <a class="btn btn-sm btn-primary btn-outline"
@@ -404,7 +408,7 @@
         </div>
         <img class="docs-hero-illust docs-hero-illust-right"
              src="./assets/hero-right.png" alt="" aria-hidden="true"
-             width="1080" height="597">
+             width="998" height="750">
       </section>
 
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
