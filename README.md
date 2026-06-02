@@ -270,6 +270,72 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 
 ---
 
+## コントリビューション
+
+### ブランチ運用
+
+`main` は **保護ブランチ**で、直接 push できません。変更はすべて PR 経由でマージしてください。
+
+| ルール | 設定 |
+|---|---|
+| Pull Request 必須 | ✅ 直接 push 不可（レビューは 0 人で OK、セルフマージ可） |
+| Force push | ✅ 禁止 |
+| ブランチ削除 | ✅ 禁止（`main` のみ） |
+| Admin にも適用 | ✅ オーナー権限でも PR 経由 |
+
+### 開発フロー
+
+```bash
+# 1. main から作業ブランチを切る
+git checkout main && git pull --ff-only
+git checkout -b <verb>-<scope>           # 例: add-tab-component, fix-slack-notify-jq
+
+# 2. 編集 → コミット
+git add .
+git commit -m "feat(<scope>): ..."        # Conventional Commits 必須
+
+# 3. push & PR 作成
+git push -u origin <verb>-<scope>
+gh pr create --fill                       # またはブラウザで PR 作成
+
+# 4. セルフマージ（squash で main は 1 PR = 1 commit に保つ）
+gh pr merge <N> --squash --delete-branch
+git checkout main && git pull --ff-only
+```
+
+### コミットメッセージ規約
+
+[Conventional Commits](https://www.conventionalcommits.org/) に従ってください。
+
+| プレフィックス | 用途 |
+|---|---|
+| `feat:`     | 新機能・新コンポーネント |
+| `fix:`      | バグ修正 |
+| `refactor:` | 動作を変えずに構造を整える |
+| `style:`    | 見た目・コード整形のみ |
+| `docs:`     | ドキュメント変更のみ |
+| `chore:`    | ビルド設定 / 依存更新など |
+| `ci:`       | GitHub Actions / リリース系 |
+
+### コーディング規約
+
+CSS / HTML を書く時は **必ずデザインシステムが用意した変数を使う**（pixel / hex / 生数値の直書きは禁止）。詳細は [CLAUDE.md](CLAUDE.md#-必須ルール-ハードコーディング禁止) を参照。
+
+要点:
+
+- **余白**: `p-2` / `gap-4` 等の utility、または `calc(var(--spacing) * N)`（祝福スケール: 0/1/2/3/4/6/8/12/16）
+- **色**: `text-fg-high` / `bg-primary-500` 等の semantic ロール、または `var(--color-*)`
+- **タイポ**: `.typo-{xsmall,small,medium,large,xlarge,2xlarge,3xlarge}` クラス
+- **角丸 / シャドウ**: `rounded-sm` / `shadow-md` 等の utility、または `var(--radius-*)` / `var(--shadow-*)`
+
+### 関連ドキュメント
+
+- 📖 [CLAUDE.md](CLAUDE.md) — リポジトリ全体の運用ガイド（Claude Code 用 + 人間向け詳細）
+- 🚀 [docs/RELEASING.md](docs/RELEASING.md) — npm publish + Slack 通知のリリース手順
+- 👋 [docs/INTRODUCTION.md](docs/INTRODUCTION.md) — チーム向けオンボーディング
+
+---
+
 ## バージョン
 
 `v0.1.0` — 初期リリース（ライトモードのみ、トークンは Figma 同期済み）。ダークモードは将来のバージョンで対応予定。
