@@ -311,7 +311,7 @@
       align-items: center;
       justify-content: center;
       max-width: 640px;
-      gap: calc(var(--spacing) * 6);          /* 16 */
+      gap: calc(var(--spacing) * 10);          /* 40 — off-scale, hero 専用調整値 */
       padding:
         calc(var(--spacing) * 16)             /* top 64 — clears curve cut-off */
         calc(var(--spacing) * 4)              /* x   16 */
@@ -323,7 +323,7 @@
      * adjacent to it for screen readers, hidden via .sr-only. */
     .docs-hero-title {
       display: block;
-      width: 100%;
+      width: 80%;
       max-width: calc(var(--spacing) * 140);   /* 560 ≈ natural SVG 563 */
       height: auto;
       margin: 0;
