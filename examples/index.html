@@ -267,7 +267,8 @@
       min-width: 0;
     }
 
-    /* Hero banner — left / right illustrations bracket an HTML title + CTA */
+    /* Hero banner — full-width inside docs-main, left / right illustrations
+     * bracket an HTML title + CTA */
     .docs-hero {
       display: flex;
       align-items: center;
@@ -275,13 +276,12 @@
       gap: 0;
       width: 100%;
       background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
-      border-radius: var(--radius-md);
-      overflow: hidden;
+      border-bottom: 1px solid var(--color-stroke-low);
     }
     .docs-hero-illust {
       flex-shrink: 0;
       width: 30%;
-      max-width: 320px;
+      max-width: 360px;
       height: auto;
       pointer-events: none;
       user-select: none;
@@ -301,7 +301,7 @@
       align-items: center;
       justify-content: center;
       gap: 16px;
-      padding: 24px 16px;
+      padding: 32px 16px;
       text-align: center;
     }
     .docs-hero-title {
@@ -382,29 +382,31 @@
     </aside>
 
     <div class="docs-main">
-  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+      <!-- =====================================================================
+           HERO — welcome banner (Figma node 3375:1562)
+           Lives outside <main> so it spans the full content column width
+           (not constrained by max-w-5xl). Left / right illustrations are
+           PNGs cropped out of the Figma render; the title + GitHub CTA
+           live as real HTML in the middle so they're selectable,
+           translatable, and the button is actually a link.
+           ===================================================================== -->
+      <section class="docs-hero">
+        <img class="docs-hero-illust docs-hero-illust-left"
+             src="./assets/hero-left.png" alt="" aria-hidden="true">
+        <div class="docs-hero-content">
+          <h1 class="docs-hero-title">relay Design System<br>へようこそ</h1>
+          <a class="btn btn-sm btn-primary btn-outline"
+             href="https://github.com/relay-development/relay-design-system"
+             target="_blank" rel="noopener noreferrer">
+            GitHub
+            <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+          </a>
+        </div>
+        <img class="docs-hero-illust docs-hero-illust-right"
+             src="./assets/hero-right.png" alt="" aria-hidden="true">
+      </section>
 
-    <!-- =====================================================================
-         HERO — welcome banner (Figma node 3375:1562)
-         Left / right illustrations are PNGs cropped out of the Figma render;
-         the title + GitHub CTA live as real HTML in the middle so they're
-         selectable, translatable, and the button is actually a link.
-         ===================================================================== -->
-    <section class="docs-hero">
-      <img class="docs-hero-illust docs-hero-illust-left"
-           src="./assets/hero-left.png" alt="" aria-hidden="true">
-      <div class="docs-hero-content">
-        <h1 class="docs-hero-title">relay Design System<br>へようこそ</h1>
-        <a class="btn btn-sm btn-primary btn-outline"
-           href="https://github.com/relay-development/relay-design-system"
-           target="_blank" rel="noopener noreferrer">
-          GitHub
-          <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
-        </a>
-      </div>
-      <img class="docs-hero-illust docs-hero-illust-right"
-           src="./assets/hero-right.png" alt="" aria-hidden="true">
-    </section>
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
 
     <!-- =====================================================================
          PRIMITIVE TOKEN
