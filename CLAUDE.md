@@ -46,10 +46,81 @@ dist/                    ← ビルド成果物 (gitignored)
 
 ---
 
-## デザイントークンの使い方
+## 🔴 必須ルール: ハードコーディング禁止
+
+**CSS / HTML を書く時、余白・色・テキストの値を pixel / hex / 生数値で直書きすることを禁止する。** 必ずデザインシステムが用意した変数 or ユーティリティクラスを通すこと。例外を作りたい時は PR の commit message で必ず理由を説明する。
+
+### なぜ
+
+- トークン化されていない値は **デザインシステム改訂時に取り残される** （Figma 側で色を変えた時、ハードコード箇所だけ更新されない）
+- 「ここだけ 14.5px」のような **off-scale な値** がしれっと混入し、8×8 ベースグリッドが崩れる
+- 後から読む人が「なぜこの値？」を辿れない
+
+### 概念別: ハードコード ❌ / 正解 ✅
+
+| 概念 | ❌ ハードコード | ✅ デザインシステム経由 |
+|---|---|---|
+| **余白** (padding / margin / gap / inset) | `padding: 16px` `gap: 24px` `margin-top: 8px` | utility: `p-4` / `gap-6` / `mt-2` <br> raw CSS: `calc(var(--spacing) * 4)` etc. |
+| **色** (背景 / 文字 / ボーダー) | `color: #334155` `background: rgb(48 182 134)` | utility: `text-fg-middle` / `bg-primary-500` <br> raw CSS: `var(--color-fg-middle)` / `var(--color-primary-500)` |
+| **角丸** | `border-radius: 8px` | utility: `rounded-sm` <br> raw CSS: `var(--radius-sm)` |
+| **シャドウ** | `box-shadow: 0 1px 3px rgba(0,0,0,0.1)` | utility: `shadow-sm` <br> raw CSS: `var(--shadow-sm)` |
+| **フォントサイズ / 行間 / ウェイト** | `font-size: 16px` `line-height: 1.5` `font-weight: 700` | クラス: `.typo-medium` / `.typo-2xlarge` etc. <br> raw CSS: `var(--text-base)` + `var(--text-base--line-height)` + `var(--font-weight-bold)` |
+| **letter-spacing** | `letter-spacing: 0.02em` | `var(--tracking-{tight,normal,wide,wider,widest})` |
+| **アイコンサイズ** | `width: 20px; height: 20px` | クラス: `.icon-md` <br> raw CSS: `calc(var(--spacing) * 5)` |
+
+### 余白の "祝福スケール"
+
+Tailwind v4 は `--spacing: 0.25rem` (4px) から **任意倍数** を生成できるが、デザインシステムが**正式に祝福する**のは **9 段階のみ**:
+
+```
+spacing/0  = 0
+spacing/1  = 4   spacing/2  = 8   spacing/3  = 12
+spacing/4  = 16  spacing/6  = 24  spacing/8  = 32
+spacing/12 = 48  spacing/16 = 64
+```
+
+→ utility: `p-{0,1,2,3,4,6,8,12,16}` / raw: `calc(var(--spacing) * {0,1,2,3,4,6,8,12,16})`
+
+**祝福外の倍数（5, 7, 9, 10, 11, 13, 14, 15...）を使わない。** Figma 仕様で 40px や 56px が出てきたら、近傍の祝福値（32 or 48 / 48 or 64）に丸めて使う。本当にどうしても必要ならコミットメッセージで理由を明記。
+
+### 例外（ハードコードを許容するケース）
+
+| 状況 | 例 | 理由 |
+|---|---|---|
+| Figma 由来の **bespoke カラー** がパレットに無い | hero gradient `#d9ebea` / `#e7f6f6` | 1 箇所限定の装飾色。トークン化するほどではない。コメントで由来を明記 |
+| Figma 仕様で **off-scale な余白** が出る | (例) コンポーネント内 7px パディング | 該当パーツで本当に必要なら raw 値 OK。ただしコメントで「Figma 仕様」と明記 |
+| **比率・100% / auto** | `width: 50%` `height: auto` `inset: 0` | スケール非依存値はそのまま |
+
+### コードレビュー時のセルフチェック
+
+PR 出す前に以下を grep して 0 件か確認:
+
+```bash
+# CSS / HTML 中の pixel リテラル（タイポを除く）
+grep -nE ':\s*[0-9]+px' examples/index.html src/components/*.css \
+  | grep -v 'font-size\|line-height\|gap-\|@apply'
+```
+
+`Figma 仕様` コメントの無い pixel 値があったらトークン化する。
+
+### raw CSS で書く時の早見表
+
+`@apply` が使えない場所（`examples/index.html` 内の `<style>` ブロック等）では Tailwind の theme 変数を直接参照:
+
+| 欲しいもの | 書き方 |
+|---|---|
+| `gap-4` 相当 (16px) | `gap: calc(var(--spacing) * 4);` |
+| `p-2 px-4` 相当 | `padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);` |
+| `text-base leading-6` 相当 | `font-size: var(--text-base); line-height: var(--text-base--line-height);` |
+| `font-bold` 相当 | `font-weight: var(--font-weight-bold);` |
+| `bg-fg-high` 相当 | `background: var(--color-fg-high);` |
+| `rounded-md` 相当 | `border-radius: var(--radius-md);` |
+
+---
+
+## デザイントークンの使い方（参照表）
 
 トークンは `@theme` で宣言されており、Tailwind v4 が自動でユーティリティクラスを生成します。
-**カスタム CSS を書く時は、可能な限り Tailwind ユーティリティを `@apply` または `var(--*)` で参照**してください。
 
 | 概念 | 推奨参照 |
 |---|---|
@@ -252,9 +323,10 @@ SemVer 運用:
 
 ## やってはいけないこと
 
+- 🔴 **余白 / 色 / テキストを pixel / hex / 生数値で直書きする** → 必ずデザインシステム変数経由（詳細は「[🔴 必須ルール: ハードコーディング禁止](#-必須ルール-ハードコーディング禁止)」セクション参照）
 - ❌ `text-sm` / `text-base` 等を直接書く → `.typo-{small,medium,...}` を使う
-- ❌ pixel 値を直接書く (`padding: 14px`) → Tailwind ユーティリティか `var(--spacing-*)`
 - ❌ コンポーネント CSS で primitive color を直接参照 (`bg-slate-700`) → semantic ロール (`bg-fg-middle`) 経由
+- ❌ 祝福外の余白値 (40 / 56 / 任意 N×4px) を理由なく使う → 9 段階の祝福スケールに丸める
 - ❌ main に直接 push（保護されているので失敗するが意図しないこと）
 - ❌ `@import` の順序を雑に変える → Tailwind v4 の cascade に影響する
 - ❌ Figma を見ずに「だいたいこんな感じ」で実装 → 必ず `get_design_context` で仕様取得
