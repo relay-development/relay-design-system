@@ -1,0 +1,136 @@
+/*
+ * Tabs — recreated from Figma component set 3349:1241 (タブ)
+ *
+ *   ユーザーが扱う情報をシンプルに保つためのディスクロージャー。
+ *
+ *   props:
+ *     variant   : solid | line
+ *     isSelected: true | false      → aria-selected="true|false"
+ *     state     : enable / hover / focus / disabled
+ *     label     : string
+ *     count     : string (line variant のみ表示・isCount=true 時)
+ *
+ *   container:
+ *     solid: gap 16, tabs are individual chips
+ *     line : gap 0,  tabs touch and share the bottom border
+ *
+ *   item base (両 variant 共通):
+ *     padding 8 / 48, min-width 64
+ *     text-base bold (16/24)
+ *
+ *   colors (semantic tokens):
+ *     solid not-selected: bg white,        border stroke/middle,            text fg/middle
+ *     solid     selected: bg primary/500,  border transparent,              text white
+ *     line  not-selected: bg transparent,  border-b 1 stroke/middle,        text fg/middle
+ *     line      selected: bg transparent,  border-b 2 primary/500,          text primary/500
+ *
+ *   states:
+ *     hover : 背景 / ボーダー / 色を 1 段濃く
+ *     focus : info/500 の 3px ring (focus-ring shadow)
+ *     disabled: opacity 0.5 + cursor not-allowed (色は維持して "押せない感")
+ *
+ * Usage:
+ *   <div role="tablist" class="tabs tabs-solid">
+ *     <button role="tab" class="tab tab-solid" aria-selected="true">ラベル</button>
+ *     <button role="tab" class="tab tab-solid" aria-selected="false">ラベル</button>
+ *   </div>
+ *
+ *   <div role="tablist" class="tabs tabs-line">
+ *     <button role="tab" class="tab tab-line" aria-selected="true">
+ *       ラベル
+ *       <span class="tab-count">99件</span>
+ *     </button>
+ *     <button role="tab" class="tab tab-line" aria-selected="false">ラベル</button>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .tabs {
+    @apply inline-flex items-center;
+  }
+  .tabs-solid { @apply gap-4; }                /* 16px between chips */
+  .tabs-line  { @apply gap-0; }                /* 0px — share baseline */
+
+  /* ============================================================
+   * Tab base (button reset + shared typography)
+   * ============================================================ */
+  .tab {
+    @apply inline-flex items-center justify-center
+           gap-2
+           text-base leading-6 font-bold
+           cursor-pointer
+           border-0 bg-transparent
+           transition-colors duration-150
+           focus:outline-none;
+    min-width: 64px;
+    padding: 8px 48px;
+  }
+  .tab:disabled,
+  .tab.is-disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  /* ============================================================
+   * SOLID variant — chip-style; border + radius
+   * ============================================================ */
+  .tab-solid {
+    @apply rounded-sm border border-solid border-stroke-middle bg-white text-fg-middle;
+  }
+  .tab-solid:hover:not(:disabled):not([aria-selected="true"]),
+  .tab-solid.is-hover-preview:not([aria-selected="true"]) {
+    @apply bg-neutral-50 border-stroke-high;
+  }
+  .tab-solid:focus-visible:not(:disabled),
+  .tab-solid.is-focus-preview {
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  .tab-solid[aria-selected="true"] {
+    background-color: var(--color-primary-500);
+    border-color: transparent;
+    color: var(--color-white);
+  }
+  .tab-solid[aria-selected="true"]:hover:not(:disabled),
+  .tab-solid[aria-selected="true"].is-hover-preview {
+    background-color: var(--color-primary-600);
+  }
+
+  /* ============================================================
+   * LINE variant — underline only, no radius
+   * ============================================================ */
+  .tab-line {
+    @apply text-fg-middle;
+    border-bottom: 1px solid var(--color-stroke-middle);
+  }
+  .tab-line:hover:not(:disabled):not([aria-selected="true"]),
+  .tab-line.is-hover-preview:not([aria-selected="true"]) {
+    @apply bg-neutral-50;
+  }
+  .tab-line:focus-visible:not(:disabled),
+  .tab-line.is-focus-preview {
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  .tab-line[aria-selected="true"] {
+    color: var(--color-primary-500);
+    border-bottom-width: 2px;
+    border-bottom-color: var(--color-primary-500);
+    /* compensate the extra 1px so total visual height stays in sync */
+    padding-bottom: 7px;
+  }
+  .tab-line[aria-selected="true"]:hover:not(:disabled),
+  .tab-line[aria-selected="true"].is-hover-preview {
+    border-bottom-color: var(--color-primary-600);
+    color: var(--color-primary-600);
+  }
+
+  /* ============================================================
+   * Count badge (line variant の右側に表示)
+   * ============================================================ */
+  .tab-count {
+    @apply shrink-0 text-base leading-6 font-bold;
+  }
+}
