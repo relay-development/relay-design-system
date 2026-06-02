@@ -272,10 +272,15 @@
      *   1. base radial gradient (subtle teal wash)
      *   2. left / right blur blobs (green / yellow color clouds)
      *   3. flex children: cutout illustrations + centered HTML title + CTA
-     * Bottom edge curves via asymmetric border-radius. */
+     * Bottom edge curves via asymmetric border-radius.
+     *
+     * Spacing values are all `calc(var(--spacing) * N)` where N maps to
+     * the blessed Tailwind scale (4 / 8 / 16 / 32 / 64 px). Hero gradient
+     * colors are bespoke (sampled from the Figma artwork) and stay raw.
+     */
     .docs-hero {
       display: flex;
-      align-items: center;
+      align-items: end;
       justify-content: space-between;
       gap: 0;
       width: 100%;
@@ -283,14 +288,14 @@
         url('./assets/bg-blur-left.png')  no-repeat 5%  center / auto 120%,
         url('./assets/bg-blur-right.png') no-repeat 95% center / auto 120%,
         radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
-      border-bottom-left-radius: 50% 64px;
-      border-bottom-right-radius: 50% 64px;
+      border-bottom-left-radius:  50% calc(var(--spacing) * 16);  /* 64 */
+      border-bottom-right-radius: 50% calc(var(--spacing) * 16);
       overflow: hidden;
     }
     .docs-hero-illust {
       flex-shrink: 0;
       width: 28%;
-      max-width: 360px;
+      max-width: calc(var(--spacing) * 90);   /* 360 */
       height: auto;
       pointer-events: none;
       user-select: none;
@@ -302,31 +307,36 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 16px;
-      padding: 32px 16px 64px;   /* extra bottom pad clears the curve cut-off */
+      gap: calc(var(--spacing) * 4);          /* 16 */
+      padding:
+        calc(var(--spacing) * 16)             /* top 64 — clears curve cut-off */
+        calc(var(--spacing) * 4)              /* x   16 */
+        calc(var(--spacing) * 16);            /* bot 64 */
       text-align: center;
     }
     .docs-hero-title {
       margin: 0;
       font-size: var(--text-xl);
       line-height: var(--text-xl--line-height);
-      font-weight: 700;
+      font-weight: var(--font-weight-bold);
       color: var(--color-fg-high);
-      letter-spacing: 0.02em;
+      letter-spacing: var(--tracking-wide);
     }
     .docs-hero-content .btn svg {
-      width: 16px;
-      height: 16px;
+      width:  calc(var(--spacing) * 4);       /* 16 */
+      height: calc(var(--spacing) * 4);
     }
     /* Compact mode for narrow viewports — hide illustrations + blurs */
     @media (max-width: 640px) {
       .docs-hero { background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%); }
       .docs-hero-illust { display: none; }
-      .docs-hero-content { padding: 40px 16px 56px; }
+      .docs-hero-content {
+        padding: calc(var(--spacing) * 12) calc(var(--spacing) * 4);   /* 48 16 */
+      }
     }
 
     /* Scroll offset for anchor jumps */
-    section[id] { scroll-margin-top: 16px; }
+    section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 
     /* Hide sidebar on small screens */
     @media (max-width: 768px) {
