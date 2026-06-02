@@ -267,19 +267,59 @@
       min-width: 0;
     }
 
-    /* Hero banner — full-width clickable image at the top of content */
-    .docs-hero a {
-      display: block;
+    /* Hero banner — left / right illustrations bracket an HTML title + CTA */
+    .docs-hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0;
+      width: 100%;
+      background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
       border-radius: var(--radius-md);
       overflow: hidden;
-      transition: opacity 0.2s ease;
     }
-    .docs-hero a:hover { opacity: 0.95; }
-    .docs-hero a:focus-visible { outline: 2px solid var(--color-info-600); outline-offset: 2px; }
-    .docs-hero img {
-      display: block;
-      width: 100%;
+    .docs-hero-illust {
+      flex-shrink: 0;
+      width: 30%;
+      max-width: 320px;
       height: auto;
+      pointer-events: none;
+      user-select: none;
+      /* fade the inner edge into the gradient so the cropped illustration
+       * doesn't show a hard seam against the CSS background */
+      -webkit-mask-image: linear-gradient(to right, black 70%, transparent 100%);
+              mask-image: linear-gradient(to right, black 70%, transparent 100%);
+    }
+    .docs-hero-illust-right {
+      -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
+              mask-image: linear-gradient(to left, black 70%, transparent 100%);
+    }
+    .docs-hero-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    .docs-hero-title {
+      margin: 0;
+      font-size: var(--text-xl);
+      line-height: var(--text-xl--line-height);
+      font-weight: 700;
+      color: var(--color-fg-high);
+      letter-spacing: 0.02em;
+    }
+    .docs-hero-content .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+    /* Compact mode for narrow viewports — hide illustrations, keep content */
+    @media (max-width: 640px) {
+      .docs-hero-illust { display: none; }
+      .docs-hero-content { padding: 32px 16px; }
     }
 
     /* Scroll offset for anchor jumps */
@@ -345,18 +385,25 @@
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
 
     <!-- =====================================================================
-         HERO — welcome banner with illustrations + title + GitHub call-to-action
-         Sourced from Figma node 3375:1562. The whole banner is a single
-         clickable link to the GitHub repo so the visible "GitHub" pill in
-         the artwork actually does something.
+         HERO — welcome banner (Figma node 3375:1562)
+         Left / right illustrations are PNGs cropped out of the Figma render;
+         the title + GitHub CTA live as real HTML in the middle so they're
+         selectable, translatable, and the button is actually a link.
          ===================================================================== -->
     <section class="docs-hero">
-      <a href="https://github.com/relay-development/relay-design-system"
-         target="_blank"
-         rel="noopener noreferrer"
-         aria-label="relay Design System へようこそ — GitHub で詳細を見る">
-        <img src="./assets/hero.png" alt="relay Design System へようこそ" width="2648" height="597">
-      </a>
+      <img class="docs-hero-illust docs-hero-illust-left"
+           src="./assets/hero-left.png" alt="" aria-hidden="true">
+      <div class="docs-hero-content">
+        <h1 class="docs-hero-title">relay Design System<br>へようこそ</h1>
+        <a class="btn btn-sm btn-primary btn-outline"
+           href="https://github.com/relay-development/relay-design-system"
+           target="_blank" rel="noopener noreferrer">
+          GitHub
+          <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+        </a>
+      </div>
+      <img class="docs-hero-illust docs-hero-illust-right"
+           src="./assets/hero-right.png" alt="" aria-hidden="true">
     </section>
 
     <!-- =====================================================================
