@@ -1,0 +1,78 @@
+/*
+ * Simple Table — recreated from Figma component set 3424:1247 (シンプルテーブル)
+ *
+ *   キー / バリュー形式の縦長テーブル。
+ *   左列が Header-Cel（ラベル、neutral/50 背景・太字）、右列が Data-Cel
+ *   （値、white 背景・regular）。連続する複数行のヘッダーに対して 1 つの
+ *   data セルが rowspan で被さる "merge" パターンもサポートする。
+ *
+ *   構造（native <table> ベース）:
+ *
+ *     <table class="simple-table">
+ *       <tbody>
+ *         <tr>
+ *           <th>ラベル</th>
+ *           <td>値</td>
+ *         </tr>
+ *         <tr>
+ *           <th>関連リンク</th>
+ *           <td rowspan="4">
+ *             <a href="…" class="…">リンクテキスト</a>
+ *           </td>
+ *         </tr>
+ *         <tr><th>タグ A</th></tr>
+ *         <tr><th>タグ B</th></tr>
+ *         <tr><th>タグ C</th></tr>
+ *       </tbody>
+ *     </table>
+ *
+ *   サイズ / 色:
+ *     header cell  width 128 / bg neutral/50 / text 14-bold fg/high
+ *     data cell    flex   / bg white        / text 14-regular fg/high
+ *     row 区切り    border-bottom 1px stroke/middle
+ *     外枠          1px stroke/middle + rounded-md (16px) + overflow:hidden
+ *     padding      16px (calc(var(--spacing) * 4))
+ *
+ *   全ての spacing / color / typography 値はデザインシステムトークン経由
+ *   (CLAUDE.md「🔴 必須ルール: ハードコーディング禁止」に準拠)。
+ */
+
+@layer components {
+  .simple-table {
+    width: 100%;
+    background: var(--color-white);
+    border: 1px solid var(--color-stroke-middle);
+    border-radius: var(--radius-md);
+    border-collapse: separate;     /* required for border-radius + overflow */
+    border-spacing: 0;
+    overflow: hidden;
+  }
+
+  .simple-table th,
+  .simple-table td {
+    padding: calc(var(--spacing) * 4);   /* 16 */
+    text-align: left;
+    vertical-align: middle;
+    font-size: var(--text-sm);
+    line-height: var(--text-sm--line-height);
+    color: var(--color-fg-high);
+    border-bottom: 1px solid var(--color-stroke-middle);
+  }
+
+  .simple-table th {
+    width: calc(var(--spacing) * 32);    /* 128 */
+    background: var(--color-neutral-50);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .simple-table td {
+    background: var(--color-white);
+    font-weight: var(--font-weight-normal);
+  }
+
+  /* Last row: clean rounded bottom (drop the cell border-bottom) */
+  .simple-table tr:last-child > th,
+  .simple-table tr:last-child > td {
+    border-bottom: 0;
+  }
+}
