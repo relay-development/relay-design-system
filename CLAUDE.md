@@ -260,19 +260,33 @@ git checkout -b add-<component-name>
 - [README.md](README.md): 「コンポーネント一覧（N 個）」の表に行を追加し、N をインクリメント
 - [docs/INTRODUCTION.md](docs/INTRODUCTION.md): 冒頭の "N 種類のコンポーネント" と「入っているもの」リストを更新
 
-### Phase 7. ローカル確認 → PR → マージ
+### Phase 7. コミット & push（ここで一度ユーザーに確認）
 
 ```bash
 # dev server (起動済みでなければ)
 npm run dev   # http://localhost:5173/examples/index.html
 
-# コミット & PR
+# コミット + push（PR はまだ作らない）
 git add -A
 git commit -m "feat(<name>): ..."   # Conventional Commits
 git push -u origin add-<component-name>
-gh pr create --base main --head add-<component-name> --title "feat(<name>): …" --body "..."
+```
 
-# main 保護のため必ず PR 経由。ユーザーが OK したら:
+push が終わったらユーザーに「ローカル確認お願いします」と伝えて **止まる**。`gh pr create` はまだ叩かない。
+
+### Phase 8. PR 作成（ユーザー OK 後）
+
+ユーザーから「OK / PR 出して / マージして」など明示的な承認が来てから:
+
+```bash
+gh pr create --base main --head add-<component-name> --title "feat(<name>): …" --body "..."
+```
+
+### Phase 9. マージ（ユーザー承認後）
+
+「マージして」と来てから:
+
+```bash
 gh pr merge <N> --squash --delete-branch
 git checkout main && git pull --ff-only
 ```
@@ -317,9 +331,23 @@ SemVer 運用:
 ### Claude Code が守るべき行動規範
 
 - **main へ直接 push しない** — 保護で弾かれるが意図しないこと
+- 🛑 **実装 → branch push まで で一度止まる** — `git push` まで実行したらユーザーに「ローカル確認お願いします」と伝え、**`gh pr create` は叩かない**。AI が PR をどんどん量産すると、ユーザーがローカルで確認する暇なく PR が積み上がる
+- **PR 作成はユーザー OK 後** — 「OK」「PR 出して」「マージして」など明示的な承認が来てから `gh pr create` を叩く
 - **マージは必ずユーザー承認後** — 「マージして」と明示されてから `gh pr merge` を叩く（Auto Mode classifier の挙動と一致）
 - **PR を作る時は self-contained** に — 単一の concern を扱う。複数の変更を 1 PR に混ぜない（過去事例: Tab と CLAUDE.md は別 PR に分けた）
 - **squash merge を使う**（`gh pr merge <N> --squash --delete-branch`）— main は 1 PR = 1 commit を保つ
+
+### 実装〜マージのチェックポイント
+
+```
+[実装] → [git commit] → [git push] → 🛑 ここでユーザー確認待ち
+                                       ↓ ユーザー「OK」
+                                     [gh pr create] → 🛑 ここでもユーザー確認待ち
+                                                        ↓ ユーザー「マージして」
+                                                      [gh pr merge --squash]
+```
+
+ユーザーから明示的な合図 (「PR 出して」「マージして」等) がなければ、その先のステップに進まない。push までは autonomous に進めて OK、PR / merge は必ず人間判断を挟む。
 
 ### ブランチ命名
 
