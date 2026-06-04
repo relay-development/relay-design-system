@@ -233,7 +233,7 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 
 ---
 
-## コンポーネント一覧（15 個）
+## コンポーネント一覧（16 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -248,10 +248,11 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 | 9 | Radio          | `.radio`, `.radio-{sm,md}`, `.radio-error`, `.radio-label`, `.radio-group` |
 | 10 | Filter Chip   | `.filter-chip`, `.filter-chip-{main,icon,label,count,check,check-circle}` |
 | 11 | Tab           | `.tabs`, `.tabs-{solid,line}`, `.tab`, `.tab-{solid,line}`, `.tab-count` |
-| 12 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
-| 13 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,negative}` |
-| 14 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
-| 15 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
+| 12 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
+| 13 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
+| 14 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,negative}` |
+| 15 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
+| 16 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
 
 各コンポーネントの完成形 HTML は `snippets/*.html` を参照してください。
 
