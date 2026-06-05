@@ -291,18 +291,23 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 git checkout main && git pull --ff-only
 git checkout -b <verb>-<scope>           # 例: add-tab-component, fix-slack-notify-jq
 
-# 2. 編集 → コミット
+# 2. 編集 → コミット → push（ここで一旦止める）
 git add .
 git commit -m "feat(<scope>): ..."        # Conventional Commits 必須
-
-# 3. push & PR 作成
 git push -u origin <verb>-<scope>
+
+# 3. ローカル / Deploy Preview で動作確認
+#    確認 OK になってから次へ
+
+# 4. PR 作成
 gh pr create --fill                       # またはブラウザで PR 作成
 
-# 4. セルフマージ（squash で main は 1 PR = 1 commit に保つ）
+# 5. セルフマージ（squash で main は 1 PR = 1 commit に保つ）
 gh pr merge <N> --squash --delete-branch
 git checkout main && git pull --ff-only
 ```
+
+> **AI ツール (Claude Code 等) で作業する場合**: 「実装 → branch push → user OK → PR 作成 → user OK → merge」の **2 段階で人間判断を挟む** 運用です（push と PR を分けない・PR を即作らない）。詳細は [CLAUDE.md → Claude Code が守るべき行動規範](CLAUDE.md#claude-code-が守るべき行動規範) 参照。
 
 ### コミットメッセージ規約
 
