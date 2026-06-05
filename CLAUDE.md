@@ -52,42 +52,15 @@ dist/                    ← ビルド成果物 (gitignored)
 
 ---
 
-## 🔴 必須ルール: ハードコーディング禁止
+## ハードコード禁止 — 背景と運用
 
-**CSS / HTML を書く時、余白・色・テキストの値を pixel / hex / 生数値で直書きすることを禁止する。** 必ずデザインシステムが用意した変数 or ユーティリティクラスを通すこと。例外を作りたい時は PR の commit message で必ず理由を説明する。
+> ルール本文 (色 / 余白 / タイポ / 角丸 / 影をトークン経由でしか書かない) と禁止パターン Top 10 は [DESIGN.md](DESIGN.md) を参照。本セクションは **なぜ** その規律が必要か、**例外**、**検証コマンド**、`@apply` が使えない場面の対処を補足する。
 
 ### なぜ
 
-- トークン化されていない値は **デザインシステム改訂時に取り残される** （Figma 側で色を変えた時、ハードコード箇所だけ更新されない）
-- 「ここだけ 14.5px」のような **off-scale な値** がしれっと混入し、8×8 ベースグリッドが崩れる
+- トークン化されていない値は **デザインシステム改訂時に取り残される**（Figma 側で色を変えた時、ハードコード箇所だけ更新されない）
+- 「ここだけ 14.5px」のような **off-scale な値** がしれっと混入し、4px ベースグリッドが崩れる
 - 後から読む人が「なぜこの値？」を辿れない
-
-### 概念別: ハードコード ❌ / 正解 ✅
-
-| 概念 | ❌ ハードコード | ✅ デザインシステム経由 |
-|---|---|---|
-| **余白** (padding / margin / gap / inset) | `padding: 16px` `gap: 24px` `margin-top: 8px` | utility: `p-4` / `gap-6` / `mt-2` <br> raw CSS: `calc(var(--spacing) * 4)` etc. |
-| **色** (背景 / 文字 / ボーダー) | `color: #334155` `background: rgb(48 182 134)` | utility: `text-fg-middle` / `bg-primary-500` <br> raw CSS: `var(--color-fg-middle)` / `var(--color-primary-500)` |
-| **角丸** | `border-radius: 8px` | utility: `rounded-sm` <br> raw CSS: `var(--radius-sm)` |
-| **シャドウ** | `box-shadow: 0 1px 3px rgba(0,0,0,0.1)` | utility: `shadow-sm` <br> raw CSS: `var(--shadow-sm)` |
-| **フォントサイズ / 行間 / ウェイト** | `font-size: 16px` `line-height: 1.5` `font-weight: 700` | クラス: `.typo-medium` / `.typo-2xlarge` etc. <br> raw CSS: `var(--text-base)` + `var(--text-base--line-height)` + `var(--font-weight-bold)` |
-| **letter-spacing** | `letter-spacing: 0.02em` | `var(--tracking-{tight,normal,wide,wider,widest})` |
-| **アイコンサイズ** | `width: 20px; height: 20px` | クラス: `.icon-md` <br> raw CSS: `calc(var(--spacing) * 5)` |
-
-### 余白の "祝福スケール"
-
-Tailwind v4 は `--spacing: 0.25rem` (4px) から **任意倍数** を生成できるが、デザインシステムが**正式に祝福する**のは **9 段階のみ**:
-
-```
-spacing/0  = 0
-spacing/1  = 4   spacing/2  = 8   spacing/3  = 12
-spacing/4  = 16  spacing/6  = 24  spacing/8  = 32
-spacing/12 = 48  spacing/16 = 64
-```
-
-→ utility: `p-{0,1,2,3,4,6,8,12,16}` / raw: `calc(var(--spacing) * {0,1,2,3,4,6,8,12,16})`
-
-**祝福外の倍数（5, 7, 9, 10, 11, 13, 14, 15...）を使わない。** Figma 仕様で 40px や 56px が出てきたら、近傍の祝福値（32 or 48 / 48 or 64）に丸めて使う。本当にどうしても必要ならコミットメッセージで理由を明記。
 
 ### 例外（ハードコードを許容するケース）
 
@@ -121,22 +94,6 @@ grep -nE ':\s*[0-9]+px' examples/index.html src/components/*.css \
 | `font-bold` 相当 | `font-weight: var(--font-weight-bold);` |
 | `bg-fg-high` 相当 | `background: var(--color-fg-high);` |
 | `rounded-md` 相当 | `border-radius: var(--radius-md);` |
-
----
-
-## デザイントークンの使い方（参照表）
-
-トークンは `@theme` で宣言されており、Tailwind v4 が自動でユーティリティクラスを生成します。
-
-| 概念 | 推奨参照 |
-|---|---|
-| 色 | `bg-primary-500` / `text-fg-high` / `border-stroke-middle` (utility) または `var(--color-primary-500)` |
-| 余白 | `p-2` / `m-4` / `gap-6` etc. (4px 単位、9 段階を祝福: 0/1/2/3/4/6/8/12/16) |
-| 角丸 | `rounded-sm` / `var(--radius-md)` 等 |
-| 影 | `shadow-md` / `var(--shadow-focus-ring)` 等 |
-| タイポ | **必ず `.typo-{xsmall,small,medium,large,xlarge,2xlarge,3xlarge}` を使う**（直接 `text-sm` 等は避け、セマンティック層を通す） |
-
-`<style>` ブロックに生 CSS を書く時（`@apply` が効かない場所）は `var(--text-sm)` + `var(--text-sm--line-height)` のように **typography トークン CSS 変数を参照** する。
 
 ---
 
@@ -303,7 +260,9 @@ merge 後、`.github/workflows/deploy-pages.yml` が自動で GitHub Pages に�
 
 ## 🚀 リリースワークフロー（npm + Slack）
 
-詳細は [docs/RELEASING.md](docs/RELEASING.md)。サマリ:
+> SemVer 運用 (patch / minor / major の判断基準) は [DESIGN.md](DESIGN.md#versioning) 参照。詳細手順は [docs/RELEASING.md](docs/RELEASING.md)。
+
+実行コマンド:
 
 ```bash
 npm version patch | minor | major   # version bump + git tag 作成
@@ -313,10 +272,7 @@ gh release create vX.Y.Z --generate-notes --latest
 # → .github/workflows/notify-slack-on-release.yml が #dev_information に自動投稿
 ```
 
-SemVer 運用:
-- **patch**: バグ修正 / スタイル微調整
-- **minor**: 後方互換のあるコンポーネント / トークン追加
-- **major**: クラス名変更等の破壊的変更
+main 保護下では `git push` が弾かれるため、**release ブランチを切って PR 経由でマージしてから tag を push** する手順を使う（過去事例: v0.3.0）。
 
 ---
 
@@ -387,30 +343,20 @@ SemVer 運用:
 
 ## 過去の設計判断（読み返す価値あり）
 
+> ルールとして DESIGN.md の Non-Negotiable Principles に昇格した項目 (typo セマンティック層 / ARIA 状態 / Blessed Scale 等) は本セクションから除外。ここに残るのは **歴史的経緯** や **DS 内部の実装判断**。
+
 - **Lucide アイコンは SVG sprite として同梱**（`scripts/build-icons.mjs` → `dist/icons.svg`）。JS 依存ゼロで vanilla HTML から `<use href="...#lucide-x">` で使える
-- **Typography は `.typo-*` セマンティック層で統一**。生 `text-sm` の使用は段階的に駆逐済み
-- **Spacing は Tailwind single-base** (`--spacing: 0.25rem`) で全 `p-*` / `m-*` を自動派生。`--spacing-0..16` 等の名前付きトークンは追加しない
-- **コンポーネント state は ARIA 属性で表現** (`aria-pressed` / `aria-selected` / `disabled`)。CSS selector も `[aria-*]` を優先
+- **Spacing は Tailwind single-base** (`--spacing: 0.25rem`) で全 `p-*` / `m-*` を自動派生。`--spacing-0..16` 等の名前付きトークンは追加しない（Tailwind v4 の流儀に合わせる）
 - **カタログ用 hover/focus プレビュー**: `.is-hover-preview` / `.is-focus-preview` modifier を CSS 側で `:hover` / `:focus-visible` と OR 条件にする
 - **プレビューサイトのホスティング**: Netlify → GitHub Pages に移行済み（クレジット上限超過のため）。GitHub Pages は public repo + Free プランで容量無制限
 
 ---
 
-## やってはいけないこと
+## やってはいけないこと（DESIGN.md 補完）
 
-- 🔴 **余白 / 色 / テキストを pixel / hex / 生数値で直書きする** → 必ずデザインシステム変数経由（詳細は「[🔴 必須ルール: ハードコーディング禁止](#-必須ルール-ハードコーディング禁止)」セクション参照）
-- ❌ `text-sm` / `text-base` 等を直接書く → `.typo-{small,medium,...}` を使う
-- ❌ コンポーネント CSS で primitive color を直接参照 (`bg-slate-700`) → semantic ロール (`bg-fg-middle`) 経由
-- ❌ 祝福外の余白値 (40 / 56 / 任意 N×4px) を理由なく使う → 9 段階の祝福スケールに丸める
-- ❌ main に直接 push（保護されているので失敗するが意図しないこと）
-- ❌ `@import` の順序を雑に変える → Tailwind v4 の cascade に影響する
-- ❌ Figma を見ずに「だいたいこんな感じ」で実装 → 必ず `get_design_context` で仕様取得
+> ハードコーディング / 祝福外 spacing / primitive 直参照 / `text-sm` 直書き / main 直 push 等の禁止事項は [DESIGN.md](DESIGN.md) の Non-Negotiable Principles と禁止パターン Top 10 にまとまっている。以下は DESIGN.md に書かれていない、運用面で気をつけたい点。
 
----
-
-## 関連リンク
-
-- **本番カタログ**: https://relay-development.github.io/relay-design-system/
-- **npm**: https://www.npmjs.com/package/@light-right/design-system
-- **GitHub**: https://github.com/relay-development/relay-design-system
-- **Figma**: https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/relay-Design-System
+- ❌ **`src/index.css` の `@import` 順序を雑に変える** → Tailwind v4 の cascade に影響する（tokens → components の順序を守る）
+- ❌ **Figma を見ずに「だいたいこんな感じ」で実装** → 必ず `mcp__claude_ai_Figma__get_design_context` で仕様取得
+- ❌ **npm token を会話やコミットに含める** → `.npmrc` ローカル管理。露出したら即 revoke
+- ❌ **新しい spacing トークン (`--spacing-40` 等) を追加する** → Tailwind v4 の single-base 流儀に反する
