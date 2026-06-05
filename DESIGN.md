@@ -173,18 +173,19 @@ currentColor を継承するので text-primary-500 等で着色可能
 
 ## Source of Truth 読み順
 
+> `CLAUDE.md` は Claude Code が起動時に自動で読み込むため本表には含めない (運用ガイドはそちら参照)。
+
 | # | ファイル | 役割 |
 |---|---|---|
 | 1 | [DESIGN.md](DESIGN.md) (本ファイル) | 憲法 + quick reference |
-| 2 | [CLAUDE.md](CLAUDE.md) | AI / Claude Code 用運用ルール (ハードコード禁止 / ワークフロー詳細) |
-| 3 | [README.md](README.md) | 全コンポーネントクラス一覧 + トークン参照表 |
-| 4 | [src/tokens/](src/tokens/) | トークン定義 (colors / typography / spacing / radius / shadow) |
-| 5 | [src/components/](src/components/) | 各コンポーネント CSS 実装 (1 component = 1 file) |
-| 6 | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.1 AAA 実務チェックリスト |
-| 7 | [docs/INTRODUCTION.md](docs/INTRODUCTION.md) | 全体像・4 つの入口 (Figma / GitHub / Pages / npm) |
-| 8 | [docs/WORKSHOP.md](docs/WORKSHOP.md) | Git / PR ワークフロー (非エンジニア向け) |
-| 9 | [docs/RELEASING.md](docs/RELEASING.md) | npm publish + Slack 通知の手順 |
-| 10 | [examples/index.html](examples/index.html) | 全コンポーネントの状態網羅プレビュー (live catalog) |
+| 2 | [README.md](README.md) | 全コンポーネントクラス一覧 + トークン参照表 |
+| 3 | [src/tokens/](src/tokens/) | トークン定義 (colors / typography / spacing / radius / shadow) |
+| 4 | [src/components/](src/components/) | 各コンポーネント CSS 実装 (1 component = 1 file) |
+| 5 | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.1 AAA 実務チェックリスト |
+| 6 | [docs/INTRODUCTION.md](docs/INTRODUCTION.md) | 全体像・4 つの入口 (Figma / GitHub / Pages / npm) |
+| 7 | [docs/WORKSHOP.md](docs/WORKSHOP.md) | Git / PR ワークフロー (非エンジニア向け) |
+| 8 | [docs/RELEASING.md](docs/RELEASING.md) | npm publish + Slack 通知の手順 |
+| 9 | [examples/index.html](examples/index.html) | 全コンポーネントの状態網羅プレビュー (live catalog) |
 
 ---
 
