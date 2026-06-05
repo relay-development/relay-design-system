@@ -24,7 +24,7 @@
 
 1. **ハードコーディング禁止** — pixel / hex / 生数値で直書きしない。必ずトークン or ユーティリティ経由
 2. **Semantic Color** — `bg-primary-500` / `text-fg-high` を使う。`bg-slate-700` のような primitive 直参照は最終手段
-3. **Blessed Spacing** — `p-{0,1,2,3,4,6,8,12,16}` のみ祝福。5 / 7 / 9 / 10 などの倍数は使わない
+3. **Blessed Spacing** — `p-{0,1,2,3,4,6,8,12,16}` のみ使う。5 / 7 / 9 / 10 などの倍数は使わない
 4. **Typography セマンティック層** — `.typo-{xsmall..3xlarge}` を使う。生の `text-sm` / `text-base` は禁止
 5. **ARIA 属性で状態を表現** — `[aria-pressed="true"]` / `[aria-selected="true"]` / `:disabled` を CSS selector に使う
 6. **Figma → コード の片方向同期** — Figma が正本。コードから Figma に逆流はしない
