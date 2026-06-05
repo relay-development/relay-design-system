@@ -11,12 +11,16 @@
 - **誰が使う**: relay 系プロダクトのチーム（npm `@light-right/design-system`）
 - **配布**: npm package + 公開 GitHub Pages カタログ
 - **同期元**: Figma file `hJcKE8FkiyXtB1F9SuuE08`（片方向: Figma → コード）
+- **Quick reference (1 枚憲法)**: [DESIGN.md](DESIGN.md) — トークン値・主要コンポーネント API・禁止パターンが 1 ファイルに集約されている。UI を生成する単発タスクならまず DESIGN.md を見て、複雑な作業や運用判断が必要な時に本ファイル (CLAUDE.md) を参照する
 
 ---
 
 ## リポジトリ構造
 
 ```
+DESIGN.md                ← AI が UI を生成する時に最初に読む 1 枚憲法（トークン・主要 API・禁止パターン）
+CLAUDE.md                ← 本ファイル。運用ガイド + ワークフロー詳細
+README.md                ← 全コンポーネントクラス一覧 + トークン参照表
 src/
   index.css              ← Tailwind v4 エントリ。tokens + components の @import を集約
   tokens/                ← @theme による primitive / role トークン
@@ -37,6 +41,8 @@ scripts/
 snippets/                ← 利用者向けコピペ HTML（軽め、メインはカタログ）
 docs/
   INTRODUCTION.md        ← チームへの案内（4 つの入り口）
+  ACCESSIBILITY.md       ← WCAG 2.1 AAA 実務チェックリスト
+  WORKSHOP.md            ← Git / PR ワークフロー（非エンジニア向け勉強会資料）
   RELEASING.md           ← リリース手順 + Slack 自動通知の仕組み
 .github/workflows/
   deploy-pages.yml          ← push to main → GitHub Pages にカタログをデプロイ
