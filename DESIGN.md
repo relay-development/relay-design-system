@@ -11,11 +11,9 @@
 
 | キーワード | 意味 |
 |---|---|
-| Figma-Synced | Figma `hJcKE8FkiyXtB1F9SuuE08` の semantic tokens が source of truth |
-| Token-Driven | 色・余白・タイポ・角丸・影はすべて CSS 変数経由。pixel / hex 直書き禁止 |
-| ARIA-First | 状態は `aria-pressed` / `aria-selected` / `disabled` で表現。クラスは最終手段 |
-| Blessed Scale | 4px 倍数のうち 9 段階 (0/1/2/3/4/6/8/12/16) のみが公式 |
-| AAA-Aspiring | WCAG 2.1 Level AAA を念頭に、コントラスト 7:1 / focus-visible を default で担保 |
+|  |  |
+
+> _キーワード一覧はチームで議論中。決定次第ここに追記する。_
 
 参考: Linear / Notion / Stripe — 控えめで機能的、しかし精密
 アンチ: 7px や 14.5px のような off-scale 値 / `#334155` のような直書き色
