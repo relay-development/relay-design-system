@@ -3,10 +3,9 @@ name: Notify Slack on release
 # GitHub Release が published されたら #dev_information に通知。
 # 通知内容:
 #   - バージョン
-#   - リリースノート (release.body)
+#   - 変更点 (release.body の箇条書き、最大 3 件 + 「その他 N 件対応」)
 #   - 前回 Release 以降に close された Issue 一覧
 #   - リリースノート / プレビューサイトへのリンク
-#   - npm install コマンド
 #
 # 事前準備:
 #   - Slack で Incoming Webhook を作成 (#dev_information 指定)
@@ -24,6 +23,35 @@ jobs:
   notify:
     runs-on: ubuntu-latest
     steps:
+      # リリースノートの箇条書きを最大 3 件に要約 (超過分は「その他 N 件対応」)
+      - name: Build change summary (max 3 bullets)
+        id: changes
+        env:
+          BODY: ${{ github.event.release.body }}
+        run: |
+          set -e
+          # リリースノートの箇条書き行 (- * •) を最大 3 件に要約。
+          # 超過分は「その他 N 件対応」にまとめる。箇条書きが無ければプレースホルダ。
+          summary=$(printf '%s\n' "$BODY" | awk '
+            /^[[:space:]]*[-*•][[:space:]]+/ {
+              line = $0
+              sub(/^[[:space:]]*[-*•][[:space:]]+/, "", line)
+              items[++n] = line
+            }
+            END {
+              if (n == 0) { print "_変更点の記載なし_"; exit }
+              shown = (n > 3) ? 3 : n
+              for (i = 1; i <= shown; i++) print "• " items[i]
+              if (n > 3) print "• その他 " (n - 3) " 件対応"
+            }
+          ')
+
+          {
+            echo "SUMMARY<<EOF"
+            printf '%s\n' "$summary"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       # 前回 Release 以降に close された Issue 一覧 (PR は除外)
       - name: Collect closed issues since previous release
         id: issues
@@ -67,7 +95,7 @@ jobs:
           WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           TAG: ${{ github.event.release.tag_name }}
           URL: ${{ github.event.release.html_url }}
-          BODY: ${{ github.event.release.body }}
+          SUMMARY: ${{ steps.changes.outputs.SUMMARY }}
           ISSUES: ${{ steps.issues.outputs.LIST }}
         run: |
           set -e
@@ -79,7 +107,7 @@ jobs:
           payload=$(jq -n \
             --arg tag "$TAG" \
             --arg url "$URL" \
-            --arg body "$BODY" \
+            --arg summary "$SUMMARY" \
             --arg issues "$ISSUES" \
             '{
               blocks: [
@@ -89,8 +117,7 @@ jobs:
                 },
                 {
                   type: "section",
-                  text: { type: "mrkdwn",
-                          text: (if $body == "" then "_変更点の記載なし_" else "*変更点*\n\($body)" end) }
+                  text: { type: "mrkdwn", text: "*変更点*\n\($summary)" }
                 },
                 {
                   type: "section",
@@ -102,11 +129,6 @@ jobs:
                     { type: "mrkdwn", text: "*リリースノート*\n<\($url)|GitHub Release>" },
                     { type: "mrkdwn", text: "*プレビューサイト*\n<https://relay-development.github.io/relay-design-system/|カタログ>" }
                   ]
-                },
-                {
-                  type: "section",
-                  text: { type: "mrkdwn",
-                          text: "*インストール*\n`npm install @light-right/design-system@\($tag | sub("^v"; ""))`" }
                 }
               ]
             }')
