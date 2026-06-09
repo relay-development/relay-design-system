@@ -350,25 +350,50 @@
 /* Scroll offset for anchor jumps */
 section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 
-/* Landing page — component index card grid */
+/* Landing page — component index cards.
+ * Figma node 3481:1226: each card = a tinted preview panel showing a live
+ * component instance, with a name/desc label below. The whole card is a link
+ * via a stretched ::after; the preview is `inert` so its controls never steal
+ * the click or keyboard focus. */
 .page-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: calc(var(--spacing) * 4);
 }
 .page-card {
-  display: block;
-  padding: calc(var(--spacing) * 4);
+  position: relative;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--color-stroke-middle);
   border-radius: var(--radius-md);
   background: var(--color-surface);
-  text-decoration: none;
+  overflow: hidden;
   transition: border-color 0.12s ease, box-shadow 0.12s ease;
 }
 .page-card:hover {
   border-color: var(--color-primary-300);
   box-shadow: var(--shadow-sm);
 }
+.page-card-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);
+  min-height: calc(var(--spacing) * 28);   /* 112 */
+  padding: calc(var(--spacing) * 4);
+  background: var(--color-primary-50);
+  border-bottom: 1px solid var(--color-stroke-low);
+  overflow: hidden;
+}
+.page-card-label { padding: calc(var(--spacing) * 3); }
+.page-card-link { text-decoration: none; }
+.page-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.page-card:hover .page-card-link { text-decoration: none; }
 
 /* Hide sidebar on small screens */
 @media (max-width: 768px) {
