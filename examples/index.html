@@ -1092,7 +1092,7 @@
           <h3 class="typo-large font-semibold">テキスト</h3>
           <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: text-*</code>
         </div>
-        <p class="typo-small text-fg-low mb-4">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。</p>
+        <p class="typo-small text-fg-low mb-4">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。WCAG コントラスト準拠状況は <a href="#text-wcag-matrix" class="text-info-600 underline">下のマトリクス</a> を参照。</p>
 
         <div class="grid lg:grid-cols-2 gap-6">
           <!-- Light tokens -->
@@ -1145,62 +1145,6 @@
                 <div class="swatch is-circle" style="background:var(--color-fg-low-inverse);"></div>
                 <div class="meta"><p class="token-name">fg-low-inverse</p><p class="token-ref">→ slate/300</p></div>
                 <span class="text-fg-low-inverse typo-small">補助テキスト</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- =========================================================
-           境界線 (Border)
-           ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">境界線</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: border-*</code>
-        </div>
-        <p class="typo-small text-fg-low mb-4">階層に応じて 3 段階。inverse はダーク背景の上で使う。</p>
-
-        <div class="grid lg:grid-cols-2 gap-6">
-          <!-- Light -->
-          <div>
-            <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">light</p>
-            <div class="token-list">
-              <div class="token-row">
-                <div class="swatch bg-white" style="border:1px solid var(--color-stroke-high);"></div>
-                <div class="meta"><p class="token-name">stroke-high</p><p class="token-ref">→ slate/300</p></div>
-                <span class="hex">#cbd5e1</span>
-              </div>
-              <div class="token-row">
-                <div class="swatch bg-white" style="border:1px solid var(--color-stroke-middle);"></div>
-                <div class="meta"><p class="token-name">stroke-middle</p><p class="token-ref">→ slate/200</p></div>
-                <span class="hex">#e2e8f0</span>
-              </div>
-              <div class="token-row">
-                <div class="swatch bg-white" style="border:1px solid var(--color-stroke-low);"></div>
-                <div class="meta"><p class="token-name">stroke-low</p><p class="token-ref">→ slate/100</p></div>
-                <span class="hex">#f1f5f9</span>
-              </div>
-            </div>
-          </div>
-          <!-- Inverse -->
-          <div>
-            <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">inverse</p>
-            <div class="token-list is-inverse">
-              <div class="token-row">
-                <div class="swatch" style="border:1px solid var(--color-stroke-high-inverse);"></div>
-                <div class="meta"><p class="token-name">stroke-high-inverse</p><p class="token-ref">→ slate/100</p></div>
-                <span class="hex">#f1f5f9</span>
-              </div>
-              <div class="token-row">
-                <div class="swatch" style="border:1px solid var(--color-stroke-middle-inverse);"></div>
-                <div class="meta"><p class="token-name">stroke-middle-inverse</p><p class="token-ref">→ slate/200</p></div>
-                <span class="hex">#e2e8f0</span>
-              </div>
-              <div class="token-row">
-                <div class="swatch" style="border:1px solid var(--color-stroke-low-inverse);"></div>
-                <div class="meta"><p class="token-name">stroke-low-inverse</p><p class="token-ref">→ slate/300</p></div>
-                <span class="hex">#cbd5e1</span>
               </div>
             </div>
           </div>
@@ -1302,6 +1246,202 @@
           </div>
         </div>
       </section>
+
+      <!-- =========================================================
+           WCAG コントラスト × テキストサイズ マトリクス
+           テキストトークン × タイポグラフィークラス を横断したガイド
+           ========================================================= -->
+      <div id="text-wcag-matrix" class="card mb-12 overflow-hidden">
+        <div class="card-header">
+          <h4 class="card-title">WCAG コントラスト × テキストサイズ</h4>
+          <p class="card-subtitle">テキストサイズによって要求されるコントラスト比が変わる</p>
+        </div>
+        <div class="card-body">
+
+          <!-- Threshold legend -->
+          <p class="typo-small text-fg-middle mb-3">
+            WCAG は <strong>大きいテキスト</strong>(18pt = 24px 以上、または 14pt = 18.66px 以上の太字) と <strong>通常テキスト</strong>(それ未満) で要件を分けている:
+          </p>
+          <div class="grid sm:grid-cols-2 gap-3 mb-6">
+            <div class="border border-stroke-middle rounded-md p-4 bg-neutral-50">
+              <p class="typo-xsmall font-semibold text-fg-low uppercase tracking-wide mb-2">通常テキスト</p>
+              <p class="typo-small text-fg-high">AA: <span class="font-mono">4.5:1</span> 以上</p>
+              <p class="typo-small text-fg-high">AAA: <span class="font-mono">7:1</span> 以上</p>
+              <p class="typo-xsmall text-fg-low mt-2"><code class="typo-xsmall">.typo-xsmall</code> / <code class="typo-xsmall">.typo-small</code> / <code class="typo-xsmall">.typo-medium</code></p>
+            </div>
+            <div class="border border-stroke-middle rounded-md p-4 bg-neutral-50">
+              <p class="typo-xsmall font-semibold text-fg-low uppercase tracking-wide mb-2">大きいテキスト</p>
+              <p class="typo-small text-fg-high">AA: <span class="font-mono">3:1</span> 以上</p>
+              <p class="typo-small text-fg-high">AAA: <span class="font-mono">4.5:1</span> 以上</p>
+              <p class="typo-xsmall text-fg-low mt-2"><code class="typo-xsmall">.typo-large</code> / <code class="typo-xsmall">.typo-xlarge</code> / <code class="typo-xsmall">.typo-2xlarge</code> / <code class="typo-xsmall">.typo-3xlarge</code></p>
+            </div>
+          </div>
+
+          <!-- Matrix table -->
+          <div class="border border-stroke-middle rounded-md overflow-hidden">
+            <!-- Header -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle items-end">
+              <div>トークン</div>
+              <div>比率</div>
+              <div class="text-center">通常<br>AA</div>
+              <div class="text-center">通常<br>AAA</div>
+              <div class="text-center">大きい<br>AA</div>
+              <div class="text-center">大きい<br>AAA</div>
+              <div>使用ガイド</div>
+            </div>
+
+            <!-- fg-high -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-high</code>
+              <span class="font-mono text-fg-middle typo-xsmall">18:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">本文・見出し全般。AAA でも安心</span>
+            </div>
+
+            <!-- fg-middle -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-middle</code>
+              <span class="font-mono text-fg-middle typo-xsmall">10.7:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">本文 default。AAA でも安心</span>
+            </div>
+
+            <!-- fg-low -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-low</code>
+              <span class="font-mono text-fg-middle typo-xsmall">4.5:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">AAA 本文 NG。<code class="typo-xsmall">.typo-large</code> 以上なら AAA も OK</span>
+            </div>
+
+            <!-- fg-placeholder -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-placeholder</code>
+              <span class="font-mono text-fg-middle typo-xsmall">3.0:1</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-fg-middle typo-xsmall">プレースホルダ専用。本文には使わない</span>
+            </div>
+
+            <!-- fg-disabled -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-disabled</code>
+              <span class="font-mono text-fg-middle typo-xsmall">3.0:1</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-fg-middle typo-xsmall">無効化コントロール (WCAG 1.4.3 Note 2 で例外)</span>
+            </div>
+
+            <!-- fg-high-inverse -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-high-inverse</code>
+              <span class="font-mono text-fg-middle typo-xsmall">18:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">ダーク背景上の見出し・本文</span>
+            </div>
+
+            <!-- fg-middle-inverse -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-middle-inverse</code>
+              <span class="font-mono text-fg-middle typo-xsmall">12:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">ダーク背景上の本文</span>
+            </div>
+
+            <!-- fg-low-inverse -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center">
+              <code class="font-mono typo-xsmall">fg-low-inverse</code>
+              <span class="font-mono text-fg-middle typo-xsmall">8:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">ダーク背景上の補助テキスト</span>
+            </div>
+          </div>
+
+          <!-- Footnote -->
+          <p class="typo-xsmall text-fg-low mt-4">
+            凡例: <span class="text-success-600 font-bold">✓</span> 使用可 / <span class="text-fg-low font-bold">✗</span> 不可 / <span class="text-fg-low font-bold">—</span> 例外扱い。詳細は <a href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md#143-コントラスト-最低限-aa--ds-で担保" class="text-info-600 underline" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> 参照。
+          </p>
+
+        </div>
+      </div>
+
+      <!-- =========================================================
+           境界線 (Border)
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">境界線</h3>
+          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: border-*</code>
+        </div>
+        <p class="typo-small text-fg-low mb-4">階層に応じて 3 段階。inverse はダーク背景の上で使う。</p>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <!-- Light -->
+          <div>
+            <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">light</p>
+            <div class="token-list">
+              <div class="token-row">
+                <div class="swatch bg-white" style="border:1px solid var(--color-stroke-high);"></div>
+                <div class="meta"><p class="token-name">stroke-high</p><p class="token-ref">→ slate/300</p></div>
+                <span class="hex">#cbd5e1</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch bg-white" style="border:1px solid var(--color-stroke-middle);"></div>
+                <div class="meta"><p class="token-name">stroke-middle</p><p class="token-ref">→ slate/200</p></div>
+                <span class="hex">#e2e8f0</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch bg-white" style="border:1px solid var(--color-stroke-low);"></div>
+                <div class="meta"><p class="token-name">stroke-low</p><p class="token-ref">→ slate/100</p></div>
+                <span class="hex">#f1f5f9</span>
+              </div>
+            </div>
+          </div>
+          <!-- Inverse -->
+          <div>
+            <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">inverse</p>
+            <div class="token-list is-inverse">
+              <div class="token-row">
+                <div class="swatch" style="border:1px solid var(--color-stroke-high-inverse);"></div>
+                <div class="meta"><p class="token-name">stroke-high-inverse</p><p class="token-ref">→ slate/100</p></div>
+                <span class="hex">#f1f5f9</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch" style="border:1px solid var(--color-stroke-middle-inverse);"></div>
+                <div class="meta"><p class="token-name">stroke-middle-inverse</p><p class="token-ref">→ slate/200</p></div>
+                <span class="hex">#e2e8f0</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch" style="border:1px solid var(--color-stroke-low-inverse);"></div>
+                <div class="meta"><p class="token-name">stroke-low-inverse</p><p class="token-ref">→ slate/300</p></div>
+                <span class="hex">#cbd5e1</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- =========================================================
            余白 (Spacing) — 8px ベースグリッドの 9 段階スケール
