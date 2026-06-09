@@ -24,29 +24,29 @@ const PAGES_DIR = resolve(EXAMPLES, "pages");
 // group: sidebar group title (pages with the same group are bundled together).
 // label: sidebar link text.  title: <title> + landing card heading.
 const PAGES = [
-  { file: "color.html",      group: "Foundations", label: "色 (Color)",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
+  { file: "color.html",      group: "Foundations", label: "色",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
   { file: "typography.html", group: "Foundations", label: "タイポグラフィ",  title: "タイポグラフィ", desc: "フォントスケール + .typo-* クラス" },
   { file: "layout.html",     group: "Foundations", label: "レイアウト",      title: "レイアウト",     desc: "余白 / 角丸 / 境界線" },
   { file: "effects.html",    group: "Foundations", label: "エフェクト",      title: "エフェクト",     desc: "シャドウ / Opacity" },
-  { file: "icons.html",      group: "Foundations", label: "Icons",          title: "Icons",        desc: "Lucide スプライト 38 アイコン" },
+  { file: "icons.html",      group: "Foundations", label: "アイコン",          title: "アイコン",        desc: "Lucide スプライト 38 アイコン" },
 
-  { file: "button.html",       group: "Components", label: "Button",       title: "Button",       desc: "variant × theme × size × state" },
-  { file: "icon-button.html",  group: "Components", label: "Icon Button",  title: "Icon Button",  desc: "アイコンのみのボタン" },
-  { file: "label-control.html",group: "Components", label: "Label Control",title: "Label Control",desc: "フォーム項目ラベル + バッジ" },
-  { file: "input.html",        group: "Components", label: "Input",        title: "Input",        desc: "単一行テキスト入力" },
-  { file: "search-input.html", group: "Components", label: "Search Input", title: "Search Input", desc: "検索フィールド + クリア / 送信" },
-  { file: "selector.html",     group: "Components", label: "Selector",     title: "Selector",     desc: "セレクト / ドロップダウン" },
-  { file: "textarea.html",     group: "Components", label: "Textarea",     title: "Textarea",     desc: "複数行入力 + 文字カウンター" },
-  { file: "checkbox.html",     group: "Components", label: "Checkbox",     title: "Checkbox",     desc: "チェックボックス + nested" },
-  { file: "radio.html",        group: "Components", label: "Radio",        title: "Radio",        desc: "ラジオボタン + group" },
-  { file: "filter-chip.html",  group: "Components", label: "Filter Chip",  title: "Filter Chip",  desc: "トグル可能なチップ" },
-  { file: "tab.html",          group: "Components", label: "Tab",          title: "Tab",          desc: "タブバー (solid / line)" },
-  { file: "simple-table.html", group: "Components", label: "Simple Table", title: "Simple Table", desc: "キー / バリュー テーブル" },
-  { file: "card.html",         group: "Components", label: "Card",         title: "Card",         desc: "コンテナ (header / body / footer)" },
-  { file: "badge.html",        group: "Components", label: "Badge",        title: "Badge",        desc: "ステータス / ラベルバッジ" },
-  { file: "alert.html",        group: "Components", label: "Alert",        title: "Alert",        desc: "アラート (info / success / warning / negative)" },
+  { file: "button.html",       group: "Components", label: "ボタン",       title: "ボタン",       desc: "variant × theme × size × state" },
+  { file: "icon-button.html",  group: "Components", label: "アイコンボタン",  title: "アイコンボタン",  desc: "アイコンのみのボタン" },
+  { file: "label-control.html",group: "Components", label: "ラベルコントロール",title: "ラベルコントロール",desc: "フォーム項目ラベル + バッジ" },
+  { file: "input.html",        group: "Components", label: "インプット",        title: "インプット",        desc: "単一行テキスト入力" },
+  { file: "search-input.html", group: "Components", label: "サーチインプット", title: "サーチインプット", desc: "検索フィールド + クリア / 送信" },
+  { file: "selector.html",     group: "Components", label: "セレクター",     title: "セレクター",     desc: "セレクト / ドロップダウン" },
+  { file: "textarea.html",     group: "Components", label: "テキストエリア",     title: "テキストエリア",     desc: "複数行入力 + 文字カウンター" },
+  { file: "checkbox.html",     group: "Components", label: "チェックボックス",     title: "チェックボックス",     desc: "チェックボックス + nested" },
+  { file: "radio.html",        group: "Components", label: "ラジオ",        title: "ラジオ",        desc: "ラジオボタン + group" },
+  { file: "filter-chip.html",  group: "Components", label: "フィルターチップ",  title: "フィルターチップ",  desc: "トグル可能なチップ" },
+  { file: "tab.html",          group: "Components", label: "タブ",          title: "タブ",          desc: "タブバー (solid / line)" },
+  { file: "simple-table.html", group: "Components", label: "シンプルテーブル", title: "シンプルテーブル", desc: "キー / バリュー テーブル" },
+  { file: "card.html",         group: "Components", label: "カード",         title: "カード",         desc: "コンテナ (header / body / footer)" },
+  { file: "badge.html",        group: "Components", label: "バッジ",        title: "バッジ",        desc: "ステータス / ラベルバッジ" },
+  { file: "alert.html",        group: "Components", label: "アラート",        title: "アラート",        desc: "アラート (info / success / warning / negative)" },
 
-  { file: "guidelines.html",   group: "ガイドライン", label: "Guidelines", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
+  { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
 ];
 
 const INDEX = { file: "index.html", title: "Relay Design System" };
