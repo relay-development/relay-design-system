@@ -93,7 +93,7 @@ import iconsUrl from "@light-right/design-system/icons";
 
 #### 同梱アイコン一覧
 
-カタログの [Icons セクション](https://relay-development.github.io/relay-design-system/#icons) を参照。追加して欲しい Lucide アイコンがあれば GitHub Issue で。
+カタログの [アイコンページ](https://relay-development.github.io/relay-design-system/icons.html) を参照。追加して欲しい Lucide アイコンがあれば GitHub Issue で。
 
 ### 7. Issue / 要望
 
@@ -110,7 +110,13 @@ src/
   tokens/          ← @theme によるトークン定義（color/typography/spacing/radius/shadow）
   components/      ← .btn / .input / .card など、@layer components のクラス定義
 snippets/          ← 各コンポーネントの貼り付け可能な HTML
-examples/index.html← 全コンポーネントを一覧できるプレビューページ
+examples/
+  pages/           ← プレビュー各ページの本文断片（編集する source）
+  catalog.css      ← プレビュー共通スタイル
+  catalog.js       ← プレビュー共通スクリプト
+  *.html           ← build:pages が生成するページ（gitignore）
+scripts/
+  build-pages.mjs  ← 共通テンプレート + 断片 → examples/*.html を生成
 dist/              ← ビルド成果物（relay.css / tokens.css）
 ```
 
@@ -120,9 +126,12 @@ dist/              ← ビルド成果物（relay.css / tokens.css）
 
 ```bash
 npm install
-npm run dev      # http://localhost:5173/examples/index.html
-npm run build    # dist/relay.css と dist/tokens.css を生成
+npm run dev        # build:pages 後に起動 → http://localhost:5173/examples/index.html（トップ）
+npm run build:pages# examples/*.html を生成（断片 examples/pages/* を編集したら再実行）
+npm run build      # dist/relay.css と dist/tokens.css を生成
 ```
+
+> プレビューは **マルチページ**構成です。トップ（`index.html`）から各コンポーネント／Foundations ページへ遷移できます。ページは `examples/pages/*.html`（本文断片）+ 共通テンプレート（`scripts/build-pages.mjs`）から生成され、生成物 `examples/*.html` は gitignore 対象です。
 
 ## 利用側からの使い方
 
@@ -265,7 +274,7 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 1. `mcp__claude_ai_Figma__get_variable_defs` または Plugin API 経由で `semantic tokens` コレクションを取得
 2. 値を `src/tokens/*.css` の `@theme` と `src/tokens.css` の `:root` へ反映
 3. 各コンポーネントの Figma 仕様（`get_design_context`）と CSS を突き合わせて調整
-4. `examples/index.html` で視覚確認 → 必要なら Figma スクリーンショットと並べて差分検証
+4. `npm run dev` で該当コンポーネントのプレビューページ（`examples/<name>.html`）を視覚確認 → 必要なら Figma スクリーンショットと並べて差分検証
 
 最新の Figma 同期日: 2026-05-25。
 
