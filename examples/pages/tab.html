@@ -1,0 +1,106 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="tab">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">タブ</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">variant</code> (solid / line) × <code class="px-1 bg-neutral-100 rounded">isSelected</code> × <code class="px-1 bg-neutral-100 rounded">state</code> (enable / hover / focus / disabled)</p>
+      <p class="typo-small text-fg-middle mb-6">ユーザーが扱う情報をシンプルに保つためのディスクロージャー。</p>
+
+      <!-- ===== SOLID variant: isSelected × state matrix ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">solid × state</h3>
+          <p class="card-subtitle">isSelected: false / true × enable / hover / focus / disabled</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">isSelected: false</span>
+          <span class="typo-xsmall text-fg-low text-center">isSelected: true</span>
+
+          <!-- enable -->
+          <span class="typo-xsmall text-fg-low text-right">enable</span>
+          <div class="flex justify-center"><button class="tab tab-solid" aria-selected="false">ラベル</button></div>
+          <div class="flex justify-center"><button class="tab tab-solid" aria-selected="true">ラベル</button></div>
+
+          <!-- hover -->
+          <span class="typo-xsmall text-fg-low text-right">hover</span>
+          <div class="flex justify-center"><button class="tab tab-solid is-hover-preview" aria-selected="false">ラベル</button></div>
+          <div class="flex justify-center"><button class="tab tab-solid is-hover-preview" aria-selected="true">ラベル</button></div>
+
+          <!-- focus -->
+          <span class="typo-xsmall text-fg-low text-right">focus</span>
+          <div class="flex justify-center"><button class="tab tab-solid is-focus-preview" aria-selected="false">ラベル</button></div>
+          <div class="flex justify-center"><button class="tab tab-solid is-focus-preview" aria-selected="true">ラベル</button></div>
+
+          <!-- disabled -->
+          <span class="typo-xsmall text-fg-low text-right">disabled</span>
+          <div class="flex justify-center"><button class="tab tab-solid" aria-selected="false" disabled>ラベル</button></div>
+          <div class="flex justify-center"><button class="tab tab-solid" aria-selected="true" disabled>ラベル</button></div>
+        </div>
+      </div>
+
+      <!-- ===== LINE variant: isSelected × state matrix ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">line × state</h3>
+          <p class="card-subtitle">isSelected: false / true × enable / hover / focus / disabled (count 表示は line variant のみ)</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">isSelected: false</span>
+          <span class="typo-xsmall text-fg-low text-center">isSelected: true</span>
+
+          <!-- enable -->
+          <span class="typo-xsmall text-fg-low text-right">enable</span>
+          <div class="flex justify-center"><button class="tab tab-line" aria-selected="false">ラベル <span class="tab-count">99件</span></button></div>
+          <div class="flex justify-center"><button class="tab tab-line" aria-selected="true">ラベル <span class="tab-count">99件</span></button></div>
+
+          <!-- hover -->
+          <span class="typo-xsmall text-fg-low text-right">hover</span>
+          <div class="flex justify-center"><button class="tab tab-line is-hover-preview" aria-selected="false">ラベル <span class="tab-count">99件</span></button></div>
+          <div class="flex justify-center"><button class="tab tab-line is-hover-preview" aria-selected="true">ラベル <span class="tab-count">99件</span></button></div>
+
+          <!-- focus -->
+          <span class="typo-xsmall text-fg-low text-right">focus</span>
+          <div class="flex justify-center"><button class="tab tab-line is-focus-preview" aria-selected="false">ラベル <span class="tab-count">99件</span></button></div>
+          <div class="flex justify-center"><button class="tab tab-line is-focus-preview" aria-selected="true">ラベル <span class="tab-count">99件</span></button></div>
+
+          <!-- disabled -->
+          <span class="typo-xsmall text-fg-low text-right">disabled</span>
+          <div class="flex justify-center"><button class="tab tab-line" aria-selected="false" disabled>ラベル <span class="tab-count">99件</span></button></div>
+          <div class="flex justify-center"><button class="tab tab-line" aria-selected="true" disabled>ラベル <span class="tab-count">99件</span></button></div>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — solid</h3>
+          <p class="card-subtitle">クリックで isSelected をトグル（兄弟同士の選択を排他にする JS は data-tabgroup で対応）</p>
+        </div>
+        <div class="card-body">
+          <div role="tablist" class="tabs tabs-solid" data-tabgroup>
+            <button role="tab" class="tab tab-solid" aria-selected="true">概要</button>
+            <button role="tab" class="tab tab-solid" aria-selected="false">仕様</button>
+            <button role="tab" class="tab tab-solid" aria-selected="false">レビュー</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — line (with count)</h3>
+          <p class="card-subtitle">タブ右側に件数バッジ。tab-count 要素を含めるだけ</p>
+        </div>
+        <div class="card-body">
+          <div role="tablist" class="tabs tabs-line" data-tabgroup>
+            <button role="tab" class="tab tab-line" aria-selected="true">すべて <span class="tab-count">124件</span></button>
+            <button role="tab" class="tab tab-line" aria-selected="false">未読 <span class="tab-count">12件</span></button>
+            <button role="tab" class="tab tab-line" aria-selected="false">アーカイブ <span class="tab-count">87件</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

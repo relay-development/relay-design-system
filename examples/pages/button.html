@@ -1,0 +1,271 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="button">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">ボタン</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> × <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">variant</code> × <code class="px-1 bg-neutral-100 rounded">state</code></p>
+
+      <!-- ===== Variant × Theme matrix (size = medium) ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">Variant × Theme  <span class="text-fg-low font-normal typo-xsmall ml-2">size = medium / state = enable</span></h3>
+        </div>
+        <div class="card-body overflow-x-auto">
+          <table class="w-full border-collapse">
+            <thead>
+              <tr class="text-fg-low typo-xsmall">
+                <th class="text-left px-3 py-2 font-medium w-32">&nbsp;</th>
+                <th class="px-3 py-2 font-medium">solid</th>
+                <th class="px-3 py-2 font-medium">outline</th>
+                <th class="px-3 py-2 font-medium">subtle</th>
+                <th class="px-3 py-2 font-medium">ghost</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">primary</th>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-solid">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-outline">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-subtle">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-primary btn-ghost">ボタン</button></td>
+              </tr>
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">secondary</th>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-solid">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-outline">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-subtle">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-secondary btn-ghost">ボタン</button></td>
+              </tr>
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">neutral</th>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-solid">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-outline">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-subtle">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-neutral btn-ghost">ボタン</button></td>
+              </tr>
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">negative</th>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-solid">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-outline">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-subtle">ボタン</button></td>
+                <td class="px-3 py-3"><button type="button" class="btn btn-md btn-negative btn-ghost">ボタン</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== Size × State matrix (theme = primary, variant = solid) ===== -->
+      <div class="grid lg:grid-cols-2 gap-6 mb-8">
+        <!-- Size scale -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">size</h3>
+            <p class="card-subtitle">primary / solid</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">small</span>
+              <button type="button" class="btn btn-sm btn-primary btn-solid">ボタン</button>
+              <span class="text-[10px] text-fg-low font-mono">h32 · p4/12 · 14/24</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">medium</span>
+              <button type="button" class="btn btn-md btn-primary btn-solid">ボタン</button>
+              <span class="text-[10px] text-fg-low font-mono">h40 · p8/24 · 14/24</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">large</span>
+              <button type="button" class="btn btn-lg btn-primary btn-solid">ボタン</button>
+              <span class="text-[10px] text-fg-low font-mono">h48 · p12/24 · 16/24</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">xlarge</span>
+              <button type="button" class="btn btn-xl btn-primary btn-solid">ボタン</button>
+              <span class="text-[10px] text-fg-low font-mono">h72 · p16/40 · 24/40</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- State -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">state</h3>
+            <p class="card-subtitle">primary / solid / medium</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">enable</span>
+              <button type="button" class="btn btn-md btn-primary btn-solid">ボタン</button>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">hover</span>
+              <button type="button" class="btn btn-md btn-primary btn-solid" style="background-color:var(--color-primary-600);">ボタン</button>
+              <span class="text-[10px] text-fg-low">bg: primary/600</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">focus</span>
+              <button type="button" class="btn btn-md btn-primary btn-solid" style="outline:2px solid var(--color-info-600); outline-offset:2px;">ボタン</button>
+              <span class="text-[10px] text-fg-low">＋ outline info/600</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">loading</span>
+              <button type="button" class="btn btn-md btn-primary btn-solid" data-loading>ボタン</button>
+              <span class="text-[10px] text-fg-low">data-loading</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">disabled</span>
+              <button type="button" class="btn btn-md btn-primary btn-solid" disabled>ボタン</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Icon slots (prefix / suffix) ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">prefix / suffix</h3>
+          <p class="card-subtitle">slot は 24×24 / gap 8 — アイコン単体は <code class="typo-xsmall px-1 bg-neutral-100 rounded">.icon-btn</code> を使う</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-4">
+          <div class="space-y-2">
+            <p class="typo-xsmall text-fg-low">prefix slot</p>
+            <button type="button" class="btn btn-md btn-primary btn-solid">
+              <svg class="size-5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"/></svg>
+              追加
+            </button>
+          </div>
+          <div class="space-y-2">
+            <p class="typo-xsmall text-fg-low">suffix slot</p>
+            <button type="button" class="btn btn-md btn-neutral btn-outline">
+              次へ
+              <svg class="size-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z" clip-rule="evenodd"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== NG patterns ===== -->
+      <div class="mb-8">
+        <div class="flex items-baseline justify-between mb-3">
+          <h3 class="typo-large font-semibold">NG パターン</h3>
+          <span class="typo-xsmall text-fg-low">ボタンを並べる時の注意点</span>
+        </div>
+
+        <!-- Rule 1: same size -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <!-- Don't -->
+            <div class="p-6 bg-negative-50">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="btn btn-sm btn-primary btn-outline">キャンセル</button>
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              </div>
+              <p class="typo-small text-fg-middle">サイズが異なるボタンを隣り合わせで使用することは避けてください。</p>
+            </div>
+            <!-- Good -->
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="btn btn-md btn-primary btn-outline">キャンセル</button>
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              </div>
+              <p class="typo-small text-fg-middle">並ぶボタンは同じサイズで揃え、ヒエラルキーは variant（solid / outline）で表現する。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rule 2: don't combine two strong solids -->
+        <div class="card overflow-hidden">
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <!-- Don't -->
+            <div class="p-6 bg-negative-50">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="btn btn-md btn-secondary btn-solid">確認する</button>
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              </div>
+              <p class="typo-small text-fg-middle">塗りつぶしの色が異なる場合、2 つの solid ボタンを隣り合わせで使用することは避けてください。</p>
+            </div>
+            <!-- Good -->
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="btn btn-md btn-neutral btn-subtle">確認する</button>
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              </div>
+              <p class="typo-small text-fg-middle">主アクション 1 つだけを solid にして強調し、副アクションは neutral / subtle で抑える。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Property reference ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">プロパティ</h3>
+        </div>
+        <div class="card-body">
+          <table class="w-full typo-small">
+            <thead>
+              <tr class="text-fg-low typo-xsmall border-b border-stroke-low">
+                <th class="text-left px-3 py-2 font-medium w-24">prop</th>
+                <th class="text-left px-3 py-2 font-medium">values</th>
+                <th class="text-left px-3 py-2 font-medium">description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">thema</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">primary</code> · <code class="typo-xsmall">secondary</code> · <code class="typo-xsmall">neutral</code> · <code class="typo-xsmall">negative</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">ボタンの色彩テーマ。Semantic Token の同名ロールにマップ。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">size</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">sm</code> · <code class="typo-xsmall">md</code> · <code class="typo-xsmall">lg</code> · <code class="typo-xsmall">xl</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">高さ・パディング・フォントサイズ・行間がまとめて切り替わる。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">variant</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">solid</code> · <code class="typo-xsmall">outline</code> · <code class="typo-xsmall">subtle</code> · <code class="typo-xsmall">ghost</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">背景・枠線・テキスト色の組み合わせを変える。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">state</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">enable</code> · <code class="typo-xsmall">:hover</code> · <code class="typo-xsmall">:focus-visible</code> · <code class="typo-xsmall">[data-loading]</code> · <code class="typo-xsmall">:disabled</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">CSS の擬似クラスと <code>data-loading</code>/<code>disabled</code> 属性で表現。</td>
+              </tr>
+              <tr>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">icon slot</code></td>
+                <td class="px-3 py-3 align-top">prefix · suffix</td>
+                <td class="px-3 py-3 align-top text-fg-middle">SVG を <code>&lt;button&gt;</code> 直下に置けば 24×24 スロットになる。アイコン単体のボタンは <code>.icon-btn</code> を使う。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+

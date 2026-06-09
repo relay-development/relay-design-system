@@ -1,0 +1,192 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="checkbox">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">チェックボックス</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">body</code> (none / checked / indeterminate) × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
+
+      <!-- Body × State matrix (valid, medium) -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">body × state</h3>
+          <p class="card-subtitle">size = medium · isInvalid=false</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">enable</span>
+          <span class="typo-xsmall text-fg-low text-center">hover</span>
+          <span class="typo-xsmall text-fg-low text-center">focus</span>
+          <span class="typo-xsmall text-fg-low text-center">disabled</span>
+
+          <span class="typo-xsmall text-fg-low">body = none</span>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" style="border-color: var(--color-neutral-500);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" style="box-shadow: var(--shadow-focus-ring);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" disabled /></div>
+
+          <span class="typo-xsmall text-fg-low">body = checked</span>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" checked /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" checked style="background-color: var(--color-primary-600); border-color: var(--color-primary-600);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" checked style="box-shadow: var(--shadow-focus-ring);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" checked disabled /></div>
+
+          <span class="typo-xsmall text-fg-low">body = indeterminate</span>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" data-indeterminate /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" data-indeterminate style="background-color: var(--color-primary-600); border-color: var(--color-primary-600);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" data-indeterminate style="box-shadow: var(--shadow-focus-ring);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox" data-indeterminate disabled /></div>
+        </div>
+      </div>
+
+      <!-- Error variants -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">isInvalid=true</h3>
+          <p class="card-subtitle">境界線 / 塗りつぶしが negative 系</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">enable</span>
+          <span class="typo-xsmall text-fg-low text-center">hover</span>
+          <span class="typo-xsmall text-fg-low text-center">disabled</span>
+
+          <span class="typo-xsmall text-fg-low">body = none</span>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" style="border-color: var(--color-negative-600);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" disabled /></div>
+
+          <span class="typo-xsmall text-fg-low">body = checked</span>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" checked /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" checked style="background-color: var(--color-negative-600); border-color: var(--color-negative-600);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" checked disabled /></div>
+
+          <span class="typo-xsmall text-fg-low">body = indeterminate</span>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" data-indeterminate /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" data-indeterminate style="background-color: var(--color-negative-600); border-color: var(--color-negative-600);" /></div>
+          <div class="flex justify-center"><input type="checkbox" class="checkbox checkbox-error" data-indeterminate disabled /></div>
+        </div>
+      </div>
+
+      <!-- Size comparison -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">size</h3>
+          <p class="card-subtitle">small (16) / medium (24)</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-3">
+            <p class="typo-xsmall text-fg-low font-mono">small</p>
+            <label class="checkbox-label checkbox-label-sm"><input type="checkbox" class="checkbox checkbox-sm" />選択肢</label>
+            <label class="checkbox-label checkbox-label-sm"><input type="checkbox" class="checkbox checkbox-sm" checked />選択肢</label>
+            <label class="checkbox-label checkbox-label-sm"><input type="checkbox" class="checkbox checkbox-sm" data-indeterminate />選択肢</label>
+          </div>
+          <div class="flex flex-col gap-3">
+            <p class="typo-xsmall text-fg-low font-mono">medium</p>
+            <label class="checkbox-label checkbox-label-md"><input type="checkbox" class="checkbox" />選択肢</label>
+            <label class="checkbox-label checkbox-label-md"><input type="checkbox" class="checkbox" checked />選択肢</label>
+            <label class="checkbox-label checkbox-label-md"><input type="checkbox" class="checkbox" data-indeterminate />選択肢</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 patterns -->
+      <div class="grid lg:grid-cols-3 gap-4 mb-8">
+        <!-- standalone -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title typo-small">standalone checkbox</h3>
+          </div>
+          <div class="card-body">
+            <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />利用規約に同意する</label>
+            <p class="mt-3 typo-xsmall text-fg-low">周りに他のチェックボックスは存在せず、視覚的に独立した専用のコンテナ内に配置される。</p>
+          </div>
+        </div>
+        <!-- checkbox list -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title typo-small">checkbox list</h3>
+          </div>
+          <div class="card-body">
+            <div class="flex flex-col gap-2 mb-3">
+              <div class="label-control mb-1">
+                <div class="label-control-row"><span class="label-control-text">ラベル</span><span class="label-badge label-badge-optional">任意</span></div>
+              </div>
+              <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />選択肢</label>
+              <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢</label>
+              <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢</label>
+              <label class="checkbox-label"><input type="checkbox" class="checkbox" disabled />選択肢</label>
+            </div>
+            <p class="typo-xsmall text-fg-low">checkbox list では、それぞれのチェックボックスは独立して機能する。</p>
+          </div>
+        </div>
+        <!-- nested checkbox -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title typo-small">nested checkbox</h3>
+          </div>
+          <div class="card-body">
+            <div class="flex flex-col gap-2 mb-3" data-nested-checkbox>
+              <div class="label-control mb-1">
+                <div class="label-control-row"><span class="label-control-text">ラベル</span><span class="label-badge label-badge-optional">任意</span></div>
+              </div>
+              <label class="checkbox-label"><input type="checkbox" class="checkbox" data-nested-parent />すべて選択</label>
+              <div class="pl-7 flex flex-col gap-2">
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" data-nested-child checked />選択肢</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" data-nested-child />選択肢</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" data-nested-child />選択肢</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" data-nested-child disabled />選択肢</label>
+              </div>
+            </div>
+            <p class="typo-xsmall text-fg-low">親チェックボックスの一部の子が選択されていれば、親チェックボックスは「不確定」状態になり、ハイフンで表示される。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== NG patterns ===== -->
+      <div class="mb-8">
+        <div class="flex items-baseline justify-between mb-3">
+          <h3 class="typo-large font-semibold">NG パターン</h3>
+          <span class="typo-xsmall text-fg-low">チェックボックスのレイアウト原則</span>
+        </div>
+
+        <div class="card overflow-hidden">
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <!-- Don't: horizontal -->
+            <div class="p-6 bg-negative-50">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-6 mb-4">
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />選択肢A</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢B</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢C</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢D</label>
+              </div>
+              <p class="typo-small text-fg-middle">チェックボックスを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなる上、選択肢の追加・改行で崩れやすくなります。</p>
+            </div>
+            <!-- Good: vertical -->
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="flex flex-col gap-2 mb-4">
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />選択肢A</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢B</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢C</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢D</label>
+              </div>
+              <p class="typo-small text-fg-middle">チェックボックスは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

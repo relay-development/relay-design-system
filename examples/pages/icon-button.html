@@ -1,0 +1,150 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="icon-button">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">アイコンボタン</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">アイコン単体のボタン。プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> × <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">variant</code> × <code class="px-1 bg-neutral-100 rounded">state</code> — secondary / subtle / loading は除外。</p>
+
+      <!-- Variant × Theme matrix (size = medium) -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">Variant × Theme  <span class="text-fg-low font-normal typo-xsmall ml-2">size = medium / state = enable</span></h3>
+        </div>
+        <div class="card-body overflow-x-auto">
+          <table class="w-full border-collapse">
+            <thead>
+              <tr class="text-fg-low typo-xsmall">
+                <th class="text-left px-3 py-2 font-medium w-32">&nbsp;</th>
+                <th class="px-3 py-2 font-medium">solid</th>
+                <th class="px-3 py-2 font-medium">outline</th>
+                <th class="px-3 py-2 font-medium">ghost</th>
+              </tr>
+            </thead>
+            <tbody class="text-center">
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">primary</th>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-outline" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-ghost" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+              </tr>
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">neutral</th>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-outline" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></td>
+              </tr>
+              <tr class="border-t border-stroke-low">
+                <th class="text-left px-3 py-3 typo-small font-semibold">negative</th>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-solid" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></td>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-outline" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></td>
+                <td class="px-3 py-3"><button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Size + State matrix -->
+      <div class="grid lg:grid-cols-2 gap-6 mb-8">
+        <!-- Size scale -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">size</h3>
+            <p class="card-subtitle">primary / solid · icon は常に 24×24</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">small</span>
+              <button type="button" class="icon-btn icon-btn-sm icon-btn-primary icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+              <span class="text-[10px] text-fg-low font-mono">32×32 · p4</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">medium</span>
+              <button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+              <span class="text-[10px] text-fg-low font-mono">40×40 · p8</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">large</span>
+              <button type="button" class="icon-btn icon-btn-lg icon-btn-primary icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+              <span class="text-[10px] text-fg-low font-mono">48×48 · p12</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- State -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">state</h3>
+            <p class="card-subtitle">primary / solid / medium</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">enable</span>
+              <button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">hover</span>
+              <button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ" style="background-color:var(--color-primary-600);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+              <span class="text-[10px] text-fg-low">bg: primary/600</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">focus</span>
+              <button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ" style="outline:2px solid var(--color-info-600); outline-offset:2px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+              <span class="text-[10px] text-fg-low">＋ outline info/600</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="typo-xsmall text-fg-low w-16">disabled</span>
+              <button type="button" class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" disabled aria-label="次へ"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Property reference -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">プロパティ</h3>
+        </div>
+        <div class="card-body">
+          <table class="w-full typo-small">
+            <thead>
+              <tr class="text-fg-low typo-xsmall border-b border-stroke-low">
+                <th class="text-left px-3 py-2 font-medium w-24">prop</th>
+                <th class="text-left px-3 py-2 font-medium">values</th>
+                <th class="text-left px-3 py-2 font-medium">description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">thema</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">primary</code> · <code class="typo-xsmall">neutral</code> · <code class="typo-xsmall">negative</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">アイコンボタンは secondary を持たない。3 色のみ。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">size</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">sm</code> · <code class="typo-xsmall">md</code> · <code class="typo-xsmall">lg</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">32 / 40 / 48 の正方形。アイコンは常に 24×24 で固定。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">variant</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">solid</code> · <code class="typo-xsmall">outline</code> · <code class="typo-xsmall">ghost</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">subtle は持たない。3 つだけ。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">state</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">enable</code> · <code class="typo-xsmall">:hover</code> · <code class="typo-xsmall">:focus-visible</code> · <code class="typo-xsmall">:disabled</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">loading は持たない。</td>
+              </tr>
+              <tr>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">aria-label</code></td>
+                <td class="px-3 py-3 align-top">必須</td>
+                <td class="px-3 py-3 align-top text-fg-middle">アイコンだけの操作なので、スクリーンリーダー用に <code>aria-label</code> を必ず付与する。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+

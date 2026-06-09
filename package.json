@@ -37,10 +37,11 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "vite",
+    "dev": "npm run build:icons && npm run build:pages && vite",
     "build:icons": "node scripts/build-icons.mjs",
+    "build:pages": "node scripts/build-pages.mjs",
     "build": "npm run build:icons && vite build && vite build --config vite.tokens.config.ts",
-    "build:site": "npm run build:icons && vite build --config vite.site.config.ts",
+    "build:site": "npm run build:icons && npm run build:pages && vite build --config vite.site.config.ts",
     "preview:site": "vite preview --config vite.site.config.ts",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"

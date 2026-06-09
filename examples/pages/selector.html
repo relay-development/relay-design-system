@@ -1,0 +1,131 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="selector">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">セレクター</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">ネイティブ <code class="px-1 bg-neutral-100 rounded">&lt;select&gt;</code> をラップして、左アイコン・chevron・状態色を統一したコンポーネント。プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code> × <code class="px-1 bg-neutral-100 rounded">icon</code></p>
+
+      <!-- Size + state matrix (valid) -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">size × state</h3>
+          <p class="card-subtitle">valid · with icon</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+          <span class="typo-xsmall text-fg-low text-center">large</span>
+
+          <span class="typo-xsmall text-fg-low">enable / empty</span>
+          <div class="selector selector-sm">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="">選択内容</option><option value="1">業種A</option></select>
+          </div>
+          <div class="selector selector-md">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="">選択内容</option><option value="1">業種A</option></select>
+          </div>
+          <div class="selector selector-lg">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="">選択内容</option><option value="1">業種A</option></select>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">enable / filled</span>
+          <div class="selector selector-sm">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="1" selected>業種A</option></select>
+          </div>
+          <div class="selector selector-md">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="1" selected>業種A</option></select>
+          </div>
+          <div class="selector selector-lg">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="1" selected>業種A</option></select>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">disabled</span>
+          <div class="selector selector-sm is-disabled">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field" disabled><option value="">選択内容</option></select>
+          </div>
+          <div class="selector selector-md is-disabled">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field" disabled><option value="">選択内容</option></select>
+          </div>
+          <div class="selector selector-lg is-disabled">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field" disabled><option value="">選択内容</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error variants -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">isInvalid=true</h3>
+          <p class="card-subtitle">bg negative/50 · border 2px negative/500</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+          <span class="typo-xsmall text-fg-low text-center">large</span>
+
+          <span class="typo-xsmall text-fg-low">enable / empty</span>
+          <div class="selector selector-sm selector-error">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="">選択内容</option></select>
+          </div>
+          <div class="selector selector-md selector-error">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="">選択内容</option></select>
+          </div>
+          <div class="selector selector-lg selector-error">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="">選択内容</option></select>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">enable / filled</span>
+          <div class="selector selector-sm selector-error">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="1" selected>業種A</option></select>
+          </div>
+          <div class="selector selector-md selector-error">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="1" selected>業種A</option></select>
+          </div>
+          <div class="selector selector-lg selector-error">
+            <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg></span>
+            <select class="selector-field"><option value="1" selected>業種A</option></select>
+          </div>
+        </div>
+      </div>
+
+      <!-- icon variants -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">icon: true / false</h3>
+          <p class="card-subtitle">左アイコン slot は任意。省略すると text only.</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <p class="typo-xsmall text-fg-low font-mono">icon: false</p>
+            <div class="selector selector-md">
+              <select class="selector-field"><option value="">選択内容</option><option value="1">A</option></select>
+            </div>
+          </div>
+          <div class="space-y-2">
+            <p class="typo-xsmall text-fg-low font-mono">icon: true (場所)</p>
+            <div class="selector selector-md">
+              <span class="selector-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+              <select class="selector-field"><option value="">選択内容</option><option value="1">場所A</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

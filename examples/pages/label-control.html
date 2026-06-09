@@ -1,0 +1,122 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="label-control">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">ラベルコントロール</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">フォーム項目の上に置く、ラベル + バッジ + サポートテキストのセット。</p>
+
+      <!-- Size comparison -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">size</h3>
+          <p class="card-subtitle">default (label 16) / small (label 14)</p>
+        </div>
+        <div class="card-body space-y-6">
+          <!-- default -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-2 font-mono">default</p>
+            <div class="label-control">
+              <div class="label-control-row">
+                <span class="label-control-text">ラベル</span>
+                <span class="label-badge label-badge-required">必須</span>
+                <span class="label-badge label-badge-disabled">編集不可</span>
+                <span class="label-badge label-badge-private">非公開</span>
+                <span class="label-badge label-badge-support">
+                  <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.545 4.045L12 4.5l-3.273 2.91L9.81 12 6 9.6 2.19 12l1.083-4.59L0 4.5l4.455-.455L6 0z"/></svg>
+                  入力サポート
+                </span>
+              </div>
+              <p class="label-control-support">サポートテキスト</p>
+            </div>
+          </div>
+
+          <!-- small -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-2 font-mono">small</p>
+            <div class="label-control label-control-sm">
+              <div class="label-control-row">
+                <span class="label-control-text">ラベル</span>
+                <span class="label-badge label-badge-required">必須</span>
+                <span class="label-badge label-badge-disabled">編集不可</span>
+                <span class="label-badge label-badge-private">非公開</span>
+                <span class="label-badge label-badge-support">
+                  <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.545 4.045L12 4.5l-3.273 2.91L9.81 12 6 9.6 2.19 12l1.083-4.59L0 4.5l4.455-.455L6 0z"/></svg>
+                  入力サポート
+                </span>
+              </div>
+              <p class="label-control-support">サポートテキスト</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Badges -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">バッジ</h3>
+          <p class="card-subtitle">ラベルに付与できる 5 種</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div class="flex flex-col items-start gap-2">
+            <span class="label-badge label-badge-required">必須</span>
+            <p class="typo-xsmall text-fg-low"><code class="font-mono">label-badge-required</code><br>赤の outlined</p>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <span class="label-badge label-badge-optional">任意</span>
+            <p class="typo-xsmall text-fg-low"><code class="font-mono">label-badge-optional</code><br>グレーの outlined</p>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <span class="label-badge label-badge-disabled">編集不可</span>
+            <p class="typo-xsmall text-fg-low"><code class="font-mono">label-badge-disabled</code><br>塗りグレー</p>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <span class="label-badge label-badge-private">非公開</span>
+            <p class="typo-xsmall text-fg-low"><code class="font-mono">label-badge-private</code><br>白＋グレー枠</p>
+          </div>
+          <div class="flex flex-col items-start gap-2">
+            <span class="label-badge label-badge-support">
+              <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.545 4.045L12 4.5l-3.273 2.91L9.81 12 6 9.6 2.19 12l1.083-4.59L0 4.5l4.455-.455L6 0z"/></svg>
+              入力サポート
+            </span>
+            <p class="typo-xsmall text-fg-low"><code class="font-mono">label-badge-support</code><br>warning 系 + アイコン</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usage example -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">input と組み合わせて</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <div class="label-control">
+              <div class="label-control-row">
+                <span class="label-control-text">メールアドレス</span>
+                <span class="label-badge label-badge-required">必須</span>
+              </div>
+              <p class="label-control-support">ログインに使用します</p>
+            </div>
+            <input type="email" class="input" placeholder="you@example.com" />
+          </div>
+          <div class="space-y-2">
+            <div class="label-control">
+              <div class="label-control-row">
+                <span class="label-control-text">表示名</span>
+                <span class="label-badge label-badge-optional">任意</span>
+                <span class="label-badge label-badge-support">
+                  <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 0l1.545 4.045L12 4.5l-3.273 2.91L9.81 12 6 9.6 2.19 12l1.083-4.59L0 4.5l4.455-.455L6 0z"/></svg>
+                  入力サポート
+                </span>
+              </div>
+              <p class="label-control-support">他のユーザーにも見えます</p>
+            </div>
+            <input type="text" class="input" placeholder="例: 山田 太郎" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
