@@ -1,0 +1,162 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="textarea">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">テキストエリア</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">複数行入力欄。プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code>。エラーテキスト＋文字カウンターを下に併設。</p>
+
+      <!-- Size × state matrix (valid) -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">size × state</h3>
+          <p class="card-subtitle">valid · maxlength=100</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr] gap-4">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small (14/24)</span>
+          <span class="typo-xsmall text-fg-low text-center">medium (16/24)</span>
+
+          <span class="typo-xsmall text-fg-low pt-2">enable / empty</span>
+          <div class="textarea-control">
+            <textarea class="textarea textarea-sm" placeholder="入力内容" maxlength="100"></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+          <div class="textarea-control">
+            <textarea class="textarea textarea-md" placeholder="入力内容" maxlength="100"></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low pt-2">enable / filled</span>
+          <div class="textarea-control">
+            <textarea class="textarea textarea-sm" placeholder="入力内容" maxlength="100">入力された内容がここに入ります。</textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">16/100</span>
+            </div>
+          </div>
+          <div class="textarea-control">
+            <textarea class="textarea textarea-md" placeholder="入力内容" maxlength="100">入力された内容がここに入ります。</textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">16/100</span>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low pt-2">disabled</span>
+          <div class="textarea-control">
+            <textarea class="textarea textarea-sm" placeholder="入力内容" maxlength="100" disabled></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+          <div class="textarea-control">
+            <textarea class="textarea textarea-md" placeholder="入力内容" maxlength="100" disabled></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error variants -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">isInvalid=true</h3>
+          <p class="card-subtitle">bg negative/50 · border 2px negative/500 · エラーテキスト＋赤いカウンター</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr] gap-4">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+
+          <span class="typo-xsmall text-fg-low pt-2">enable / empty</span>
+          <div class="textarea-control is-invalid">
+            <textarea class="textarea textarea-sm textarea-error" placeholder="入力内容" maxlength="100"></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+          <div class="textarea-control is-invalid">
+            <textarea class="textarea textarea-md textarea-error" placeholder="入力内容" maxlength="100"></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low pt-2">enable / over-limit</span>
+          <div class="textarea-control is-invalid">
+            <textarea class="textarea textarea-sm textarea-error" placeholder="入力内容">入力された内容がここに入ります。文字数超過のサンプルです。これは 100 文字を超える長文テキストです。続きの文章を含めてサンプル化します。</textarea>
+            <div class="textarea-footer">
+              <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+              <span class="textarea-counter">101/100</span>
+            </div>
+          </div>
+          <div class="textarea-control is-invalid">
+            <textarea class="textarea textarea-md textarea-error" placeholder="入力内容">入力された内容がここに入ります。文字数超過のサンプルです。これは 100 文字を超える長文テキストです。続きの文章を含めてサンプル化します。</textarea>
+            <div class="textarea-footer">
+              <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+              <span class="textarea-counter">101/100</span>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low pt-2">disabled</span>
+          <div class="textarea-control is-invalid">
+            <textarea class="textarea textarea-sm textarea-error" placeholder="入力内容" disabled></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+          <div class="textarea-control is-invalid">
+            <textarea class="textarea textarea-md textarea-error" placeholder="入力内容" disabled></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-error-text">＊エラーテキストが入ります。</span>
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive (counter wires up via JS) -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">入力するとカウンターがリアルタイム更新</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-6">
+          <div class="textarea-control" data-counter-max="100">
+            <div class="label-control mb-2">
+              <div class="label-control-row">
+                <span class="label-control-text">自己紹介</span>
+                <span class="label-badge label-badge-optional">任意</span>
+              </div>
+              <p class="label-control-support">100文字以内で記入してください</p>
+            </div>
+            <textarea class="textarea textarea-md" placeholder="入力内容" maxlength="100"></textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">0/100</span>
+            </div>
+          </div>
+          <div class="textarea-control" data-counter-max="100">
+            <div class="label-control mb-2">
+              <div class="label-control-row">
+                <span class="label-control-text">フィードバック</span>
+                <span class="label-badge label-badge-required">必須</span>
+              </div>
+              <p class="label-control-support">改善のヒントを教えてください</p>
+            </div>
+            <textarea class="textarea textarea-md" placeholder="入力内容" maxlength="100">使ってみた感想を書いてみよう。</textarea>
+            <div class="textarea-footer">
+              <span class="textarea-counter">15/100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

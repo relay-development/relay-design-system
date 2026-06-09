@@ -1,0 +1,285 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="typography-page">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">タイポグラフィ</h2>
+        <span class="badge badge-soft-neutral">foundation</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">フォントサイズ / 行間 / ウェイトの primitive スケールと、.typo-* セマンティッククラス。</p>
+      <!-- =========================================================
+           font — size / weight / leading / tracking / family / style
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">font</h3>
+          <p class="typo-xsmall text-fg-low">size / weight / leading / tracking / family / style</p>
+        </div>
+        <p class="typo-small text-fg-low mb-4">タイポグラフィの基本ユニット。組み合わせて semantic 層の型を作る。</p>
+
+        <!-- size -->
+        <div class="card mb-4">
+          <div class="card-header"><h4 class="card-title typo-small">size</h4></div>
+          <div class="card-body grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-xsmall">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">xs</p><p class="typo-xsmall text-fg-low">12px</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-small">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">sm</p><p class="typo-xsmall text-fg-low">14px</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-medium">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">base</p><p class="typo-xsmall text-fg-low">16px</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-large">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">lg</p><p class="typo-xsmall text-fg-low">20px</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-xlarge">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">xl</p><p class="typo-xsmall text-fg-low">24px</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-2xlarge">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">2xl</p><p class="typo-xsmall text-fg-low">32px</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <div class="h-12 flex items-end"><span class="typo-3xlarge leading-none">Aa</span></div>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">3xl</p><p class="typo-xsmall text-fg-low">40px</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- weight -->
+        <div class="card mb-4">
+          <div class="card-header"><h4 class="card-title typo-small">weight</h4></div>
+          <div class="card-body grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-4">
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-thin">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">thin</p><p class="typo-xsmall text-fg-low">100</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-extralight">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">extralight</p><p class="typo-xsmall text-fg-low">200</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-light">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">light</p><p class="typo-xsmall text-fg-low">300</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-normal">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">normal</p><p class="typo-xsmall text-fg-low">400</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-medium">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">medium</p><p class="typo-xsmall text-fg-low">500</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-semibold">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">semibold</p><p class="typo-xsmall text-fg-low">600</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-bold">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">bold</p><p class="typo-xsmall text-fg-low">700</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-extrabold">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">extrabold</p><p class="typo-xsmall text-fg-low">800</p></div>
+            </div>
+            <div class="flex flex-col items-center gap-2">
+              <span class="typo-2xlarge font-black">Ag</span>
+              <div class="text-center"><p class="typo-small font-semibold font-mono">black</p><p class="typo-xsmall text-fg-low">900</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- leading + tracking grid -->
+        <div class="grid lg:grid-cols-2 gap-4 mb-4">
+          <!-- leading -->
+          <div class="card">
+            <div class="card-header"><h4 class="card-title typo-small">leading</h4></div>
+            <div class="card-body grid grid-cols-5 gap-3">
+              <div class="flex flex-col items-center gap-2">
+                <div class="typo-small leading-4 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">4</p><p class="typo-xsmall text-fg-low">16px</p></div>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <div class="typo-small leading-6 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">6</p><p class="typo-xsmall text-fg-low">24px</p></div>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <div class="typo-small leading-8 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">8</p><p class="typo-xsmall text-fg-low">32px</p></div>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <div class="typo-small leading-10 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">10</p><p class="typo-xsmall text-fg-low">40px</p></div>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <div class="typo-small leading-12 text-center">Text<br>Text<br>Text</div>
+                <div class="text-center"><p class="typo-small font-semibold font-mono">12</p><p class="typo-xsmall text-fg-low">48px</p></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- tracking -->
+          <div class="card">
+            <div class="card-header"><h4 class="card-title typo-small">tracking</h4></div>
+            <div class="card-body space-y-3">
+              <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
+                <p class="typo-small font-semibold font-mono">tighter</p>
+                <div class="typo-small tracking-tighter">HELLO TYPO</div>
+                <p class="typo-xsmall text-fg-low text-right">-0.05em</p>
+              </div>
+              <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
+                <p class="typo-small font-semibold font-mono">tight</p>
+                <div class="typo-small tracking-tight">HELLO TYPO</div>
+                <p class="typo-xsmall text-fg-low text-right">-0.025em</p>
+              </div>
+              <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
+                <p class="typo-small font-semibold font-mono">normal</p>
+                <div class="typo-small tracking-normal">HELLO TYPO</div>
+                <p class="typo-xsmall text-fg-low text-right">0em</p>
+              </div>
+              <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
+                <p class="typo-small font-semibold font-mono">wide</p>
+                <div class="typo-small tracking-wide">HELLO TYPO</div>
+                <p class="typo-xsmall text-fg-low text-right">0.025em</p>
+              </div>
+              <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
+                <p class="typo-small font-semibold font-mono">wider</p>
+                <div class="typo-small tracking-wider">HELLO TYPO</div>
+                <p class="typo-xsmall text-fg-low text-right">0.05em</p>
+              </div>
+              <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
+                <p class="typo-small font-semibold font-mono">widest</p>
+                <div class="typo-small tracking-widest">HELLO TYPO</div>
+                <p class="typo-xsmall text-fg-low text-right">0.1em</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- family + style -->
+        <div class="grid lg:grid-cols-2 gap-4">
+          <div class="card">
+            <div class="card-header"><h4 class="card-title typo-small">family</h4></div>
+            <div class="card-body">
+              <p class="typo-2xlarge font-medium font-sans mb-2">事業承継をオープンに</p>
+              <p class="typo-xsmall text-fg-low font-mono">Noto Sans JP</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h4 class="card-title typo-small">style</h4></div>
+            <div class="card-body grid grid-cols-2 gap-4">
+              <div class="flex flex-col items-center gap-2">
+                <span class="typo-3xlarge not-italic">Aa</span>
+                <p class="typo-small font-semibold font-mono">normal</p>
+              </div>
+              <div class="flex flex-col items-center gap-2">
+                <span class="typo-3xlarge italic">Aa</span>
+                <p class="typo-small font-semibold font-mono">italic</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================
+           タイポグラフィー (Typography) — semantic .typo-* layer
+           Figma 3111:1902 と 1:1 対応するクラス
+           ========================================================= -->
+      <section id="typography" class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">タイポグラフィー</h3>
+          <p class="typo-xsmall text-fg-low font-mono">Math.ceil((size × 1.3) / 8) × 8</p>
+        </div>
+        <p class="typo-small text-fg-low mb-4">
+          8 の倍数の行間で 8×8 ベースグリッドに揃える。weight は body サイズが <code class="px-1 bg-neutral-100 rounded">medium</code>、display サイズが <code class="px-1 bg-neutral-100 rounded">bold</code>（<code class="px-1 bg-neutral-100 rounded">font-bold</code> / <code class="px-1 bg-neutral-100 rounded">font-medium</code> で上書き可）。
+        </p>
+
+        <div class="card overflow-hidden">
+          <div class="card-body !p-0">
+            <!-- Header row -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
+              <div>class</div>
+              <div>size</div>
+              <div>line-height</div>
+              <div>preview</div>
+            </div>
+            <!-- .typo-xsmall 12/16 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono typo-small">.typo-xsmall</p>
+                <p class="typo-xsmall text-fg-low">medium</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">12</div>
+              <div class="text-fg-low typo-small font-mono">16</div>
+              <p class="typo-xsmall">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
+            </div>
+            <!-- .typo-small 14/24 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono typo-small">.typo-small</p>
+                <p class="typo-xsmall text-fg-low">medium</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">14</div>
+              <div class="text-fg-low typo-small font-mono">24</div>
+              <p class="typo-small">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
+            </div>
+            <!-- .typo-medium 16/24 medium (base) -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono typo-small">.typo-medium <span class="text-fg-low font-normal typo-xsmall">(base)</span></p>
+                <p class="typo-xsmall text-fg-low">medium</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">16</div>
+              <div class="text-fg-low typo-small font-mono">24</div>
+              <p class="typo-medium">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
+            </div>
+            <!-- .typo-large 20/32 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono typo-small">.typo-large</p>
+                <p class="typo-xsmall text-fg-low">medium</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">20</div>
+              <div class="text-fg-low typo-small font-mono">32</div>
+              <p class="typo-large">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
+            </div>
+            <!-- .typo-xlarge 24/32 medium -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono typo-small">.typo-xlarge</p>
+                <p class="typo-xsmall text-fg-low">medium</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">24</div>
+              <div class="text-fg-low typo-small font-mono">32</div>
+              <p class="typo-xlarge">日本語 にほんご ニホンゴ 0123 1行目<br>日本語 にほんご ニホンゴ 0123 2行目</p>
+            </div>
+            <!-- .typo-2xlarge 32/40 bold -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center border-b border-stroke-low">
+              <div>
+                <p class="font-mono typo-small">.typo-2xlarge</p>
+                <p class="typo-xsmall text-fg-low">bold</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">32</div>
+              <div class="text-fg-low typo-small font-mono">40</div>
+              <p class="typo-2xlarge">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</p>
+            </div>
+            <!-- .typo-3xlarge 40/48 bold -->
+            <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-4 items-center">
+              <div>
+                <p class="font-mono typo-small">.typo-3xlarge</p>
+                <p class="typo-xsmall text-fg-low">bold</p>
+              </div>
+              <div class="text-fg-low typo-small font-mono">40</div>
+              <div class="text-fg-low typo-small font-mono">48</div>
+              <p class="typo-3xlarge">日本語 にほんご 0123 1行目<br>日本語 にほんご 0123 2行目</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+

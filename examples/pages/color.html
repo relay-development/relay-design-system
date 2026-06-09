@@ -1,0 +1,696 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="color">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">色</h2>
+        <span class="badge badge-soft-neutral">foundation</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">プリミティブなカラースケールと、セマンティックロール (status / 背景 / テキスト / brand)、WCAG コントラストガイド。primitive ramps はコンポーネントから直接使わず、セマンティックロール経由で参照する。</p>
+      <!-- =========================================================
+           color (primitive)
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">プリミティブカラー</h3>
+          <p class="typo-xsmall text-fg-low">9 系統 × 11 段階 ＋ white / black</p>
+        </div>
+        <p class="typo-small text-fg-low mb-4">brand-green / brand-yellow は relay 固有。slate / red / amber / green / blue は Tailwind 標準と一致。</p>
+
+        <!-- white / black token list -->
+        <div class="token-list mb-4">
+          <div class="token-row">
+            <div class="swatch bg-white border border-stroke-middle"></div>
+            <div class="meta"><p class="token-name">white</p><p class="token-ref">純白</p></div>
+            <span class="hex">#ffffff</span>
+          </div>
+          <div class="token-row">
+            <div class="swatch bg-black"></div>
+            <div class="meta"><p class="token-name">black</p><p class="token-ref">純黒</p></div>
+            <span class="hex">#000000</span>
+          </div>
+        </div>
+
+        <!-- 9 ramps in status-grid style -->
+        <div class="status-grid">
+          <div class="status-row status-head">
+            <div class="head-corner">ramp / token</div>
+            <div class="head-step">50</div>
+            <div class="head-step">100</div>
+            <div class="head-step">200</div>
+            <div class="head-step">300</div>
+            <div class="head-step">400</div>
+            <div class="head-step">500</div>
+            <div class="head-step">600</div>
+            <div class="head-step">700</div>
+            <div class="head-step">800</div>
+            <div class="head-step">900</div>
+            <div class="head-step">950</div>
+          </div>
+                    <!-- brand-green -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">brand-green</span>
+              <span class="label-en">relay primary</span>
+            </div>
+            <div class="status-cell" data-tip="brand-green/50 · #effaf5"><div class="dot bg-brand-green-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="brand-green/100 · #d7f4e4"><div class="dot bg-brand-green-100"></div></div>
+            <div class="status-cell" data-tip="brand-green/200 · #b3e7ce"><div class="dot bg-brand-green-200"></div></div>
+            <div class="status-cell" data-tip="brand-green/300 · #81d4b1"><div class="dot bg-brand-green-300"></div></div>
+            <div class="status-cell" data-tip="brand-green/400 · #4cbb90"><div class="dot bg-brand-green-400"></div></div>
+            <div class="status-cell" data-tip="brand-green/500 · #30b686"><div class="dot bg-brand-green-500"></div></div>
+            <div class="status-cell" data-tip="brand-green/600 · #1b805e"><div class="dot bg-brand-green-600"></div></div>
+            <div class="status-cell" data-tip="brand-green/700 · #16664d"><div class="dot bg-brand-green-700"></div></div>
+            <div class="status-cell" data-tip="brand-green/800 · #14513e"><div class="dot bg-brand-green-800"></div></div>
+            <div class="status-cell" data-tip="brand-green/900 · #114334"><div class="dot bg-brand-green-900"></div></div>
+            <div class="status-cell" data-tip="brand-green/950 · #08261e"><div class="dot bg-brand-green-950"></div></div>
+          </div>
+          <!-- brand-yellow -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">brand-yellow</span>
+              <span class="label-en">relay secondary</span>
+            </div>
+            <div class="status-cell" data-tip="brand-yellow/50 · #fefee8"><div class="dot bg-brand-yellow-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/100 · #ffffc2"><div class="dot bg-brand-yellow-100"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/200 · #fffa87"><div class="dot bg-brand-yellow-200"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/300 · #fff043"><div class="dot bg-brand-yellow-300"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/400 · #ffe004"><div class="dot bg-brand-yellow-400"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/500 · #efc803"><div class="dot bg-brand-yellow-500"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/600 · #ce9b00"><div class="dot bg-brand-yellow-600"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/700 · #a46f04"><div class="dot bg-brand-yellow-700"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/800 · #88570b"><div class="dot bg-brand-yellow-800"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/900 · #734710"><div class="dot bg-brand-yellow-900"></div></div>
+            <div class="status-cell" data-tip="brand-yellow/950 · #432505"><div class="dot bg-brand-yellow-950"></div></div>
+          </div>
+          <!-- slate -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">slate</span>
+              <span class="label-en">neutral グレースケール</span>
+            </div>
+            <div class="status-cell" data-tip="slate/50 · #f8fafc"><div class="dot bg-slate-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="slate/100 · #f1f5f9"><div class="dot bg-slate-100"></div></div>
+            <div class="status-cell" data-tip="slate/200 · #e2e8f0"><div class="dot bg-slate-200"></div></div>
+            <div class="status-cell" data-tip="slate/300 · #cbd5e1"><div class="dot bg-slate-300"></div></div>
+            <div class="status-cell" data-tip="slate/400 · #94a3b8"><div class="dot bg-slate-400"></div></div>
+            <div class="status-cell" data-tip="slate/500 · #64748b"><div class="dot bg-slate-500"></div></div>
+            <div class="status-cell" data-tip="slate/600 · #475569"><div class="dot bg-slate-600"></div></div>
+            <div class="status-cell" data-tip="slate/700 · #334155"><div class="dot bg-slate-700"></div></div>
+            <div class="status-cell" data-tip="slate/800 · #1e293b"><div class="dot bg-slate-800"></div></div>
+            <div class="status-cell" data-tip="slate/900 · #0f172a"><div class="dot bg-slate-900"></div></div>
+            <div class="status-cell" data-tip="slate/950 · #020617"><div class="dot bg-slate-950"></div></div>
+          </div>
+          <!-- red -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">red</span>
+              <span class="label-en">negative の参照元</span>
+            </div>
+            <div class="status-cell" data-tip="red/50 · #fef2f2"><div class="dot bg-red-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="red/100 · #fee2e2"><div class="dot bg-red-100"></div></div>
+            <div class="status-cell" data-tip="red/200 · #fecaca"><div class="dot bg-red-200"></div></div>
+            <div class="status-cell" data-tip="red/300 · #fca5a5"><div class="dot bg-red-300"></div></div>
+            <div class="status-cell" data-tip="red/400 · #f87171"><div class="dot bg-red-400"></div></div>
+            <div class="status-cell" data-tip="red/500 · #ef4444"><div class="dot bg-red-500"></div></div>
+            <div class="status-cell" data-tip="red/600 · #dc2626"><div class="dot bg-red-600"></div></div>
+            <div class="status-cell" data-tip="red/700 · #b91c1c"><div class="dot bg-red-700"></div></div>
+            <div class="status-cell" data-tip="red/800 · #991b1b"><div class="dot bg-red-800"></div></div>
+            <div class="status-cell" data-tip="red/900 · #7f1d1d"><div class="dot bg-red-900"></div></div>
+            <div class="status-cell" data-tip="red/950 · #450a0a"><div class="dot bg-red-950"></div></div>
+          </div>
+          <!-- amber -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">amber</span>
+              <span class="label-en">warning の参照元</span>
+            </div>
+            <div class="status-cell" data-tip="amber/50 · #fffbeb"><div class="dot bg-amber-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="amber/100 · #fef3c7"><div class="dot bg-amber-100"></div></div>
+            <div class="status-cell" data-tip="amber/200 · #fde68a"><div class="dot bg-amber-200"></div></div>
+            <div class="status-cell" data-tip="amber/300 · #fcd34d"><div class="dot bg-amber-300"></div></div>
+            <div class="status-cell" data-tip="amber/400 · #fbbf24"><div class="dot bg-amber-400"></div></div>
+            <div class="status-cell" data-tip="amber/500 · #f59e0b"><div class="dot bg-amber-500"></div></div>
+            <div class="status-cell" data-tip="amber/600 · #d97706"><div class="dot bg-amber-600"></div></div>
+            <div class="status-cell" data-tip="amber/700 · #b45309"><div class="dot bg-amber-700"></div></div>
+            <div class="status-cell" data-tip="amber/800 · #92400e"><div class="dot bg-amber-800"></div></div>
+            <div class="status-cell" data-tip="amber/900 · #78350f"><div class="dot bg-amber-900"></div></div>
+            <div class="status-cell" data-tip="amber/950 · #451a03"><div class="dot bg-amber-950"></div></div>
+          </div>
+          <!-- green -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">green</span>
+              <span class="label-en">success の参照元</span>
+            </div>
+            <div class="status-cell" data-tip="green/50 · #f0fdf4"><div class="dot bg-green-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="green/100 · #dcfce7"><div class="dot bg-green-100"></div></div>
+            <div class="status-cell" data-tip="green/200 · #bbf7d0"><div class="dot bg-green-200"></div></div>
+            <div class="status-cell" data-tip="green/300 · #86efac"><div class="dot bg-green-300"></div></div>
+            <div class="status-cell" data-tip="green/400 · #4ade80"><div class="dot bg-green-400"></div></div>
+            <div class="status-cell" data-tip="green/500 · #22c55e"><div class="dot bg-green-500"></div></div>
+            <div class="status-cell" data-tip="green/600 · #16a34a"><div class="dot bg-green-600"></div></div>
+            <div class="status-cell" data-tip="green/700 · #15803d"><div class="dot bg-green-700"></div></div>
+            <div class="status-cell" data-tip="green/800 · #166534"><div class="dot bg-green-800"></div></div>
+            <div class="status-cell" data-tip="green/900 · #14532d"><div class="dot bg-green-900"></div></div>
+            <div class="status-cell" data-tip="green/950 · #052e16"><div class="dot bg-green-950"></div></div>
+          </div>
+          <!-- blue -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">blue</span>
+              <span class="label-en">info の参照元 / focus ring</span>
+            </div>
+            <div class="status-cell" data-tip="blue/50 · #eff6ff"><div class="dot bg-blue-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="blue/100 · #dbeafe"><div class="dot bg-blue-100"></div></div>
+            <div class="status-cell" data-tip="blue/200 · #bfdbfe"><div class="dot bg-blue-200"></div></div>
+            <div class="status-cell" data-tip="blue/300 · #93c5fd"><div class="dot bg-blue-300"></div></div>
+            <div class="status-cell" data-tip="blue/400 · #60a5fa"><div class="dot bg-blue-400"></div></div>
+            <div class="status-cell" data-tip="blue/500 · #3b82f6"><div class="dot bg-blue-500"></div></div>
+            <div class="status-cell" data-tip="blue/600 · #2563eb"><div class="dot bg-blue-600"></div></div>
+            <div class="status-cell" data-tip="blue/700 · #1d4ed8"><div class="dot bg-blue-700"></div></div>
+            <div class="status-cell" data-tip="blue/800 · #1e40af"><div class="dot bg-blue-800"></div></div>
+            <div class="status-cell" data-tip="blue/900 · #1e3a8a"><div class="dot bg-blue-900"></div></div>
+            <div class="status-cell" data-tip="blue/950 · #172554"><div class="dot bg-blue-950"></div></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- =========================================================
+           ステータス (Status)
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">セマンティックカラー</h3>
+          <p class="typo-xsmall text-fg-low">7 系統 × 11 段階 — 用途で色を選ぶ</p>
+        </div>
+        <p class="typo-small text-fg-low mb-4">primary / secondary は relay ブランドの 2 色、それ以外は意味ベース（成功・警告・エラー・情報・中立）。</p>
+
+        <div class="status-grid">
+          <!-- Column header — steps shown once -->
+          <div class="status-row status-head">
+            <div class="head-corner">用途 / token</div>
+            <div class="head-step">50</div>
+            <div class="head-step">100</div>
+            <div class="head-step">200</div>
+            <div class="head-step">300</div>
+            <div class="head-step">400</div>
+            <div class="head-step">500</div>
+            <div class="head-step">600</div>
+            <div class="head-step">700</div>
+            <div class="head-step">800</div>
+            <div class="head-step">900</div>
+            <div class="head-step">950</div>
+          </div>
+
+          <!-- primary -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">主要アクション、リンク</span>
+              <span class="label-en">primary · brand-green</span>
+            </div>
+            <div class="status-cell" data-tip="primary/50 · brand-green/50 · #effaf5"><div class="dot bg-primary-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="primary/100 · brand-green/100 · #d7f4e4"><div class="dot bg-primary-100"></div></div>
+            <div class="status-cell" data-tip="primary/200 · brand-green/200 · #b3e7ce"><div class="dot bg-primary-200"></div></div>
+            <div class="status-cell" data-tip="primary/300 · brand-green/300 · #81d4b1"><div class="dot bg-primary-300"></div></div>
+            <div class="status-cell" data-tip="primary/400 · brand-green/400 · #4cbb90"><div class="dot bg-primary-400"></div></div>
+            <div class="status-cell" data-tip="primary/500 · brand-green/500 · #30b686"><div class="dot bg-primary-500"></div></div>
+            <div class="status-cell" data-tip="primary/600 · brand-green/600 · #1b805e"><div class="dot bg-primary-600"></div></div>
+            <div class="status-cell" data-tip="primary/700 · brand-green/700 · #16664d"><div class="dot bg-primary-700"></div></div>
+            <div class="status-cell" data-tip="primary/800 · brand-green/800 · #14513e"><div class="dot bg-primary-800"></div></div>
+            <div class="status-cell" data-tip="primary/900 · brand-green/900 · #114334"><div class="dot bg-primary-900"></div></div>
+            <div class="status-cell" data-tip="primary/950 · brand-green/950 · #08261e"><div class="dot bg-primary-950"></div></div>
+          </div>
+          <!-- secondary -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">補助アクション、強調</span>
+              <span class="label-en">secondary · brand-yellow</span>
+            </div>
+            <div class="status-cell" data-tip="secondary/50 · brand-yellow/50 · #fefee8"><div class="dot bg-secondary-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="secondary/100 · brand-yellow/100 · #ffffc2"><div class="dot bg-secondary-100"></div></div>
+            <div class="status-cell" data-tip="secondary/200 · brand-yellow/200 · #fffa87"><div class="dot bg-secondary-200"></div></div>
+            <div class="status-cell" data-tip="secondary/300 · brand-yellow/300 · #fff043"><div class="dot bg-secondary-300"></div></div>
+            <div class="status-cell" data-tip="secondary/400 · brand-yellow/400 · #ffe004"><div class="dot bg-secondary-400"></div></div>
+            <div class="status-cell" data-tip="secondary/500 · brand-yellow/500 · #efc803"><div class="dot bg-secondary-500"></div></div>
+            <div class="status-cell" data-tip="secondary/600 · brand-yellow/600 · #ce9b00"><div class="dot bg-secondary-600"></div></div>
+            <div class="status-cell" data-tip="secondary/700 · brand-yellow/700 · #a46f04"><div class="dot bg-secondary-700"></div></div>
+            <div class="status-cell" data-tip="secondary/800 · brand-yellow/800 · #88570b"><div class="dot bg-secondary-800"></div></div>
+            <div class="status-cell" data-tip="secondary/900 · brand-yellow/900 · #734710"><div class="dot bg-secondary-900"></div></div>
+            <div class="status-cell" data-tip="secondary/950 · brand-yellow/950 · #432505"><div class="dot bg-secondary-950"></div></div>
+          </div>
+          <!-- negative -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">エラー・失敗</span>
+              <span class="label-en">negative · red</span>
+            </div>
+            <div class="status-cell" data-tip="negative/50 · red/50 · #fef2f2"><div class="dot bg-negative-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="negative/100 · red/100 · #fee2e2"><div class="dot bg-negative-100"></div></div>
+            <div class="status-cell" data-tip="negative/200 · red/200 · #fecaca"><div class="dot bg-negative-200"></div></div>
+            <div class="status-cell" data-tip="negative/300 · red/300 · #fca5a5"><div class="dot bg-negative-300"></div></div>
+            <div class="status-cell" data-tip="negative/400 · red/400 · #f87171"><div class="dot bg-negative-400"></div></div>
+            <div class="status-cell" data-tip="negative/500 · red/500 · #ef4444"><div class="dot bg-negative-500"></div></div>
+            <div class="status-cell" data-tip="negative/600 · red/600 · #dc2626"><div class="dot bg-negative-600"></div></div>
+            <div class="status-cell" data-tip="negative/700 · red/700 · #b91c1c"><div class="dot bg-negative-700"></div></div>
+            <div class="status-cell" data-tip="negative/800 · red/800 · #991b1b"><div class="dot bg-negative-800"></div></div>
+            <div class="status-cell" data-tip="negative/900 · red/900 · #7f1d1d"><div class="dot bg-negative-900"></div></div>
+            <div class="status-cell" data-tip="negative/950 · red/950 · #450a0a"><div class="dot bg-negative-950"></div></div>
+          </div>
+          <!-- warning -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">警告・注意</span>
+              <span class="label-en">warning · amber</span>
+            </div>
+            <div class="status-cell" data-tip="warning/50 · amber/50 · #fffbeb"><div class="dot bg-warning-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="warning/100 · amber/100 · #fef3c7"><div class="dot bg-warning-100"></div></div>
+            <div class="status-cell" data-tip="warning/200 · amber/200 · #fde68a"><div class="dot bg-warning-200"></div></div>
+            <div class="status-cell" data-tip="warning/300 · amber/300 · #fcd34d"><div class="dot bg-warning-300"></div></div>
+            <div class="status-cell" data-tip="warning/400 · amber/400 · #fbbf24"><div class="dot bg-warning-400"></div></div>
+            <div class="status-cell" data-tip="warning/500 · amber/500 · #f59e0b"><div class="dot bg-warning-500"></div></div>
+            <div class="status-cell" data-tip="warning/600 · amber/600 · #d97706"><div class="dot bg-warning-600"></div></div>
+            <div class="status-cell" data-tip="warning/700 · amber/700 · #b45309"><div class="dot bg-warning-700"></div></div>
+            <div class="status-cell" data-tip="warning/800 · amber/800 · #92400e"><div class="dot bg-warning-800"></div></div>
+            <div class="status-cell" data-tip="warning/900 · amber/900 · #78350f"><div class="dot bg-warning-900"></div></div>
+            <div class="status-cell" data-tip="warning/950 · amber/950 · #451a03"><div class="dot bg-warning-950"></div></div>
+          </div>
+          <!-- success -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">成功・完了</span>
+              <span class="label-en">success · green</span>
+            </div>
+            <div class="status-cell" data-tip="success/50 · green/50 · #f0fdf4"><div class="dot bg-success-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="success/100 · green/100 · #dcfce7"><div class="dot bg-success-100"></div></div>
+            <div class="status-cell" data-tip="success/200 · green/200 · #bbf7d0"><div class="dot bg-success-200"></div></div>
+            <div class="status-cell" data-tip="success/300 · green/300 · #86efac"><div class="dot bg-success-300"></div></div>
+            <div class="status-cell" data-tip="success/400 · green/400 · #4ade80"><div class="dot bg-success-400"></div></div>
+            <div class="status-cell" data-tip="success/500 · green/500 · #22c55e"><div class="dot bg-success-500"></div></div>
+            <div class="status-cell" data-tip="success/600 · green/600 · #16a34a"><div class="dot bg-success-600"></div></div>
+            <div class="status-cell" data-tip="success/700 · green/700 · #15803d"><div class="dot bg-success-700"></div></div>
+            <div class="status-cell" data-tip="success/800 · green/800 · #166534"><div class="dot bg-success-800"></div></div>
+            <div class="status-cell" data-tip="success/900 · green/900 · #14532d"><div class="dot bg-success-900"></div></div>
+            <div class="status-cell" data-tip="success/950 · green/950 · #052e16"><div class="dot bg-success-950"></div></div>
+          </div>
+          <!-- info -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">情報・通知</span>
+              <span class="label-en">info · blue</span>
+            </div>
+            <div class="status-cell" data-tip="info/50 · blue/50 · #eff6ff"><div class="dot bg-info-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="info/100 · blue/100 · #dbeafe"><div class="dot bg-info-100"></div></div>
+            <div class="status-cell" data-tip="info/200 · blue/200 · #bfdbfe"><div class="dot bg-info-200"></div></div>
+            <div class="status-cell" data-tip="info/300 · blue/300 · #93c5fd"><div class="dot bg-info-300"></div></div>
+            <div class="status-cell" data-tip="info/400 · blue/400 · #60a5fa"><div class="dot bg-info-400"></div></div>
+            <div class="status-cell" data-tip="info/500 · blue/500 · #3b82f6"><div class="dot bg-info-500"></div></div>
+            <div class="status-cell" data-tip="info/600 · blue/600 · #2563eb"><div class="dot bg-info-600"></div></div>
+            <div class="status-cell" data-tip="info/700 · blue/700 · #1d4ed8"><div class="dot bg-info-700"></div></div>
+            <div class="status-cell" data-tip="info/800 · blue/800 · #1e40af"><div class="dot bg-info-800"></div></div>
+            <div class="status-cell" data-tip="info/900 · blue/900 · #1e3a8a"><div class="dot bg-info-900"></div></div>
+            <div class="status-cell" data-tip="info/950 · blue/950 · #172554"><div class="dot bg-info-950"></div></div>
+          </div>
+          <!-- neutral -->
+          <div class="status-row">
+            <div class="status-label">
+              <span class="label-jp">無効・中立</span>
+              <span class="label-en">neutral · slate</span>
+            </div>
+            <div class="status-cell" data-tip="neutral/50 · slate/50 · #f8fafc"><div class="dot bg-neutral-50 border border-stroke-middle"></div></div>
+            <div class="status-cell" data-tip="neutral/100 · slate/100 · #f1f5f9"><div class="dot bg-neutral-100"></div></div>
+            <div class="status-cell" data-tip="neutral/200 · slate/200 · #e2e8f0"><div class="dot bg-neutral-200"></div></div>
+            <div class="status-cell" data-tip="neutral/300 · slate/300 · #cbd5e1"><div class="dot bg-neutral-300"></div></div>
+            <div class="status-cell" data-tip="neutral/400 · slate/400 · #94a3b8"><div class="dot bg-neutral-400"></div></div>
+            <div class="status-cell" data-tip="neutral/500 · slate/500 · #64748b"><div class="dot bg-neutral-500"></div></div>
+            <div class="status-cell" data-tip="neutral/600 · slate/600 · #475569"><div class="dot bg-neutral-600"></div></div>
+            <div class="status-cell" data-tip="neutral/700 · slate/700 · #334155"><div class="dot bg-neutral-700"></div></div>
+            <div class="status-cell" data-tip="neutral/800 · slate/800 · #1e293b"><div class="dot bg-neutral-800"></div></div>
+            <div class="status-cell" data-tip="neutral/900 · slate/900 · #0f172a"><div class="dot bg-neutral-900"></div></div>
+            <div class="status-cell" data-tip="neutral/950 · slate/950 · #020617"><div class="dot bg-neutral-950"></div></div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- =========================================================
+           背景 (Background)
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">背景</h3>
+          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: bg-*</code>
+        </div>
+        <p class="typo-small text-fg-low mb-4">ページ全体・サーフェス・オーバーレイの 3 レイヤー構造。</p>
+
+        <div class="grid lg:grid-cols-[1fr_320px] gap-6">
+          <div class="token-list">
+            <div class="token-row">
+              <div class="swatch bg-page border border-stroke-middle"></div>
+              <div class="meta"><p class="token-name">page</p><p class="token-ref">→ white</p></div>
+              <span class="hex">#ffffff</span>
+            </div>
+            <div class="token-row">
+              <div class="swatch bg-page-green"></div>
+              <div class="meta"><p class="token-name">page-green</p><p class="token-ref">→ brand-green/50</p></div>
+              <span class="hex">#effaf5</span>
+            </div>
+            <div class="token-row">
+              <div class="swatch bg-surface border border-stroke-middle"></div>
+              <div class="meta"><p class="token-name">surface</p><p class="token-ref">→ white</p></div>
+              <span class="hex">#ffffff</span>
+            </div>
+            <div class="token-row">
+              <div class="swatch bg-overlay"></div>
+              <div class="meta"><p class="token-name">overlay</p><p class="token-ref">→ neutral/900 @ 60%</p></div>
+              <span class="hex">rgba(15,23,42,.6)</span>
+            </div>
+          </div>
+
+          <!-- Hierarchy diagram -->
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title typo-small">レイヤー構造</h4>
+            </div>
+            <div class="card-body">
+              <div class="relative h-32 flex items-center justify-center">
+                <div class="absolute w-40 h-24 bg-page-green rounded-md shadow-sm" style="transform: translate(-16px, 20px);"></div>
+                <div class="absolute w-40 h-24 bg-surface rounded-md border border-stroke-middle shadow-md"></div>
+                <div class="absolute w-40 h-24 bg-overlay rounded-md" style="transform: translate(16px, -20px);"></div>
+              </div>
+              <ul class="mt-4 typo-xsmall text-fg-low space-y-1">
+                <li><span class="inline-block w-3 h-3 rounded-sm bg-overlay align-middle mr-2"></span>overlay (最前面)</li>
+                <li><span class="inline-block w-3 h-3 rounded-sm bg-surface border border-stroke-middle align-middle mr-2"></span>surface</li>
+                <li><span class="inline-block w-3 h-3 rounded-sm bg-page-green align-middle mr-2"></span>page / page-green</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- =========================================================
+           テキスト (Text)
+           ========================================================= -->
+      <div class="mb-12">
+        <div class="flex items-baseline justify-between mb-1">
+          <h3 class="typo-large font-semibold">テキスト</h3>
+          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: text-*</code>
+        </div>
+        <p class="typo-small text-fg-low mb-4">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。WCAG コントラスト準拠状況は <a href="#text-wcag-matrix" class="text-info-600 underline">下のマトリクス</a> を参照。</p>
+
+        <div class="grid lg:grid-cols-2 gap-6">
+          <!-- Light tokens -->
+          <div>
+            <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">light</p>
+            <div class="token-list">
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-high);"></div>
+                <div class="meta"><p class="token-name">fg-high</p><p class="token-ref">→ slate/900</p></div>
+                <span class="text-fg-high font-semibold typo-small">見出し</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-middle);"></div>
+                <div class="meta"><p class="token-name">fg-middle</p><p class="token-ref">→ slate/700</p></div>
+                <span class="text-fg-middle typo-small">本文テキスト</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-low);"></div>
+                <div class="meta"><p class="token-name">fg-low</p><p class="token-ref">→ slate/500</p></div>
+                <span class="text-fg-low typo-small">補助テキスト</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-placeholder);"></div>
+                <div class="meta"><p class="token-name">fg-placeholder</p><p class="token-ref">→ slate/400</p></div>
+                <span class="text-fg-placeholder typo-small">placeholder</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-disabled);"></div>
+                <div class="meta"><p class="token-name">fg-disabled</p><p class="token-ref">→ slate/400</p></div>
+                <span class="text-fg-disabled typo-small">disabled</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Inverse tokens -->
+          <div>
+            <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">inverse (dark background)</p>
+            <div class="token-list is-inverse">
+              <div class="token-row">
+                <div class="swatch is-circle bg-white"></div>
+                <div class="meta"><p class="token-name">fg-high-inverse</p><p class="token-ref">→ white</p></div>
+                <span class="text-fg-high-inverse font-semibold typo-small">見出し</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-middle-inverse);"></div>
+                <div class="meta"><p class="token-name">fg-middle-inverse</p><p class="token-ref">→ slate/200</p></div>
+                <span class="text-fg-middle-inverse typo-small">本文テキスト</span>
+              </div>
+              <div class="token-row">
+                <div class="swatch is-circle" style="background:var(--color-fg-low-inverse);"></div>
+                <div class="meta"><p class="token-name">fg-low-inverse</p><p class="token-ref">→ slate/300</p></div>
+                <span class="text-fg-low-inverse typo-small">補助テキスト</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- =========================================================
+           WCAG コントラスト × テキストサイズ マトリクス
+           テキストトークン × タイポグラフィークラス を横断したガイド
+           ========================================================= -->
+      <div id="text-wcag-matrix" class="card mb-12 overflow-hidden">
+        <div class="card-header">
+          <h4 class="card-title">WCAG コントラスト × テキストサイズ</h4>
+          <p class="card-subtitle">テキストサイズによって要求されるコントラスト比が変わる</p>
+        </div>
+        <div class="card-body">
+
+          <!-- Threshold legend -->
+          <p class="typo-small text-fg-middle mb-3">
+            WCAG は <strong>大きいテキスト</strong>(18pt = 24px 以上、または 14pt = 18.66px 以上の太字) と <strong>通常テキスト</strong>(それ未満) で要件を分けている:
+          </p>
+          <div class="grid sm:grid-cols-2 gap-3 mb-6">
+            <div class="border border-stroke-middle rounded-md p-4 bg-neutral-50">
+              <p class="typo-xsmall font-semibold text-fg-low uppercase tracking-wide mb-2">通常テキスト</p>
+              <p class="typo-small text-fg-high">AA: <span class="font-mono">4.5:1</span> 以上</p>
+              <p class="typo-small text-fg-high">AAA: <span class="font-mono">7:1</span> 以上</p>
+              <p class="typo-xsmall text-fg-low mt-2"><code class="typo-xsmall">.typo-xsmall</code> / <code class="typo-xsmall">.typo-small</code> / <code class="typo-xsmall">.typo-medium</code></p>
+            </div>
+            <div class="border border-stroke-middle rounded-md p-4 bg-neutral-50">
+              <p class="typo-xsmall font-semibold text-fg-low uppercase tracking-wide mb-2">大きいテキスト</p>
+              <p class="typo-small text-fg-high">AA: <span class="font-mono">3:1</span> 以上</p>
+              <p class="typo-small text-fg-high">AAA: <span class="font-mono">4.5:1</span> 以上</p>
+              <p class="typo-xsmall text-fg-low mt-2"><code class="typo-xsmall">.typo-large</code> / <code class="typo-xsmall">.typo-xlarge</code> / <code class="typo-xsmall">.typo-2xlarge</code> / <code class="typo-xsmall">.typo-3xlarge</code></p>
+            </div>
+          </div>
+
+          <!-- Matrix table -->
+          <div class="border border-stroke-middle rounded-md overflow-hidden">
+            <!-- Header -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle items-end">
+              <div>トークン</div>
+              <div>比率</div>
+              <div class="text-center">通常<br>AA</div>
+              <div class="text-center">通常<br>AAA</div>
+              <div class="text-center">大きい<br>AA</div>
+              <div class="text-center">大きい<br>AAA</div>
+              <div>使用ガイド</div>
+            </div>
+
+            <!-- fg-high -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-high</code>
+              <span class="font-mono text-fg-middle typo-xsmall">18:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">本文・見出し全般。AAA でも安心</span>
+            </div>
+
+            <!-- fg-middle -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-middle</code>
+              <span class="font-mono text-fg-middle typo-xsmall">10.7:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">本文 default。AAA でも安心</span>
+            </div>
+
+            <!-- fg-low -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-low</code>
+              <span class="font-mono text-fg-middle typo-xsmall">4.5:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">AAA 本文 NG。<code class="typo-xsmall">.typo-large</code> 以上なら AAA も OK</span>
+            </div>
+
+            <!-- fg-placeholder -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-placeholder</code>
+              <span class="font-mono text-fg-middle typo-xsmall">3.0:1</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-fg-middle typo-xsmall">プレースホルダ専用。本文には使わない</span>
+            </div>
+
+            <!-- fg-disabled -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-disabled</code>
+              <span class="font-mono text-fg-middle typo-xsmall">3.0:1</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-center text-fg-low font-bold">—</span>
+              <span class="text-fg-middle typo-xsmall">無効化コントロール (WCAG 1.4.3 Note 2 で例外)</span>
+            </div>
+
+            <!-- fg-high-inverse -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-high-inverse</code>
+              <span class="font-mono text-fg-middle typo-xsmall">18:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">ダーク背景上の見出し・本文</span>
+            </div>
+
+            <!-- fg-middle-inverse -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">fg-middle-inverse</code>
+              <span class="font-mono text-fg-middle typo-xsmall">12:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">ダーク背景上の本文</span>
+            </div>
+
+            <!-- fg-low-inverse -->
+            <div class="grid grid-cols-[140px_80px_repeat(4,minmax(0,1fr))_1.6fr] gap-3 px-4 py-3 typo-small items-center">
+              <code class="font-mono typo-xsmall">fg-low-inverse</code>
+              <span class="font-mono text-fg-middle typo-xsmall">8:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-fg-middle typo-xsmall">ダーク背景上の補助テキスト</span>
+            </div>
+          </div>
+
+          <!-- Footnote -->
+          <p class="typo-xsmall text-fg-low mt-4">
+            凡例: <span class="text-success-600 font-bold">✓</span> 使用可 / <span class="text-fg-low font-bold">✗</span> 不可 / <span class="text-fg-low font-bold">—</span> 例外扱い。詳細は <a href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md#143-コントラスト-最低限-aa--ds-で担保" class="text-info-600 underline" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> 参照。
+          </p>
+
+        </div>
+      </div>
+
+
+      <!-- =========================================================
+           ブランドカラーをテキストに使う時 — primary スケールの安全段階
+           ========================================================= -->
+      <div id="brand-color-text-contrast" class="card mb-12 overflow-hidden">
+        <div class="card-header">
+          <h4 class="card-title">ブランドカラーをテキストに使う時</h4>
+          <p class="card-subtitle">コントラスト比は前景/背景を入れ替えても同じ。中間色 (500) はテキスト不可</p>
+        </div>
+        <div class="card-body">
+
+          <!-- Symmetry explanation -->
+          <p class="typo-small text-fg-middle mb-4">
+            コントラスト比は <strong>前景色と背景色を入れ替えても変わらない</strong>。つまり「白地に緑文字」と「緑地に白文字」は同じ比率になる。<code class="typo-xsmall">primary-500</code> (#30b686) は white と <strong>約 2.57:1</strong> しかなく、どちらの向きでもテキストには使えない。緑をテキストに使うなら濃い段階を選ぶ。
+          </p>
+
+          <!-- primary scale table -->
+          <div class="border border-stroke-middle rounded-md overflow-hidden mb-6">
+            <!-- Header -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle items-end">
+              <div>トークン</div>
+              <div>hex</div>
+              <div>vs white</div>
+              <div class="text-center">通常<br>AA</div>
+              <div class="text-center">通常<br>AAA</div>
+              <div>プレビュー</div>
+            </div>
+
+            <!-- primary-500 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">primary-500</code>
+              <span class="font-mono text-fg-low typo-xsmall">#30b686</span>
+              <span class="font-mono text-fg-middle typo-xsmall">2.57:1</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <!-- demo only: raw var() で実コントラストを体感させる目的 (Figma 仕様外・デモ専用) -->
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-500);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-500);">白文字</span>
+              </div>
+            </div>
+
+            <!-- primary-600 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">primary-600</code>
+              <span class="font-mono text-fg-low typo-xsmall">#1b805e</span>
+              <span class="font-mono text-fg-middle typo-xsmall">4.9:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-600);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-600);">白文字</span>
+              </div>
+            </div>
+
+            <!-- primary-700 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">primary-700</code>
+              <span class="font-mono text-fg-low typo-xsmall">#16664d</span>
+              <span class="font-mono text-fg-middle typo-xsmall">6.9:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-700);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-700);">白文字</span>
+              </div>
+            </div>
+
+            <!-- primary-800 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center">
+              <code class="font-mono typo-xsmall">primary-800</code>
+              <span class="font-mono text-fg-low typo-xsmall">#14513e</span>
+              <span class="font-mono text-fg-middle typo-xsmall">9.2:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-800);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-800);">白文字</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conclusion box -->
+          <div class="border border-stroke-middle rounded-md p-4 bg-neutral-50">
+            <p class="typo-xsmall font-semibold text-fg-low uppercase tracking-wide mb-2">使い分けの結論</p>
+            <ul class="space-y-1 typo-small text-fg-middle">
+              <li>白背景の<strong>緑文字</strong> → <code class="typo-xsmall">primary-700</code> 以上推奨 (AA は <code class="typo-xsmall">primary-600</code> から)</li>
+              <li>緑背景の<strong>白文字</strong> → <code class="typo-xsmall">primary-600</code> 以上 (AA) / <code class="typo-xsmall">primary-800</code> (AAA)</li>
+              <li><code class="typo-xsmall">primary-500</code> は<strong>面・装飾</strong> (ボタン塗り等) のみ。テキスト色には使わない</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+  </main>
+

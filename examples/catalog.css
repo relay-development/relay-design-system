@@ -1,0 +1,408 @@
+/*
+ * Catalog-only styles for the preview pages (examples/*.html).
+ * Generated pages link this AFTER ../src/index.css so var(--color-*) /
+ * var(--text-*) tokens resolve. Edit here — build-pages.mjs copies it as-is.
+ */
+
+/* Checkered background to visualize transparency in opacity tokens */
+.checker {
+  background-image:
+    linear-gradient(45deg, #e2e8f0 25%, transparent 25%),
+    linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #e2e8f0 75%),
+    linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 0 6px, 6px -6px, -6px 0;
+}
+
+/* Status grid — semantic color token table */
+.status-grid {
+  border: 1px solid var(--color-stroke-low);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.status-grid .status-row {
+  display: grid;
+  grid-template-columns: 200px repeat(11, minmax(0, 1fr));
+  border-top: 1px solid var(--color-stroke-low);
+}
+.status-grid .status-row:first-child { border-top: 0; }
+
+/* Column header row — shows steps 50/100/.../950 once */
+.status-grid .status-head {
+  background: var(--color-neutral-50);
+  border-bottom: 1px solid var(--color-stroke-low);
+}
+.status-grid .status-head .head-corner {
+  padding: 12px 20px;
+  border-right: 1px solid var(--color-stroke-low);
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 600;
+  color: var(--color-fg-low);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+}
+.status-grid .status-head .head-step {
+  padding: 12px 4px;
+  text-align: center;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-weight: 600;
+  color: var(--color-fg-low);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+.status-grid .status-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 16px 20px;
+  background: var(--color-neutral-50);
+  border-right: 1px solid var(--color-stroke-low);
+}
+.status-grid .status-label .label-jp {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-fg-high);
+  line-height: var(--text-sm--line-height);
+}
+.status-grid .status-label .label-en {
+  margin-top: 2px;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  color: var(--color-fg-low);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+/* Swatch cell — dot only; step is in column header, full name on hover */
+.status-grid .status-cell {
+  position: relative;
+  padding: 14px 6px;
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.status-grid .status-cell .dot {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  transition: transform 0.15s ease;
+}
+.status-grid .status-cell:hover .dot { transform: scale(1.15); }
+
+/* Custom tooltip — instant, shows the data-tip text */
+.status-grid .status-cell[data-tip]:hover::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% - 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-neutral-900);
+  color: var(--color-white);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  white-space: nowrap;
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+}
+.status-grid .status-cell[data-tip]:hover::before {
+  content: "";
+  position: absolute;
+  bottom: calc(100% - 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: var(--color-neutral-900);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Token swatch (used across Background / Text / Border sections) */
+.token-list {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-stroke-middle);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-surface);
+}
+.token-row {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--color-stroke-low);
+}
+.token-row:first-child { border-top: 0; }
+.token-row .swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+.token-row .swatch.is-circle { border-radius: 9999px; }
+.token-row .meta { min-width: 0; }
+.token-row .meta .token-name {
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  font-weight: 600;
+  color: var(--color-fg-high);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.token-row .meta .token-ref {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  color: var(--color-fg-low);
+  margin-top: 2px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.token-row .hex {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  color: var(--color-fg-low);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.token-list.is-inverse { background: var(--color-neutral-900); border-color: transparent; }
+.token-list.is-inverse .token-row { border-top-color: rgba(255,255,255,0.12); }
+.token-list.is-inverse .meta .token-name { color: var(--color-white); }
+.token-list.is-inverse .meta .token-ref,
+.token-list.is-inverse .hex { color: var(--color-fg-low-inverse); }
+
+/* ============================================================
+ * Docs layout — left sidebar + main content
+ * ============================================================ */
+.docs-layout {
+  display: flex;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+.docs-sidebar {
+  position: sticky;
+  top: 0;
+  flex-shrink: 0;
+  width: 16rem;
+  height: 100vh;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-stroke-low);
+  padding: 24px 16px;
+  z-index: 10;
+}
+.docs-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 8px 16px;
+  border-bottom: 1px solid var(--color-stroke-low);
+  margin-bottom: 16px;
+  text-decoration: none;
+}
+.docs-sidebar-brand .brand-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: var(--color-primary-500);
+  flex-shrink: 0;
+}
+.docs-sidebar-brand .brand-name {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  line-height: var(--text-sm--line-height);
+  color: var(--color-fg-high);
+}
+.docs-sidebar-brand .brand-sub {
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  color: var(--color-fg-low);
+  margin-top: 2px;
+}
+.docs-sidebar-nav { display: flex; flex-direction: column; gap: 16px; }
+.docs-sidebar-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.docs-sidebar-group-title {
+  padding: 0 8px;
+  margin-bottom: 4px;
+  font-size: var(--text-base);
+  line-height: var(--text-base--line-height);
+  font-weight: 600;
+  color: var(--color-fg-high);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.docs-sidebar-nav a {
+  display: block;
+  padding: 6px 8px;
+  font-size: var(--text-sm);
+  line-height: var(--text-sm--line-height);
+  color: var(--color-fg-high);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: background-color 0.12s ease, color 0.12s ease;
+}
+.docs-sidebar-nav a:hover {
+  background: var(--color-neutral-50);
+  color: var(--color-fg-high);
+}
+.docs-sidebar-nav a.is-active {
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+  font-weight: 600;
+}
+
+.docs-main {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Hero banner — full-width inside docs-main.
+ * Three layers, back to front:
+ *   1. base radial gradient (subtle teal wash)
+ *   2. left / right blur blobs (green / yellow color clouds)
+ *   3. flex children: cutout illustrations + centered HTML title + CTA
+ * Bottom edge curves via asymmetric border-radius.
+ *
+ * Spacing values are all `calc(var(--spacing) * N)` where N maps to
+ * the blessed Tailwind scale (4 / 8 / 16 / 32 / 64 px). Hero gradient
+ * colors are bespoke (sampled from the Figma artwork) and stay raw.
+ */
+.docs-hero {
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%);
+  padding-top: calc(var(--spacing) * 16) ;
+  padding-left: calc(var(--spacing) * 16) ;
+  padding-right: calc(var(--spacing) * 16) ;
+  overflow: hidden;
+}
+.docs-hero-illust {
+  flex-shrink: 0;
+  width: 28%;
+  max-width: calc(var(--spacing) * 90);   /* 360 */
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  image-rendering: -webkit-optimize-contrast;
+}
+.docs-hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 640px;
+  gap: calc(var(--spacing) * 10);          /* 40 — off-scale, hero 専用調整値 */
+  padding:
+    calc(var(--spacing) * 16)             /* top 64 — clears curve cut-off */
+    calc(var(--spacing) * 4)              /* x   16 */
+    calc(var(--spacing) * 16);            /* bot 64 */
+  text-align: center;
+}
+/* Hero title is shipped as an SVG (assets/hero-center.svg, 563×131).
+ * .docs-hero-title styles the <img>. The semantic <h1> still exists
+ * adjacent to it for screen readers, hidden via .sr-only. */
+.docs-hero-title {
+  display: block;
+  width: 80%;
+  max-width: calc(var(--spacing) * 140);   /* 560 ≈ natural SVG 563 */
+  height: auto;
+  margin: 0;
+}
+/* Visually hidden but still announced by screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+.docs-hero-content .btn svg {
+  width:  calc(var(--spacing) * 4);       /* 16 */
+  height: calc(var(--spacing) * 4);
+}
+/* Compact mode for narrow viewports — hide illustrations + blurs */
+@media (max-width: 640px) {
+  .docs-hero { background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%); }
+  .docs-hero-illust { display: none; }
+  .docs-hero-content {
+    padding: calc(var(--spacing) * 12) calc(var(--spacing) * 4);   /* 48 16 */
+  }
+}
+
+/* Scroll offset for anchor jumps */
+section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
+
+/* Landing page — component index cards.
+ * Figma node 3481:1226: each card = a tinted preview panel showing a live
+ * component instance, with a name/desc label below. The whole card is a link
+ * via a stretched ::after; the preview is `inert` so its controls never steal
+ * the click or keyboard focus. */
+.page-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: calc(var(--spacing) * 4);
+}
+.page-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-stroke-middle);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  overflow: hidden;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+}
+.page-card:hover {
+  border-color: var(--color-primary-300);
+  box-shadow: var(--shadow-sm);
+}
+.page-card-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);
+  min-height: calc(var(--spacing) * 28);   /* 112 */
+  padding: calc(var(--spacing) * 4);
+  background: var(--color-primary-50);
+  border-bottom: 1px solid var(--color-stroke-low);
+  overflow: hidden;
+}
+.page-card-label { padding: calc(var(--spacing) * 3); }
+.page-card-link { text-decoration: none; }
+.page-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+.page-card:hover .page-card-link { text-decoration: none; }
+
+/* Hide sidebar on small screens */
+@media (max-width: 768px) {
+  .docs-layout { flex-direction: column; }
+  .docs-sidebar {
+    position: static;
+    width: 100%;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-stroke-low);
+  }
+}

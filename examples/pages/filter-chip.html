@@ -1,0 +1,197 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="filter-chip">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">フィルターチップ</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">isSelected</code> × <code class="px-1 bg-neutral-100 rounded">state</code> (enable / hover / disabled)</p>
+      <p class="typo-small text-fg-middle mb-6">タグや単語を用いてコンテンツをフィルタリングするためのコンポーネント。</p>
+
+      <!-- isSelected × State matrix -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">isSelected × state</h3>
+          <p class="card-subtitle">未選択 / 選択 × enable / hover / disabled</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">isSelected: false</span>
+          <span class="typo-xsmall text-fg-low text-center">isSelected: true</span>
+
+          <!-- enable -->
+          <span class="typo-xsmall text-fg-low text-right">enable</span>
+          <div class="flex justify-center">
+            <button type="button" class="filter-chip" aria-pressed="false">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="flex justify-center">
+            <button type="button" class="filter-chip" aria-pressed="true">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <!-- hover -->
+          <span class="typo-xsmall text-fg-low text-right">hover</span>
+          <div class="flex justify-center">
+            <button type="button" class="filter-chip is-hover-preview" aria-pressed="false">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="flex justify-center">
+            <button type="button" class="filter-chip is-hover-preview" aria-pressed="true">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <!-- disabled -->
+          <span class="typo-xsmall text-fg-low text-right">disabled</span>
+          <div class="flex justify-center">
+            <button type="button" class="filter-chip" aria-pressed="false" disabled>
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+          <div class="flex justify-center">
+            <button type="button" class="filter-chip" aria-pressed="true" disabled>
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usage example: 複数チップでフィルタリング -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">複数チップを並べたフィルター UI — クリックで選択 / 解除をトグル</p>
+        </div>
+        <div class="card-body">
+          <div class="flex flex-wrap gap-2" data-filter-chip-group>
+            <button type="button" class="filter-chip" aria-pressed="true">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">自治体連携</span>
+              </span>
+              <span class="filter-chip-count">124件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+            <button type="button" class="filter-chip" aria-pressed="false">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">エンタープライズ</span>
+              </span>
+              <span class="filter-chip-count">87件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+            <button type="button" class="filter-chip" aria-pressed="true">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">教育機関</span>
+              </span>
+              <span class="filter-chip-count">52件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+            <button type="button" class="filter-chip" aria-pressed="false">
+              <span class="filter-chip-main">
+                <span class="filter-chip-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="9" y2="9"/><line x1="4" x2="20" y1="15" y2="15"/><line x1="10" x2="8" y1="3" y2="21"/><line x1="16" x2="14" y1="3" y2="21"/></svg>
+                </span>
+                <span class="filter-chip-label">医療・ヘルスケア</span>
+              </span>
+              <span class="filter-chip-count">36件</span>
+              <span class="filter-chip-check">
+                <span class="filter-chip-check-circle">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                </span>
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

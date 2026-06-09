@@ -1,0 +1,122 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="alert">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">アラート</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">画面内に直接埋め込む静的なインラインメッセージ。プロパティ: <code class="px-1 bg-neutral-100 rounded">thema</code> (neutral / success / negative / warning / info)</p>
+
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">5 つのテーマ</h3>
+        </div>
+        <div class="card-body space-y-3">
+          <div class="alert alert-neutral">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">インフォメーションタイトル</p>
+              <p class="alert-body">補足分が入ります。</p>
+            </div>
+            <button type="button" class="alert-close" aria-label="閉じる">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <div class="alert alert-success">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">インフォメーションタイトル</p>
+              <p class="alert-body">補足分が入ります。</p>
+            </div>
+            <button type="button" class="alert-close" aria-label="閉じる">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <div class="alert alert-negative">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">インフォメーションタイトル</p>
+              <p class="alert-body">補足分が入ります。</p>
+            </div>
+            <button type="button" class="alert-close" aria-label="閉じる">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <div class="alert alert-warning">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">インフォメーションタイトル</p>
+              <p class="alert-body">補足分が入ります。</p>
+            </div>
+            <button type="button" class="alert-close" aria-label="閉じる">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">インフォメーションタイトル</p>
+              <p class="alert-body">補足分が入ります。</p>
+            </div>
+            <button type="button" class="alert-close" aria-label="閉じる">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Title-only / body-only / dismissible variations -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">バリエーション</h3>
+          <p class="card-subtitle">タイトルのみ / 補足のみ / 閉じるボタン付き</p>
+        </div>
+        <div class="card-body space-y-3">
+          <div class="alert alert-success">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">保存しました</p>
+            </div>
+          </div>
+
+          <div class="alert alert-info">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-body">スマートフォンをお持ちでない場合は、お問い合わせからご連絡ください。別の方法をご案内します。</p>
+            </div>
+          </div>
+
+          <div class="alert alert-negative">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">送信に失敗しました</p>
+              <p class="alert-body">時間をおいて再度お試しください。</p>
+            </div>
+            <button type="button" class="alert-close" aria-label="閉じる">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

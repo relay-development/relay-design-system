@@ -1,0 +1,98 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="input">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">インプット</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">size</code> × <code class="px-1 bg-neutral-100 rounded">state</code> × <code class="px-1 bg-neutral-100 rounded">isInvalid</code></p>
+
+      <!-- Size + State matrix -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">size × state</h3>
+          <p class="card-subtitle">valid (isInvalid=false)</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+          <span class="typo-xsmall text-fg-low text-center">large</span>
+
+          <span class="typo-xsmall text-fg-low">enable / empty</span>
+          <input type="text" class="input input-sm" placeholder="入力内容" />
+          <input type="text" class="input input-md" placeholder="入力内容" />
+          <input type="text" class="input input-lg" placeholder="入力内容" />
+
+          <span class="typo-xsmall text-fg-low">enable / filled</span>
+          <input type="text" class="input input-sm" value="入力内容" />
+          <input type="text" class="input input-md" value="入力内容" />
+          <input type="text" class="input input-lg" value="入力内容" />
+
+          <span class="typo-xsmall text-fg-low">disabled</span>
+          <input type="text" class="input input-sm" placeholder="入力内容" disabled />
+          <input type="text" class="input input-md" placeholder="入力内容" disabled />
+          <input type="text" class="input input-lg" placeholder="入力内容" disabled />
+        </div>
+      </div>
+
+      <!-- Error variants -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">isInvalid=true</h3>
+          <p class="card-subtitle">bg negative/50 · border 2px negative/500 (hover 600 / disabled 200)</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+          <span class="typo-xsmall text-fg-low text-center">large</span>
+
+          <span class="typo-xsmall text-fg-low">enable / empty</span>
+          <input type="text" class="input input-sm input-error" placeholder="入力内容" />
+          <input type="text" class="input input-md input-error" placeholder="入力内容" />
+          <input type="text" class="input input-lg input-error" placeholder="入力内容" />
+
+          <span class="typo-xsmall text-fg-low">enable / filled</span>
+          <input type="text" class="input input-sm input-error" value="入力内容" />
+          <input type="text" class="input input-md input-error" value="入力内容" />
+          <input type="text" class="input input-lg input-error" value="入力内容" />
+
+          <span class="typo-xsmall text-fg-low">disabled</span>
+          <input type="text" class="input input-sm input-error" placeholder="入力内容" disabled />
+          <input type="text" class="input input-md input-error" placeholder="入力内容" disabled />
+          <input type="text" class="input input-lg input-error" placeholder="入力内容" disabled />
+        </div>
+      </div>
+
+      <!-- Usage with Label Control -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">Label Control と組み合わせて</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <div class="label-control">
+              <div class="label-control-row">
+                <span class="label-control-text">メールアドレス</span>
+                <span class="label-badge label-badge-required">必須</span>
+              </div>
+              <p class="label-control-support">ログインに使用します</p>
+            </div>
+            <input type="email" class="input input-md" placeholder="you@example.com" />
+          </div>
+          <div class="space-y-2">
+            <div class="label-control">
+              <div class="label-control-row">
+                <span class="label-control-text">パスワード</span>
+                <span class="label-badge label-badge-required">必須</span>
+              </div>
+              <p class="label-control-support">8文字以上で入力してください</p>
+            </div>
+            <input type="password" class="input input-md input-error" value="abc" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+

@@ -1,0 +1,120 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="simple-table">
+      <div class="flex items-baseline justify-between mb-2">
+        <h2 class="typo-2xlarge font-semibold">シンプルテーブル</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-low mb-6">
+        プロパティ: <code class="px-1 bg-neutral-100 rounded">th</code>（ラベル列、neutral/50 背景・bold）×
+        <code class="px-1 bg-neutral-100 rounded">td</code>（値列、white 背景・regular）。
+        必要に応じて <code class="px-1 bg-neutral-100 rounded">rowspan</code> で複数行をマージできる。
+      </p>
+      <p class="typo-small text-fg-middle mb-6">
+        ユーザーが扱う情報を整理して縦に並べる、キー/バリュー形式のシンプルなテーブル。
+      </p>
+
+      <!-- ===== 基本パターン ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">基本</h3>
+          <p class="card-subtitle">th が左の固定列（128px）、td が右の伸縮列</p>
+        </div>
+        <div class="card-body">
+          <table class="simple-table">
+            <tbody>
+              <tr>
+                <th>プロジェクト名</th>
+                <td>Relay Design System</td>
+              </tr>
+              <tr>
+                <th>担当者</th>
+                <td>山田 太郎</td>
+              </tr>
+              <tr>
+                <th>作成日</th>
+                <td>2026-06-01</td>
+              </tr>
+              <tr>
+                <th>ステータス</th>
+                <td>進行中</td>
+              </tr>
+              <tr>
+                <th>カテゴリ</th>
+                <td>UI / Design</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== rowspan によるセル merge ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">セル merge (rowspan)</h3>
+          <p class="card-subtitle">複数行の th に対して 1 つの td を <code class="px-1 bg-neutral-100 rounded">rowspan="N"</code> で被せる</p>
+        </div>
+        <div class="card-body">
+          <table class="simple-table">
+            <tbody>
+              <tr>
+                <th>名前</th>
+                <td>Aプロジェクト</td>
+              </tr>
+              <tr>
+                <th>関連リンク</th>
+                <td rowspan="4">
+                  <a href="https://github.com/relay-development/relay-design-system" target="_blank" rel="noopener noreferrer"
+                     class="inline-flex items-center gap-1 typo-small font-medium text-primary-500 underline hover:text-primary-600">
+                    リンクテキスト
+                    <svg class="icon icon-xs" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <th>タグ A</th>
+              </tr>
+              <tr>
+                <th>タグ B</th>
+              </tr>
+              <tr>
+                <th>タグ C</th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== カスタムスロット ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — td 内に任意の UI</h3>
+          <p class="card-subtitle">td にバッジ、ボタン、リンク等を入れられる</p>
+        </div>
+        <div class="card-body">
+          <table class="simple-table">
+            <tbody>
+              <tr>
+                <th>ステータス</th>
+                <td><span class="badge badge-soft-success">公開中</span></td>
+              </tr>
+              <tr>
+                <th>優先度</th>
+                <td><span class="badge badge-soft-warning">高</span></td>
+              </tr>
+              <tr>
+                <th>担当者</th>
+                <td>山田 太郎</td>
+              </tr>
+              <tr>
+                <th>アクション</th>
+                <td>
+                  <button type="button" class="btn btn-sm btn-primary btn-solid">編集</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
