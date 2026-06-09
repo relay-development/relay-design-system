@@ -24,7 +24,11 @@ const PAGES_DIR = resolve(EXAMPLES, "pages");
 // group: sidebar group title (pages with the same group are bundled together).
 // label: sidebar link text.  title: <title> + landing card heading.
 const PAGES = [
-  { file: "foundations.html", group: "Foundations", label: "Foundations", title: "Foundations", desc: "色 / タイポ / トークン / アイコン / WCAG ガイド" },
+  { file: "color.html",      group: "Foundations", label: "色 (Color)",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
+  { file: "typography.html", group: "Foundations", label: "タイポグラフィ",  title: "タイポグラフィ", desc: "フォントスケール + .typo-* クラス" },
+  { file: "layout.html",     group: "Foundations", label: "レイアウト",      title: "レイアウト",     desc: "余白 / 角丸 / 境界線" },
+  { file: "effects.html",    group: "Foundations", label: "エフェクト",      title: "エフェクト",     desc: "シャドウ / Opacity" },
+  { file: "icons.html",      group: "Foundations", label: "Icons",          title: "Icons",        desc: "Lucide スプライト 38 アイコン" },
 
   { file: "button.html",       group: "Components", label: "Button",       title: "Button",       desc: "variant × theme × size × state" },
   { file: "icon-button.html",  group: "Components", label: "Icon Button",  title: "Icon Button",  desc: "アイコンのみのボタン" },
