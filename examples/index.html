@@ -1388,6 +1388,100 @@
       </div>
 
       <!-- =========================================================
+           ブランドカラーをテキストに使う時 — primary スケールの安全段階
+           ========================================================= -->
+      <div id="brand-color-text-contrast" class="card mb-12 overflow-hidden">
+        <div class="card-header">
+          <h4 class="card-title">ブランドカラーをテキストに使う時</h4>
+          <p class="card-subtitle">コントラスト比は前景/背景を入れ替えても同じ。中間色 (500) はテキスト不可</p>
+        </div>
+        <div class="card-body">
+
+          <!-- Symmetry explanation -->
+          <p class="typo-small text-fg-middle mb-4">
+            コントラスト比は <strong>前景色と背景色を入れ替えても変わらない</strong>。つまり「白地に緑文字」と「緑地に白文字」は同じ比率になる。<code class="typo-xsmall">primary-500</code> (#30b686) は white と <strong>約 2.57:1</strong> しかなく、どちらの向きでもテキストには使えない。緑をテキストに使うなら濃い段階を選ぶ。
+          </p>
+
+          <!-- primary scale table -->
+          <div class="border border-stroke-middle rounded-md overflow-hidden mb-6">
+            <!-- Header -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle items-end">
+              <div>トークン</div>
+              <div>hex</div>
+              <div>vs white</div>
+              <div class="text-center">通常<br>AA</div>
+              <div class="text-center">通常<br>AAA</div>
+              <div>プレビュー</div>
+            </div>
+
+            <!-- primary-500 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">primary-500</code>
+              <span class="font-mono text-fg-low typo-xsmall">#30b686</span>
+              <span class="font-mono text-fg-middle typo-xsmall">2.57:1</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <!-- demo only: raw var() で実コントラストを体感させる目的 (Figma 仕様外・デモ専用) -->
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-500);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-500);">白文字</span>
+              </div>
+            </div>
+
+            <!-- primary-600 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">primary-600</code>
+              <span class="font-mono text-fg-low typo-xsmall">#1b805e</span>
+              <span class="font-mono text-fg-middle typo-xsmall">4.9:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-600);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-600);">白文字</span>
+              </div>
+            </div>
+
+            <!-- primary-700 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center border-b border-stroke-low">
+              <code class="font-mono typo-xsmall">primary-700</code>
+              <span class="font-mono text-fg-low typo-xsmall">#16664d</span>
+              <span class="font-mono text-fg-middle typo-xsmall">6.9:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-fg-low font-bold">✗</span>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-700);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-700);">白文字</span>
+              </div>
+            </div>
+
+            <!-- primary-800 -->
+            <div class="grid grid-cols-[120px_90px_80px_repeat(2,minmax(0,1fr))_2fr] gap-3 px-4 py-3 typo-small items-center">
+              <code class="font-mono typo-xsmall">primary-800</code>
+              <span class="font-mono text-fg-low typo-xsmall">#14513e</span>
+              <span class="font-mono text-fg-middle typo-xsmall">9.2:1</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <span class="text-center text-success-600 font-bold">✓</span>
+              <div class="flex gap-2">
+                <span class="px-2 py-1 rounded-sm bg-white typo-xsmall font-semibold" style="color:var(--color-primary-800);">緑文字</span>
+                <span class="px-2 py-1 rounded-sm text-white typo-xsmall font-semibold" style="background:var(--color-primary-800);">白文字</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conclusion box -->
+          <div class="border border-stroke-middle rounded-md p-4 bg-neutral-50">
+            <p class="typo-xsmall font-semibold text-fg-low uppercase tracking-wide mb-2">使い分けの結論</p>
+            <ul class="space-y-1 typo-small text-fg-middle">
+              <li>白背景の<strong>緑文字</strong> → <code class="typo-xsmall">primary-700</code> 以上推奨 (AA は <code class="typo-xsmall">primary-600</code> から)</li>
+              <li>緑背景の<strong>白文字</strong> → <code class="typo-xsmall">primary-600</code> 以上 (AA) / <code class="typo-xsmall">primary-800</code> (AAA)</li>
+              <li><code class="typo-xsmall">primary-500</code> は<strong>面・装飾</strong> (ボタン塗り等) のみ。テキスト色には使わない</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- =========================================================
            境界線 (Border)
            ========================================================= -->
       <div class="mb-12">
