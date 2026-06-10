@@ -1,26 +1,26 @@
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
     <section id="accessibility">
       <div class="mb-8">
-        <div class="flex items-baseline justify-between mb-3">
+        <div class="flex items-baseline justify-between mb-8">
           <h2 class="typo-2xlarge font-semibold">アクセシビリティについての取り組み</h2>
-          <span class="typo-xsmall text-fg-low">WCAG 2.1 AAA に向けて</span>
+          <span class="typo-xsmall text-fg-low">WCAG 2.2 AAA に向けて</span>
         </div>
 
         <p class="typo-small text-fg-middle mb-6">
-          Relay Design System は <strong>WCAG 2.1 Level AAA</strong> を目指す設計です。下の表で、各達成基準を「DS が担保する項目」と「プロダクト側で実装が必要な項目」に切り分けて把握できます。全 78 達成基準のより詳しい実務チェックリストは <a class="text-info-600 underline" href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> を参照してください。
+          Relay Design System は <strong>WCAG 2.2 Level AAA</strong> を目指す設計です。下の表で、各達成基準を「DS が担保する項目」と「プロダクト側で実装が必要な項目」に切り分けて把握できます。全 86 達成基準のより詳しい実務チェックリストは <a class="text-info-600 underline" href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> を参照してください。
         </p>
 
         <div class="space-y-4">
 
-          <!-- 達成基準別の対応内容 (WCAG 2.1 全 78 基準) -->
+          <!-- 達成基準別の対応内容 (WCAG 2.2 全 86 基準) -->
           <p class="typo-small text-fg-middle">
-            <strong>DS 担保</strong> 列: <span class="text-success-600 font-bold">✓</span> = コンポーネント / トークンで担保 ・ <span class="text-fg-low font-bold">△</span> = DS が下地を提供（プロダクトが正しく使う）・ <span class="text-fg-low">—</span> = プロダクト側 / コンテンツ次第
+            <strong>DS 担保</strong> 列: <span class="text-success-600 font-bold">✓</span> = コンポーネント / トークンで担保 ・ <span class="text-fg-low font-bold">△</span> = DS が下地を提供（プロダクトが正しく使う）・ <span class="text-fg-low">—</span> = プロダクト側 / コンテンツ次第。<span class="badge badge-soft-primary typo-xsmall">2.2</span> = WCAG 2.2 で追加された基準。
           </p>
 
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Perceivable (知覚可能)</h3>
-              <p class="card-subtitle">1.x — 全 29 基準 (A / AA / AAA)</p>
+              <p class="card-subtitle">1.x — 全 29 基準</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
@@ -211,7 +211,7 @@
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Operable (操作可能)</h3>
-              <p class="card-subtitle">2.x — 全 29 基準 (A / AA / AAA)</p>
+              <p class="card-subtitle">2.x — 全 34 基準（2.2 で 5 基準追加）</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
@@ -360,6 +360,24 @@
                   <span class="text-fg-middle">各セクションに見出しを付与</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.4.11 フォーカスの非遮蔽（最低限）</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> フォーカス中の要素が固定ヘッダー等に完全には隠れない</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.4.12 フォーカスの非遮蔽（高度）</span>
+                  <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> フォーカス中の要素が全く隠れない</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.4.13 フォーカスの外観</span>
+                  <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
+                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> フォーカスリングが十分な面積＋3:1 のコントラスト（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--shadow-focus-ring</code>）</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.1 ポインタジェスチャ</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
@@ -384,16 +402,28 @@
                   <span class="text-fg-middle">デバイスの動き起動に UI 代替＋無効化</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
-                  <span class="text-fg-high">2.5.5 ターゲットのサイズ</span>
+                  <span class="text-fg-high">2.5.5 ターゲットのサイズ（高度）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
                   <span class="text-fg-middle">ポインタ対象 44×44px 以上（<code class="typo-xsmall px-1 bg-neutral-100 rounded">lg</code> サイズを使う）</span>
                 </div>
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.6 入力メカニズムの共存</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
                   <span class="text-fg-middle">キーボード / マウス / タッチを併用可能</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.5.7 ドラッグ動作</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> ドラッグ操作に単一ポインタ（タップ等）の代替を用意</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                  <span class="text-fg-high">2.5.8 ターゲットのサイズ（最低限）</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> ポインタ対象 24×24px 以上（DS は最小 sm でも 32px で充足）</span>
                 </div>
               </div>
             </div>
@@ -402,7 +432,7 @@
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Understandable (理解可能)</h3>
-              <p class="card-subtitle">3.x — 全 17 基準 (A / AA / AAA)</p>
+              <p class="card-subtitle">3.x — 全 21 基準（2.2 で 4 基準追加）</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
@@ -479,6 +509,12 @@
                   <span class="text-fg-middle">文脈変化はユーザーの明示操作でのみ</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">3.2.6 一貫したヘルプ</span>
+                  <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> ヘルプ（問い合わせ・チャット等）を各ページで同じ相対順序に配置</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.1 エラーの特定</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
@@ -508,11 +544,29 @@
                   <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
                   <span class="text-fg-middle">文脈に応じたヘルプを提供</span>
                 </div>
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.6 誤り防止（すべて）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
                   <span class="text-fg-middle">すべての送信に確認 / 取消 / 検証</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">3.3.7 冗長な入力</span>
+                  <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> 同一プロセスで既出情報の再入力を求めない（自動入力・選択可）</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">3.3.8 アクセシブルな認証（最低限）</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> 認知機能テスト（パズル等）に頼らない認証（コピペ・パスキー許可）</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                  <span class="text-fg-high">3.3.9 アクセシブルな認証（高度）</span>
+                  <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
+                  <span class="text-center"><span class="text-fg-low">—</span></span>
+                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> 認知機能テストを一切課さない認証</span>
                 </div>
               </div>
             </div>
@@ -521,7 +575,7 @@
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Robust (堅牢)</h3>
-              <p class="card-subtitle">4.x — 全 3 基準 (A / AA)</p>
+              <p class="card-subtitle">4.x — 全 2 基準（4.1.1 は 2.2 で廃止）</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
@@ -530,12 +584,6 @@
                   <div class="text-center">レベル</div>
                   <div class="text-center">DS 担保</div>
                   <div>具体的な対応内容</div>
-                </div>
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
-                  <span class="text-fg-high">4.1.1 構文解析</span>
-                  <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">valid な HTML（重複 ID・未閉じタグを避ける）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">4.1.2 名前・役割・値</span>
