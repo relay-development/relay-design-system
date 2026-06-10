@@ -40,7 +40,7 @@
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   font-weight: 600;
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   display: flex;
@@ -52,7 +52,7 @@
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   font-weight: 600;
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -74,7 +74,7 @@
   margin-top: 2px;
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -161,14 +161,14 @@
 .token-row .meta .token-ref {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   margin-top: 2px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .token-row .hex {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .token-list.is-inverse { background: var(--color-neutral-900); border-color: transparent; }
@@ -222,7 +222,7 @@
 .docs-sidebar-brand .brand-sub {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   margin-top: 2px;
 }
 .docs-sidebar-nav { display: flex; flex-direction: column; gap: 16px; }
