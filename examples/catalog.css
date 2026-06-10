@@ -40,7 +40,7 @@
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   font-weight: 600;
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   text-transform: uppercase;
   letter-spacing: 0.04em;
   display: flex;
@@ -52,7 +52,7 @@
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
   font-weight: 600;
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -74,7 +74,7 @@
   margin-top: 2px;
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -161,14 +161,14 @@
 .token-row .meta .token-ref {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   margin-top: 2px;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .token-row .hex {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 .token-list.is-inverse { background: var(--color-neutral-900); border-color: transparent; }
@@ -222,7 +222,7 @@
 .docs-sidebar-brand .brand-sub {
   font-size: var(--text-xs);
   line-height: var(--text-xs--line-height);
-  color: var(--color-fg-low);
+  color: var(--color-fg-middle);
   margin-top: 2px;
 }
 .docs-sidebar-nav { display: flex; flex-direction: column; gap: 16px; }
@@ -349,6 +349,10 @@
 
 /* Scroll offset for anchor jumps */
 section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
+
+/* セクション見出し (.typo-large の h3) は常に上に 48px の余白を確保し、
+ * 直前のコンテンツと明確に区切る。card-title (h3) は対象外。 */
+.docs-main h3.typo-large { margin-top: calc(var(--spacing) * 12); }   /* 48 */
 
 /* Landing page — component index cards.
  * Figma node 3481:1226: each card = a tinted preview panel showing a live

@@ -20,7 +20,7 @@
   }
 
   .card-body {
-    @apply px-5 py-4 text-sm text-fg-middle;
+    @apply p-6 text-sm text-fg-middle;
   }
 
   .card-footer {

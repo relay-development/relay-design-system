@@ -1,30 +1,57 @@
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
     <section id="accessibility">
       <div class="mb-8">
-        <div class="flex items-baseline justify-between mb-3">
+        <div class="flex items-baseline justify-between mb-8">
           <h2 class="typo-2xlarge font-semibold">アクセシビリティについての取り組み</h2>
-          <span class="typo-xsmall text-fg-low">WCAG 2.1 AAA に向けて</span>
+          <span class="typo-xsmall text-fg-middle">WCAG 2.2 AAA に向けて</span>
         </div>
 
-        <p class="typo-small text-fg-middle mb-6">
-          Relay Design System は <strong>WCAG 2.1 Level AAA</strong> を目指す設計です。下の表で、各達成基準を「DS が担保する項目」と「プロダクト側で実装が必要な項目」に切り分けて把握できます。全 78 達成基準のより詳しい実務チェックリストは <a class="text-info-600 underline" href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> を参照してください。
+        <h3 class="typo-large font-semibold mb-2">方針</h3>
+        <p class="typo-small text-fg-high mb-6">
+          Relay Design System は <strong>WCAG 2.2 Level AAA</strong> を目指す設計です。下の表で、各達成基準を「DS が担保する項目」と「プロダクト側で実装が必要な項目」に切り分けて把握できます。全 86 達成基準のより詳しい実務チェックリストは <a class="text-info-600 underline" href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> を参照してください。
         </p>
 
         <div class="space-y-4">
 
-          <!-- 達成基準別の対応内容 (WCAG 2.1 全 78 基準) -->
-          <p class="typo-small text-fg-middle">
-            <strong>DS 担保</strong> 列: <span class="text-success-600 font-bold">✓</span> = コンポーネント / トークンで担保 ・ <span class="text-fg-low font-bold">△</span> = DS が下地を提供（プロダクトが正しく使う）・ <span class="text-fg-low">—</span> = プロダクト側 / コンテンツ次第
+          <!-- 方針の内容 -->
+          <div class="card overflow-hidden">
+            <div class="card-body">
+              <ul class="space-y-3 typo-small text-fg-high list-disc pl-5">
+                <li>
+                  本デザインシステムは <a class="text-info-600 underline" href="https://waic.jp/docs/jis2016/accessibility-plan-guidelines/201604/" target="_blank" rel="noopener noreferrer">WAIC「ウェブアクセシビリティ方針 策定ガイドライン」</a> に沿って対応を進めます。
+                </li>
+                <li>
+                  達成目標レベルは以下の通りです。
+                  <ul class="space-y-2 mt-2 list-[circle] pl-5">
+                    <li>
+                      <strong class="text-fg-high">本体サイト</strong> — レベル <span class="badge badge-soft-info">AA</span> に準拠を目指します。
+                    </li>
+                    <li>
+                      <strong class="text-fg-high">自治体様の特設ページ</strong> — レベル <span class="badge badge-soft-primary">AAA</span> の<strong>一部達成</strong>を目指します（1.4.6 高度なコントラスト、2.3.2 3 回の閃光、など）。
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 試験について — 達成基準別の対応内容 (WCAG 2.2 全 86 基準) -->
+          <h3 class="typo-large font-semibold">試験について</h3>
+          <p class="typo-small text-fg-high">
+            試験は <a class="text-info-600 underline" href="https://waic.jp/docs/jis2016/test-guidelines/202012/gcl_example.html" target="_blank" rel="noopener noreferrer">WAIC「JIS X 8341-3:2016 試験実施ガイドライン」</a> に従って行います。下表は各達成基準への対応内容と、デザインシステム側での担保状況を示します。
+          </p>
+          <p class="typo-small text-fg-high">
+            <strong>DS 担保</strong> 列: <span class="text-success-600 font-bold">✓</span> = コンポーネント / トークンで担保 ・ <span class="text-fg-middle font-bold">△</span> = DS が下地を提供（プロダクトが正しく使う）・ <span class="text-fg-middle">—</span> = プロダクト側 / コンテンツ次第。
           </p>
 
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Perceivable (知覚可能)</h3>
-              <p class="card-subtitle">1.x — 全 29 基準 (A / AA / AAA)</p>
+              <p class="card-subtitle">1.x — 全 29 基準</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-middle bg-neutral-50 border-b border-stroke-middle">
                   <div>達成基準</div>
                   <div class="text-center">レベル</div>
                   <div class="text-center">DS 担保</div>
@@ -33,176 +60,176 @@
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.1.1 非テキストコンテンツ</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">画像に <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt</code>、装飾は <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt=""</code>、アイコンボタンに <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-label</code>、グラフ・図に内容説明</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">画像に <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt</code>、装飾は <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt=""</code>、アイコンボタンに <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-label</code>、グラフ・図に内容説明</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.1 音声のみ・映像のみ（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">音声のみに書き起こし、映像のみに音声解説またはテキスト説明</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">音声のみに書き起こし、映像のみに音声解説またはテキスト説明</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.2 キャプション（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">収録済み動画に同期字幕（セリフ＋話者＋効果音）</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">収録済み動画に同期字幕（セリフ＋話者＋効果音）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.3 音声解説/メディア代替（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">動画の視覚情報を音声解説、または全文テキスト代替を提供</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">動画の視覚情報を音声解説、または全文テキスト代替を提供</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.4 キャプション（ライブ）</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">ライブ配信にリアルタイム字幕</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ライブ配信にリアルタイム字幕</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.5 音声解説（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">収録済み動画に音声解説トラックを追加</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">収録済み動画に音声解説トラックを追加</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.6 手話（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">収録済み動画に手話通訳（ワイプ等）を提供</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">収録済み動画に手話通訳（ワイプ等）を提供</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.7 拡張音声解説（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">通常の音声解説で不足する場合、再生を止めて拡張音声解説</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">通常の音声解説で不足する場合、再生を止めて拡張音声解説</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.8 メディアに対する代替（収録済）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">視覚情報も含む全文書き起こしを用意</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">視覚情報も含む全文書き起こしを用意</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.2.9 音声のみ（ライブ）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">ライブ音声に同時文字起こし（キャプション）</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ライブ音声に同時文字起こし（キャプション）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.3.1 情報及び関係性</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">見出し・リスト・表を適切な HTML セマンティクスで表現</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">見出し・リスト・表を適切な HTML セマンティクスで表現</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.3.2 意味のある順序</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">DOM 順序＝読み上げ順序を保つ</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">DOM 順序＝読み上げ順序を保つ</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.3.3 感覚的特徴</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">形・位置・色・音だけに依存しない説明</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">形・位置・色・音だけに依存しない説明</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.3.4 表示の向き</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">縦横どちらの向きでも利用可能（固定しない）</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">縦横どちらの向きでも利用可能（固定しない）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.3.5 入力目的の特定</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">入力欄に <code class="typo-xsmall px-1 bg-neutral-100 rounded">autocomplete</code> 属性</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">入力欄に <code class="typo-xsmall px-1 bg-neutral-100 rounded">autocomplete</code> 属性</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.3.6 目的の特定</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">UI 部品の目的を ARIA ランドマーク / <code class="typo-xsmall px-1 bg-neutral-100 rounded">role</code> で判別可能に</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">UI 部品の目的を ARIA ランドマーク / <code class="typo-xsmall px-1 bg-neutral-100 rounded">role</code> で判別可能に</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.1 色の使用</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">エラー・リンク・必須を色だけで示さない</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">エラー・リンク・必須を色だけで示さない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.2 音声の制御</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">3 秒超の自動再生音声に停止・音量手段</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">3 秒超の自動再生音声に停止・音量手段</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.3 最低限のコントラスト</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">通常テキスト 4.5:1、大きい文字（24px / 太字 18.66px）3:1</span>
+                  <span class="text-fg-high">通常テキスト 4.5:1、大きい文字（24px / 太字 18.66px）3:1</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.4 テキストのサイズ変更</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">ブラウザ 200% 拡大で情報・機能が失われない（<code class="typo-xsmall px-1 bg-neutral-100 rounded">rem</code> 等を使用）</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">ブラウザ 200% 拡大で情報・機能が失われない（<code class="typo-xsmall px-1 bg-neutral-100 rounded">rem</code> 等を使用）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.5 文字画像</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">文字は画像でなくテキストで表現（ロゴ等の例外を除く）</span>
+                  <span class="text-fg-high">文字は画像でなくテキストで表現（ロゴ等の例外を除く）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.6 高度なコントラスト</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">通常テキスト 7:1（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-fg-high</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">text-fg-middle</code>）、大きい文字 4.5:1</span>
+                  <span class="text-fg-high">通常テキスト 7:1（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-fg-high</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">text-fg-high</code>）、大きい文字 4.5:1</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.7 小さな背景音</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">収録済み音声の背景音は前景より 20dB 以上小さく、または無し</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">収録済み音声の背景音は前景より 20dB 以上小さく、または無し</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.8 視覚的提示</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">段落幅・行間 1.5・両端揃え無し・配色変更・200% 対応</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">段落幅・行間 1.5・両端揃え無し・配色変更・200% 対応</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.9 文字画像（例外なし）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">ロゴ以外はテキストを画像化しない（例外なし）</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ロゴ以外はテキストを画像化しない（例外なし）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.10 リフロー</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">幅 320px 相当（400% 拡大）で二次元スクロールなし</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">幅 320px 相当（400% 拡大）で二次元スクロールなし</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.11 非テキストのコントラスト</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">UI 部品・図形を背景と 3:1 以上</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">UI 部品・図形を背景と 3:1 以上</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">1.4.12 テキストの間隔</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">行間 1.5 倍・段落間 2 倍・文字間 0.12em・単語間 0.16em に調整しても破綻しない</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">行間 1.5 倍・段落間 2 倍・文字間 0.12em・単語間 0.16em に調整しても破綻しない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
                   <span class="text-fg-high">1.4.13 ホバー/フォーカスで表示</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">ツールチップ等は消去可能・ホバー維持可能・離脱まで表示継続</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ツールチップ等は消去可能・ホバー維持可能・離脱まで表示継続</span>
                 </div>
               </div>
             </div>
@@ -211,11 +238,11 @@
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Operable (操作可能)</h3>
-              <p class="card-subtitle">2.x — 全 29 基準 (A / AA / AAA)</p>
+              <p class="card-subtitle">2.x — 全 34 基準（2.2 で 5 基準追加）</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-middle bg-neutral-50 border-b border-stroke-middle">
                   <div>達成基準</div>
                   <div class="text-center">レベル</div>
                   <div class="text-center">DS 担保</div>
@@ -225,175 +252,205 @@
                   <span class="text-fg-high">2.1.1 キーボード</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">全機能をキーボードのみで操作可能</span>
+                  <span class="text-fg-high">全機能をキーボードのみで操作可能</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.1.2 キーボードトラップなし</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">フォーカスが特定要素から抜け出せる（モーダルは Esc 等）</span>
+                  <span class="text-fg-high">フォーカスが特定要素から抜け出せる（モーダルは Esc 等）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.1.3 キーボード（例外なし）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">タイミング依存もなくキーボードで全操作</span>
+                  <span class="text-fg-high">タイミング依存もなくキーボードで全操作</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.1.4 文字キーショートカット</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">単一文字ショートカットは無効化 / 修飾キー併用 / フォーカス時のみ</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">単一文字ショートカットは無効化 / 修飾キー併用 / フォーカス時のみ</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.2.1 タイミング調整可能</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">制限時間をオフ / 10 倍延長 / 事前警告で延長可</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">制限時間をオフ / 10 倍延長 / 事前警告で延長可</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.2.2 一時停止・停止・非表示</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">自動の動き・点滅・自動更新を止める手段</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">自動の動き・点滅・自動更新を止める手段</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.2.3 タイミング非依存</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">利用にタイミングを要求しない</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">利用にタイミングを要求しない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.2.4 割り込み</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">通知・割り込みを延期 / 抑止できる</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">通知・割り込みを延期 / 抑止できる</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.2.5 再認証</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">セッション切れ後の再認証でデータを失わない</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">セッション切れ後の再認証でデータを失わない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.2.6 タイムアウト</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">データ損失を伴うタイムアウトの 20 秒以上前に警告</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">データ損失を伴うタイムアウトの 20 秒以上前に警告</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.3.1 3 回の閃光、又は閾値以下</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">1 秒に 3 回以上の閃光を含めない</span>
+                  <span class="text-fg-high">1 秒に 3 回以上の閃光を含めない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.3.2 3 回の閃光</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">どのコンテンツにも閃光を含めない</span>
+                  <span class="text-fg-high">どのコンテンツにも閃光を含めない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.3.3 インタラクションによるアニメーション</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle"><code class="typo-xsmall px-1 bg-neutral-100 rounded">prefers-reduced-motion</code> でモーションを無効化</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high"><code class="typo-xsmall px-1 bg-neutral-100 rounded">prefers-reduced-motion</code> でモーションを無効化</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.1 ブロックスキップ</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">「本文へスキップ」リンクを冒頭に配置</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">「本文へスキップ」リンクを冒頭に配置</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.2 ページタイトル</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">各ページに固有で説明的な <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;title&gt;</code></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">各ページに固有で説明的な <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;title&gt;</code></span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.3 フォーカス順序</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">Tab 順序が意味と操作可能性を保つ（<code class="typo-xsmall px-1 bg-neutral-100 rounded">tabindex</code> 正値を避ける）</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">Tab 順序が意味と操作可能性を保つ（<code class="typo-xsmall px-1 bg-neutral-100 rounded">tabindex</code> 正値を避ける）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.4 リンクの目的（コンテキスト内）</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">リンク文言＋周辺文脈で目的が分かる</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">リンク文言＋周辺文脈で目的が分かる</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.5 複数の手段</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">ナビ / 検索 / サイトマップ等 2 つ以上の導線</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ナビ / 検索 / サイトマップ等 2 つ以上の導線</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.6 見出し及びラベル</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">セクション見出し・フォームラベルを明確に</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">セクション見出し・フォームラベルを明確に</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.7 フォーカスの可視化</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">フォーカス時に視覚的な focus ring（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--shadow-focus-ring</code>）</span>
+                  <span class="text-fg-high">フォーカス時に視覚的な focus ring（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--shadow-focus-ring</code>）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.8 現在位置</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">パンくず・<code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-current="page"</code> で現在位置を提示</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">パンくず・<code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-current="page"</code> で現在位置を提示</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.9 リンクの目的（リンクのみ）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">リンク文言単独で目的が分かる（「こちら」を避ける）</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">リンク文言単独で目的が分かる（「こちら」を避ける）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.10 セクション見出し</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">各セクションに見出しを付与</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">各セクションに見出しを付与</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.4.11 フォーカスの非遮蔽（最低限）</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">フォーカス中の要素が固定ヘッダー等に完全には隠れない</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.4.12 フォーカスの非遮蔽（高度）</span>
+                  <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">フォーカス中の要素が全く隠れない</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.4.13 フォーカスの外観</span>
+                  <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">フォーカスリングが十分な面積＋3:1 のコントラスト（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--shadow-focus-ring</code>）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.1 ポインタジェスチャ</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">マルチポイント / 軌跡ジェスチャに単一ポインタ代替</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">マルチポイント / 軌跡ジェスチャに単一ポインタ代替</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.2 ポインタのキャンセル</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle"><code class="typo-xsmall px-1 bg-neutral-100 rounded">click</code>(mouseup) で発火し誤操作をキャンセル可能</span>
+                  <span class="text-fg-high"><code class="typo-xsmall px-1 bg-neutral-100 rounded">click</code>(mouseup) で発火し誤操作をキャンセル可能</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.3 名前のラベル</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">視覚ラベルの文言をアクセシブル名に含める</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">視覚ラベルの文言をアクセシブル名に含める</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.4 動きによる起動</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">デバイスの動き起動に UI 代替＋無効化</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">デバイスの動き起動に UI 代替＋無効化</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
-                  <span class="text-fg-high">2.5.5 ターゲットのサイズ</span>
+                  <span class="text-fg-high">2.5.5 ターゲットのサイズ（高度）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">ポインタ対象 44×44px 以上（<code class="typo-xsmall px-1 bg-neutral-100 rounded">lg</code> サイズを使う）</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">ポインタ対象 44×44px 以上（<code class="typo-xsmall px-1 bg-neutral-100 rounded">lg</code> サイズを使う）</span>
                 </div>
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.6 入力メカニズムの共存</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">キーボード / マウス / タッチを併用可能</span>
+                  <span class="text-fg-high">キーボード / マウス / タッチを併用可能</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">2.5.7 ドラッグ動作</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ドラッグ操作に単一ポインタ（タップ等）の代替を用意</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                  <span class="text-fg-high">2.5.8 ターゲットのサイズ（最低限）</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
+                  <span class="text-fg-high">ポインタ対象 24×24px 以上（DS は最小 sm でも 32px で充足）</span>
                 </div>
               </div>
             </div>
@@ -402,11 +459,11 @@
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Understandable (理解可能)</h3>
-              <p class="card-subtitle">3.x — 全 17 基準 (A / AA / AAA)</p>
+              <p class="card-subtitle">3.x — 全 21 基準（2.2 で 4 基準追加）</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-middle bg-neutral-50 border-b border-stroke-middle">
                   <div>達成基準</div>
                   <div class="text-center">レベル</div>
                   <div class="text-center">DS 担保</div>
@@ -415,104 +472,128 @@
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.1.1 ページの言語</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;html lang="ja"&gt;</code> を設定</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high"><code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;html lang="ja"&gt;</code> を設定</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.1.2 一部分の言語</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">異なる言語部分に <code class="typo-xsmall px-1 bg-neutral-100 rounded">lang</code> 属性</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">異なる言語部分に <code class="typo-xsmall px-1 bg-neutral-100 rounded">lang</code> 属性</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.1.3 一般的でない用語</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">専門用語に <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;abbr&gt;</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;dfn&gt;</code> や用語集</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">専門用語に <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;abbr&gt;</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;dfn&gt;</code> や用語集</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.1.4 略語</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">略語に <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;abbr title&gt;</code> や略語集</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">略語に <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;abbr title&gt;</code> や略語集</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.1.5 読解レベル</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">難解な文章に要約・図解を併記</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">難解な文章に要約・図解を併記</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.1.6 発音</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">多義語・固有名詞に <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;ruby&gt;</code> / 発音表記</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">多義語・固有名詞に <code class="typo-xsmall px-1 bg-neutral-100 rounded">&lt;ruby&gt;</code> / 発音表記</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.2.1 フォーカス時</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">フォーカスしただけで文脈を変えない</span>
+                  <span class="text-fg-high">フォーカスしただけで文脈を変えない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.2.2 入力時</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">入力・選択で勝手に送信 / 遷移しない</span>
+                  <span class="text-fg-high">入力・選択で勝手に送信 / 遷移しない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.2.3 一貫したナビゲーション</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">繰り返すナビを同じ相対順序で配置</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">繰り返すナビを同じ相対順序で配置</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.2.4 一貫した識別性</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">同機能を同じラベル・アイコンで識別</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">同機能を同じラベル・アイコンで識別</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.2.5 要求による変化</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">文脈変化はユーザーの明示操作でのみ</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">文脈変化はユーザーの明示操作でのみ</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">3.2.6 一貫したヘルプ</span>
+                  <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">ヘルプ（問い合わせ・チャット等）を各ページで同じ相対順序に配置</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.1 エラーの特定</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">エラー項目をテキストで特定（<code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-invalid</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-describedby</code>）</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">エラー項目をテキストで特定（<code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-invalid</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-describedby</code>）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.2 ラベル又は説明文</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">入力欄にラベル・説明（placeholder のみは不可）</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">入力欄にラベル・説明（placeholder のみは不可）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.3 エラー修正の提案</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">具体的な修正候補を提示</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">具体的な修正候補を提示</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.4 エラー回避（法的・金融・データ）</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">重要操作に確認 / 取消 / 送信前検証</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">重要操作に確認 / 取消 / 送信前検証</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.5 ヘルプ</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">文脈に応じたヘルプを提供</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">文脈に応じたヘルプを提供</span>
                 </div>
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.6 誤り防止（すべて）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
-                  <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle">すべての送信に確認 / 取消 / 検証</span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">すべての送信に確認 / 取消 / 検証</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">3.3.7 冗長な入力</span>
+                  <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">同一プロセスで既出情報の再入力を求めない（自動入力・選択可）</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                  <span class="text-fg-high">3.3.8 アクセシブルな認証（最低限）</span>
+                  <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">認知機能テスト（パズル等）に頼らない認証（コピペ・パスキー許可）</span>
+                </div>
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
+                  <span class="text-fg-high">3.3.9 アクセシブルな認証（高度）</span>
+                  <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
+                  <span class="text-center"><span class="text-fg-middle">—</span></span>
+                  <span class="text-fg-high">認知機能テストを一切課さない認証</span>
                 </div>
               </div>
             </div>
@@ -521,33 +602,27 @@
           <div class="card overflow-hidden">
             <div class="card-header">
               <h3 class="card-title">Robust (堅牢)</h3>
-              <p class="card-subtitle">4.x — 全 3 基準 (A / AA)</p>
+              <p class="card-subtitle">4.x — 全 2 基準（4.1.1 は 2.2 で廃止）</p>
             </div>
             <div class="card-body">
               <div class="border border-stroke-middle rounded-md overflow-hidden">
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle">
+                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-middle bg-neutral-50 border-b border-stroke-middle">
                   <div>達成基準</div>
                   <div class="text-center">レベル</div>
                   <div class="text-center">DS 担保</div>
                   <div>具体的な対応内容</div>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
-                  <span class="text-fg-high">4.1.1 構文解析</span>
-                  <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
-                  <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">valid な HTML（重複 ID・未閉じタグを避ける）</span>
-                </div>
-                <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">4.1.2 名前・役割・値</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle">UI 部品の名前・役割・状態をプログラム的に提供（ネイティブ要素＋ARIA）</span>
+                  <span class="text-fg-high">UI 部品の名前・役割・状態をプログラム的に提供（ネイティブ要素＋ARIA）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
                   <span class="text-fg-high">4.1.3 ステータスメッセージ</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
-                  <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle">動的メッセージを <code class="typo-xsmall px-1 bg-neutral-100 rounded">role="status"</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-live</code> で通知</span>
+                  <span class="text-center"><span class="text-fg-middle font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
+                  <span class="text-fg-high">動的メッセージを <code class="typo-xsmall px-1 bg-neutral-100 rounded">role="status"</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-live</code> で通知</span>
                 </div>
               </div>
             </div>
