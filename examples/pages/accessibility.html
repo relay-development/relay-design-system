@@ -1,0 +1,246 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="accessibility">
+      <div class="mb-8">
+        <div class="flex items-baseline justify-between mb-3">
+          <h2 class="typo-2xlarge font-semibold">アクセシビリティについての取り組み</h2>
+          <span class="typo-xsmall text-fg-low">WCAG 2.1 AAA に向けて</span>
+        </div>
+
+        <p class="typo-small text-fg-middle mb-6">
+          Relay Design System は <strong>WCAG 2.1 Level AAA</strong> を目指す設計です。コンポーネントを使うだけで自動的に担保される項目と、プロダクト側で実装が必要な項目を切り分けて把握できるようにしています。全 28 達成基準の実務チェックリストは <a class="text-info-600 underline" href="https://github.com/relay-development/relay-design-system/blob/main/docs/ACCESSIBILITY.md" target="_blank" rel="noopener noreferrer">docs/ACCESSIBILITY.md</a> を参照してください。
+        </p>
+
+        <div class="space-y-4">
+
+          <!-- DS が担保する項目 -->
+          <div class="card overflow-hidden">
+            <div class="card-header">
+              <h4 class="card-title">✅ デザインシステムが担保する項目</h4>
+              <p class="card-subtitle">標準コンポーネントを使うだけで自動的に満たされる WCAG 基準</p>
+            </div>
+            <div class="card-body">
+              <ul class="space-y-3 typo-small text-fg-middle">
+                <li>
+                  <strong class="text-fg-high">コントラスト 7:1 以上 (1.4.6)</strong>
+                  <span class="text-fg-low"> — <code class="typo-xsmall">text-fg-high</code> ≈ 18:1 / <code class="typo-xsmall">text-fg-middle</code> ≈ 10.7:1</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">キーボード操作 (2.1.3)</strong>
+                  <span class="text-fg-low"> — 全 interactive 要素に <code class="typo-xsmall">:focus-visible</code> + <code class="typo-xsmall">--shadow-focus-ring</code></span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">ARIA 状態 (4.1.2)</strong>
+                  <span class="text-fg-low"> — <code class="typo-xsmall">aria-pressed</code> / <code class="typo-xsmall">aria-selected</code> / <code class="typo-xsmall">disabled</code> ベースで状態を表現</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">閃光・点滅なし (2.3.2)</strong>
+                  <span class="text-fg-low"> — 1 秒 3 回以上の明滅は含まれていない</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">入力モダリティ非依存 (2.5.6)</strong>
+                  <span class="text-fg-low"> — キーボード / マウス / タッチすべてに対応</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- プロダクト側で実装が必要な項目 -->
+          <div class="card overflow-hidden">
+            <div class="card-header">
+              <h4 class="card-title">🔧 プロダクト側で実装が必要な項目</h4>
+              <p class="card-subtitle">DS では担保しきれない、プロダクト固有の責務</p>
+            </div>
+            <div class="card-body">
+              <ul class="space-y-3 typo-small text-fg-middle">
+                <li>
+                  <strong class="text-fg-high">動画・音声コンテンツ (1.2.6-9)</strong>
+                  <span class="text-fg-low"> — 手話通訳 / 拡張音声解説 / トランスクリプトの提供</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">フォーム属性とランドマーク (1.3.6)</strong>
+                  <span class="text-fg-low"> — <code class="typo-xsmall">autocomplete</code> 属性 / <code class="typo-xsmall">&lt;header&gt;</code> <code class="typo-xsmall">&lt;nav&gt;</code> <code class="typo-xsmall">&lt;main&gt;</code> の配置</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">prefers-reduced-motion (2.3.3)</strong>
+                  <span class="text-fg-low"> — <code class="typo-xsmall">@media (prefers-reduced-motion: reduce)</code> でアニメーション抑制</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">セッションタイムアウト警告 (2.2.6)</strong>
+                  <span class="text-fg-low"> — 切断 20 秒以上前のモーダル警告と延長手段</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">具体的なリンク文言 (2.4.9)</strong>
+                  <span class="text-fg-low"> — 「こちら」「more」を避け、行き先を文言に含める</span>
+                </li>
+                <li>
+                  <strong class="text-fg-high">重要操作の確認ダイアログ (3.3.6)</strong>
+                  <span class="text-fg-low"> — 削除 / 課金など取消困難な操作には確認画面または undo を提供</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ターゲットサイズ警告 -->
+          <div class="alert alert-warning">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">ターゲットサイズ 44 × 44 CSS px には <code class="typo-xsmall">lg</code> を使う (2.5.5)</p>
+              <p class="alert-body">
+                WCAG AAA はポインタターゲットに 44 × 44 px 以上を要求します。<code class="typo-xsmall">.btn-md</code> / <code class="typo-xsmall">.icon-btn-md</code> / <code class="typo-xsmall">.input-md</code> は 40px なので不足します。AAA を目指す画面では <code class="typo-xsmall">btn-lg</code> / <code class="typo-xsmall">icon-btn-lg</code> / <code class="typo-xsmall">input-lg</code> を選んでください。
+              </p>
+            </div>
+          </div>
+
+          <!-- 検証ツールの早見表 -->
+          <div class="card overflow-hidden">
+            <div class="card-header">
+              <h4 class="card-title">検証ツール</h4>
+              <p class="card-subtitle">AAA は自動チェックだけでは検出しきれない項目が多い</p>
+            </div>
+            <div class="card-body">
+              <div class="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <p class="typo-xsmall font-semibold mb-2 text-fg-low">自動チェック</p>
+                  <ul class="space-y-1 typo-small text-fg-middle">
+                    <li><a class="text-info-600 underline" href="https://www.deque.com/axe/devtools/" target="_blank" rel="noopener noreferrer">axe DevTools</a> — ARIA / コントラスト</li>
+                    <li><a class="text-info-600 underline" href="https://developer.chrome.com/docs/lighthouse" target="_blank" rel="noopener noreferrer">Lighthouse</a> — Accessibility スコア</li>
+                    <li><a class="text-info-600 underline" href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer">WAVE</a> — 視覚的なエラーマップ</li>
+                    <li><a class="text-info-600 underline" href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener noreferrer">WebAIM Contrast Checker</a></li>
+                  </ul>
+                </div>
+                <div>
+                  <p class="typo-xsmall font-semibold mb-2 text-fg-low">手動チェック</p>
+                  <ul class="space-y-1 typo-small text-fg-middle">
+                    <li>キーボードのみで全操作 (Tab / Enter / Esc / 矢印)</li>
+                    <li>スクリーンリーダー (NVDA / VoiceOver / TalkBack)</li>
+                    <li>200% ズームで横スクロール無しに読めるか</li>
+                    <li>OS の「視差効果を減らす」設定でアニメ確認</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 達成基準別の対応内容 (Perceivable A / AA) -->
+          <div class="card overflow-hidden">
+            <div class="card-header">
+              <h3 class="card-title">達成基準別の対応内容</h3>
+              <p class="card-subtitle">Perceivable (知覚可能) の A / AA 基準と具体策</p>
+            </div>
+            <div class="card-body">
+              <div class="border border-stroke-middle rounded-md overflow-hidden">
+                <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-middle">
+                  <div>達成基準</div>
+                  <div class="text-center">レベル</div>
+                  <div>具体的な対応内容</div>
+                </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.1.1 非テキストコンテンツ</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">画像に <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt</code>、装飾は <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt=""</code>、アイコンボタンに <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-label</code>、グラフ・図に内容説明</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.2.1 音声のみ・映像のみ（収録済）</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">音声のみに書き起こし、映像のみに音声解説またはテキスト説明</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.2.2 キャプション（収録済）</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">収録済み動画に同期字幕（セリフ＋話者＋効果音）</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.2.3 音声解説/メディア代替（収録済）</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">動画の視覚情報を音声解説、または全文テキスト代替を提供</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.2.4 キャプション（ライブ）</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">ライブ配信にリアルタイム字幕</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.2.5 音声解説（収録済）</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">収録済み動画に音声解説トラックを追加</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.3.1 情報及び関係性</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">見出し・リスト・表を適切な HTML セマンティクスで表現</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.3.2 意味のある順序</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">DOM 順序＝読み上げ順序を保つ</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.3.3 感覚的特徴</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">形・位置・色・音だけに依存しない説明</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.3.4 表示の向き</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">縦横どちらの向きでも利用可能（固定しない）</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.3.5 入力目的の特定</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">入力欄に <code class="typo-xsmall px-1 bg-neutral-100 rounded">autocomplete</code> 属性</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.1 色の使用</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">エラー・リンク・必須を色だけで示さない</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.2 音声の制御</span>
+                <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
+                <span class="text-fg-middle">3 秒超の自動再生音声に停止・音量手段</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.3 最低限のコントラスト</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">通常テキスト 4.5:1、大きい文字（24px / 太字 18.66px）3:1</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.4 テキストのサイズ変更</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">ブラウザ 200% 拡大で情報・機能が失われない（<code class="typo-xsmall px-1 bg-neutral-100 rounded">rem</code> 等を使用）</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.5 文字画像</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">文字は画像でなくテキストで表現（ロゴ等の例外を除く）</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.10 リフロー</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">幅 320px 相当（400% 拡大）で二次元スクロールなし</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.11 非テキストのコントラスト</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">UI 部品・図形を背景と 3:1 以上</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
+                <span class="text-fg-high">1.4.12 テキストの間隔</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">行間 1.5 倍・段落間 2 倍・文字間 0.12em・単語間 0.16em に調整しても破綻しない</span>
+              </div>
+              <div class="grid grid-cols-[minmax(0,1.3fr)_56px_minmax(0,2fr)] gap-3 px-4 py-3 typo-small items-start">
+                <span class="text-fg-high">1.4.13 ホバー/フォーカスで表示</span>
+                <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
+                <span class="text-fg-middle">ツールチップ等は消去可能・ホバー維持可能・離脱まで表示継続</span>
+              </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
