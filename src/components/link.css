@@ -1,0 +1,57 @@
+/*
+ * Link (リンクテキスト) — recreated from Figma component 3208:1456
+ *
+ *   コンテンツがナビゲーションできることをユーザーに提示するインラインリンク。
+ *
+ *   props:
+ *     state       : enable / hover         → :hover / .is-hover-preview
+ *     isOpenInNew : true | false           → 末尾に external-link アイコン (16px)
+ *     label       : string
+ *
+ *   色: enable = primary/600、hover = primary/700
+ *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と AA 不足のため
+ *       アクセシビリティ方針 (WCAG 2.2 AA) に合わせ primary/600 (約 4.9:1) に上げている。
+ *   タイポ: text-sm (14/24) medium、ラベルに underline (from-font / skip-ink: none)。
+ *
+ * Usage:
+ *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
+ *     <span class="link-label">リンクテキスト</span>
+ *     <svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg>
+ *   </a>
+ *   外部アイコン無し: <a class="link"><span class="link-label">前のページ</span></a>
+ */
+
+@layer components {
+  .link {
+    @apply inline-flex items-center gap-1
+           text-sm leading-6 font-medium
+           text-primary-600 no-underline
+           cursor-pointer;
+  }
+
+  /* 下線はラベルだけに掛け、アイコンには掛けない */
+  .link .link-label {
+    @apply underline;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+  }
+
+  /* 末尾の external-link アイコン (16px) */
+  .link .icon {
+    @apply w-4 h-4 shrink-0;
+  }
+
+  /* Hover (カタログ用 .is-hover-preview も同条件) */
+  .link:hover:not([aria-disabled="true"]),
+  .link.is-hover-preview {
+    @apply text-primary-700;
+  }
+
+  /* Focus ring */
+  .link:focus-visible,
+  .link.is-focus-preview {
+    outline: none;
+    border-radius: var(--radius-xs);
+    box-shadow: var(--shadow-focus-ring);
+  }
+}
