@@ -12,9 +12,33 @@
 
         <div class="space-y-4">
 
+          <!-- 方針 -->
+          <div class="card overflow-hidden">
+            <div class="card-header">
+              <h3 class="card-title">方針</h3>
+              <p class="card-subtitle">アクセシビリティ対応の進め方と目標レベル</p>
+            </div>
+            <div class="card-body">
+              <ul class="space-y-3 typo-small text-fg-middle">
+                <li>
+                  本デザインシステムは <a class="text-info-600 underline" href="https://waic.jp/docs/jis2016/accessibility-plan-guidelines/201604/" target="_blank" rel="noopener noreferrer">WAIC「ウェブアクセシビリティ方針 策定ガイドライン」</a> に沿って対応を進めます。
+                </li>
+                <li>
+                  各コンポーネント・アセットを <strong>WCAG 2.2</strong> に準拠させます。
+                </li>
+                <li>
+                  <strong class="text-fg-high">本体サイト</strong> — レベル <span class="badge badge-soft-info">AA</span> に準拠を目指します。
+                </li>
+                <li>
+                  <strong class="text-fg-high">自治体様の特設ページ</strong> — レベル <span class="badge badge-soft-primary">AAA</span> の<strong>一部達成</strong>を目指します（1.4.6 高度なコントラスト、2.3.2 3 回の閃光、など）。
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <!-- 達成基準別の対応内容 (WCAG 2.2 全 86 基準) -->
           <p class="typo-small text-fg-middle">
-            <strong>DS 担保</strong> 列: <span class="text-success-600 font-bold">✓</span> = コンポーネント / トークンで担保 ・ <span class="text-fg-low font-bold">△</span> = DS が下地を提供（プロダクトが正しく使う）・ <span class="text-fg-low">—</span> = プロダクト側 / コンテンツ次第。<span class="badge badge-soft-primary typo-xsmall">2.2</span> = WCAG 2.2 で追加された基準。
+            <strong>DS 担保</strong> 列: <span class="text-success-600 font-bold">✓</span> = コンポーネント / トークンで担保 ・ <span class="text-fg-low font-bold">△</span> = DS が下地を提供（プロダクトが正しく使う）・ <span class="text-fg-low">—</span> = プロダクト側 / コンテンツ次第。
           </p>
 
           <div class="card overflow-hidden">
@@ -363,19 +387,19 @@
                   <span class="text-fg-high">2.4.11 フォーカスの非遮蔽（最低限）</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> フォーカス中の要素が固定ヘッダー等に完全には隠れない</span>
+                  <span class="text-fg-middle">フォーカス中の要素が固定ヘッダー等に完全には隠れない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.12 フォーカスの非遮蔽（高度）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> フォーカス中の要素が全く隠れない</span>
+                  <span class="text-fg-middle">フォーカス中の要素が全く隠れない</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.4.13 フォーカスの外観</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-fg-low font-bold" title="DS が下地を提供（プロダクトが正しく使う）">△</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> フォーカスリングが十分な面積＋3:1 のコントラスト（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--shadow-focus-ring</code>）</span>
+                  <span class="text-fg-middle">フォーカスリングが十分な面積＋3:1 のコントラスト（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--shadow-focus-ring</code>）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">2.5.1 ポインタジェスチャ</span>
@@ -417,13 +441,13 @@
                   <span class="text-fg-high">2.5.7 ドラッグ動作</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> ドラッグ操作に単一ポインタ（タップ等）の代替を用意</span>
+                  <span class="text-fg-middle">ドラッグ操作に単一ポインタ（タップ等）の代替を用意</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
                   <span class="text-fg-high">2.5.8 ターゲットのサイズ（最低限）</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-success-600 font-bold" title="DS で担保">✓</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> ポインタ対象 24×24px 以上（DS は最小 sm でも 32px で充足）</span>
+                  <span class="text-fg-middle">ポインタ対象 24×24px 以上（DS は最小 sm でも 32px で充足）</span>
                 </div>
               </div>
             </div>
@@ -512,7 +536,7 @@
                   <span class="text-fg-high">3.2.6 一貫したヘルプ</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> ヘルプ（問い合わせ・チャット等）を各ページで同じ相対順序に配置</span>
+                  <span class="text-fg-middle">ヘルプ（問い合わせ・チャット等）を各ページで同じ相対順序に配置</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.1 エラーの特定</span>
@@ -554,19 +578,19 @@
                   <span class="text-fg-high">3.3.7 冗長な入力</span>
                   <span class="text-center"><span class="badge badge-soft-neutral typo-xsmall">A</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> 同一プロセスで既出情報の再入力を求めない（自動入力・選択可）</span>
+                  <span class="text-fg-middle">同一プロセスで既出情報の再入力を求めない（自動入力・選択可）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start border-b border-stroke-low">
                   <span class="text-fg-high">3.3.8 アクセシブルな認証（最低限）</span>
                   <span class="text-center"><span class="badge badge-soft-info typo-xsmall">AA</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> 認知機能テスト（パズル等）に頼らない認証（コピペ・パスキー許可）</span>
+                  <span class="text-fg-middle">認知機能テスト（パズル等）に頼らない認証（コピペ・パスキー許可）</span>
                 </div>
                 <div class="grid grid-cols-[minmax(0,1.25fr)_52px_56px_minmax(0,1.9fr)] gap-3 px-4 py-3 typo-small items-start">
                   <span class="text-fg-high">3.3.9 アクセシブルな認証（高度）</span>
                   <span class="text-center"><span class="badge badge-soft-primary typo-xsmall">AAA</span></span>
                   <span class="text-center"><span class="text-fg-low">—</span></span>
-                  <span class="text-fg-middle"><span class="badge badge-soft-primary typo-xsmall">2.2</span> 認知機能テストを一切課さない認証</span>
+                  <span class="text-fg-middle">認知機能テストを一切課さない認証</span>
                 </div>
               </div>
             </div>
