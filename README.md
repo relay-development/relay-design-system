@@ -242,7 +242,7 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 
 ---
 
-## コンポーネント一覧（16 個）
+## コンポーネント一覧（18 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -261,7 +261,9 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 | 13 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
 | 14 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,negative}` |
 | 15 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
-| 16 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
+| 16 | Link          | `.link`, `.link-label`（緑下線 + external-link アイコン、enable=primary-600 / hover=primary-700） |
+| 17 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
+| 18 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
 
 各コンポーネントの完成形 HTML は `snippets/*.html` を参照してください。
 
