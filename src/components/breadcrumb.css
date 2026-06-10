@@ -1,0 +1,42 @@
+/*
+ * Breadcrumb (パンくずリスト) — recreated from Figma component 3208:1539 / 3208:1356
+ *
+ *   ユーザーが現在のページ階層を理解し、親階層へ戻るためのナビゲーション。
+ *
+ *   構造: <nav class="breadcrumb"><ol> … </ol></nav>
+ *     項目 (isCurrent=false): .link (外部アイコンなし)
+ *     区切り             : lucide chevron-right 16px を .breadcrumb-sep でラップ
+ *     現在ページ (isCurrent=true): .breadcrumb-current（リンクにせず aria-current="page"）
+ *
+ * Usage:
+ *   <nav class="breadcrumb" aria-label="パンくずリスト">
+ *     <ol>
+ *       <li><a class="link" href="#"><span class="link-label">前のページ</span></a></li>
+ *       <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+ *       <li><span class="breadcrumb-current" aria-current="page">現在のページ</span></li>
+ *     </ol>
+ *   </nav>
+ */
+
+@layer components {
+  .breadcrumb ol {
+    @apply flex flex-wrap items-center list-none m-0 p-0;
+  }
+
+  .breadcrumb li {
+    @apply inline-flex items-center;
+  }
+
+  /* chevron-right 区切り (16px、fg-low) */
+  .breadcrumb-sep {
+    @apply text-fg-low mx-1;
+  }
+  .breadcrumb-sep .icon {
+    @apply w-4 h-4;
+  }
+
+  /* 現在ページ（非リンク） */
+  .breadcrumb-current {
+    @apply text-sm leading-6 font-medium text-fg-high;
+  }
+}

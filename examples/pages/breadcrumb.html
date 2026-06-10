@@ -1,0 +1,71 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="breadcrumb">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge font-semibold">パンくずリスト</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-middle mb-6">
+        プロパティ: 各項目 <code class="px-1 bg-neutral-100 rounded">isCurrent</code> (true / false)。現在のページ階層を示し、親階層へ戻るためのナビゲーション。非現在項目は <code class="px-1 bg-neutral-100 rounded">.link</code> を流用し、<code class="px-1 bg-neutral-100 rounded">chevron-right</code> で区切ります。
+      </p>
+
+      <!-- ===== 基本 ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">基本</h3>
+          <p class="card-subtitle">4 階層。末尾が現在のページ</p>
+        </div>
+        <div class="card-body">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a class="link" href="#"><span class="link-label">前のページ</span></a></li>
+              <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+              <li><a class="link" href="#"><span class="link-label">前のページ</span></a></li>
+              <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+              <li><a class="link" href="#"><span class="link-label">前のページ</span></a></li>
+              <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+              <li><span class="breadcrumb-current" aria-current="page">現在のページ</span></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ===== 項目の状態 ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">項目の状態</h3>
+          <p class="card-subtitle">isCurrent による違い</p>
+        </div>
+        <div class="card-body grid grid-cols-[140px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">isCurrent: false</span>
+          <nav class="breadcrumb" aria-label="例">
+            <ol>
+              <li><a class="link" href="#"><span class="link-label">前のページ</span></a></li>
+              <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+            </ol>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">isCurrent: true</span>
+          <span class="breadcrumb-current" aria-current="page">現在のページ</span>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">ページ階層</p>
+        </div>
+        <div class="card-body">
+          <nav class="breadcrumb" aria-label="パンくずリスト">
+            <ol>
+              <li><a class="link" href="#"><span class="link-label">ホーム</span></a></li>
+              <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+              <li><a class="link" href="#"><span class="link-label">サービス一覧</span></a></li>
+              <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>
+              <li><span class="breadcrumb-current" aria-current="page">申請手続き</span></li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>

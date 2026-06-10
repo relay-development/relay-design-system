@@ -1,0 +1,75 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="link-text">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge font-semibold">リンクテキスト</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-middle mb-6">
+        プロパティ: <code class="px-1 bg-neutral-100 rounded">state</code> (enable / hover) ×
+        <code class="px-1 bg-neutral-100 rounded">isOpenInNew</code>。コンテンツがナビゲーションできることを示すインラインリンク。色は <code class="px-1 bg-neutral-100 rounded">primary-600</code>（hover: <code class="px-1 bg-neutral-100 rounded">primary-700</code>）で、下線と合わせて WCAG AA を満たします。
+      </p>
+
+      <!-- ===== state マトリクス ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">state</h3>
+          <p class="card-subtitle">enable / hover（外部リンクアイコン付き）</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">enable</span>
+          <div>
+            <a class="link" href="#">
+              <span class="link-label">リンクテキスト</span>
+              <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+            </a>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">hover</span>
+          <div>
+            <a class="link is-hover-preview" href="#">
+              <span class="link-label">リンクテキスト</span>
+              <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== バリエーション ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">バリエーション</h3>
+          <p class="card-subtitle">外部リンクアイコンの有無</p>
+        </div>
+        <div class="card-body space-y-3">
+          <p class="typo-small text-fg-middle">
+            外部サイトを新規タブで開く例:
+            <a class="link" href="https://waic.jp/" target="_blank" rel="noopener noreferrer">
+              <span class="link-label">WAIC のサイトを見る</span>
+              <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
+            </a>
+          </p>
+          <p class="typo-small text-fg-middle">
+            同一サイト内リンク（アイコンなし）:
+            <a class="link" href="#"><span class="link-label">同じサイト内のページ</span></a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">本文中に埋め込む</p>
+        </div>
+        <div class="card-body">
+          <p class="typo-medium text-fg-high">
+            詳しくは
+            <a class="link" href="#"><span class="link-label">プライバシーポリシー</span></a>
+            をご確認ください。設定は
+            <a class="link" href="#"><span class="link-label">アカウント設定</span></a>
+            から変更できます。
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>

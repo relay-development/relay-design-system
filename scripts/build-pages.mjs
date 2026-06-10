@@ -47,6 +47,8 @@ const PAGES = [
   { file: "card.html",         group: "Components", label: "カード",         title: "カード",         desc: "コンテナ (header / body / footer)" },
   { file: "badge.html",        group: "Components", label: "バッジ",        title: "バッジ",        desc: "ステータス / ラベルバッジ" },
   { file: "alert.html",        group: "Components", label: "アラート",        title: "アラート",        desc: "アラート (info / success / warning / negative)" },
+  { file: "link-text.html",    group: "Components", label: "リンクテキスト",   title: "リンクテキスト",   desc: "緑下線 + 外部リンクアイコン" },
+  { file: "breadcrumb.html",   group: "Components", label: "パンくずリスト",   title: "パンくずリスト",   desc: "chevron 区切りの階層ナビ" },
 
   { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
 ];
@@ -79,8 +81,27 @@ ${links}
     .join("\n\n");
 }
 
+// ── Breadcrumb (ホーム / グループ / ページ名) ─────────────────────────────────
+// Breadcrumb コンポーネント (.breadcrumb) と同じ UI: .link (緑下線) +
+// chevron-right 区切り + .breadcrumb-current。group が無いページ (index) では出さない。
+const sep =
+  '<li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></li>';
+function breadcrumb(group, title) {
+  if (!group) return "";
+  return `      <nav class="breadcrumb max-w-5xl mx-auto px-6 pt-6" aria-label="パンくずリスト">
+        <ol>
+          <li><a class="link" href="./index.html"><span class="link-label">ホーム</span></a></li>
+          ${sep}
+          <li><span class="typo-small text-fg-middle">${group}</span></li>
+          ${sep}
+          <li><span class="breadcrumb-current" aria-current="page">${title}</span></li>
+        </ol>
+      </nav>
+`;
+}
+
 // ── Page template ───────────────────────────────────────────────────────────
-function render({ title, content, activeFile }) {
+function render({ title, group, content, activeFile }) {
   return `<!doctype html>
 <html lang="ja">
 <head>
@@ -106,7 +127,7 @@ ${navHtml(activeFile)}
     </aside>
 
     <div class="docs-main">
-${content}
+${breadcrumb(group, title)}${content}
     </div>
   </div>
 
@@ -129,7 +150,7 @@ const all = [INDEX, ...PAGES];
 let written = 0;
 for (const p of all) {
   const content = readFragment(p.file);
-  const html = render({ title: p.title, content, activeFile: p.file });
+  const html = render({ title: p.title, group: p.group, content, activeFile: p.file });
   writeFileSync(resolve(EXAMPLES, p.file), html, "utf8");
   written++;
 }
