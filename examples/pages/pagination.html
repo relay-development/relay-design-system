@@ -41,39 +41,100 @@
       </div>
 
       <!-- ===== 使用例 ===== -->
-      <div class="card mb-8">
+      <div class="card mb-6">
         <div class="card-header">
           <h3 class="card-title">使用例</h3>
-          <p class="card-subtitle">ページ数が多いときは <code class="px-1 bg-neutral-100 rounded">.pagination-ellipsis</code> で省略する。1 ページ目では「前へ」を <code class="px-1 bg-neutral-100 rounded">aria-disabled="true"</code> にする</p>
+          <p class="card-subtitle">ページ数が少なければ全ページを並べ、多いときは <code class="px-1 bg-neutral-100 rounded">.pagination-ellipsis</code> で省略する。1 ページ目では「前へ」を <code class="px-1 bg-neutral-100 rounded">aria-disabled="true"</code> にする</p>
         </div>
         <div class="card-body space-y-6">
-          <!-- 中間ページ -->
-          <nav class="pagination" aria-label="検索結果のページネーション">
-            <ul>
-              <li><a class="pagination-item" href="#pagination" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
-              <li><a class="pagination-item" href="#pagination">1</a></li>
-              <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a class="pagination-item" href="#pagination">4</a></li>
-              <li><a class="pagination-item" href="#pagination" aria-current="page">5</a></li>
-              <li><a class="pagination-item" href="#pagination">6</a></li>
-              <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a class="pagination-item" href="#pagination">10</a></li>
-              <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
-            </ul>
-          </nav>
+          <!-- ページ数が少ない場合 (省略なし) -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-2">ページ数が少ない場合（省略なし・全 5 ページ）</p>
+            <nav class="pagination" aria-label="省略なしの例">
+              <ul>
+                <li><a class="pagination-item" href="#pagination" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+                <li><a class="pagination-item" href="#pagination">1</a></li>
+                <li><a class="pagination-item" href="#pagination">2</a></li>
+                <li><a class="pagination-item" href="#pagination" aria-current="page">3</a></li>
+                <li><a class="pagination-item" href="#pagination">4</a></li>
+                <li><a class="pagination-item" href="#pagination">5</a></li>
+                <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+              </ul>
+            </nav>
+          </div>
+
+          <!-- ページ数が多い場合 (省略あり) -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-2">ページ数が多い場合（省略あり・全 10 ページ）</p>
+            <nav class="pagination" aria-label="検索結果のページネーション">
+              <ul>
+                <li><a class="pagination-item" href="#pagination" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+                <li><a class="pagination-item" href="#pagination">1</a></li>
+                <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+                <li><a class="pagination-item" href="#pagination">4</a></li>
+                <li><a class="pagination-item" href="#pagination" aria-current="page">5</a></li>
+                <li><a class="pagination-item" href="#pagination">6</a></li>
+                <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+                <li><a class="pagination-item" href="#pagination">10</a></li>
+                <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+              </ul>
+            </nav>
+          </div>
 
           <!-- 先頭ページ -->
-          <nav class="pagination" aria-label="先頭ページの例">
-            <ul>
-              <li><a class="pagination-item" href="#pagination" aria-disabled="true" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
-              <li><a class="pagination-item" href="#pagination" aria-current="page">1</a></li>
-              <li><a class="pagination-item" href="#pagination">2</a></li>
-              <li><a class="pagination-item" href="#pagination">3</a></li>
-              <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
-              <li><a class="pagination-item" href="#pagination">10</a></li>
-              <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
-            </ul>
-          </nav>
+          <div>
+            <p class="typo-xsmall text-fg-low mb-2">先頭ページ（「前へ」は無効）</p>
+            <nav class="pagination" aria-label="先頭ページの例">
+              <ul>
+                <li><a class="pagination-item" href="#pagination" aria-disabled="true" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+                <li><a class="pagination-item" href="#pagination" aria-current="page">1</a></li>
+                <li><a class="pagination-item" href="#pagination">2</a></li>
+                <li><a class="pagination-item" href="#pagination">3</a></li>
+                <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+                <li><a class="pagination-item" href="#pagination">10</a></li>
+                <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== NG パターン ===== -->
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">NG パターン — 1 ページしかないときに表示する</h3>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <!-- Don't -->
+          <div class="p-6 bg-negative-50">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <nav class="pagination mb-4" aria-label="NG: 1 ページのみ">
+              <ul>
+                <li><a class="pagination-item" href="#pagination" aria-disabled="true" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+                <li><a class="pagination-item" href="#pagination" aria-current="page">1</a></li>
+                <li><a class="pagination-item" href="#pagination" aria-disabled="true" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+              </ul>
+            </nav>
+            <p class="typo-small text-fg-middle">全件が 1 ページに収まるのにページネーションを表示すると、押せない部品だけが並び、ユーザーに「操作できそうで操作できない」迷いを生みます。</p>
+          </div>
+          <!-- Good -->
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="flex items-center justify-center h-10 mb-4 border border-dashed border-stroke-middle rounded-sm">
+              <span class="typo-xsmall text-fg-low">（何も表示しない）</span>
+            </div>
+            <p class="typo-small text-fg-middle">1 ページに収まるときはページネーション自体を表示しません。2 ページ以上になったときだけ表示します。</p>
+          </div>
         </div>
       </div>
     </section>
