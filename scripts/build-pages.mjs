@@ -43,6 +43,7 @@ const PAGES = [
   { file: "radio.html",        group: "Components", label: "ラジオ",        title: "ラジオ",        desc: "ラジオボタン + group" },
   { file: "filter-chip.html",  group: "Components", label: "フィルターチップ",  title: "フィルターチップ",  desc: "トグル可能なチップ" },
   { file: "tab.html",          group: "Components", label: "タブ",          title: "タブ",          desc: "タブバー (solid / line)" },
+  { file: "table.html",        group: "Components", label: "テーブル",         title: "テーブル",         desc: "項目名が上の比較テーブル" },
   { file: "simple-table.html", group: "Components", label: "シンプルテーブル", title: "シンプルテーブル", desc: "キー / バリュー テーブル" },
   { file: "card.html",         group: "Components", label: "カード",         title: "カード",         desc: "コンテナ (header / body / footer)" },
   { file: "badge.html",        group: "Components", label: "バッジ",        title: "バッジ",        desc: "ステータス / ラベルバッジ" },
