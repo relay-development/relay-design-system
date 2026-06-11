@@ -68,6 +68,11 @@ function navHtml(activeFile) {
     if (!g) { g = { title: p.group, items: [] }; groups.push(g); }
     g.items.push(p);
   }
+  // Foundations / Components はアコーディオン (details)。開閉状態は
+  // catalog.js が localStorage に保存してページ間で引き継ぐ。
+  const COLLAPSIBLE = new Set(["Foundations", "Components"]);
+  const chevron =
+    '<svg class="docs-sidebar-group-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
   return groups
     .map((g) => {
       const links = g.items
@@ -78,6 +83,12 @@ function navHtml(activeFile) {
           return `          <a href="./${p.file}"${active}>${p.label}</a>`;
         })
         .join("\n");
+      if (COLLAPSIBLE.has(g.title)) {
+        return `        <details class="docs-sidebar-group" data-nav-group="${g.title}" open>
+          <summary class="docs-sidebar-group-title">${g.title}${chevron}</summary>
+${links}
+        </details>`;
+      }
       return `        <div class="docs-sidebar-group">
           <div class="docs-sidebar-group-title">${g.title}</div>
 ${links}

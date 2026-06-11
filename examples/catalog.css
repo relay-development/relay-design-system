@@ -241,6 +241,23 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
+/* アコーディオン化したグループ (Foundations / Components) */
+summary.docs-sidebar-group-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;             /* デフォルトの ▶ マーカーを消す */
+}
+summary.docs-sidebar-group-title::-webkit-details-marker { display: none; }
+.docs-sidebar-group-chevron {
+  width: calc(var(--spacing) * 4);    /* 16 */
+  height: calc(var(--spacing) * 4);
+  color: var(--color-fg-low);
+  transition: transform 0.15s ease;
+}
+details[open] > summary .docs-sidebar-group-chevron { transform: rotate(180deg); }
+
 .docs-sidebar-nav a {
   display: block;
   padding: 6px 8px;
