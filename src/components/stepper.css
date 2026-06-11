@@ -13,7 +13,7 @@
  *
  *   marker : 32px 円。completed = primary/600 + check (16px)、
  *            current = white + border 2px primary/600 + 数字 primary/800、
- *            upcoming = neutral/200 塗り + 数字 fg/middle (8.40:1)
+ *            upcoming = neutral/100 塗り + 数字 fg/middle (9.45:1)
  *   line   : 2px。完了ステップの直後は primary/600、それ以外 stroke/middle
  *   label  : text-sm。current = fg/high bold、completed / upcoming = fg/middle
  *
@@ -77,7 +77,7 @@
   .stepper-marker {
     @apply inline-flex items-center justify-center w-8 h-8 rounded-full
            text-sm leading-6 font-semibold
-           bg-neutral-200 text-fg-middle;
+           bg-neutral-100 text-fg-middle;
   }
   .stepper-marker .icon {
     @apply w-4 h-4 shrink-0;   /* 16px check */
