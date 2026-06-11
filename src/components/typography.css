@@ -8,13 +8,14 @@
  *
  *   8x8 ベースグリッドに合わせるため、line-height は常に 8 の倍数。
  *   ルール: height = Math.ceil((size * 1.3) / 8) * 8
+ *   例外: medium は本文 default として可読性を優先し 1 段広い 32 を採用。
  *
  *   ┌──────────┬──────┬──────┬─────────┬─────────────────────┐
  *   │ class    │ size │ line │ weight  │ 用途                │
  *   ├──────────┼──────┼──────┼─────────┼─────────────────────┤
  *   │ xsmall   │  12  │  16  │ medium  │ キャプション・注釈  │
  *   │ small    │  14  │  24  │ medium  │ 補助テキスト        │
- *   │ medium   │  16  │  24  │ medium  │ 本文 (base)         │
+ *   │ medium   │  16  │  32  │ medium  │ 本文 (base)         │
  *   │ large    │  20  │  32  │ medium  │ サブ見出し          │
  *   │ xlarge   │  24  │  32  │ medium  │ セクション見出し    │
  *   │ 2xlarge  │  32  │  40  │ bold    │ ページタイトル      │
@@ -31,7 +32,7 @@
   /* Body sizes — Medium weight by default */
   .typo-xsmall  { @apply text-xs   leading-4  font-medium; }   /* 12 / 16 */
   .typo-small   { @apply text-sm   leading-6  font-medium; }   /* 14 / 24 */
-  .typo-medium  { @apply text-base leading-6  font-medium; }   /* 16 / 24 */
+  .typo-medium  { @apply text-base leading-8  font-medium; }   /* 16 / 32 */
   .typo-large   { @apply text-lg   leading-8  font-medium; }   /* 20 / 32 */
   .typo-xlarge  { @apply text-xl   leading-8  font-medium; }   /* 24 / 32 */
 

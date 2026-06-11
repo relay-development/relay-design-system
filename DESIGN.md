@@ -86,7 +86,7 @@ spacing/12 = 48px      spacing/16 = 64px
 ```
 .typo-xsmall    : 12px / 16px line-height
 .typo-small     : 14px / 24px
-.typo-medium    : 16px / 24px  ← 本文 default
+.typo-medium    : 16px / 32px  ← 本文 default
 .typo-large     : 20px / 32px
 .typo-xlarge    : 24px / 32px
 .typo-2xlarge   : 32px / 40px  ← セクション見出し
