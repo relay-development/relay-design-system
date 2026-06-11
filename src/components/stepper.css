@@ -1,0 +1,110 @@
+/*
+ * Stepper (ステッパー) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   入力 → 確認 → 完了のような複数ステップの手続きで、現在地と進捗を示す
+ *   ナビゲーション。マーカーの配色は Tab (solid) / Pagination の current と
+ *   同じ primary/500 + white に揃えている。
+ *
+ *   props (stepper-step):
+ *     state : completed / current / upcoming
+ *       - current   → aria-current="step"
+ *       - completed → .is-completed (ARIA に「完了」を表す属性が無いため
+ *                     クラスで指定。マーカーは check アイコンに差し替える)
+ *       - upcoming  → 修飾なし
+ *
+ *   marker : 32px 円。completed = primary/500 + check (16px)、
+ *            current = white + border 2px primary/500 + 数字 primary/600、
+ *            upcoming = white + border stroke/middle + 数字 fg/low
+ *   line   : 2px。完了ステップの直後は primary/500、それ以外 stroke/middle
+ *   label  : text-sm。current = fg/high bold、completed = fg/middle、upcoming = fg/low
+ *
+ * Usage:
+ *   <ol class="stepper" aria-label="申請の進捗">
+ *     <li class="stepper-step is-completed">
+ *       <span class="stepper-marker"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-check"></use></svg></span>
+ *       <span class="stepper-label">入力</span>
+ *     </li>
+ *     <li class="stepper-step" aria-current="step">
+ *       <span class="stepper-marker">2</span>
+ *       <span class="stepper-label">確認</span>
+ *     </li>
+ *     <li class="stepper-step">
+ *       <span class="stepper-marker">3</span>
+ *       <span class="stepper-label">完了</span>
+ *     </li>
+ *   </ol>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .stepper {
+    @apply flex list-none m-0 p-0 w-full;
+  }
+
+  /* ============================================================
+   * Step (マーカー + ラベル)
+   * ============================================================ */
+  .stepper-step {
+    @apply relative flex-1 flex flex-col items-center gap-2 text-center;
+  }
+
+  /* 接続線 — 左隣のマーカーと自分のマーカーの間を結ぶ。
+   * 50% (自分の中心) から左へ伸ばし、両端をマーカー半径 + 余白 (24px) 分空ける */
+  .stepper-step + .stepper-step::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--spacing) * 4 - 1px);            /* marker 32px の中心 */
+    right: calc(50% + var(--spacing) * 6);
+    width: calc(100% - var(--spacing) * 12);
+    height: 2px;
+    background: var(--color-stroke-middle);
+  }
+  /* 完了ステップの直後の線は進捗色にする */
+  .stepper-step.is-completed + .stepper-step::before {
+    background: var(--color-primary-500);
+  }
+
+  /* ============================================================
+   * Marker (丸数字 / check)
+   * ============================================================ */
+  .stepper-marker {
+    @apply inline-flex items-center justify-center w-8 h-8 rounded-full
+           text-sm leading-6 font-semibold
+           border border-solid border-stroke-middle bg-white text-fg-low;
+  }
+  .stepper-marker .icon {
+    @apply w-4 h-4 shrink-0;   /* 16px check */
+  }
+
+  /* ============================================================
+   * Label
+   * ============================================================ */
+  .stepper-label {
+    @apply text-sm leading-6 font-normal text-fg-low;
+  }
+
+  /* ============================================================
+   * States
+   * ============================================================ */
+  /* Current (現在のステップ) — ARIA 属性で指定 */
+  .stepper-step[aria-current="step"] .stepper-marker {
+    background-color: var(--color-white);
+    border: 2px solid var(--color-primary-500);
+    color: var(--color-primary-600);
+  }
+  .stepper-step[aria-current="step"] .stepper-label {
+    @apply font-bold text-fg-high;
+  }
+
+  /* Completed (完了したステップ) */
+  .stepper-step.is-completed .stepper-marker {
+    background-color: var(--color-primary-500);
+    border-color: transparent;
+    color: var(--color-white);
+  }
+  .stepper-step.is-completed .stepper-label {
+    @apply text-fg-middle;
+  }
+}

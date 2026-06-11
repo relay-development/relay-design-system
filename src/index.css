@@ -28,6 +28,7 @@
 @import "./components/breadcrumb.css";
 @import "./components/sidenav.css";
 @import "./components/pagination.css";
+@import "./components/stepper.css";
 
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";

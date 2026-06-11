@@ -242,7 +242,7 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 
 ---
 
-## コンポーネント一覧（20 個）
+## コンポーネント一覧（21 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -265,7 +265,8 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 | 17 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
 | 18 | Side Nav      | `.sidenav`, `.sidenav-group`, `.sidenav-divider`, `.sidenav-item`（現在地は `aria-current="page"`） |
 | 19 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
-| 20 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
+| 20 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
+| 21 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
 
 各コンポーネントの完成形 HTML は `snippets/*.html` を参照してください。
 
