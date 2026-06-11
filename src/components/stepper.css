@@ -12,11 +12,16 @@
  *                     クラスで指定。マーカーは check アイコンに差し替える)
  *       - upcoming  → 修飾なし
  *
- *   marker : 32px 円。completed = primary/500 + check (16px)、
- *            current = white + border 2px primary/500 + 数字 primary/600、
- *            upcoming = white + border stroke/middle + 数字 fg/low
- *   line   : 2px。完了ステップの直後は primary/500、それ以外 stroke/middle
- *   label  : text-sm。current = fg/high bold、completed = fg/middle、upcoming = fg/low
+ *   marker : 32px 円。completed = primary/700 + check (16px)、
+ *            current = white + border 2px primary/700 + 数字 primary/800、
+ *            upcoming = white + border stroke/middle + 数字 neutral/600
+ *   line   : 2px。完了ステップの直後は primary/700、それ以外 stroke/middle
+ *   label  : text-sm。current = fg/high bold、completed = fg/middle、upcoming = neutral/600
+ *
+ *   ※ 配色は WCAG 2.2 AAA (テキスト 7:1 / 非テキスト 3:1) を満たすよう
+ *     他コンポーネントの primary/500 系より 1〜2 段濃くしている:
+ *       数字 primary/800 = 9.23:1、ラベル neutral/600 = 7.58:1、
+ *       白 check / 枠線 primary/700 = 6.90:1 (非テキスト)
  *
  * Usage:
  *   <ol class="stepper" aria-label="申請の進捗">
@@ -63,7 +68,7 @@
   }
   /* 完了ステップの直後の線は進捗色にする */
   .stepper-step.is-completed + .stepper-step::before {
-    background: var(--color-primary-500);
+    background: var(--color-primary-700);
   }
 
   /* ============================================================
@@ -72,7 +77,7 @@
   .stepper-marker {
     @apply inline-flex items-center justify-center w-8 h-8 rounded-full
            text-sm leading-6 font-semibold
-           border border-solid border-stroke-middle bg-white text-fg-low;
+           border border-solid border-stroke-middle bg-white text-neutral-600;
   }
   .stepper-marker .icon {
     @apply w-4 h-4 shrink-0;   /* 16px check */
@@ -82,7 +87,7 @@
    * Label
    * ============================================================ */
   .stepper-label {
-    @apply text-sm leading-6 font-normal text-fg-low;
+    @apply text-sm leading-6 font-normal text-neutral-600;
   }
 
   /* ============================================================
@@ -91,8 +96,8 @@
   /* Current (現在のステップ) — ARIA 属性で指定 */
   .stepper-step[aria-current="step"] .stepper-marker {
     background-color: var(--color-white);
-    border: 2px solid var(--color-primary-500);
-    color: var(--color-primary-600);
+    border: 2px solid var(--color-primary-700);
+    color: var(--color-primary-800);
   }
   .stepper-step[aria-current="step"] .stepper-label {
     @apply font-bold text-fg-high;
@@ -100,7 +105,7 @@
 
   /* Completed (完了したステップ) */
   .stepper-step.is-completed .stepper-marker {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-700);
     border-color: transparent;
     color: var(--color-white);
   }
