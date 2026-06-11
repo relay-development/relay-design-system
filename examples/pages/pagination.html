@@ -1,0 +1,80 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="pagination">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge font-semibold">ページネーション</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-medium text-fg-middle mb-6">検索結果や一覧が複数ページに分かれるとき、ページを行き来するためのナビゲーションです。いま何ページ目にいるかが色で分かります。</p>
+
+      <!-- ===== 項目の状態 ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">項目の状態</h3>
+          <p class="card-subtitle">enable / hover / focus / current / disabled。現在のページは <code class="px-1 bg-neutral-100 rounded">aria-current="page"</code>、端で押せない矢印は <code class="px-1 bg-neutral-100 rounded">aria-disabled="true"</code> で指定</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">enable</span>
+          <nav class="pagination" aria-label="状態: enable"><ul>
+            <li><a class="pagination-item" href="#pagination">1</a></li>
+          </ul></nav>
+
+          <span class="typo-xsmall text-fg-low">hover</span>
+          <nav class="pagination" aria-label="状態: hover"><ul>
+            <li><a class="pagination-item is-hover-preview" href="#pagination">1</a></li>
+          </ul></nav>
+
+          <span class="typo-xsmall text-fg-low">focus</span>
+          <nav class="pagination" aria-label="状態: focus"><ul>
+            <li><a class="pagination-item is-focus-preview" href="#pagination">1</a></li>
+          </ul></nav>
+
+          <span class="typo-xsmall text-fg-low">current</span>
+          <nav class="pagination" aria-label="状態: current"><ul>
+            <li><a class="pagination-item" href="#pagination" aria-current="page">1</a></li>
+          </ul></nav>
+
+          <span class="typo-xsmall text-fg-low">disabled</span>
+          <nav class="pagination" aria-label="状態: disabled"><ul>
+            <li><a class="pagination-item" href="#pagination" aria-disabled="true" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+          </ul></nav>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">ページ数が多いときは <code class="px-1 bg-neutral-100 rounded">.pagination-ellipsis</code> で省略する。1 ページ目では「前へ」を <code class="px-1 bg-neutral-100 rounded">aria-disabled="true"</code> にする</p>
+        </div>
+        <div class="card-body space-y-6">
+          <!-- 中間ページ -->
+          <nav class="pagination" aria-label="検索結果のページネーション">
+            <ul>
+              <li><a class="pagination-item" href="#pagination" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+              <li><a class="pagination-item" href="#pagination">1</a></li>
+              <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+              <li><a class="pagination-item" href="#pagination">4</a></li>
+              <li><a class="pagination-item" href="#pagination" aria-current="page">5</a></li>
+              <li><a class="pagination-item" href="#pagination">6</a></li>
+              <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+              <li><a class="pagination-item" href="#pagination">10</a></li>
+              <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+            </ul>
+          </nav>
+
+          <!-- 先頭ページ -->
+          <nav class="pagination" aria-label="先頭ページの例">
+            <ul>
+              <li><a class="pagination-item" href="#pagination" aria-disabled="true" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+              <li><a class="pagination-item" href="#pagination" aria-current="page">1</a></li>
+              <li><a class="pagination-item" href="#pagination">2</a></li>
+              <li><a class="pagination-item" href="#pagination">3</a></li>
+              <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+              <li><a class="pagination-item" href="#pagination">10</a></li>
+              <li><a class="pagination-item" href="#pagination" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
