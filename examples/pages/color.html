@@ -8,12 +8,15 @@
       <!-- =========================================================
            color (primitive)
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">プリミティブカラー</h3>
-          <p class="typo-xsmall text-fg-low">9 系統 × 11 段階 ＋ white / black</p>
+      <div class="card mb-12">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">プリミティブカラー</h3>
+            <p class="typo-xsmall text-fg-low">9 系統 × 11 段階 ＋ white / black</p>
+          </div>
+          <p class="card-subtitle">brand-green / brand-yellow は relay 固有。slate / red / amber / green / blue は Tailwind 標準と一致。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">brand-green / brand-yellow は relay 固有。slate / red / amber / green / blue は Tailwind 標準と一致。</p>
+        <div class="card-body">
 
         <!-- white / black token list -->
         <div class="token-list mb-4">
@@ -172,18 +175,22 @@
             <div class="status-cell" data-tip="blue/950 · #172554"><div class="dot bg-blue-950"></div></div>
           </div>
         </div>
+        </div>
       </div>
 
 
       <!-- =========================================================
            ステータス (Status)
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">セマンティックカラー</h3>
-          <p class="typo-xsmall text-fg-low">7 系統 × 11 段階 — 用途で色を選ぶ</p>
+      <div class="card mb-12">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">セマンティックカラー</h3>
+            <p class="typo-xsmall text-fg-low">7 系統 × 11 段階 — 用途で色を選ぶ</p>
+          </div>
+          <p class="card-subtitle">primary / secondary は relay ブランドの 2 色、それ以外は意味ベース（成功・警告・エラー・情報・中立）。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">primary / secondary は relay ブランドの 2 色、それ以外は意味ベース（成功・警告・エラー・情報・中立）。</p>
+        <div class="card-body">
 
         <div class="status-grid">
           <!-- Column header — steps shown once -->
@@ -329,20 +336,22 @@
             <div class="status-cell" data-tip="neutral/950 · slate/950 · #020617"><div class="dot bg-neutral-950"></div></div>
           </div>
         </div>
+        </div>
       </div>
 
 
       <!-- =========================================================
            背景 (Background)
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">背景</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: bg-*</code>
+      <div class="card mb-12">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">背景</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: bg-*</code>
+          </div>
+          <p class="card-subtitle">ページ全体・サーフェス・オーバーレイの 3 レイヤー構造。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">ページ全体・サーフェス・オーバーレイの 3 レイヤー構造。</p>
-
-        <div class="grid lg:grid-cols-[1fr_320px] gap-6">
+        <div class="card-body grid lg:grid-cols-[1fr_320px] gap-6">
           <div class="token-list">
             <div class="token-row">
               <div class="swatch bg-page border border-stroke-middle"></div>
@@ -369,7 +378,7 @@
           <!-- Hierarchy diagram -->
           <div class="card">
             <div class="card-header">
-              <h4 class="card-title typo-small">レイヤー構造</h4>
+              <h3 class="card-title">レイヤー構造</h3>
             </div>
             <div class="card-body">
               <div class="relative h-32 flex items-center justify-center">
@@ -391,14 +400,15 @@
       <!-- =========================================================
            テキスト (Text)
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">テキスト</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: text-*</code>
+      <div class="card mb-12">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">テキスト</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: text-*</code>
+          </div>
+          <p class="card-subtitle">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。WCAG コントラスト準拠状況は <a class="link" href="#text-wcag-matrix"><span class="link-label">下のマトリクス</span></a> を参照。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">優先度 (high / middle / low) と用途固有 (placeholder / disabled)、ダーク背景用の inverse。WCAG コントラスト準拠状況は <a class="link" href="#text-wcag-matrix"><span class="link-label">下のマトリクス</span></a> を参照。</p>
-
-        <div class="grid lg:grid-cols-2 gap-6">
+        <div class="card-body grid lg:grid-cols-2 gap-6">
           <!-- Light tokens -->
           <div>
             <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">light</p>
