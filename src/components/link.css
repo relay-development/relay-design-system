@@ -11,7 +11,8 @@
  *   色: enable = primary/600、hover = primary/700
  *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と AA 不足のため
  *       アクセシビリティ方針 (WCAG 2.2 AA) に合わせ primary/600 (約 4.9:1) に上げている。
- *   タイポ: text-sm (14/24) medium、ラベルに underline (from-font / skip-ink: none)。
+ *   タイポ: text-base (16/32) medium、ラベルに underline (from-font / skip-ink: none)。
+ *     ※ Figma は 14/24 だが、可読性改善のため本文 (typo-medium 16/32) と同サイズに統一。
  *
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
@@ -24,7 +25,7 @@
 @layer components {
   .link {
     @apply inline-flex items-center gap-1
-           text-sm leading-6 font-medium
+           text-base leading-8 font-medium
            text-primary-600 no-underline
            cursor-pointer;
   }

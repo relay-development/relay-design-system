@@ -35,8 +35,8 @@
     @apply w-4 h-4;
   }
 
-  /* 現在ページ（非リンク） */
+  /* 現在ページ（非リンク）— .link と同サイズ (16/32) で行を揃える */
   .breadcrumb-current {
-    @apply text-sm leading-6 font-medium text-fg-high;
+    @apply text-base leading-8 font-medium text-fg-high;
   }
 }
