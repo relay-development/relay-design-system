@@ -50,6 +50,7 @@ const PAGES = [
   { file: "link-text.html",    group: "Components", label: "リンクテキスト",   title: "リンクテキスト",   desc: "緑下線 + 外部リンクアイコン" },
   { file: "breadcrumb.html",   group: "Components", label: "パンくずリスト",   title: "パンくずリスト",   desc: "chevron 区切りの階層ナビ" },
   { file: "side-nav.html",     group: "Components", label: "サイドナビ",       title: "サイドナビ",       desc: "現在地を示す縦型ナビゲーション" },
+  { file: "pagination.html",   group: "Components", label: "ページネーション", title: "ページネーション", desc: "ページ送りナビゲーション" },
 
   { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
 ];

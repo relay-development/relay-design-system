@@ -1,0 +1,84 @@
+/*
+ * Pagination (ページネーション) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   検索結果や一覧が複数ページに分かれるとき、ページを行き来するための
+ *   ナビゲーション。見た目は Tab (solid) のチップ表現に揃えている。
+ *
+ *   props (pagination-item):
+ *     state     : enable / hover / focus / disabled
+ *     isCurrent : true | false   → aria-current="page"
+ *
+ *   item   : 40×40, 角丸 sm (8), text-sm medium, border stroke/middle
+ *   colors : default = white / fg-middle、current = primary/500 + white (tab-solid と同一)
+ *   矢印   : chevron-left / chevron-right (16px)。端のページでは aria-disabled="true"
+ *
+ * Usage:
+ *   <nav class="pagination" aria-label="ページネーション">
+ *     <ul>
+ *       <li><a class="pagination-item" href="…" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+ *       <li><a class="pagination-item" href="…">1</a></li>
+ *       <li><a class="pagination-item" href="…" aria-current="page">2</a></li>
+ *       <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
+ *       <li><a class="pagination-item" href="…">10</a></li>
+ *       <li><a class="pagination-item" href="…" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+ *     </ul>
+ *   </nav>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .pagination ul {
+    @apply flex flex-wrap items-center gap-2 list-none m-0 p-0;
+  }
+
+  /* ============================================================
+   * Item (ページ番号 / 前へ / 次へ)
+   * ============================================================ */
+  .pagination-item {
+    @apply inline-flex items-center justify-center w-10 h-10 rounded-sm
+           text-sm leading-6 font-medium
+           border border-solid border-stroke-middle bg-white text-fg-middle
+           no-underline cursor-pointer
+           transition-colors duration-150;
+  }
+  .pagination-item .icon {
+    @apply w-4 h-4 shrink-0;   /* 16px chevron */
+  }
+
+  /* Hover (カタログ用 .is-hover-preview も同条件) */
+  .pagination-item:hover:not([aria-disabled="true"]):not([aria-current="page"]),
+  .pagination-item.is-hover-preview:not([aria-current="page"]) {
+    @apply bg-neutral-50 border-stroke-high;
+  }
+
+  /* Focus ring */
+  .pagination-item:focus-visible:not([aria-disabled="true"]),
+  .pagination-item.is-focus-preview {
+    outline: none;
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  /* Current (現在のページ) — ARIA 属性で指定。tab-solid selected と同じ配色 */
+  .pagination-item[aria-current="page"] {
+    background-color: var(--color-primary-500);
+    border-color: transparent;
+    color: var(--color-white);
+    cursor: default;
+  }
+
+  /* Disabled (先頭ページの「前へ」/ 最終ページの「次へ」) */
+  .pagination-item[aria-disabled="true"] {
+    @apply opacity-50 cursor-not-allowed;
+    pointer-events: none;
+  }
+
+  /* ============================================================
+   * Ellipsis (省略)
+   * ============================================================ */
+  .pagination-ellipsis {
+    @apply inline-flex items-center justify-center w-10 h-10
+           text-sm leading-6 text-fg-low select-none;
+  }
+}
