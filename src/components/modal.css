@@ -42,6 +42,8 @@
     width: calc(100% - var(--spacing) * 8);
     max-width: calc(var(--spacing) * 120);   /* 480px */
     box-shadow: var(--shadow-lg);
+    /* showModal() 時に画面中央へ (Tailwind の preflight が UA の margin:auto を打ち消すため明示) */
+    margin: auto;
   }
 
   .modal::backdrop {
