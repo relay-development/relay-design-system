@@ -8,15 +8,15 @@
       <!-- =========================================================
            ドロップシャドウ (Drop Shadow)
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">ドロップシャドウ</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: shadow-*</code>
+      <div class="card mb-12">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">ドロップシャドウ</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: shadow-*</code>
+          </div>
+          <p class="card-subtitle">none / sm / md / lg の 4 段階＋focus-ring / destructive のリング用 2 種。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">none / sm / md / lg の 4 段階＋focus-ring / destructive のリング用 2 種。</p>
-
-        <div class="card">
-          <div class="card-body grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+        <div class="card-body grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
             <div class="flex flex-col items-center gap-3">
               <div class="w-24 h-16 bg-white rounded-sm" style="box-shadow: var(--shadow-none);"></div>
               <div class="text-center"><p class="typo-small font-semibold font-mono">none</p><p class="typo-xsmall text-fg-low">no shadow</p></div>
@@ -42,21 +42,20 @@
               <div class="text-center"><p class="typo-small font-semibold font-mono">destructive</p><p class="typo-xsmall text-fg-low">0 0 0 3 · negative/500</p></div>
             </div>
           </div>
-        </div>
       </div>
 
       <!-- =========================================================
            opacity
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">opacity</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: opacity-*</code>
+      <div class="card">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">opacity</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: opacity-*</code>
+          </div>
+          <p class="card-subtitle">0 から 100 まで 5% 刻みの 21 段階。市松模様の上に blue/600 を重ねて表示。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">0 から 100 まで 5% 刻みの 21 段階。市松模様の上に blue/600 を重ねて表示。</p>
-
-        <div class="card">
-          <div class="card-body">
+        <div class="card-body">
             <div class="grid gap-2" style="grid-template-columns: repeat(11, minmax(0, 1fr));">
               <div class="space-y-2"><div class="relative h-14 rounded-sm overflow-hidden checker"><div class="absolute inset-0 bg-neutral-600 opacity-0"></div></div><p class="text-[11px] text-center font-mono font-semibold">0</p></div>
               <div class="space-y-2"><div class="relative h-14 rounded-sm overflow-hidden checker"><div class="absolute inset-0 bg-neutral-600 opacity-5"></div></div><p class="text-[11px] text-center font-mono font-semibold">5</p></div>
@@ -81,7 +80,6 @@
               <div class="space-y-2"><div class="relative h-14 rounded-sm overflow-hidden checker"><div class="absolute inset-0 bg-neutral-600 opacity-100"></div></div><p class="text-[11px] text-center font-mono font-semibold">100</p></div>
             </div>
           </div>
-        </div>
       </div>
 
     </section>

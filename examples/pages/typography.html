@@ -9,15 +9,12 @@
            font — size / weight / leading / tracking / family / style
            ========================================================= -->
       <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">font</h3>
-          <p class="typo-xsmall text-fg-low">size / weight / leading / tracking / family / style</p>
-        </div>
-        <p class="typo-small text-fg-low mb-4">タイポグラフィの基本ユニット。組み合わせて semantic 層の型を作る。</p>
-
         <!-- size -->
         <div class="card mb-4">
-          <div class="card-header"><h4 class="card-title typo-small">size</h4></div>
+          <div class="card-header">
+            <h3 class="card-title">font — size</h3>
+            <p class="card-subtitle">タイポグラフィの基本ユニット（size / weight / leading / tracking / family / style）。組み合わせて semantic 層の型を作る。</p>
+          </div>
           <div class="card-body grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4">
             <div class="flex flex-col items-center gap-2">
               <div class="h-12 flex items-end"><span class="typo-xsmall">Aa</span></div>
@@ -52,7 +49,7 @@
 
         <!-- weight -->
         <div class="card mb-4">
-          <div class="card-header"><h4 class="card-title typo-small">weight</h4></div>
+          <div class="card-header"><h3 class="card-title">font — weight</h3></div>
           <div class="card-body grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-4">
             <div class="flex flex-col items-center gap-2">
               <span class="typo-2xlarge font-thin">Ag</span>
@@ -97,7 +94,7 @@
         <div class="grid lg:grid-cols-2 gap-4 mb-4">
           <!-- leading -->
           <div class="card">
-            <div class="card-header"><h4 class="card-title typo-small">leading</h4></div>
+            <div class="card-header"><h3 class="card-title">font — leading</h3></div>
             <div class="card-body grid grid-cols-5 gap-3">
               <div class="flex flex-col items-center gap-2">
                 <div class="typo-small leading-4 text-center">Text<br>Text<br>Text</div>
@@ -124,7 +121,7 @@
 
           <!-- tracking -->
           <div class="card">
-            <div class="card-header"><h4 class="card-title typo-small">tracking</h4></div>
+            <div class="card-header"><h3 class="card-title">font — tracking</h3></div>
             <div class="card-body space-y-3">
               <div class="grid grid-cols-[80px_1fr_80px] items-center gap-3">
                 <p class="typo-small font-semibold font-mono">tighter</p>
@@ -163,14 +160,14 @@
         <!-- family + style -->
         <div class="grid lg:grid-cols-2 gap-4">
           <div class="card">
-            <div class="card-header"><h4 class="card-title typo-small">family</h4></div>
+            <div class="card-header"><h3 class="card-title">font — family</h3></div>
             <div class="card-body">
               <p class="typo-2xlarge font-medium font-sans mb-2">事業承継をオープンに</p>
               <p class="typo-xsmall text-fg-low font-mono">Noto Sans JP</p>
             </div>
           </div>
           <div class="card">
-            <div class="card-header"><h4 class="card-title typo-small">style</h4></div>
+            <div class="card-header"><h3 class="card-title">font — style</h3></div>
             <div class="card-body grid grid-cols-2 gap-4">
               <div class="flex flex-col items-center gap-2">
                 <span class="typo-3xlarge not-italic">Aa</span>
@@ -190,15 +187,14 @@
            Figma 3111:1902 と 1:1 対応するクラス
            ========================================================= -->
       <section id="typography" class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">タイポグラフィー</h3>
-          <p class="typo-xsmall text-fg-low font-mono">Math.ceil((size × 1.3) / 8) × 8</p>
-        </div>
-        <p class="typo-small text-fg-low mb-4">
-          8 の倍数の行間で 8×8 ベースグリッドに揃える。weight は body サイズが <code class="px-1 bg-neutral-100 rounded">medium</code>、display サイズが <code class="px-1 bg-neutral-100 rounded">bold</code>（<code class="px-1 bg-neutral-100 rounded">font-bold</code> / <code class="px-1 bg-neutral-100 rounded">font-medium</code> で上書き可）。
-        </p>
-
         <div class="card overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">タイポグラフィー</h3>
+              <p class="typo-xsmall text-fg-low font-mono">Math.ceil((size × 1.3) / 8) × 8</p>
+            </div>
+            <p class="card-subtitle">8 の倍数の行間で 8×8 ベースグリッドに揃える。weight は body サイズが <code class="px-1 bg-neutral-100 rounded">medium</code>、display サイズが <code class="px-1 bg-neutral-100 rounded">bold</code>（<code class="px-1 bg-neutral-100 rounded">font-bold</code> / <code class="px-1 bg-neutral-100 rounded">font-medium</code> で上書き可）。</p>
+          </div>
           <div class="card-body !p-0">
             <!-- Header row -->
             <div class="grid grid-cols-[180px_80px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">

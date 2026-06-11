@@ -9,15 +9,15 @@
            余白 (Spacing) — 8px ベースグリッドの 9 段階スケール
            Figma 3300:1395 と 1:1 対応
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">余白</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: p-* / m-* / gap-* / space-*</code>
+      <div class="card mb-12 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">余白</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: p-* / m-* / gap-* / space-*</code>
+          </div>
+          <p class="card-subtitle">8px グリッドを基本単位とする 9 段階。<code class="px-1 bg-neutral-100 rounded">spacing/N</code> は Tailwind の <code class="px-1 bg-neutral-100 rounded">p-N</code> / <code class="px-1 bg-neutral-100 rounded">m-N</code> / <code class="px-1 bg-neutral-100 rounded">gap-N</code> 等に対応。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">8px グリッドを基本単位とする 9 段階。<code class="px-1 bg-neutral-100 rounded">spacing/N</code> は Tailwind の <code class="px-1 bg-neutral-100 rounded">p-N</code> / <code class="px-1 bg-neutral-100 rounded">m-N</code> / <code class="px-1 bg-neutral-100 rounded">gap-N</code> 等に対応。</p>
-
-        <div class="card overflow-hidden">
-          <div class="card-body !p-0">
+        <div class="card-body !p-0">
             <!-- Header row -->
             <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
               <div>token</div>
@@ -115,26 +115,24 @@
               <div><div class="bg-primary-500 rounded-xs" style="width:64px;height:20px;"></div></div>
             </div>
           </div>
+        <div class="card-footer">
+          <p class="typo-xsmall text-fg-low">※ 8 の倍数を基本（2, 4, 8, 16, 24, 32, 48, 64）、<code class="px-1 bg-neutral-100 rounded">spacing/3 = 12</code> と <code class="px-1 bg-neutral-100 rounded">spacing/1 = 4</code> は微調整用。</p>
         </div>
-
-        <p class="typo-xsmall text-fg-low mt-3">
-          ※ 8 の倍数を基本（2, 4, 8, 16, 24, 32, 48, 64）、<code class="px-1 bg-neutral-100 rounded">spacing/3 = 12</code> と <code class="px-1 bg-neutral-100 rounded">spacing/1 = 4</code> は微調整用。
-        </p>
       </div>
 
 
       <!-- =========================================================
            角丸 (Radius) — none / xs / sm / md / lg / full の 6 段階
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">角丸</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: rounded-*</code>
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">角丸</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: rounded-*</code>
+          </div>
+          <p class="card-subtitle">none / xs / sm / md / lg / full の 6 段階。<code class="px-1 bg-neutral-100 rounded">full</code> はピル / 円形用。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">none / xs / sm / md / lg / full の 6 段階。<code class="px-1 bg-neutral-100 rounded">full</code> はピル / 円形用。</p>
-
-        <div class="card overflow-hidden mb-8">
-          <div class="card-body !p-0">
+        <div class="card-body !p-0">
             <!-- Header row -->
             <div class="grid grid-cols-[180px_80px_1fr] gap-4 px-6 py-3 typo-xsmall font-semibold uppercase tracking-wide text-fg-low bg-neutral-50 border-b border-stroke-low">
               <div>token</div>
@@ -204,11 +202,11 @@
           </div>
         </div>
 
-        <!-- Hierarchy diagram — design guidance -->
-        <div class="card">
+      <!-- Hierarchy diagram — design guidance -->
+      <div class="card mb-12">
           <div class="card-header">
-            <h4 class="card-title typo-small">ヒエラルキー</h4>
-            <p class="card-subtitle typo-xsmall">入れ子では外側ほど大きく、内側ほど小さく揃える（lg → md → sm → xs）と、角が同心円状になって整って見える。</p>
+            <h3 class="card-title">ヒエラルキー</h3>
+            <p class="card-subtitle">入れ子では外側ほど大きく、内側ほど小さく揃える（lg → md → sm → xs）と、角が同心円状になって整って見える。</p>
           </div>
           <div class="card-body grid sm:grid-cols-[1fr_auto] gap-6 items-center">
             <div class="relative h-44 flex items-center justify-center">
@@ -226,21 +224,21 @@
               <li>中心 → <span class="text-fg-high font-semibold">full (●)</span></li>
             </ul>
           </div>
-        </div>
       </div>
 
 
       <!-- =========================================================
            境界線 (Border)
            ========================================================= -->
-      <div class="mb-12">
-        <div class="flex items-baseline justify-between mb-1">
-          <h3 class="typo-large font-semibold">境界線</h3>
-          <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: border-*</code>
+      <div class="card">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">境界線</h3>
+            <code class="typo-xsmall px-2 py-0.5 rounded bg-neutral-100 text-fg-middle font-mono">CSS: border-*</code>
+          </div>
+          <p class="card-subtitle">階層に応じて 3 段階。inverse はダーク背景の上で使う。</p>
         </div>
-        <p class="typo-small text-fg-low mb-4">階層に応じて 3 段階。inverse はダーク背景の上で使う。</p>
-
-        <div class="grid lg:grid-cols-2 gap-6">
+        <div class="card-body grid lg:grid-cols-2 gap-6">
           <!-- Light -->
           <div>
             <p class="typo-xsmall font-semibold text-fg-low mb-2 uppercase tracking-wide">light</p>
