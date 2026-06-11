@@ -51,6 +51,7 @@ const PAGES = [
   { file: "breadcrumb.html",   group: "Components", label: "パンくずリスト",   title: "パンくずリスト",   desc: "chevron 区切りの階層ナビ" },
   { file: "side-nav.html",     group: "Components", label: "サイドナビ",       title: "サイドナビ",       desc: "現在地を示す縦型ナビゲーション" },
   { file: "pagination.html",   group: "Components", label: "ページネーション", title: "ページネーション", desc: "ページ送りナビゲーション" },
+  { file: "stepper.html",      group: "Components", label: "ステッパー",       title: "ステッパー",       desc: "複数ステップの進捗表示" },
 
   { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
 ];

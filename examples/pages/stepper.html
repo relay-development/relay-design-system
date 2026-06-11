@@ -1,0 +1,112 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="stepper">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge font-semibold">ステッパー</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-medium text-fg-middle mb-6">「入力 → 確認 → 完了」のような複数ステップの手続きで、いまどこまで進んだかを示すナビゲーションです。終わったステップはチェック、いまいるステップは緑の枠で表示されます。配色は WCAG 2.2 AAA のコントラスト基準を満たしています。</p>
+
+      <!-- ===== ステップの状態 ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">ステップの状態</h3>
+          <p class="card-subtitle">completed / current / upcoming。現在地は <code class="px-1 bg-neutral-100 rounded">aria-current="step"</code>、完了は <code class="px-1 bg-neutral-100 rounded">.is-completed</code>（ARIA に完了を表す属性が無いためクラスで指定）</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">completed</span>
+          <ol class="stepper max-w-30" aria-label="状態: completed">
+            <li class="stepper-step is-completed">
+              <span class="stepper-marker"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-check"></use></svg></span>
+              <span class="stepper-label">ステップ名</span>
+            </li>
+          </ol>
+
+          <span class="typo-xsmall text-fg-low">current</span>
+          <ol class="stepper max-w-30" aria-label="状態: current">
+            <li class="stepper-step" aria-current="step">
+              <span class="stepper-marker">1</span>
+              <span class="stepper-label">ステップ名</span>
+            </li>
+          </ol>
+
+          <span class="typo-xsmall text-fg-low">upcoming</span>
+          <ol class="stepper max-w-30" aria-label="状態: upcoming">
+            <li class="stepper-step">
+              <span class="stepper-marker">1</span>
+              <span class="stepper-label">ステップ名</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">完了したステップの直後の接続線は進捗色（primary/600）になる</p>
+        </div>
+        <div class="card-body space-y-10">
+          <!-- 3 ステップ: 手続きの途中 -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-4">3 ステップ（確認まで進んだ状態）</p>
+            <ol class="stepper max-w-md" aria-label="申請の進捗">
+              <li class="stepper-step is-completed">
+                <span class="stepper-marker"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-check"></use></svg></span>
+                <span class="stepper-label">入力</span>
+              </li>
+              <li class="stepper-step" aria-current="step">
+                <span class="stepper-marker">2</span>
+                <span class="stepper-label">確認</span>
+              </li>
+              <li class="stepper-step">
+                <span class="stepper-marker">3</span>
+                <span class="stepper-label">完了</span>
+              </li>
+            </ol>
+          </div>
+
+          <!-- 4 ステップ: 開始直後 -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-4">4 ステップ（開始直後）</p>
+            <ol class="stepper max-w-xl" aria-label="会員登録の進捗">
+              <li class="stepper-step" aria-current="step">
+                <span class="stepper-marker">1</span>
+                <span class="stepper-label">基本情報</span>
+              </li>
+              <li class="stepper-step">
+                <span class="stepper-marker">2</span>
+                <span class="stepper-label">本人確認</span>
+              </li>
+              <li class="stepper-step">
+                <span class="stepper-marker">3</span>
+                <span class="stepper-label">お支払い</span>
+              </li>
+              <li class="stepper-step">
+                <span class="stepper-marker">4</span>
+                <span class="stepper-label">完了</span>
+              </li>
+            </ol>
+          </div>
+
+          <!-- 3 ステップ: すべて完了 -->
+          <div>
+            <p class="typo-xsmall text-fg-low mb-4">3 ステップ（すべて完了）</p>
+            <ol class="stepper max-w-md" aria-label="完了した申請の進捗">
+              <li class="stepper-step is-completed">
+                <span class="stepper-marker"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-check"></use></svg></span>
+                <span class="stepper-label">入力</span>
+              </li>
+              <li class="stepper-step is-completed">
+                <span class="stepper-marker"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-check"></use></svg></span>
+                <span class="stepper-label">確認</span>
+              </li>
+              <li class="stepper-step is-completed">
+                <span class="stepper-marker"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-check"></use></svg></span>
+                <span class="stepper-label">完了</span>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
