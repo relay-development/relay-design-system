@@ -30,6 +30,7 @@
 @import "./components/sidenav.css";
 @import "./components/pagination.css";
 @import "./components/stepper.css";
+@import "./components/modal.css";
 
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";

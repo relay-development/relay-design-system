@@ -1,7 +1,7 @@
 # relay Design System へようこそ
 
 relay プロダクトの UI を、誰が作っても **同じ見た目・同じ操作感** になるようにまとめた共通部品集です。
-ボタン・入力欄・カード・アラートなど **22 種類のコンポーネント** と、色・余白・文字サイズなどの **デザイントークン** が入っています。
+ボタン・入力欄・カード・アラートなど **23 種類のコンポーネント** と、色・余白・文字サイズなどの **デザイントークン** が入っています。
 
 > 「relay っぽい UI を、毎回ゼロから考えずに済む」状態を目指しています。
 
@@ -94,7 +94,7 @@ import "@light-right/design-system/css";
 ## ✨ 現状
 
 - **最新バージョン**: `v0.1.0`
-- **入っているもの**: Button / Icon Button / Label Control / Input / Search Input / Selector / Textarea / Checkbox / Radio / Filter Chip / Tab / Table / Simple Table / Card / Badge / Alert / Link / Breadcrumb / Side Nav / Pagination / Stepper / ガイドライン
+- **入っているもの**: Button / Icon Button / Label Control / Input / Search Input / Selector / Textarea / Checkbox / Radio / Filter Chip / Tab / Table / Simple Table / Card / Badge / Alert / Link / Breadcrumb / Side Nav / Pagination / Stepper / Modal / ガイドライン
 - **ライセンス**: MIT
 - **更新**: Figma 側で変更があれば随時反映 → 新バージョンを npm に publish
 - **リリース通知**: 新バージョンを publish すると Slack `#dev_information` に自動でアナウンスが流れます 📣

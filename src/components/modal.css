@@ -1,0 +1,77 @@
+/*
+ * Modal (モーダル) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   ユーザーの確認や入力を求めるとき、画面の最前面に重ねて表示する
+ *   ダイアログ。ネイティブ <dialog> 要素ベースで、フォーカス管理・
+ *   Esc キーでの閉じる動作はブラウザ標準に任せる。
+ *   ヘッダ / ボディ / フッタの寸法・配色は Card と揃えている。
+ *
+ *   構造:
+ *     <dialog class="modal" id="my-modal" aria-labelledby="my-modal-title">
+ *       <div class="modal-header">
+ *         <h2 class="modal-title" id="my-modal-title">タイトル</h2>
+ *         <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost"
+ *                 data-modal-close aria-label="閉じる">
+ *           <svg class="icon"><use href="./icons.svg#lucide-x"></use></svg>
+ *         </button>
+ *       </div>
+ *       <div class="modal-body">本文</div>
+ *       <div class="modal-footer">
+ *         <button type="button" class="btn btn-md btn-neutral btn-subtle" data-modal-close>キャンセル</button>
+ *         <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+ *       </div>
+ *     </dialog>
+ *
+ *   開閉 (vanilla JS):
+ *     開く : document.getElementById("my-modal").showModal()
+ *     閉じる: dialog.close() — カタログでは data-modal-open / data-modal-close
+ *            の event delegation を catalog.js が提供
+ *
+ *   サイズ / 色:
+ *     幅       max 480px (spacing*120)、狭い画面では左右 16px ずつ空ける
+ *     角丸     rounded-md (16px) + shadow-lg
+ *     backdrop overlay トークン (neutral/900 @ 60%)
+ *     header   px-5 py-4 border-b (card-header と同一)
+ *     body     p-6 / text-base (16/32) fg/high
+ *     footer   px-5 py-3 border-t bg-neutral-50 右寄せ (card-footer と同一)
+ */
+
+@layer components {
+  .modal {
+    @apply p-0 bg-surface rounded-md border-0 text-fg-high overflow-hidden;
+    width: calc(100% - var(--spacing) * 8);
+    max-width: calc(var(--spacing) * 120);   /* 480px */
+    box-shadow: var(--shadow-lg);
+    /* showModal() 時に画面中央へ (Tailwind の preflight が UA の margin:auto を打ち消すため明示) */
+    margin: auto;
+  }
+
+  .modal::backdrop {
+    background: var(--color-overlay, rgb(15 23 42 / 0.6));
+  }
+
+  .modal-header {
+    @apply flex items-center justify-between gap-2
+           px-5 py-4 border-b border-solid border-stroke-middle;
+  }
+
+  .modal-title {
+    @apply text-lg leading-8 font-semibold text-fg-high m-0;
+  }
+
+  .modal-body {
+    @apply p-6 text-base leading-8 font-normal text-fg-high;
+  }
+
+  .modal-footer {
+    @apply px-5 py-3 border-t border-solid border-stroke-middle bg-neutral-50
+           flex items-center justify-end gap-2;
+  }
+
+  /* カタログ用: 開いた状態をページ内に静的表示するための modifier */
+  .modal.is-static-preview {
+    position: static;
+    display: block;
+    margin: 0;
+  }
+}
