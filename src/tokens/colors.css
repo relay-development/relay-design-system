@@ -1,5 +1,5 @@
 /*
- * Relay Design System — Color tokens
+ * relay Design System — Color tokens
  * Source of truth: Figma file hJcKE8FkiyXtB1F9SuuE08
  *
  * Two layers:
@@ -17,7 +17,7 @@
   --color-white: #ffffff;
   --color-black: #000000;
 
-  /* brand-green (Relay primary brand) */
+  /* brand-green (relay primary brand) */
   --color-brand-green-50:  #effaf5;
   --color-brand-green-100: #d7f4e4;
   --color-brand-green-200: #b3e7ce;
@@ -30,7 +30,7 @@
   --color-brand-green-900: #114334;
   --color-brand-green-950: #08261e;
 
-  /* brand-yellow (Relay secondary brand) */
+  /* brand-yellow (relay secondary brand) */
   --color-brand-yellow-50:  #fefee8;
   --color-brand-yellow-100: #ffffc2;
   --color-brand-yellow-200: #fffa87;

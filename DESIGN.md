@@ -1,6 +1,6 @@
-# Relay Design System — Design Constitution
+# relay Design System — Design Constitution
 
-> AI エージェントが Relay UI を生成するとき、最初に読むファイル。
+> AI エージェントが relay UI を生成するとき、最初に読むファイル。
 > 思想・非交渉原則・クイックリファレンス・参照先をこの 1 枚に集約する。
 
 ---
@@ -36,7 +36,7 @@
 
 ## Quick Reference
 
-> この section だけで基本的な Relay UI コード生成が可能。
+> この section だけで基本的な relay UI コード生成が可能。
 
 ### インストール + import
 

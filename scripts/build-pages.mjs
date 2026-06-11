@@ -57,7 +57,7 @@ const PAGES = [
   { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
 ];
 
-const INDEX = { file: "index.html", title: "Relay Design System" };
+const INDEX = { file: "index.html", title: "relay Design System" };
 
 // ── Sidebar nav (grouped, active link marked) ───────────────────────────────
 function navHtml(activeFile) {
@@ -111,7 +111,7 @@ function render({ title, group, content, activeFile }) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} — Relay Design System</title>
+  <title>${title} — relay Design System</title>
   <link rel="stylesheet" href="../src/index.css" />
   <link rel="stylesheet" href="./catalog.css" />
 </head>
