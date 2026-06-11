@@ -26,6 +26,7 @@
 @import "./components/alert.css";
 @import "./components/link.css";
 @import "./components/breadcrumb.css";
+@import "./components/sidenav.css";
 
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";

@@ -29,9 +29,9 @@ export const ICONS = [
   "chevron-up", "chevron-down", "chevron-left", "chevron-right",
   "chevrons-up-down", "arrow-left",
   // Object
-  "file", "folder", "link", "external-link", "image",
+  "file", "files", "folder", "folder-cog", "link", "external-link", "image",
   // User
-  "user", "users", "settings", "help-circle",
+  "user", "users", "smile", "shield-check", "medal", "settings", "help-circle",
   // Search / Filter
   "search", "filter", "hash",
   // Visibility
