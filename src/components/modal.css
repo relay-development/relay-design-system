@@ -38,7 +38,7 @@
 
 @layer components {
   .modal {
-    @apply p-0 bg-surface rounded-md border-0 text-fg-high;
+    @apply p-0 bg-surface rounded-md border-0 text-fg-high overflow-hidden;
     width: calc(100% - var(--spacing) * 8);
     max-width: calc(var(--spacing) * 120);   /* 480px */
     box-shadow: var(--shadow-lg);
