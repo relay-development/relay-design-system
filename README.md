@@ -202,7 +202,7 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 |---|---|
 | `--font-sans` | "Noto Sans JP" + フォールバック |
 | `--text-xs..3xl` | 12 / 14 / 16 / 20 / 24 / 32 / 40 px |
-| Line-height | 16 / 24 / 24 / 32 / 32 / 40 / 48 px |
+| Line-height | 16 / 24 / 32 / 32 / 32 / 40 / 48 px |
 | `--font-weight-{thin..black}` | 100 / 300 / 400 / 500 / 700 / 700 / 900 |
 
 ### Spacing
