@@ -350,10 +350,13 @@
 /* Scroll offset for anchor jumps */
 section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 
-/* セクション見出し (.typo-large / .typo-xlarge の h3) は常に上に 64px の余白を
- * 確保し、直前のコンテンツと明確に区切る。card-title (h3) は対象外。 */
+/* セクション見出し (.typo-large / .typo-xlarge の h3) は常に上に 80px / 下に 16px
+ * の余白を確保し、直前のコンテンツと明確に区切る。card-title (h3) は対象外。 */
 .docs-main h3.typo-large,
-.docs-main h3.typo-xlarge { margin-top: calc(var(--spacing) * 16); }   /* 64 */
+.docs-main h3.typo-xlarge {
+  margin-top: calc(var(--spacing) * 20);      /* 80 */
+  margin-bottom: calc(var(--spacing) * 4);    /* 16 */
+}
 
 /* Landing page — component index cards.
  * Figma node 3481:1226: each card = a tinted preview panel showing a live
