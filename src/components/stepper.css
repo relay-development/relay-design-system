@@ -2,8 +2,7 @@
  * Stepper (ステッパー) — Figma に仕様が無いため DS 規約から新規設計
  *
  *   入力 → 確認 → 完了のような複数ステップの手続きで、現在地と進捗を示す
- *   ナビゲーション。マーカーの配色は Tab (solid) / Pagination の current と
- *   同じ primary/500 + white に揃えている。
+ *   ナビゲーション。
  *
  *   props (stepper-step):
  *     state : completed / current / upcoming
