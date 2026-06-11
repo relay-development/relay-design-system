@@ -1,4 +1,4 @@
-# Relay Design System
+# relay Design System
 
 relay プロダクトのための、Tailwind CSS v4 ベースのフレームワーク非依存デザインシステムです。
 **デザイントークン + 14 コンポーネント** を HTML スニペット集として提供します。

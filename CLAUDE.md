@@ -1,4 +1,4 @@
-# Relay Design System — Claude Code 用ガイド
+# relay Design System — Claude Code 用ガイド
 
 このファイルは Claude Code が本リポジトリで作業する際に毎回読み込む運用ガイドです。
 リポジトリの慣習、定型ワークフロー、過去の設計判断をここに集約します。
