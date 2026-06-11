@@ -95,3 +95,23 @@ document.addEventListener("click", (e) => {
     t.setAttribute("aria-selected", t === tab ? "true" : "false");
   });
 });
+
+// Modal — data-modal-open="<dialog id>" で showModal()、data-modal-close で閉じる。
+// backdrop (dialog 自身の外側) クリックでも閉じる。Esc はネイティブ <dialog> が処理。
+document.addEventListener("click", (e) => {
+  const opener = e.target.closest("[data-modal-open]");
+  if (opener) {
+    document.getElementById(opener.dataset.modalOpen)?.showModal();
+    return;
+  }
+  if (e.target.closest("[data-modal-close]")) {
+    e.target.closest("dialog")?.close();
+    return;
+  }
+  // backdrop クリック判定: クリック座標が dialog の矩形外なら閉じる
+  if (e.target instanceof HTMLDialogElement && e.target.classList.contains("modal") && e.target.open) {
+    const r = e.target.getBoundingClientRect();
+    const outside = e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    if (outside) e.target.close();
+  }
+});

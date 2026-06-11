@@ -1,0 +1,86 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="modal">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge font-semibold">モーダル</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-medium text-fg-middle mb-6">大事な確認や入力をお願いするとき、画面の最前面に重ねて表示する小さなウィンドウです。閉じるまで後ろの画面は操作できません。</p>
+
+      <!-- ===== 構成 ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">構成</h3>
+          <p class="card-subtitle">ヘッダ（タイトル + 閉じるボタン）/ ボディ / フッタ（アクション右寄せ）。寸法・配色はカードと共通。下は開いた状態の静的プレビュー（<code class="px-1 bg-neutral-100 rounded">.is-static-preview</code>）</p>
+        </div>
+        <div class="card-body bg-neutral-100">
+          <dialog class="modal is-static-preview mx-auto" open aria-labelledby="modal-preview-title">
+            <div class="modal-header">
+              <h2 class="modal-title" id="modal-preview-title">モーダルタイトル</h2>
+              <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="閉じる">
+                <svg class="icon"><use href="./icons.svg#lucide-x"></use></svg>
+              </button>
+            </div>
+            <div class="modal-body">
+              モーダルの本文です。ユーザーに確認してほしい内容や、入力フォームをここに置きます。
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-md btn-neutral btn-subtle">キャンセル</button>
+              <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+            </div>
+          </dialog>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 (実際に開く) ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — 実際に開いてみる</h3>
+          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">data-modal-open="ID"</code> のボタンで開き、<code class="px-1 bg-neutral-100 rounded">data-modal-close</code> / Esc キー / 背景クリックで閉じる</p>
+        </div>
+        <div class="card-body flex flex-wrap gap-4">
+          <button type="button" class="btn btn-md btn-primary btn-solid" data-modal-open="demo-modal-basic">基本のモーダルを開く</button>
+          <button type="button" class="btn btn-md btn-negative btn-outline" data-modal-open="demo-modal-confirm">削除確認モーダルを開く</button>
+        </div>
+      </div>
+
+      <!-- 基本のモーダル -->
+      <dialog class="modal" id="demo-modal-basic" aria-labelledby="demo-modal-basic-title">
+        <div class="modal-header">
+          <h2 class="modal-title" id="demo-modal-basic-title">プロフィールの編集</h2>
+          <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" data-modal-close aria-label="閉じる">
+            <svg class="icon"><use href="./icons.svg#lucide-x"></use></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-4">
+            <label class="label-control mb-1" for="demo-modal-name">
+              <span class="label-control-row"><span class="label-control-text">表示名</span></span>
+            </label>
+            <input id="demo-modal-name" type="text" class="input input-md" value="山田 太郎" />
+          </div>
+          <p class="typo-small text-fg-middle">表示名はプロフィールページとコメント欄に表示されます。</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-md btn-neutral btn-subtle" data-modal-close>キャンセル</button>
+          <button type="button" class="btn btn-md btn-primary btn-solid" data-modal-close>保存する</button>
+        </div>
+      </dialog>
+
+      <!-- 削除確認モーダル -->
+      <dialog class="modal" id="demo-modal-confirm" aria-labelledby="demo-modal-confirm-title">
+        <div class="modal-header">
+          <h2 class="modal-title" id="demo-modal-confirm-title">プロジェクトを削除しますか？</h2>
+          <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" data-modal-close aria-label="閉じる">
+            <svg class="icon"><use href="./icons.svg#lucide-x"></use></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          「Aプロジェクト」を削除します。この操作は取り消せません。
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-md btn-neutral btn-subtle" data-modal-close>キャンセル</button>
+          <button type="button" class="btn btn-md btn-negative btn-solid" data-modal-close>削除する</button>
+        </div>
+      </dialog>
+    </section>
+  </main>
