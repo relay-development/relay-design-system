@@ -93,7 +93,7 @@ function breadcrumb(group, title) {
         <ol>
           <li><a class="link" href="./index.html"><span class="link-label">ホーム</span></a></li>
           ${sep}
-          <li><span class="typo-small text-fg-middle">${group}</span></li>
+          <li><span class="typo-medium text-fg-middle">${group}</span></li>
           ${sep}
           <li><span class="breadcrumb-current" aria-current="page">${title}</span></li>
         </ol>
