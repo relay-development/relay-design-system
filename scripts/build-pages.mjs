@@ -136,7 +136,7 @@ ${breadcrumb(group, title)}${content}
     </div>
   </div>
 
-  <script src="./catalog.js"></script>
+  <script type="module" src="./catalog.js"></script>
 </body>
 </html>
 `;
