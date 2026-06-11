@@ -1,0 +1,121 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="side-nav">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge font-semibold">サイドナビ</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-small text-fg-middle mb-6">
+        プロパティ: 各項目 <code class="px-1 bg-neutral-100 rounded">state</code> (default / hover / current) × <code class="px-1 bg-neutral-100 rounded">icon</code> × <code class="px-1 bg-neutral-100 rounded">label</code>。マイページ等で現在地を示しながら階層を移動するための縦型ナビゲーション。現在地は <code class="px-1 bg-neutral-100 rounded">aria-current="page"</code> で指定します。
+      </p>
+
+      <!-- ===== 項目の状態 ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">項目の状態</h3>
+          <p class="card-subtitle">default / hover / focus / current。hover と current は同じ見た目（背景 primary/50 + 太字）</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">default</span>
+          <nav class="sidenav" aria-label="状態: default">
+            <ul class="sidenav-group">
+              <li>
+                <a class="sidenav-item" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">hover</span>
+          <nav class="sidenav" aria-label="状態: hover">
+            <ul class="sidenav-group">
+              <li>
+                <a class="sidenav-item is-hover-preview" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">focus</span>
+          <nav class="sidenav" aria-label="状態: focus">
+            <ul class="sidenav-group">
+              <li>
+                <a class="sidenav-item is-focus-preview" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">current</span>
+          <nav class="sidenav" aria-label="状態: current">
+            <ul class="sidenav-group">
+              <li>
+                <a class="sidenav-item" href="#side-nav" aria-current="page">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">グループを <code class="px-1 bg-neutral-100 rounded">.sidenav-divider</code> で区切る（Figma 仕様の 2 グループ構成）</p>
+        </div>
+        <div class="card-body">
+          <nav class="sidenav" aria-label="マイページ">
+            <ul class="sidenav-group">
+              <li>
+                <a class="sidenav-item" href="#side-nav" aria-current="page">
+                  <svg class="icon"><use href="./icons.svg#lucide-smile"></use></svg>
+                  マイページTOP
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  財務情報購入履歴
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-medal"></use></svg>
+                  プレミアム会員登録
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-folder-cog"></use></svg>
+                  おすすめ案件設定
+                </a>
+              </li>
+            </ul>
+            <hr class="sidenav-divider" />
+            <ul class="sidenav-group">
+              <li>
+                <a class="sidenav-item" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-shield-check"></use></svg>
+                  基本情報（本人確認）
+                </a>
+              </li>
+              <li>
+                <a class="sidenav-item" href="#side-nav">
+                  <svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>
+                  アカウント設定
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
