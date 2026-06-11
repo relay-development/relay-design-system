@@ -147,13 +147,14 @@
 
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">
-        <div class="flex items-baseline justify-between mb-3">
-          <h3 class="typo-large font-semibold">NG パターン</h3>
-          <span class="typo-xsmall text-fg-low">ボタンを並べる時の注意点</span>
-        </div>
-
         <!-- Rule 1: same size -->
         <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">NG パターン — ボタンサイズの混在</h3>
+              <span class="typo-xsmall text-fg-low">ボタンを並べる時の注意点</span>
+            </div>
+          </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <!-- Don't -->
             <div class="p-6 bg-negative-50">
@@ -188,6 +189,9 @@
 
         <!-- Rule 2: don't combine two strong solids -->
         <div class="card overflow-hidden">
+          <div class="card-header">
+            <h3 class="card-title">NG パターン — solid ボタンの並列</h3>
+          </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <!-- Don't -->
             <div class="p-6 bg-negative-50">
