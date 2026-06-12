@@ -6,6 +6,146 @@
       </div>
             <p class="typo-medium text-fg-middle mb-6">余白・角の丸み・境界線（区切りの線）の決まりごと一覧です。決まった段階の中から選ぶことで、どの画面でも見た目が揃います。</p>
       <!-- =========================================================
+           8px グリッド — recreated from Figma 3059:451 (レイアウト)
+           ========================================================= -->
+      <div class="card mb-12">
+        <div class="card-header">
+          <h3 class="card-title">8px グリッド</h3>
+          <p class="card-subtitle">基本となるグリッドは 8×8 で、すべての要素は 8 の偶数倍の大きさと間隔で構成されています（例: 16、24、32、48、128 など）。これにより、コンポーネントシステムは堅牢で使いやすいものとなっています。</p>
+        </div>
+        <div class="card-body">
+          <div class="flex items-center gap-2 mb-6">
+            <span class="inline-block w-2 h-2 bg-info-600" aria-hidden="true"></span>
+            <span class="typo-xsmall font-mono text-info-700">8 = base</span>
+          </div>
+
+          <!-- 8 の倍数スケール -->
+          <div class="flex flex-wrap items-end gap-4 mb-8">
+            <div class="flex items-center justify-center w-12 h-4 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+            <div class="flex items-center justify-center w-16 h-6 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">24</span></div>
+            <div class="flex items-center justify-center w-20 h-8 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">32</span></div>
+            <div class="flex items-center justify-center w-22 h-10 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">40</span></div>
+            <div class="flex items-center justify-center w-24 h-12 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">48</span></div>
+            <div class="flex items-center justify-center w-28 h-16 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">64</span></div>
+            <div class="flex items-center justify-center w-28 h-20 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">80</span></div>
+          </div>
+
+          <!-- 分割しても揃う -->
+          <p class="typo-small text-fg-middle mb-3">8 の倍数どうしは、分割したり積み重ねてもグリッドが揃います:</p>
+          <div class="flex flex-wrap gap-8">
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-20 h-8 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">32</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-12 h-4 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+                <div class="flex items-center justify-center w-12 h-4 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-24 h-12 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">48</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-16 h-6 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">24</span></div>
+                <div class="flex items-center justify-center w-16 h-6 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">24</span></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-28 h-16 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">64</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-20 h-8 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">32</span></div>
+                <div class="flex items-center justify-center w-20 h-8 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">32</span></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-28 h-20 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">80</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-22 h-10 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">40</span></div>
+                <div class="flex items-center justify-center w-22 h-10 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">40</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 余白を取っても揃う -->
+          <p class="typo-small text-fg-middle mt-8 mb-3">要素の間に余白を取る場合も、余白を 8 の倍数にすれば全体はグリッドに揃ったままです（破線 = 余白）:</p>
+          <div class="flex flex-wrap gap-8">
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-24 h-12 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">48</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-16 h-4 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+                <div class="flex items-center justify-center w-16 h-4 border border-dashed border-info-400 bg-white"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+                <div class="flex items-center justify-center w-16 h-4 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-28 h-16 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">64</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-16 h-6 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">24</span></div>
+                <div class="flex items-center justify-center w-16 h-4 border border-dashed border-info-400 bg-white"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+                <div class="flex items-center justify-center w-16 h-6 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">24</span></div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="flex items-center justify-center w-28 h-20 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">80</span></div>
+              <span class="typo-xsmall text-fg-low">=</span>
+              <div class="flex flex-col">
+                <div class="flex items-center justify-center w-20 h-8 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">32</span></div>
+                <div class="flex items-center justify-center w-20 h-4 border border-dashed border-info-400 bg-white"><span class="typo-xsmall font-mono text-info-700">16</span></div>
+                <div class="flex items-center justify-center w-20 h-8 border border-info-300 bg-info-50"><span class="typo-xsmall font-mono text-info-700">32</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 実例: コンポーネントもグリッドに乗る -->
+          <p class="typo-small text-fg-middle mt-8 mb-3">実際のコンポーネントを方眼 (8px 刻み) の上に並べてグリッドを組んだ例です。2 カラムの列間・行間 (16)、外周の余白 (24)、ボタン間 (8)、ラベルと入力欄の間 (8)、入力欄やボタンの高さ (40) がすべて 8 の倍数なので、各要素の端が方眼の線に揃います:</p>
+          <div class="max-w-2xl border border-info-200 rounded-md p-6 bg-white" style="background-image: linear-gradient(to right, var(--color-info-100) 1px, transparent 1px), linear-gradient(to bottom, var(--color-info-100) 1px, transparent 1px); background-size: calc(var(--spacing) * 2) calc(var(--spacing) * 2);">
+            <div class="grid sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="label-control mb-2" for="grid-demo-name">
+                  <span class="label-control-row"><span class="label-control-text">お名前</span></span>
+                </label>
+                <input id="grid-demo-name" type="text" class="input input-md" placeholder="山田 太郎" />
+              </div>
+              <div>
+                <label class="label-control mb-2" for="grid-demo-mail">
+                  <span class="label-control-row"><span class="label-control-text">メールアドレス</span></span>
+                </label>
+                <input id="grid-demo-mail" type="email" class="input input-md" placeholder="taro@example.com" />
+              </div>
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4 mb-4">
+              <div>
+                <label class="label-control mb-2" for="grid-demo-kind">
+                  <span class="label-control-row"><span class="label-control-text">お問い合わせ種別</span></span>
+                </label>
+                <div class="selector selector-md">
+                  <select class="selector-field" id="grid-demo-kind">
+                    <option value="">選択してください</option>
+                    <option value="a">資料請求</option>
+                    <option value="b">その他</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="label-control mb-2" for="grid-demo-tel">
+                  <span class="label-control-row"><span class="label-control-text">電話番号</span></span>
+                </label>
+                <input id="grid-demo-tel" type="tel" class="input input-md" placeholder="090-0000-0000" />
+              </div>
+            </div>
+            <div class="flex justify-end gap-2">
+              <button type="button" class="btn btn-md btn-neutral btn-subtle">キャンセル</button>
+              <button type="button" class="btn btn-md btn-neutral btn-outline">下書き保存</button>
+              <button type="button" class="btn btn-md btn-primary btn-solid">送信する</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- =========================================================
            余白 (Spacing) — 8px ベースグリッドの 9 段階スケール
            Figma 3300:1395 と 1:1 対応
            ========================================================= -->
