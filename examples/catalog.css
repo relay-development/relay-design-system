@@ -441,14 +441,55 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 }
 .page-card:hover .page-card-link { text-decoration: none; }
 
-/* Hide sidebar on small screens */
+/* ハンバーガートグル (デスクトップでは非表示) */
+.docs-sidebar-toggle { display: none; }
+
+/* Mobile — サイドナビをハンバーガーメニュー化 */
 @media (max-width: 768px) {
   .docs-layout { flex-direction: column; }
   .docs-sidebar {
-    position: static;
+    position: sticky;
+    top: 0;
     width: 100%;
     height: auto;
+    overflow: visible;
     border-right: 0;
     border-bottom: 1px solid var(--color-stroke-low);
+    padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4);   /* 12 16 */
+    z-index: 30;
+  }
+  .docs-sidebar-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .docs-sidebar-brand {
+    padding: 0 8px;
+    border-bottom: 0;
+    margin-bottom: 0;
+  }
+  .docs-sidebar-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(var(--spacing) * 10);    /* 40 */
+    height: calc(var(--spacing) * 10);
+    border: 1px solid var(--color-stroke-middle);
+    border-radius: var(--radius-sm);
+    background: var(--color-white);
+    color: var(--color-fg-high);
+    cursor: pointer;
+  }
+  .docs-sidebar-toggle .icon-close { display: none; }
+  .docs-sidebar.is-open .docs-sidebar-toggle .icon-menu { display: none; }
+  .docs-sidebar.is-open .docs-sidebar-toggle .icon-close { display: block; }
+
+  /* メニュー本体: 閉=非表示、開=ヘッダ下に展開 (画面内スクロール) */
+  .docs-sidebar-nav { display: none; }
+  .docs-sidebar.is-open .docs-sidebar-nav {
+    display: flex;
+    margin-top: calc(var(--spacing) * 4);
+    max-height: calc(100vh - var(--spacing) * 20);
+    overflow-y: auto;
   }
 }
