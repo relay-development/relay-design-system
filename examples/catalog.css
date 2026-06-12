@@ -453,7 +453,10 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 
 /* Mobile — サイドナビをハンバーガーメニュー化 */
 @media (max-width: 768px) {
-  .docs-layout { flex-direction: column; }
+  /* 縦並びでは align-items:flex-start だと子が fit-content 幅になり、
+   * 幅広テーブルの min-content にページ全体が引っ張られる。stretch で
+   * ビューポート幅に固定し、はみ出しは card-body の横スクロールに任せる */
+  .docs-layout { flex-direction: column; align-items: stretch; }
   .docs-sidebar {
     position: sticky;
     top: 0;
