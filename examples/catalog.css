@@ -373,13 +373,20 @@ details[open] > summary .docs-sidebar-group-chevron { transform: rotate(180deg);
   width:  calc(var(--spacing) * 4);       /* 16 */
   height: calc(var(--spacing) * 4);
 }
-/* Compact mode for narrow viewports — hide illustrations + blurs */
+/* Compact mode for narrow viewports — hero の外側 padding を 0 にして
+ * イラスト 2 枚 + タイトルを画面幅に収める */
 @media (max-width: 640px) {
-  .docs-hero { background: radial-gradient(ellipse at center, #d9ebea 0%, #e7f6f6 70%); }
-  .docs-hero-illust { display: none; }
-  .docs-hero-content {
-    padding: calc(var(--spacing) * 12) calc(var(--spacing) * 4);   /* 48 16 */
+  .docs-hero {
+    padding: 0;
+    padding-top: calc(var(--spacing) * 6);   /* 24 */
   }
+  .docs-hero-illust { width: 30%; }
+  .docs-hero-content {
+    min-width: 0;   /* flex の自動最小幅でタイトルが縮めなくなるのを防ぐ */
+    padding: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 6);   /* 0 8 24 */
+    gap: calc(var(--spacing) * 4);
+  }
+  .docs-hero-title { width: 100%; }
 }
 
 /* Scroll offset for anchor jumps */
