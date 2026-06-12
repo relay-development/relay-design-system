@@ -94,6 +94,7 @@
   transition: transform 0.15s ease;
 }
 .status-grid .status-cell:hover .dot { transform: scale(1.15); }
+.status-grid .status-cell[data-tip] { cursor: pointer; }   /* クリックでカラーコードをコピー */
 
 /* Custom tooltip — instant, shows the data-tip text */
 .status-grid .status-cell[data-tip]:hover::after {
