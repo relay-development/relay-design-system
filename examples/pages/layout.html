@@ -98,6 +98,27 @@
               </div>
             </div>
           </div>
+
+          <!-- 実例: コンポーネントもグリッドに乗る -->
+          <p class="typo-small text-fg-middle mt-8 mb-3">実際のコンポーネントも 8px グリッドに乗っています。下の方眼は 8px 刻みで、フォームの余白 (padding 24)・要素間 (16)・ボタン間 (8)・入力欄やボタンの高さ (40) がすべて線に揃います:</p>
+          <div class="max-w-md border border-info-200 rounded-md p-6 bg-white" style="background-image: linear-gradient(to right, var(--color-info-100) 1px, transparent 1px), linear-gradient(to bottom, var(--color-info-100) 1px, transparent 1px); background-size: calc(var(--spacing) * 2) calc(var(--spacing) * 2);">
+            <div class="mb-4">
+              <label class="label-control mb-1" for="grid-demo-name">
+                <span class="label-control-row"><span class="label-control-text">お名前</span></span>
+              </label>
+              <input id="grid-demo-name" type="text" class="input input-md" placeholder="山田 太郎" />
+            </div>
+            <div class="mb-4">
+              <label class="label-control mb-1" for="grid-demo-mail">
+                <span class="label-control-row"><span class="label-control-text">メールアドレス</span></span>
+              </label>
+              <input id="grid-demo-mail" type="email" class="input input-md" placeholder="taro@example.com" />
+            </div>
+            <div class="flex justify-end gap-2">
+              <button type="button" class="btn btn-md btn-neutral btn-subtle">キャンセル</button>
+              <button type="button" class="btn btn-md btn-primary btn-solid">送信する</button>
+            </div>
+          </div>
         </div>
       </div>
 
