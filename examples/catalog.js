@@ -124,3 +124,21 @@ document.querySelectorAll("details[data-nav-group]").forEach((d) => {
   if (saved !== null) d.open = saved === "1";
   d.addEventListener("toggle", () => localStorage.setItem(key, d.open ? "1" : "0"));
 });
+
+// Color swatch — 色の丸クリックでカラーコードをクリップボードにコピー。
+// data-tip 末尾のコード (#hex / rgba) を抜き出し、ツールチップで完了を知らせる。
+document.addEventListener("click", async (e) => {
+  const cell = e.target.closest(".status-cell[data-tip]");
+  if (!cell) return;
+  const original = cell.dataset.tip;
+  const code = original.split("\u00b7").pop().trim();
+  try {
+    await navigator.clipboard.writeText(code);
+  } catch {
+    return;   // クリップボード未許可 (非 HTTPS 等) は何もしない
+  }
+  cell.dataset.tip = `${code} をコピーしました \u2713`;
+  setTimeout(() => {
+    cell.dataset.tip = original;
+  }, 1200);
+});
