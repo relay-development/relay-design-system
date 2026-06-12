@@ -373,13 +373,20 @@ details[open] > summary .docs-sidebar-group-chevron { transform: rotate(180deg);
   width:  calc(var(--spacing) * 4);       /* 16 */
   height: calc(var(--spacing) * 4);
 }
-/* Compact mode for narrow viewports — イラストは残し、padding 0 で調整 */
+/* Compact mode for narrow viewports — hero の外側 padding を 0 にして
+ * イラスト 2 枚 + タイトルを画面幅に収める */
 @media (max-width: 640px) {
+  .docs-hero {
+    padding: 0;
+    padding-top: calc(var(--spacing) * 6);   /* 24 */
+  }
   .docs-hero-illust { width: 30%; }
   .docs-hero-content {
-    padding: 0;
-    gap: calc(var(--spacing) * 3);
+    min-width: 0;   /* flex の自動最小幅でタイトルが縮めなくなるのを防ぐ */
+    padding: 0 calc(var(--spacing) * 2) calc(var(--spacing) * 6);   /* 0 8 24 */
+    gap: calc(var(--spacing) * 4);
   }
+  .docs-hero-title { width: 100%; }
 }
 
 /* Scroll offset for anchor jumps */
