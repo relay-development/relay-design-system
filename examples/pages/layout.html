@@ -100,17 +100,17 @@
           </div>
 
           <!-- 実例: コンポーネントもグリッドに乗る -->
-          <p class="typo-small text-fg-middle mt-8 mb-3">実際のコンポーネントを方眼 (8px 刻み) の上に並べてグリッドを組んだ例です。2 カラムの列間・行間 (16)、外周の余白 (24)、ボタン間 (8)、入力欄やボタンの高さ (40) がすべて 8 の倍数なので、各要素の端が方眼の線に揃います:</p>
+          <p class="typo-small text-fg-middle mt-8 mb-3">実際のコンポーネントを方眼 (8px 刻み) の上に並べてグリッドを組んだ例です。2 カラムの列間・行間 (16)、外周の余白 (24)、ボタン間 (8)、ラベルと入力欄の間 (8)、入力欄やボタンの高さ (40) がすべて 8 の倍数なので、各要素の端が方眼の線に揃います:</p>
           <div class="max-w-2xl border border-info-200 rounded-md p-6 bg-white" style="background-image: linear-gradient(to right, var(--color-info-100) 1px, transparent 1px), linear-gradient(to bottom, var(--color-info-100) 1px, transparent 1px); background-size: calc(var(--spacing) * 2) calc(var(--spacing) * 2);">
             <div class="grid sm:grid-cols-2 gap-4 mb-4">
               <div>
-                <label class="label-control mb-1" for="grid-demo-name">
+                <label class="label-control mb-2" for="grid-demo-name">
                   <span class="label-control-row"><span class="label-control-text">お名前</span></span>
                 </label>
                 <input id="grid-demo-name" type="text" class="input input-md" placeholder="山田 太郎" />
               </div>
               <div>
-                <label class="label-control mb-1" for="grid-demo-mail">
+                <label class="label-control mb-2" for="grid-demo-mail">
                   <span class="label-control-row"><span class="label-control-text">メールアドレス</span></span>
                 </label>
                 <input id="grid-demo-mail" type="email" class="input input-md" placeholder="taro@example.com" />
@@ -118,7 +118,7 @@
             </div>
             <div class="grid sm:grid-cols-2 gap-4 mb-4">
               <div>
-                <label class="label-control mb-1" for="grid-demo-kind">
+                <label class="label-control mb-2" for="grid-demo-kind">
                   <span class="label-control-row"><span class="label-control-text">お問い合わせ種別</span></span>
                 </label>
                 <div class="selector selector-md">
@@ -130,7 +130,7 @@
                 </div>
               </div>
               <div>
-                <label class="label-control mb-1" for="grid-demo-tel">
+                <label class="label-control mb-2" for="grid-demo-tel">
                   <span class="label-control-row"><span class="label-control-text">電話番号</span></span>
                 </label>
                 <input id="grid-demo-tel" type="tel" class="input input-md" placeholder="090-0000-0000" />
