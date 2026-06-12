@@ -493,3 +493,17 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
     overflow-y: auto;
   }
 }
+
+/* Mobile — 幅広コンテンツが画面からはみ出さないようにする */
+@media (max-width: 768px) {
+  /* 本文の左右余白を 24 → 16 に圧縮 */
+  .docs-main main { padding-inline: calc(var(--spacing) * 4); }
+
+  /* 幅固定のグリッド表 (タイポ一覧 / WCAG マトリクス / 達成基準表など) は
+   * カードの overflow:hidden で見切れていたため、カード内で横スクロール可能に */
+  .docs-main .card-body { overflow-x: auto; }
+
+  /* カラーグリッドは列が潰れて dot が重なるため、最小幅を確保して
+   * 横スクロール側に逃がす */
+  .status-grid { min-width: calc(var(--spacing) * 120); }   /* 480 */
+}
