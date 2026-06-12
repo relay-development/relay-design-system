@@ -68,7 +68,7 @@ function navHtml(activeFile) {
     if (!g) { g = { title: p.group, items: [] }; groups.push(g); }
     g.items.push(p);
   }
-  // Foundations / Components はアコーディオン (details)。開閉状態は
+  // Foundations / Components はアコーディオン (details、初期表示は閉)。開閉状態は
   // catalog.js が localStorage に保存してページ間で引き継ぐ。
   const COLLAPSIBLE = new Set(["Foundations", "Components"]);
   const chevron =
@@ -84,7 +84,7 @@ function navHtml(activeFile) {
         })
         .join("\n");
       if (COLLAPSIBLE.has(g.title)) {
-        return `        <details class="docs-sidebar-group" data-nav-group="${g.title}" open>
+        return `        <details class="docs-sidebar-group" data-nav-group="${g.title}">
           <summary class="docs-sidebar-group-title">${g.title}${chevron}</summary>
 ${links}
         </details>`;
