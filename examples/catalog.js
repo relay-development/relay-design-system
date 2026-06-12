@@ -173,3 +173,12 @@ document.addEventListener("click", async (e) => {
   document.body.appendChild(bubble);
   setTimeout(() => bubble.remove(), 1200);
 });
+
+// Mobile hamburger — サイドナビの開閉 (768px 以下で表示されるトグル)
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".docs-sidebar-toggle");
+  if (!btn) return;
+  const sidebar = btn.closest(".docs-sidebar");
+  const open = sidebar.classList.toggle("is-open");
+  btn.setAttribute("aria-expanded", open ? "true" : "false");
+});
