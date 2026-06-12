@@ -142,3 +142,33 @@ document.addEventListener("click", async (e) => {
     cell.dataset.tip = original;
   }, 1200);
 });
+
+// Token swatch — token-list の色見本クリックでもカラーコードをコピー。
+// hex が DOM に無い行 (テキスト系) もあるため、描画色 (computed style) から取得する。
+const rgbToCode = (rgb) => {
+  const m = rgb.match(/rgba?\(([^)]+)\)/);
+  if (!m) return rgb;
+  const [r, g, b, a] = m[1].split(",").map((v) => parseFloat(v));
+  const hex = "#" + [r, g, b].map((v) => Math.round(v).toString(16).padStart(2, "0")).join("");
+  return a !== undefined && a < 1 ? `rgba(${r}, ${g}, ${b}, ${a})` : hex;
+};
+
+document.addEventListener("click", async (e) => {
+  const sw = e.target.closest(".token-row .swatch");
+  if (!sw) return;
+  const code = rgbToCode(getComputedStyle(sw).backgroundColor);
+  try {
+    await navigator.clipboard.writeText(code);
+  } catch {
+    return;
+  }
+  // スウォッチの上に 1.2 秒だけ完了バブルを出す
+  const r = sw.getBoundingClientRect();
+  const bubble = document.createElement("div");
+  bubble.className = "copy-bubble";
+  bubble.textContent = `${code} をコピーしました \u2713`;
+  bubble.style.left = `${r.left + r.width / 2}px`;
+  bubble.style.top = `${r.top}px`;
+  document.body.appendChild(bubble);
+  setTimeout(() => bubble.remove(), 1200);
+});

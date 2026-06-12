@@ -95,6 +95,23 @@
 }
 .status-grid .status-cell:hover .dot { transform: scale(1.15); }
 .status-grid .status-cell[data-tip] { cursor: pointer; }   /* クリックでカラーコードをコピー */
+.token-row .swatch { cursor: pointer; }                     /* こちらもクリックでコピー */
+
+/* swatch コピー完了バブル (status-cell ツールチップと同じ見た目) */
+.copy-bubble {
+  position: fixed;
+  transform: translate(-50%, calc(-100% - 8px));
+  background: var(--color-neutral-900);
+  color: var(--color-white);
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: var(--text-xs);
+  line-height: var(--text-xs--line-height);
+  white-space: nowrap;
+  z-index: 50;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+  pointer-events: none;
+}
 
 /* Custom tooltip — instant, shows the data-tip text */
 .status-grid .status-cell[data-tip]:hover::after {
