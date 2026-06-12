@@ -156,7 +156,8 @@ const rgbToCode = (rgb) => {
 document.addEventListener("click", async (e) => {
   const sw = e.target.closest(".token-row .swatch");
   if (!sw) return;
-  const code = rgbToCode(getComputedStyle(sw).backgroundColor);
+  // 枠線が本体のスウォッチ (境界線トークン等) は data-copy で明示指定
+  const code = sw.dataset.copy || rgbToCode(getComputedStyle(sw).backgroundColor);
   try {
     await navigator.clipboard.writeText(code);
   } catch {
