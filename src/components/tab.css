@@ -20,9 +20,9 @@
  *
  *   colors (semantic tokens):
  *     solid not-selected: bg white,        border stroke/middle,            text fg/middle
- *     solid     selected: bg primary/500,  border transparent,              text white
+ *     solid     selected: bg primary/700,  border transparent,              text white (7.0:1 AAA)
  *     line  not-selected: bg transparent,  border-b 1 stroke/middle,        text fg/middle
- *     line      selected: bg transparent,  border-b 2 primary/500,          text primary/500
+ *     line      selected: bg transparent,  border-b 2 primary/700,          text primary/700 (7.0:1 AAA)
  *
  *   states:
  *     hover : 背景 / ボーダー / 色を 1 段濃く
@@ -89,13 +89,13 @@
   }
 
   .tab-solid[aria-selected="true"] {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-700);
     border-color: transparent;
     color: var(--color-white);
   }
   .tab-solid[aria-selected="true"]:hover:not(:disabled),
   .tab-solid[aria-selected="true"].is-hover-preview {
-    background-color: var(--color-primary-600);
+    background-color: var(--color-primary-800);
   }
 
   /* ============================================================
@@ -115,16 +115,16 @@
   }
 
   .tab-line[aria-selected="true"] {
-    color: var(--color-primary-500);
+    color: var(--color-primary-700);
     border-bottom-width: 2px;
-    border-bottom-color: var(--color-primary-500);
+    border-bottom-color: var(--color-primary-700);
     /* compensate the extra 1px so total visual height stays in sync */
     padding-bottom: 7px;
   }
   .tab-line[aria-selected="true"]:hover:not(:disabled),
   .tab-line[aria-selected="true"].is-hover-preview {
-    border-bottom-color: var(--color-primary-600);
-    color: var(--color-primary-600);
+    border-bottom-color: var(--color-primary-800);
+    color: var(--color-primary-800);
   }
 
   /* ============================================================

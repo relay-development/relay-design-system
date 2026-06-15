@@ -8,7 +8,7 @@
 
   /* Solid */
   .badge-solid-neutral { @apply bg-neutral-900   text-fg-high-inverse; }
-  .badge-solid-primary { @apply bg-primary-500   text-fg-high-inverse; }
+  .badge-solid-primary { @apply bg-primary-700   text-fg-high-inverse; }
   .badge-solid-info    { @apply bg-info-500      text-fg-high-inverse; }
   .badge-solid-success { @apply bg-success-500   text-fg-high-inverse; }
   .badge-solid-warning { @apply bg-warning-500   text-fg-high-inverse; }

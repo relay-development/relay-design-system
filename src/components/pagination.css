@@ -62,7 +62,7 @@
 
   /* Current (現在のページ) — ARIA 属性で指定。tab-solid selected と同じ配色 */
   .pagination-item[aria-current="page"] {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-700);
     border-color: transparent;
     color: var(--color-white);
     cursor: default;
