@@ -166,7 +166,7 @@
   .search-input-submit {
     @apply shrink-0 inline-flex items-center justify-center
            font-bold text-white whitespace-nowrap
-           bg-primary-500 hover:bg-primary-600
+           bg-primary-700 hover:bg-primary-800
            border-0 rounded-sm cursor-pointer
            transition-colors duration-150
            focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
