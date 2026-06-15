@@ -8,9 +8,9 @@
  *     isOpenInNew : true | false           → 末尾に external-link アイコン (16px)
  *     label       : string
  *
- *   色: enable = primary/600、hover = primary/700
- *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と AA 不足のため
- *       アクセシビリティ方針 (WCAG 2.2 AA) に合わせ primary/600 (約 4.9:1) に上げている。
+ *   色: enable = primary/700、hover = primary/800
+ *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と不足のため
+ *       primary/700 (約 7.0:1) に上げ、WCAG 2.2 AAA を満たす。
  *   タイポ: text-base (16/32) medium、ラベルに underline (from-font / skip-ink: none)。
  *     ※ Figma は 14/24 だが、可読性改善のため本文 (typo-medium 16/32) と同サイズに統一。
  *
@@ -26,7 +26,7 @@
   .link {
     @apply inline-flex items-center gap-1
            text-base leading-8 font-medium
-           text-primary-600 no-underline
+           text-primary-700 no-underline
            cursor-pointer;
   }
 
@@ -45,7 +45,7 @@
   /* Hover (カタログ用 .is-hover-preview も同条件) */
   .link:hover:not([aria-disabled="true"]),
   .link.is-hover-preview {
-    @apply text-primary-700;
+    @apply text-primary-800;
   }
 
   /* Focus ring */

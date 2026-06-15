@@ -262,7 +262,7 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 | 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
 | 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,negative}` |
 | 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
-| 17 | Link          | `.link`, `.link-label`（緑下線 + external-link アイコン、enable=primary-600 / hover=primary-700） |
+| 17 | Link          | `.link`, `.link-label`（緑下線 + external-link アイコン、enable=primary-700 / hover=primary-800） |
 | 18 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
 | 19 | Side Nav      | `.sidenav`, `.sidenav-group`, `.sidenav-divider`, `.sidenav-item`（現在地は `aria-current="page"`） |
 | 20 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
