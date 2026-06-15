@@ -8,11 +8,11 @@
 
   /* Solid */
   .badge-solid-neutral { @apply bg-neutral-900   text-fg-high-inverse; }
-  .badge-solid-primary { @apply bg-primary-700   text-fg-high-inverse; }
-  .badge-solid-info    { @apply bg-info-800      text-fg-high-inverse; }
-  .badge-solid-success { @apply bg-success-800   text-fg-high-inverse; }
-  .badge-solid-warning { @apply bg-warning-800   text-fg-high-inverse; }
-  .badge-solid-danger  { @apply bg-negative-800  text-fg-high-inverse; }
+  .badge-solid-primary { @apply bg-primary-500   text-fg-high-inverse; }
+  .badge-solid-info    { @apply bg-info-500      text-fg-high-inverse; }
+  .badge-solid-success { @apply bg-success-500   text-fg-high-inverse; }
+  .badge-solid-warning { @apply bg-warning-500   text-fg-high-inverse; }
+  .badge-solid-danger  { @apply bg-negative-500  text-fg-high-inverse; }
 
   /* Soft */
   .badge-soft-neutral  { @apply bg-neutral-100   text-fg-high; }
