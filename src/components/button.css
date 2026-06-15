@@ -103,8 +103,8 @@
   /* Optional fallbacks (not in Figma) — mirror primary's pattern with secondary tokens */
   .btn-secondary.btn-outline {
     background-color: var(--color-white);
-    color: var(--color-secondary-700);
-    border-color: var(--color-secondary-500);
+    color: var(--color-secondary-900);
+    border-color: var(--color-secondary-900);
   }
   .btn-secondary.btn-outline:hover:not(:disabled),
   .btn-secondary.btn-outline:active:not(:disabled) { background-color: var(--color-secondary-50); }
@@ -115,7 +115,7 @@
 
   .btn-secondary.btn-subtle {
     background-color: var(--color-secondary-50);
-    color: var(--color-secondary-700);
+    color: var(--color-secondary-900);
   }
   .btn-secondary.btn-subtle:hover:not(:disabled),
   .btn-secondary.btn-subtle:active:not(:disabled) { background-color: var(--color-secondary-100); }
@@ -126,7 +126,7 @@
 
   .btn-secondary.btn-ghost {
     background-color: transparent;
-    color: var(--color-secondary-700);
+    color: var(--color-secondary-900);
   }
   .btn-secondary.btn-ghost:hover:not(:disabled),
   .btn-secondary.btn-ghost:active:not(:disabled) { background-color: var(--color-secondary-50); }
@@ -185,17 +185,17 @@
    *   outline bg = negative/50 (NOT white) — special case
    * ============================================================ */
   .btn-negative.btn-solid {
-    background-color: var(--color-negative-500);
+    background-color: var(--color-negative-800);
     color: var(--color-white);
   }
   .btn-negative.btn-solid:hover:not(:disabled),
-  .btn-negative.btn-solid:active:not(:disabled) { background-color: var(--color-negative-600); }
+  .btn-negative.btn-solid:active:not(:disabled) { background-color: var(--color-negative-900); }
   .btn-negative.btn-solid:disabled              { background-color: var(--color-negative-200); }
 
   .btn-negative.btn-outline {
     background-color: var(--color-negative-50);       /* note: /50, not white */
-    color: var(--color-negative-500);
-    border-color: var(--color-negative-500);
+    color: var(--color-negative-800);
+    border-color: var(--color-negative-800);
   }
   .btn-negative.btn-outline:hover:not(:disabled),
   .btn-negative.btn-outline:active:not(:disabled) { background-color: var(--color-negative-100); }
@@ -207,7 +207,7 @@
 
   .btn-negative.btn-subtle {
     background-color: var(--color-negative-50);
-    color: var(--color-negative-500);
+    color: var(--color-negative-800);
   }
   .btn-negative.btn-subtle:hover:not(:disabled),
   .btn-negative.btn-subtle:active:not(:disabled) { background-color: var(--color-negative-100); }
@@ -218,7 +218,7 @@
 
   .btn-negative.btn-ghost {
     background-color: transparent;
-    color: var(--color-negative-500);
+    color: var(--color-negative-800);
   }
   .btn-negative.btn-ghost:hover:not(:disabled),
   .btn-negative.btn-ghost:active:not(:disabled) { background-color: var(--color-negative-50); }
@@ -260,13 +260,13 @@
   .btn-secondary.btn-solid.btn-loading::after { color: var(--color-neutral-900); }
 
   .btn-primary[data-loading]:not(.btn-solid)::after,
-  .btn-primary.btn-loading:not(.btn-solid)::after { color: var(--color-primary-500); }
+  .btn-primary.btn-loading:not(.btn-solid)::after { color: var(--color-primary-700); }
   .btn-secondary[data-loading]:not(.btn-solid)::after,
-  .btn-secondary.btn-loading:not(.btn-solid)::after { color: var(--color-secondary-700); }
+  .btn-secondary.btn-loading:not(.btn-solid)::after { color: var(--color-secondary-900); }
   .btn-neutral[data-loading]:not(.btn-solid)::after,
   .btn-neutral.btn-loading:not(.btn-solid)::after { color: var(--color-neutral-600); }
   .btn-negative[data-loading]:not(.btn-solid)::after,
-  .btn-negative.btn-loading:not(.btn-solid)::after { color: var(--color-negative-500); }
+  .btn-negative.btn-loading:not(.btn-solid)::after { color: var(--color-negative-800); }
 
   @keyframes btn-spin {
     to { transform: rotate(360deg); }
