@@ -46,17 +46,17 @@
    * PRIMARY
    * ============================================================ */
   .btn-primary.btn-solid {
-    background-color: var(--color-primary-500);
+    background-color: var(--color-primary-700);
     color: var(--color-white);
   }
   .btn-primary.btn-solid:hover:not(:disabled),
-  .btn-primary.btn-solid:active:not(:disabled) { background-color: var(--color-primary-600); }
+  .btn-primary.btn-solid:active:not(:disabled) { background-color: var(--color-primary-800); }
   .btn-primary.btn-solid:disabled              { background-color: var(--color-primary-200); }
 
   .btn-primary.btn-outline {
     background-color: var(--color-white);
-    color: var(--color-primary-500);
-    border-color: var(--color-primary-500);
+    color: var(--color-primary-700);
+    border-color: var(--color-primary-700);
   }
   .btn-primary.btn-outline:hover:not(:disabled),
   .btn-primary.btn-outline:active:not(:disabled) { background-color: var(--color-primary-50); }
@@ -68,7 +68,7 @@
 
   .btn-primary.btn-subtle {
     background-color: var(--color-primary-50);
-    color: var(--color-primary-500);
+    color: var(--color-primary-700);
   }
   .btn-primary.btn-subtle:hover:not(:disabled),
   .btn-primary.btn-subtle:active:not(:disabled) { background-color: var(--color-primary-100); }
@@ -79,7 +79,7 @@
 
   .btn-primary.btn-ghost {
     background-color: transparent;
-    color: var(--color-primary-500);
+    color: var(--color-primary-700);
   }
   .btn-primary.btn-ghost:hover:not(:disabled),
   .btn-primary.btn-ghost:active:not(:disabled) { background-color: var(--color-primary-50); }
