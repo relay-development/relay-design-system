@@ -260,7 +260,7 @@
   .btn-secondary.btn-solid.btn-loading::after { color: var(--color-neutral-900); }
 
   .btn-primary[data-loading]:not(.btn-solid)::after,
-  .btn-primary.btn-loading:not(.btn-solid)::after { color: var(--color-primary-500); }
+  .btn-primary.btn-loading:not(.btn-solid)::after { color: var(--color-primary-700); }
   .btn-secondary[data-loading]:not(.btn-solid)::after,
   .btn-secondary.btn-loading:not(.btn-solid)::after { color: var(--color-secondary-700); }
   .btn-neutral[data-loading]:not(.btn-solid)::after,
