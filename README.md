@@ -202,8 +202,10 @@ Tailwind v4 の `@theme` で宣言されており、すべて CSS 変数とし�
 |---|---|
 | `--font-sans` | "Noto Sans JP" + フォールバック |
 | `--text-xs..3xl` | 12 / 14 / 16 / 20 / 24 / 32 / 40 px |
-| Line-height | 16 / 24 / 32 / 32 / 32 / 40 / 48 px |
+| Line-height | 16 / 24 / 24 / 32 / 32 / 40 / 48 px |
 | `--font-weight-{thin..black}` | 100 / 300 / 400 / 500 / 700 / 700 / 900 |
+
+`.typo-medium`（16/24）とは別に、記事・読み物用の独立スケール `.typo-article`（16px / **32px** / regular）があります。長文の可読性のため行間を広く取った用途特化クラスです。
 
 ### Spacing
 
