@@ -1,0 +1,194 @@
+/**
+ * Build the data index consumed by the relay Design System MCP server.
+ *
+ *   input:
+ *     src/components/*.css   — header doc comment + class selectors per component
+ *     src/tokens/*.css        — --token: value pairs grouped by category
+ *     snippets/*.html         — copy-paste HTML, matched to a component by basename
+ *     DESIGN.md               — the design constitution (principles + forbidden patterns)
+ *     package.json            — name + version stamped onto the index
+ *   output:
+ *     dist/mcp-index.json
+ *
+ *   The MCP server (src/mcp/server.mjs) imports this JSON and esbuild inlines it
+ *   into the bundled dist/mcp.mjs, so the server ships as a single self-contained
+ *   file with no runtime dependency on this script or the source tree.
+ *
+ *   Single source of truth stays in the existing files — this script only
+ *   re-shapes them. Re-run via `npm run build:mcp` (also part of `npm run build`).
+ */
+
+import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(__dirname, "..");
+
+const FIGMA_FILE = "hJcKE8FkiyXtB1F9SuuE08";
+
+/** Strip /* ... *​/ block comments from CSS so they don't pollute selector parsing. */
+function stripCssComments(css) {
+  return css.replace(/\/\*[\s\S]*?\*\//g, "");
+}
+
+/** Pull the first leading block comment, cleaned of the ` * ` gutter. */
+function extractHeaderDoc(css) {
+  const m = css.match(/\/\*([\s\S]*?)\*\//);
+  if (!m) return "";
+  return m[1]
+    .split("\n")
+    .map((line) => line.replace(/^\s*\*\s?/, ""))
+    .join("\n")
+    .trim();
+}
+
+/**
+ * Collect component class names: every `.foo` that appears in selector position
+ * (i.e. in the text before a `{`). This deliberately skips utility names inside
+ * `@apply ...;` declarations, which live in the rule body, not the selector.
+ */
+function extractClasses(css) {
+  const body = stripCssComments(css);
+  const classes = new Set();
+  for (const m of body.matchAll(/([^{}]+)\{/g)) {
+    const selector = m[1];
+    for (const c of selector.matchAll(/\.(-?[a-zA-Z_][\w-]*)/g)) {
+      classes.add(c[1]);
+    }
+  }
+  return [...classes].sort();
+}
+
+/** Best-effort one-line summary from the header doc (skips boilerplate lines). */
+function deriveSummary(doc, componentName) {
+  const lines = doc.split("\n").map((l) => l.trim());
+  for (const line of lines) {
+    if (!line) continue;
+    if (line.startsWith(componentName)) continue; // title line
+    if (/recreated from|component set|props\s*:|Usage\s*:|^\*+$/i.test(line)) continue;
+    if (line.endsWith(":")) continue; // sub-header label, not prose
+    return line;
+  }
+  return null;
+}
+
+async function buildComponents() {
+  const dir = path.join(projectRoot, "src/components");
+  const files = (await readdir(dir)).filter((f) => f.endsWith(".css")).sort();
+
+  const snippetsDir = path.join(projectRoot, "snippets");
+  const snippetFiles = new Set(
+    (await readdir(snippetsDir)).filter((f) => f.endsWith(".html")),
+  );
+
+  const components = [];
+  for (const file of files) {
+    const name = file.replace(/\.css$/, "");
+    const css = await readFile(path.join(dir, file), "utf8");
+    const doc = extractHeaderDoc(css);
+
+    const figmaNode = (doc.match(/component set\s+([\d:]+)/) || [])[1] || null;
+    // Japanese name in the parens after the Figma node id, e.g. "... 3120:1917 (インプット)"
+    const nameJa =
+      (doc.match(/component set\s+[\d:]+\s*\(([^)]+)\)/) || [])[1] || null;
+
+    let snippet = null;
+    if (snippetFiles.has(`${name}.html`)) {
+      snippet = (
+        await readFile(path.join(snippetsDir, `${name}.html`), "utf8")
+      ).trim();
+    }
+
+    components.push({
+      name,
+      nameJa,
+      figmaNode,
+      summary: deriveSummary(doc, name),
+      classes: extractClasses(css),
+      doc,
+      snippet,
+    });
+  }
+  return components;
+}
+
+async function buildTokens() {
+  const dir = path.join(projectRoot, "src/tokens");
+  const files = (await readdir(dir)).filter((f) => f.endsWith(".css")).sort();
+
+  const tokens = {};
+  for (const file of files) {
+    const category = file.replace(/\.css$/, "");
+    const css = stripCssComments(await readFile(path.join(dir, file), "utf8"));
+    const entries = [];
+    for (const m of css.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
+      entries.push({ name: m[1], value: m[2].trim().replace(/\s+/g, " ") });
+    }
+    tokens[category] = entries;
+  }
+  return tokens;
+}
+
+/** Slice a markdown section that starts at a heading and ends at the next heading of <= depth. */
+function sliceSection(md, startHeading, stopDepths) {
+  const lines = md.split("\n");
+  const startIdx = lines.findIndex((l) => l.trim() === startHeading);
+  if (startIdx === -1) return null;
+  const stopRe = new RegExp(`^#{${stopDepths}}\\s`); // e.g. #{1,2} → ## or #
+  const out = [lines[startIdx]];
+  for (let i = startIdx + 1; i < lines.length; i++) {
+    if (stopRe.test(lines[i])) break;
+    out.push(lines[i]);
+  }
+  return out.join("\n").trim();
+}
+
+async function buildDesign() {
+  const md = await readFile(path.join(projectRoot, "DESIGN.md"), "utf8");
+  const principles = sliceSection(md, "## Non-Negotiable Principles", "1,2");
+  const forbidden = sliceSection(md, "### 禁止パターン要約 (Top 10)", "1,3");
+  return { principles, forbidden, full: md };
+}
+
+async function main() {
+  const pkg = JSON.parse(
+    await readFile(path.join(projectRoot, "package.json"), "utf8"),
+  );
+
+  const [components, tokens, design] = await Promise.all([
+    buildComponents(),
+    buildTokens(),
+    buildDesign(),
+  ]);
+
+  const index = {
+    name: pkg.name,
+    version: pkg.version,
+    figmaFile: FIGMA_FILE,
+    catalogUrl: "https://relay-development.github.io/relay-design-system",
+    generatedFrom: "src/components/*.css, src/tokens/*.css, snippets/*.html, DESIGN.md",
+    components,
+    tokens,
+    principles: design.principles,
+    forbiddenPatterns: design.forbidden,
+    designConstitution: design.full,
+  };
+
+  const outDir = path.join(projectRoot, "dist");
+  await mkdir(outDir, { recursive: true });
+  const outFile = path.join(outDir, "mcp-index.json");
+  await writeFile(outFile, JSON.stringify(index, null, 2) + "\n", "utf8");
+
+  const tokenCount = Object.values(tokens).reduce((n, t) => n + t.length, 0);
+  console.log(
+    `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
+      `${components.length} components, ${tokenCount} tokens, ` +
+      `${components.filter((c) => c.snippet).length} snippets`,
+  );
+}
+
+main().catch((err) => {
+  console.error("[build-mcp] failed:", err);
+  process.exit(1);
+});
