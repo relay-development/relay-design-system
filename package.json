@@ -33,6 +33,9 @@
     "./source": "./src/index.css",
     "./snippets/*": "./snippets/*"
   },
+  "bin": {
+    "relay-ds-mcp": "dist/mcp.mjs"
+  },
   "publishConfig": {
     "access": "public"
   },
@@ -40,14 +43,17 @@
     "dev": "npm run build:icons && npm run build:pages && vite",
     "build:icons": "node scripts/build-icons.mjs",
     "build:pages": "node scripts/build-pages.mjs",
-    "build": "vite build && vite build --config vite.tokens.config.ts && npm run build:icons",
+    "build:mcp": "node scripts/build-mcp.mjs && esbuild src/mcp/server.mjs --bundle --platform=node --format=esm --packages=bundle --outfile=dist/mcp.mjs --banner:js=\"#!/usr/bin/env node\" && chmod +x dist/mcp.mjs",
+    "build": "vite build && vite build --config vite.tokens.config.ts && npm run build:icons && npm run build:mcp",
     "build:site": "npm run build:icons && npm run build:pages && vite build --config vite.site.config.ts && cp examples/icons.svg site/icons.svg",
     "preview:site": "vite preview --config vite.site.config.ts",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
     "@tailwindcss/vite": "^4.0.0",
+    "esbuild": "^0.24.0",
     "lucide-static": "^1.16.0",
     "tailwindcss": "^4.0.0",
     "vite": "^5.4.0"

@@ -101,15 +101,32 @@ import "@light-right/design-system/css";
 
 ---
 
-## 🚀 今後の予定 — MCP サーバー化
+## 🤖 AI で書く人へ — MCP サーバー
 
-このデザインシステムを **MCP（Model Context Protocol）サーバー** として提供する拡張を計画中です。
+Cursor や Claude Code などの AI コーディングツールに「relay のデザインシステムをまるごと理解させる」ための
+**MCP（Model Context Protocol）サーバー**を npm パッケージに同梱しています。これを使うと:
 
-ざっくり言うと、Cursor や Claude Code などの AI コーディングツールに「relay のデザインシステムをまるごと理解させる」仕組みです。これが入ると:
+- 「relay のスタイルでログイン画面作って」と頼むだけで、デザインシステムに準拠した UI が生成される
+- どのコンポーネントにどんな props / クラスがあるかを AI が自動で把握する
+- ハードコード値や規約違反（`text-sm` 直書き等）を避けやすくなる
 
-- 「relay のスタイルでログイン画面作って」と頼むだけで、デザインシステムに準拠した UI が自動生成される
-- どのコンポーネントにどんな props / スタイルがあるかを AI が自動で把握する
-- 実装スピードが大幅に上がる
+### 登録方法（Claude Code の例）
+
+`.mcp.json` に以下を追加すれば使えます（Cursor / Windsurf も各ツールの MCP 設定に同じコマンドを登録）:
+
+```json
+{
+  "mcpServers": {
+    "relay-ds": {
+      "command": "npx",
+      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
+    }
+  }
+}
+```
+
+登録すると `list_components` / `get_component` / `get_tokens` / `get_design_principles` / `search` の
+5 つのツールが AI から使えるようになります。詳細は GitHub の [README](https://github.com/relay-development/relay-design-system#readme) を参照。
 
 参考事例: [社内デザインシステムをMCPサーバー化したらUI実装が爆速になった (Ubie Dev)](https://zenn.dev/ubie_dev/articles/f927aaff02d618) — 「テキスト指示だけで UI が約 1 分で完成」と報告されています。
 

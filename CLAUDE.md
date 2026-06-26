@@ -33,11 +33,14 @@ src/
     typography.css       ← .typo-{xsmall,small,medium,large,xlarge,2xlarge,3xlarge}
     icon.css             ← .icon + .icon-{xs,sm,md,lg,xl}
     button.css / icon-button.css / input.css / ... 各コンポーネント
+  mcp/
+    server.mjs           ← stdio MCP サーバー本体。dist/mcp-index.json を読み esbuild で dist/mcp.mjs に単一バンドル
 examples/
   index.html             ← カタログ（プレビューサイト）。左サイドナビ + 全コンポーネントの状態網羅
   icons.svg              ← scripts/build-icons.mjs が生成（gitignored）
 scripts/
   build-icons.mjs        ← Lucide subset → dist/icons.svg + examples/icons.svg
+  build-mcp.mjs          ← DESIGN.md / components / tokens / snippets を解析 → dist/mcp-index.json を生成（MCP の素材）
 snippets/                ← 利用者向けコピペ HTML（軽め、メインはカタログ）
 docs/
   INTRODUCTION.md        ← チームへの案内（4 つの入り口）
@@ -349,6 +352,7 @@ main 保護下では `git push` が弾かれるため、**release ブランチ�
 - **Spacing は Tailwind single-base** (`--spacing: 0.25rem`) で全 `p-*` / `m-*` を自動派生。`--spacing-0..16` 等の名前付きトークンは追加しない（Tailwind v4 の流儀に合わせる）
 - **カタログ用 hover/focus プレビュー**: `.is-hover-preview` / `.is-focus-preview` modifier を CSS 側で `:hover` / `:focus-visible` と OR 条件にする
 - **プレビューサイトのホスティング**: Netlify → GitHub Pages に移行済み（クレジット上限超過のため）。GitHub Pages は public repo + Free プランで容量無制限
+- **MCP サーバーは既存パッケージに同梱**（`bin: relay-ds-mcp` → `dist/mcp.mjs`）。`@modelcontextprotocol/sdk` は **esbuild でバンドル**して単一ファイル化し devDependency に留める（CSS だけ使う利用者に runtime 依存を増やさない）。コンテンツは二重管理せず `scripts/build-mcp.mjs` が正本ファイルから `dist/mcp-index.json` を生成 → server にインライン。**`get_component` の品質は `src/components/*.css` 先頭のヘッダコメント形式（`recreated from Figma component set NNNN:NNNN (和名)` + props + Usage）に依存する**ので、新規コンポーネントでもこの雛形を必ず踏襲する（ヘッダが無いと doc が空になる）
 
 ---
 

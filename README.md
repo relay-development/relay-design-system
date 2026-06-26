@@ -366,11 +366,42 @@ CSS / HTML を書く時は **必ずデザインシステムが用意した変数
 
 ---
 
-## ロードマップ
+## MCP サーバー（AI コーディングツール連携）
 
-### MCP Server 化（計画中）
+AI（Claude Code / Cursor / Windsurf 等）で UI を書くときに、このデザインシステムの
+**コンポーネント仕様・トークン・必須ルール**を AI に直接読ませるための MCP サーバーを同梱しています。
+これにより、ハードコード値や規約違反（`text-sm` 直書き等）を避けた relay 準拠の UI を生成しやすくなります。
 
-このデザインシステムを **Model Context Protocol サーバー** として公開する拡張を予定しています。
-コンポーネント定義 / デザイントークン / アイコン情報を MCP 経由で AI コーディングツール（Cursor / Claude Code 等）に提供し、自然言語の指示からデザインシステムに準拠した UI を自動生成できる状態を目指します。
+### セットアップ
+
+このパッケージに `relay-ds-mcp` という stdio MCP サーバーが入っています。利用ツールの設定に登録してください。
+
+**Claude Code**（プロジェクトの `.mcp.json` または `claude mcp add`）:
+
+```json
+{
+  "mcpServers": {
+    "relay-ds": {
+      "command": "npx",
+      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
+    }
+  }
+}
+```
+
+> 既にプロジェクトに `npm install @light-right/design-system` 済みなら、`command: "relay-ds-mcp"`（引数なし）でローカル版を直接起動できます。Cursor / Windsurf も同じ stdio コマンドを各ツールの MCP 設定に登録すれば使えます。
+
+### 使えるツール
+
+| ツール | 内容 |
+|---|---|
+| `list_components` | 全コンポーネント一覧（英名 / 和名 / 概要 / 主要クラス） |
+| `get_component(name)` | 指定コンポーネントの完全仕様（props・状態・色・usage・クラス・コピペ HTML・Figma リンク） |
+| `get_tokens(category?)` | デザイントークン（colors / typography / spacing / radius / shadow） |
+| `get_design_principles` | 必須ルール（ハードコード禁止・semantic color 等）+ 禁止パターン Top 10 |
+| `search(query)` | コンポーネント / トークン / 規約の横断検索 |
+
+公開データは `DESIGN.md` / `src/components/*.css` / `src/tokens/*.css` / `snippets/*.html` から
+ビルド時に自動生成されるため、デザインシステム本体を更新すれば MCP の応答も追従します。
 
 参考: [社内デザインシステムをMCPサーバー化したらUI実装が爆速になった (Ubie Dev)](https://zenn.dev/ubie_dev/articles/f927aaff02d618)
