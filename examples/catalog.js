@@ -182,3 +182,25 @@ document.addEventListener("click", (e) => {
   const open = sidebar.classList.toggle("is-open");
   btn.setAttribute("aria-expanded", open ? "true" : "false");
 });
+
+// Copy button — [data-copy-target="<selector>"] で対象要素のテキストをコピー。
+// ボタン内の [data-copy-label] テキストだけを一時的に差し替えて完了を知らせる
+// (アイコンは保持)。色見本の data-copy とは属性名を分けて衝突を避ける。
+document.addEventListener("click", async (e) => {
+  const btn = e.target.closest("[data-copy-target]");
+  if (!btn) return;
+  const target = document.querySelector(btn.dataset.copyTarget);
+  if (!target) return;
+  try {
+    await navigator.clipboard.writeText(target.textContent.trim());
+  } catch {
+    return;   // クリップボード未許可 (非 HTTPS 等) は何もしない
+  }
+  const label = btn.querySelector("[data-copy-label]") || btn;
+  if (label.dataset.original === undefined) label.dataset.original = label.textContent;
+  label.textContent = "コピーしました ✓";
+  clearTimeout(btn._copyTimer);
+  btn._copyTimer = setTimeout(() => {
+    label.textContent = label.dataset.original;
+  }, 1400);
+});

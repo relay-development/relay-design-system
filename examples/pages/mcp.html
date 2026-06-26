@@ -17,7 +17,36 @@
 
         <div class="card overflow-hidden mb-6">
           <div class="card-header">
-            <h3 class="card-title">Claude Code</h3>
+            <h3 class="card-title">AI にセットアップを依頼する</h3>
+            <p class="card-subtitle">手っ取り早く始めたいとき。下のプロンプトをコピーして、お使いの AI ツール（Claude Code / Cursor など）にそのまま貼り付けてください</p>
+          </div>
+          <div class="card-body">
+            <div class="flex justify-end mb-2">
+              <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-setup-prompt">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+                <span data-copy-label>プロンプトをコピー</span>
+              </button>
+            </div>
+            <pre id="mcp-setup-prompt" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">relay デザインシステムの MCP サーバーをこのプロジェクトで使えるようにセットアップして。
+
+プロジェクト直下の .mcp.json に次の設定を追加してください（ファイルが無ければ新規作成）:
+
+{
+  "mcpServers": {
+    "relay-ds": {
+      "command": "npx",
+      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
+    }
+  }
+}
+
+追加できたら relay-ds の list_components ツールが使えるか確認し、以降は relay デザインシステムのトークン・コンポーネント・規約に準拠して UI を実装して。</pre>
+          </div>
+        </div>
+
+        <div class="card overflow-hidden mb-6">
+          <div class="card-header">
+            <h3 class="card-title">手動で設定する（Claude Code）</h3>
             <p class="card-subtitle">プロジェクト直下の <code class="typo-xsmall px-1 bg-neutral-100 rounded">.mcp.json</code> に追記</p>
           </div>
           <div class="card-body">
