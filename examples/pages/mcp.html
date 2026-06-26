@@ -1,0 +1,74 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="mcp">
+      <div class="mb-8">
+        <div class="flex items-baseline justify-between mb-8">
+          <h2 class="typo-2xlarge font-semibold">MCP サーバー</h2>
+          <span class="typo-xsmall text-fg-middle">AI コーディングツール連携</span>
+        </div>
+
+        <p class="typo-article text-fg-high mb-6">
+          AI（Claude Code / Cursor / Windsurf など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを npm パッケージに同梱しています。AI ツールの設定に 1 行登録するだけで、ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
+        </p>
+
+        <div class="alert alert-info mb-8">
+          <span class="alert-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+          </span>
+          <div class="alert-content">
+            <p class="alert-title">公開について</p>
+            <p class="typo-small text-fg-high">MCP サーバーは npm への公開後に利用できます。最新版の <code class="typo-xsmall px-1 bg-neutral-100 rounded">@light-right/design-system</code> を導入してください。</p>
+          </div>
+        </div>
+
+        <h3 class="typo-xlarge font-semibold mb-4">セットアップ</h3>
+        <p class="typo-article text-fg-high mb-4">
+          このパッケージには <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds-mcp</code> という stdio MCP サーバーが含まれています。利用するツールの MCP 設定に登録してください。
+        </p>
+
+        <div class="card overflow-hidden mb-6">
+          <div class="card-header">
+            <h3 class="card-title">Claude Code</h3>
+            <p class="card-subtitle">プロジェクト直下の <code class="typo-xsmall px-1 bg-neutral-100 rounded">.mcp.json</code> に追記</p>
+          </div>
+          <div class="card-body">
+            <pre class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high">{
+  "mcpServers": {
+    "relay-ds": {
+      "command": "npx",
+      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
+    }
+  }
+}</pre>
+            <p class="typo-small text-fg-middle mt-4">
+              すでにプロジェクトへ <code class="typo-xsmall px-1 bg-neutral-100 rounded">npm install @light-right/design-system</code> 済みなら、<code class="typo-xsmall px-1 bg-neutral-100 rounded">command</code> を <code class="typo-xsmall px-1 bg-neutral-100 rounded">"relay-ds-mcp"</code>（引数なし）にしてローカル版を直接起動できます。<strong>Cursor / Windsurf</strong> も各ツールの MCP 設定に同じコマンドを登録すれば使えます。
+            </p>
+          </div>
+        </div>
+
+        <h3 class="typo-xlarge font-semibold mb-4">使えるツール</h3>
+        <p class="typo-article text-fg-high mb-4">
+          登録すると、AI から次の 5 つのツールが使えるようになります。「relay のスタイルでログイン画面を作って」のように頼むと、AI がこれらを呼び出して規約準拠の UI を生成します。
+        </p>
+
+        <div class="card overflow-hidden">
+          <div class="card-body">
+            <table class="data-table">
+              <thead>
+                <tr><th>ツール</th><th>内容</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">list_components</code></td><td>全コンポーネント一覧（英名 / 和名 / 概要 / 主要クラス）</td></tr>
+                <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_component</code></td><td>指定コンポーネントの完全仕様（props・状態・色・usage・クラス・コピペ HTML・Figma リンク）</td></tr>
+                <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_tokens</code></td><td>デザイントークン（color / typography / spacing / radius / shadow）</td></tr>
+                <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_design_principles</code></td><td>必須ルール（ハードコード禁止・semantic color 等）+ 禁止パターン Top 10</td></tr>
+                <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">search</code></td><td>コンポーネント / トークン / 規約の横断検索</td></tr>
+              </tbody>
+            </table>
+            <p class="typo-small text-fg-middle mt-4">
+              公開データは <code class="typo-xsmall px-1 bg-neutral-100 rounded">DESIGN.md</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/components</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/tokens</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">snippets</code> から自動生成されるため、デザインシステム本体を更新すれば MCP の応答も追従します。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
