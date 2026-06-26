@@ -24,7 +24,8 @@ const PAGES_DIR = resolve(EXAMPLES, "pages");
 // group: sidebar group title (pages with the same group are bundled together).
 // label: sidebar link text.  title: <title> + landing card heading.
 const PAGES = [
-  { file: "accessibility.html", group: "アクセシビリティ", label: "取り組み", title: "アクセシビリティについての取り組み", desc: "WCAG 2.2 AAA に向けたデザインシステムの担保とプロダクト側の責務" },
+  { file: "mcp.html",           group: "イントロダクション", label: "MCP サーバー", title: "MCP サーバー", desc: "AI コーディングツールに relay の規約・トークン・コンポーネントを理解させる" },
+  { file: "accessibility.html", group: "イントロダクション", label: "取り組み", title: "アクセシビリティについての取り組み", desc: "WCAG 2.2 AAA に向けたデザインシステムの担保とプロダクト側の責務" },
 
   { file: "color.html",      group: "Foundations", label: "色",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
   { file: "typography.html", group: "Foundations", label: "タイポグラフィ",  title: "タイポグラフィ", desc: "フォントスケール + .typo-* クラス" },
