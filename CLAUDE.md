@@ -34,7 +34,9 @@ src/
     icon.css             ← .icon + .icon-{xs,sm,md,lg,xl}
     button.css / icon-button.css / input.css / ... 各コンポーネント
   mcp/
-    server.mjs           ← stdio MCP サーバー本体。dist/mcp-index.json を読み esbuild で dist/mcp.mjs に単一バンドル
+    handlers.mjs         ← MCP の tools/resources ロジック（トランスポート非依存・両エントリで共有）
+    server.mjs           ← stdio エントリ。handlers を stdio に接続し esbuild で dist/mcp.mjs に単一バンドル（bin）
+    worker.mjs           ← Cloudflare Workers エントリ。handlers を Streamable HTTP (POST /mcp) で公開（authless・リモート）
 examples/
   index.html             ← カタログ（プレビューサイト）。左サイドナビ + 全コンポーネントの状態網羅
   icons.svg              ← scripts/build-icons.mjs が生成（gitignored）
