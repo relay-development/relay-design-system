@@ -98,6 +98,8 @@ spacing/12 = 48px      spacing/16 = 64px
 
 **`text-sm` / `text-base` を直接書かない。** 必ず `.typo-*` を経由。
 
+**`.typo-article` は原則 `text-fg-high` とセットで使う。** 読み物本文は高コントラストを確保する（例: `<p class="typo-article text-fg-high">`）。
+
 ### Radius / Shadow
 
 ```

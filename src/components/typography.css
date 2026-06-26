@@ -24,6 +24,7 @@
  *   別枠: .typo-article (16 / 32 / normal) — 案件詳細記事など「読み物」用の
  *   独立スケール。本文 16px に 1 段広い行間 (32) と regular weight を与え、
  *   長文の可読性を優先する。サイズスケール (medium 等) とは用途が異なる。
+ *   原則 `text-fg-high` とセットで使う (読み物本文は高コントラストを確保)。
  *
  * Usage:
  *   <p class="typo-medium">本文テキスト</p>
@@ -44,6 +45,7 @@
   .typo-3xlarge { @apply text-3xl  leading-12 font-bold;   }   /* 40 / 48 */
 
   /* Long-form / article — 記事・読み物用の独立スケール (16 / 32 / normal)。
-     長文の可読性のため body より広い行間。weight は font-* で上書き可。 */
+     長文の可読性のため body より広い行間。weight は font-* で上書き可。
+     原則 text-fg-high とセットで使う (読み物本文は高コントラストを確保)。 */
   .typo-article { @apply text-base leading-8  font-normal; }   /* 16 / 32 */
 }
