@@ -101,6 +101,11 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
 
+    // Lightweight diagnostics (visible via `wrangler tail`).
+    console.log(
+      `[req] ${request.method} ${url.pathname} accept=${request.headers.get("accept") || "-"} proto=${request.headers.get("mcp-protocol-version") || "-"} session=${request.headers.get("mcp-session-id") || "-"}`,
+    );
+
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS });
     }
@@ -141,6 +146,12 @@ export default {
     } catch {
       return jsonResponse(err(null, -32700, "Parse error"));
     }
+
+    console.log(
+      `[rpc] ${(Array.isArray(body) ? body : [body])
+        .map((m) => (m && m.method === "tools/call" ? `tools/call:${m.params?.name}` : m && m.method))
+        .join(",")}`,
+    );
 
     const wantsSse = (request.headers.get("Accept") || "").includes("text/event-stream");
     const messages = Array.isArray(body) ? body : [body];
