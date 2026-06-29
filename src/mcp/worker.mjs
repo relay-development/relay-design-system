@@ -2,38 +2,60 @@
  * relay Design System — remote MCP server (Cloudflare Workers).
  *
  *   Exposes the SAME tools/resources as the stdio server (src/mcp/server.mjs) over
- *   MCP Streamable HTTP at a single `POST /mcp` endpoint, so it can be added as a
+ *   MCP Streamable HTTP at a single `/mcp` endpoint, so it can be added as a
  *   remote/custom connector by URL — no npm / Node needed on the client side.
  *
  *   Authless: the design system is public (MIT / public repo / public npm), so the
  *   data is not secret. claude.ai supports authless remote connectors.
  *
- *   Stateless: every request is a self-contained JSON-RPC call. No sessions, no
- *   Durable Objects, no KV — data is inlined at build time via ./handlers.mjs.
+ *   Transport notes (Streamable HTTP):
+ *     - POST /mcp with a JSON-RPC request. If the client's Accept header includes
+ *       text/event-stream (claude.ai does), the response is sent as a single SSE
+ *       `event: message` frame; otherwise as application/json. Some clients only
+ *       invoke tools when the response arrives over SSE, so we honor Accept.
+ *     - A Mcp-Session-Id is returned on initialize (clients echo it back; we are
+ *       stateless so we accept any/none).
+ *     - initialize echoes the client's requested protocolVersion (our basic
+ *       methods are version-agnostic), maximizing client compatibility.
  *
- *   Deploy:  npm run deploy:mcp   (runs scripts/build-mcp.mjs then `wrangler deploy`)
- *   Local:   npm run dev:mcp-remote   (wrangler dev → http://localhost:8787/mcp)
+ *   Deploy:  npm run deploy:mcp   ·   Local: npm run dev:mcp-remote
  *   Add to claude.ai: Settings → Connectors → Add custom connector → <url>/mcp
  */
 
 import { SERVER_INFO, TOOLS, callTool, listResources, readResource } from "./handlers.mjs";
 
-const PROTOCOL_VERSION = "2024-11-05";
+const DEFAULT_PROTOCOL = "2025-06-18";
+const SESSION_ID = "relay-ds"; // stateless — a stable id is enough for clients that require one
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type, Mcp-Session-Id, Authorization",
+  "Access-Control-Allow-Headers": "Content-Type, Accept, Mcp-Session-Id, MCP-Protocol-Version, Authorization",
+  "Access-Control-Expose-Headers": "Mcp-Session-Id",
   "Access-Control-Max-Age": "86400",
 };
 
 const ok = (id, result) => ({ jsonrpc: "2.0", id, result });
 const err = (id, code, message) => ({ jsonrpc: "2.0", id, error: { code, message } });
 
-function jsonResponse(body, status = 200) {
+function jsonResponse(body, { status = 200, headers = {} } = {}) {
   return new Response(body === null ? null : JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json", ...CORS },
+    headers: { "Content-Type": "application/json", ...CORS, ...headers },
+  });
+}
+
+/** Send one or more JSON-RPC responses as Server-Sent Events (single, then close). */
+function sseResponse(responses, { headers = {} } = {}) {
+  const body = responses.map((r) => `event: message\ndata: ${JSON.stringify(r)}\n\n`).join("");
+  return new Response(body, {
+    status: 200,
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      ...CORS,
+      ...headers,
+    },
   });
 }
 
@@ -47,7 +69,9 @@ function handleRpc(msg) {
   switch (method) {
     case "initialize":
       return ok(id, {
-        protocolVersion: PROTOCOL_VERSION,
+        // Echo the client's requested version (our methods are version-agnostic).
+        protocolVersion:
+          typeof params.protocolVersion === "string" ? params.protocolVersion : DEFAULT_PROTOCOL,
         capabilities: { tools: {}, resources: {} },
         serverInfo: SERVER_INFO,
       });
@@ -85,7 +109,7 @@ export default {
     if (url.pathname === "/" || url.pathname === "") {
       return new Response(
         `relay Design System — remote MCP server (v${SERVER_INFO.version}).\n` +
-          `MCP endpoint: POST ${url.origin}/mcp\n` +
+          `MCP endpoint: ${url.origin}/mcp\n` +
           `Add to claude.ai: Settings → Connectors → Add custom connector → ${url.origin}/mcp\n`,
         { headers: { "Content-Type": "text/plain; charset=utf-8", ...CORS } },
       );
@@ -95,8 +119,16 @@ export default {
       return new Response("Not found", { status: 404, headers: CORS });
     }
 
-    // GET /mcp is for server→client streaming; this stateless server has none.
+    // GET /mcp opens the optional server→client SSE stream. We have no
+    // server-initiated messages, so return an open-then-idle empty stream
+    // (200) rather than 405, which stricter clients treat as a failure.
     if (request.method === "GET") {
+      if ((request.headers.get("Accept") || "").includes("text/event-stream")) {
+        return new Response(":ok\n\n", {
+          status: 200,
+          headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache", ...CORS },
+        });
+      }
       return new Response("Method Not Allowed", { status: 405, headers: CORS });
     }
     if (request.method !== "POST") {
@@ -110,15 +142,18 @@ export default {
       return jsonResponse(err(null, -32700, "Parse error"));
     }
 
-    // Batch or single request.
-    if (Array.isArray(body)) {
-      const responses = body.map(handleRpc).filter((r) => r !== null);
-      // If the batch was all notifications, ack with 202 and no body.
-      return responses.length ? jsonResponse(responses) : new Response(null, { status: 202, headers: CORS });
-    }
+    const wantsSse = (request.headers.get("Accept") || "").includes("text/event-stream");
+    const messages = Array.isArray(body) ? body : [body];
+    const responses = messages.map(handleRpc).filter((r) => r !== null);
 
-    const res = handleRpc(body);
-    if (res === null) return new Response(null, { status: 202, headers: CORS });
-    return jsonResponse(res);
+    // Attach a session id so clients that require one for Streamable HTTP proceed.
+    const headers = { "Mcp-Session-Id": SESSION_ID };
+
+    // All notifications → just acknowledge.
+    if (responses.length === 0) return new Response(null, { status: 202, headers: { ...CORS, ...headers } });
+
+    if (wantsSse) return sseResponse(responses, { headers });
+    // Non-SSE clients: single object for a single request, array for a batch.
+    return jsonResponse(Array.isArray(body) ? responses : responses[0], { headers });
   },
 };
