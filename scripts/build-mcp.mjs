@@ -5,6 +5,7 @@
  *     src/components/*.css   — header doc comment + class selectors per component
  *     src/tokens/*.css        — --token: value pairs grouped by category
  *     snippets/*.html         — copy-paste HTML, matched to a component by basename
+ *     examples/pages/assets.html — downloadable brand assets (logo / illustrations)
  *     DESIGN.md               — the design constitution (principles + forbidden patterns)
  *     package.json            — name + version stamped onto the index
  *   output:
@@ -26,6 +27,13 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 
 const FIGMA_FILE = "hJcKE8FkiyXtB1F9SuuE08";
+
+// Brand assets ship in the repo and are served — with a stable, un-hashed path —
+// from raw.githubusercontent.com. The catalog's deployed copies get Vite content
+// hashes (relay_main-BDI_TTMS.png), so the GitHub Pages URL is NOT stable; the raw
+// URL is. Pinned to `main` so the link tracks the latest committed asset.
+const ASSET_RAW_BASE =
+  "https://raw.githubusercontent.com/relay-development/relay-design-system/main/examples/assets";
 
 /** Strip /* ... *​/ block comments from CSS so they don't pollute selector parsing. */
 function stripCssComments(css) {
@@ -117,17 +125,82 @@ async function buildTokens() {
   const dir = path.join(projectRoot, "src/tokens");
   const files = (await readdir(dir)).filter((f) => f.endsWith(".css")).sort();
 
-  const tokens = {};
+  // First pass: collect raw name→value across ALL token files (semantic tokens
+  // reference primitives via var(--…), so we need the full map to resolve them).
+  const rawByCat = {};
+  const raw = {};
   for (const file of files) {
     const category = file.replace(/\.css$/, "");
     const css = stripCssComments(await readFile(path.join(dir, file), "utf8"));
     const entries = [];
     for (const m of css.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
-      entries.push({ name: m[1], value: m[2].trim().replace(/\s+/g, " ") });
+      const name = m[1];
+      const value = m[2].trim().replace(/\s+/g, " ");
+      entries.push({ name, value });
+      raw[name] = value;
     }
-    tokens[category] = entries;
+    rawByCat[category] = entries;
+  }
+
+  // Resolve a value to its final literal (e.g. var(--color-brand-green-500) → #30b686).
+  const resolve = (value, depth = 0) => {
+    if (depth > 10) return value;
+    const m = value.match(/^var\((--[\w-]+)\)$/);
+    if (m && raw[m[1]] !== undefined) return resolve(raw[m[1]], depth + 1);
+    return value;
+  };
+
+  // Second pass: emit resolved values. `via` records the immediate semantic→primitive
+  // alias so consumers can see e.g. primary-500 = #30b686 (= brand-green-500).
+  const tokens = {};
+  for (const [category, entries] of Object.entries(rawByCat)) {
+    tokens[category] = entries.map(({ name, value }) => {
+      const resolved = resolve(value);
+      const out = { name, value: resolved };
+      const ref = value.match(/^var\((--color-[\w-]+)\)$/);
+      if (ref && resolved !== value) out.via = ref[1].replace(/^--color-/, "");
+      return out;
+    });
   }
   return tokens;
+}
+
+/**
+ * Parse the downloadable assets out of the catalog's assets page. Each asset
+ * card carries an <img>, a human label, and a download <a>; we key off the
+ * download link so page-only decorations (bg blur, hero art) are excluded.
+ * The page fragment is the single source of truth for "what is published".
+ */
+async function buildAssets() {
+  const file = path.join(projectRoot, "examples/pages/assets.html");
+  let html;
+  try {
+    html = await readFile(file, "utf8");
+  } catch {
+    return []; // page not present (older checkout) — emit no assets rather than fail
+  }
+
+  // Split on the per-card wrapper so img / label / download stay grouped.
+  const blocks = html
+    .split('<div class="border border-stroke-low rounded-md overflow-hidden">')
+    .slice(1);
+
+  const assets = [];
+  for (const b of blocks) {
+    const name = (b.match(/href="\.\/assets\/([^"]+)"\s+download/) || [])[1];
+    if (!name) continue; // no download link → decorative, skip
+    const label = (b.match(/font-semibold[^"]*">([^<]+)</) || [])[1]?.trim() || null;
+    const alt = (b.match(/<img[^>]*\salt="([^"]*)"/) || [])[1] || null;
+    const format = (name.match(/\.([a-z0-9]+)$/i) || [])[1]?.toUpperCase() || null;
+    assets.push({
+      name,
+      label,
+      alt,
+      format,
+      url: `${ASSET_RAW_BASE}/${name}`,
+    });
+  }
+  return assets;
 }
 
 /** Slice a markdown section that starts at a heading and ends at the next heading of <= depth. */
@@ -156,10 +229,11 @@ async function main() {
     await readFile(path.join(projectRoot, "package.json"), "utf8"),
   );
 
-  const [components, tokens, design] = await Promise.all([
+  const [components, tokens, design, assets] = await Promise.all([
     buildComponents(),
     buildTokens(),
     buildDesign(),
+    buildAssets(),
   ]);
 
   const index = {
@@ -167,9 +241,11 @@ async function main() {
     version: pkg.version,
     figmaFile: FIGMA_FILE,
     catalogUrl: "https://relay-development.github.io/relay-design-system",
-    generatedFrom: "src/components/*.css, src/tokens/*.css, snippets/*.html, DESIGN.md",
+    generatedFrom:
+      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md",
     components,
     tokens,
+    assets,
     principles: design.principles,
     forbiddenPatterns: design.forbidden,
     designConstitution: design.full,
@@ -184,7 +260,7 @@ async function main() {
   console.log(
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
       `${components.length} components, ${tokenCount} tokens, ` +
-      `${components.filter((c) => c.snippet).length} snippets`,
+      `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets`,
   );
 }
 

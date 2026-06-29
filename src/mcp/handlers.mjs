@@ -14,6 +14,7 @@
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
  *     get_tokens(category?)    — colors / typography / spacing / radius / shadow
  *     get_design_principles    — non-negotiable rules + forbidden patterns (Top 10)
+ *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
  */
 
@@ -77,13 +78,60 @@ function formatComponent(c) {
 function formatTokens(category) {
   const cats = category ? [category] : TOKEN_CATEGORIES;
   const out = [`# relay Design System — design tokens (v${index.version})`, ""];
-  out.push("raw CSS で使う時は var(--name)、Tailwind ユーティリティ名は --color-x-500 → bg-x-500 等に対応。", "");
+  out.push(
+    "値は解決済みの実値（例: --color-primary-500 = #30b686）。CSS が無い環境（スタンドアロン生成）でも、この実値をそのまま使うこと。",
+    "Tailwind ユーティリティ名は --color-x-500 → bg-x-500、--spacing*N → p-N 等に対応。",
+    "",
+  );
   for (const cat of cats) {
     const entries = index.tokens[cat];
     if (!entries) continue;
     out.push(`## ${cat} (${entries.length})`, "");
-    for (const t of entries) out.push(`- \`${t.name}\`: ${t.value}`);
+    for (const t of entries) out.push(`- \`${t.name}\`: ${t.value}${t.via ? ` (= ${t.via})` : ""}`);
     out.push("");
+  }
+  return out.join("\n");
+}
+
+/** Resolved value of a color token by name (e.g. "--color-primary-500" → "#30b686"). */
+function colorValue(name) {
+  const t = (index.tokens.colors || []).find((c) => c.name === name);
+  return t ? t.value : "?";
+}
+
+function formatBrandColors() {
+  return [
+    "## ブランド基調色（実値・これを使う）",
+    "",
+    "relay の CSS を読み込まない環境（claude.ai 等のスタンドアロン生成）では、下記の実値を直接使うこと。**青などの独自色は使わない。**",
+    "",
+    `- primary（ブランド緑）: \`bg-primary-500\` = ${colorValue("--color-primary-500")} / hover \`bg-primary-600\` = ${colorValue("--color-primary-600")} / 濃 \`primary-700\` = ${colorValue("--color-primary-700")}`,
+    `- secondary（ブランド黄）: \`secondary-500\` = ${colorValue("--color-secondary-500")}`,
+    `- 本文テキスト: \`text-fg-high\` = ${colorValue("--color-fg-high")} / \`text-fg-middle\` = ${colorValue("--color-fg-middle")} / \`text-fg-low\` = ${colorValue("--color-fg-low")}`,
+    `- ステータス: success ${colorValue("--color-success-500")} / warning ${colorValue("--color-warning-500")} / negative ${colorValue("--color-negative-500")} / info ${colorValue("--color-info-500")}`,
+    `- 背景/境界: page ${colorValue("--color-page")} / border \`stroke-middle\` ${colorValue("--color-stroke-middle")}`,
+    "",
+    "> 全トークン（余白/角丸/影/タイポ含む実値）は get_tokens を呼ぶこと。",
+  ].join("\n");
+}
+
+function formatAssets() {
+  const assets = index.assets || [];
+  const out = [`# relay Design System — ブランドアセット（${assets.length}）`, ""];
+  if (!assets.length) {
+    out.push("登録されたアセットがありません。");
+    return out.join("\n");
+  }
+  out.push(
+    "ロゴ・イラストの画像素材。`url` は直リンク（GitHub raw・内容ハッシュ無しの固定URL）なので、",
+    "そのまま `<img src=\"…\">` や Markdown 画像として参照できる。relay 以外の独自ロゴ・イラストは使わないこと。",
+    "",
+  );
+  for (const a of assets) {
+    const meta = [a.label, a.format].filter(Boolean).join(" · ");
+    out.push(`- **${meta || a.name}**`);
+    if (a.alt) out.push(`  用途: ${a.alt}`);
+    out.push(`  url: ${a.url}`);
   }
   return out.join("\n");
 }
@@ -93,6 +141,8 @@ function formatPrinciples() {
     "# relay Design System — 必須ルール & 禁止パターン",
     "",
     "AI が relay UI を生成する際、以下を必ず守ること。",
+    "",
+    formatBrandColors(),
     "",
     index.principles || "(principles 未取得)",
     "",
@@ -124,6 +174,13 @@ function runSearch(query) {
     }
   }
 
+  const assetHits = (index.assets || []).filter(
+    (a) =>
+      a.name.toLowerCase().includes(q) ||
+      (a.label && a.label.toLowerCase().includes(q)) ||
+      (a.alt && a.alt.toLowerCase().includes(q)),
+  );
+
   const out = [`# 検索結果: "${query}"`, ""];
   if (compHits.length) {
     out.push("## コンポーネント（get_component で詳細）", "");
@@ -138,7 +195,14 @@ function runSearch(query) {
     if (tokenHits.length > 20) out.push(`- … 他 ${tokenHits.length - 20} 件`);
     out.push("");
   }
-  if (!compHits.length && !tokenHits.length) {
+  if (assetHits.length) {
+    out.push("## アセット（list_assets で全件・直リンク URL）", "");
+    for (const a of assetHits) {
+      out.push(`- **${a.label || a.name}**${a.format ? `（${a.format}）` : ""}: ${a.url}`);
+    }
+    out.push("");
+  }
+  if (!compHits.length && !tokenHits.length && !assetHits.length) {
     out.push("ヒットなし。list_components / get_tokens / get_design_principles を試してください。");
   }
   return out.join("\n");
@@ -183,6 +247,12 @@ export const TOOLS = [
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
+    name: "list_assets",
+    description:
+      "relay のブランドアセット（サービスロゴ・イラスト）一覧を直リンク URL 付きで返す。生成物にロゴやイラストを埋め込むときに使う（独自ロゴを作らない）。",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
     name: "search",
     description:
       "コンポーネント / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。",
@@ -222,6 +292,8 @@ export function callTool(name, args = {}) {
     }
     case "get_design_principles":
       return { text: formatPrinciples() };
+    case "list_assets":
+      return { text: formatAssets() };
     case "search":
       return { text: runSearch(args.query) };
     default:
