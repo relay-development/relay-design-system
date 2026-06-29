@@ -64,6 +64,28 @@
           </div>
         </div>
 
+        <div class="card overflow-hidden mb-6">
+          <div class="card-header">
+            <h3 class="card-title">リモート接続（claude.ai など・npm / Node 不要）</h3>
+            <p class="card-subtitle">URL を登録するだけ。ローカルに何もインストールせず使えます</p>
+          </div>
+          <div class="card-body">
+            <p class="typo-article text-fg-high mb-4">
+              Cloudflare Workers 上でリモート版（認証なし）が稼働しています。<strong>claude.ai（Web）</strong>なら Settings → Connectors → 「カスタムコネクタを追加」に次の URL を貼るだけ。URL 登録に対応したツールでも同様に使えます。
+            </p>
+            <div class="flex justify-end mb-2">
+              <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-remote-url">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+                <span data-copy-label>URL をコピー</span>
+              </button>
+            </div>
+            <pre id="mcp-remote-url" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
+            <p class="typo-small text-fg-middle mt-4">
+              中身は公開情報のため認証は不要です。提供するツール・リソースはローカル版とまったく同じです。
+            </p>
+          </div>
+        </div>
+
         <h3 class="typo-xlarge font-semibold mb-4">使えるツール</h3>
         <p class="typo-article text-fg-high mb-4">
           登録すると、AI から次の 5 つのツールが使えるようになります。「relay のスタイルでログイン画面を作って」のように頼むと、AI がこれらを呼び出して規約準拠の UI を生成します。

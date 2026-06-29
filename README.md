@@ -406,16 +406,19 @@ AI（Claude Code / Cursor / Windsurf 等）で UI を書くときに、このデ
 
 ### リモート版（任意・Cloudflare Workers）
 
-`npx` / Node を使わず **URL で繋ぐ**リモート MCP も用意しています（[src/mcp/worker.mjs](src/mcp/worker.mjs)）。
+`npx` / Node を使わず **URL で繋ぐ**リモート MCP も稼働しています（[src/mcp/worker.mjs](src/mcp/worker.mjs)）。
 claude.ai（Web）のカスタムコネクタや、URL 登録に対応した各ツールで使えます。中身は公開情報のため **authless**（認証なし）・stateless で、Cloudflare Workers の無料枠で動きます。
 
-```bash
-# ローカル確認（http://localhost:8787/mcp）
-npm run dev:mcp-remote
-# デプロイ（要 Cloudflare アカウント / wrangler login）
-npm run deploy:mcp
-```
+**エンドポイント**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
 
-デプロイ後、各ツールに `https://<your-worker>.workers.dev/mcp` を登録するだけ（claude.ai は Settings → Connectors → Add custom connector）。stdio 版とまったく同じツール／リソースを返します（ロジックは [src/mcp/handlers.mjs](src/mcp/handlers.mjs) で共通化）。
+- **claude.ai**: Settings → Connectors → Add custom connector → 上記 URL を貼る（認証不要）
+- 各ツールに URL を登録するだけ。**npm / Node は不要**。stdio 版とまったく同じツール／リソースを返します（ロジックは [src/mcp/handlers.mjs](src/mcp/handlers.mjs) で共通化）
+
+メンテナ向け（デプロイ）:
+
+```bash
+npm run dev:mcp-remote   # ローカル確認（http://localhost:8787/mcp）
+npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrangler login）
+```
 
 参考: [社内デザインシステムをMCPサーバー化したらUI実装が爆速になった (Ubie Dev)](https://zenn.dev/ubie_dev/articles/f927aaff02d618)
