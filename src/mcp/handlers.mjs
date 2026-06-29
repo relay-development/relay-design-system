@@ -14,6 +14,7 @@
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
  *     get_tokens(category?)    — colors / typography / spacing / radius / shadow
  *     get_design_principles    — non-negotiable rules + forbidden patterns (Top 10)
+ *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
  */
 
@@ -114,6 +115,27 @@ function formatBrandColors() {
   ].join("\n");
 }
 
+function formatAssets() {
+  const assets = index.assets || [];
+  const out = [`# relay Design System — ブランドアセット（${assets.length}）`, ""];
+  if (!assets.length) {
+    out.push("登録されたアセットがありません。");
+    return out.join("\n");
+  }
+  out.push(
+    "ロゴ・イラストの画像素材。`url` は直リンク（GitHub raw・内容ハッシュ無しの固定URL）なので、",
+    "そのまま `<img src=\"…\">` や Markdown 画像として参照できる。relay 以外の独自ロゴ・イラストは使わないこと。",
+    "",
+  );
+  for (const a of assets) {
+    const meta = [a.label, a.format].filter(Boolean).join(" · ");
+    out.push(`- **${meta || a.name}**`);
+    if (a.alt) out.push(`  用途: ${a.alt}`);
+    out.push(`  url: ${a.url}`);
+  }
+  return out.join("\n");
+}
+
 function formatPrinciples() {
   return [
     "# relay Design System — 必須ルール & 禁止パターン",
@@ -152,6 +174,13 @@ function runSearch(query) {
     }
   }
 
+  const assetHits = (index.assets || []).filter(
+    (a) =>
+      a.name.toLowerCase().includes(q) ||
+      (a.label && a.label.toLowerCase().includes(q)) ||
+      (a.alt && a.alt.toLowerCase().includes(q)),
+  );
+
   const out = [`# 検索結果: "${query}"`, ""];
   if (compHits.length) {
     out.push("## コンポーネント（get_component で詳細）", "");
@@ -166,7 +195,14 @@ function runSearch(query) {
     if (tokenHits.length > 20) out.push(`- … 他 ${tokenHits.length - 20} 件`);
     out.push("");
   }
-  if (!compHits.length && !tokenHits.length) {
+  if (assetHits.length) {
+    out.push("## アセット（list_assets で全件・直リンク URL）", "");
+    for (const a of assetHits) {
+      out.push(`- **${a.label || a.name}**${a.format ? `（${a.format}）` : ""}: ${a.url}`);
+    }
+    out.push("");
+  }
+  if (!compHits.length && !tokenHits.length && !assetHits.length) {
     out.push("ヒットなし。list_components / get_tokens / get_design_principles を試してください。");
   }
   return out.join("\n");
@@ -211,6 +247,12 @@ export const TOOLS = [
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
+    name: "list_assets",
+    description:
+      "relay のブランドアセット（サービスロゴ・イラスト）一覧を直リンク URL 付きで返す。生成物にロゴやイラストを埋め込むときに使う（独自ロゴを作らない）。",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
     name: "search",
     description:
       "コンポーネント / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。",
@@ -250,6 +292,8 @@ export function callTool(name, args = {}) {
     }
     case "get_design_principles":
       return { text: formatPrinciples() };
+    case "list_assets":
+      return { text: formatAssets() };
     case "search":
       return { text: runSearch(args.query) };
     default:

@@ -404,9 +404,10 @@ AI（Claude Code / Cursor / Windsurf 等）で UI を書くときに、このデ
 | `get_component(name)` | 指定コンポーネントの完全仕様（props・状態・色・usage・クラス・コピペ HTML・Figma リンク） |
 | `get_tokens(category?)` | デザイントークン（colors / typography / spacing / radius / shadow） |
 | `get_design_principles` | 必須ルール（ハードコード禁止・semantic color 等）+ 禁止パターン Top 10 |
-| `search(query)` | コンポーネント / トークン / 規約の横断検索 |
+| `list_assets` | ブランドアセット（ロゴ / イラスト）一覧 + 直リンク URL（`<img src>` にそのまま使える） |
+| `search(query)` | コンポーネント / トークン / 規約 / アセットの横断検索 |
 
-公開データは `DESIGN.md` / `src/components/*.css` / `src/tokens/*.css` / `snippets/*.html` から
+公開データは `DESIGN.md` / `src/components/*.css` / `src/tokens/*.css` / `snippets/*.html` / `examples/pages/assets.html` から
 ビルド時に自動生成されるため、デザインシステム本体を更新すれば MCP の応答も追従します。
 
 ### リモート版（任意・Cloudflare Workers）
