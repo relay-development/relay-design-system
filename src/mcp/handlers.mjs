@@ -10,6 +10,7 @@
  *   Each transport's bundler (esbuild / wrangler) inlines this JSON import.
  *
  *   Tools:
+ *     get_setup                — CSS 導入手順（UI 着手前に最初に呼ぶ）
  *     list_components          — every component with name / 和名 / summary / classes
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
  *     get_tokens(category?)    — colors / typography / spacing / radius / shadow
@@ -34,13 +35,14 @@ export const TOKEN_CATEGORIES = Object.keys(index.tokens); // colors, typography
 export const INSTRUCTIONS = [
   "relay Design System の MCP。relay 系プロダクトの UI を作るときは必ずこのサーバーの情報を使い、自前のデザインや独自色で実装しないこと。",
   "",
-  "【前提: CSS の導入を最初に確認】",
-  "relay のコンポーネントクラス（.btn / .card / .input 等）は npm パッケージ @light-right/design-system の CSS が読み込まれて初めて効く。MCP はクラス名やトークンの「知識」を渡すだけで CSS 実体は渡さない。",
-  "プロジェクトに未導入なら、UI を書く前に導入する: `npm i @light-right/design-system` → エントリ CSS で `@import \"@light-right/design-system\";`（Tailwind v4）。",
-  "これをせずに relay クラスを書いても見た目が変わらず、ハードコードに逃げる結果になる。",
+  "【最初に必ず get_setup を呼ぶ】",
+  "UI 作業を始める前に、まず get_setup を呼んで CSS の導入手順と確認方法を取得すること。",
+  "relay のコンポーネントクラス（.btn / .card / .input 等）は npm パッケージ @light-right/design-system の CSS が読み込まれて初めて効く。MCP はクラス名やトークンの「知識」を渡すだけで CSS 実体は渡さない。CSS 未導入のまま relay クラスを書いても見た目が変わらず、ハードコードに逃げる結果になる。",
+  "プロジェクトに未導入なら、UI を書く前に導入を済ませる（手順は get_setup 参照）。",
   "",
   "【実装フロー】",
-  "1. UI 着手前に get_design_principles を読み、必須ルールと禁止パターンを把握する。",
+  "0. get_setup を呼び、CSS が導入済みか確認する（未導入なら導入してから UI を書く）。",
+  "1. get_design_principles を読み、必須ルールと禁止パターンを把握する。",
   "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
@@ -139,6 +141,43 @@ function formatBrandColors() {
     `- 背景/境界: page ${colorValue("--color-page")} / border \`stroke-middle\` ${colorValue("--color-stroke-middle")}`,
     "",
     "> 全トークン（余白/角丸/影/タイポ含む実値）は get_tokens を呼ぶこと。",
+  ].join("\n");
+}
+
+function formatSetup() {
+  return [
+    `# relay Design System — セットアップ（UI 作業の前に必ず確認）`,
+    "",
+    "relay のクラス（`.btn` / `.card` / `.input` 等）は **CSS 本体が読み込まれて初めて効く**。",
+    "この MCP はクラス名・トークン等の「知識」を返すだけで CSS 実体は配らない。**CSS 未導入のまま relay クラスを書くとクラスが無効になり、ハードコードに逃げる結果になる**ので、まずここを満たすこと。",
+    "",
+    "## 1. インストール",
+    "```bash",
+    "npm install @light-right/design-system",
+    "```",
+    "",
+    "## 2. CSS を読み込む（いずれか 1 つ）",
+    "```js",
+    "// ビルドツール（Vite / webpack 等）の JS / TS エントリから",
+    'import "@light-right/design-system/css";',
+    "```",
+    "```css",
+    "/* または Tailwind v4 のエントリ CSS で（プロジェクト側で Tailwind をビルドする場合） */",
+    '@import "tailwindcss";',
+    '@import "@light-right/design-system/tokens";',
+    "```",
+    "```html",
+    "<!-- ビルドツールが無い素の HTML なら link でも可 -->",
+    '<link rel="stylesheet" href="node_modules/@light-right/design-system/dist/relay.css" />',
+    "```",
+    "",
+    "## 3. 導入確認",
+    "- `node_modules/@light-right/design-system/dist/relay.css` が存在する",
+    "- 上の import / link がアプリのエントリに書かれている",
+    "- 確認: `.btn-primary` を置いてブランド緑のボタンが表示されれば効いている",
+    "",
+    "導入できたら **get_design_principles → get_component → get_tokens** の順で UI を実装する。",
+    "アイコンは `@light-right/design-system/icons`（SVG sprite）、ロゴ/イラストは list_assets を参照。",
   ].join("\n");
 }
 
@@ -242,6 +281,12 @@ function runSearch(query) {
 
 export const TOOLS = [
   {
+    name: "get_setup",
+    description:
+      "【最初に必ず呼ぶ】relay の UI を実装する前に CSS 導入手順と確認方法を返す。relay のクラスは @light-right/design-system の CSS が読み込まれて初めて効くため、未導入だとどのコンポーネントも機能しない。UI 着手前のセットアップ確認に使う。",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
     name: "list_components",
     description:
       "relay Design System の全コンポーネント一覧（英名 / 和名 / 概要 / 主要クラス）を返す。UI を組む前の全体把握に使う。",
@@ -301,6 +346,8 @@ export const TOOLS = [
  */
 export function callTool(name, args = {}) {
   switch (name) {
+    case "get_setup":
+      return { text: formatSetup() };
     case "list_components":
       return { text: formatComponentList() };
     case "get_component": {

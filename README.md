@@ -400,6 +400,7 @@ AI（Claude Code / Cursor / Windsurf 等）で UI を書くときに、このデ
 
 | ツール | 内容 |
 |---|---|
+| `get_setup` | **最初に呼ぶ**。CSS 導入手順と確認方法（未導入だと relay クラスが効かない） |
 | `list_components` | 全コンポーネント一覧（英名 / 和名 / 概要 / 主要クラス） |
 | `get_component(name)` | 指定コンポーネントの完全仕様（props・状態・色・usage・クラス・コピペ HTML・Figma リンク） |
 | `get_tokens(category?)` | デザイントークン（colors / typography / spacing / radius / shadow） |
