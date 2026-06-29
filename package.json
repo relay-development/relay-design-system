@@ -47,7 +47,7 @@
     "dev:mcp-remote": "wrangler dev",
     "deploy:mcp": "wrangler deploy",
     "build": "vite build && vite build --config vite.tokens.config.ts && npm run build:icons && npm run build:mcp",
-    "build:site": "npm run build:icons && npm run build:pages && vite build --config vite.site.config.ts && cp examples/icons.svg site/icons.svg",
+    "build:site": "npm run build:icons && npm run build:pages && vite build --config vite.site.config.ts && cp examples/icons.svg site/icons.svg && cp -R examples/assets/. site/assets/",
     "preview:site": "vite preview --config vite.site.config.ts",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"
