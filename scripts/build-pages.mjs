@@ -32,6 +32,7 @@ const PAGES = [
   { file: "layout.html",     group: "Foundations", label: "レイアウト",      title: "レイアウト",     desc: "余白 / 角丸 / 境界線" },
   { file: "effects.html",    group: "Foundations", label: "エフェクト",      title: "エフェクト",     desc: "シャドウ / Opacity" },
   { file: "icons.html",      group: "Foundations", label: "アイコン",          title: "アイコン",        desc: "Lucide スプライト 43 アイコン" },
+  { file: "assets.html",     group: "Foundations", label: "アセット",          title: "アセット",        desc: "ロゴ / イラストのダウンロード" },
 
   { file: "button.html",       group: "Components", label: "ボタン",       title: "ボタン",       desc: "variant × theme × size × state" },
   { file: "icon-button.html",  group: "Components", label: "アイコンボタン",  title: "アイコンボタン",  desc: "アイコンのみのボタン" },
