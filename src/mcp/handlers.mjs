@@ -123,15 +123,18 @@ function formatAssets() {
     return out.join("\n");
   }
   out.push(
-    "ロゴ・イラストの画像素材。`url` は直リンク（GitHub raw・内容ハッシュ無しの固定URL）なので、",
-    "そのまま `<img src=\"…\">` や Markdown 画像として参照できる。relay 以外の独自ロゴ・イラストは使わないこと。",
+    "ロゴ・イラストの画像素材。URL は直リンク（GitHub raw・内容ハッシュ無しの固定URL）なので、",
+    "そのまま `<img src=\"{URL}\">` や Markdown `![{用途}]({URL})` で埋め込める。relay 以外の独自ロゴ・イラストは使わないこと。",
     "",
+    "| 名前 | 形式 | 用途 | URL |",
+    "|---|---|---|---|",
   );
   for (const a of assets) {
-    const meta = [a.label, a.format].filter(Boolean).join(" · ");
-    out.push(`- **${meta || a.name}**`);
-    if (a.alt) out.push(`  用途: ${a.alt}`);
-    out.push(`  url: ${a.url}`);
+    out.push(`| ${a.label || a.name} | ${a.format || ""} | ${a.alt || ""} | ${a.url} |`);
+  }
+  out.push("", "### 埋め込み用スニペット");
+  for (const a of assets) {
+    out.push(`- ${a.label || a.name}: \`![${a.alt || a.label || a.name}](${a.url})\``);
   }
   return out.join("\n");
 }
