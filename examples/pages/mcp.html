@@ -7,85 +7,72 @@
         </div>
 
         <p class="typo-article text-fg-high mb-6">
-          AI（Claude Code / Cursor / Windsurf など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを提供しています。AI ツールの設定に登録するだけで、ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
+          AI（Claude Code / Cursor / claude.ai など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを提供しています。Cloudflare 上で稼働しており、<strong>URL を登録するだけ</strong>で使えます（npm / Node のインストール不要・認証不要）。ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
         </p>
 
         <h3 class="typo-xlarge font-semibold mb-4">セットアップ</h3>
         <p class="typo-article text-fg-high mb-4">
-          使い方は 2 通りあります。お使いのツールに合わせて選んでください。
+          接続先はこの URL です（認証なし）。各ツールへの登録方法は下記のとおりです。
         </p>
-        <ul class="typo-article text-fg-high mb-4 list-disc pl-5 space-y-1">
-          <li><strong>ローカル版（stdio）</strong>: npm パッケージ <code class="typo-xsmall px-1 bg-neutral-100 rounded">@light-right/design-system</code> 同梱の <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds-mcp</code> を <code class="typo-xsmall px-1 bg-neutral-100 rounded">npx</code> で起動。Claude Code / Cursor / Windsurf 向け（Node が必要）</li>
-          <li><strong>リモート版</strong>: Cloudflare 上で稼働するサーバーに <strong>URL を登録するだけ</strong>。claude.ai（Web）などで使え、<strong>npm / Node は不要</strong></li>
-        </ul>
+
+        <div class="flex justify-end mb-2">
+          <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-remote-url">
+            <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+            <span data-copy-label>URL をコピー</span>
+          </button>
+        </div>
+        <pre id="mcp-remote-url" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap mb-6">https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
 
         <div class="card overflow-hidden mb-6">
           <div class="card-header">
-            <h3 class="card-title">AI にセットアップを依頼する</h3>
-            <p class="card-subtitle">手っ取り早く始めたいとき。下のプロンプトをコピーして、お使いの AI ツール（Claude Code / Cursor など）にそのまま貼り付けてください</p>
+            <h3 class="card-title">claude.ai（Web）</h3>
+            <p class="card-subtitle">カスタムコネクタとして URL を追加するだけ</p>
           </div>
           <div class="card-body">
-            <div class="flex justify-end mb-2">
-              <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-setup-prompt">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
-                <span data-copy-label>プロンプトをコピー</span>
-              </button>
-            </div>
-            <pre id="mcp-setup-prompt" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">relay デザインシステムの MCP サーバーをこのプロジェクトで使えるようにセットアップして。
-
-プロジェクト直下の .mcp.json に次の設定を追加してください（ファイルが無ければ新規作成）:
-
-{
-  "mcpServers": {
-    "relay-ds": {
-      "command": "npx",
-      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
-    }
-  }
-}
-
-追加できたら relay-ds の list_components ツールが使えるか確認し、以降は relay デザインシステムのトークン・コンポーネント・規約に準拠して UI を実装して。</pre>
+            <p class="typo-article text-fg-high">
+              <strong>Settings → Connectors →「カスタムコネクタを追加」</strong>を開き、上記の URL を貼って保存してください。以降、チャットから relay のツールが使えるようになります。
+            </p>
           </div>
         </div>
 
         <div class="card overflow-hidden mb-6">
           <div class="card-header">
-            <h3 class="card-title">手動で設定する（Claude Code）</h3>
-            <p class="card-subtitle">プロジェクト直下の <code class="typo-xsmall px-1 bg-neutral-100 rounded">.mcp.json</code> に追記</p>
+            <h3 class="card-title">Claude Code</h3>
+            <p class="card-subtitle">コマンド（方法A）または <code class="typo-xsmall px-1 bg-neutral-100 rounded">.mcp.json</code> 直書き（方法B）</p>
           </div>
-          <div class="card-body">
-            <pre class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high">{
+          <div class="card-body space-y-6">
+
+            <div>
+              <p class="typo-article text-fg-high mb-2"><strong>方法A: コマンドで追加</strong>（<code class="typo-xsmall px-1 bg-neutral-100 rounded">--transport http</code> の指定が必須）</p>
+              <div class="flex justify-end mb-2">
+                <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-cc-cmd">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+                  <span data-copy-label>コマンドをコピー</span>
+                </button>
+              </div>
+              <pre id="mcp-cc-cmd" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">claude mcp add --transport http relay-ds https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
+            </div>
+
+            <div>
+              <p class="typo-article text-fg-high mb-2"><strong>方法B: <code class="typo-xsmall px-1 bg-neutral-100 rounded">.mcp.json</code> に直接書く</strong>（プロジェクト直下。チーム共有向け）</p>
+              <div class="flex justify-end mb-2">
+                <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-cc-json">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+                  <span data-copy-label>JSON をコピー</span>
+                </button>
+              </div>
+              <pre id="mcp-cc-json" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">{
   "mcpServers": {
     "relay-ds": {
-      "command": "npx",
-      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
+      "type": "http",
+      "url": "https://relay-design-system-mcp.s-taguchi.workers.dev/mcp"
     }
   }
 }</pre>
-            <p class="typo-small text-fg-middle mt-4">
-              すでにプロジェクトへ <code class="typo-xsmall px-1 bg-neutral-100 rounded">npm install @light-right/design-system</code> 済みなら、<code class="typo-xsmall px-1 bg-neutral-100 rounded">command</code> を <code class="typo-xsmall px-1 bg-neutral-100 rounded">"relay-ds-mcp"</code>（引数なし）にしてローカル版を直接起動できます。<strong>Cursor / Windsurf</strong> も各ツールの MCP 設定に同じコマンドを登録すれば使えます。
-            </p>
-          </div>
-        </div>
-
-        <div class="card overflow-hidden mb-6">
-          <div class="card-header">
-            <h3 class="card-title">リモート接続（claude.ai など・npm / Node 不要）</h3>
-            <p class="card-subtitle">URL を登録するだけ。ローカルに何もインストールせず使えます</p>
-          </div>
-          <div class="card-body">
-            <p class="typo-article text-fg-high mb-4">
-              Cloudflare Workers 上でリモート版（認証なし）が稼働しています。<strong>claude.ai（Web）</strong>なら Settings → Connectors → 「カスタムコネクタを追加」に次の URL を貼るだけ。URL 登録に対応したツールでも同様に使えます。
-            </p>
-            <div class="flex justify-end mb-2">
-              <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-remote-url">
-                <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
-                <span data-copy-label>URL をコピー</span>
-              </button>
             </div>
-            <pre id="mcp-remote-url" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
-            <p class="typo-small text-fg-middle mt-4">
-              中身は公開情報のため認証は不要です。提供するツール・リソースはローカル版とまったく同じです。
+
+            <p class="typo-small text-fg-middle">
+              <code class="typo-xsmall px-1 bg-neutral-100 rounded">claude mcp list</code> で <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds</code> が connected か確認できます。<strong>Cursor / Windsurf</strong> も各ツールの MCP 設定に同じ URL を登録すれば使えます。
             </p>
           </div>
         </div>
@@ -110,7 +97,7 @@
               </tbody>
             </table>
             <p class="typo-small text-fg-middle mt-4">
-              公開データは <code class="typo-xsmall px-1 bg-neutral-100 rounded">DESIGN.md</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/components</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/tokens</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">snippets</code> から自動生成されるため、デザインシステム本体を更新すれば MCP の応答も追従します。
+              公開データは <code class="typo-xsmall px-1 bg-neutral-100 rounded">DESIGN.md</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/components</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/tokens</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">snippets</code> から生成されています。
             </p>
           </div>
         </div>
