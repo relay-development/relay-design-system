@@ -1,0 +1,54 @@
+name: Deploy MCP Worker to Cloudflare
+
+# Deploys the remote MCP server (Cloudflare Worker, src/mcp/worker.mjs) on every
+# push to main that touches the worker code or any source the data index is built
+# from (components / tokens / snippets / DESIGN.md / assets page). The wrangler
+# [build] hook regenerates dist/mcp-index.json before bundling, so the deployed
+# Worker always serves the latest content.
+#
+# Required repo secrets (Settings → Secrets and variables → Actions):
+#   CLOUDFLARE_API_TOKEN   — token with the "Edit Cloudflare Workers" permission
+#   CLOUDFLARE_ACCOUNT_ID  — account id (wrangler.toml has no account_id)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/mcp/**"
+      - "src/components/**"
+      - "src/tokens/**"
+      - "snippets/**"
+      - "examples/pages/assets.html"
+      - "scripts/build-mcp.mjs"
+      - "DESIGN.md"
+      - "wrangler.toml"
+      - "package.json"
+  workflow_dispatch:
+
+# One deploy at a time; queue the rest (don't cancel an in-flight publish).
+concurrency:
+  group: deploy-mcp-worker
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy Worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
