@@ -7,13 +7,17 @@
         </div>
 
         <p class="typo-article text-fg-high mb-6">
-          AI（Claude Code / Cursor / Windsurf など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを npm パッケージに同梱しています。AI ツールの設定に 1 行登録するだけで、ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
+          AI（Claude Code / Cursor / Windsurf など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを提供しています。AI ツールの設定に登録するだけで、ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
         </p>
 
         <h3 class="typo-xlarge font-semibold mb-4">セットアップ</h3>
         <p class="typo-article text-fg-high mb-4">
-          このパッケージには <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds-mcp</code> という stdio MCP サーバーが含まれています。利用するツールの MCP 設定に登録してください。
+          使い方は 2 通りあります。お使いのツールに合わせて選んでください。
         </p>
+        <ul class="typo-article text-fg-high mb-4 list-disc pl-5 space-y-1">
+          <li><strong>ローカル版（stdio）</strong>: npm パッケージ <code class="typo-xsmall px-1 bg-neutral-100 rounded">@light-right/design-system</code> 同梱の <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds-mcp</code> を <code class="typo-xsmall px-1 bg-neutral-100 rounded">npx</code> で起動。Claude Code / Cursor / Windsurf 向け（Node が必要）</li>
+          <li><strong>リモート版</strong>: Cloudflare 上で稼働するサーバーに <strong>URL を登録するだけ</strong>。claude.ai（Web）などで使え、<strong>npm / Node は不要</strong></li>
+        </ul>
 
         <div class="card overflow-hidden mb-6">
           <div class="card-header">
