@@ -77,15 +77,41 @@ function formatComponent(c) {
 function formatTokens(category) {
   const cats = category ? [category] : TOKEN_CATEGORIES;
   const out = [`# relay Design System — design tokens (v${index.version})`, ""];
-  out.push("raw CSS で使う時は var(--name)、Tailwind ユーティリティ名は --color-x-500 → bg-x-500 等に対応。", "");
+  out.push(
+    "値は解決済みの実値（例: --color-primary-500 = #30b686）。CSS が無い環境（スタンドアロン生成）でも、この実値をそのまま使うこと。",
+    "Tailwind ユーティリティ名は --color-x-500 → bg-x-500、--spacing*N → p-N 等に対応。",
+    "",
+  );
   for (const cat of cats) {
     const entries = index.tokens[cat];
     if (!entries) continue;
     out.push(`## ${cat} (${entries.length})`, "");
-    for (const t of entries) out.push(`- \`${t.name}\`: ${t.value}`);
+    for (const t of entries) out.push(`- \`${t.name}\`: ${t.value}${t.via ? ` (= ${t.via})` : ""}`);
     out.push("");
   }
   return out.join("\n");
+}
+
+/** Resolved value of a color token by name (e.g. "--color-primary-500" → "#30b686"). */
+function colorValue(name) {
+  const t = (index.tokens.colors || []).find((c) => c.name === name);
+  return t ? t.value : "?";
+}
+
+function formatBrandColors() {
+  return [
+    "## ブランド基調色（実値・これを使う）",
+    "",
+    "relay の CSS を読み込まない環境（claude.ai 等のスタンドアロン生成）では、下記の実値を直接使うこと。**青などの独自色は使わない。**",
+    "",
+    `- primary（ブランド緑）: \`bg-primary-500\` = ${colorValue("--color-primary-500")} / hover \`bg-primary-600\` = ${colorValue("--color-primary-600")} / 濃 \`primary-700\` = ${colorValue("--color-primary-700")}`,
+    `- secondary（ブランド黄）: \`secondary-500\` = ${colorValue("--color-secondary-500")}`,
+    `- 本文テキスト: \`text-fg-high\` = ${colorValue("--color-fg-high")} / \`text-fg-middle\` = ${colorValue("--color-fg-middle")} / \`text-fg-low\` = ${colorValue("--color-fg-low")}`,
+    `- ステータス: success ${colorValue("--color-success-500")} / warning ${colorValue("--color-warning-500")} / negative ${colorValue("--color-negative-500")} / info ${colorValue("--color-info-500")}`,
+    `- 背景/境界: page ${colorValue("--color-page")} / border \`stroke-middle\` ${colorValue("--color-stroke-middle")}`,
+    "",
+    "> 全トークン（余白/角丸/影/タイポ含む実値）は get_tokens を呼ぶこと。",
+  ].join("\n");
 }
 
 function formatPrinciples() {
@@ -93,6 +119,8 @@ function formatPrinciples() {
     "# relay Design System — 必須ルール & 禁止パターン",
     "",
     "AI が relay UI を生成する際、以下を必ず守ること。",
+    "",
+    formatBrandColors(),
     "",
     index.principles || "(principles 未取得)",
     "",

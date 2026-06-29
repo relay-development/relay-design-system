@@ -117,15 +117,42 @@ async function buildTokens() {
   const dir = path.join(projectRoot, "src/tokens");
   const files = (await readdir(dir)).filter((f) => f.endsWith(".css")).sort();
 
-  const tokens = {};
+  // First pass: collect raw name→value across ALL token files (semantic tokens
+  // reference primitives via var(--…), so we need the full map to resolve them).
+  const rawByCat = {};
+  const raw = {};
   for (const file of files) {
     const category = file.replace(/\.css$/, "");
     const css = stripCssComments(await readFile(path.join(dir, file), "utf8"));
     const entries = [];
     for (const m of css.matchAll(/(--[\w-]+)\s*:\s*([^;]+);/g)) {
-      entries.push({ name: m[1], value: m[2].trim().replace(/\s+/g, " ") });
+      const name = m[1];
+      const value = m[2].trim().replace(/\s+/g, " ");
+      entries.push({ name, value });
+      raw[name] = value;
     }
-    tokens[category] = entries;
+    rawByCat[category] = entries;
+  }
+
+  // Resolve a value to its final literal (e.g. var(--color-brand-green-500) → #30b686).
+  const resolve = (value, depth = 0) => {
+    if (depth > 10) return value;
+    const m = value.match(/^var\((--[\w-]+)\)$/);
+    if (m && raw[m[1]] !== undefined) return resolve(raw[m[1]], depth + 1);
+    return value;
+  };
+
+  // Second pass: emit resolved values. `via` records the immediate semantic→primitive
+  // alias so consumers can see e.g. primary-500 = #30b686 (= brand-green-500).
+  const tokens = {};
+  for (const [category, entries] of Object.entries(rawByCat)) {
+    tokens[category] = entries.map(({ name, value }) => {
+      const resolved = resolve(value);
+      const out = { name, value: resolved };
+      const ref = value.match(/^var\((--color-[\w-]+)\)$/);
+      if (ref && resolved !== value) out.via = ref[1].replace(/^--color-/, "");
+      return out;
+    });
   }
   return tokens;
 }
