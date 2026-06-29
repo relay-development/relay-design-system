@@ -15,13 +15,21 @@
           接続先はこの URL です（認証なし）。各ツールへの登録方法は下記のとおりです。
         </p>
 
-        <div class="flex justify-end mb-2">
-          <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-remote-url">
-            <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
-            <span data-copy-label>URL をコピー</span>
-          </button>
+        <div class="card overflow-hidden mb-6">
+          <div class="card-header">
+            <h3 class="card-title">接続先 URL</h3>
+            <p class="card-subtitle">各ツールにこの URL を登録します（認証なし）</p>
+          </div>
+          <div class="card-body">
+            <div class="flex justify-end mb-2">
+              <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-remote-url">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+                <span data-copy-label>URL をコピー</span>
+              </button>
+            </div>
+            <pre id="mcp-remote-url" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
+          </div>
         </div>
-        <pre id="mcp-remote-url" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap mb-6">https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
 
         <div class="card overflow-hidden mb-6">
           <div class="card-header">
