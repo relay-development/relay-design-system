@@ -24,6 +24,33 @@ export { index };
 export const SERVER_INFO = { name: "relay-design-system", version: index.version };
 export const TOKEN_CATEGORIES = Object.keys(index.tokens); // colors, typography, spacing, radius, shadow
 
+/**
+ * Standing guidance returned in the `initialize` result. MCP clients load this
+ * as system context at connect time, so — unlike a tool the agent must choose to
+ * call — these rules stay in effect through a whole implementation session. This
+ * targets the common failure mode where an agent connects, calls a tool once,
+ * then drifts back to hardcoded values mid-build.
+ */
+export const INSTRUCTIONS = [
+  "relay Design System の MCP。relay 系プロダクトの UI を作るときは必ずこのサーバーの情報を使い、自前のデザインや独自色で実装しないこと。",
+  "",
+  "【前提: CSS の導入を最初に確認】",
+  "relay のコンポーネントクラス（.btn / .card / .input 等）は npm パッケージ @light-right/design-system の CSS が読み込まれて初めて効く。MCP はクラス名やトークンの「知識」を渡すだけで CSS 実体は渡さない。",
+  "プロジェクトに未導入なら、UI を書く前に導入する: `npm i @light-right/design-system` → エントリ CSS で `@import \"@light-right/design-system\";`（Tailwind v4）。",
+  "これをせずに relay クラスを書いても見た目が変わらず、ハードコードに逃げる結果になる。",
+  "",
+  "【実装フロー】",
+  "1. UI 着手前に get_design_principles を読み、必須ルールと禁止パターンを把握する。",
+  "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。",
+  "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
+  "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
+  "",
+  "【ハード制約】",
+  "- 色 / 余白 / タイポ / 角丸 / 影をハードコードしない（#hex やピクセル直書き・任意値クラスを避け、トークン／ユーティリティ経由で書く）。",
+  "- 既存コンポーネントがある UI は手書きで再実装せず relay コンポーネントを使う。",
+  "- 独自のブランド色（青など）を持ち込まない。基調はブランド緑 primary / 黄 secondary。",
+].join("\n");
+
 /* ------------------------------------------------------------------ helpers */
 
 function figmaUrl(node) {

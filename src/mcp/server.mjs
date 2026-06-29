@@ -20,6 +20,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import {
   SERVER_INFO,
+  INSTRUCTIONS,
   TOKEN_CATEGORIES,
   TOOLS,
   callTool,
@@ -27,7 +28,12 @@ import {
   readResource,
 } from "./handlers.mjs";
 
-const server = new Server(SERVER_INFO, { capabilities: { tools: {}, resources: {} } });
+// `instructions` is surfaced in the initialize result and loaded by clients as
+// standing system context (see handlers.mjs INSTRUCTIONS for why).
+const server = new Server(SERVER_INFO, {
+  capabilities: { tools: {}, resources: {} },
+  instructions: INSTRUCTIONS,
+});
 
 server.setRequestHandler(ListToolsRequestSchema, async () => ({ tools: TOOLS }));
 
