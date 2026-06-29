@@ -369,10 +369,15 @@ CSS / HTML を書く時は **必ずデザインシステムが用意した変数
 ## MCP サーバー（AI コーディングツール連携）
 
 AI（Claude Code / Cursor / Windsurf 等）で UI を書くときに、このデザインシステムの
-**コンポーネント仕様・トークン・必須ルール**を AI に直接読ませるための MCP サーバーを同梱しています。
+**コンポーネント仕様・トークン・必須ルール**を AI に直接読ませるための MCP サーバーを提供しています。
 これにより、ハードコード値や規約違反（`text-sm` 直書き等）を避けた relay 準拠の UI を生成しやすくなります。
 
-### セットアップ
+提供形態は 2 つあります:
+
+- **ローカル版（stdio）** — npm パッケージ `@light-right/design-system` に `relay-ds-mcp` として同梱。`npx` で起動（Node が必要）
+- **リモート版** — Cloudflare 上で稼働。URL を登録するだけで使え、npm / Node 不要（→ 後述の「リモート版」）
+
+### セットアップ（ローカル版 / stdio）
 
 このパッケージに `relay-ds-mcp` という stdio MCP サーバーが入っています。利用ツールの設定に登録してください。
 
@@ -403,5 +408,22 @@ AI（Claude Code / Cursor / Windsurf 等）で UI を書くときに、このデ
 
 公開データは `DESIGN.md` / `src/components/*.css` / `src/tokens/*.css` / `snippets/*.html` から
 ビルド時に自動生成されるため、デザインシステム本体を更新すれば MCP の応答も追従します。
+
+### リモート版（任意・Cloudflare Workers）
+
+`npx` / Node を使わず **URL で繋ぐ**リモート MCP も稼働しています（[src/mcp/worker.mjs](src/mcp/worker.mjs)）。
+claude.ai（Web）のカスタムコネクタや、URL 登録に対応した各ツールで使えます。中身は公開情報のため **authless**（認証なし）・stateless で、Cloudflare Workers の無料枠で動きます。
+
+**エンドポイント**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
+
+- **claude.ai**: Settings → Connectors → Add custom connector → 上記 URL を貼る（認証不要）
+- 各ツールに URL を登録するだけ。**npm / Node は不要**。stdio 版とまったく同じツール／リソースを返します（ロジックは [src/mcp/handlers.mjs](src/mcp/handlers.mjs) で共通化）
+
+メンテナ向け（デプロイ）:
+
+```bash
+npm run dev:mcp-remote   # ローカル確認（http://localhost:8787/mcp）
+npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrangler login）
+```
 
 参考: [社内デザインシステムをMCPサーバー化したらUI実装が爆速になった (Ubie Dev)](https://zenn.dev/ubie_dev/articles/f927aaff02d618)

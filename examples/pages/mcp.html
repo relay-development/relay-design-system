@@ -7,13 +7,17 @@
         </div>
 
         <p class="typo-article text-fg-high mb-6">
-          AI（Claude Code / Cursor / Windsurf など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを npm パッケージに同梱しています。AI ツールの設定に 1 行登録するだけで、ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
+          AI（Claude Code / Cursor / Windsurf など）で UI を書くとき、relay デザインシステムの<strong>コンポーネント仕様・トークン・必須ルール</strong>を AI に直接読ませるための MCP（Model Context Protocol）サーバーを提供しています。AI ツールの設定に登録するだけで、ハードコード値や規約違反（<code class="typo-xsmall px-1 bg-neutral-100 rounded">text-sm</code> 直書きなど）を避けた relay 準拠の UI を生成しやすくなります。
         </p>
 
         <h3 class="typo-xlarge font-semibold mb-4">セットアップ</h3>
         <p class="typo-article text-fg-high mb-4">
-          このパッケージには <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds-mcp</code> という stdio MCP サーバーが含まれています。利用するツールの MCP 設定に登録してください。
+          使い方は 2 通りあります。お使いのツールに合わせて選んでください。
         </p>
+        <ul class="typo-article text-fg-high mb-4 list-disc pl-5 space-y-1">
+          <li><strong>ローカル版（stdio）</strong>: npm パッケージ <code class="typo-xsmall px-1 bg-neutral-100 rounded">@light-right/design-system</code> 同梱の <code class="typo-xsmall px-1 bg-neutral-100 rounded">relay-ds-mcp</code> を <code class="typo-xsmall px-1 bg-neutral-100 rounded">npx</code> で起動。Claude Code / Cursor / Windsurf 向け（Node が必要）</li>
+          <li><strong>リモート版</strong>: Cloudflare 上で稼働するサーバーに <strong>URL を登録するだけ</strong>。claude.ai（Web）などで使え、<strong>npm / Node は不要</strong></li>
+        </ul>
 
         <div class="card overflow-hidden mb-6">
           <div class="card-header">
@@ -60,6 +64,28 @@
 }</pre>
             <p class="typo-small text-fg-middle mt-4">
               すでにプロジェクトへ <code class="typo-xsmall px-1 bg-neutral-100 rounded">npm install @light-right/design-system</code> 済みなら、<code class="typo-xsmall px-1 bg-neutral-100 rounded">command</code> を <code class="typo-xsmall px-1 bg-neutral-100 rounded">"relay-ds-mcp"</code>（引数なし）にしてローカル版を直接起動できます。<strong>Cursor / Windsurf</strong> も各ツールの MCP 設定に同じコマンドを登録すれば使えます。
+            </p>
+          </div>
+        </div>
+
+        <div class="card overflow-hidden mb-6">
+          <div class="card-header">
+            <h3 class="card-title">リモート接続（claude.ai など・npm / Node 不要）</h3>
+            <p class="card-subtitle">URL を登録するだけ。ローカルに何もインストールせず使えます</p>
+          </div>
+          <div class="card-body">
+            <p class="typo-article text-fg-high mb-4">
+              Cloudflare Workers 上でリモート版（認証なし）が稼働しています。<strong>claude.ai（Web）</strong>なら Settings → Connectors → 「カスタムコネクタを追加」に次の URL を貼るだけ。URL 登録に対応したツールでも同様に使えます。
+            </p>
+            <div class="flex justify-end mb-2">
+              <button type="button" class="btn btn-sm btn-neutral btn-outline" data-copy-target="#mcp-remote-url">
+                <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+                <span data-copy-label>URL をコピー</span>
+              </button>
+            </div>
+            <pre id="mcp-remote-url" class="typo-xsmall font-mono bg-neutral-50 border border-stroke-low rounded p-3 overflow-x-auto text-fg-high whitespace-pre-wrap">https://relay-design-system-mcp.s-taguchi.workers.dev/mcp</pre>
+            <p class="typo-small text-fg-middle mt-4">
+              中身は公開情報のため認証は不要です。提供するツール・リソースはローカル版とまったく同じです。
             </p>
           </div>
         </div>
