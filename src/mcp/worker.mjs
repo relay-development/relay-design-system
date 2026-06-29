@@ -22,7 +22,7 @@
  *   Add to claude.ai: Settings → Connectors → Add custom connector → <url>/mcp
  */
 
-import { SERVER_INFO, TOOLS, callTool, listResources, readResource } from "./handlers.mjs";
+import { SERVER_INFO, INSTRUCTIONS, TOOLS, callTool, listResources, readResource } from "./handlers.mjs";
 
 const DEFAULT_PROTOCOL = "2025-06-18";
 const SESSION_ID = "relay-ds"; // stateless — a stable id is enough for clients that require one
@@ -74,6 +74,9 @@ function handleRpc(msg) {
           typeof params.protocolVersion === "string" ? params.protocolVersion : DEFAULT_PROTOCOL,
         capabilities: { tools: {}, resources: {} },
         serverInfo: SERVER_INFO,
+        // Standing system context loaded by clients at connect time (keeps the
+        // "use relay components / no hardcoding" rules in effect mid-build).
+        instructions: INSTRUCTIONS,
       });
     case "ping":
       return ok(id, {});
