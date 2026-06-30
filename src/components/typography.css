@@ -26,6 +26,15 @@
  *   長文の可読性を優先する。サイズスケール (medium 等) とは用途が異なる。
  *   原則 `text-fg-high` とセットで使う (読み物本文は高コントラストを確保)。
  *
+ * 機能:
+ *   Figma の命名サイズに 1:1 対応する意味づけテキストスタイル層（.typo-*）。
+ *
+ * 使用法:
+ *   OK: 用途で選ぶ（本文=typo-medium、読み物本文=typo-article、見出し=typo-xlarge 等）。
+ *   OK: weight は font-bold / font-medium で上書きできる。
+ *   NG: text-sm / font-size を直書きしない → .typo-* を使う。
+ *   NG: 行間を独自指定しない → 8 の倍数の規定 line-height を保つ。
+ *
  * Usage:
  *   <p class="typo-medium">本文テキスト</p>
  *   <h2 class="typo-2xlarge">セクションタイトル</h2>

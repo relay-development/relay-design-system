@@ -19,6 +19,16 @@
  *
  *   placeholder color: text/placeholder
  *
+ * 機能:
+ *   1 行のテキスト入力。
+ *   検索特化なら search-input、選択肢からの選択は selector、複数行は textarea。
+ *
+ * 使用法:
+ *   OK: サイズは input-{sm,md,lg}、エラー時は input-error を付ける。
+ *   OK: ラベルは label-control と組み合わせる。
+ *   NG: エラー色を直書きしない → input-error を使う。
+ *   NG: プレースホルダーをラベル代わりにしない → label-control でラベルを置く。
+ *
  * Usage:
  *   <input type="text" class="input input-md" placeholder="入力内容" />
  *   <input type="email" class="input input-md input-error" />

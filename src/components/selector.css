@@ -26,6 +26,16 @@
  *
  *   placeholder (empty option) color: text/placeholder
  *
+ * 機能:
+ *   アイコン枠・状態表示付きの単一選択コンポーネント（ネイティブ <select> をラップ）。
+ *   選択肢が多い単一選択に向く。最小スタイルだけなら select。
+ *
+ * 使用法:
+ *   OK: サイズ/状態は Input と同じ体系（selector-{sm,md,lg}, isInvalid）。
+ *   OK: 先頭に空 option（プレースホルダー）を置ける。
+ *   NG: 少数（2〜7）の選択肢には使わず radio で見せる → 一覧性が上がる。
+ *   NG: エラー色を直書きしない → invalid 用クラスを使う。
+ *
  * Usage:
  *   <div class="selector selector-md">
  *     <span class="selector-icon"><svg>…</svg></span>   (optional)

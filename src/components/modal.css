@@ -34,6 +34,16 @@
  *     header   px-5 py-4 border-b (card-header と同一)
  *     body     p-6 / text-base (16/32) fg/high
  *     footer   px-5 py-3 border-t bg-neutral-50 右寄せ (card-footer と同一)
+ *
+ * 機能:
+ *   確認や入力を求めるとき最前面に重ねるダイアログ。ネイティブ <dialog> ベース。
+ *   ページ内に常設で知らせるだけなら modal ではなく alert。
+ *
+ * 使用法:
+ *   OK: showModal() で開き、フォーカス管理と Esc 閉じはブラウザ標準に任せる。
+ *   OK: aria-labelledby でタイトルと関連付ける。
+ *   NG: 情報表示だけに多用しない → 操作を止める必要がある時に限る。
+ *   NG: 閉じる手段（閉じるボタン / Esc）を消さない。
  */
 
 @layer components {

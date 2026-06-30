@@ -23,6 +23,15 @@
  *     - テキストは 7:1 必要: 数字 primary/800 = 9.23:1、ラベル fg/middle = 10.35:1
  *       (primary/600,700 や fg/low では 7:1 に届かない)
  *
+ * 機能:
+ *   複数ステップの手続き（入力→確認→完了）で現在地と進捗を示すナビゲーション。
+ *   同一領域の表示切替は tab、ページ送りは pagination。
+ *
+ * 使用法:
+ *   OK: 現在は aria-current="step"、完了は is-completed（マーカーを check に差し替え）。
+ *   NG: 単なる表示切替（タブ）に使わない → tab。
+ *   NG: 完了を色だけで示さない → is-completed ＋ check アイコンで示す。
+ *
  * Usage:
  *   <ol class="stepper" aria-label="申請の進捗">
  *     <li class="stepper-step is-completed">

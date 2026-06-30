@@ -29,6 +29,16 @@
  *     focus : info/500 の 3px ring (focus-ring shadow)
  *     disabled: opacity 0.5 + cursor not-allowed (色は維持して "押せない感")
  *
+ * 機能:
+ *   同じ領域で表示内容を切り替えるディスクロージャー。情報を一度に出しすぎない。
+ *   手続きの進捗は stepper、ページ送りは pagination、サイト移動は sidenav。
+ *
+ * 使用法:
+ *   OK: role="tablist" / role="tab"、選択は aria-selected="true"。
+ *   OK: variant は solid / line から選ぶ。
+ *   NG: ページ遷移リンクの並びに使わない → 同一ページ内の表示切替に使う。
+ *   NG: 選択状態をクラスだけで示さない → aria-selected を使う。
+ *
  * Usage:
  *   <div role="tablist" class="tabs tabs-solid">
  *     <button role="tab" class="tab tab-solid" aria-selected="true">ラベル</button>

@@ -27,6 +27,16 @@
  *     enable / hover / focus: text/high
  *     disabled: text/disabled
  *
+ * 機能:
+ *   複数選択や ON/OFF 設定に使うフォーム部品。
+ *   排他的な単一選択は radio、絞り込みのトグルは filter-chip。
+ *
+ * 使用法:
+ *   OK: input と文言を checkbox-label で囲み、ラベル全体を押せるようにする。
+ *   OK: 中間状態は JS で el.indeterminate = true。
+ *   NG: 排他的な単一選択に使わない → radio。
+ *   NG: 形状を独自シェイプに変えない → □ が「複数選択可」の手がかり（guidelines 参照）。
+ *
  * Usage:
  *   <label class="checkbox-label">
  *     <input type="checkbox" class="checkbox" />

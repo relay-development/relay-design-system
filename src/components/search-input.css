@@ -16,6 +16,15 @@
  *
  *   isInvalid=true で container bg=negative/50, border 2px negative/500
  *
+ * 機能:
+ *   フリーワード検索の入力。クリア（×）と送信（検索）を内蔵。
+ *   通常の 1 行入力は search-input ではなく input。
+ *
+ * 使用法:
+ *   OK: type="search"。md/lg では送信ボタン、入力済みのときクリアを出す。
+ *   NG: 一般のテキスト入力に流用しない → input。
+ *   NG: エラー色を直書きしない → isInvalid 用のクラスを使う。
+ *
  * Usage:
  *   <div class="search-input search-input-md">
  *     <input type="search" class="search-input-field" placeholder="フリーワードで検索" />

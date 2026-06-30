@@ -35,6 +35,15 @@
  *
  *   全ての spacing / color / typography 値はデザインシステムトークン経由
  *   (CLAUDE.md「🔴 必須ルール: ハードコーディング禁止」に準拠)。
+ *
+ * 機能:
+ *   キー/値形式の縦長テーブル。1 件の詳細表示に使う。
+ *   複数データの比較なら simple-table ではなく data-table。
+ *
+ * 使用法:
+ *   OK: 左列 <th>（ラベル）、右列 <td>（値）。連続ラベルは rowspan でまとめられる。
+ *   NG: 複数件の比較に使わない → data-table。
+ *   NG: 罫線・余白を直書きしない → .simple-table の既定を使う。
  */
 
 @layer components {

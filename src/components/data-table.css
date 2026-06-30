@@ -25,6 +25,15 @@
  *     row 区切り    border-bottom 1px stroke/middle
  *     外枠          1px stroke/middle + rounded-md (16px) + overflow:hidden
  *     padding      16px (calc(var(--spacing) * 4))
+ *
+ * 機能:
+ *   列見出しを上に置き、複数データを行で比較する表。
+ *   1 件の詳細を縦に並べるなら data-table ではなく simple-table。
+ *
+ * 使用法:
+ *   OK: thead に列見出し、tbody に行データを置く。
+ *   NG: 1 件の項目一覧（キー/値）に使わない → simple-table。
+ *   NG: 罫線・余白を直書きしない → .data-table の既定を使う。
  */
 
 @layer components {

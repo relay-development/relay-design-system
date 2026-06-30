@@ -2,6 +2,15 @@
  * Icon helper — for rendering icons from the Lucide sprite shipped at
  *   @light-right/design-system/icons (dist/icons.svg)
  *
+ * 機能:
+ *   Lucide スプライトからアイコンを表示するヘルパー。表示とサイズだけを担う。
+ *
+ * 使用法:
+ *   OK: サイズは icon-{xs,sm,md,lg,xl}。色は currentColor 継承なので text-* で着色。
+ *   OK: <use href="...#lucide-名前"> で参照する。
+ *   NG: 色やサイズを #hex/px で直書きしない → text-* と icon-* を使う。
+ *   NG: 意味のあるアイコンを無ラベルで置かない → 必要なら aria-label を併記。
+ *
  * Usage:
  *
  *   <svg class="icon icon-md">
