@@ -146,6 +146,53 @@
         </div>
       </div>
 
+      <!-- ===== Property reference ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">プロパティ</h3>
+        </div>
+        <div class="card-body">
+          <table class="w-full typo-small">
+            <thead>
+              <tr class="text-fg-low typo-xsmall border-b border-stroke-low">
+                <th class="text-left px-3 py-2 font-medium w-24">prop</th>
+                <th class="text-left px-3 py-2 font-medium">values</th>
+                <th class="text-left px-3 py-2 font-medium">description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">thema</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">primary</code> · <code class="typo-xsmall">secondary</code> · <code class="typo-xsmall">neutral</code> · <code class="typo-xsmall">negative</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">ボタンの色彩テーマ。Semantic Token の同名ロールにマップ。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">size</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">sm</code> · <code class="typo-xsmall">md</code> · <code class="typo-xsmall">lg</code> · <code class="typo-xsmall">xl</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">高さ・パディング・フォントサイズ・行間がまとめて切り替わる。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">variant</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">solid</code> · <code class="typo-xsmall">outline</code> · <code class="typo-xsmall">subtle</code> · <code class="typo-xsmall">ghost</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">背景・枠線・テキスト色の組み合わせを変える。</td>
+              </tr>
+              <tr class="border-b border-stroke-low">
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">state</code></td>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall">enable</code> · <code class="typo-xsmall">:hover</code> · <code class="typo-xsmall">:focus-visible</code> · <code class="typo-xsmall">[data-loading]</code> · <code class="typo-xsmall">:disabled</code></td>
+                <td class="px-3 py-3 align-top text-fg-middle">CSS の擬似クラスと <code>data-loading</code>/<code>disabled</code> 属性で表現。</td>
+              </tr>
+              <tr>
+                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">icon slot</code></td>
+                <td class="px-3 py-3 align-top">prefix · suffix</td>
+                <td class="px-3 py-3 align-top text-fg-middle">SVG を <code>&lt;button&gt;</code> 直下に置けば 24×24 スロットになる。アイコン単体のボタンは <code>.icon-btn</code> を使う。</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- usage:auto:button -->
+
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">
         <!-- Rule 1: same size -->
@@ -226,52 +273,6 @@
         </div>
       </div>
 
-      <!-- ===== Property reference ===== -->
-      <div class="card mb-8">
-        <div class="card-header">
-          <h3 class="card-title">プロパティ</h3>
-        </div>
-        <div class="card-body">
-          <table class="w-full typo-small">
-            <thead>
-              <tr class="text-fg-low typo-xsmall border-b border-stroke-low">
-                <th class="text-left px-3 py-2 font-medium w-24">prop</th>
-                <th class="text-left px-3 py-2 font-medium">values</th>
-                <th class="text-left px-3 py-2 font-medium">description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b border-stroke-low">
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">thema</code></td>
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall">primary</code> · <code class="typo-xsmall">secondary</code> · <code class="typo-xsmall">neutral</code> · <code class="typo-xsmall">negative</code></td>
-                <td class="px-3 py-3 align-top text-fg-middle">ボタンの色彩テーマ。Semantic Token の同名ロールにマップ。</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">size</code></td>
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall">sm</code> · <code class="typo-xsmall">md</code> · <code class="typo-xsmall">lg</code> · <code class="typo-xsmall">xl</code></td>
-                <td class="px-3 py-3 align-top text-fg-middle">高さ・パディング・フォントサイズ・行間がまとめて切り替わる。</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">variant</code></td>
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall">solid</code> · <code class="typo-xsmall">outline</code> · <code class="typo-xsmall">subtle</code> · <code class="typo-xsmall">ghost</code></td>
-                <td class="px-3 py-3 align-top text-fg-middle">背景・枠線・テキスト色の組み合わせを変える。</td>
-              </tr>
-              <tr class="border-b border-stroke-low">
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">state</code></td>
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall">enable</code> · <code class="typo-xsmall">:hover</code> · <code class="typo-xsmall">:focus-visible</code> · <code class="typo-xsmall">[data-loading]</code> · <code class="typo-xsmall">:disabled</code></td>
-                <td class="px-3 py-3 align-top text-fg-middle">CSS の擬似クラスと <code>data-loading</code>/<code>disabled</code> 属性で表現。</td>
-              </tr>
-              <tr>
-                <td class="px-3 py-3 align-top"><code class="typo-xsmall font-mono">icon slot</code></td>
-                <td class="px-3 py-3 align-top">prefix · suffix</td>
-                <td class="px-3 py-3 align-top text-fg-middle">SVG を <code>&lt;button&gt;</code> 直下に置けば 24×24 スロットになる。アイコン単体のボタンは <code>.icon-btn</code> を使う。</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- usage:auto:button -->
     </section>
   </main>
 
