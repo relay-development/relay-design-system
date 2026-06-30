@@ -1,3 +1,19 @@
+/*
+ * Badge (バッジ) — ステータスやカテゴリを短い語で示すラベル。
+ *
+ *   クリックできる操作要素ではない。variant: solid / soft × thema。
+ *
+ * 機能:
+ *   ステータス・分類・件数などを短いテキストで示す非操作のラベル。
+ *   操作するなら button / link、絞り込みのトグルは filter-chip。
+ *
+ * 使用法:
+ *   OK: 色は意味で選ぶ（成功=success / 警告=warning / エラー=negative 等）。
+ *   OK: 強調度に応じて solid / soft を使い分ける。
+ *   NG: クリック操作に使わない → button / link / filter-chip。
+ *   NG: 長文を入れない → 1〜2 語のラベルに留める。
+ */
+
 @layer components {
   .badge {
     @apply inline-flex items-center gap-1

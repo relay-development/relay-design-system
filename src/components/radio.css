@@ -27,6 +27,16 @@
  *     sm: 12/16 (box 16, dot 10)
  *     md: 16/24 (box 24, dot 14)
  *
+ * 機能:
+ *   排他的な単一選択に使うフォーム部品。
+ *   複数選択は checkbox、選択肢が多いなら selector（ドロップダウン）。
+ *
+ * 使用法:
+ *   OK: 同じ name でグループ化し、ラベル全体を押せるようにする。
+ *   OK: 安全な初期値を選択しておく。
+ *   NG: 複数選択に radio を使わない → checkbox。
+ *   NG: 選択肢が多すぎる時に radio を大量に並べない → selector。
+ *
  * Usage:
  *   <label class="radio-label">
  *     <input type="radio" name="plan" class="radio" />

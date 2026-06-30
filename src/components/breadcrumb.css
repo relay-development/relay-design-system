@@ -8,6 +8,16 @@
  *     区切り             : lucide chevron-right 16px を .breadcrumb-sep でラップ
  *     現在ページ (isCurrent=true): .breadcrumb-current（リンクにせず aria-current="page"）
  *
+ * 機能:
+ *   現在のページ階層を示し、親階層へ戻れるようにするナビゲーション。
+ *   ページ内の節移動ではなくサイト階層のパス表示に使う。
+ *
+ * 使用法:
+ *   OK: 各項目は .link、現在ページは breadcrumb-current（リンクにせず aria-current="page"）。
+ *   OK: 区切りは chevron-right を breadcrumb-sep でラップ。
+ *   NG: 現在ページをリンクにしない → aria-current="page" の breadcrumb-current。
+ *   NG: 階層が 1 つしかないページに無理に置かない → 階層がある時だけ使う。
+ *
  * Usage:
  *   <nav class="breadcrumb" aria-label="パンくずリスト">
  *     <ol>

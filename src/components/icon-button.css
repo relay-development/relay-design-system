@@ -7,6 +7,16 @@
  *   icon:    24×24 (lucide / heroicons / etc., always constant)
  *   radius:  8px (rounded-sm in our scale)
  *
+ * 機能:
+ *   アイコンのみで操作を表すボタン。省スペースな操作に使う。
+ *   文言ラベルを見せたい主操作は icon-button ではなく button。
+ *
+ * 使用法:
+ *   OK: 必ず aria-label で操作名を与える（視覚ラベルが無いため）。
+ *   OK: thema / size / variant を用途に合わせて選ぶ。
+ *   NG: aria-label を省略しない → 何のボタンか読み上げられない。
+ *   NG: 遷移に使わない → href のナビゲーションは link。
+ *
  * Usage:
  *   <button class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ">
  *     <svg viewBox="0 0 24 24">…</svg>

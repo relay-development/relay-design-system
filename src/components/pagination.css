@@ -12,6 +12,16 @@
  *   colors : default = white / fg-middle、current = primary/500 + white (tab-solid と同一)
  *   矢印   : chevron-left / chevron-right (16px)。端のページでは aria-disabled="true"
  *
+ * 機能:
+ *   一覧が複数ページに分かれるとき、ページを行き来するナビゲーション。
+ *   同一ページ内の表示切替は tab、手続きの進捗は stepper。
+ *
+ * 使用法:
+ *   OK: 現在ページは aria-current="page"。端では矢印を aria-disabled="true"。
+ *   OK: 省略は pagination-ellipsis で示す。
+ *   NG: 現在ページもリンクで押せるようにしない → aria-current で示す。
+ *   NG: 無限スクロールで足りる場面に無理に足さない。
+ *
  * Usage:
  *   <nav class="pagination" aria-label="ページネーション">
  *     <ul>

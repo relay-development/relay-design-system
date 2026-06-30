@@ -27,6 +27,15 @@
  *
  *   placeholder color: text/placeholder
  *   counter: text/high (valid) or negative/500 (invalid)
+ *
+ * 機能:
+ *   複数行のテキスト入力。文字数カウンタ付き。
+ *   1 行入力なら textarea ではなく input。
+ *
+ * 使用法:
+ *   OK: textarea-control で囲み、必要なら maxlength ＋ textarea-counter を出す。
+ *   NG: 1 行入力に使わない → input。
+ *   NG: エラー色を直書きしない → isInvalid 用クラスを使う。
  */
 
 @layer components {

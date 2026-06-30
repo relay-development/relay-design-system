@@ -6,6 +6,16 @@
  *   sizes:    default (label 16/24) / sm (label 14/20)
  *   badges:   required / optional / disabled / private / support
  *
+ * 機能:
+ *   フォーム項目のラベル＋バッジ（必須/任意等）＋サポートテキストのまとまり。
+ *   入力欄（input / selector / textarea 等）の直上に置く。
+ *
+ * 使用法:
+ *   OK: 必須/任意は label-badge-required / label-badge-optional で示す。
+ *   OK: 補足は label-control-support に書く。
+ *   NG: 必須を色だけで示さない → テキストの label-badge-required を使う。
+ *   NG: 対象フィールドと切り離して遠くに置かない → 直上に置く。
+ *
  * Usage:
  *   <div class="label-control">
  *     <div class="label-control-row">

@@ -17,6 +17,16 @@
  *     warning:  bg warning/50,  border warning/300,  title + body secondary/700
  *     info:     bg info/50,     border info/300,     title + body info/600
  *
+ * 機能:
+ *   操作の結果やお知らせをページ内に埋め込んで伝えるメッセージ。テーマで意味を表す。
+ *   画面を覆って操作を止めたいなら alert ではなく modal。
+ *
+ * 使用法:
+ *   OK: 内容に応じてテーマを選ぶ（成功=success / エラー=negative / 注意=warning / 情報=info）。
+ *   OK: 閉じられるようにするなら alert-close を付ける。
+ *   NG: 一時表示のトースト代わりに使わない → alert はページ内常設メッセージ。
+ *   NG: テーマを色の好みで選ばない → 意味（成功/エラー等）に合わせる。
+ *
  * Usage:
  *   <div class="alert alert-info">
  *     <span class="alert-icon"><svg viewBox="0 0 24 24">…</svg></span>

@@ -14,6 +14,15 @@
  *     ※ Figma は current 文字色 primary/500 だが、primary/50 背景で約 2.4:1 と
  *       AA 不足のため、リンクテキストと同様 primary/600 に上げている。
  *
+ * 機能:
+ *   現在地を示しながら階層を移動する縦型ナビゲーション（マイページ等）。
+ *   サイト階層のパス表示は sidenav ではなく breadcrumb、表示切替は tab。
+ *
+ * 使用法:
+ *   OK: 現在地は aria-current="page"。グループは sidenav-group ＋ sidenav-divider で区切る。
+ *   NG: 現在地をクラスだけで示さない → aria-current="page" を付ける。
+ *   NG: 横並びのコンテンツ切替に流用しない → tab。
+ *
  * Usage:
  *   <nav class="sidenav" aria-label="マイページ">
  *     <ul class="sidenav-group">
