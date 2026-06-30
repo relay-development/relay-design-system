@@ -27,7 +27,7 @@
 3. **Blessed Spacing** — `p-{0,1,2,3,4,6,8,12,16}` のみ使う。5 / 7 / 9 / 10 などの倍数は使わない
 4. **Typography セマンティック層** — `.typo-{xsmall..3xlarge}` を使う。生の `text-sm` / `text-base` は禁止
 5. **ARIA 属性で状態を表現** — `[aria-pressed="true"]` / `[aria-selected="true"]` / `:disabled` を CSS selector に使う
-6. **Figma → コード の片方向同期** — Figma が正本。コードから Figma に逆流はしない
+6. **デフォルトは medium** — コンポーネントサイズは例外を除き `md` を使う。タイポグラフィも基準は `.typo-medium` (16px)
 7. **main 直 push 禁止** — すべて feature branch + PR + squash merge
 
 > 詳細は [CLAUDE.md](CLAUDE.md) の「🔴 必須ルール: ハードコーディング禁止」と「やってはいけないこと」を参照。
@@ -135,6 +135,8 @@ Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
 Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit
 ```
+
+> **サイズは例外を除き `md` をデフォルトに。** `btn` / `icon-btn` / `input` / `selector` / `textarea` 等のサイズ付きコンポーネントは、特段の理由（密なツールバーで `sm`、ヒーロー CTA で `lg/xl` 等）がない限り `*-md` を使う。`icon` も既定は `icon-md` (20px)。タイポグラフィの `.typo-medium` 基準と揃えると画面全体のリズムが安定する。
 
 > **リンクテキストは必ず本文とフォントサイズを揃える。** `.link` は `font-size`/`line-height` を周囲から inherit するので、置いた本文 (typo-small / typo-medium 等) のサイズに自動追従する。リンクだけ別サイズにしない（末尾アイコンも 1em で連動）。
 
