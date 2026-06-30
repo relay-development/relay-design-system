@@ -74,11 +74,43 @@ function deriveSummary(doc, componentName) {
   for (const line of lines) {
     if (!line) continue;
     if (line.startsWith(componentName)) continue; // title line
-    if (/recreated from|component set|props\s*:|Usage\s*:|^\*+$/i.test(line)) continue;
+    if (/recreated from|component set|props\s*:|Usage\s*:|機能\s*:|使用法\s*:|^(OK|NG):|^\*+$/i.test(line)) continue;
     if (line.endsWith(":")) continue; // sub-header label, not prose
     return line;
   }
   return null;
+}
+
+/**
+ * Pull the indented body under a column-0 `<label>:` line from the de-gutter'd
+ * header doc (e.g. "機能" / "使用法"). Stops at the next column-0 label (props:,
+ * Usage:, 使用法: …) or end of doc. Returns the trimmed body, or null if absent.
+ */
+function sliceDocLabel(doc, label) {
+  const lines = doc.split("\n");
+  const start = lines.findIndex((l) => l.trim() === `${label}:`);
+  if (start === -1) return null;
+  const body = [];
+  for (let i = start + 1; i < lines.length; i++) {
+    const line = lines[i];
+    if (line.trim() === "") { body.push(""); continue; }
+    if (!/^\s/.test(line)) break; // hit the next column-0 label → end of this block
+    body.push(line.trim());
+  }
+  return body.join("\n").trim() || null;
+}
+
+/** Split a 使用法 block into { ok[], ng[] } from leading OK:/NG: bullet lines. */
+function parseOkNg(block) {
+  if (!block) return null;
+  const ok = [];
+  const ng = [];
+  for (const raw of block.split("\n")) {
+    const m = raw.trim().match(/^(OK|NG):\s*(.+)$/);
+    if (!m) continue;
+    (m[1] === "OK" ? ok : ng).push(m[2].trim());
+  }
+  return ok.length || ng.length ? { ok, ng } : null;
 }
 
 async function buildComponents() {
@@ -108,11 +140,22 @@ async function buildComponents() {
       ).trim();
     }
 
+    // 機能 (what it's for / when to use vs alternatives) + 使用法 (OK/NG bullets).
+    // Optional per component — null until a header is migrated to the new format.
+    const functionDoc = sliceDocLabel(doc, "機能");
+    const usageBlock = sliceDocLabel(doc, "使用法");
+    const usage = parseOkNg(usageBlock);
+    if (usageBlock && !usage) {
+      console.warn(`[build-mcp] ${file}: 使用法 ブロックがあるが OK:/NG: 行を検出できません`);
+    }
+
     components.push({
       name,
       nameJa,
       figmaNode,
       summary: deriveSummary(doc, name),
+      function: functionDoc,
+      usage,
       classes: extractClasses(css),
       doc,
       snippet,
@@ -260,7 +303,8 @@ async function main() {
   console.log(
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
       `${components.length} components, ${tokenCount} tokens, ` +
-      `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets`,
+      `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ` +
+      `${components.filter((c) => c.function).length} with 機能`,
   );
 }
 

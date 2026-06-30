@@ -43,7 +43,7 @@ export const INSTRUCTIONS = [
   "【実装フロー】",
   "0. get_setup を呼び、CSS が導入済みか確認する（未導入なら導入してから UI を書く）。",
   "1. get_design_principles を読み、必須ルールと禁止パターンを把握する。",
-  "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。",
+  "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
   "",
@@ -83,12 +83,31 @@ function formatComponentList() {
   ];
   for (const c of index.components) {
     const ja = c.nameJa ? `（${c.nameJa}）` : "";
-    const summary = c.summary ? ` — ${c.summary}` : "";
+    // 機能の 1 行目があればそれを概要に使う（用途が伝わる）。無ければ従来の summary。
+    const lead = c.function ? c.function.split("\n")[0].trim() : c.summary;
+    const summary = lead ? ` — ${lead}` : "";
     const cls = c.classes.slice(0, 6).join(", ");
     lines.push(`- **${c.name}**${ja}${summary}`);
     lines.push(`  classes: ${cls}${c.classes.length > 6 ? ", …" : ""}`);
   }
   return lines.join("\n");
+}
+
+/** Remove the column-0 `<label>:` lines and their indented bodies from a header doc. */
+function stripDocLabels(doc, labels) {
+  const out = [];
+  let skipping = false;
+  for (const line of doc.split("\n")) {
+    const trimmed = line.trim();
+    if (labels.some((l) => trimmed === `${l}:`)) { skipping = true; continue; }
+    if (skipping) {
+      if (trimmed === "") continue; // blank line inside/after the block
+      if (/^\s/.test(line)) continue; // indented body → still in the block
+      skipping = false; // hit the next column-0 label → block ended
+    }
+    out.push(line);
+  }
+  return out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
 }
 
 function formatComponent(c) {
@@ -97,7 +116,19 @@ function formatComponent(c) {
   const url = figmaUrl(c.figmaNode);
   if (url) out.push(`Figma: component set ${c.figmaNode} — ${url}`);
   out.push("");
-  out.push(`## 仕様（src/components/${c.name}.css ヘッダより）`, "", c.doc || "（ドキュメントコメントなし）", "");
+
+  // 機能 / 使用法 を最初に出す（クラスや snippet を掴む前に「用途と NG」を読ませる）。
+  if (c.function) out.push("## 機能", "", c.function, "");
+  if (c.usage && ((c.usage.ok && c.usage.ok.length) || (c.usage.ng && c.usage.ng.length))) {
+    out.push("## 使用法", "");
+    for (const ok of c.usage.ok || []) out.push(`- ✅ ${ok}`);
+    for (const ng of c.usage.ng || []) out.push(`- ❌ ${ng}`);
+    out.push("");
+  }
+
+  // 仕様（doc）からは 機能/使用法 ブロックを除いて重複表示を避ける（doc 全文は index に保持）。
+  const spec = c.doc ? stripDocLabels(c.doc, ["機能", "使用法"]) : "";
+  out.push(`## 仕様（src/components/${c.name}.css ヘッダより）`, "", spec || "（ドキュメントコメントなし）", "");
   out.push(`## CSS クラス（${c.classes.length}）`, "", c.classes.map((x) => `.${x}`).join(", "), "");
   out.push("## コピペ用 HTML スニペット", "");
   out.push(c.snippet ? "```html\n" + c.snippet + "\n```" : "（このコンポーネントの snippet はありません。上記の Usage と CSS クラスを参照）");
@@ -229,6 +260,8 @@ function runSearch(query) {
         c.name.includes(q) ||
         (c.nameJa && c.nameJa.toLowerCase().includes(q)) ||
         (c.summary && c.summary.toLowerCase().includes(q)) ||
+        (c.function && c.function.toLowerCase().includes(q)) ||
+        (c.usage && [...(c.usage.ok || []), ...(c.usage.ng || [])].join(" ").toLowerCase().includes(q)) ||
         c.classes.some((cl) => cl.includes(q)) ||
         (c.doc && c.doc.toLowerCase().includes(q)),
     )
@@ -295,7 +328,7 @@ export const TOOLS = [
   {
     name: "get_component",
     description:
-      "指定コンポーネントの完全仕様（props・状態・色マッピング・usage 例・CSS クラス一覧・コピペ用 HTML スニペット・Figma リンク）を返す。name は 'button' / 'input' など（英名）。",
+      "指定コンポーネントの完全仕様を返す。機能（用途・代替コンポーネントとの使い分け）と使用法（OK/NG パターン）を先頭に、続いて props・状態・色マッピング・usage 例・CSS クラス一覧・コピペ用 HTML スニペット・Figma リンク。name は 'button' / 'input' など（英名）。",
     inputSchema: {
       type: "object",
       properties: { name: { type: "string", description: "コンポーネント英名（例: button, input, alert, card）" } },
