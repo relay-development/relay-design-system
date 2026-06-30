@@ -11,8 +11,11 @@
  *   色: enable = primary/700、hover = primary/800
  *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と不足のため
  *       primary/700 (約 7.0:1) に上げ、WCAG 2.2 AAA を満たす。
- *   タイポ: text-base (16/32) medium、ラベルに underline (from-font / skip-ink: none)。
- *     ※ Figma は 14/24 だが、可読性改善のため本文 (typo-medium 16/32) と同サイズに統一。
+ *   タイポ: font-size / line-height は周囲の本文を inherit（medium ウェイト + underline）。
+ *     ※ 本文中に置くリンクは必ず本文とフォントサイズを揃える。サイズを固定すると
+ *       typo-small (14px) 等の本文に入れたとき行が不揃いになるため、inherit で
+ *       周囲のサイズに自動追従させる（典型は typo-medium 16/32 の本文）。
+ *       末尾アイコンも 1em で文字サイズに連動する。
  *
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
@@ -25,9 +28,12 @@
 @layer components {
   .link {
     @apply inline-flex items-center gap-1
-           text-base leading-8 font-medium
+           font-medium
            text-primary-700 no-underline
            cursor-pointer;
+    /* 本文とフォントサイズを揃える: 周囲の typo-* から継承 */
+    font-size: inherit;
+    line-height: inherit;
   }
 
   /* 下線はラベルだけに掛け、アイコンには掛けない */
@@ -37,9 +43,11 @@
     text-decoration-skip-ink: none;
   }
 
-  /* 末尾の external-link アイコン (16px) */
+  /* 末尾の external-link アイコン: 文字サイズ (1em) に連動 */
   .link .icon {
-    @apply w-4 h-4 shrink-0;
+    @apply shrink-0;
+    width: 1em;
+    height: 1em;
   }
 
   /* Hover (カタログ用 .is-hover-preview も同条件) */

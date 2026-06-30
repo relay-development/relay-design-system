@@ -131,7 +131,10 @@ Simple Table       : <table class="simple-table"><tr><th>ラベル</th><td>値</
 Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
+Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit
 ```
+
+> **リンクテキストは必ず本文とフォントサイズを揃える。** `.link` は `font-size`/`line-height` を周囲から inherit するので、置いた本文 (typo-small / typo-medium 等) のサイズに自動追従する。リンクだけ別サイズにしない（末尾アイコンも 1em で連動）。
 
 ### Icons (Lucide SVG sprite, 38 icons)
 
