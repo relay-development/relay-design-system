@@ -1,6 +1,6 @@
 {
   "name": "@light-right/design-system",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "relay Design System — Tailwind CSS v4 based design tokens & HTML snippet library",
   "type": "module",
   "license": "MIT",
