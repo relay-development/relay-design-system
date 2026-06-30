@@ -144,6 +144,14 @@ git checkout -b add-<component-name>
  *
  *   サイズ / 余白 / 色のサマリ（Figma 値）
  *
+ * 機能:
+ *   <何のためのコンポーネントか＝役割を 1〜3 行。似て非なるものがあれば
+ *    「いつコレで、いつ別のものか」を 1 行で（例: 遷移=link / 実行=button）。>
+ *
+ * 使用法:
+ *   OK: <推奨される使い方を 1 行>
+ *   NG: <アンチパターン> → <代わりにどうするか / 理由>
+ *
  * Usage:
  *   <最小 HTML スニペット>
  */
@@ -355,6 +363,7 @@ main 保護下では `git push` が弾かれるため、**release ブランチ�
 - **カタログ用 hover/focus プレビュー**: `.is-hover-preview` / `.is-focus-preview` modifier を CSS 側で `:hover` / `:focus-visible` と OR 条件にする
 - **プレビューサイトのホスティング**: Netlify → GitHub Pages に移行済み（クレジット上限超過のため）。GitHub Pages は public repo + Free プランで容量無制限
 - **MCP サーバーは既存パッケージに同梱**（`bin: relay-ds-mcp` → `dist/mcp.mjs`）。`@modelcontextprotocol/sdk` は **esbuild でバンドル**して単一ファイル化し devDependency に留める（CSS だけ使う利用者に runtime 依存を増やさない）。コンテンツは二重管理せず `scripts/build-mcp.mjs` が正本ファイルから `dist/mcp-index.json` を生成 → server にインライン。**`get_component` の品質は `src/components/*.css` 先頭のヘッダコメント形式（`recreated from Figma component set NNNN:NNNN (和名)` + props + Usage）に依存する**ので、新規コンポーネントでもこの雛形を必ず踏襲する（ヘッダが無いと doc が空になる）
+- **コンポーネントの「機能」「使用法(OK/NG)」も CSS ヘッダが正本**。ヘッダに `機能:`（用途・代替コンポーネントとの使い分け）と `使用法:`（`OK:` / `NG:` で始まる行）ブロックを書くと、`build-mcp.mjs` が `function` / `usage{ok,ng}` フィールドに抽出し `get_component` がクラスより前に表示する。さらに `build-pages.mjs` が `dist/mcp-index.json` を読み、カタログ fragment 内の `<!-- usage:auto:<name> -->` マーカーを「機能・使用法」カードに置換する（人間向け表示も同じ正本から自動生成・二重管理なし）。**この自動注入のため `dev` / `build:site` は `build:pages` の前に `build:mcp-index` を実行する**（順序を崩さない）。ブロックの**どの行にも `*/` を書かない**（CSS ブロックコメントが閉じてしまう／ヘッダが途中で切れる）。`使用法:` があるのに `OK:`/`NG:` 行が無いと build-mcp が warn を出す
 
 ---
 

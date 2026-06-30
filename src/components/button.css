@@ -8,6 +8,18 @@
  *     neutral  : solid / outline / subtle / ghost  (outline border uses border/high — theme-independent)
  *     negative : solid / outline / subtle / ghost  (outline bg is negative/50, not white)
  *
+ * 機能:
+ *   ユーザーのアクション（送信・保存・削除など）を引き起こす主操作要素。
+ *   ページ遷移そのものが目的なら button ではなく link を使う。
+ *
+ * 使用法:
+ *   OK: 主要アクションは 1 画面に btn-primary 1 つ。副次は btn-neutral / btn-ghost。
+ *   OK: 破壊的操作（削除など）は btn-negative。
+ *   OK: 非同期処理中は data-loading を付け二重送信を防ぐ。
+ *   NG: 遷移リンクを btn でスタイルしない → href のナビゲーションは link。
+ *   NG: 1 画面に btn-primary を複数置かない → 主従が伝わらない。副次は neutral/ghost。
+ *   NG: 色を #hex 直書きしない → btn-primary 等のクラスで色は決まる。
+ *
  * Usage:
  *   <button class="btn btn-md btn-primary btn-solid">ボタン</button>
  *   <button class="btn btn-lg btn-negative btn-outline">削除</button>

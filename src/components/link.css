@@ -17,6 +17,17 @@
  *       周囲のサイズに自動追従させる（典型は typo-medium 16/32 の本文）。
  *       末尾アイコンも 1em で文字サイズに連動する。
  *
+ * 機能:
+ *   コンテンツがナビゲーション可能であることを示すインラインリンク。
+ *   結果が「移動」なら link、「処理の実行」なら button。
+ *
+ * 使用法:
+ *   OK: 本文中に置き font-size は周囲から inherit（サイズを固定しない）。
+ *   OK: 別タブは target="_blank" rel="noopener noreferrer" ＋外部リンクアイコン。
+ *   NG: 送信などのアクションに link を使わない → button。
+ *   NG: フォントサイズを固定しない → 本文と行が不揃いになる。inherit のまま。
+ *   NG: enable 色を primary/500 に下げない → 白背景でコントラスト不足。primary/700 を保つ。
+ *
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
  *     <span class="link-label">リンクテキスト</span>

@@ -35,6 +35,16 @@
  *   selected の右側チェックマーク:
  *     enable/hover → primary/500 の塗りまる + 白チェック
  *     disabled     → primary/200 の塗りまる + 白チェック
+ *
+ * 機能:
+ *   タグや単語でコンテンツを絞り込むトグル可能なチップ。複数同時選択の絞り込みに使う。
+ *   複数選択の絞り込み=filter-chip / 単一選択=radio / ON-OFF 設定=checkbox。
+ *
+ * 使用法:
+ *   OK: 選択状態は aria-pressed="true|false"。
+ *   OK: 件数表示は filter-chip-count。
+ *   NG: 単一選択しか許さない設問に並べない → radio。
+ *   NG: チップ形状を独自シェイプに変えない → 何個選べるか直感が崩れる（guidelines 参照）。
  */
 
 @layer components {

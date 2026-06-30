@@ -20,6 +20,74 @@ const ROOT = resolve(__dirname, "..");
 const EXAMPLES = resolve(ROOT, "examples");
 const PAGES_DIR = resolve(EXAMPLES, "pages");
 
+// ── 機能 / 使用法 auto-injection ─────────────────────────────────────────────
+// The MCP index (dist/mcp-index.json, built by build-mcp.mjs which runs before
+// this script — see package.json `dev` / `build:site`) is the single source of
+// truth for each component's 機能 (purpose) + 使用法 (OK/NG). A fragment opts in
+// with a `<!-- usage:auto:<component-name> -->` marker; we render a card from the
+// index in its place. Missing index → markers are left as-is (no failure).
+let mcpComponents = new Map();
+try {
+  const idx = JSON.parse(readFileSync(resolve(ROOT, "dist/mcp-index.json"), "utf8"));
+  mcpComponents = new Map((idx.components || []).map((c) => [c.name, c]));
+} catch {
+  mcpComponents = new Map(); // index not built yet (older checkout) — skip injection
+}
+
+const esc = (s) =>
+  String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** Render the 機能・使用法 card for a component, or "" if it has no such data. */
+function renderUsageCard(c) {
+  if (!c || (!c.function && !c.usage)) return "";
+  const fn = c.function
+    ? `<p class="typo-article text-fg-high">${esc(c.function).replace(/\n/g, "<br>")}</p>`
+    : "";
+  const li = (mark, cls, t) =>
+    `              <li class="flex gap-2"><span class="${cls} shrink-0 font-bold">${mark}</span><span>${esc(t)}</span></li>`;
+  const ok = (c.usage?.ok || []).map((t) => li("✓", "text-success-700", t)).join("\n");
+  const ng = (c.usage?.ng || []).map((t) => li("✕", "text-negative-600", t)).join("\n");
+  const okBlock = ok
+    ? `            <div class="p-5">
+              <p class="typo-medium font-bold text-success-700 mb-3">OK</p>
+              <ul class="typo-small text-fg-middle space-y-2">
+${ok}
+              </ul>
+            </div>`
+    : "";
+  const ngBlock = ng
+    ? `            <div class="p-5 bg-negative-50">
+              <p class="typo-medium font-bold text-negative-600 mb-3">NG</p>
+              <ul class="typo-small text-fg-middle space-y-2">
+${ng}
+              </ul>
+            </div>`
+    : "";
+  const grid =
+    okBlock || ngBlock
+      ? `          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low border-t border-stroke-low">
+${[okBlock, ngBlock].filter(Boolean).join("\n")}
+          </div>`
+      : "";
+  return `      <div class="card overflow-hidden mb-8">
+        <div class="card-header">
+          <h3 class="card-title">機能・使用法</h3>
+          <p class="card-subtitle">このコンポーネントの用途と、やりがちな NG パターン</p>
+        </div>
+        <div class="card-body">
+${fn}
+        </div>
+${grid}
+      </div>`;
+}
+
+/** Replace every `<!-- usage:auto:<name> -->` marker with the rendered card. */
+function injectUsage(content) {
+  return content.replace(/<!-- usage:auto:([\w-]+) -->/g, (_, name) =>
+    renderUsageCard(mcpComponents.get(name)),
+  );
+}
+
 // ── Master page list (single source of truth for nav + titles) ──────────────
 // group: sidebar group title (pages with the same group are bundled together).
 // label: sidebar link text.  title: <title> + landing card heading.
@@ -173,7 +241,7 @@ function readFragment(file) {
 const all = [INDEX, ...PAGES];
 let written = 0;
 for (const p of all) {
-  const content = readFragment(p.file);
+  const content = injectUsage(readFragment(p.file));
   const html = render({ title: p.title, group: p.group, content, activeFile: p.file });
   writeFileSync(resolve(EXAMPLES, p.file), html, "utf8");
   written++;

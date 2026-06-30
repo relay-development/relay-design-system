@@ -40,14 +40,15 @@
     "access": "public"
   },
   "scripts": {
-    "dev": "npm run build:icons && npm run build:pages && vite",
+    "dev": "npm run build:icons && npm run build:mcp-index && npm run build:pages && vite",
     "build:icons": "node scripts/build-icons.mjs",
     "build:pages": "node scripts/build-pages.mjs",
-    "build:mcp": "node scripts/build-mcp.mjs && esbuild src/mcp/server.mjs --bundle --platform=node --format=esm --packages=bundle --outfile=dist/mcp.mjs --banner:js=\"#!/usr/bin/env node\" && chmod +x dist/mcp.mjs",
+    "build:mcp-index": "node scripts/build-mcp.mjs",
+    "build:mcp": "npm run build:mcp-index && esbuild src/mcp/server.mjs --bundle --platform=node --format=esm --packages=bundle --outfile=dist/mcp.mjs --banner:js=\"#!/usr/bin/env node\" && chmod +x dist/mcp.mjs",
     "dev:mcp-remote": "wrangler dev",
     "deploy:mcp": "wrangler deploy",
     "build": "vite build && vite build --config vite.tokens.config.ts && npm run build:icons && npm run build:mcp",
-    "build:site": "npm run build:icons && npm run build:pages && vite build --config vite.site.config.ts && cp examples/icons.svg site/icons.svg && cp -R examples/assets/. site/assets/",
+    "build:site": "npm run build:icons && npm run build:mcp-index && npm run build:pages && vite build --config vite.site.config.ts && cp examples/icons.svg site/icons.svg && cp -R examples/assets/. site/assets/",
     "preview:site": "vite preview --config vite.site.config.ts",
     "preview": "vite preview",
     "prepublishOnly": "npm run build"
