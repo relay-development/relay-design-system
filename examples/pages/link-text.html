@@ -5,18 +5,6 @@
         <span class="badge badge-soft-primary">component</span>
       </div>
             <p class="typo-article text-fg-high mb-6">文章の中に置く、別のページへ移動できるリンクです。緑色の下線付きで、リンクであることが一目で分かります。</p>
-
-      <!-- ===== ルール: 本文とフォントサイズを揃える ===== -->
-      <div class="alert alert-info mb-8">
-        <span class="alert-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-        </span>
-        <div class="alert-content">
-          <p class="alert-title">リンクは必ず本文とフォントサイズを揃える</p>
-          <p class="alert-body"><code class="px-1 bg-neutral-100 rounded">.link</code> は <code class="px-1 bg-neutral-100 rounded">font-size</code> / <code class="px-1 bg-neutral-100 rounded">line-height</code> を周囲の本文から inherit するため、置いた本文のサイズ（typo-small / typo-medium 等）に自動で追従します。リンクだけ別サイズにしないでください。末尾の外部リンクアイコンも 1em で文字サイズに連動します。</p>
-        </div>
-      </div>
-
       <!-- ===== state マトリクス ===== -->
       <div class="card mb-6 overflow-hidden">
         <div class="card-header">
@@ -89,13 +77,17 @@
           <h3 class="card-title">使用例</h3>
           <p class="card-subtitle">本文中に埋め込む</p>
         </div>
-        <div class="card-body">
+        <div class="card-body space-y-4">
           <p class="typo-medium text-fg-high">
             詳しくは
             <a class="link" href="#"><span class="link-label">プライバシーポリシー</span></a>
             をご確認ください。設定は
             <a class="link" href="#"><span class="link-label">アカウント設定</span></a>
             から変更できます。
+          </p>
+          <p class="typo-small text-fg-middle">
+            <strong class="font-medium text-fg-high">リンクは必ず本文とフォントサイズを揃える。</strong>
+            <code class="px-1 bg-neutral-100 rounded">.link</code> は <code class="px-1 bg-neutral-100 rounded">font-size</code> / <code class="px-1 bg-neutral-100 rounded">line-height</code> を周囲の本文から inherit するため、置いた本文のサイズ（typo-small / typo-medium 等）に自動で追従します。リンクだけ別サイズにしないでください。末尾の外部リンクアイコンも 1em で文字サイズに連動します。
           </p>
         </div>
       </div>
