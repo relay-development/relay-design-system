@@ -96,6 +96,8 @@ spacing/12 = 48px      spacing/16 = 64px
 ウェイト         : font-{thin,light,normal,medium,bold,black} (100..900)
 ```
 
+**ベースは `.typo-medium`（16px）。** 本文も各コンポーネント内のテキストも medium（16px）を基準サイズとして使う。補助・キャプションで下げる（small/xsmall）、見出しで上げる（large 以上）のは、この 16px ベースからの相対調整として選ぶ。
+
 **`text-sm` / `text-base` を直接書かない。** 必ず `.typo-*` を経由。
 
 **`.typo-article` は原則 `text-fg-high` とセットで使う。** 読み物本文は高コントラストを確保する（例: `<p class="typo-article text-fg-high">`）。

@@ -28,11 +28,15 @@
  *
  * 機能:
  *   Figma の命名サイズに 1:1 対応する意味づけテキストスタイル層（.typo-*）。
+ *   ベースは typo-medium (16px)。本文も各コンポーネント内のテキストも
+ *   medium を基準サイズとして使い、補助/見出しはそこからの相対で選ぶ。
  *
  * 使用法:
- *   OK: 用途で選ぶ（本文=typo-medium、読み物本文=typo-article、見出し=typo-xlarge 等）。
+ *   OK: 基準は typo-medium (16px)。本文・各コンポーネントのテキストは medium をベースに。
+ *   OK: 補助/キャプションは small/xsmall、見出しは large 以上を 16px ベースから相対で選ぶ。
  *   OK: weight は font-bold / font-medium で上書きできる。
  *   NG: text-sm / font-size を直書きしない → .typo-* を使う。
+ *   NG: 既定サイズを下げて本文を small で組まない → 本文の基準は medium (16px)。
  *   NG: 行間を独自指定しない → 8 の倍数の規定 line-height を保つ。
  *
  * Usage:
