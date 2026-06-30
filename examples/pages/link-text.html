@@ -51,19 +51,43 @@
         </div>
       </div>
 
+      <!-- ===== 本文サイズへの追従 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">本文サイズへの追従</h3>
+          <p class="card-subtitle">同じ <code class="px-1 bg-neutral-100 rounded">.link</code> が周囲の typo-* サイズに自動で揃う</p>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="typo-small text-fg-high">
+            typo-small (14px) の本文に置くと
+            <a class="link" href="#"><span class="link-label">リンクも 14px</span></a>
+            になり、行が揃います。
+          </p>
+          <p class="typo-medium text-fg-high">
+            typo-medium (16px) の本文に置くと
+            <a class="link" href="#"><span class="link-label">リンクも 16px</span></a>
+            になります。
+          </p>
+        </div>
+      </div>
+
       <!-- ===== 使用例 ===== -->
       <div class="card mb-8">
         <div class="card-header">
           <h3 class="card-title">使用例</h3>
           <p class="card-subtitle">本文中に埋め込む</p>
         </div>
-        <div class="card-body">
+        <div class="card-body space-y-4">
           <p class="typo-medium text-fg-high">
             詳しくは
             <a class="link" href="#"><span class="link-label">プライバシーポリシー</span></a>
             をご確認ください。設定は
             <a class="link" href="#"><span class="link-label">アカウント設定</span></a>
             から変更できます。
+          </p>
+          <p class="typo-article text-fg-middle">
+            <strong class="font-medium text-fg-high">リンクは必ず本文とフォントサイズを揃える。</strong>
+            <code class="px-1 bg-neutral-100 rounded">.link</code> は <code class="px-1 bg-neutral-100 rounded">font-size</code> / <code class="px-1 bg-neutral-100 rounded">line-height</code> を周囲の本文から inherit するため、置いた本文のサイズ（typo-small / typo-medium 等）に自動で追従します。リンクだけ別サイズにしないでください。末尾の外部リンクアイコンも 1em で文字サイズに連動します。
           </p>
         </div>
       </div>
