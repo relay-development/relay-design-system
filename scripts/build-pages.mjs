@@ -37,12 +37,25 @@ try {
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** Render the 機能・使用法 card for a component, or "" if it has no such data. */
+/** Render the 機能 card + 使用法 card for a component (separate cards), or "". */
 function renderUsageCard(c) {
   if (!c || (!c.function && !c.usage)) return "";
-  const fn = c.function
-    ? `<p class="typo-article text-fg-high">${esc(c.function).replace(/\n/g, "<br>")}</p>`
-    : "";
+  const cards = [];
+
+  // 機能 card — what the component is for.
+  if (c.function) {
+    cards.push(`      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">機能</h3>
+          <p class="card-subtitle">このコンポーネントの用途</p>
+        </div>
+        <div class="card-body">
+          <p class="typo-article text-fg-high">${esc(c.function).replace(/\n/g, "<br>")}</p>
+        </div>
+      </div>`);
+  }
+
+  // 使用法 card — OK / NG patterns side by side.
   const li = (mark, cls, t) =>
     `              <li class="flex gap-2"><span class="${cls} shrink-0 font-bold">${mark}</span><span>${esc(t)}</span></li>`;
   const ok = (c.usage?.ok || []).map((t) => li("✓", "text-success-700", t)).join("\n");
@@ -63,22 +76,19 @@ ${ng}
               </ul>
             </div>`
     : "";
-  const grid =
-    okBlock || ngBlock
-      ? `          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low border-t border-stroke-low">
-${[okBlock, ngBlock].filter(Boolean).join("\n")}
-          </div>`
-      : "";
-  return `      <div class="card overflow-hidden mb-8">
+  if (okBlock || ngBlock) {
+    cards.push(`      <div class="card overflow-hidden mb-8">
         <div class="card-header">
-          <h3 class="card-title">機能・使用法</h3>
-          <p class="card-subtitle">このコンポーネントの用途と、やりがちな NG パターン</p>
+          <h3 class="card-title">使用法</h3>
+          <p class="card-subtitle">推奨される使い方と、やりがちな NG パターン</p>
         </div>
-        <div class="card-body">
-${fn}
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+${[okBlock, ngBlock].filter(Boolean).join("\n")}
         </div>
-${grid}
-      </div>`;
+      </div>`);
+  }
+
+  return cards.join("\n");
 }
 
 /** Replace every `<!-- usage:auto:<name> -->` marker with the rendered card. */
