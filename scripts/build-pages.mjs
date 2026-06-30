@@ -88,6 +88,10 @@ ${[okBlock, ngBlock].filter(Boolean).join("\n")}
       </div>`);
   }
 
+  // 直前要素に下マージンが無いページ（badge / card 等）でも一定の間隔を保つため、
+  // 先頭カードに mt-8 を付ける。直前が mb-8 のページでは隣接マージンが相殺され 32px のまま。
+  if (cards.length) cards[0] = cards[0].replace('<div class="card', '<div class="card mt-8');
+
   return cards.join("\n");
 }
 
