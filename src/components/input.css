@@ -80,21 +80,4 @@
   .input-error:disabled {
     @apply bg-neutral-50 border-negative-200 text-fg-disabled;
   }
-
-  /* ============================================================
-   * Helpers used by labels around the input
-   * (kept for backward compatibility — Label Control is preferred)
-   * ============================================================ */
-  .field {
-    @apply flex flex-col gap-1.5;
-  }
-  .field-label {
-    @apply text-sm font-medium text-fg-high;
-  }
-  .field-hint {
-    @apply text-xs text-fg-low;
-  }
-  .field-error {
-    @apply text-xs text-negative-700;
-  }
 }

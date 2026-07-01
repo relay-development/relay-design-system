@@ -1,19 +1,34 @@
-<!-- Basic with label -->
-<div class="field">
-  <label class="field-label" for="email">メールアドレス</label>
-  <input id="email" type="email" class="input" placeholder="you@example.com" />
-  <span class="field-hint">ログインに使用します</span>
+<!-- Basic — label-control (ラベル + バッジ + 補足) + input -->
+<div class="space-y-2">
+  <div class="label-control">
+    <div class="label-control-row">
+      <label class="label-control-text" for="email">メールアドレス</label>
+      <span class="label-badge label-badge-required">必須</span>
+    </div>
+    <p class="label-control-support">ログインに使用します</p>
+  </div>
+  <input id="email" type="email" class="input input-md" placeholder="you@example.com" />
 </div>
 
 <!-- Error state -->
-<div class="field">
-  <label class="field-label" for="pw">パスワード</label>
-  <input id="pw" type="password" class="input input-error" />
-  <span class="field-error">8文字以上で入力してください</span>
+<div class="space-y-2">
+  <div class="label-control">
+    <div class="label-control-row">
+      <label class="label-control-text" for="pw">パスワード</label>
+      <span class="label-badge label-badge-required">必須</span>
+    </div>
+    <p class="label-control-support">8文字以上で入力してください</p>
+  </div>
+  <input id="pw" type="password" class="input input-md input-error" />
 </div>
 
 <!-- Disabled -->
-<div class="field">
-  <label class="field-label" for="name">氏名</label>
-  <input id="name" type="text" class="input" value="山田 太郎" disabled />
+<div class="space-y-2">
+  <div class="label-control">
+    <div class="label-control-row">
+      <label class="label-control-text" for="name">氏名</label>
+      <span class="label-badge label-badge-disabled">編集不可</span>
+    </div>
+  </div>
+  <input id="name" type="text" class="input input-md" value="山田 太郎" disabled />
 </div>

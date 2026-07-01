@@ -16,10 +16,16 @@
   選択できません
 </label>
 
-<!-- Group -->
-<fieldset class="flex flex-col gap-2">
-  <legend class="field-label mb-2">通知設定</legend>
-  <label class="checkbox-label"><input type="checkbox" class="checkbox" checked /> メール</label>
-  <label class="checkbox-label"><input type="checkbox" class="checkbox" /> SMS</label>
-  <label class="checkbox-label"><input type="checkbox" class="checkbox" /> プッシュ通知</label>
-</fieldset>
+<!-- Group — label-control をグループの上に置く -->
+<div>
+  <div class="label-control mb-2">
+    <div class="label-control-row">
+      <span class="label-control-text">通知設定</span>
+    </div>
+  </div>
+  <fieldset class="flex flex-col gap-2">
+    <label class="checkbox-label"><input type="checkbox" class="checkbox" checked /> メール</label>
+    <label class="checkbox-label"><input type="checkbox" class="checkbox" /> SMS</label>
+    <label class="checkbox-label"><input type="checkbox" class="checkbox" /> プッシュ通知</label>
+  </fieldset>
+</div>
