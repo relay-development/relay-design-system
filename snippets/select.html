@@ -1,6 +1,10 @@
 <!-- Basic -->
-<div class="field">
-  <label class="field-label" for="country">国</label>
+<div class="space-y-2">
+  <div class="label-control">
+    <div class="label-control-row">
+      <label class="label-control-text" for="country">国</label>
+    </div>
+  </div>
   <select id="country" class="select">
     <option value="">選択してください</option>
     <option value="jp">日本</option>
@@ -10,14 +14,19 @@
 </div>
 
 <!-- Error -->
-<div class="field">
-  <label class="field-label" for="plan">プラン</label>
+<div class="space-y-2">
+  <div class="label-control">
+    <div class="label-control-row">
+      <label class="label-control-text" for="plan">プラン</label>
+      <span class="label-badge label-badge-required">必須</span>
+    </div>
+    <p class="label-control-support">プランを選択してください</p>
+  </div>
   <select id="plan" class="select select-error">
     <option value="">未選択</option>
     <option value="free">Free</option>
     <option value="pro">Pro</option>
   </select>
-  <span class="field-error">プランを選択してください</span>
 </div>
 
 <!-- Disabled -->

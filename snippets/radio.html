@@ -1,16 +1,29 @@
-<!-- Vertical group -->
-<fieldset class="radio-group">
-  <legend class="field-label mb-2">プラン</legend>
-  <label class="radio-label"><input type="radio" name="plan" class="radio" checked /> Free</label>
-  <label class="radio-label"><input type="radio" name="plan" class="radio" /> Pro</label>
-  <label class="radio-label"><input type="radio" name="plan" class="radio" /> Enterprise</label>
-</fieldset>
+<!-- Vertical group — label-control をグループの上に置く -->
+<div>
+  <div class="label-control mb-2">
+    <div class="label-control-row">
+      <span class="label-control-text">プラン</span>
+      <span class="label-badge label-badge-required">必須</span>
+    </div>
+  </div>
+  <fieldset class="radio-group">
+    <label class="radio-label"><input type="radio" name="plan" class="radio" checked /> Free</label>
+    <label class="radio-label"><input type="radio" name="plan" class="radio" /> Pro</label>
+    <label class="radio-label"><input type="radio" name="plan" class="radio" /> Enterprise</label>
+  </fieldset>
+</div>
 
 <!-- Horizontal group -->
-<fieldset class="radio-group-horizontal">
-  <legend class="field-label mb-2">サイズ</legend>
-  <label class="radio-label"><input type="radio" name="size" class="radio" /> S</label>
-  <label class="radio-label"><input type="radio" name="size" class="radio" checked /> M</label>
-  <label class="radio-label"><input type="radio" name="size" class="radio" /> L</label>
-  <label class="radio-label"><input type="radio" name="size" class="radio" disabled /> XL</label>
-</fieldset>
+<div>
+  <div class="label-control mb-2">
+    <div class="label-control-row">
+      <span class="label-control-text">サイズ</span>
+    </div>
+  </div>
+  <fieldset class="radio-group-horizontal">
+    <label class="radio-label"><input type="radio" name="size" class="radio" /> S</label>
+    <label class="radio-label"><input type="radio" name="size" class="radio" checked /> M</label>
+    <label class="radio-label"><input type="radio" name="size" class="radio" /> L</label>
+    <label class="radio-label"><input type="radio" name="size" class="radio" disabled /> XL</label>
+  </fieldset>
+</div>
