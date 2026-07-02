@@ -177,7 +177,15 @@ currentColor を継承するので text-primary-500 等で着色可能
 | `is-selected` クラス | `aria-selected="true"` |
 | main へ直 push | feature branch + PR |
 
-> ハードコード許容例外 (Figma 由来の 1 箇所限定装飾色、比率値 100% / auto 等) は [CLAUDE.md](CLAUDE.md#例外ハードコードを許容するケース) 参照。
+### ハードコードを許容する例外
+
+上記は原則。以下のケースに限りハードコードを許容する（いずれもコメントで由来を明記）:
+
+| 状況 | 例 | 理由 |
+|---|---|---|
+| Figma 由来の **bespoke カラー** がパレットに無い | hero gradient `#d9ebea` / `#e7f6f6` | 1 箇所限定の装飾色。トークン化するほどではない。コメントで由来を明記 |
+| Figma 仕様で **off-scale な余白** が出る | (例) コンポーネント内 7px パディング | 該当パーツで本当に必要なら raw 値 OK。ただしコメントで「Figma 仕様」と明記 |
+| **比率・100% / auto** | `width: 50%` `height: auto` `inset: 0` | スケール非依存値はそのまま |
 
 ---
 
