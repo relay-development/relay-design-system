@@ -246,6 +246,38 @@ async function buildAssets() {
   return assets;
 }
 
+/**
+ * Bundle the sprint development kit: the subagent definitions (.claude/agents/*.md)
+ * and workflow scripts (.claude/workflows/*.js) that drive the planner → generator
+ * ⇄ evaluator sprint loop. The MCP server ships these verbatim via get_sprint_kit
+ * so consuming projects can install them into their own .claude/ directory —
+ * agents/workflows only run from the local filesystem, so the MCP acts as the
+ * distribution channel, not the runtime.
+ */
+async function buildSprintKit() {
+  const readDir = async (rel, ext) => {
+    const dir = path.join(projectRoot, rel);
+    let files;
+    try {
+      files = (await readdir(dir)).filter((f) => f.endsWith(ext)).sort();
+    } catch {
+      return []; // directory absent (older checkout) — ship an empty kit rather than fail
+    }
+    return Promise.all(
+      files.map(async (f) => ({
+        name: f.replace(new RegExp(`\\${ext}$`), ""),
+        path: `${rel}/${f}`,
+        content: (await readFile(path.join(dir, f), "utf8")).trimEnd() + "\n",
+      })),
+    );
+  };
+  const [agents, workflows] = await Promise.all([
+    readDir(".claude/agents", ".md"),
+    readDir(".claude/workflows", ".js"),
+  ]);
+  return { agents, workflows };
+}
+
 /** Slice a markdown section that starts at a heading and ends at the next heading of <= depth. */
 function sliceSection(md, startHeading, stopDepths) {
   const lines = md.split("\n");
@@ -272,11 +304,12 @@ async function main() {
     await readFile(path.join(projectRoot, "package.json"), "utf8"),
   );
 
-  const [components, tokens, design, assets] = await Promise.all([
+  const [components, tokens, design, assets, sprintKit] = await Promise.all([
     buildComponents(),
     buildTokens(),
     buildDesign(),
     buildAssets(),
+    buildSprintKit(),
   ]);
 
   const index = {
@@ -285,10 +318,11 @@ async function main() {
     figmaFile: FIGMA_FILE,
     catalogUrl: "https://relay-development.github.io/relay-design-system",
     generatedFrom:
-      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md",
+      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, .claude/agents/*.md, .claude/workflows/*.js",
     components,
     tokens,
     assets,
+    sprintKit,
     principles: design.principles,
     forbiddenPatterns: design.forbidden,
     designConstitution: design.full,
@@ -304,7 +338,8 @@ async function main() {
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
       `${components.length} components, ${tokenCount} tokens, ` +
       `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ` +
-      `${components.filter((c) => c.function).length} with 機能`,
+      `${components.filter((c) => c.function).length} with 機能, ` +
+      `sprint kit ${sprintKit.agents.length} agents + ${sprintKit.workflows.length} workflows`,
   );
 }
 

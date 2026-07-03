@@ -17,6 +17,10 @@
  *     get_design_principles    — non-negotiable rules + forbidden patterns (Top 10)
  *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
+ *     get_sprint_kit           — planner/generator/evaluator agents + sprint workflow の配布
+ *
+ *   Prompts (Claude Code では /mcp__<server>__sprint スラッシュコマンドになる):
+ *     sprint(task?)            — sprint kit のインストール → Workflow 実行を指示
  */
 
 import index from "../../dist/mcp-index.json" with { type: "json" };
@@ -51,6 +55,9 @@ export const INSTRUCTIONS = [
   "- 色 / 余白 / タイポ / 角丸 / 影をハードコードしない（#hex やピクセル直書き・任意値クラスを避け、トークン／ユーティリティ経由で書く）。",
   "- 既存コンポーネントがある UI は手書きで再実装せず relay コンポーネントを使う。",
   "- 独自のブランド色（青など）を持ち込まない。基調はブランド緑 primary / 黄 secondary。",
+  "",
+  "【スプリント開発キット（Claude Code 向け）】",
+  "「実装→評価→修正」を自動往復させるスプリント開発（planner / generator / evaluator subagent + sprint workflow）を使いたい場合は get_sprint_kit を呼ぶこと。ファイル一式と .claude/ へのインストール手順が返る。",
 ].join("\n");
 
 /* ------------------------------------------------------------------ helpers */
@@ -251,6 +258,64 @@ function formatPrinciples() {
   ].join("\n");
 }
 
+/**
+ * The sprint kit ships agent/workflow definition FILES, not knowledge — they only
+ * run once written into the consuming project's .claude/ directory (Workflow's
+ * agentType resolves from the local filesystem). So the payload is an install
+ * guide followed by every file verbatim. Files are delimited with `===== FILE`
+ * marker lines instead of markdown fences because the file bodies themselves
+ * contain fences and tables that would break any ``` nesting.
+ */
+function formatSprintKit() {
+  const kit = index.sprintKit || { agents: [], workflows: [] };
+  if (!kit.agents.length && !kit.workflows.length) {
+    return "スプリント開発キットがこのビルドに含まれていません（build:mcp-index を .claude/ が存在するチェックアウトで再実行してください）。";
+  }
+
+  const out = [
+    "# relay スプリント開発キット — planner / generator / evaluator + sprint workflow",
+    "",
+    "relay DS 準拠の UI を「実装 → 評価 → 修正」の自動往復で仕上げる **Claude Code 用**キット。",
+    "subagent 定義とワークフロースクリプトは**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、この MCP は配布のみを担う。以下の手順でインストールしてから実行すること。",
+    "",
+    "## 構成",
+    "",
+    "- **planner**（企画・要件定義）— 議事録等から課題を発見し仮説3つ・PRD・KPI・スプリント計画を `docs/` に出力。実装はしない",
+    "- **generator**（実装）— 1スプリント=1機能で DS 準拠実装＋セルフチェック（ハードコード / DS 準拠 / AI スロップ）",
+    "- **evaluator**（品質ゲート）— 成果物を実測し PASS/FAIL 判定。ファイルは変更しない",
+    "- **sprint workflow** — generator ⇄ evaluator を PASS まで自動往復（最大 maxRounds 回）",
+    "",
+    "## 前提",
+    "",
+    "- Claude Code（subagent 定義 `.claude/agents/` と Workflow ツールをサポートするバージョン）",
+    "- この relay-design-system MCP サーバーが接続済みであること",
+    "- evaluator は Playwright MCP（`mcp__playwright__*`）で実機確認する。未導入なら導入するか、evaluator の `tools:` から Playwright 系を外して静的計測のみで運用する",
+    "",
+    "## インストール手順（このキットを受け取った AI が行うこと）",
+    "",
+    "1. 下記の各ファイルを、利用中プロジェクトの**同じ相対パス**（`.claude/agents/…` / `.claude/workflows/…`）へ**一字一句そのまま**書き込む。`===== FILE:` / `===== END FILE` の区切り行自体は含めない。既存の同名ファイルがある場合は上書き前にユーザーへ確認する",
+    "2. **tools プレフィックスを確認する。** agent frontmatter の `tools:` は claude.ai コネクタ接続時の名前 `mcp__claude_ai_relay-design-system__*` で書かれている。自分の環境で relay DS のツールが別名（例: stdio 接続の `mcp__relay-ds__get_component`）の場合は、自分が現在呼べる実際のツール名に合わせて全 agent ファイル内のプレフィックスを置換する",
+    "3. 書き込んだ agent 定義が認識されない場合は Claude Code のセッションを再起動する",
+    "",
+    "## 実行方法",
+    "",
+    '- **スプリント**: Workflow ツールで `{ name: "sprint", args: { task: "<実装する1機能の説明>", maxRounds: 4 } }`。1スプリント=1機能。複数機能は分割して1つずつ渡す',
+    '- **企画から始める場合**: Agent ツールで `subagent_type: "planner"` に議事録・要望等を渡し、出力された `docs/sprint-plan.md` の各スプリントを順に sprint workflow へ渡す',
+    "",
+    "---",
+    "",
+    "## ファイル一式",
+    "",
+  ];
+
+  for (const f of [...kit.agents, ...kit.workflows]) {
+    out.push(`===== FILE: ${f.path} =====`);
+    out.push(f.content.trimEnd());
+    out.push(`===== END FILE: ${f.path} =====`, "");
+  }
+  return out.join("\n");
+}
+
 function runSearch(query) {
   const q = String(query || "").trim().toLowerCase();
   if (!q) return "検索クエリが空です。";
@@ -372,6 +437,12 @@ export const TOOLS = [
       additionalProperties: false,
     },
   },
+  {
+    name: "get_sprint_kit",
+    description:
+      "【Claude Code 向け】relay のスプリント開発キット（planner / generator / evaluator subagent 定義 + sprint workflow スクリプト）をインストール手順付きで返す。「実装→評価→修正」を PASS まで自動往復させたいとき・relay 流のスプリント開発を始めたいときに呼ぶ。返ってきたファイル一式を利用側プロジェクトの .claude/ に書き込んでから Workflow で実行する。",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
 ];
 
 /**
@@ -407,6 +478,8 @@ export function callTool(name, args = {}) {
       return { text: formatAssets() };
     case "search":
       return { text: runSearch(args.query) };
+    case "get_sprint_kit":
+      return { text: formatSprintKit() };
     default:
       return { text: `Unknown tool: ${name}`, isError: true };
   }
@@ -420,6 +493,13 @@ export function listResources() {
       uri: "relay://design-constitution",
       name: "relay Design Constitution (DESIGN.md)",
       description: "思想・非交渉原則・クイックリファレンス・禁止パターンの 1 枚憲法",
+      mimeType: "text/markdown",
+    },
+    {
+      uri: "relay://skill/sprint",
+      name: "Skill: relay sprint development kit",
+      description:
+        "planner / generator / evaluator subagent + sprint workflow のインストール手順とファイル一式（get_sprint_kit と同内容）",
       mimeType: "text/markdown",
     },
     ...index.components.map((c) => ({
@@ -436,10 +516,55 @@ export function readResource(uri) {
   if (uri === "relay://design-constitution") {
     return { uri, mimeType: "text/markdown", text: index.designConstitution };
   }
+  if (uri === "relay://skill/sprint") {
+    return { uri, mimeType: "text/markdown", text: formatSprintKit() };
+  }
   const m = uri.match(/^relay:\/\/component\/(.+)$/);
   if (m) {
     const c = index.components.find((x) => x.name === m[1]);
     if (c) return { uri, mimeType: "text/markdown", text: formatComponent(c) };
   }
   throw new Error(`Unknown resource: ${uri}`);
+}
+
+/* ------------------------------------------------------------------- prompts */
+
+/**
+ * MCP prompts. Claude Code surfaces these as slash commands
+ * (/mcp__<server>__sprint), giving the sprint kit a skill-like entry point:
+ * one command → install (if needed) → run the workflow.
+ */
+export const PROMPTS = [
+  {
+    name: "sprint",
+    description:
+      "relay スプリント開発を実行する（Claude Code 向け）。sprint kit 未導入なら get_sprint_kit でインストールし、Workflow で generator ⇄ evaluator を PASS まで自動往復させる。",
+    arguments: [
+      {
+        name: "task",
+        description: "実装する1機能の説明（1スプリント=1機能）",
+        required: false,
+      },
+    ],
+  },
+];
+
+/** Build a prompt's messages. Throws on unknown prompt name. */
+export function getPrompt(name, args = {}) {
+  if (name !== "sprint") throw new Error(`Unknown prompt: ${name}`);
+  const task = (args.task || "").trim();
+  const text = [
+    "relay のスプリント開発（実装 → 評価 → 修正の自動往復）を実行してください。",
+    "",
+    "1. 利用中プロジェクトに sprint kit（`.claude/agents/planner.md` / `generator.md` / `evaluator.md` と `.claude/workflows/sprint.js`）が揃っているか確認する",
+    "2. 無ければ relay-design-system MCP の `get_sprint_kit` を呼び、返ってきたインストール手順に従ってファイル一式を書き込む（agent の tools プレフィックスの調整を忘れない）",
+    task
+      ? `3. Workflow ツールで \`{ name: "sprint", args: { task: ${JSON.stringify(task)}, maxRounds: 4 } }\` を実行する`
+      : "3. 実装する1機能をユーザーに確認し、Workflow ツールで `{ name: \"sprint\", args: { task: \"<その1機能>\", maxRounds: 4 } }` を実行する",
+    "4. 完了したら PASS/FAIL・ラウンド数・最終フィードバックを報告する",
+  ].join("\n");
+  return {
+    description: PROMPTS[0].description,
+    messages: [{ role: "user", content: { type: "text", text } }],
+  };
 }

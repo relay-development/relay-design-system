@@ -1,6 +1,6 @@
 # relay Design System MCP — ツールリファレンス
 
-relay Design System の MCP サーバーが提供する **7 つのツール** と、その使い方をまとめる。
+relay Design System の MCP サーバーが提供する **8 つのツール** と、その使い方をまとめる。
 
 - **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
@@ -21,6 +21,7 @@ relay Design System の MCP サーバーが提供する **7 つのツール** �
 | 5 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
 | 6 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
 | 7 | `search` | `query` | 横断あいまい検索 |
+| 8 | `get_sprint_kit` | なし | スプリント開発キットの配布（Claude Code 向け） |
 
 ---
 
@@ -95,6 +96,21 @@ relay Design System の MCP サーバーが提供する **7 つのツール** �
 
 ---
 
+## 8. `get_sprint_kit` — スプリント開発キットの配布（Claude Code 向け）
+
+**入力**: なし
+
+**何ができる**: relay 流のスプリント開発を回すための subagent 定義 3 つ（`planner` / `generator` / `evaluator`）と Workflow スクリプト（`sprint`）を、インストール手順付きで一式返す。「実装 → 評価 → 修正」を PASS まで自動往復させたいときに呼ぶ。
+
+**仕組み（重要）**: subagent / workflow は**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、MCP は配布のみを担う。受け取った AI がレスポンス内の手順に従って `.claude/agents/*.md` と `.claude/workflows/sprint.js` を書き込み、その後 Workflow ツールで `{ name: "sprint", args: { task: "<1機能>" } }` を実行する流れ。正本はこのリポジトリの [.claude/agents/](../.claude/agents/) と [.claude/workflows/](../.claude/workflows/)（`build:mcp-index` が同梱）。
+
+**注意**:
+
+- agent 定義の `tools:` は claude.ai コネクタ接続時の名前（`mcp__claude_ai_relay-design-system__*`）で書かれており、stdio 接続などサーバー名が異なる環境では実際のツール名への置換が必要（手順に明記済み）
+- evaluator は Playwright MCP による実機確認を前提とする
+
+---
+
 ## セットアップ
 
 ### ローカル版（stdio）
@@ -138,7 +154,8 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 ## ツール以外の仕組み
 
 - **接続時の常駐ガイダンス（`initialize` の instructions）**: 接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
-- **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。
+- **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。スプリント開発キットも `relay://skill/sprint` としてスキル形式（手順書＋ファイル一式）で読める。
+- **prompts**: `sprint` プロンプトを公開。Claude Code ではスラッシュコマンド（`/mcp__<サーバー名>__sprint`）として現れ、1 コマンドで「キット未導入なら get_sprint_kit でインストール → Workflow 実行」まで誘導する（引数 `task` に実装する 1 機能を渡せる）。
 
 ---
 
