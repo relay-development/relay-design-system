@@ -246,9 +246,11 @@ function formatAssets() {
 
 function formatPrinciples() {
   return [
-    "# relay Design System — 必須ルール & 禁止パターン",
+    "# relay Design System — デザイン原則・必須ルール & 禁止パターン",
     "",
     "AI が relay UI を生成する際、以下を必ず守ること。",
+    "",
+    index.designPhilosophy || "(design principles 未取得)",
     "",
     formatBrandColors(),
     "",
@@ -417,7 +419,7 @@ export const TOOLS = [
   {
     name: "get_design_principles",
     description:
-      "relay の Non-Negotiable Principles（ハードコード禁止・semantic color・blessed spacing・typo セマンティック層・ARIA 状態 等）と禁止パターン Top 10 を返す。コード生成前のガードに使う。",
+      "relay のデザイン原則（ゆったりとした余白・わかりやすい表現・明瞭な色使い）、Non-Negotiable Principles（ハードコード禁止・semantic color・blessed spacing・typo セマンティック層・ARIA 状態 等）、禁止パターン Top 10 を返す。コード生成前のガードに使う。",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
