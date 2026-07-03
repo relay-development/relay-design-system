@@ -299,10 +299,15 @@ function formatSprintKit() {
     "2. **tools プレフィックスを確認する。** agent frontmatter の `tools:` は claude.ai コネクタ接続時の名前 `mcp__claude_ai_relay-design-system__*` で書かれている。自分の環境で relay DS のツールが別名（例: stdio 接続の `mcp__relay-ds__get_component`）の場合は、自分が現在呼べる実際のツール名に合わせて全 agent ファイル内のプレフィックスを置換する",
     "3. 書き込んだ agent 定義が認識されない場合は Claude Code のセッションを再起動する",
     "",
-    "## 実行方法",
+    "## 実行方法（標準フロー: 企画 → ユーザー承認 → 実装）",
     "",
-    '- **スプリント**: Workflow ツールで `{ name: "sprint", args: { task: "<実装する1機能の説明>", maxRounds: 4 } }`。1スプリント=1機能。複数機能は分割して1つずつ渡す',
-    '- **企画から始める場合**: Agent ツールで `subagent_type: "planner"` に議事録・要望等を渡し、出力された `docs/sprint-plan.md` の各スプリントを順に sprint workflow へ渡す',
+    "Workflow スクリプトは実行中にユーザーへ確認を取れないため、**承認ゲートはメインエージェントが挟む**。以下の順で進めること:",
+    "",
+    '1. **企画**: Agent ツールで `subagent_type: "planner"` に要望・議事録等を渡す → `docs/prd.md` / `docs/kpi.md` / `docs/sprint-plan.md` が出力される',
+    "2. **ユーザー承認 🛑**: sprint-plan.md の内容（課題・推奨仮説・スプリント分割）を要約提示し、承認を得るまで**実装に進まない**。修正指示は planner に反映して再提示",
+    '3. **実装**: 承認後、各スプリントを順に Workflow ツールで実行: `{ name: "sprint", args: { task: "<1機能>", maxRounds: 4 } }`。スプリント完了ごとに PASS/FAIL を報告し、次へ進む前に継続確認を取る',
+    "",
+    "実装する1機能が既に確定している場合のみ、企画を飛ばして手順 3 の sprint workflow を直接実行してよい（1スプリント=1機能。複数機能は分割して1つずつ）。",
     "",
     "---",
     "",
@@ -540,11 +545,11 @@ export const PROMPTS = [
   {
     name: "sprint",
     description:
-      "relay スプリント開発を実行する（Claude Code 向け）。sprint kit 未導入なら get_sprint_kit でインストールし、Workflow で generator ⇄ evaluator を PASS まで自動往復させる。",
+      "relay スプリント開発を「企画 → ユーザー承認 → 実装」で実行する（Claude Code 向け）。sprint kit 未導入なら get_sprint_kit でインストール。planner が計画を立て、ユーザーが承認したスプリントだけを Workflow（generator ⇄ evaluator の自動往復）で実装する。",
     arguments: [
       {
         name: "task",
-        description: "実装する1機能の説明（1スプリント=1機能）",
+        description: "実装したい機能・解決したい課題・議事録等（planner への入力）",
         required: false,
       },
     ],
@@ -555,15 +560,29 @@ export const PROMPTS = [
 export function getPrompt(name, args = {}) {
   if (name !== "sprint") throw new Error(`Unknown prompt: ${name}`);
   const task = (args.task || "").trim();
+  // Workflow scripts run headless and cannot pause for user input, so the
+  // approval gate lives here: the MAIN agent runs planner, stops for explicit
+  // user approval, and only then launches the sprint workflow.
   const text = [
-    "relay のスプリント開発（実装 → 評価 → 修正の自動往復）を実行してください。",
+    "relay のスプリント開発を「企画 → ユーザー承認 → 実装」の順で実行してください。承認前に実装を始めてはいけません。",
     "",
-    "1. 利用中プロジェクトに sprint kit（`.claude/agents/planner.md` / `generator.md` / `evaluator.md` と `.claude/workflows/sprint.js`）が揃っているか確認する",
-    "2. 無ければ relay-design-system MCP の `get_sprint_kit` を呼び、返ってきたインストール手順に従ってファイル一式を書き込む（agent の tools プレフィックスの調整を忘れない）",
+    "## 0. セットアップ確認",
+    "利用中プロジェクトに sprint kit（`.claude/agents/planner.md` / `generator.md` / `evaluator.md` と `.claude/workflows/sprint.js`）が揃っているか確認する。無ければ relay-design-system MCP の `get_sprint_kit` を呼び、返ってきたインストール手順に従ってファイル一式を書き込む（agent の tools プレフィックスの調整を忘れない）。",
+    "",
+    "## 1. 企画（planner）",
     task
-      ? `3. Workflow ツールで \`{ name: "sprint", args: { task: ${JSON.stringify(task)}, maxRounds: 4 } }\` を実行する`
-      : "3. 実装する1機能をユーザーに確認し、Workflow ツールで `{ name: \"sprint\", args: { task: \"<その1機能>\", maxRounds: 4 } }` を実行する",
-    "4. 完了したら PASS/FAIL・ラウンド数・最終フィードバックを報告する",
+      ? `Agent ツールで \`subagent_type: "planner"\` を起動し、次のインプットを渡す: ${JSON.stringify(task)}`
+      : "実装したい機能・解決したい課題・議事録等のインプットをユーザーに確認し、Agent ツールで `subagent_type: \"planner\"` に渡す。",
+    "planner は `docs/prd.md` / `docs/kpi.md` / `docs/sprint-plan.md` を出力する。",
+    "",
+    "## 2. ユーザー承認 🛑",
+    "sprint-plan.md の内容（課題・推奨仮説・スプリント分割と各スプリントの1機能）を要約してユーザーに提示し、実装に進んでよいか承認を求めて**停止する**。",
+    "- 修正指示があれば planner に反映させ、再提示して再度承認を求める",
+    "- 承認されるまで Workflow を実行しない",
+    "",
+    "## 3. 実装（承認後のみ）",
+    '承認されたスプリントを順に Workflow ツールで実行する: `{ name: "sprint", args: { task: "<そのスプリントの1機能>", maxRounds: 4 } }`',
+    "各スプリント完了ごとに PASS/FAIL・ラウンド数・最終フィードバックを報告し、次のスプリントへ進む前にユーザーの継続確認を取る。",
   ].join("\n");
   return {
     description: PROMPTS[0].description,
