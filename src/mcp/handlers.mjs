@@ -42,7 +42,7 @@ export const INSTRUCTIONS = [
   "",
   "【実装フロー】",
   "0. get_setup を呼び、CSS が導入済みか確認する（未導入なら導入してから UI を書く）。",
-  "1. get_design_principles を読み、必須ルールと禁止パターンを把握する。",
+  "1. get_design_principles で必須ルールと禁止パターンを、list_components でコンポーネントの全体像を把握する。",
   "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
@@ -207,7 +207,8 @@ function formatSetup() {
     "- 上の import / link がアプリのエントリに書かれている",
     "- 確認: `.btn-primary` を置いてブランド緑のボタンが表示されれば効いている",
     "",
-    "導入できたら **get_design_principles → get_component → get_tokens** の順で UI を実装する。",
+    "導入できたらまず **get_design_principles**（必須ルール・禁止パターン）と **list_components**（コンポーネント全体像）を読む。",
+    "その後、使うコンポーネントごとに **get_component** を呼び、具体値が要るときだけ **get_tokens** を参照して UI を実装する。",
     "アイコンは `@light-right/design-system/icons`（SVG sprite）、ロゴ/イラストは list_assets を参照。",
   ].join("\n");
 }
