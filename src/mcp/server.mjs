@@ -17,21 +17,25 @@ import {
   CallToolRequestSchema,
   ListResourcesRequestSchema,
   ReadResourceRequestSchema,
+  ListPromptsRequestSchema,
+  GetPromptRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import {
   SERVER_INFO,
   INSTRUCTIONS,
   TOKEN_CATEGORIES,
   TOOLS,
+  PROMPTS,
   callTool,
   listResources,
   readResource,
+  getPrompt,
 } from "./handlers.mjs";
 
 // `instructions` is surfaced in the initialize result and loaded by clients as
 // standing system context (see handlers.mjs INSTRUCTIONS for why).
 const server = new Server(SERVER_INFO, {
-  capabilities: { tools: {}, resources: {} },
+  capabilities: { tools: {}, resources: {}, prompts: {} },
   instructions: INSTRUCTIONS,
 });
 
@@ -49,6 +53,12 @@ server.setRequestHandler(ListResourcesRequestSchema, async () => ({ resources: l
 server.setRequestHandler(ReadResourceRequestSchema, async (req) => ({
   contents: [readResource(req.params.uri)],
 }));
+
+server.setRequestHandler(ListPromptsRequestSchema, async () => ({ prompts: PROMPTS }));
+
+server.setRequestHandler(GetPromptRequestSchema, async (req) =>
+  getPrompt(req.params.name, req.params.arguments || {}),
+);
 
 async function main() {
   const transport = new StdioServerTransport();
