@@ -99,7 +99,7 @@ git checkout -b add-<component-name>
 ```html
 <section id="<name>">
   <div class="flex items-baseline justify-between mb-2">
-    <h2 class="typo-2xlarge font-semibold"><Japanese name></h2>
+    <h2 class="typo-2xlarge"><Japanese name></h2>
     <span class="badge badge-soft-primary">component</span>
   </div>
   <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">prop1</code> × <code class="px-1 bg-neutral-100 rounded">prop2</code></p>

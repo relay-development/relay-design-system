@@ -71,7 +71,7 @@ spacing/12 = 48px      spacing/16 = 64px
 .typo-xsmall    : 12px / 16px line-height
 .typo-small     : 14px / 24px
 .typo-medium    : 16px / 24px  ← 本文 default
-.typo-large     : 20px / 32px
+.typo-large     : 20px / 32px  ← ここから weight bold 必須
 .typo-xlarge    : 24px / 32px
 .typo-2xlarge   : 32px / 40px  ← セクション見出し
 .typo-3xlarge   : 40px / 48px  ← ページタイトル
@@ -83,6 +83,8 @@ spacing/12 = 48px      spacing/16 = 64px
 **ベースは `.typo-medium`（16px）。** 本文も各コンポーネント内のテキストも medium（16px）を基準サイズとして使う。補助・キャプションで下げる（small/xsmall）、見出しで上げる（large 以上）のは、この 16px ベースからの相対調整として選ぶ。
 
 **`text-sm` / `text-base` を直接書かない。** 必ず `.typo-*` を経由。
+
+**`.typo-large` 以上は weight bold 以上必須。** large〜3xlarge はデフォルトが `font-bold`。`font-semibold` / `font-medium` 等で bold 未満に下げない。weight の上書きは medium 以下のサイズのみ（例: `typo-medium font-bold` で本文強調）。
 
 **`.typo-article` は原則 `text-fg-high` とセットで使う。** 読み物本文は高コントラストを確保する（例: `<p class="typo-article text-fg-high">`）。
 
