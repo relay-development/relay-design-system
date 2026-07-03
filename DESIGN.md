@@ -1,22 +1,10 @@
 # relay Design System — Design Constitution
 
 > AI エージェントが relay UI を生成するとき、最初に読むファイル。
-> 思想・非交渉原則・クイックリファレンス・参照先をこの 1 枚に集約する。
-
----
-
-## Brand Identity
+> 非交渉原則とクイックリファレンスをこの 1 枚に集約する。この 1 枚だけで基本的な relay UI 生成が可能。
 
 **"トークン経由でしか描かない"** — Figma が正本、コードは派生。手作業の値は混ぜない。
-
-| キーワード | 意味 |
-|---|---|
-|  |  |
-
-> _キーワード一覧はチームで議論中。決定次第ここに追記する。_
-
-参考: Linear / Notion / Stripe — 控えめで機能的、しかし精密
-アンチ: 7px や 14.5px のような off-scale 値 / `#334155` のような直書き色
+参考: Linear / Notion / Stripe — 控えめで機能的、しかし精密。アンチ: 7px のような off-scale 値 / `#334155` のような直書き色。
 
 ---
 
@@ -30,13 +18,9 @@
 6. **デフォルトは medium** — コンポーネントサイズは例外を除き `md` を使う。タイポグラフィも基準は `.typo-medium` (16px)
 7. **main 直 push 禁止** — すべて feature branch + PR + squash merge
 
-> 詳細は [CLAUDE.md](CLAUDE.md) の「🔴 必須ルール: ハードコーディング禁止」と「やってはいけないこと」を参照。
-
 ---
 
 ## Quick Reference
-
-> この section だけで基本的な relay UI コード生成が可能。
 
 ### インストール + import
 
@@ -140,6 +124,8 @@ Link (本文中)      : <a class="link"><span class="link-label">リンクテキ
 
 > **リンクテキストは必ず本文とフォントサイズを揃える。** `.link` は `font-size`/`line-height` を周囲から inherit するので、置いた本文 (typo-small / typo-medium 等) のサイズに自動追従する。リンクだけ別サイズにしない（末尾アイコンも 1em で連動）。
 
+全コンポーネントのクラス一覧は [README.md](README.md)、完成形 HTML は `snippets/*.html` を参照。
+
 ### Icons (Lucide SVG sprite, 38 icons)
 
 ```
@@ -189,75 +175,24 @@ currentColor を継承するので text-primary-500 等で着色可能
 
 ---
 
-## Source of Truth 読み順
-
-> `CLAUDE.md` は Claude Code が起動時に自動で読み込むため本表には含めない (運用ガイドはそちら参照)。
-
-| # | ファイル | 役割 |
-|---|---|---|
-| 1 | [DESIGN.md](DESIGN.md) (本ファイル) | 憲法 + quick reference |
-| 2 | [README.md](README.md) | 全コンポーネントクラス一覧 + トークン参照表 |
-| 3 | [src/tokens/](src/tokens/) | トークン定義 (colors / typography / spacing / radius / shadow) |
-| 4 | [src/components/](src/components/) | 各コンポーネント CSS 実装 (1 component = 1 file) |
-| 5 | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.1 AAA 実務チェックリスト |
-| 6 | [docs/INTRODUCTION.md](docs/INTRODUCTION.md) | 全体像・4 つの入口 (Figma / GitHub / Pages / npm) |
-| 7 | [docs/WORKSHOP.md](docs/WORKSHOP.md) | Git / PR ワークフロー (非エンジニア向け) |
-| 8 | [docs/RELEASING.md](docs/RELEASING.md) | npm publish + Slack 通知の手順 |
-| 9 | [examples/index.html](examples/index.html) | 全コンポーネントの状態網羅プレビュー (live catalog) |
-
----
-
-## Agent Prompt Guide
-
-### クイック (単体 UI 生成)
-
-`DESIGN.md` のみ読めば OK。Quick Reference のクラスをそのまま使う。
-
-### 標準 (ページ単位)
-
-`DESIGN.md` → `CLAUDE.md`「🔴 必須ルール」 → 該当コンポーネントの `src/components/*.css` を覗いて class API を確認 → 必要なら `examples/index.html` の対応 section で実例を確認。
-
-### フル (新規コンポーネント追加 / トークン変更)
-
-1. Figma `hJcKE8FkiyXtB1F9SuuE08` で仕様取得 (`mcp__claude_ai_Figma__get_design_context`)
-2. CLAUDE.md「🎯 定型ワークフロー: Figma → 新規コンポーネント追加」の Phase 0〜9 に従う
-3. `src/components/` に CSS / `src/index.css` に `@import` / `examples/index.html` にカタログセクション追加
-4. README / INTRODUCTION のコンポーネント数を更新
-
----
-
 ## Theme
 
 | 設定 | 値 |
 |---|---|
 | カラーモード | ライトのみ (ダークモード対応は将来検討) |
-| Primary | `#30b686` (brand-green-500) |
-| Primary hover | `#1b805e` (brand-green-600) |
+| Primary | `#30b686` (brand-green-500) / hover `#1b805e` (600) |
 | Font | Noto Sans JP + system fallbacks |
 | Icon | Lucide subset 38 icons (SVG sprite) |
 | Locale | ja (日本語) |
 | ベーススペーシング | 4px (`--spacing: 0.25rem`) |
-| アクセシビリティ | WCAG 2.1 AAA を目指す ([docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) 参照) |
-| バージョン | npm `@light-right/design-system@0.3.0` |
-| 配布 | npm + GitHub Pages カタログ |
+| アクセシビリティ | WCAG 2.1 AAA を目指す ([docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)) |
+| 配布 | npm `@light-right/design-system` + GitHub Pages カタログ |
 
 ---
 
-## Versioning
+## より深く知りたいとき
 
-| Bump | いつ | 例 |
-|---|---|---|
-| **patch** | バグ修正・スタイル微調整 | `0.3.0` → `0.3.1` |
-| **minor** | 後方互換のあるコンポーネント / トークン追加 | `0.3.0` → `0.4.0` (Simple Table 追加時) |
-| **major** | 破壊的変更 (クラス名 rename / トークン削除) | `0.x.x` → `1.0.0` |
-
-リリース手順は [docs/RELEASING.md](docs/RELEASING.md) を参照。
-
----
-
-## 関連リンク
-
-- 本番カタログ: https://relay-development.github.io/relay-design-system/
-- npm: https://www.npmjs.com/package/@light-right/design-system
-- GitHub: https://github.com/relay-development/relay-design-system
-- Figma: https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/relay-Design-System
+- **ページ単位の実装**: 本ファイル → 該当コンポーネントの [src/components/](src/components/)*.css で class API 確認 → 必要なら[カタログ](https://relay-development.github.io/relay-design-system/)で実例確認
+- **新規コンポーネント追加 / トークン変更**: [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md)（Figma 仕様取得 → CSS → カタログ → PR の Phase 0〜9）
+- **Git / PR 運用**: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) / **SemVer・リリース**: [docs/RELEASING.md](docs/RELEASING.md)
+- **リンク**: [カタログ](https://relay-development.github.io/relay-design-system/) / [npm](https://www.npmjs.com/package/@light-right/design-system) / [GitHub](https://github.com/relay-development/relay-design-system) / [Figma](https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/relay-Design-System)

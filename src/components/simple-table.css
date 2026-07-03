@@ -34,7 +34,7 @@
  *     padding      16px (calc(var(--spacing) * 4))
  *
  *   全ての spacing / color / typography 値はデザインシステムトークン経由
- *   (CLAUDE.md「🔴 必須ルール: ハードコーディング禁止」に準拠)。
+ *   (DESIGN.md の Non-Negotiable Principles に準拠)。
  *
  * 機能:
  *   キー/値形式の縦長テーブル。1 件の詳細表示に使う。

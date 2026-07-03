@@ -95,6 +95,46 @@ relay Design System の MCP サーバーが提供する **7 つのツール** �
 
 ---
 
+## セットアップ
+
+### ローカル版（stdio）
+
+npm パッケージに `relay-ds-mcp` という stdio MCP サーバーが同梱されている。利用ツールの設定に登録する。
+
+**Claude Code**（プロジェクトの `.mcp.json` または `claude mcp add`）:
+
+```json
+{
+  "mcpServers": {
+    "relay-ds": {
+      "command": "npx",
+      "args": ["-y", "--package=@light-right/design-system", "relay-ds-mcp"]
+    }
+  }
+}
+```
+
+> 既にプロジェクトに `npm install @light-right/design-system` 済みなら、`command: "relay-ds-mcp"`（引数なし）で直接起動できる。Cursor / Windsurf も同じ stdio コマンドを各ツールの MCP 設定に登録すれば使える。
+
+### リモート版（Cloudflare Workers / npm・Node 不要）
+
+URL を登録するだけで使える。中身は公開情報のため **authless**（認証なし）・stateless で、Cloudflare Workers の無料枠で動く（[src/mcp/worker.mjs](../src/mcp/worker.mjs)）。
+
+- **エンドポイント**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
+- **claude.ai**: Settings → Connectors → Add custom connector → 上記 URL を貼る（認証不要）
+- stdio 版とまったく同じツール／リソースを返す（ロジックは [src/mcp/handlers.mjs](../src/mcp/handlers.mjs) で共通化）
+
+### メンテナ向け（デプロイ）
+
+```bash
+npm run dev:mcp-remote   # ローカル確認（http://localhost:8787/mcp）
+npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrangler login）
+```
+
+参考: [社内デザインシステムをMCPサーバー化したらUI実装が爆速になった (Ubie Dev)](https://zenn.dev/ubie_dev/articles/f927aaff02d618)
+
+---
+
 ## ツール以外の仕組み
 
 - **接続時の常駐ガイダンス（`initialize` の instructions）**: 接続時に「まず get_setup →（get_design_principles）→ 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。
@@ -124,4 +164,4 @@ list_assets          ← ロゴ・イラストを埋め込むとき
 
 - [docs/INTRODUCTION.md](INTRODUCTION.md) — チーム向けの入り口
 - [examples/mcp.html](../examples/pages/mcp.html) — カタログ内の MCP 紹介ページ
-- [CLAUDE.md](../CLAUDE.md) — MCP の設計判断・ヘッダ正本ルール
+- [docs/DECISIONS.md](DECISIONS.md) — MCP の設計判断・ヘッダ正本ルール
