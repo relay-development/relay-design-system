@@ -305,7 +305,7 @@ function formatSprintKit() {
     "",
     '1. **企画**: Agent ツールで `subagent_type: "planner"` に要望・議事録等を渡す → `docs/prd.md` / `docs/kpi.md` / `docs/sprint-plan.md` が出力される',
     "2. **ユーザー承認 🛑**: sprint-plan.md の内容（課題・推奨仮説・スプリント分割）を要約提示し、承認を得るまで**実装に進まない**。修正指示は planner に反映して再提示",
-    '3. **実装**: 承認後、各スプリントを順に Workflow ツールで実行: `{ name: "sprint", args: { task: "<1機能>", maxRounds: 4 } }`。スプリント完了ごとに PASS/FAIL を報告し、次へ進む前に継続確認を取る',
+    '3. **実装**: 承認後、各スプリントを順に Workflow ツールで実行: `{ name: "sprint", args: { task: "<1機能>", minRounds: 3, maxRounds: 4 } }`。1ラウンドの評価では確認漏れが出るため**最低 minRounds（既定3）ラウンドは実装⇄評価を回し**、早期 PASS 後は別観点の再点検ラウンドに切り替わる。スプリント完了ごとに PASS/FAIL を報告し、次へ進む前に継続確認を取る',
     "",
     "実装する1機能が既に確定している場合のみ、企画を飛ばして手順 3 の sprint workflow を直接実行してよい（1スプリント=1機能。複数機能は分割して1つずつ）。",
     "",
@@ -581,7 +581,7 @@ export function getPrompt(name, args = {}) {
     "- 承認されるまで Workflow を実行しない",
     "",
     "## 3. 実装（承認後のみ）",
-    '承認されたスプリントを順に Workflow ツールで実行する: `{ name: "sprint", args: { task: "<そのスプリントの1機能>", maxRounds: 4 } }`',
+    '承認されたスプリントを順に Workflow ツールで実行する: `{ name: "sprint", args: { task: "<そのスプリントの1機能>", minRounds: 3, maxRounds: 4 } }`（確認漏れ対策として最低 minRounds ラウンドは実装⇄評価が回る）',
     "各スプリント完了ごとに PASS/FAIL・ラウンド数・最終フィードバックを報告し、次のスプリントへ進む前にユーザーの継続確認を取る。",
   ].join("\n");
   return {
