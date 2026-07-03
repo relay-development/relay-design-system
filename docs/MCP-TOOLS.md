@@ -137,7 +137,7 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 
 ## ツール以外の仕組み
 
-- **接続時の常駐ガイダンス（`initialize` の instructions）**: 接続時に「まず get_setup →（get_design_principles）→ 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。
+- **接続時の常駐ガイダンス（`initialize` の instructions）**: 接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
 - **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。
 
 ---
@@ -148,6 +148,8 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 get_setup            ← CSS 導入確認（未導入なら導入してから書く）
   ↓
 get_design_principles ← 必須ルール / 禁止パターンを把握
+  ↓
+list_components      ← コンポーネントの全体像を把握
   ↓
 get_component(<name>) ← 使うコンポーネントごとに。機能・使用法(NG)・スニペットを土台に
   ↓
