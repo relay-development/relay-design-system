@@ -4,7 +4,8 @@
  *
  *   Figma が定義する命名サイズに 1:1 で対応するクラス。
  *   font-size / line-height / 推奨 weight をまとめて当てる。
- *   weight は必要に応じて `font-bold` / `font-medium` 等で上書き可能。
+ *   weight の上書きは medium 以下のサイズのみ可（`font-bold` 等）。
+ *   large 以上は bold 以上が必須 — bold 未満（semibold / medium 等）に下げない。
  *
  *   8x8 ベースグリッドに合わせるため、line-height は常に 8 の倍数。
  *   ルール: height = Math.ceil((size * 1.3) / 8) * 8
@@ -15,8 +16,8 @@
  *   │ xsmall   │  12  │  16  │ medium  │ キャプション・注釈  │
  *   │ small    │  14  │  24  │ medium  │ 補助テキスト        │
  *   │ medium   │  16  │  24  │ medium  │ 本文 (base)         │
- *   │ large    │  20  │  32  │ medium  │ サブ見出し          │
- *   │ xlarge   │  24  │  32  │ medium  │ セクション見出し    │
+ *   │ large    │  20  │  32  │ bold    │ サブ見出し          │
+ *   │ xlarge   │  24  │  32  │ bold    │ セクション見出し    │
  *   │ 2xlarge  │  32  │  40  │ bold    │ ページタイトル      │
  *   │ 3xlarge  │  40  │  48  │ bold    │ Display             │
  *   └──────────┴──────┴──────┴─────────┴─────────────────────┘
@@ -34,7 +35,8 @@
  * 使用法:
  *   OK: 基準は typo-medium (16px)。本文・各コンポーネントのテキストは medium をベースに。
  *   OK: 補助/キャプションは small/xsmall、見出しは large 以上を 16px ベースから相対で選ぶ。
- *   OK: weight は font-bold / font-medium で上書きできる。
+ *   OK: medium 以下のサイズは weight を font-bold 等で上書きできる。
+ *   NG: typo-large 以上で weight を bold 未満に下げない (font-semibold / font-medium 等) → デフォルトの bold のまま使う。
  *   NG: text-sm / font-size を直書きしない → .typo-* を使う。
  *   NG: 既定サイズを下げて本文を small で組まない → 本文の基準は medium (16px)。
  *   NG: 行間を独自指定しない → 8 の倍数の規定 line-height を保つ。
@@ -42,7 +44,7 @@
  * Usage:
  *   <p class="typo-medium">本文テキスト</p>
  *   <h2 class="typo-2xlarge">セクションタイトル</h2>
- *   <p class="typo-large font-bold">large + 強調</p>  ← weight 上書き
+ *   <p class="typo-medium font-bold">本文 + 強調</p>  ← weight 上書きは medium 以下のみ
  */
 
 @layer components {
@@ -50,10 +52,10 @@
   .typo-xsmall  { @apply text-xs   leading-4  font-medium; }   /* 12 / 16 */
   .typo-small   { @apply text-sm   leading-6  font-medium; }   /* 14 / 24 */
   .typo-medium  { @apply text-base leading-6  font-medium; }   /* 16 / 24 */
-  .typo-large   { @apply text-lg   leading-8  font-medium; }   /* 20 / 32 */
-  .typo-xlarge  { @apply text-xl   leading-8  font-medium; }   /* 24 / 32 */
 
-  /* Display sizes — Bold weight by default */
+  /* Heading / Display sizes — Bold weight (large 以上は bold 以上必須) */
+  .typo-large   { @apply text-lg   leading-8  font-bold;   }   /* 20 / 32 */
+  .typo-xlarge  { @apply text-xl   leading-8  font-bold;   }   /* 24 / 32 */
   .typo-2xlarge { @apply text-2xl  leading-10 font-bold;   }   /* 32 / 40 */
   .typo-3xlarge { @apply text-3xl  leading-12 font-bold;   }   /* 40 / 48 */
 
