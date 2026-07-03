@@ -102,7 +102,11 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 **何ができる**: relay 流のスプリント開発を回すための subagent 定義 3 つ（`planner` / `generator` / `evaluator`）と Workflow スクリプト（`sprint`）を、インストール手順付きで一式返す。「実装 → 評価 → 修正」を PASS まで自動往復させたいときに呼ぶ。
 
-**仕組み（重要）**: subagent / workflow は**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、MCP は配布のみを担う。受け取った AI がレスポンス内の手順に従って `.claude/agents/*.md` と `.claude/workflows/sprint.js` を書き込み、その後 Workflow ツールで `{ name: "sprint", args: { task: "<1機能>" } }` を実行する流れ。正本はこのリポジトリの [.claude/agents/](../.claude/agents/) と [.claude/workflows/](../.claude/workflows/)（`build:mcp-index` が同梱）。
+**仕組み（重要）**: subagent / workflow は**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、MCP は配布のみを担う。受け取った AI がレスポンス内の手順に従って `.claude/agents/*.md` と `.claude/workflows/sprint.js` を書き込んで使う。正本はこのリポジトリの [.claude/agents/](../.claude/agents/) と [.claude/workflows/](../.claude/workflows/)（`build:mcp-index` が同梱）。
+
+**標準フロー（企画 → ユーザー承認 → 実装）**: Workflow スクリプトは実行中にユーザーへ確認を取れないため、承認ゲートはメインエージェントが挟む設計。planner が `docs/sprint-plan.md` を出力 → 計画を要約提示してユーザー承認を待つ → 承認後に各スプリントを `{ name: "sprint", args: { task: "<1機能>" } }` で実行、という順序をキットの手順と `sprint` プロンプトの両方に明記している。実装する 1 機能が確定済みの場合のみ企画を飛ばして sprint workflow を直接実行してよい。
+
+**最低ラウンド数**: 1 ラウンドの評価では確認漏れが多発するため、sprint workflow は PASS 判定でも**最低 `minRounds`（既定 3）ラウンドは実装⇄評価を回す**。早期 PASS 後の残りラウンドは「再点検」に切り替わり、generator はセルフチェック再実行、evaluator は前回と異なる観点（キーボード操作・レスポンシブ・エッジケース入力等）での再監査を行う。
 
 **注意**:
 
@@ -155,7 +159,7 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 
 - **接続時の常駐ガイダンス（`initialize` の instructions）**: 接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
 - **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。スプリント開発キットも `relay://skill/sprint` としてスキル形式（手順書＋ファイル一式）で読める。
-- **prompts**: `sprint` プロンプトを公開。Claude Code ではスラッシュコマンド（`/mcp__<サーバー名>__sprint`）として現れ、1 コマンドで「キット未導入なら get_sprint_kit でインストール → Workflow 実行」まで誘導する（引数 `task` に実装する 1 機能を渡せる）。
+- **prompts**: `sprint` プロンプトを公開。Claude Code ではスラッシュコマンド（`/mcp__<サーバー名>__sprint`）として現れ、1 コマンドで「キット未導入なら get_sprint_kit でインストール → planner で企画 → ユーザー承認 🛑 → 承認後に Workflow 実行」まで誘導する（引数 `task` に要望・議事録等の planner への入力を渡せる）。
 
 ---
 
