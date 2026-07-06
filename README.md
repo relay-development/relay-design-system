@@ -2,7 +2,7 @@
 
 relay プロダクトのための、Tailwind CSS v4 ベースのフレームワーク非依存デザインシステムです。
 **デザイントークン + コンポーネント** を HTML スニペット集として提供します。
-トークンは Figma ファイル `hJcKE8FkiyXtB1F9SuuE08` の `semantic tokens` コレクションと同期されています（片方向: Figma → コード）。
+正本はこのリポジトリのコードです。Figma ファイル `hJcKE8FkiyXtB1F9SuuE08` はデザイン探求の場で、そこで固まったデザインをコードに取り込みます。
 
 - 📦 npm: `@light-right/design-system`
 - 🌐 プレビューサイト: https://relay-development.github.io/relay-design-system

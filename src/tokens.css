@@ -1,7 +1,8 @@
 /*
  * relay Design System — Tokens (plain CSS variables)
  *
- * Synced from Figma file hJcKE8FkiyXtB1F9SuuE08.
+ * Source of truth for relay tokens (initially imported from Figma file
+ * hJcKE8FkiyXtB1F9SuuE08; the code is canonical since then).
  * Two layers — primitive (raw values) + semantic (role-based aliases).
  *
  * Mirrors src/tokens/*.css so consumers who don't use Tailwind still get

@@ -10,7 +10,7 @@ Claude Code が本リポジトリで作業する際に毎回読み込む運用�
 - **何**: Tailwind CSS v4 ベース、フレームワーク非依存のデザインシステム
 - **誰が使う**: relay 系プロダクトのチーム（npm `@light-right/design-system`）
 - **配布**: npm package + 公開 GitHub Pages カタログ
-- **同期元**: Figma file `hJcKE8FkiyXtB1F9SuuE08`（片方向: Figma → コード）
+- **正本**: このリポジトリのコード（トークン・コンポーネント仕様・API すべて）。Figma file `hJcKE8FkiyXtB1F9SuuE08` は**デザイン探求の場** — 固まったデザインをコードに取り込んだ時点で正式版になる
 - **Quick reference (1 枚憲法)**: [DESIGN.md](DESIGN.md) — トークン値・主要コンポーネント API・禁止パターン。UI を生成する単発タスクならまず DESIGN.md を見る
 
 ## リポジトリ構造
@@ -66,7 +66,7 @@ docs/                  ← 詳細ドキュメント（下記リンク集参照�
 ### コーディング
 
 - **ハードコード禁止** — 色 / 余白 / タイポ / 角丸 / 影は必ずトークン経由（詳細・例外は [DESIGN.md](DESIGN.md)）
-- **Figma を見ずに「だいたいこんな感じ」で実装しない** — 必ず `mcp__claude_ai_Figma__get_design_context` で仕様取得
+- **正本はコード** — 既存のトークン・コンポーネント仕様は Figma でなく [DESIGN.md](DESIGN.md) / `src/` を参照する。Figma 発の新規デザインを取り込む時だけ `mcp__claude_ai_Figma__get_design_context` で仕様取得し、「だいたいこんな感じ」で実装しない
 - 新規コンポーネント CSS は**先頭ヘッダコメントの雛形を必ず踏襲**（MCP `get_component` の正本。書式は [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md) Phase 2）
 - `src/index.css` の `@import` 順序（tokens → components）を崩さない
 - 新しい spacing トークン（`--spacing-40` 等）を追加しない（Tailwind v4 single-base 流儀）

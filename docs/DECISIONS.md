@@ -32,3 +32,12 @@ Netlify のクレジット上限超過のため移行済み。GitHub Pages は p
 - **この自動注入のため `dev` / `build:site` は `build:pages` の前に `build:mcp-index` を実行する**（順序を崩さない）
 - ブロックの**どの行にも `*/` を書かない**（CSS ブロックコメントが閉じてしまう／ヘッダが途中で切れる）
 - `使用法:` があるのに `OK:` / `NG:` 行が無いと build-mcp が warn を出す
+
+## 正本の反転: コードが正本、Figma はデザイン探求の場（2026-07）
+
+当初は Figma を正本とし、片方向（Figma → コード）同期を原則としていたが、UI 実装の主体が AI エージェント（Claude Code / Cursor 等）に移り、エージェントが参照するのはコード・MCP・DESIGN.md である実態に合わせて反転した。
+
+- **正本**: このリポジトリのコード（`src/tokens/` / `src/components/*.css` ヘッダ / DESIGN.md）
+- **Figma の役割**: 新しいコンポーネント・画面のデザイン探求。固まったデザインをコードに取り込んだ時点で正式版になる
+- Figma への書き戻し・継続同期は行わない（必要になれば都度判断）
+- コンポーネント CSS ヘッダの `recreated from Figma component set NNNN:NNNN` 表記は出自の記録として維持する（build-mcp のパースにも使用しているため書式を変えない）
