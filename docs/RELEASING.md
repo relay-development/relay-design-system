@@ -47,7 +47,7 @@ npm publish
 - [ ] `npm run build` が成功し、`dist/relay.css` と `dist/tokens.css` が更新される
 - [ ] `npm pack --dry-run` で配布物に余計なファイルが含まれていない
 - [ ] README のコンポーネント一覧が最新（追加した場合）
-- [ ] Figma との突き合わせ：トークンを変更した場合、Figma 側の `semantic tokens` も更新済み
+- [ ] トークンを変更した場合、DESIGN.md / README のトークン記載も更新済み（正本はコード。Figma への反映は必須でない）
 
 ## 失敗 / リカバリ
 

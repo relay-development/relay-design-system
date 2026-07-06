@@ -11,13 +11,13 @@ relay プロダクトの UI を、誰が作っても **同じ見た目・同じ�
 
 このデザインシステムは 4 つの場所に存在します。役割によって主に見る場所が変わります。
 
-### 🎨 1. Figma — デザインの "正本"
+### 🎨 1. Figma — デザイン探求の場
 
 - **URL**: https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/relay-Design-System
 - **主に使う人**: デザイナー
-- **ここで何をする**: コンポーネントの見た目を編集 / 新しいコンポーネントを追加 / トークン（色など）を変更
+- **ここで何をする**: 新しいコンポーネント・画面のデザインを探求・検討する（固まったデザインはコードに取り込み、以後はコードが正式版）
 
-### 💻 2. GitHub — コードの "正本"
+### 💻 2. GitHub — デザインシステムの "正本"
 
 - **URL**: https://github.com/relay-development/relay-design-system
 - **主に使う人**: エンジニア
@@ -48,8 +48,8 @@ relay プロダクトの UI を、誰が作っても **同じ見た目・同じ�
 
 ### 🎨 デザイナーの方へ
 
-1. デザインは Figma ファイルで作成・編集してください
-2. 新しいコンポーネントを追加した / 既存を変更した時は、エンジニアに「これコードにも反映して」と一言伝えてください
+1. 新しいデザインの探求・検討は Figma ファイルで自由に行ってください
+2. デザインが固まったら、エンジニアに「これコードに取り込んで」と一言伝えてください（コードに入った時点で正式版になります）
 3. 軽い修正提案は Figma 内コメントでも OK
 
 ### 💻 エンジニアの方へ
@@ -96,7 +96,7 @@ import "@light-right/design-system/css";
 - **最新バージョン**: `v0.1.0`
 - **入っているもの**: Button / Icon Button / Label Control / Input / Search Input / Selector / Textarea / Checkbox / Radio / Filter Chip / Tab / Table / Simple Table / Card / Badge / Alert / Link / Breadcrumb / Side Nav / Pagination / Stepper / Modal / ガイドライン
 - **ライセンス**: MIT
-- **更新**: Figma 側で変更があれば随時反映 → 新バージョンを npm に publish
+- **更新**: コード側の変更を随時 npm に publish（Figma で探求したデザインは、コードに取り込んだ時点で正式版）
 - **リリース通知**: 新バージョンを publish すると Slack `#dev_information` に自動でアナウンスが流れます 📣
 
 ---

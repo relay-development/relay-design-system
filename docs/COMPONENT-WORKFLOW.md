@@ -2,6 +2,7 @@
 
 > 過去事例: Filter Chip / Tab / Typography / Spacing 等。
 > チェックポイント運用（push で止まる / PR・merge はユーザー承認後）は [CONTRIBUTING.md](CONTRIBUTING.md) 参照。
+> **正本はコード**。Figma はデザイン探求の場であり、この手順は「Figma で固まったデザインをコードに取り込む」ためのもの。取り込み後はコード（`src/`）が正式版で、Figma との継続同期は行わない。
 
 ## Phase 0. Figma 仕様取得
 
@@ -191,7 +192,9 @@ merge 後、`.github/workflows/deploy-pages.yml` が自動で GitHub Pages に�
 
 ---
 
-## トークンの Figma 同期（Figma → コード 片方向）
+## Figma で探求したトークンの取り込み（正本はコード）
+
+トークンの正本は `src/tokens/`。Figma でトークンの変更を探求した場合、以下の手順でコードに取り込む（取り込んだ時点で正式版。Figma への書き戻しは不要）。
 
 1. `mcp__claude_ai_Figma__get_variable_defs` または Plugin API 経由で `semantic tokens` コレクションを取得
 2. 値を `src/tokens/*.css` の `@theme` と `src/tokens.css` の `:root` へ反映
