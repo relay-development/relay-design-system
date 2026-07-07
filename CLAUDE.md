@@ -21,12 +21,16 @@ README.md              ← 利用者向け入口 + 全コンポーネントク�
 src/
   index.css            ← Tailwind v4 エントリ（@import 順序: tokens → components を崩さない）
   tokens/              ← @theme による primitive / role トークン
+  tokens.css           ← :root 変数ミラー（Tailwind 非使用の利用者向け。tokens/ と値を揃える）
   components/          ← @layer components の CSS（1 component = 1 file、先頭ヘッダコメントが MCP の正本）
   mcp/                 ← MCP サーバー（handlers.mjs を stdio / Cloudflare Workers で共有）
 examples/pages/        ← カタログ各ページの本文断片（examples/*.html は build:pages が生成・gitignored）
 snippets/              ← 利用者向けコピペ HTML
 scripts/               ← build-icons / build-mcp / build-pages
 docs/                  ← 詳細ドキュメント（下記リンク集参照）
+.claude/
+  agents/              ← スプリントキット正本（planner / generator / evaluator。MCP get_sprint_kit が配布）
+  workflows/           ← sprint.js（generator ⇄ evaluator の自動往復 Workflow）
 ```
 
 ---
@@ -42,6 +46,7 @@ docs/                  ← 詳細ドキュメント（下記リンク集参照�
 | リリース（npm publish + Slack 通知・SemVer 基準） | [docs/RELEASING.md](docs/RELEASING.md) |
 | 過去の設計判断・MCP のヘッダ正本ルール | [docs/DECISIONS.md](docs/DECISIONS.md) |
 | MCP ツールの仕様・セットアップ | [docs/MCP-TOOLS.md](docs/MCP-TOOLS.md) |
+| アイコン（Lucide sprite）の使い方・同梱一覧 | [docs/ICONS.md](docs/ICONS.md) |
 | アクセシビリティチェック | [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) |
 
 ---
