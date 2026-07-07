@@ -343,7 +343,7 @@ async function main() {
       `${components.length} components, ${tokenCount} tokens, ` +
       `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ` +
       `${components.filter((c) => c.function).length} with 機能, ` +
-      `sprint kit ${sprintKit.agents.length} agents + ${sprintKit.workflows.length} workflows`,
+      `sprint kit ${sprintKit.agents.length} agents + ${sprintKit.workflows.length} workflows + ${sprintKit.hooks.length} hooks`,
   );
 }
 
