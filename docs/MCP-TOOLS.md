@@ -100,9 +100,11 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 **入力**: なし
 
-**何ができる**: relay 流のスプリント開発を回すための subagent 定義 3 つ（`planner` / `generator` / `evaluator`）と Workflow スクリプト（`sprint`）を、インストール手順付きで一式返す。「実装 → 評価 → 修正」を PASS まで自動往復させたいときに呼ぶ。
+**何ができる**: relay 流のスプリント開発を回すための subagent 定義 3 つ（`planner` / `generator` / `evaluator`）と Workflow スクリプト（`sprint`）、ハードコード検知フック（`relay-hardcode-gate`・任意）を、インストール手順付きで一式返す。「実装 → 評価 → 修正」を PASS まで自動往復させたいときに呼ぶ。
 
-**仕組み（重要）**: subagent / workflow は**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、MCP は配布のみを担う。受け取った AI がレスポンス内の手順に従って `.claude/agents/*.md` と `.claude/workflows/sprint.js` を書き込んで使う。正本はこのリポジトリの [.claude/agents/](../.claude/agents/) と [.claude/workflows/](../.claude/workflows/)（`build:mcp-index` が同梱）。
+**仕組み（重要）**: subagent / workflow / hook は**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、MCP は配布のみを担う。受け取った AI がレスポンス内の手順に従って `.claude/agents/*.md` / `.claude/workflows/sprint.js` / `.claude/hooks/*.mjs` を書き込んで使う。正本はこのリポジトリの [.claude/agents/](../.claude/agents/) / [.claude/workflows/](../.claude/workflows/) / [.claude/hooks/](../.claude/hooks/)（`build:mcp-index` が同梱）。
+
+**書き込み時ゲート（フック・任意）**: `relay-hardcode-gate.mjs` は Write/Edit 直後に発火する PostToolUse フックで、生 hex 色・font-size 生値・祝福外 spacing・独自状態クラス・外部スプライト参照を検知して Claude に即フィードバックする（exit 2 で stderr が返る）。evaluator が見つける前に書き込み時点で弾くので、機械的違反にスプリントのラウンドを消費しない。有効化には利用側プロジェクトの `.claude/settings.json` への hooks 設定追記が必要（手順に明記済み）。**このリポジトリ自体では有効化しない**（コンポーネント CSS にはヘッダコメントで管理された正当な例外があるため）。
 
 **標準フロー（企画 → ユーザー承認 → 実装）**: Workflow スクリプトは実行中にユーザーへ確認を取れないため、承認ゲートはメインエージェントが挟む設計。planner が `docs/sprint-plan.md` を出力 → 計画を要約提示してユーザー承認を待つ → 承認後に各スプリントを `{ name: "sprint", args: { task: "<1機能>" } }` で実行、という順序をキットの手順と `sprint` プロンプトの両方に明記している。実装する 1 機能が確定済みの場合のみ企画を飛ばして sprint workflow を直接実行してよい。
 

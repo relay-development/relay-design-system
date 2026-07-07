@@ -17,7 +17,7 @@
  *     get_design_principles    — non-negotiable rules + forbidden patterns (Top 10)
  *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
- *     get_sprint_kit           — planner/generator/evaluator agents + sprint workflow の配布
+ *     get_sprint_kit           — planner/generator/evaluator agents + sprint workflow + hardcode gate hook の配布
  *
  *   Prompts (Claude Code では /mcp__<server>__sprint スラッシュコマンドになる):
  *     sprint(task?)            — sprint kit のインストール → Workflow 実行を指示
@@ -269,7 +269,8 @@ function formatPrinciples() {
  * contain fences and tables that would break any ``` nesting.
  */
 function formatSprintKit() {
-  const kit = index.sprintKit || { agents: [], workflows: [] };
+  const kit = index.sprintKit || { agents: [], workflows: [], hooks: [] };
+  const hooks = kit.hooks || []; // older index builds have no hooks field
   if (!kit.agents.length && !kit.workflows.length) {
     return "スプリント開発キットがこのビルドに含まれていません（build:mcp-index を .claude/ が存在するチェックアウトで再実行してください）。";
   }
@@ -286,6 +287,7 @@ function formatSprintKit() {
     "- **generator**（実装）— 1スプリント=1機能で DS 準拠実装＋セルフチェック（ハードコード / DS 準拠 / AI スロップ）",
     "- **evaluator**（品質ゲート）— 成果物を実測し PASS/FAIL 判定。ファイルは変更しない",
     "- **sprint workflow** — generator ⇄ evaluator を PASS まで自動往復（最大 maxRounds 回）",
+    "- **hardcode gate hook**（任意・推奨）— Write/Edit 直後にハードコード違反（生 hex 色・font-size 生値・祝福外 spacing・独自状態クラス・外部スプライト等）を検知して Claude に即フィードバックする PostToolUse フック。evaluator が見つける前に書き込み時点で弾き、機械的違反にラウンドを消費させない",
     "",
     "## 前提",
     "",
@@ -295,9 +297,24 @@ function formatSprintKit() {
     "",
     "## インストール手順（このキットを受け取った AI が行うこと）",
     "",
-    "1. 下記の各ファイルを、利用中プロジェクトの**同じ相対パス**（`.claude/agents/…` / `.claude/workflows/…`）へ**一字一句そのまま**書き込む。`===== FILE:` / `===== END FILE` の区切り行自体は含めない。既存の同名ファイルがある場合は上書き前にユーザーへ確認する",
+    "1. 下記の各ファイルを、利用中プロジェクトの**同じ相対パス**（`.claude/agents/…` / `.claude/workflows/…` / `.claude/hooks/…`）へ**一字一句そのまま**書き込む。`===== FILE:` / `===== END FILE` の区切り行自体は含めない。既存の同名ファイルがある場合は上書き前にユーザーへ確認する",
     "2. **tools プレフィックスを確認する。** agent frontmatter の `tools:` は claude.ai コネクタ接続時の名前 `mcp__claude_ai_relay-design-system__*` で書かれている。自分の環境で relay DS のツールが別名（例: stdio 接続の `mcp__relay-ds__get_component`）の場合は、自分が現在呼べる実際のツール名に合わせて全 agent ファイル内のプレフィックスを置換する",
-    "3. 書き込んだ agent 定義が認識されない場合は Claude Code のセッションを再起動する",
+    "3. **（推奨）hardcode gate hook を有効化する。** ユーザーに有効化するか確認の上、プロジェクトの `.claude/settings.json` に以下の hooks 設定をマージする（既存の hooks キーがあれば PostToolUse 配列に追記）。Node.js が必要:",
+    "",
+    "```json",
+    "{",
+    '  "hooks": {',
+    '    "PostToolUse": [',
+    "      {",
+    '        "matcher": "Write|Edit",',
+    '        "hooks": [{ "type": "command", "command": "node .claude/hooks/relay-hardcode-gate.mjs" }]',
+    "      }",
+    "    ]",
+    "  }",
+    "}",
+    "```",
+    "",
+    "4. 書き込んだ agent 定義やフックが認識されない場合は Claude Code のセッションを再起動する",
     "",
     "## 実行方法（標準フロー: 企画 → ユーザー承認 → 実装）",
     "",
@@ -315,7 +332,7 @@ function formatSprintKit() {
     "",
   ];
 
-  for (const f of [...kit.agents, ...kit.workflows]) {
+  for (const f of [...kit.agents, ...kit.workflows, ...hooks]) {
     out.push(`===== FILE: ${f.path} =====`);
     out.push(f.content.trimEnd());
     out.push(`===== END FILE: ${f.path} =====`, "");
@@ -447,7 +464,7 @@ export const TOOLS = [
   {
     name: "get_sprint_kit",
     description:
-      "【Claude Code 向け】relay のスプリント開発キット（planner / generator / evaluator subagent 定義 + sprint workflow スクリプト）をインストール手順付きで返す。「実装→評価→修正」を PASS まで自動往復させたいとき・relay 流のスプリント開発を始めたいときに呼ぶ。返ってきたファイル一式を利用側プロジェクトの .claude/ に書き込んでから Workflow で実行する。",
+      "【Claude Code 向け】relay のスプリント開発キット（planner / generator / evaluator subagent 定義 + sprint workflow スクリプト + ハードコード検知 hook）をインストール手順付きで返す。「実装→評価→修正」を PASS まで自動往復させたいとき・relay 流のスプリント開発を始めたいときに呼ぶ。返ってきたファイル一式を利用側プロジェクトの .claude/ に書き込んでから Workflow で実行する。",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
 ];
