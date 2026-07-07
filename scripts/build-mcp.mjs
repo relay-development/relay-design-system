@@ -247,8 +247,9 @@ async function buildAssets() {
 }
 
 /**
- * Bundle the sprint development kit: the subagent definitions (.claude/agents/*.md)
- * and workflow scripts (.claude/workflows/*.js) that drive the planner → generator
+ * Bundle the sprint development kit: the subagent definitions (.claude/agents/*.md),
+ * workflow scripts (.claude/workflows/*.js) and hook scripts (.claude/hooks/*.mjs)
+ * that drive the planner → generator
  * ⇄ evaluator sprint loop. The MCP server ships these verbatim via get_sprint_kit
  * so consuming projects can install them into their own .claude/ directory —
  * agents/workflows only run from the local filesystem, so the MCP acts as the
@@ -271,11 +272,12 @@ async function buildSprintKit() {
       })),
     );
   };
-  const [agents, workflows] = await Promise.all([
+  const [agents, workflows, hooks] = await Promise.all([
     readDir(".claude/agents", ".md"),
     readDir(".claude/workflows", ".js"),
+    readDir(".claude/hooks", ".mjs"),
   ]);
-  return { agents, workflows };
+  return { agents, workflows, hooks };
 }
 
 /** Slice a markdown section that starts at a heading and ends at the next heading of <= depth. */
@@ -319,7 +321,7 @@ async function main() {
     figmaFile: FIGMA_FILE,
     catalogUrl: "https://relay-development.github.io/relay-design-system",
     generatedFrom:
-      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, .claude/agents/*.md, .claude/workflows/*.js",
+      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, .claude/agents/*.md, .claude/workflows/*.js, .claude/hooks/*.mjs",
     components,
     tokens,
     assets,
