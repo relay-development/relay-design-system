@@ -43,7 +43,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v6
         with:
-          node-version: "20"
+          node-version: "22" # wrangler v4 が Node >= 22 を要求
           cache: "npm"
 
       - name: Install dependencies
