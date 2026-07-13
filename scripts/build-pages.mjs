@@ -141,7 +141,8 @@ const PAGES = [
   { file: "tooltip.html",      group: "Components", label: "ツールチップ",     title: "ツールチップ",     desc: "ホバー / フォーカスで出る補足の吹き出し" },
   { file: "switch.html",       group: "Components", label: "トグルスイッチ",   title: "トグルスイッチ",   desc: "ON/OFF を即時に切り替えるスイッチ" },
 
-  { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
+  // hidden: サイドバーに出さない（checkbox / radio ページ下部のカードリンクからのみ遷移）
+  { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility", hidden: true },
 ];
 
 const INDEX = { file: "index.html", title: "relay Design System" };
@@ -150,6 +151,7 @@ const INDEX = { file: "index.html", title: "relay Design System" };
 function navHtml(activeFile) {
   const groups = [];
   for (const p of PAGES) {
+    if (p.hidden) continue;
     let g = groups.find((x) => x.title === p.group);
     if (!g) { g = { title: p.group, items: [] }; groups.push(g); }
     g.items.push(p);
