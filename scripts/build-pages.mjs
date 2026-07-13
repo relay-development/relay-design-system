@@ -142,7 +142,7 @@ const PAGES = [
   { file: "switch.html",       group: "Components", label: "トグルスイッチ",   title: "トグルスイッチ",   desc: "ON/OFF を即時に切り替えるスイッチ" },
 
   // hidden: サイドバーに出さない（checkbox / radio ページ下部のカードリンクからのみ遷移）
-  { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility", hidden: true },
+  { file: "guidelines.html",   group: "ガイドライン", label: "チェックボックスとラジオボタン", title: "チェックボックスとラジオボタン", desc: "Don't / Good パターン集", hidden: true },
 ];
 
 const INDEX = { file: "index.html", title: "relay Design System" };
