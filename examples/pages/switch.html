@@ -1,0 +1,80 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="switch">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">トグルスイッチ</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-article text-fg-high mb-6">設定の ON/OFF を切り替えるスイッチです。切り替えた結果はその場ですぐに反映されます。保存ボタンで後から確定する項目にはチェックボックスを使ってください。</p>
+
+      <!-- Body × State matrix -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">body × state</h3>
+          <p class="card-subtitle">size = medium</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">enable</span>
+          <span class="typo-xsmall text-fg-low text-center">hover</span>
+          <span class="typo-xsmall text-fg-low text-center">focus</span>
+          <span class="typo-xsmall text-fg-low text-center">disabled</span>
+
+          <span class="typo-xsmall text-fg-low">body = off</span>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" /></div>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" style="background-color: var(--color-neutral-500);" /></div>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" style="box-shadow: var(--shadow-focus-ring);" /></div>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" disabled /></div>
+
+          <span class="typo-xsmall text-fg-low">body = on</span>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" checked /></div>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" checked style="background-color: var(--color-primary-600);" /></div>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" checked style="box-shadow: var(--shadow-focus-ring);" /></div>
+          <div class="flex justify-center"><input type="checkbox" role="switch" class="switch" checked disabled /></div>
+        </div>
+      </div>
+
+      <!-- Size comparison -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">size</h3>
+          <p class="card-subtitle">small (36×20) / medium (44×24)。特段の理由がなければ medium を使う</p>
+        </div>
+        <div class="card-body grid sm:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-3">
+            <p class="typo-xsmall text-fg-low font-mono">small</p>
+            <label class="switch-label"><input type="checkbox" role="switch" class="switch switch-sm" />通知を受け取る</label>
+            <label class="switch-label"><input type="checkbox" role="switch" class="switch switch-sm" checked />通知を受け取る</label>
+          </div>
+          <div class="flex flex-col gap-3">
+            <p class="typo-xsmall text-fg-low font-mono">medium</p>
+            <label class="switch-label"><input type="checkbox" role="switch" class="switch" />通知を受け取る</label>
+            <label class="switch-label"><input type="checkbox" role="switch" class="switch" checked />通知を受け取る</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 使用例 -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — 通知設定</h3>
+          <p class="card-subtitle">ラベル全体がクリック / タップでき、Tab + Space でも切り替えられます</p>
+        </div>
+        <div class="card-body flex flex-col gap-4">
+          <label class="switch-label justify-between w-full max-w-md">
+            メールで通知を受け取る
+            <input type="checkbox" role="switch" class="switch" checked />
+          </label>
+          <label class="switch-label justify-between w-full max-w-md">
+            プッシュ通知を受け取る
+            <input type="checkbox" role="switch" class="switch" />
+          </label>
+          <label class="switch-label justify-between w-full max-w-md">
+            週次レポートを受け取る
+            <input type="checkbox" role="switch" class="switch" disabled />
+          </label>
+        </div>
+      </div>
+
+      <!-- usage:auto:switch -->
+    </section>
+  </main>

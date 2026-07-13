@@ -32,6 +32,7 @@
 @import "./components/stepper.css";
 @import "./components/modal.css";
 @import "./components/tooltip.css";
+@import "./components/switch.css";
 
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";
