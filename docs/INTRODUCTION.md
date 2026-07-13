@@ -93,7 +93,7 @@ import "@light-right/design-system/css";
 
 ## ✨ 現状
 
-- **最新バージョン**: `v0.1.0`
+- **最新バージョン**: [npm のパッケージページ](https://www.npmjs.com/package/@light-right/design-system)を参照（リリースごとにここを書き換えない）
 - **入っているもの**: Button / Icon Button / Label Control / Input / Search Input / Selector / Textarea / Checkbox / Radio / Filter Chip / Tab / Table / Simple Table / Card / Badge / Alert / Link / Breadcrumb / Side Nav / Pagination / Stepper / Modal / Tooltip / Toggle Switch / ガイドライン
 - **ライセンス**: MIT
 - **更新**: コード側の変更を随時 npm に publish（Figma で探求したデザインは、コードに取り込んだ時点で正式版）
