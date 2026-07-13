@@ -138,7 +138,7 @@ Link (本文中)      : <a class="link"><span class="link-label">リンクテキ
 
 全コンポーネントのクラス一覧は [README.md](README.md)、完成形 HTML は `snippets/*.html` を参照。
 
-### Icons (Lucide SVG sprite, 38 icons)
+### Icons (Lucide SVG sprite, 43 icons)
 
 ```
 import iconsUrl from "@light-right/design-system/icons";
@@ -194,7 +194,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | カラーモード | ライトのみ (ダークモード対応は将来検討) |
 | Primary | `#30b686` (brand-green-500) / hover `#1b805e` (600) |
 | Font | Noto Sans JP + system fallbacks |
-| Icon | Lucide subset 38 icons (SVG sprite) |
+| Icon | Lucide subset 43 icons (SVG sprite) |
 | Locale | ja (日本語) |
 | ベーススペーシング | 4px (`--spacing: 0.25rem`) |
 | アクセシビリティ | WCAG 2.1 AAA を目指す ([docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)) |
