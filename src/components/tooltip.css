@@ -133,6 +133,7 @@
     left: auto;
     right: calc(var(--spacing) * -1);
     top: 50%;
+    margin-left: 0;   /* top 配置の横センタリング用マージンを打ち消す */
     margin-top: calc(var(--spacing) * -1);
   }
 
@@ -149,6 +150,7 @@
     right: auto;
     left: calc(var(--spacing) * -1);
     top: 50%;
+    margin-left: 0;   /* top 配置の横センタリング用マージンを打ち消す */
     margin-top: calc(var(--spacing) * -1);
   }
 }
