@@ -26,8 +26,6 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 
-const FIGMA_FILE = "hJcKE8FkiyXtB1F9SuuE08";
-
 // Brand assets ship in the repo and are served — with a stable, un-hashed path —
 // from raw.githubusercontent.com. The catalog's deployed copies get Vite content
 // hashes (relay_main-BDI_TTMS.png), so the GitHub Pages URL is NOT stable; the raw
@@ -318,7 +316,6 @@ async function main() {
   const index = {
     name: pkg.name,
     version: pkg.version,
-    figmaFile: FIGMA_FILE,
     catalogUrl: "https://relay-development.github.io/relay-design-system",
     generatedFrom:
       "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, .claude/agents/*.md, .claude/workflows/*.js, .claude/hooks/*.mjs",

@@ -8,7 +8,7 @@
 
 ```text
 mcp__claude_ai_Figma__get_design_context
-  fileKey: hJcKE8FkiyXtB1F9SuuE08
+  fileKey: <ユーザーが共有した URL の /design/ 直後の英数字>
   nodeId:  <ユーザーが共有した URL の node-id>
 ```
 
