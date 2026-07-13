@@ -1,0 +1,120 @@
+/*
+ * Toggle Switch (トグルスイッチ) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   設定の ON/OFF を切り替え、結果が即座に反映されるフォーム部品。
+ *   checkbox と同じく appearance-none の input ベースで、つまみは
+ *   擬似要素でなく SVG background で描画する（input への ::before は
+ *   ブラウザ間で不安定なため。checkbox のグリフと同じ手法）。
+ *
+ *   props: size (sm 36×20 / md 44×24) × body (off/on) × state
+ *
+ *   サイズ (設計値):
+ *     md: トラック 44×24, つまみ 20px 円, 端から 2px, 移動量 20px
+ *     sm: トラック 36×20, つまみ 16px 円, 端から 2px, 移動量 16px
+ *
+ *   colors (semantic tokens):
+ *     off enable:   track neutral/400, つまみ white
+ *     off hover:    track neutral/500
+ *     off disabled: track neutral/200
+ *     on  enable:   track primary/500
+ *     on  hover:    track primary/600
+ *     on  disabled: track primary/200
+ *     focus: focus-ring shadow (checkbox と同一)
+ *
+ *   label color:
+ *     enable / hover / focus: text/high
+ *     disabled: text/disabled
+ *
+ * 機能:
+ *   設定の ON/OFF を切り替え、結果が即座に反映されるフォーム部品。
+ *   送信ボタンで後から確定する項目は checkbox、絞り込みのトグルは filter-chip。
+ *
+ * 使用法:
+ *   OK: input type="checkbox" role="switch" を switch-label で囲み、ラベル全体を押せるようにする。
+ *   OK: 切り替えた結果は即座に反映する（保存ボタンを待たない設定に使う）。
+ *   NG: フォーム送信で確定する入力に使わない → checkbox を使う。
+ *   NG: ラベルを状態で言い換えない（ON にする/OFF にする 等）→ 状態はスイッチ自体が示すので、ラベルは「通知を受け取る」のような機能名で固定する。
+ *
+ * Usage:
+ *   <label class="switch-label">
+ *     <input type="checkbox" role="switch" class="switch" />
+ *     通知を受け取る
+ *   </label>
+ *   <input type="checkbox" role="switch" class="switch switch-sm" />  ← small
+ */
+
+@layer components {
+  /* ============================================================
+   * Track + thumb — base (medium 44×24)
+   * ============================================================ */
+  .switch {
+    @apply inline-block shrink-0
+           appearance-none cursor-pointer
+           rounded-full bg-neutral-400
+           border-0
+           focus:outline-none
+           disabled:cursor-not-allowed;
+    width: 44px;
+    height: 24px;
+    /* つまみ (20px 白円)。checked で右端へスライド */
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='10' fill='white'/></svg>");
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: left 2px center;
+    transition: background-color 150ms ease, background-position 150ms ease;
+  }
+  .switch:checked {
+    background-position: left 22px center;   /* 44 - 20 - 2 */
+  }
+
+  /* ============================================================
+   * States — off (track neutral)
+   * ============================================================ */
+  .switch:hover:not(:checked):not(:disabled) {
+    @apply bg-neutral-500;
+  }
+  .switch:disabled:not(:checked) {
+    @apply bg-neutral-200;
+  }
+
+  /* ============================================================
+   * States — on (track primary)
+   * ============================================================ */
+  .switch:checked:not(:disabled) {
+    @apply bg-primary-500;
+  }
+  .switch:checked:hover:not(:disabled) {
+    @apply bg-primary-600;
+  }
+  .switch:checked:disabled {
+    @apply bg-primary-200;
+  }
+
+  /* Focus ring (checkbox と同一) */
+  .switch:focus-visible {
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  /* ============================================================
+   * Small (36×20, つまみ 16)
+   * ============================================================ */
+  .switch-sm {
+    width: 36px;
+    height: 20px;
+    background-size: 16px 16px;
+  }
+  .switch-sm:checked {
+    background-position: left 18px center;   /* 36 - 16 - 2 */
+  }
+
+  /* ============================================================
+   * Label wrapper — box + text を 8px gap で揃える (checkbox-label と同一)
+   * ============================================================ */
+  .switch-label {
+    @apply inline-flex items-center gap-2 cursor-pointer text-fg-high
+           text-base leading-6;
+  }
+  .switch-label:has(input.switch:disabled) {
+    @apply text-fg-disabled cursor-not-allowed;
+  }
+}
