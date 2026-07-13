@@ -1,0 +1,156 @@
+/*
+ * Tooltip (ツールチップ) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   ホバーまたはキーボードフォーカスで、トリガー要素の近くに短い補足
+ *   テキストを吹き出しで表示する。CSS のみで動作し JS 不要。
+ *   トリガーとの関連付けは aria-describedby で行う。
+ *
+ *   構造:
+ *     <span class="tooltip">
+ *       <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost"
+ *               aria-describedby="tip-help" aria-label="ヘルプ">
+ *         <svg class="icon"><use href="./icons.svg#lucide-info"></use></svg>
+ *       </button>
+ *       <span class="tooltip-content" id="tip-help" role="tooltip">補足テキスト</span>
+ *     </span>
+ *
+ *   props:
+ *     placement : top (default) | bottom | left | right
+ *                 → .tooltip-{top,bottom,left,right} を .tooltip に付与（無指定は top）
+ *
+ *   サイズ / 色 (semantic tokens):
+ *     bubble : bg fg/high (slate-900) / text fg/high-inverse (white) 反転配色
+ *     text   : 16/24 regular (typo-medium 相当。可読性ファーストで small に下げない)
+ *     padding: 8px / 12px (py-2 px-3), rounded-sm (4px), shadow-md
+ *     max-w  : 240px (spacing*60)。超えたら折り返し
+ *     arrow  : 8px 正方形を 45° 回転（bubble と同色）
+ *     gap    : トリガーとの距離 8px (spacing*2)
+ *
+ *   states:
+ *     表示: .tooltip:hover / .tooltip:focus-within で opacity 遷移 (150ms)
+ *     カタログ用: .is-open-preview で常時表示
+ *
+ * 機能:
+ *   ホバー / フォーカス時に短い補足テキストを出す吹き出し。無くても操作が
+ *   成立する「あると助かる」情報のためのもの。常設で知らせるべき情報は
+ *   alert、フォーム項目の説明は label-control の補足テキストを使う。
+ *
+ * 使用法:
+ *   OK: フォーカスできる要素（button / a / input 等）をトリガーにし、aria-describedby で関連付ける。
+ *   OK: 1〜2 文の短い補足に限定する。placement は top を基本にする。
+ *   NG: 操作に不可欠な情報（エラー・必須条件）を入れない → 見えるテキストや alert で常時表示する。
+ *   NG: span や div などフォーカス不能な要素だけに付けない → キーボード利用者に表示されなくなる。
+ *
+ * Usage:
+ *   <span class="tooltip">
+ *     <button type="button" class="btn btn-md btn-primary btn-outline" aria-describedby="tip-1">保存</button>
+ *     <span class="tooltip-content" id="tip-1" role="tooltip">下書きとして保存されます</span>
+ *   </span>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container — トリガーを包む基準点
+   * ============================================================ */
+  .tooltip {
+    @apply relative inline-flex;
+  }
+
+  /* ============================================================
+   * Bubble
+   * ============================================================ */
+  .tooltip-content {
+    @apply absolute z-10 py-2 px-3 rounded-sm
+           text-base leading-6 font-normal text-left
+           invisible opacity-0 pointer-events-none
+           transition-opacity duration-150;
+    background-color: var(--color-fg-high);
+    color: var(--color-fg-high-inverse);
+    box-shadow: var(--shadow-md);
+    width: max-content;
+    max-width: calc(var(--spacing) * 60);   /* 240px */
+  }
+
+  /* arrow — bubble と同色の 8px 正方形を 45° 回転 */
+  .tooltip-content::before {
+    content: "";
+    @apply absolute;
+    width: calc(var(--spacing) * 2);
+    height: calc(var(--spacing) * 2);
+    background-color: var(--color-fg-high);
+    transform: rotate(45deg);
+  }
+
+  /* 表示条件: hover / キーボードフォーカス / カタログ用プレビュー */
+  .tooltip:hover .tooltip-content,
+  .tooltip:focus-within .tooltip-content,
+  .tooltip-content.is-open-preview {
+    @apply visible opacity-100;
+  }
+
+  /* ============================================================
+   * Placement — top (default) / bottom / left / right
+   * ============================================================ */
+  /* top (default) */
+  .tooltip .tooltip-content,
+  .tooltip-top .tooltip-content {
+    bottom: calc(100% + var(--spacing) * 2);
+    left: 50%;
+    translate: -50% 0;
+  }
+  .tooltip .tooltip-content::before,
+  .tooltip-top .tooltip-content::before {
+    top: auto;
+    bottom: calc(var(--spacing) * -1);
+    left: 50%;
+    margin-left: calc(var(--spacing) * -1);
+  }
+
+  /* bottom */
+  .tooltip-bottom .tooltip-content {
+    bottom: auto;
+    top: calc(100% + var(--spacing) * 2);
+    left: 50%;
+    translate: -50% 0;
+  }
+  .tooltip-bottom .tooltip-content::before {
+    bottom: auto;
+    top: calc(var(--spacing) * -1);
+    left: 50%;
+    margin-left: calc(var(--spacing) * -1);
+  }
+
+  /* left */
+  .tooltip-left .tooltip-content {
+    bottom: auto;
+    left: auto;
+    right: calc(100% + var(--spacing) * 2);
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .tooltip-left .tooltip-content::before {
+    bottom: auto;
+    left: auto;
+    right: calc(var(--spacing) * -1);
+    top: 50%;
+    margin-left: 0;   /* top 配置の横センタリング用マージンを打ち消す */
+    margin-top: calc(var(--spacing) * -1);
+  }
+
+  /* right */
+  .tooltip-right .tooltip-content {
+    bottom: auto;
+    right: auto;
+    left: calc(100% + var(--spacing) * 2);
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .tooltip-right .tooltip-content::before {
+    bottom: auto;
+    right: auto;
+    left: calc(var(--spacing) * -1);
+    top: 50%;
+    margin-left: 0;   /* top 配置の横センタリング用マージンを打ち消す */
+    margin-top: calc(var(--spacing) * -1);
+  }
+}
