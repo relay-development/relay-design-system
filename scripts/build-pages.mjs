@@ -138,6 +138,7 @@ const PAGES = [
   { file: "pagination.html",   group: "Components", label: "ページネーション", title: "ページネーション", desc: "ページ送りナビゲーション" },
   { file: "stepper.html",      group: "Components", label: "ステッパー",       title: "ステッパー",       desc: "複数ステップの進捗表示" },
   { file: "modal.html",        group: "Components", label: "モーダル",         title: "モーダル",         desc: "最前面に重ねる確認ダイアログ" },
+  { file: "tooltip.html",      group: "Components", label: "ツールチップ",     title: "ツールチップ",     desc: "ホバー / フォーカスで出る補足の吹き出し" },
 
   { file: "guidelines.html",   group: "ガイドライン", label: "ガイドライン", title: "ガイドライン", desc: "Checkbox vs Radio / Web Accessibility" },
 ];

@@ -69,7 +69,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 
 ---
 
-## コンポーネント一覧（23 個）
+## コンポーネント一覧（24 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -95,7 +95,8 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 20 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
 | 21 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
 | 22 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
-| 23 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
+| 23 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
+| 24 | （ガイドライン） | デザイン原則・利用上の注意事項（プレビューサイト内）|
 
 各コンポーネントの完成形 HTML は `snippets/*.html` を、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
 

@@ -1,0 +1,87 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="tooltip">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">ツールチップ</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-article text-fg-high mb-6">ボタンやアイコンにマウスを乗せたとき、またはキーボードでフォーカスしたときに、短い補足テキストを吹き出しで表示します。CSS のみで動作し、JavaScript は不要です。</p>
+
+      <!-- ===== 配置（placement） ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">配置（placement）</h3>
+          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">.tooltip-{top,bottom,left,right}</code> で表示位置を指定（無指定は top）。下は <code class="px-1 bg-neutral-100 rounded">.is-open-preview</code> による常時表示プレビュー</p>
+        </div>
+        <div class="card-body grid grid-cols-2 gap-4">
+          <div class="flex flex-col items-center gap-8 py-12">
+            <span class="tooltip tooltip-top">
+              <button type="button" class="btn btn-md btn-neutral btn-outline" aria-describedby="tip-preview-top">top</button>
+              <span class="tooltip-content is-open-preview" id="tip-preview-top" role="tooltip">上に表示</span>
+            </span>
+          </div>
+          <div class="flex flex-col items-center gap-8 py-12">
+            <span class="tooltip tooltip-bottom">
+              <button type="button" class="btn btn-md btn-neutral btn-outline" aria-describedby="tip-preview-bottom">bottom</button>
+              <span class="tooltip-content is-open-preview" id="tip-preview-bottom" role="tooltip">下に表示</span>
+            </span>
+          </div>
+          <div class="flex flex-col items-center gap-8 py-12">
+            <span class="tooltip tooltip-left">
+              <button type="button" class="btn btn-md btn-neutral btn-outline" aria-describedby="tip-preview-left">left</button>
+              <span class="tooltip-content is-open-preview" id="tip-preview-left" role="tooltip">左に表示</span>
+            </span>
+          </div>
+          <div class="flex flex-col items-center gap-8 py-12">
+            <span class="tooltip tooltip-right">
+              <button type="button" class="btn btn-md btn-neutral btn-outline" aria-describedby="tip-preview-right">right</button>
+              <span class="tooltip-content is-open-preview" id="tip-preview-right" role="tooltip">右に表示</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 長いテキストの折り返し ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">長いテキスト</h3>
+          <p class="card-subtitle">最大幅 240px を超えると折り返します。1〜2 文の短い補足に収めてください</p>
+        </div>
+        <div class="card-body flex justify-center pb-16">
+          <div class="pt-16 mt-16">
+            <span class="tooltip tooltip-top">
+              <button type="button" class="btn btn-md btn-neutral btn-outline" aria-describedby="tip-preview-long">長い補足</button>
+              <span class="tooltip-content is-open-preview" id="tip-preview-long" role="tooltip">240px を超える長さの補足テキストは、このように自動で折り返して複数行になります。</span>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 使用例（実際にホバー / フォーカス） ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — 実際に試す</h3>
+          <p class="card-subtitle">マウスホバー、または Tab キーでのフォーカスで表示されます。トリガーには <code class="px-1 bg-neutral-100 rounded">aria-describedby</code> でツールチップの id を関連付けます</p>
+        </div>
+        <div class="card-body flex flex-wrap items-center gap-8">
+          <span class="tooltip">
+            <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-describedby="tip-demo-help" aria-label="ヘルプ">
+              <svg class="icon"><use href="./icons.svg#lucide-help-circle"></use></svg>
+            </button>
+            <span class="tooltip-content" id="tip-demo-help" role="tooltip">登録内容はあとから変更できます</span>
+          </span>
+          <span class="tooltip">
+            <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-describedby="tip-demo-copy" aria-label="コピー">
+              <svg class="icon"><use href="./icons.svg#lucide-copy"></use></svg>
+            </button>
+            <span class="tooltip-content" id="tip-demo-copy" role="tooltip">クリップボードにコピー</span>
+          </span>
+          <span class="tooltip tooltip-bottom">
+            <button type="button" class="btn btn-md btn-primary btn-outline" aria-describedby="tip-demo-save">下書き保存</button>
+            <span class="tooltip-content" id="tip-demo-save" role="tooltip">公開せずに下書きとして保存します</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- usage:auto:tooltip -->
+    </section>
+  </main>
