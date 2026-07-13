@@ -13,7 +13,6 @@ relay プロダクトの UI を、誰が作っても **同じ見た目・同じ�
 
 ### 🎨 1. Figma — デザイン探求の場
 
-- **URL**: https://www.figma.com/design/hJcKE8FkiyXtB1F9SuuE08/relay-Design-System
 - **主に使う人**: デザイナー
 - **ここで何をする**: 新しいコンポーネント・画面のデザインを探求・検討する（固まったデザインはコードに取り込み、以後はコードが正式版）
 

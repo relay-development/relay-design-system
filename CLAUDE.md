@@ -10,7 +10,7 @@ Claude Code が本リポジトリで作業する際に毎回読み込む運用�
 - **何**: Tailwind CSS v4 ベース、フレームワーク非依存のデザインシステム
 - **誰が使う**: relay 系プロダクトのチーム（npm `@light-right/design-system`）
 - **配布**: npm package + 公開 GitHub Pages カタログ
-- **正本**: このリポジトリのコード（トークン・コンポーネント仕様・API すべて）。Figma file `hJcKE8FkiyXtB1F9SuuE08` は**デザイン探求の場** — 固まったデザインをコードに取り込んだ時点で正式版になる
+- **正本**: このリポジトリのコード（トークン・コンポーネント仕様・API すべて）。Figma は**デザイン探求の場** — 固まったデザインをコードに取り込んだ時点で正式版になる
 - **Quick reference (1 枚憲法)**: [DESIGN.md](DESIGN.md) — トークン値・主要コンポーネント API・禁止パターン。UI を生成する単発タスクならまず DESIGN.md を見る
 
 ## リポジトリ構造

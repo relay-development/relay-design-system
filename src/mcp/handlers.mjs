@@ -62,11 +62,6 @@ export const INSTRUCTIONS = [
 
 /* ------------------------------------------------------------------ helpers */
 
-function figmaUrl(node) {
-  if (!node) return null;
-  return `https://www.figma.com/design/${index.figmaFile}/relay-Design-System?node-id=${node.replace(/:/g, "-")}`;
-}
-
 function findComponent(query) {
   const q = String(query || "").trim().toLowerCase();
   if (!q) return null;
@@ -120,8 +115,6 @@ function stripDocLabels(doc, labels) {
 function formatComponent(c) {
   const ja = c.nameJa ? ` （${c.nameJa}）` : "";
   const out = [`# ${c.name}${ja}`];
-  const url = figmaUrl(c.figmaNode);
-  if (url) out.push(`Figma: component set ${c.figmaNode} — ${url}`);
   out.push("");
 
   // 機能 / 使用法 を最初に出す（クラスや snippet を掴む前に「用途と NG」を読ませる）。
