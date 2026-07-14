@@ -222,7 +222,7 @@ function render({ title, group, content, activeFile }) {
         <a class="docs-sidebar-brand" href="./index.html">
           <div>
             <div class="brand-name">relay Design System</div>
-            <div class="brand-sub">Tailwind v4 · Figma synced</div>
+            <div class="brand-sub">Tailwind v4</div>
           </div>
         </a>
         <button type="button" class="docs-sidebar-toggle" aria-expanded="false" aria-controls="docs-sidebar-nav" aria-label="メニューを開閉">
