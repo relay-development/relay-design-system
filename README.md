@@ -139,6 +139,6 @@ git checkout -b <verb>-<scope>       # 例: add-tab-component
 | [docs/RELEASING.md](docs/RELEASING.md) | npm publish + Slack 通知のリリース手順 |
 | [docs/MCP-TOOLS.md](docs/MCP-TOOLS.md) | MCP サーバーのセットアップとツール仕様 |
 | [docs/ICONS.md](docs/ICONS.md) | アイコンの使い方・一覧 |
-| [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.1 AAA 実務チェックリスト |
+| [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.2 AAA 実務チェックリスト |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | 過去の設計判断の記録 |
 | [docs/WORKSHOP.md](docs/WORKSHOP.md) | Git / PR ワークフロー（非エンジニア向け） |
