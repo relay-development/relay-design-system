@@ -1,10 +1,12 @@
-# 定型ワークフロー: Figma → 新規コンポーネント追加
+# 定型ワークフロー: 新規コンポーネント追加
 
 > 過去事例: Filter Chip / Tab / Typography / Spacing 等。
 > チェックポイント運用（push で止まる / PR・merge はユーザー承認後）は [CONTRIBUTING.md](CONTRIBUTING.md) 参照。
-> **正本はコード**。Figma はデザイン探求の場であり、この手順は「Figma で固まったデザインをコードに取り込む」ためのもの。取り込み後はコード（`src/`）が正式版で、Figma との継続同期は行わない。
+> **正本はコード**。追加はコード上で行い、Figma はデザイン探求の場。取り込み後はコード（`src/`）が正式版で、Figma との継続同期は行わない。
 
-## Phase 0. Figma 仕様取得
+## Phase 0. Figma 仕様取得（Figma 発のデザインを取り込む場合のみ）
+
+Figma を経由しないコード起点の追加は Phase 1 から始める。
 
 ```text
 mcp__claude_ai_Figma__get_design_context
@@ -91,49 +93,60 @@ git checkout -b add-<component-name>
 
 `@import` は tokens → components の順序を守る（Tailwind v4 の cascade に影響）。
 
-## Phase 4. カタログにセクション追加
+## Phase 4. カタログにページ追加
 
-`examples/index.html` の適切な位置に `<section id="<name>">` を挿入。
+カタログはマルチページ構成。`examples/*.html` は `npm run build:pages` の**生成物（gitignored）なので直接編集しない**。編集するのは以下の 3 箇所:
 
-セクション構造（必須・他コンポーネントと統一）:
+1. **`examples/pages/<name>.html`** — ページ本文の断片を新規作成（`.docs-main` の中身のみ。既存の checkbox.html / switch.html 等を参考）:
 
 ```html
-<section id="<name>">
-  <div class="flex items-baseline justify-between mb-2">
-    <h2 class="typo-2xlarge"><Japanese name></h2>
-    <span class="badge badge-soft-primary">component</span>
-  </div>
-  <p class="typo-small text-fg-low mb-6">プロパティ: <code class="px-1 bg-neutral-100 rounded">prop1</code> × <code class="px-1 bg-neutral-100 rounded">prop2</code></p>
-  <p class="typo-small text-fg-middle mb-6">用途の説明文</p>
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="<name>">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge"><Japanese name></h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-article text-fg-high mb-6">用途の説明文</p>
 
-  <!-- ===== state × variant マトリクス（カード形式・3 列 grid が定番）===== -->
-  <div class="card mb-6 overflow-hidden">
-    <div class="card-header">
-      <h3 class="card-title">variant × state</h3>
-      <p class="card-subtitle">説明</p>
-    </div>
-    <div class="card-body grid grid-cols-[100px_1fr_1fr] gap-4 items-center">
-      <!-- header row + state rows -->
-    </div>
-  </div>
+      <!-- ===== state × variant マトリクス（カード形式）===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">variant × state</h3>
+          <p class="card-subtitle">説明</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr_1fr] gap-4 items-center">
+          <!-- header row + state rows -->
+        </div>
+      </div>
 
-  <!-- ===== 使用例 ===== -->
-  <div class="card mb-8">
-    <div class="card-header">
-      <h3 class="card-title">使用例</h3>
-      <p class="card-subtitle">…</p>
-    </div>
-    <div class="card-body">…</div>
-  </div>
-</section>
+      <!-- ===== 使用例 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例</h3>
+          <p class="card-subtitle">…</p>
+        </div>
+        <div class="card-body">…</div>
+      </div>
+
+      <!-- usage:auto:<name> -->  ← 機能 / 使用法カードが CSS ヘッダ（MCP index）から自動注入される
+    </section>
+  </main>
 ```
 
-サイドナビ (`.docs-sidebar-nav` 内の適切なグループ) に `<a href="#<name>"><Name></a>` を追加。
+2. **`scripts/build-pages.mjs`** — `PAGES` 配列の Components グループに 1 行追加（サイドバー・`<title>`・パンくずはここから自動生成される。手動でナビを編集しない）:
+
+```js
+{ file: "<name>.html", group: "Components", label: "<日本語名>", title: "<日本語名>", desc: "<一行説明>" },
+```
+
+3. **`examples/pages/index.html`** — トップページのコンポーネントセクションにページカード（`.page-card`）を追加。
+
+`npm run build:pages`（`npm run dev` 中は自動）で `examples/<name>.html` が生成される。
 
 ## Phase 5. 必要なら振る舞い JS を追加
 
-`</body>` 直前の `<script>` ブロック群に追加。**document.addEventListener('click', ...)** の event delegation パターン推奨（filter-chip / tab 等を参考）。
-データ属性で対象を識別（`[data-tabgroup]` 等）。
+共有スクリプト **`examples/catalog.js`** に追加（build-pages が全生成ページにリンクする）。**document.addEventListener('click', ...)** の event delegation パターン推奨（search-input / nested checkbox 等を参考）。
+データ属性で対象を識別（`[data-tabgroup]` 等）し、対象が無いページでは no-op になるよう selector でガードする。
 
 ## Phase 6. ドキュメント更新
 
@@ -179,7 +192,7 @@ merge 後、`.github/workflows/deploy-pages.yml` が自動で GitHub Pages に�
 
 > 色 / 余白 / タイポ / 角丸 / 影をトークン経由でしか書かない規律、禁止パターン Top 10、ハードコード許容例外は [DESIGN.md](../DESIGN.md) を参照。
 
-`@apply` が使えない場所（`examples/index.html` 内の `<style>` ブロック等）では Tailwind の theme 変数を直接参照:
+`@apply` が使えない場所（`examples/catalog.css` などの raw CSS ファイル）では Tailwind の theme 変数を直接参照:
 
 | 欲しいもの | 書き方 |
 |---|---|
