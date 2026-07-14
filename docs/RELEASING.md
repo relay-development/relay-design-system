@@ -18,6 +18,9 @@
 
 ## 手順
 
+> **main は保護ブランチ**のため、バージョンコミットも直接 push できない。他の変更と同じく PR 経由でマージし、タグは**マージ後の main のコミット**に打つ。
+> （`npm version` が自動で作るタグをそのまま `git push --follow-tags` すると、main が拒否されてもタグだけ孤児コミットを指したまま届いてしまう）
+
 ```bash
 # 1) main を最新化
 git checkout main
@@ -26,19 +29,28 @@ git pull --ff-only
 # 2) 変更が積まれていることを確認
 git log --oneline $(git describe --tags --abbrev=0)..HEAD
 
-# 3) バージョンを bump（package.json 更新 + git tag v0.x.y が自動で作られる）
-npm version patch    # or minor / major
+# 3) release ブランチでバージョンを bump（タグはまだ作らない）
+git checkout -b release-v0.x.y
+npm version patch --no-git-tag-version    # or minor / major
+git commit -am "chore(release): 0.x.y"
 
-# 4) push（タグも一緒に送る）
-git push --follow-tags
+# 4) push → PR 作成 → ユーザー承認後に squash merge（通常のチェックポイント運用と同じ）
+git push -u origin release-v0.x.y
+gh pr create --title "chore(release): 0.x.y" --body "..."
+gh pr merge --squash --delete-branch
 
-# 5) npm に publish
+# 5) マージ後の main にタグを打って push
+git checkout main && git pull --ff-only
+git tag -a v0.x.y -m "0.x.y"
+git push origin v0.x.y
+
+# 6) npm に publish
 #    prepublishOnly が走るため、自動的に `npm run build` が実行される
 npm publish
 
-# 6) GitHub Releases にリリースノート
-#    https://github.com/relay-development/relay-design-system/releases/new
-#    → 作られた tag を選択 → 変更点を箇条書きで記載
+# 7) GitHub Releases にリリースノート
+#    gh release create v0.x.y --title "v0.x.y" --notes "変更点を箇条書きで"
+#    （publish すると Slack 通知が自動で流れる。下記「通知」参照）
 ```
 
 ## 公開前チェックリスト
