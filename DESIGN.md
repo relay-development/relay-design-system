@@ -198,7 +198,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | Locale | ja (日本語) |
 | ベーススペーシング | 4px (`--spacing: 0.25rem`) |
 | アクセシビリティ | WCAG 2.2 AAA を目指す ([docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md)) |
-| 配布 | npm `@light-right/design-system` + GitHub Pages カタログ |
+| 配布 | npm `@light-right/design-system` + GitHub Pages カタログ + MCP リモート (Cloudflare Workers、[docs/MCP-TOOLS.md](docs/MCP-TOOLS.md)) |
 
 ---
 
