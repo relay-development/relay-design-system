@@ -164,15 +164,15 @@ currentColor を継承するので text-primary-500 等で着色可能
 
 | 禁止 | 代替 |
 |---|---|
-| `padding: 16px` | `p-4` または `calc(var(--spacing) * 4)` |
-| `color: #334155` | `text-fg-middle` または `var(--color-fg-middle)` |
-| `font-size: 14px` | `.typo-small` |
-| `border-radius: 8px` | `rounded-sm` |
-| `box-shadow: 0 1px 3px rgba(0,0,0,0.1)` | `shadow-sm` |
-| `p-5` / `p-7` / `p-10` (祝福外) | `p-4` or `p-6` / `p-6` or `p-8` |
-| `text-sm` 直書き | `.typo-small` |
-| `bg-slate-700` (primitive 直参照) | `bg-fg-middle` (semantic) |
-| `is-selected` クラス | `aria-selected="true"` |
+| `padding: 16px` `color: #334155` `font-size: 14px` 等の生値直書き | トークン / ユーティリティ経由（`p-4` / `text-fg-middle` / `.typo-small`） |
+| `p-5` / `p-7` / `p-10`（祝福外 spacing） | 近傍の祝福値（`p-4` or `p-6` / `p-6` or `p-8`） |
+| 新しい spacing トークンの追加（`--spacing-40` 等） | 祝福 9 段階に丸める |
+| `text-sm` / `text-base` 直書き | `.typo-small` / `.typo-medium` |
+| `bg-slate-700`（primitive 直参照） | semantic ロール（`bg-fg-middle` 等） |
+| `typo-large` 以上で weight を bold 未満に下げる | デフォルトの bold のまま使う |
+| 理由なく `sm` / `lg` サイズを選ぶ | 例外を除き `md` をデフォルトに |
+| 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
+| `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
 | main へ直 push | feature branch + PR |
 
 ### ハードコードを許容する例外
