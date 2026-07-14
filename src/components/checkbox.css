@@ -32,10 +32,13 @@
  *   排他的な単一選択は radio、絞り込みのトグルは filter-chip。
  *
  * 使用法:
- *   OK: input と文言を checkbox-label で囲み、ラベル全体を押せるようにする。
+ *   OK: input と文言を checkbox-label で囲み、ラベル全体を押せるようにする（キーボード・スクリーンリーダー対応もほぼ自動で得られる）。
  *   OK: 中間状態は JS で el.indeterminate = true。
+ *   OK: グループが複数あるときは fieldset/legend や Label Control の見出しで区切る。
  *   NG: 排他的な単一選択に使わない → radio。
  *   NG: 形状を独自シェイプに変えない → □ が「複数選択可」の手がかり（guidelines 参照）。
+ *   NG: ラベルを否定形で書かない（「メール通知を受け取らない」等） → チェックで二重否定になる。肯定形で書き、チェック＝有効に揃える。
+ *   NG: チェックした瞬間に送信・保存を実行しない → 確定ボタンを挟む。
  *
  * Usage:
  *   <label class="checkbox-label">
