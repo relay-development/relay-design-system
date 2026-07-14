@@ -205,6 +205,6 @@ currentColor を継承するので text-primary-500 等で着色可能
 ## より深く知りたいとき
 
 - **ページ単位の実装**: 本ファイル → 該当コンポーネントの [src/components/](src/components/)*.css で class API 確認 → 必要なら[カタログ](https://relay-development.github.io/relay-design-system/)で実例確認
-- **新規コンポーネント追加 / トークン変更**: [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md)（Figma 仕様取得 → CSS → カタログ → PR の Phase 0〜9）
+- **新規コンポーネント追加 / トークン変更**: [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md)（CSS → カタログ → ドキュメント → PR の Phase 0〜9）。追加はコード上で行う（正本はコード）。Figma はデザイン探求の場で、Figma 発のデザインを取り込む場合のみ Phase 0 の仕様取得から始める
 - **Git / PR 運用**: [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) / **SemVer・リリース**: [docs/RELEASING.md](docs/RELEASING.md)
 - **リンク**: [カタログ](https://relay-development.github.io/relay-design-system/) / [npm](https://www.npmjs.com/package/@light-right/design-system) / [GitHub](https://github.com/relay-development/relay-design-system)
