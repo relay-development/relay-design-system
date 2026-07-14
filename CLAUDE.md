@@ -40,7 +40,7 @@ docs/                  ← 詳細ドキュメント（下記リンク集参照�
 | タスク | 読むファイル |
 |---|---|
 | UI を書く / トークン・禁止パターン確認 | [DESIGN.md](DESIGN.md) |
-| 新規コンポーネント追加（Figma → コード Phase 0〜9） | [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md) |
+| 新規コンポーネント追加（Phase 0〜9。Figma 発の取り込みは Phase 0 から） | [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md) |
 | raw CSS 早見表（`@apply` が使えない場所） | [docs/COMPONENT-WORKFLOW.md](docs/COMPONENT-WORKFLOW.md#raw-css-で書く時の早見表) |
 | Git / PR 運用・ブランチ命名・コミット規約 | [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) |
 | リリース（npm publish + Slack 通知・SemVer 基準） | [docs/RELEASING.md](docs/RELEASING.md) |
