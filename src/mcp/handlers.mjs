@@ -411,7 +411,7 @@ export const TOOLS = [
   {
     name: "get_component",
     description:
-      "指定コンポーネントの完全仕様を返す。機能（用途・代替コンポーネントとの使い分け）と使用法（OK/NG パターン）を先頭に、続いて props・状態・色マッピング・usage 例・CSS クラス一覧・コピペ用 HTML スニペット・Figma リンク。name は 'button' / 'input' など（英名）。",
+      "指定コンポーネントの完全仕様を返す。機能（用途・代替コンポーネントとの使い分け）と使用法（OK/NG パターン）を先頭に、続いて props・状態・色マッピング・usage 例・CSS クラス一覧・コピペ用 HTML スニペット。name は 'button' / 'input' など（英名）。",
     inputSchema: {
       type: "object",
       properties: { name: { type: "string", description: "コンポーネント英名（例: button, input, alert, card）" } },

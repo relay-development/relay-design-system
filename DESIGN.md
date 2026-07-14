@@ -122,7 +122,7 @@ Search Input       : <div class="search-input search-input-md">...field + clear 
 Selector / Select  : <div class="selector selector-md">...</div>
 Textarea           : <div class="textarea-control"><textarea class="textarea textarea-md" maxlength="100"></textarea>...</div>
 Checkbox / Radio   : <label class="checkbox-label"><input type="checkbox" class="checkbox" />ラベル</label>
-Label Control      : <div class="label-control">...label + badge-required/optional + 入力欄...</div>
+Label Control      : <div class="label-control">...label + label-badge-{required,optional} + 入力欄...</div>
 Filter Chip        : <button class="filter-chip" aria-pressed="false">...</button>
 Tab                : <div class="tabs tabs-solid"><button class="tab tab-solid" aria-selected="true">...</button>...</div>
 Simple Table       : <table class="simple-table"><tr><th>ラベル</th><td>値</td></tr>...</table>

@@ -42,7 +42,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 ```
 
 - 全コンポーネントの状態網羅プレビュー: https://relay-development.github.io/relay-design-system
-- コピペ用 HTML: `node_modules/@light-right/design-system/snippets/*.html`
+- コピペ用 HTML（主要コンポーネント分）: `node_modules/@light-right/design-system/snippets/*.html`
 
 ### 3. トークンだけ使いたい（自前 Tailwind v4 環境がある場合）
 
@@ -97,7 +97,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 23 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
 | 24 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
 
-各コンポーネントの完成形 HTML は `snippets/*.html` を、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
+主要コンポーネントの完成形 HTML は `snippets/*.html` を（全コンポーネントのスニペットは MCP `get_component` またはプレビューサイト）、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
 
 ---
 
@@ -139,6 +139,5 @@ git checkout -b <verb>-<scope>       # 例: add-tab-component
 | [docs/RELEASING.md](docs/RELEASING.md) | npm publish + Slack 通知のリリース手順 |
 | [docs/MCP-TOOLS.md](docs/MCP-TOOLS.md) | MCP サーバーのセットアップとツール仕様 |
 | [docs/ICONS.md](docs/ICONS.md) | アイコンの使い方・一覧 |
-| [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.2 AAA 実務チェックリスト |
+| [docs/ACCESSIBILITY.md](docs/ACCESSIBILITY.md) | WCAG 2.2 (A / AA / AAA) 実務チェックリスト |
 | [docs/DECISIONS.md](docs/DECISIONS.md) | 過去の設計判断の記録 |
-| [docs/WORKSHOP.md](docs/WORKSHOP.md) | Git / PR ワークフロー（非エンジニア向け） |

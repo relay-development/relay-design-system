@@ -98,4 +98,3 @@ CSS / HTML を書く時は **必ずデザインシステムが用意した変数
 
 - [COMPONENT-WORKFLOW.md](COMPONENT-WORKFLOW.md) — Figma → 新規コンポーネント追加の Phase 0〜9
 - [RELEASING.md](RELEASING.md) — npm publish + Slack 通知のリリース手順
-- [WORKSHOP.md](WORKSHOP.md) — Git / PR ワークフロー（非エンジニア向け勉強会資料）

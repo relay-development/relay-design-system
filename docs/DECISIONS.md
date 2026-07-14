@@ -24,6 +24,7 @@ Netlify のクレジット上限超過のため移行済み。GitHub Pages は p
 - `@modelcontextprotocol/sdk` は **esbuild でバンドル**して単一ファイル化し devDependency に留める（CSS だけ使う利用者に runtime 依存を増やさない）
 - コンテンツは二重管理せず `scripts/build-mcp.mjs` が正本ファイルから `dist/mcp-index.json` を生成 → server にインライン
 - **`get_component` の品質は `src/components/*.css` 先頭のヘッダコメント形式（`recreated from Figma component set NNNN:NNNN (和名)` + props + Usage）に依存する**ので、新規コンポーネントでも雛形を必ず踏襲する（ヘッダが無いと doc が空になる）
+- （追記）その後、npm 不要のリモート版（authless / Streamable HTTP）を Cloudflare Workers にも展開（`src/mcp/worker.mjs`、`npm run deploy:mcp`）。stdio 版と `handlers.mjs` を共有し、コンテンツの正本は変わらず `dist/mcp-index.json`
 
 ## コンポーネントの「機能」「使用法(OK/NG)」も CSS ヘッダが正本
 

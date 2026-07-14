@@ -31,6 +31,7 @@ docs/                  ← 詳細ドキュメント（下記リンク集参照�
 .claude/
   agents/              ← スプリントキット正本（planner / generator / evaluator。MCP get_sprint_kit が配布）
   workflows/           ← sprint.js（generator ⇄ evaluator の自動往復 Workflow）
+  hooks/               ← relay-hardcode-gate.mjs（ハードコード検知 hook。sprint kit として配布）
 ```
 
 ---

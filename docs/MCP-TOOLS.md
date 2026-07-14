@@ -16,7 +16,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 |---|---|---|---|
 | 1 | `get_setup` | なし | CSS 導入手順と確認方法（**最初に呼ぶ**） |
 | 2 | `get_design_principles` | なし | 必須ルール＋禁止パターン Top 10 |
-| 3 | `list_components` | なし | 全 25 コンポーネントの一覧 |
+| 3 | `list_components` | なし | 全コンポーネントの一覧 |
 | 4 | `get_component` | `name` | 指定コンポーネントの完全仕様 |
 | 5 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
 | 6 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
@@ -51,7 +51,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 **入力**: なし
 
-**何ができる**: 全 25 コンポーネントを、英名・和名・**概要（＝機能の 1 行目）**・主要クラスの一覧で返す。UI を組む前の全体把握に使う。各コンポーネントの完全仕様は `get_component` で取得する。
+**何ができる**: 全コンポーネントを、英名・和名・**概要（＝機能の 1 行目）**・主要クラスの一覧で返す（UI コンポーネントのほか icon / typography 等の基盤スタイルも含む）。UI を組む前の全体把握に使う。各コンポーネントの完全仕様は `get_component` で取得する。
 
 ---
 
@@ -66,7 +66,6 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 3. 仕様 — props・状態・色マッピング（CSS ヘッダ由来）
 4. CSS クラス一覧
 5. コピペ用 HTML スニペット
-6. Figma リンク
 
 > マークアップはゼロから組まず、返ってくるスニペットとクラスを土台にする。
 
@@ -188,5 +187,5 @@ list_assets          ← ロゴ・イラストを埋め込むとき
 ## 関連
 
 - [docs/INTRODUCTION.md](INTRODUCTION.md) — チーム向けの入り口
-- [examples/mcp.html](../examples/pages/mcp.html) — カタログ内の MCP 紹介ページ
+- [examples/pages/mcp.html](../examples/pages/mcp.html) — カタログ内の MCP 紹介ページ
 - [docs/DECISIONS.md](DECISIONS.md) — MCP の設計判断・ヘッダ正本ルール
