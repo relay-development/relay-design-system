@@ -43,7 +43,7 @@ npm publish
 
 ## 公開前チェックリスト
 
-- [ ] `examples/index.html` をブラウザで開き、追加 / 変更したコンポーネントが正しく表示される
+- [ ] `npm run dev`（または `npm run build:pages`）で生成した `examples/index.html` をブラウザで開き、追加 / 変更したコンポーネントが正しく表示される（`examples/*.html` はビルド生成物・gitignored）
 - [ ] `npm run build` が成功し、`dist/relay.css` と `dist/tokens.css` が更新される
 - [ ] `npm pack --dry-run` で配布物に余計なファイルが含まれていない
 - [ ] README のコンポーネント一覧が最新（追加した場合）
@@ -61,10 +61,9 @@ GitHub で Release を **publish** すると、[.github/workflows/notify-slack-o
 通知に含まれる情報:
 
 - バージョン（タグ名）
-- リリースノート（Release 本文をそのまま）
+- 変更点の要約（Release 本文の箇条書きを最大 3 件。超過分は「その他 N 件対応」にまとめる）
 - このリリース期間に close された Issue 一覧（`Fixes #N` で PR 経由 close したものも含む）
 - リリースノート / プレビューサイトへのリンク
-- `npm install` コマンド
 
 ### 通知が動かない時のチェック
 
