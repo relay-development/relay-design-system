@@ -70,10 +70,10 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 
 | 項目 | DS の実装状況 | 関連基準 |
 |---|---|---|
-| コントラスト本文 (AAA 7:1) | `fg-high` ≈18:1 / `fg-middle` ≈10.7:1 ✅ | 1.4.6 |
+| コントラスト本文 (AAA 7:1) | `fg-high` ≈18:1 / `fg-middle` ≈10.4:1 ✅ | 1.4.6 |
 | コントラスト本文 (AA 4.5:1) | `fg-low` ≈4.5:1 ✅ | 1.4.3 |
-| 非テキストコントラスト 3:1 | `stroke-middle` 等で確保 ⚠️ | 1.4.11 |
-| キーボード操作 | 全 interactive 要素に `focus-visible` ✅ | 2.1.1 / 2.1.2 |
+| 非テキストコントラスト 3:1 | 境界色 (`stroke-*`) は 3:1 に不足あり、focus 時に補強 ⚠️ | 1.4.11 |
+| キーボード操作 | ネイティブ interactive 要素ベースで全て Tab 操作可能 ✅ | 2.1.1 / 2.1.2 |
 | Focus ring | `--shadow-focus-ring` + `outline-info-600` ✅ | 2.4.7 |
 | ARIA 状態 | `aria-pressed` / `aria-selected` / `disabled` ✅ | 4.1.2 |
 | 名前・役割・値 | ネイティブ HTML 要素ベース ✅ | 4.1.2 |
@@ -356,7 +356,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 
 **DS 側の担保**:
 - `--color-fg-high` (slate-900) on white = 約 18:1 ✅
-- `--color-fg-middle` (slate-700) on white = 約 10.7:1 ✅
+- `--color-fg-middle` (slate-700) on white = 約 10.4:1 ✅
 - `--color-fg-low` (slate-500) on white = 約 4.5:1 ✅ (本基準ぴったり)
 
 **ブランドカラーをテキストに使う時の注意**:
@@ -417,7 +417,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 
 **DS 側の担保**:
 - `--color-fg-high` ≈ 18:1 ✅
-- `--color-fg-middle` ≈ 10.7:1 ✅
+- `--color-fg-middle` ≈ 10.4:1 ✅
 - `--color-fg-low` ≈ 4.5:1 → **AA 止まり、AAA 本文には使わない** ⚠️
 
 **プロダクト側の責務**:
@@ -489,8 +489,8 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 **達成基準**: UI コンポーネントの境界・状態表示・グラフィカルオブジェクトのコントラスト比 3:1 以上。
 
 **DS 側の担保**:
-- `--color-stroke-middle` (slate-300) on white ≈ 1.6:1 ❌ 不足
-- `--color-stroke-high` (slate-400) on white ≈ 2.6:1 ❌ 不足
+- `--color-stroke-high` (slate-300) on white ≈ 1.5:1 ❌ 不足
+- `--color-stroke-middle` (slate-200) on white ≈ 1.2:1 ❌ 不足
 - ボタン / 入力欄の境界色は AA に不足する場合あり、focus 時に補強される設計
 
 **プロダクト側の責務**:
@@ -802,7 +802,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 **達成基準**: キーボードフォーカス可能な要素に、フォーカス時の視覚的指示を提供。
 
 **DS 側の担保**:
-- 全 interactive コンポーネントに `:focus-visible` 実装
+- 全 interactive コンポーネントでフォーカスを可視化（button / tab / filter-chip 等は `:focus-visible`、input / textarea は `:focus` の境界色強調、selector は `:focus-within`）
 - `--shadow-focus-ring` (`0 0 0 3px #2563eb`) または `outline-info-600`
 - checkbox / radio は `box-shadow: var(--shadow-focus-ring)`
 
@@ -983,13 +983,17 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 
 ---
 
-### 2.5.8 ターゲットのサイズ (最低限) `AA` 🆕 ✅ DS で担保
+### 2.5.8 ターゲットのサイズ (最低限) `AA` 🆕 ⚠️ DS + プロダクト共同
 
 **達成基準** (WCAG 2.2 で追加): ポインタターゲットは **24 × 24 CSS px 以上** (または十分な間隔)。
 
 **DS 側の担保**:
-- 最小の `sm` サイズでも 32px (`.btn-sm` / `.icon-btn-sm` / `.input-sm`) → **24px を全サイズで満たす** ✅
+- ボタン / 入力系は最小の `sm` でも 32px (`.btn-sm` / `.icon-btn-sm` / `.input-sm`) → 単体で適合 ✅
+- checkbox / radio の `md` は 24px で適合。**`sm` は 16×16px、switch-sm は高さ 20px で単体では不足** ❌
 - (AAA の 44px は [2.5.5](#255-ターゲットのサイズ-高度-aaa--ds--プロダクト共同) を参照)
+
+**プロダクト側の責務**:
+- `sm` の checkbox / radio / switch は `checkbox-label` 等でラベルを含めてターゲット化する（推奨パターン）か、周囲 24px 相当の間隔を確保する
 
 **チェック**:
 - [ ] すべてのターゲットが 24×24px 以上、または間隔で確保
@@ -1307,7 +1311,7 @@ WCAG 2.2 で本基準は **削除** されました (現代のブラウザ・支
 | 見出し階層 | 2.4.6 / 2.4.10 | `.typo-*` を意味順で使う |
 | ヘルプ UI | 3.3.5 | `.label-control-support` / `.alert` |
 | 名前・役割・値 | 4.1.2 | ネイティブ HTML + ARIA states |
-| 最小ターゲット 24px | 2.5.8 | 最小 `sm` でも 32px |
+| 最小ターゲット 24px | 2.5.8 | ボタン / 入力系は `sm` でも 32px。checkbox / radio / switch の `sm` はラベル併用で確保 |
 
 ---
 
