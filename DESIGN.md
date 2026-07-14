@@ -56,7 +56,7 @@ import "@light-right/design-system/css";
 反転テキスト               : text-fg-high-inverse (white)
 ボーダー                   : border-stroke-{high,middle,low}
 ステータス                 : {success,warning,negative,info}-{50..950}
-背景ページ                 : bg-bg-page (white) / bg-bg-page-green (primary-50)
+背景ページ                 : bg-page (white) / bg-page-green (primary-50)
 ```
 
 > raw CSS で書く時: `var(--color-primary-500)` / `var(--color-fg-high)` 等。
@@ -86,7 +86,7 @@ spacing/12 = 48px      spacing/16 = 64px
 .typo-2xlarge   : 32px / 40px  ← セクション見出し
 .typo-3xlarge   : 40px / 48px  ← ページタイトル
 .typo-article   : 16px / 32px  ← 記事・読み物用 (regular, 広め行間) の独立スケール
-フォントスタック : Noto Sans JP, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif
+フォントスタック : Noto Sans JP, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, sans-serif
 ウェイト         : font-{thin,light,normal,medium,bold,black} (100..900)
 ```
 
@@ -101,7 +101,7 @@ spacing/12 = 48px      spacing/16 = 64px
 ### Radius / Shadow
 
 ```
-border-radius   : rounded-{none,xs,sm,md,lg,full}  (= 0 / 2 / 4 / 8 / 12 / 9999 px)
+border-radius   : rounded-{none,xs,sm,md,lg,full}  (= 0 / 4 / 8 / 16 / 24 / 9999 px)
 shadow-sm       : 1px ドロップ
 shadow-md       : 2 層 (Figma 仕様)
 shadow-lg       : 2 層 (大きめ)
