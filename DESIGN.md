@@ -51,7 +51,7 @@ import "@light-right/design-system/css";
 プライマリ (brand-green)   : bg-primary-500 (#30b686) / hover bg-primary-600
 ニュートラル (slate)       : neutral-{50,100,200,...,950}
 本文テキスト (高優先)      : text-fg-high (slate-900, コントラスト ≈18:1)
-本文テキスト (中優先)      : text-fg-middle (slate-700, ≈10.7:1)
+本文テキスト (中優先)      : text-fg-middle (slate-700, ≈10.4:1)
 補助テキスト (AA まで)     : text-fg-low (slate-500, ≈4.5:1)
 反転テキスト               : text-fg-high-inverse (white)
 ボーダー                   : border-stroke-{high,middle,low}
