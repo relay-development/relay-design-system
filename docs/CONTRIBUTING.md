@@ -7,6 +7,7 @@
 | ルール | 状態 |
 |---|---|
 | Require a pull request before merging | ✅ ON（レビュー 0 人で OK、セルフマージ可） |
+| Require status checks to pass before merging | ✅ ON（`check` = [整合性チェック](#整合性チェックci)。❌ の間はマージ不可） |
 | Block force pushes | ✅ ON |
 | Block deletions | ✅ ON |
 | Enforce for admins (オーナーにも適用) | ✅ ON |
