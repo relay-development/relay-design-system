@@ -1,0 +1,31 @@
+name: Check docs consistency
+
+# 正本（コード側）と派生ドキュメントの数表記・規約のズレを PR 上で検知する。
+# チェック内容と修正方法は scripts/check-consistency.mjs 冒頭コメントを参照。
+# 依存パッケージ不要のため npm ci は行わない（node 単体で実行できる）。
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-consistency-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+
+      - name: Run consistency check
+        run: node scripts/check-consistency.mjs
