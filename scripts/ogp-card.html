@@ -29,41 +29,19 @@
       padding: 0 calc(var(--spacing) * 16); /* 64px */
       box-sizing: border-box;
     }
-    .ogp-bg { position: absolute; inset: 0; pointer-events: none; }
-    .ogp-bg img { position: absolute; height: 100%; }
-    .ogp-bg .left  { left: 0; top: 0; }
-    .ogp-bg .right { right: 0; bottom: 0; }
-    .ogp-lead  { position: relative; display: flex; flex-direction: column; gap: calc(var(--spacing) * 8); }
-    .ogp-logo  { width: 400px; }
-    .ogp-badges { display: flex; gap: calc(var(--spacing) * 3); }
-    .ogp-hero  { position: relative; height: 420px; }
-    .ogp-bar   { position: absolute; bottom: 0; left: 0; width: 100%; height: calc(var(--spacing) * 3); }
+    .ogp-lead { display: flex; flex-direction: column; gap: calc(var(--spacing) * 10); }
+    .ogp-logo { width: 400px; }
+    .ogp-hero { height: 420px; }
+    .ogp-bar  { position: absolute; bottom: 0; left: 0; width: 100%; height: calc(var(--spacing) * 3); }
   </style>
 </head>
 <body class="bg-white font-sans antialiased">
   <div class="ogp">
-    <div class="ogp-bg">
-      <img class="left" src="../examples/assets/bg-blur-left.png" alt="" />
-      <img class="right" src="../examples/assets/bg-blur-right.png" alt="" />
-    </div>
-
     <div class="ogp-lead">
       <img class="ogp-logo" src="../examples/assets/relay_logo.svg" alt="relay リレイ" />
-      <div>
-        <div class="typo-3xlarge text-fg-high">Design System</div>
-        <p class="typo-xlarge text-fg-middle" style="margin-top: calc(var(--spacing) * 4)">
-          トークン・コンポーネント・AI 連携をひとつに
-        </p>
-      </div>
-      <div class="ogp-badges">
-        <span class="badge badge-soft-primary">Tailwind CSS v4</span>
-        <span class="badge badge-soft-primary">Framework agnostic</span>
-        <span class="badge badge-soft-primary">MCP / evals</span>
-      </div>
+      <div class="typo-3xlarge text-fg-high">Design System</div>
     </div>
-
     <img class="ogp-hero" src="../examples/assets/relay_main.png" alt="" />
-
     <div class="ogp-bar bg-primary-500"></div>
   </div>
 </body>
