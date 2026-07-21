@@ -11,6 +11,7 @@
  * Links are RELATIVE (./button.html) so they work both on the dev server (served
  * at "/") and on GitHub Pages (served under "/relay-design-system/").
  */
+import { createHash } from "node:crypto";
 import { readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -155,6 +156,15 @@ const INDEX = {
 // OGP の絶対 URL 用（GitHub Pages の公開先）
 const SITE_URL = "https://relay-development.github.io/relay-design-system/";
 
+// og:image に画像の内容ハッシュを付与する（X 等は og:image の URL 単位で
+// カードをキャッシュするため、画像を差し替えても URL が同じだと古いカードが
+// 出続ける。内容が変わったときだけ URL が変わり、キャッシュが確実に割れる）
+const ogpHash = createHash("md5")
+  .update(readFileSync(resolve(__dirname, "../examples/assets/ogp.png")))
+  .digest("hex")
+  .slice(0, 8);
+const OGP_IMAGE_URL = `${SITE_URL}assets/ogp.png?v=${ogpHash}`;
+
 // ── Sidebar nav (grouped, active link marked) ───────────────────────────────
 function navHtml(activeFile) {
   const groups = [];
@@ -229,7 +239,7 @@ function render({ title, group, content, activeFile, desc }) {
   <meta property="og:title" content="${fullTitle}" />
   <meta property="og:description" content="${desc}" />
   <meta property="og:url" content="${SITE_URL}${activeFile}" />
-  <meta property="og:image" content="${SITE_URL}assets/ogp.png" />
+  <meta property="og:image" content="${OGP_IMAGE_URL}" />
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="../src/index.css" />
   <link rel="stylesheet" href="./catalog.css" />
