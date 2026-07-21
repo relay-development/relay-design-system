@@ -33,6 +33,8 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 **なぜ最初に呼ぶか**: relay のクラス（`.btn` / `.card` / `.input` 等）は npm パッケージ `@light-right/design-system` の CSS が読み込まれて初めて効く。MCP はクラス名やトークンの「知識」を渡すだけで CSS 実体は渡さないため、未導入のまま relay クラスを書いても見た目が変わらず、ハードコードに逃げる結果になる。UI 着手前のセットアップ確認に使う。
 
+導入済みプロジェクト向けには**バージョン確認**の手順も含む（MCP の知識の基準バージョンと利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS を正とする）。
+
 ---
 
 ## 2. `get_design_principles` — 規約とガードを返す
@@ -61,11 +63,12 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 **何ができる**: 指定コンポーネントの完全仕様を、以下の順で返す。**用途と NG を先に読ませて誤用を防ぐ**設計。
 
-1. **機能** — 何のためのコンポーネントか／似た別コンポーネントとの使い分け（例: 遷移は `link`、実行は `button`）
-2. **使用法** — ✅ OK パターン / ❌ NG パターン（アンチパターン → 是正）
-3. 仕様 — props・状態・色マッピング（CSS ヘッダ由来）
-4. CSS クラス一覧
-5. コピペ用 HTML スニペット
+1. **基準バージョン注記** — この仕様がどのリリース基準か。利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS（dist/relay.css）を正とする指示つき
+2. **機能** — 何のためのコンポーネントか／似た別コンポーネントとの使い分け（例: 遷移は `link`、実行は `button`）
+3. **使用法** — ✅ OK パターン / ❌ NG パターン（アンチパターン → 是正）
+4. 仕様 — props・状態・色マッピング（CSS ヘッダ由来）
+5. CSS クラス一覧
+6. コピペ用 HTML スニペット
 
 > マークアップはゼロから組まず、返ってくるスニペットとクラスを土台にする。
 
@@ -159,6 +162,8 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 ## ツール以外の仕組み
 
 - **接続時の常駐ガイダンス（`initialize` の instructions）**: 接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
+- **事前知識で答えないルール（instructions 内）**: 実装を伴わない質問・レビュー・相談でも、relay の仕様に関する回答は必ずツールで確認してから行うことを instructions で強制。AI が記憶で答えて古い・存在しないクラスを案内するハルシネーションを防ぐ（SmartHR Design System の SKILL.md 方式）。
+- **バージョンずれ対策**: instructions・get_setup・get_component の 3 箇所で「この知識は v〇〇 基準。利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS を正とする」を明示。MCP の知識と実 CSS のバージョン差で「クラスが効かない → ハードコードに逃げる」事故を防ぐ。
 - **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。スプリント開発キットも `relay://skill/sprint` としてスキル形式（手順書＋ファイル一式）で読める。
 - **prompts**: `sprint` プロンプトを公開。Claude Code ではスラッシュコマンド（`/mcp__<サーバー名>__sprint`）として現れ、1 コマンドで「キット未導入なら get_sprint_kit でインストール → planner で企画 → ユーザー承認 🛑 → 承認後に Workflow 実行」まで誘導する（引数 `task` に要望・議事録等の planner への入力を渡せる）。
 
