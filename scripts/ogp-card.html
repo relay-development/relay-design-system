@@ -1,0 +1,70 @@
+<!doctype html>
+<!--
+  OGP 画像のソース (1200x630)。examples/assets/ogp.png の正本。
+
+  再生成手順:
+    1. npm run build で dist/relay.css を生成
+    2. リポジトリルートで HTTP サーバーを立て、このファイルをブラウザで開く
+    3. ビューポート 1200x630 でスクリーンショットを撮り examples/assets/ogp.png に保存
+       （Playwright: browser_resize 1200x630 → navigate → screenshot）
+
+  スタイル方針: 色・タイポ・余白は relay のクラス / トークン変数経由。
+  レイアウトの実 px は構造ジオメトリ（DESIGN.md の検査対象外）のみ。
+  注意: dist/relay.css はカタログで使用中のユーティリティのみ含むため、
+  ここで使うクラスは既存ページで使われているものに限る（無いものは var() で書く）。
+-->
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="../dist/relay.css" />
+  <style>
+    html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+    .ogp {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 calc(var(--spacing) * 16); /* 64px */
+      box-sizing: border-box;
+    }
+    .ogp-bg { position: absolute; inset: 0; pointer-events: none; }
+    .ogp-bg img { position: absolute; height: 100%; }
+    .ogp-bg .left  { left: 0; top: 0; }
+    .ogp-bg .right { right: 0; bottom: 0; }
+    .ogp-lead  { position: relative; display: flex; flex-direction: column; gap: calc(var(--spacing) * 8); }
+    .ogp-logo  { width: 400px; }
+    .ogp-badges { display: flex; gap: calc(var(--spacing) * 3); }
+    .ogp-hero  { position: relative; height: 420px; }
+    .ogp-bar   { position: absolute; bottom: 0; left: 0; width: 100%; height: calc(var(--spacing) * 3); }
+  </style>
+</head>
+<body class="bg-white font-sans antialiased">
+  <div class="ogp">
+    <div class="ogp-bg">
+      <img class="left" src="../examples/assets/bg-blur-left.png" alt="" />
+      <img class="right" src="../examples/assets/bg-blur-right.png" alt="" />
+    </div>
+
+    <div class="ogp-lead">
+      <img class="ogp-logo" src="../examples/assets/relay_logo.svg" alt="relay リレイ" />
+      <div>
+        <div class="typo-3xlarge text-fg-high">Design System</div>
+        <p class="typo-xlarge text-fg-middle" style="margin-top: calc(var(--spacing) * 4)">
+          トークン・コンポーネント・AI 連携をひとつに
+        </p>
+      </div>
+      <div class="ogp-badges">
+        <span class="badge badge-soft-primary">Tailwind CSS v4</span>
+        <span class="badge badge-soft-primary">Framework agnostic</span>
+        <span class="badge badge-soft-primary">MCP / evals</span>
+      </div>
+    </div>
+
+    <img class="ogp-hero" src="../examples/assets/relay_main.png" alt="" />
+
+    <div class="ogp-bar bg-primary-500"></div>
+  </div>
+</body>
+</html>

@@ -146,7 +146,14 @@ const PAGES = [
   { file: "guidelines.html",   group: "ガイドライン", label: "チェックボックスとラジオボタン", title: "チェックボックスとラジオボタン", desc: "Don't / Good パターン集", hidden: true },
 ];
 
-const INDEX = { file: "index.html", title: "relay Design System" };
+const INDEX = {
+  file: "index.html",
+  title: "relay Design System",
+  desc: "Tailwind CSS v4 ベースのフレームワーク非依存デザインシステム。デザイントークン・コンポーネント・AI 連携（MCP / evals）を提供します。",
+};
+
+// OGP の絶対 URL 用（GitHub Pages の公開先）
+const SITE_URL = "https://relay-development.github.io/relay-design-system/";
 
 // ── Sidebar nav (grouped, active link marked) ───────────────────────────────
 function navHtml(activeFile) {
@@ -206,13 +213,24 @@ function breadcrumb(group, title) {
 }
 
 // ── Page template ───────────────────────────────────────────────────────────
-function render({ title, group, content, activeFile }) {
+function render({ title, group, content, activeFile, desc }) {
+  // index はサイト名そのものなので「— relay Design System」を重ねない
+  const fullTitle = title === "relay Design System" ? title : `${title} — relay Design System`;
   return `<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>${title} — relay Design System</title>
+  <title>${fullTitle}</title>
+  <meta name="description" content="${desc}" />
+  <!-- OGP / X カード（画像の正本は scripts/ogp-card.html。再生成手順はそのヘッダ参照） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="relay Design System" />
+  <meta property="og:title" content="${fullTitle}" />
+  <meta property="og:description" content="${desc}" />
+  <meta property="og:url" content="${SITE_URL}${activeFile}" />
+  <meta property="og:image" content="${SITE_URL}assets/ogp.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="stylesheet" href="../src/index.css" />
   <link rel="stylesheet" href="./catalog.css" />
 </head>
@@ -261,7 +279,7 @@ const all = [INDEX, ...PAGES];
 let written = 0;
 for (const p of all) {
   const content = injectUsage(readFragment(p.file));
-  const html = render({ title: p.title, group: p.group, content, activeFile: p.file });
+  const html = render({ title: p.title, group: p.group, content, activeFile: p.file, desc: p.desc });
   writeFileSync(resolve(EXAMPLES, p.file), html, "utf8");
   written++;
 }
