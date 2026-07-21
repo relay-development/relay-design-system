@@ -94,6 +94,19 @@ git checkout main && git pull --ff-only
 CSS / HTML を書く時は **必ずデザインシステムが用意した変数を使う**（pixel / hex / 生数値の直書きは禁止）。
 詳細は [DESIGN.md](../DESIGN.md) の Non-Negotiable Principles と禁止パターン Top 10 を参照。
 
+## 整合性チェック（CI）
+
+PR を出すと `check-consistency` ワークフローが自動実行され、正本（コード側）と派生ドキュメントのズレを検知する。ローカルでは `npm run check:consistency` で同じチェックを実行できる（依存インストール不要）。
+
+| チェック | 正本 | 照合先 |
+|---|---|---|
+| アイコン数 | `scripts/build-icons.mjs` の `ICONS` | README / DESIGN.md / docs/ICONS.md / カタログの数表記 |
+| コンポーネント数 | `scripts/build-pages.mjs` の Components グループ | README の見出し・表 / docs/INTRODUCTION.md |
+| ヘッダ規約 | — | `src/components/*.css` 先頭コメントの 機能: / 使用法:（MCP の正本） |
+| index.css | `src/tokens/` `src/components/` の実ファイル | `@import` の網羅と tokens → components 順序 |
+
+CI が落ちたら、エラーメッセージの指示に従いドキュメント側の表記を更新する。意図的に文言を変えた場合は `scripts/check-consistency.mjs` のパターン定義（`ICON_CLAIMS` 等）も更新する。
+
 ## 関連ドキュメント
 
 - [COMPONENT-WORKFLOW.md](COMPONENT-WORKFLOW.md) — Figma → 新規コンポーネント追加の Phase 0〜9

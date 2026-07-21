@@ -78,3 +78,4 @@ docs/                  ← 詳細ドキュメント（下記リンク集参照�
 - 新しい spacing トークン（`--spacing-40` 等）を追加しない（Tailwind v4 single-base 流儀）
 - npm token を会話やコミットに含めない（露出したら即 revoke）
 - コンポーネント追加時は README のコンポーネント数・INTRODUCTION.md も更新（[Phase 6](docs/COMPONENT-WORKFLOW.md#phase-6-ドキュメント更新)）
+- 数表記・ヘッダ規約・`@import` 網羅のズレは `npm run check:consistency` で検証できる（PR 時に CI が自動実行。詳細は [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md#整合性チェックci)）
