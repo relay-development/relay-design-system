@@ -51,6 +51,13 @@ export const INSTRUCTIONS = [
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
   "",
+  "【事前知識で答えない】",
+  "relay のクラス名・トークン値・コンポーネント仕様に関する回答は、UI を実装しない場合（質問への回答・コードレビュー・相談）でも、事前知識のみで答えず必ず get_component / get_tokens / search で確認してから答えること。仕様は更新されるため、記憶に頼ると古い・存在しないクラス（例: .badge-error — 正しくは .badge-solid-negative）を案内する恐れがある。",
+  "「どのコンポーネントを使うべきか」の相談も、記憶で列挙せずまず list_components を呼ぶこと。",
+  "",
+  "【バージョンずれ】",
+  `この MCP の知識は @light-right/design-system v${index.version} 基準。利用プロジェクトの導入バージョン（package.json）が異なる場合は node_modules 内の実 CSS（dist/relay.css）を正とし、「クラスを書いたのに効かない」ときはハードコードに逃げる前にバージョン差を疑うこと。`,
+  "",
   "【ハード制約】",
   "- 色 / 余白 / タイポ / 角丸 / 影をハードコードしない（#hex やピクセル直書き・任意値クラスを避け、トークン／ユーティリティ経由で書く）。",
   "- 既存コンポーネントがある UI は手書きで再実装せず relay コンポーネントを使う。",
@@ -116,6 +123,12 @@ function formatComponent(c) {
   const ja = c.nameJa ? ` （${c.nameJa}）` : "";
   const out = [`# ${c.name}${ja}`];
   out.push("");
+  // 基準バージョンと、ずれていた場合の正の在り処を毎回明示する（利用プロジェクトの
+  // 導入バージョンが古い/新しい場合、この知識にあるクラスが実 CSS に無いことがある）。
+  out.push(
+    `> この仕様は @light-right/design-system **v${index.version}** 基準。利用プロジェクトの導入バージョン（package.json で確認）が異なる場合は、node_modules 内の実 CSS（dist/relay.css）を正とすること。`,
+    "",
+  );
 
   // 機能 / 使用法 を最初に出す（クラスや snippet を掴む前に「用途と NG」を読ませる）。
   if (c.function) out.push("## 機能", "", c.function, "");
@@ -206,6 +219,10 @@ function formatSetup() {
     "- `node_modules/@light-right/design-system/dist/relay.css` が存在する",
     "- 上の import / link がアプリのエントリに書かれている",
     "- 確認: `.btn-primary` を置いてブランド緑のボタンが表示されれば効いている",
+    "",
+    "## 4. バージョン確認（導入済みプロジェクトの場合）",
+    `- この MCP の知識は **v${index.version}** 基準。利用プロジェクトの package.json / lock の \`@light-right/design-system\` のバージョンを確認すること`,
+    "- バージョンが異なる場合、この MCP が案内するクラスが実 CSS に存在しない（またはその逆の）可能性がある。**node_modules 内の実 CSS（dist/relay.css）を正**とし、更新が必要ならユーザーに `npm update @light-right/design-system` を提案する",
     "",
     "導入できたらまず **get_design_principles**（必須ルール・禁止パターン）と **list_components**（コンポーネント全体像）を読む。",
     "その後、使うコンポーネントごとに **get_component** を呼び、具体値が要るときだけ **get_tokens** を参照して UI を実装する。",
