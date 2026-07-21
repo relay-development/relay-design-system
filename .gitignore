@@ -23,3 +23,7 @@ examples/*.html
 
 # Playwright MCP session artifacts (browser snapshots)
 .playwright-mcp/
+
+# Agent eval artifacts (generated UIs and score history; see evals/README.md)
+evals/output/
+evals/results/
