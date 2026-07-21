@@ -1,0 +1,100 @@
+{
+  "ranAt": "2026-07-21T06:28:35.981Z",
+  "dsVersion": "0.15.1",
+  "model": "(cli default)",
+  "skipGenerate": false,
+  "passed": 5,
+  "total": 5,
+  "results": [
+    {
+      "id": "delete-confirmation",
+      "generated": true,
+      "pass": true,
+      "hardcode": {
+        "pass": true,
+        "detail": []
+      },
+      "classes": {
+        "pass": true,
+        "missing": [],
+        "invented": []
+      },
+      "patterns": {
+        "pass": true,
+        "failed": []
+      }
+    },
+    {
+      "id": "invite-form",
+      "generated": true,
+      "pass": true,
+      "hardcode": {
+        "pass": true,
+        "detail": []
+      },
+      "classes": {
+        "pass": true,
+        "missing": [],
+        "invented": []
+      },
+      "patterns": {
+        "pass": true,
+        "failed": []
+      }
+    },
+    {
+      "id": "status-table",
+      "generated": true,
+      "pass": true,
+      "hardcode": {
+        "pass": true,
+        "detail": []
+      },
+      "classes": {
+        "pass": true,
+        "missing": [],
+        "invented": []
+      },
+      "patterns": {
+        "pass": true,
+        "failed": []
+      }
+    },
+    {
+      "id": "empty-state",
+      "generated": true,
+      "pass": true,
+      "hardcode": {
+        "pass": true,
+        "detail": []
+      },
+      "classes": {
+        "pass": true,
+        "missing": [],
+        "invented": []
+      },
+      "patterns": {
+        "pass": true,
+        "failed": []
+      }
+    },
+    {
+      "id": "settings-nav",
+      "generated": true,
+      "pass": true,
+      "hardcode": {
+        "pass": true,
+        "detail": []
+      },
+      "classes": {
+        "pass": true,
+        "missing": [],
+        "invented": []
+      },
+      "patterns": {
+        "pass": true,
+        "failed": []
+      }
+    }
+  ]
+}

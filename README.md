@@ -72,7 +72,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
-| 1 | Button         | `.btn` + `.btn-{primary,secondary,ghost,danger}` + `.btn-{sm,md,lg,xl}` |
+| 1 | Button         | `.btn` + `.btn-{primary,secondary,neutral,negative}` + `.btn-{solid,outline,subtle,ghost}` + `.btn-{sm,md,lg,xl}` |
 | 2 | Icon Button    | `.icon-btn` + `.icon-btn-{primary,neutral,negative}` + `.icon-btn-{sm,md,lg}` + `.icon-btn-{solid,outline,ghost}` |
 | 3 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}` |
 | 4 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
@@ -86,7 +86,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 12 | Table         | `.data-table`（thead が項目名行。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
 | 13 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
 | 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
-| 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,negative}` |
+| 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
 | 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
 | 17 | Link          | `.link`, `.link-label`（緑下線 + external-link アイコン、enable=primary-700 / hover=primary-800） |
 | 18 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |

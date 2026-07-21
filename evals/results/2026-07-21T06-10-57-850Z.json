@@ -1,0 +1,15 @@
+{
+  "ranAt": "2026-07-21T06:10:57.850Z",
+  "dsVersion": "0.15.1",
+  "model": "(cli default)",
+  "skipGenerate": true,
+  "passed": 0,
+  "total": 1,
+  "results": [
+    {
+      "id": "delete-confirmation",
+      "generated": false,
+      "pass": false
+    }
+  ]
+}

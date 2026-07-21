@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>設定</title>
+  <link rel="stylesheet" href="./relay.css" />
+</head>
+<body class="bg-page">
+  <svg xmlns="http://www.w3.org/2000/svg" hidden>
+    <symbol id="icon-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="icon-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </symbol>
+    <symbol id="icon-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+    </symbol>
+  </svg>
+
+  <div class="max-w-5xl mx-auto p-8">
+    <header class="mb-8">
+      <h1 class="typo-2xlarge">設定</h1>
+      <p class="typo-medium text-fg-middle mt-2">アカウントの設定を確認・変更できます。</p>
+    </header>
+
+    <div class="flex flex-col sm:flex-row gap-8">
+      <nav class="sidenav w-full sm:w-64 shrink-0" aria-label="設定">
+        <ul class="sidenav-group">
+          <li>
+            <a class="sidenav-item" href="#profile" aria-current="page">
+              <svg class="icon" aria-hidden="true"><use href="#icon-user"></use></svg>
+              プロフィール
+            </a>
+          </li>
+          <li>
+            <a class="sidenav-item" href="#notifications">
+              <svg class="icon" aria-hidden="true"><use href="#icon-bell"></use></svg>
+              通知
+            </a>
+          </li>
+          <li>
+            <a class="sidenav-item" href="#security">
+              <svg class="icon" aria-hidden="true"><use href="#icon-shield"></use></svg>
+              セキュリティ
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <main class="flex-1 min-w-0">
+        <section id="profile" aria-labelledby="profile-title">
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title" id="profile-title">プロフィール</h2>
+              <p class="card-subtitle">ほかのメンバーに表示される情報です。</p>
+            </div>
+            <div class="card-body space-y-6">
+              <div class="space-y-2">
+                <div class="label-control">
+                  <div class="label-control-row">
+                    <label class="label-control-text" for="profile-name">氏名</label>
+                    <span class="label-badge label-badge-required">必須</span>
+                  </div>
+                </div>
+                <input id="profile-name" type="text" class="input input-md" value="田口 慧" />
+              </div>
+              <div class="space-y-2">
+                <div class="label-control">
+                  <div class="label-control-row">
+                    <label class="label-control-text" for="profile-email">メールアドレス</label>
+                    <span class="label-badge label-badge-required">必須</span>
+                  </div>
+                  <p class="label-control-support">ログインと通知の送付先に使用します</p>
+                </div>
+                <input id="profile-email" type="email" class="input input-md" value="s.taguchi@light-right.jp" />
+              </div>
+              <div class="space-y-2">
+                <div class="label-control">
+                  <div class="label-control-row">
+                    <label class="label-control-text" for="profile-team">所属チーム</label>
+                    <span class="label-badge label-badge-optional">任意</span>
+                  </div>
+                </div>
+                <input id="profile-team" type="text" class="input input-md" placeholder="例: プロダクト開発部" />
+              </div>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-md btn-neutral btn-outline">キャンセル</button>
+              <button type="button" class="btn btn-md btn-primary btn-solid">保存</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="notifications" aria-labelledby="notifications-title" hidden>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title" id="notifications-title">通知</h2>
+              <p class="card-subtitle">切り替えた内容はすぐに反映されます。</p>
+            </div>
+            <div class="card-body space-y-6">
+              <div class="space-y-1">
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" checked />
+                  メールで通知を受け取る
+                </label>
+                <p class="typo-article text-fg-middle">コメントやメンションをメールでお知らせします。</p>
+              </div>
+              <div class="space-y-1">
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" checked />
+                  プッシュ通知を受け取る
+                </label>
+                <p class="typo-article text-fg-middle">ブラウザのプッシュ通知でお知らせします。</p>
+              </div>
+              <div class="space-y-1">
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" />
+                  週次レポートを受け取る
+                </label>
+                <p class="typo-article text-fg-middle">1 週間の活動のまとめを毎週月曜日に届けます。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="security" aria-labelledby="security-title" hidden>
+          <div class="space-y-8">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title" id="security-title">セキュリティ</h2>
+                <p class="card-subtitle">パスワードとログインの保護を管理します。</p>
+              </div>
+              <div class="card-body space-y-6">
+                <div class="space-y-2">
+                  <div class="label-control">
+                    <div class="label-control-row">
+                      <label class="label-control-text" for="security-current">現在のパスワード</label>
+                      <span class="label-badge label-badge-required">必須</span>
+                    </div>
+                  </div>
+                  <input id="security-current" type="password" class="input input-md" autocomplete="current-password" />
+                </div>
+                <div class="space-y-2">
+                  <div class="label-control">
+                    <div class="label-control-row">
+                      <label class="label-control-text" for="security-new">新しいパスワード</label>
+                      <span class="label-badge label-badge-required">必須</span>
+                    </div>
+                    <p class="label-control-support">8文字以上で、英字と数字を組み合わせてください</p>
+                  </div>
+                  <input id="security-new" type="password" class="input input-md" autocomplete="new-password" />
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-md btn-primary btn-solid">パスワードを変更</button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title">2段階認証</h2>
+              </div>
+              <div class="card-body space-y-1">
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" />
+                  2段階認証を使う
+                </label>
+                <p class="typo-article text-fg-middle">ログイン時に認証アプリのコード入力を求め、アカウントを保護します。</p>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const navItems = document.querySelectorAll(".sidenav-item");
+    const sections = document.querySelectorAll("main > section");
+
+    function showSection(id) {
+      sections.forEach((section) => {
+        section.hidden = section.id !== id;
+      });
+      navItems.forEach((item) => {
+        if (item.getAttribute("href") === "#" + id) {
+          item.setAttribute("aria-current", "page");
+        } else {
+          item.removeAttribute("aria-current");
+        }
+      });
+    }
+
+    navItems.forEach((item) => {
+      item.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = item.getAttribute("href").slice(1);
+        showSection(id);
+        history.replaceState(null, "", "#" + id);
+      });
+    });
+
+    const initial = location.hash.slice(1);
+    if (document.getElementById(initial)) {
+      showSection(initial);
+    }
+  </script>
+</body>
+</html>

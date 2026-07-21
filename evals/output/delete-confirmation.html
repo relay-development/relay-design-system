@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>メンバー一覧</title>
+    <link rel="stylesheet" href="./relay.css" />
+  </head>
+  <body class="bg-page text-fg-high">
+    <!-- Lucide icons (inline sprite) -->
+    <svg xmlns="http://www.w3.org/2000/svg" hidden>
+      <symbol id="lucide-trash-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18" />
+        <path d="M19 6v14c0 1.1-.9 2-2 2H7c-1.1 0-2-.9-2-2V6" />
+        <path d="M8 6V4c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v2" />
+        <line x1="10" x2="10" y1="11" y2="17" />
+        <line x1="14" x2="14" y1="11" y2="17" />
+      </symbol>
+      <symbol id="lucide-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+    </svg>
+
+    <main class="max-w-5xl mx-auto px-6 py-12 flex flex-col gap-8">
+      <!-- ページヘッダ -->
+      <header>
+        <h1 class="typo-2xlarge">メンバー</h1>
+        <p class="typo-medium text-fg-middle mt-2">
+          このワークスペースに参加しているメンバーの一覧です。不要になったアカウントは、この画面から削除できます。
+        </p>
+      </header>
+
+      <!-- 削除完了メッセージ -->
+      <div class="alert alert-success" role="status" id="delete-success-alert" tabindex="-1" hidden>
+        <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd" />
+        </svg>
+        <div class="alert-body">
+          <p><span id="deleted-member-name"></span>さんのアカウントを削除しました。</p>
+        </div>
+        <button type="button" class="alert-close" aria-label="閉じる">
+          <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- メンバー一覧 -->
+      <section class="flex flex-col gap-4" aria-label="メンバー一覧">
+        <p class="typo-medium text-fg-low">全 <span id="member-count">5</span> 名</p>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>名前</th>
+              <th>メールアドレス</th>
+              <th>権限</th>
+              <th>最終ログイン</th>
+              <th>操作</th>
+            </tr>
+          </thead>
+          <tbody id="member-list">
+            <tr>
+              <td>高橋 直樹</td>
+              <td>n.takahashi@example.jp</td>
+              <td><span class="badge badge-soft-primary">管理者</span></td>
+              <td>2026/07/21 09:12</td>
+              <td>
+                <button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" data-delete-open data-member-name="高橋 直樹" data-member-email="n.takahashi@example.jp" aria-label="高橋 直樹さんのアカウントを削除">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>佐藤 花子</td>
+              <td>h.sato@example.jp</td>
+              <td><span class="badge badge-soft-neutral">メンバー</span></td>
+              <td>2026/07/18 17:45</td>
+              <td>
+                <button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" data-delete-open data-member-name="佐藤 花子" data-member-email="h.sato@example.jp" aria-label="佐藤 花子さんのアカウントを削除">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>田中 蓮</td>
+              <td>r.tanaka@example.jp</td>
+              <td><span class="badge badge-soft-neutral">メンバー</span></td>
+              <td>2026/07/15 11:03</td>
+              <td>
+                <button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" data-delete-open data-member-name="田中 蓮" data-member-email="r.tanaka@example.jp" aria-label="田中 蓮さんのアカウントを削除">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>鈴木 美咲</td>
+              <td>m.suzuki@example.jp</td>
+              <td><span class="badge badge-soft-neutral">メンバー</span></td>
+              <td>2026/06/30 08:26</td>
+              <td>
+                <button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" data-delete-open data-member-name="鈴木 美咲" data-member-email="m.suzuki@example.jp" aria-label="鈴木 美咲さんのアカウントを削除">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>伊藤 大輔</td>
+              <td>d.ito@example.jp</td>
+              <td><span class="badge badge-soft-neutral">メンバー</span></td>
+              <td>2026/06/12 19:58</td>
+              <td>
+                <button type="button" class="icon-btn icon-btn-md icon-btn-negative icon-btn-ghost" data-delete-open data-member-name="伊藤 大輔" data-member-email="d.ito@example.jp" aria-label="伊藤 大輔さんのアカウントを削除">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- 削除確認モーダル -->
+    <dialog class="modal" id="delete-modal" aria-labelledby="delete-modal-title">
+      <div class="modal-header">
+        <h2 class="modal-title" id="delete-modal-title">メンバーを削除しますか？</h2>
+        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" data-modal-close aria-label="閉じる">
+          <svg class="icon" aria-hidden="true"><use href="#lucide-x"></use></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="flex flex-col gap-4">
+          <p class="typo-medium">
+            <strong id="delete-target-name"></strong> さん（<span id="delete-target-email"></span>）のアカウントを削除しようとしています。
+          </p>
+          <p class="typo-medium">
+            削除すると、このメンバーはログインできなくなります。<strong>この操作は取り消せません。</strong>
+          </p>
+          <label class="checkbox-label">
+            <input type="checkbox" class="checkbox" id="delete-confirm-check" />
+            上記の内容を理解しました
+          </label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-md btn-neutral btn-subtle" data-modal-close autofocus>キャンセル</button>
+        <button type="button" class="btn btn-md btn-negative btn-solid" id="delete-confirm-btn" disabled>削除する</button>
+      </div>
+    </dialog>
+
+    <script>
+      const modal = document.getElementById("delete-modal");
+      const confirmCheck = document.getElementById("delete-confirm-check");
+      const confirmBtn = document.getElementById("delete-confirm-btn");
+      const successAlert = document.getElementById("delete-success-alert");
+      let targetRow = null;
+
+      document.getElementById("member-list").addEventListener("click", (event) => {
+        const opener = event.target.closest("[data-delete-open]");
+        if (!opener) return;
+        targetRow = opener.closest("tr");
+        document.getElementById("delete-target-name").textContent = opener.dataset.memberName;
+        document.getElementById("delete-target-email").textContent = opener.dataset.memberEmail;
+        confirmCheck.checked = false;
+        confirmBtn.disabled = true;
+        modal.showModal();
+      });
+
+      confirmCheck.addEventListener("change", () => {
+        confirmBtn.disabled = !confirmCheck.checked;
+      });
+
+      confirmBtn.addEventListener("click", () => {
+        if (!targetRow) return;
+        const name = document.getElementById("delete-target-name").textContent;
+        targetRow.remove();
+        targetRow = null;
+
+        document.getElementById("member-count").textContent =
+          document.querySelectorAll("#member-list tr").length;
+
+        document.getElementById("deleted-member-name").textContent = name;
+        successAlert.hidden = false;
+        modal.close();
+        successAlert.focus();
+      });
+
+      modal.addEventListener("click", (event) => {
+        if (event.target.closest("[data-modal-close]")) modal.close();
+      });
+
+      successAlert.querySelector(".alert-close").addEventListener("click", () => {
+        successAlert.hidden = true;
+      });
+    </script>
+  </body>
+</html>
