@@ -108,6 +108,7 @@ function injectUsage(content) {
 const PAGES = [
   { file: "mcp.html",           group: "イントロダクション", label: "MCP サーバー", title: "MCP サーバー", desc: "AI コーディングツールに relay の規約・トークン・コンポーネントを理解させる" },
   { file: "accessibility.html", group: "イントロダクション", label: "取り組み", title: "アクセシビリティについての取り組み", desc: "WCAG 2.2 AAA に向けたデザインシステムの担保とプロダクト側の責務" },
+  { file: "evals.html",         group: "イントロダクション", label: "品質評価", title: "品質評価（evals）", desc: "AI が DS のルール通りに作れるかを測る定期健康診断とスコアの定点観測" },
 
   { file: "color.html",      group: "Foundations", label: "色",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
   { file: "typography.html", group: "Foundations", label: "タイポグラフィ",  title: "タイポグラフィ", desc: "フォントスケール + .typo-* クラス" },

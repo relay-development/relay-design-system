@@ -1,0 +1,133 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="evals">
+      <div class="mb-8">
+        <div class="flex items-baseline justify-between mb-8">
+          <h2 class="typo-2xlarge">品質評価（evals）</h2>
+          <span class="typo-xsmall text-fg-middle">AI 生成の定期健康診断</span>
+        </div>
+
+        <p class="typo-article text-fg-high mb-6">
+          AI エージェントに UI を作らせる時代、「AI がデザインシステムのルール通りに作れているか」は誰も確かめていませんでした。relay では<strong>固定のお題を AI に解かせ、ルール通りに作れたかを採点する回帰テスト（evals）</strong>を運用しています。デザインシステムやドキュメントを変えたとき、また AI モデル自体が更新されたときに、生成品質が静かに劣化していないかをスコアで検知します。
+        </p>
+
+        <h3 class="typo-xlarge mb-4">hooks と evals — 防ぐ仕組みと測る仕組み</h3>
+        <p class="typo-article text-fg-high mb-4">
+          relay には以前から <strong>hooks</strong>（AI がコードを書いた瞬間にハードコード違反を検知して直させる、利用者側のガードレール）があります。evals はこれを置き換えるものではなく、<strong>ルールに従えているかを測って記録する</strong>、デザインシステム側の定期健康診断です。防ぐ × 測るの両輪で品質を守ります。
+        </p>
+        <div class="card overflow-hidden mb-6">
+          <div class="card-body overflow-x-auto">
+            <table class="simple-table">
+              <tbody>
+                <tr>
+                  <th>例えると</th>
+                  <td>hooks = 車線逸脱防止アシスト</td>
+                  <td>evals = 定期健康診断</td>
+                </tr>
+                <tr>
+                  <th>いつ動く</th>
+                  <td>AI がコードを書いた瞬間</td>
+                  <td>週 1 回 + ルール変更時</td>
+                </tr>
+                <tr>
+                  <th>何をする</th>
+                  <td>違反をその場で防ぐ</td>
+                  <td>従えるかを測って記録する</td>
+                </tr>
+                <tr>
+                  <th>動く場所</th>
+                  <td>利用者のプロジェクト</td>
+                  <td>デザインシステムのリポジトリ</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <h3 class="typo-xlarge mb-4">採点は 2 段構え</h3>
+        <p class="typo-article text-fg-high mb-4">
+          「アカウント削除の前に確認を挟んで」のような<strong>意図レベルの曖昧なお題</strong>を AI に解かせます（コンポーネント名は伝えません — デザインシステムが選定を導けているかを測るためです）。生成された UI を 2 種類のチェックで採点します。
+        </p>
+        <div class="grid sm:grid-cols-2 gap-4 mb-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">機械チェック</h3>
+              <p class="card-subtitle">コードで判定 — 決定的・無料</p>
+            </div>
+            <div class="card-body">
+              <ul class="space-y-2 typo-article text-fg-high list-disc pl-5">
+                <li>色・余白などのハードコード（配布中の hooks と同一判定）</li>
+                <li>実在しないクラスの捏造（例: <code class="typo-xsmall px-1 bg-neutral-100 rounded">btn-outline</code> のような架空 variant）</li>
+                <li>必須マークアップ（<code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-current</code> など）</li>
+              </ul>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">AI 審査員</h3>
+              <p class="card-subtitle">機械で測れない判断を判定</p>
+            </div>
+            <div class="card-body">
+              <ul class="space-y-2 typo-article text-fg-high list-disc pl-5">
+                <li>明文化された選定ルールの遵守判定（例: 削除確認は modal + negative ボタン）</li>
+                <li>採点基準は各コンポーネント仕様の「機能 / 使用法」など、<strong>デザインシステムが文書化したルール</strong>から作成</li>
+                <li>判定に迷う場合は不合格に倒す設定（甘い採点をしない）</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="typo-xlarge mb-4">定点観測 — 静かな劣化をスコアで検知</h3>
+        <p class="typo-article text-fg-high mb-4">
+          毎回同じ試験を回し、結果をスコアとして蓄積します。推移表で「いつから・どのお題が落ち始めたか」を追えるため、利用者からの「最近生成が変」という報告より先に劣化へ気づけます。
+        </p>
+        <div class="card overflow-hidden mb-4">
+          <div class="card-body overflow-x-auto">
+            <table class="simple-table">
+              <thead>
+                <tr>
+                  <th>実行日</th>
+                  <th>削除確認</th>
+                  <th>招待フォーム</th>
+                  <th>契約一覧</th>
+                  <th>空状態</th>
+                  <th>設定ナビ</th>
+                  <th>計</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>2026-07-21</td>
+                  <td><span class="badge badge-soft-success">PASS</span></td>
+                  <td><span class="badge badge-soft-success">PASS</span></td>
+                  <td><span class="badge badge-soft-success">PASS</span></td>
+                  <td><span class="badge badge-soft-success">PASS</span></td>
+                  <td><span class="badge badge-soft-success">PASS</span></td>
+                  <td>5/5</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <p class="typo-small text-fg-middle mb-6">
+          2026-07-21 時点のベースライン。以降、週次の実行で行が増えていきます。
+        </p>
+
+        <h3 class="typo-xlarge mb-4">これから</h3>
+        <ul class="space-y-2 typo-article text-fg-high list-disc pl-5 mb-6">
+          <li>週 1 回の定点観測でスコアの安定性を検証する</li>
+          <li>ルール（MCP・DESIGN.md・コンポーネント仕様）を変更する PR は、前後で evals を回して効果を測定する</li>
+          <li>スコアが安定したら CI に組み込み、試験に落ちたルール変更はマージできないようにする</li>
+          <li>新しいコンポーネントを追加したら試験のお題も 1 本追加し、デザインシステムが育つほど試験も育てる</li>
+        </ul>
+        <p class="typo-article text-fg-high mb-6">
+          デザイナーは「なぜこちらを選ぶのか」という判断軸を明文化し、それがそのまま試験になります。relay Design System は「UI パーツの提供」から<strong>「品質を保ち続ける仕組みの提供」</strong>へ。
+        </p>
+
+        <p class="typo-article text-fg-high">
+          仕組みの詳細・実行方法は
+          <a class="link" href="https://github.com/relay-development/relay-design-system/tree/main/evals" target="_blank" rel="noopener noreferrer"><span class="link-label">GitHub の evals/README.md</span><svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg></a>
+          を参照してください。
+        </p>
+      </div>
+    </section>
+  </main>
