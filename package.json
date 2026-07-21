@@ -45,6 +45,7 @@
     "build:pages": "node scripts/build-pages.mjs",
     "build:mcp-index": "node scripts/build-mcp.mjs",
     "check:consistency": "node scripts/check-consistency.mjs",
+    "eval": "node evals/run.mjs",
     "build:mcp": "npm run build:mcp-index && esbuild src/mcp/server.mjs --bundle --platform=node --format=esm --packages=bundle --outfile=dist/mcp.mjs --banner:js=\"#!/usr/bin/env node\" && chmod +x dist/mcp.mjs",
     "dev:mcp-remote": "wrangler dev",
     "deploy:mcp": "wrangler deploy",
