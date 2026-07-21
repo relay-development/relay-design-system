@@ -48,7 +48,7 @@ export const CASES = [
     mustPatterns: [],
     rubric: [
       "一覧に data-table を使っている（table 要素の手書きスタイリングではない）",
-      "状態表示に badge を使い、意味に合う色（有効=success / 期限切れ=danger / 審査中=warning）を割り当てている",
+      "状態表示に badge を使い、状態ごとに意味の合うステータス色を使い分けている（有効=success / 期限切れ=danger。審査中は warning / info どちらも可。全状態に同じ色を使うのは不可）",
       "状態が色だけでなくテキストでも伝わる",
       "金額など数値の桁揃えに配慮している",
     ],

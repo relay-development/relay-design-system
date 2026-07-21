@@ -1,30 +1,39 @@
 /*
- * evals/run.mjs — relay Design System の agent eval ランナー（Phase 1）
+ * evals/run.mjs — relay Design System の agent eval ランナー（Phase 1〜3）
  *
  *   固定のお題（cases.mjs）を relay MCP 接続のエージェントに解かせ、
- *   生成物を機械チェックで採点する。「DS を変えたらエージェントの挙動が
- *   壊れていないか」を測る回帰スイート（LLM 審査は Phase 2 で追加予定）。
+ *   生成物を機械チェック + LLM 審査員で採点する。「DS を変えたら
+ *   エージェントの挙動が壊れていないか」を測る回帰スイート。
  *
  * 仕組み:
  *   1. build:mcp-index で作業ツリーの最新知識から MCP インデックスを生成
  *   2. お題ごとに claude CLI をヘッドレス起動（stdio MCP = src/mcp/server.mjs を接続）
  *      → evals/output/<id>.html に単一 HTML を生成させる
- *   3. 機械チェックで採点:
+ *   3. 機械チェックで採点（Phase 1）:
  *      - hardcode  — .claude/hooks/relay-hardcode-gate.mjs をサブプロセス実行
  *                    （利用者に配布しているゲートと同一判定）
  *      - classes   — mustClasses が使われているか / relay クラスの捏造
  *                    variant（例: btn-outline）がないか（dist/mcp-index.json と照合）
  *      - patterns  — mustPatterns（aria-current 等）を満たすか
- *   4. 結果を console と evals/results/<timestamp>.json に出力
+ *   4. LLM 審査員で採点（Phase 2）:
+ *      - rubric    — cases.mjs の審査項目を claude CLI（ツールなし・単発）に
+ *                    JSON で判定させる。全項目 must 扱いで 1 つでも NO なら不合格。
+ *                    判定に迷う場合は不合格に倒す指示（審査の甘化防止）
+ *   5. 結果を console と evals/results/<timestamp>.json に出力し、
+ *      直前の実行結果と比較して変化を表示する（Phase 3: 定点観測）
  *
- * 実行（サブスク枠で LLM 生成が走る。1 回 = お題数ぶんのエージェント実行）:
- *   npm run eval                     # 全お題
+ * 実行（サブスク枠で LLM が走る。1 回 = 生成 お題数 + 審査 お題数×votes）:
+ *   npm run eval                     # 全お題（生成 + 機械チェック + LLM 審査）
  *   npm run eval -- --case <id>      # 1 お題のみ
- *   npm run eval -- --skip-generate  # 生成を飛ばし既存 output を再採点（無料）
+ *   npm run eval -- --skip-generate  # 生成を飛ばし既存 output を再採点（審査のみ消費）
+ *   npm run eval -- --skip-judge     # LLM 審査を飛ばし機械チェックのみ（無料）
+ *   npm run eval -- --votes 3        # 審査を 3 回実行し多数決（判定のブレ対策。既定 1）
+ *   npm run eval:report              # 過去の実行履歴を一覧表示（定点観測ビュー）
  *
  * 環境変数:
- *   CLAUDE_BIN — claude CLI のパス（未指定なら PATH → VSCode 拡張同梱を探索）
- *   EVAL_MODEL — 生成エージェントのモデル（未指定なら CLI のデフォルト）
+ *   CLAUDE_BIN       — claude CLI のパス（未指定なら PATH → VSCode 拡張同梱を探索）
+ *   EVAL_MODEL       — 生成エージェントのモデル（未指定なら CLI のデフォルト）
+ *   EVAL_JUDGE_MODEL — 審査員のモデル（未指定なら CLI のデフォルト）
  */
 
 import { execFileSync, execSync, spawnSync } from "node:child_process";
@@ -42,6 +51,8 @@ const hookPath = path.join(projectRoot, ".claude/hooks/relay-hardcode-gate.mjs")
 const args = process.argv.slice(2);
 const onlyCase = args.includes("--case") ? args[args.indexOf("--case") + 1] : null;
 const skipGenerate = args.includes("--skip-generate");
+const skipJudge = args.includes("--skip-judge");
+const votes = args.includes("--votes") ? Math.max(1, Number(args[args.indexOf("--votes") + 1]) || 1) : 1;
 
 /* ------------------------------------------------------------- claude CLI */
 
@@ -158,6 +169,122 @@ function checkPatterns(html, mustPatterns) {
   return { pass: failed.length === 0, failed: failed.map((p) => p.label) };
 }
 
+/* ------------------------------------------------------------- LLM 審査員 */
+
+function judgePrompt(c, html) {
+  return [
+    "あなたは relay Design System の品質審査員です。デザインシステムのルールに生成 UI が従っているかを厳格に判定します。",
+    "",
+    `お題（この HTML が満たすべき要件）: ${c.prompt}`,
+    "",
+    "審査項目:",
+    ...c.rubric.map((r, i) => `${i + 1}. ${r}`),
+    "",
+    "対象 HTML:",
+    "```html",
+    html,
+    "```",
+    "",
+    "指示:",
+    "- ツールは使わず、このメッセージ内の情報だけで判定すること。",
+    "- 項目ごとに pass を true / false で判定し、reason に根拠を 40 字以内で書くこと。",
+    "- 判定に迷う場合・HTML から確認できない場合は pass: false に倒すこと（甘い審査をしない）。",
+    "- 出力は次の JSON のみ。説明文・コードフェンスを付けないこと:",
+    `{"verdicts":[{"item":1,"pass":true,"reason":"…"}, …（全 ${c.rubric.length} 項目）]}`,
+  ].join("\n");
+}
+
+/** 応答から最初の { … 最後の } を JSON として取り出す（フェンス等のノイズ耐性） */
+function extractJson(text) {
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if (start === -1 || end <= start) return null;
+  try {
+    return JSON.parse(text.slice(start, end + 1));
+  } catch {
+    return null;
+  }
+}
+
+function judgeOnce(claudeBin, c, html) {
+  const cliArgs = [
+    "-p",
+    judgePrompt(c, html),
+    "--strict-mcp-config",
+    "--mcp-config",
+    '{"mcpServers":{}}',
+    "--max-turns",
+    "4",
+  ];
+  if (process.env.EVAL_JUDGE_MODEL) cliArgs.push("--model", process.env.EVAL_JUDGE_MODEL);
+  const res = spawnSync(claudeBin, cliArgs, {
+    cwd: projectRoot,
+    encoding: "utf8",
+    timeout: 5 * 60 * 1000,
+    stdio: ["ignore", "pipe", "pipe"],
+  });
+  if (res.error || res.status !== 0) return null;
+  const parsed = extractJson(res.stdout ?? "");
+  return Array.isArray(parsed?.verdicts) ? parsed.verdicts : null;
+}
+
+/** votes 回審査して項目ごとに多数決。全項目 must 扱い（1 つでも NO なら不合格） */
+function judgeRubric(claudeBin, c, html) {
+  const passVotes = c.rubric.map(() => 0);
+  const reasons = c.rubric.map(() => "");
+  let validVotes = 0;
+  for (let v = 0; v < votes; v++) {
+    const verdicts = judgeOnce(claudeBin, c, html);
+    if (!verdicts) continue;
+    validVotes++;
+    for (const vd of verdicts) {
+      const i = Number(vd.item) - 1;
+      if (i < 0 || i >= c.rubric.length) continue;
+      if (vd.pass === true) passVotes[i]++;
+      else if (!reasons[i]) reasons[i] = String(vd.reason ?? "");
+    }
+  }
+  if (validVotes === 0) {
+    return { pass: false, error: "審査員の応答を解析できませんでした（全 votes 失敗）", items: [] };
+  }
+  const items = c.rubric.map((text, i) => {
+    const pass = passVotes[i] > validVotes / 2;
+    return { text, pass, ...(pass ? {} : { reason: reasons[i] }) };
+  });
+  return { pass: items.every((it) => it.pass), items, validVotes };
+}
+
+/* ------------------------------------------------------------- 定点観測 */
+
+/** 直前の実行結果（あれば）を読み込む。現在の実行を書き込む前に呼ぶこと */
+function loadPreviousSummary() {
+  if (!fs.existsSync(resultsDir)) return null;
+  const files = fs.readdirSync(resultsDir).filter((f) => f.endsWith(".json")).sort();
+  if (!files.length) return null;
+  try {
+    return { file: files.at(-1), ...JSON.parse(fs.readFileSync(path.join(resultsDir, files.at(-1)), "utf8")) };
+  } catch {
+    return null;
+  }
+}
+
+function printComparison(prev, results) {
+  if (!prev) return;
+  const prevById = new Map((prev.results ?? []).map((r) => [r.id, r]));
+  const changes = [];
+  for (const r of results) {
+    const p = prevById.get(r.id);
+    if (!p) continue;
+    if (p.pass !== r.pass) changes.push(`  ${p.pass ? "✓→✗" : "✗→✓"} ${r.id}`);
+  }
+  console.log(`\n== 前回比（${prev.file}）==`);
+  if (changes.length) for (const c of changes) console.log(c);
+  else console.log("  変化なし");
+  if (Boolean(prev.skipJudge) !== skipJudge || Boolean(prev.skipGenerate) !== skipGenerate) {
+    console.log("  ※ 前回と実行条件（--skip-*）が異なるため単純比較できない可能性あり");
+  }
+}
+
 /* ------------------------------------------------------------- main */
 
 const cases = onlyCase ? CASES.filter((c) => c.id === onlyCase) : CASES;
@@ -189,7 +316,8 @@ const builtCss = path.join(projectRoot, "dist/relay.css");
 if (fs.existsSync(builtCss)) fs.copyFileSync(builtCss, path.join(outputDir, "relay.css"));
 else console.warn("⚠ dist/relay.css がありません（npm run build で生成）。採点は可能ですが目視確認はできません。");
 
-const claudeBin = skipGenerate ? null : resolveClaudeBin();
+const claudeBin = skipGenerate && skipJudge ? null : resolveClaudeBin();
+const previous = loadPreviousSummary();
 const results = [];
 
 for (const c of cases) {
@@ -215,14 +343,28 @@ for (const c of cases) {
   const hardcode = checkHardcode(outPath);
   const classes = checkClasses(html, c.mustClasses, known);
   const patterns = checkPatterns(html, c.mustPatterns);
-  const pass = hardcode.pass && classes.pass && patterns.pass;
 
   console.log(`  ${hardcode.pass ? "✓" : "✗"} hardcode${hardcode.pass ? "" : ` — ${hardcode.detail.length} 件`}`);
   for (const d of hardcode.detail.slice(0, 5)) console.log(`      ${d.trim()}`);
   console.log(`  ${classes.pass ? "✓" : "✗"} classes${classes.missing.length ? ` — 必須クラス不足: ${classes.missing.join(", ")}` : ""}${classes.invented.length ? ` — 捏造 variant: ${classes.invented.join(", ")}` : ""}`);
   console.log(`  ${patterns.pass ? "✓" : "✗"} patterns${patterns.failed.length ? ` — 未達: ${patterns.failed.join(" / ")}` : ""}`);
 
-  results.push({ id: c.id, generated: true, pass, hardcode, classes, patterns });
+  let rubric = null;
+  if (!skipJudge) {
+    process.stdout.write(`  審査中…（LLM 審査員 × ${votes}）\n`);
+    rubric = judgeRubric(claudeBin, c, html);
+    if (rubric.error) {
+      console.log(`  ✗ rubric — ${rubric.error}`);
+    } else {
+      console.log(`  ${rubric.pass ? "✓" : "✗"} rubric（${rubric.items.filter((i) => i.pass).length}/${rubric.items.length}）`);
+      for (const it of rubric.items.filter((i) => !i.pass)) {
+        console.log(`      ✗ ${it.text}${it.reason ? ` — ${it.reason}` : ""}`);
+      }
+    }
+  }
+
+  const pass = hardcode.pass && classes.pass && patterns.pass && (skipJudge || rubric.pass);
+  results.push({ id: c.id, generated: true, pass, hardcode, classes, patterns, ...(rubric ? { rubric } : {}) });
 }
 
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -230,7 +372,10 @@ const summary = {
   ranAt: new Date().toISOString(),
   dsVersion: JSON.parse(fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")).version,
   model: process.env.EVAL_MODEL ?? "(cli default)",
+  judgeModel: skipJudge ? null : process.env.EVAL_JUDGE_MODEL ?? "(cli default)",
   skipGenerate,
+  skipJudge,
+  votes,
   passed: results.filter((r) => r.pass).length,
   total: results.length,
   results,
@@ -239,5 +384,7 @@ const resultPath = path.join(resultsDir, `${stamp}.json`);
 fs.writeFileSync(resultPath, JSON.stringify(summary, null, 2));
 
 console.log(`\n== ${summary.passed}/${summary.total} PASS ==`);
-console.log(`結果: evals/results/${path.basename(resultPath)}（生成物: evals/output/*.html をブラウザで目視可）`);
+printComparison(previous, results);
+console.log(`\n結果: evals/results/${path.basename(resultPath)}（生成物: evals/output/*.html をブラウザで目視可）`);
+console.log("履歴の一覧: npm run eval:report");
 process.exit(summary.passed === summary.total ? 0 : 1);
