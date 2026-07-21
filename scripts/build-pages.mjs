@@ -223,7 +223,7 @@ function render({ title, group, content, activeFile, desc }) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${fullTitle}</title>
   <meta name="description" content="${desc}" />
-  <!-- OGP / X カード（画像の正本は scripts/ogp-card.html。再生成手順はそのヘッダ参照） -->
+  <!-- OGP / X カード（画像はブランドアセット examples/assets/ogp.png・1800x945） -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="relay Design System" />
   <meta property="og:title" content="${fullTitle}" />
