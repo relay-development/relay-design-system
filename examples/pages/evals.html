@@ -12,7 +12,7 @@
 
         <h3 class="typo-xlarge mb-4">hooks と evals — 防ぐ仕組みと測る仕組み</h3>
         <p class="typo-article text-fg-high mb-4">
-          relay には以前から <strong>hooks</strong>（AI がコードを書いた瞬間にハードコード違反を検知して直させる、利用者側のガードレール）があります。evals はこれを置き換えるものではなく、<strong>ルールに従えているかを測って記録する</strong>、デザインシステム側の定期健康診断です。防ぐ × 測るの両輪で品質を守ります。
+          relay には以前から <strong>hooks</strong>（AI がコードを書いた直後にハードコード違反を検知してその場で直させる、利用者側のガードレール）があります。evals はこれを置き換えるものではなく、<strong>ルールに従えているかを測って記録する</strong>、デザインシステム側の定期健康診断です。防ぐ × 測るの両輪で品質を守ります。
         </p>
         <div class="overflow-x-auto mb-6">
             <table class="simple-table">
@@ -24,12 +24,12 @@
                 </tr>
                 <tr>
                   <th>いつ動く</th>
-                  <td>AI がコードを書いた瞬間</td>
+                  <td>AI がコードを書いた直後</td>
                   <td>週 1 回 + ルール変更時</td>
                 </tr>
                 <tr>
                   <th>何をする</th>
-                  <td>違反をその場で防ぐ</td>
+                  <td>違反をその場で直させる</td>
                   <td>従えるかを測って記録する</td>
                 </tr>
                 <tr>
