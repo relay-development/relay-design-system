@@ -12,6 +12,7 @@
  *   OK: 影で浮かせるなら card-elevated。
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
+ *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
  */
 
 @layer components {
