@@ -448,6 +448,54 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 }
 .page-card:hover .page-card-link { text-decoration: none; }
 
+/* ============================================================
+ * Release log — 縦タイムライン (releases.html)
+ * build-pages.mjs が examples/pages/releases.json から描画する。
+ * ============================================================ */
+.release-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--spacing) * 12);          /* 48 */
+}
+/* マーカー中心 (左 16px) を通る点線。マーカー自身が上に重なって隠す */
+.release-timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--spacing) * 4);          /* 16 */
+  border-left: 2px dotted var(--color-stroke-middle);
+}
+.release-entry {
+  position: relative;
+  padding-left: calc(var(--spacing) * 12); /* 48 */
+}
+.release-marker {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--spacing) * 8);         /* 32 */
+  height: calc(var(--spacing) * 8);
+  border-radius: 9999px;
+  background: var(--color-primary-50);
+  color: var(--color-primary-700);
+}
+.release-marker svg {
+  width: calc(var(--spacing) * 4);         /* 16 */
+  height: calc(var(--spacing) * 4);
+}
+.release-entry-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: calc(var(--spacing) * 2);           /* 8 */
+  margin-bottom: calc(var(--spacing) * 4); /* 16 */
+}
+
 /* ハンバーガートグル (デスクトップでは非表示) */
 .docs-sidebar-toggle { display: none; }
 
