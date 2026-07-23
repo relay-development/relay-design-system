@@ -421,11 +421,11 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   border-radius: var(--radius-md);
   background: var(--color-surface);
   overflow: hidden;
-  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+  transition: border-color 0.12s ease;
 }
+/* ホバーはボーダー色のみで示す（elevation のシャドウは使わない — DESIGN.md） */
 .page-card:hover {
   border-color: var(--color-primary-300);
-  box-shadow: var(--shadow-sm);
 }
 .page-card-preview {
   display: flex;
