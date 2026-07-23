@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.16.1",
+      "date": "2026-07-23",
+      "title": "デザイン原則の強化とリリースログページ",
+      "summary": "背景と境界が曖昧な surface へのボーダーを必須化し、elevation（浮き上がり）表現へのシャドウ使用を禁止しました（シャドウは modal / ツールチップなど重なりレイヤー専用に）。カタログには各バージョンの変更点をたどれるリリースログページを追加しています。"
+    },
+    {
       "version": "0.16.0",
       "date": "2026-07-21",
       "title": "MCP のハルシネーション対策と品質評価（evals）の導入",
