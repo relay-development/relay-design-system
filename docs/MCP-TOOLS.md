@@ -15,7 +15,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 | # | ツール | 入力 | ひとことで |
 |---|---|---|---|
 | 1 | `get_setup` | なし | CSS 導入手順と確認方法（**最初に呼ぶ**） |
-| 2 | `get_design_principles` | なし | 必須ルール＋禁止パターン Top 10 |
+| 2 | `get_design_principles` | なし | 必須ルール＋禁止パターン要約 |
 | 3 | `list_components` | なし | 全コンポーネントの一覧 |
 | 4 | `get_component` | `name` | 指定コンポーネントの完全仕様 |
 | 5 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
@@ -44,7 +44,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 **何ができる**: コード生成前のガードとして、以下を返す。
 
 - Non-Negotiable Principles（ハードコード禁止 / semantic color / blessed spacing / typo セマンティック層 / ARIA 状態 など）
-- 禁止パターン Top 10
+- 禁止パターン要約
 - ブランド色
 
 ---

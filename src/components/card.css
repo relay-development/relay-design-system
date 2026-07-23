@@ -9,7 +9,7 @@
  *
  * 使用法:
  *   OK: 見出しは card-header > card-title、本文は card-body、操作は card-footer。
- *   OK: 影で浮かせるなら card-elevated。
+ *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。

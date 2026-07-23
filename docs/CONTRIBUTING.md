@@ -93,7 +93,7 @@ git checkout main && git pull --ff-only
 ## コーディング規約
 
 CSS / HTML を書く時は **必ずデザインシステムが用意した変数を使う**（pixel / hex / 生数値の直書きは禁止）。
-詳細は [DESIGN.md](../DESIGN.md) の Non-Negotiable Principles と禁止パターン Top 10 を参照。
+詳細は [DESIGN.md](../DESIGN.md) の Non-Negotiable Principles と禁止パターン要約 を参照。
 
 ## 整合性チェック（CI）
 

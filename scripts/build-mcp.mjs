@@ -296,7 +296,7 @@ async function buildDesign() {
   const md = await readFile(path.join(projectRoot, "DESIGN.md"), "utf8");
   const philosophy = sliceSection(md, "## デザイン原則", "1,2");
   const principles = sliceSection(md, "## Non-Negotiable Principles", "1,2");
-  const forbidden = sliceSection(md, "### 禁止パターン要約 (Top 10)", "1,3");
+  const forbidden = sliceSection(md, "### 禁止パターン要約", "1,3");
   return { philosophy, principles, forbidden, full: md };
 }
 

@@ -190,7 +190,7 @@ merge 後、`.github/workflows/deploy-pages.yml` が自動で GitHub Pages に�
 
 ## raw CSS で書く時の早見表
 
-> 色 / 余白 / タイポ / 角丸 / 影をトークン経由でしか書かない規律、禁止パターン Top 10、ハードコード許容例外は [DESIGN.md](../DESIGN.md) を参照。
+> 色 / 余白 / タイポ / 角丸 / 影をトークン経由でしか書かない規律、禁止パターン要約、ハードコード許容例外は [DESIGN.md](../DESIGN.md) を参照。
 
 `@apply` が使えない場所（`examples/catalog.css` などの raw CSS ファイル）では Tailwind の theme 変数を直接参照:
 

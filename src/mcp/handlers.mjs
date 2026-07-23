@@ -14,7 +14,7 @@
  *     list_components          — every component with name / 和名 / summary / classes
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
  *     get_tokens(category?)    — colors / typography / spacing / radius / shadow
- *     get_design_principles    — non-negotiable rules + forbidden patterns (Top 10)
+ *     get_design_principles    — non-negotiable rules + forbidden patterns
  *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
  *     get_sprint_kit           — planner/generator/evaluator agents + sprint workflow + hardcode gate hook の配布
@@ -451,7 +451,7 @@ export const TOOLS = [
   {
     name: "get_design_principles",
     description:
-      "relay のデザイン原則（ゆったりとした余白・わかりやすい表現・明瞭な色使い）、Non-Negotiable Principles（ハードコード禁止・semantic color・blessed spacing・typo セマンティック層・ARIA 状態 等）、禁止パターン Top 10 を返す。コード生成前のガードに使う。",
+      "relay のデザイン原則（ゆったりとした余白・わかりやすい表現・明瞭な色使い）、Non-Negotiable Principles（ハードコード禁止・semantic color・blessed spacing・typo セマンティック層・ARIA 状態 等）、禁止パターン要約を返す。コード生成前のガードに使う。",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
