@@ -103,6 +103,64 @@ function injectUsage(content) {
   );
 }
 
+// ── リリースログ auto-injection ──────────────────────────────────────────────
+// examples/pages/releases.json（正本）から年ごとのタイムラインを描画し、
+// releases.html の `<!-- releases:auto -->` マーカーに差し込む。
+// リリースエントリの追加手順は docs/RELEASING.md を参照。
+
+// Lucide "tag" — sprite（配布物）を増やさずカタログ専用に inline で使う
+const RELEASE_MARKER_ICON =
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.586 2.586A2 2 0 0 0 11.172 2H4a2 2 0 0 0-2 2v7.172a2 2 0 0 0 .586 1.414l8.704 8.704a2.426 2.426 0 0 0 3.42 0l6.58-6.58a2.426 2.426 0 0 0 0-3.42z"/><circle cx="7.5" cy="7.5" r=".5" fill="currentColor"/></svg>';
+
+function renderReleaseEntry(r) {
+  const tag = `v${r.version}`;
+  const url = `https://github.com/relay-development/relay-design-system/releases/tag/${tag}`;
+  const [, m, d] = r.date.split("-");
+  const dateLabel = `${Number(m)}月${Number(d)}日`;
+  return `          <article class="release-entry">
+            <span class="release-marker">${RELEASE_MARKER_ICON}</span>
+            <div class="release-entry-head">
+              <span class="typo-medium font-bold text-fg-high">${esc(tag)} をリリース</span>
+              <span class="badge badge-soft-neutral"><time datetime="${esc(r.date)}">${dateLabel}</time></span>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <h4 class="card-title">${esc(r.title)}</h4>
+              </div>
+              <div class="card-body">
+                <p class="typo-article text-fg-high mb-4">${esc(r.summary)}</p>
+                <a class="link" href="${url}" target="_blank" rel="noopener noreferrer"><span class="link-label">GitHub リリースノート</span><svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg></a>
+              </div>
+            </div>
+          </article>`;
+}
+
+/** 新しい順のまま年ごとに区切り、年見出し + タイムラインを描画する。 */
+function renderReleaseTimeline() {
+  const { releases } = JSON.parse(
+    readFileSync(resolve(PAGES_DIR, "releases.json"), "utf8"),
+  );
+  const years = [];
+  for (const r of releases) {
+    const year = r.date.slice(0, 4);
+    let g = years.find((y) => y.year === year);
+    if (!g) { g = { year, items: [] }; years.push(g); }
+    g.items.push(r);
+  }
+  return years
+    .map(
+      (y) => `        <h3 class="typo-xlarge">${y.year}</h3>
+        <div class="release-timeline">
+${y.items.map(renderReleaseEntry).join("\n")}
+        </div>`,
+    )
+    .join("\n");
+}
+
+function injectReleases(content) {
+  return content.replace(/<!-- releases:auto -->/g, renderReleaseTimeline);
+}
+
 // ── Master page list (single source of truth for nav + titles) ──────────────
 // group: sidebar group title (pages with the same group are bundled together).
 // label: sidebar link text.  title: <title> + landing card heading.
@@ -110,6 +168,7 @@ const PAGES = [
   { file: "mcp.html",           group: "イントロダクション", label: "MCP サーバー", title: "MCP サーバー", desc: "AI コーディングツールに relay の規約・トークン・コンポーネントを理解させる" },
   { file: "accessibility.html", group: "イントロダクション", label: "取り組み", title: "アクセシビリティについての取り組み", desc: "WCAG 2.2 AAA に向けたデザインシステムの担保とプロダクト側の責務" },
   { file: "evals.html",         group: "イントロダクション", label: "品質評価", title: "品質評価（evals）", desc: "AI が DS のルール通りに作れるかを測る定期健康診断とスコアの定点観測" },
+  { file: "releases.html",      group: "イントロダクション", label: "リリースログ", title: "リリースログ", desc: "各バージョンの変更点の要約と GitHub リリースノートへのリンク" },
 
   { file: "color.html",      group: "Foundations", label: "色",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
   { file: "typography.html", group: "Foundations", label: "タイポグラフィ",  title: "タイポグラフィ", desc: "フォントスケール + .typo-* クラス" },
@@ -288,7 +347,7 @@ function readFragment(file) {
 const all = [INDEX, ...PAGES];
 let written = 0;
 for (const p of all) {
-  const content = injectUsage(readFragment(p.file));
+  const content = injectReleases(injectUsage(readFragment(p.file)));
   const html = render({ title: p.title, group: p.group, content, activeFile: p.file, desc: p.desc });
   writeFileSync(resolve(EXAMPLES, p.file), html, "utf8");
   written++;

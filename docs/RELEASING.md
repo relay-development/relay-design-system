@@ -51,6 +51,10 @@ npm publish
 # 7) GitHub Releases にリリースノート
 #    gh release create v0.x.y --title "v0.x.y" --notes "変更点を箇条書きで"
 #    （publish すると Slack 通知が自動で流れる。下記「通知」参照）
+
+# 8) カタログのリリースログに 1 エントリ追加
+#    examples/pages/releases.json の先頭に { version / date / title / summary } を追記し、
+#    通常フロー（feature branch → PR）で反映。タイムラインは build:pages が自動描画する
 ```
 
 ## 公開前チェックリスト
