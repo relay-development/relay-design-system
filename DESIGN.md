@@ -109,6 +109,8 @@ shadow-focus-ring : 0 0 0 3px #2563eb (focus-visible default)
 shadow-destructive : 0 0 0 3px #ef4444 (削除ボタン focus)
 ```
 
+**elevation（浮き上がり）の表現にシャドウを使わない。** 恒常的に画面に置く surface（カード・パネル等）は `border-stroke-*` のボーダー + 背景色で区切る。`shadow-{sm,md,lg}` を使ってよいのは modal / tooltip など**実際に最前面へ重なる一時レイヤーだけ**。
+
 ### Components
 
 ```
@@ -160,7 +162,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 エラー       : .input-error / .alert-negative
 ```
 
-### 禁止パターン要約 (Top 10)
+### 禁止パターン要約
 
 | 禁止 | 代替 |
 |---|---|
@@ -173,6 +175,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 理由なく `sm` / `lg` サイズを選ぶ | 例外を除き `md` をデフォルトに |
 | 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
 | `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
+| 恒常的な surface の elevation をシャドウで表現（`card-elevated` の常用等） | ボーダー + 背景色で区切る。シャドウは modal / tooltip 等の重なりレイヤーのみ |
 | main へ直 push | feature branch + PR |
 
 ### ハードコードを許容する例外
