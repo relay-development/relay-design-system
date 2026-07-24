@@ -5,10 +5,11 @@
  *   button で操作を並べるアクションメニュー（設定・ログアウト等）にも使う。
  *
  *   props (menu-item):
- *     element : a（遷移） / button（操作）
- *     state   : default / hover / current  → :hover / aria-current="page"
- *     icon    : 24px アイコン (Lucide、任意)
- *     label   : string
+ *     element  : a（遷移） / button（操作）
+ *     state    : default / hover / current  → :hover / aria-current="page"
+ *     icon     : 左アイコン 24px (Lucide、任意)
+ *     trailing : 末尾装飾アイコン 16px (menu-item-trailing。external-link 等、任意)
+ *     label    : string
  *
  *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線。
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
@@ -28,6 +29,7 @@
  *   OK: ナビ用途は nav 要素で包んで aria-label を付け、現在地に aria-current="page" を付ける。
  *   OK: 項目は遷移なら a、操作（ログアウト等）なら button を使う。
  *   OK: 左アイコンは任意。付けるなら同じグループ内では有無を揃える（テキストの頭が揃わなくなるため）。
+ *   OK: 外部リンク等の末尾装飾アイコンは menu-item-trailing（16px・右端寄せ）。左アイコンの 24px と混同しない。
  *   OK: グループは menu-group、区切りは menu-divider。幅は親要素で決める（サイドナビは w-70 = 280px 目安）。
  *   NG: 現在地をクラスだけで示さない → aria-current="page" を付ける。
  *   NG: 横並びのコンテンツ切替に流用しない → tab。
@@ -51,6 +53,13 @@
  *           <svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>
  *           アカウント設定
  *         </button>
+ *       </li>
+ *       <li>
+ *         <a class="menu-item" href="…" target="_blank" rel="noopener noreferrer">
+ *           <svg class="icon"><use href="./icons.svg#lucide-help-circle"></use></svg>
+ *           ヘルプセンター
+ *           <svg class="icon menu-item-trailing"><use href="./icons.svg#lucide-external-link"></use></svg>
+ *         </a>
  *       </li>
  *     </ul>
  *   </nav>
@@ -86,6 +95,12 @@
   }
   .menu-item .icon {
     @apply w-6 h-6 shrink-0;   /* 24px */
+  }
+
+  /* 末尾の装飾アイコン (external-link 等) — 左アイコン (24px) と別扱いの 16px。
+   * ml-auto で項目の右端に寄せる。上の .icon 24px 指定より後に置いて上書き */
+  .menu-item .menu-item-trailing {
+    @apply w-4 h-4 shrink-0 ml-auto;   /* 16px */
   }
 
   /* Hover — ニュートラルなハイライト (カタログ用 .is-hover-preview も同条件)。

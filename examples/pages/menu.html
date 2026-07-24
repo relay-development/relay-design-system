@@ -66,7 +66,7 @@
       <div class="card mb-6">
         <div class="card-header">
           <h3 class="card-title">使用例: ナビゲーション（サイドナビ）</h3>
-          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">nav</code> 要素で包み、現在地に <code class="px-1 bg-neutral-100 rounded">aria-current="page"</code>。グループは <code class="px-1 bg-neutral-100 rounded">.menu-divider</code> で区切る</p>
+          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">nav</code> 要素で包み、現在地に <code class="px-1 bg-neutral-100 rounded">aria-current="page"</code>。グループは <code class="px-1 bg-neutral-100 rounded">.menu-divider</code> で区切る。外部リンク等の末尾装飾アイコンは <code class="px-1 bg-neutral-100 rounded">.menu-item-trailing</code>（16px・右端寄せ）</p>
         </div>
         <div class="card-body">
           <nav class="menu w-70" aria-label="マイページ">
@@ -108,6 +108,13 @@
                 <a class="menu-item" href="#menu">
                   <svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>
                   アカウント設定
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="https://relay-development.github.io/relay-design-system/" target="_blank" rel="noopener noreferrer">
+                  <svg class="icon"><use href="./icons.svg#lucide-help-circle"></use></svg>
+                  ヘルプセンター
+                  <svg class="icon menu-item-trailing" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
                 </a>
               </li>
             </ul>
