@@ -1,0 +1,38 @@
+/*
+ * Page Shell (ページシェル) — コンテンツ領域を標準幅に整えるラッパー
+ *
+ *   ヘッダー / フッター / main の内側に置き、コンテンツを --container-page
+ *   (1220px 暫定) に中央寄せする定型 3 点セット（max-width + 中央寄せ + 左右余白）。
+ *
+ *   props: なし（単一クラス）
+ *
+ *   寸法: max-width = var(--container-page) / margin-inline auto /
+ *         padding-inline 16px（画面が狭いときの左右余白）
+ *
+ * 機能:
+ *   ページのコンテンツ領域幅を全ページで揃えるためのラッパー。ヘッダー・
+ *   フッター・main それぞれの内側に置くと、帯（背景色）は全幅のまま中身の
+ *   幅が揃う。長文本文の幅は max-w-article（規約・記事系）。
+ *
+ * 使用法:
+ *   OK: 全幅の帯（header / footer / section）の直下に置き、中身をこの中に入れる。
+ *   OK: 長文の本文は page-shell の内側でさらに max-w-article で絞る。
+ *   NG: max-w-5xl 等のサイズ名でコンテナ幅を新規に書かない → max-w-page / max-w-article。
+ *   NG: page-shell を入れ子にしない → 帯ごとに 1 つ。
+ *
+ * Usage:
+ *   <header class="bg-surface border-b border-stroke-low">
+ *     <div class="page-shell flex items-center justify-between py-4">…</div>
+ *   </header>
+ *   <main>
+ *     <div class="page-shell py-16">…一覧やカードグリッド…</div>
+ *   </main>
+ */
+
+@layer components {
+  .page-shell {
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: calc(var(--spacing) * 4);   /* 16px */
+  }
+}

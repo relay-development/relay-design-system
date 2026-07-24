@@ -201,6 +201,7 @@ const PAGES = [
   { file: "modal.html",        group: "Components", label: "モーダル",         title: "モーダル",         desc: "最前面に重ねる確認ダイアログ" },
   { file: "tooltip.html",      group: "Components", label: "ツールチップ",     title: "ツールチップ",     desc: "ホバー / フォーカスで出る補足の吹き出し" },
   { file: "switch.html",       group: "Components", label: "トグルスイッチ",   title: "トグルスイッチ",   desc: "ON/OFF を即時に切り替えるスイッチ" },
+  { file: "page-shell.html",   group: "Components", label: "ページシェル",     title: "ページシェル",     desc: "コンテンツ領域を標準幅に整えるラッパー" },
 
   // hidden: サイドバーに出さない（checkbox / radio ページ下部のカードリンクからのみ遷移）
   { file: "guidelines.html",   group: "ガイドライン", label: "チェックボックスとラジオボタン", title: "チェックボックスとラジオボタン", desc: "Don't / Good パターン集", hidden: true },

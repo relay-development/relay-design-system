@@ -34,6 +34,7 @@
 @import "./components/modal.css";
 @import "./components/tooltip.css";
 @import "./components/switch.css";
+@import "./components/page-shell.css";
 
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";
