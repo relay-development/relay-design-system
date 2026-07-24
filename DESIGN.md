@@ -75,6 +75,16 @@ spacing/12 = 48px      spacing/16 = 64px
 
 **祝福外を使わない** — Figma で 40px / 56px が来たら近傍の祝福値 (32 or 48 / 48 or 64) に丸める。
 
+### Container (コンテンツ領域幅)
+
+```
+--container-page    : 76.25rem (1220px)  → max-w-page / .page-shell   ページシェル (ヘッダー / フッター / 一覧)
+--container-article : 42rem (672px)      → max-w-article              長文本文 (規約・記事系)
+```
+
+**ページシェルは page、長文本文は article。** サイズ名 (`max-w-5xl` 等) の新規使用は非推奨。
+page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判断、正本は `src/tokens/container.css`）。
+
 ### Typography
 
 ```
@@ -132,6 +142,7 @@ Card               : <div class="card"><div class="card-header">...</div><div cl
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
 Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit
+Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)
 ```
 
 > **サイズは例外を除き `md` をデフォルトに。** `btn` / `icon-btn` / `input` / `selector` / `textarea` 等のサイズ付きコンポーネントは、特段の理由（密なツールバーで `sm`、ヒーロー CTA で `lg/xl` 等）がない限り `*-md` を使う。`icon` も既定は `icon-md` (20px)。タイポグラフィの `.typo-medium` 基準と揃えると画面全体のリズムが安定する。
@@ -176,6 +187,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
 | `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
 | 恒常的な surface の elevation をシャドウで表現（`card-elevated` の常用等） | ボーダー + 背景色で区切る。シャドウは modal / tooltip 等の重なりレイヤーのみ |
+| コンテナ幅をサイズ名で新規指定（`max-w-5xl` 等） | 用途名の `max-w-page` / `max-w-article`（または `.page-shell`） |
 | main へ直 push | feature branch + PR |
 
 ### ハードコードを許容する例外

@@ -76,7 +76,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ## 5. `get_tokens(category?)` — デザイントークン
 
-**入力**: `category`（任意。`colors` / `typography` / `spacing` / `radius` / `shadow`。省略で全件）
+**入力**: `category`（任意。`colors` / `container` / `typography` / `spacing` / `radius` / `shadow`。省略で全件）
 
 **何ができる**: デザイントークンを**解決済みの実値**で返す（例: `--color-primary-500 = #30b686`）。semantic → primitive のエイリアス（`via`）も併記。色・余白・タイポ・角丸・影をハードコードせずトークン／ユーティリティ経由で書くために使う。CSS が無いスタンドアロン生成環境では、この実値をそのまま使う。
 

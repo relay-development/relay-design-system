@@ -13,7 +13,7 @@
  *     get_setup                — CSS 導入手順（UI 着手前に最初に呼ぶ）
  *     list_components          — every component with name / 和名 / summary / classes
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
- *     get_tokens(category?)    — colors / typography / spacing / radius / shadow
+ *     get_tokens(category?)    — colors / container / typography / spacing / radius / shadow
  *     get_design_principles    — non-negotiable rules + forbidden patterns
  *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
@@ -27,7 +27,7 @@ import index from "../../dist/mcp-index.json" with { type: "json" };
 
 export { index };
 export const SERVER_INFO = { name: "relay-design-system", version: index.version };
-export const TOKEN_CATEGORIES = Object.keys(index.tokens); // colors, typography, spacing, radius, shadow
+export const TOKEN_CATEGORIES = Object.keys(index.tokens); // colors, container, typography, spacing, radius, shadow
 
 /**
  * Standing guidance returned in the `initialize` result. MCP clients load this
