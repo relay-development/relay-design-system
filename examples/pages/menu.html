@@ -62,6 +62,31 @@
         </div>
       </div>
 
+      <!-- ===== サイズ ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">サイズ</h3>
+          <p class="card-subtitle">md（既定、padding 12）/ sm（<code class="px-1 bg-neutral-100 rounded">.menu-item-sm</code>、padding 8）。sm は項目数が多く密度を上げたいナビ（ドキュメントのサイドナビ等）専用</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">md（既定）</span>
+          <nav class="menu w-70" aria-label="サイズ: md">
+            <ul class="menu-group">
+              <li><a class="menu-item" href="#menu" aria-current="page">メニュー項目</a></li>
+              <li><a class="menu-item" href="#menu">メニュー項目</a></li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">sm</span>
+          <nav class="menu w-70" aria-label="サイズ: sm">
+            <ul class="menu-group">
+              <li><a class="menu-item menu-item-sm" href="#menu" aria-current="page">メニュー項目</a></li>
+              <li><a class="menu-item menu-item-sm" href="#menu">メニュー項目</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
       <!-- ===== 使用例: ナビゲーション ===== -->
       <div class="card mb-6">
         <div class="card-header">
