@@ -247,7 +247,7 @@ function navHtml(activeFile) {
       const links = g.items
         .map((p) => {
           const active = p.file === activeFile ? ' aria-current="page"' : "";
-          return `            <li><a class="menu-item" href="./${p.file}"${active}>${p.label}</a></li>`;
+          return `            <li><a class="menu-item menu-item-sm" href="./${p.file}"${active}>${p.label}</a></li>`;
         })
         .join("\n");
       if (COLLAPSIBLE.has(g.title)) {
