@@ -10,13 +10,15 @@
  *                  ではないため、「テキストリンクは常に下線」原則 (DESIGN.md) の
  *                  例外として a にも下線を付けない。
  *     state    : default / hover / current  → :hover / aria-current="page"
+ *     size     : md（既定、padding 12）/ sm（padding 8）→ .menu-item-sm
+ *                ※ sm は項目数が多く密度を上げたいナビ（ドキュメントのサイドナビ等）専用
  *     icon     : 左アイコン 24px (Lucide、任意)
  *     trailing : 末尾装飾アイコン 16px (menu-item-trailing。external-link 等、任意)
  *     label    : string
  *
  *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線。
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
- *   item     : padding 12, gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px
+ *   item     : padding 12 (sm は 8), gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px
  *   colors   : default = fg/middle、hover = bg neutral/100 + fg/high、
  *              current = bg primary/50 + bold primary/600
  *              （primary は「現在地」の意味に予約し、hover はニュートラルで示す）
@@ -34,6 +36,7 @@
  *   OK: 左アイコンは任意。付けるなら同じグループ内では有無を揃える（テキストの頭が揃わなくなるため）。
  *   OK: 外部リンク等の末尾装飾アイコンは menu-item-trailing（16px・右端寄せ）。左アイコンの 24px と混同しない。
  *   OK: グループは menu-group、区切りは menu-divider。幅は親要素で決める（サイドナビは w-70 = 280px 目安）。
+ *   OK: 項目数が多く密度を上げたいナビ（ドキュメントのサイドナビ等）は menu-item-sm。通常は md（既定）のまま。
  *   NG: 現在地をクラスだけで示さない → aria-current="page" を付ける。
  *   NG: 横並びのコンテンツ切替に流用しない → tab。
  *   NG: 操作項目に a を使わない → 遷移は a / 実行は button。
@@ -98,6 +101,13 @@
            transition-colors duration-150;
     font-family: inherit;   /* button 要素は font が継承されないため明示 */
   }
+
+  /* sm サイズ — 項目数が多く密度を上げたいナビ (ドキュメントのサイドナビ等) 専用。
+   * 理由なく sm を選ばない (md デフォルト原則) */
+  .menu-item-sm {
+    @apply p-2;
+  }
+
   .menu-item .icon {
     @apply w-6 h-6 shrink-0;   /* 24px */
   }
