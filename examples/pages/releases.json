@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.17.0",
+      "date": "2026-07-24",
+      "title": "メニューコンポーネントへの汎用化とコンテナ幅トークン",
+      "summary": "サイドナビを汎用の menu コンポーネントにリネームし、ナビゲーションに加えて button によるアクションメニューにも使えるようにしました（.sidenav-* は削除の破壊的変更）。コンテンツ領域幅のセマンティックトークン --container-{page,article} と定型ラッパー .page-shell も追加しています。"
+    },
+    {
       "version": "0.16.1",
       "date": "2026-07-23",
       "title": "デザイン原則の強化とリリースログページ",
