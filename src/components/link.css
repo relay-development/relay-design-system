@@ -5,7 +5,7 @@
  *
  *   props:
  *     state       : enable / hover         → :hover / .is-hover-preview
- *     color       : default(緑) / neutral  → .link-neutral
+ *     color       : default(緑) / neutral / inverse  → .link-neutral / .link-inverse
  *     isOpenInNew : true | false           → 末尾に external-link アイコン (16px)
  *     label       : string
  *
@@ -15,6 +15,9 @@
  *     neutral = enable fg/middle (slate-700 約 10.4:1)、hover fg/high
  *     ※ menu の a 項目と同じ配色。緑が主張しすぎる密な UI（フッター・メタ情報・
  *       表のセル内リンク等）向け。下線は色によらず常に付く。
+ *     inverse = enable fg/high-inverse (white)、hover fg/middle-inverse (slate-200)
+ *     ※ 暗い背景（neutral/800 以上・primary/700 以上等）専用。white は
+ *       primary/700 上でも 7.0:1 (AAA)。hover は 1 段落として変化を示す。
  *   タイポ: font-size / line-height は周囲の本文を inherit（medium ウェイト + underline）。
  *     ※ 本文中に置くリンクは必ず本文とフォントサイズを揃える。サイズを固定すると
  *       typo-small (14px) 等の本文に入れたとき行が不揃いになるため、inherit で
@@ -29,10 +32,12 @@
  *   OK: 本文中に置き font-size は周囲から inherit（サイズを固定しない）。
  *   OK: 別タブは target="_blank" rel="noopener noreferrer" ＋外部リンクアイコン。
  *   OK: 緑を目立たせたくない補助的なリンク（フッター・メタ情報・表のセル内等）は link-neutral。本文中の主要リンクは default（緑）のまま。
+ *   OK: 暗い背景（neutral/800 以上・primary/700 以上等）の上では白文字の link-inverse を使う。
  *   NG: 送信などのアクションに link を使わない → button。
  *   NG: フォントサイズを固定しない → 本文と行が不揃いになる。inherit のまま。
  *   NG: enable 色を primary/500 に下げない → 白背景でコントラスト不足。primary/700 を保つ。
- *   NG: text-* ユーティリティでリンク色を自作しない → hover 色が追従しない。色は default / link-neutral の 2 択。
+ *   NG: text-* ユーティリティでリンク色を自作しない → hover 色が追従しない。色は default / link-neutral / link-inverse の 3 択。
+ *   NG: 白背景で link-inverse を使わない → 見えなくなる。暗い背景専用。
  *
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
@@ -41,6 +46,7 @@
  *   </a>
  *   外部アイコン無し: <a class="link"><span class="link-label">前のページ</span></a>
  *   ニュートラル色: <a class="link link-neutral"><span class="link-label">利用規約</span></a>
+ *   暗い背景の上: <a class="link link-inverse"><span class="link-label">ヘルプ</span></a>
  */
 
 @layer components {
@@ -83,6 +89,16 @@
   .link.link-neutral:hover:not([aria-disabled="true"]),
   .link.link-neutral.is-hover-preview {
     @apply text-fg-high;
+  }
+
+  /* Inverse カラー — 暗い背景 (neutral/800 以上・primary/700 以上等) 専用。
+   * enable は white (primary/700 上でも 7.0:1 AAA)、hover は 1 段落とす */
+  .link.link-inverse {
+    @apply text-fg-high-inverse;
+  }
+  .link.link-inverse:hover:not([aria-disabled="true"]),
+  .link.link-inverse.is-hover-preview {
+    @apply text-fg-middle-inverse;
   }
 
   /* Focus ring */
