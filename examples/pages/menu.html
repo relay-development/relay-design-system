@@ -119,9 +119,9 @@
       <div class="card mb-8">
         <div class="card-header">
           <h3 class="card-title">使用例: アクションメニュー</h3>
-          <p class="card-subtitle">操作の項目は <code class="px-1 bg-neutral-100 rounded">button</code> 要素で書く（遷移は a）。ナビゲーションではないので nav では包まない</p>
+          <p class="card-subtitle">操作の項目は <code class="px-1 bg-neutral-100 rounded">button</code> 要素で書く（遷移は a）。ナビゲーションではないので nav では包まない。左アイコンは任意（付けるなら同じグループ内で有無を揃える）</p>
         </div>
-        <div class="card-body">
+        <div class="card-body flex flex-wrap gap-6 items-start">
           <div class="menu w-64">
             <ul class="menu-group">
               <li>
@@ -144,6 +144,22 @@
                   <svg class="icon"><use href="./icons.svg#lucide-x-circle"></use></svg>
                   ログアウト
                 </button>
+              </li>
+            </ul>
+          </div>
+          <div class="menu w-64">
+            <ul class="menu-group">
+              <li>
+                <button type="button" class="menu-item">プロフィールを編集</button>
+              </li>
+              <li>
+                <button type="button" class="menu-item">通知設定</button>
+              </li>
+            </ul>
+            <hr class="menu-divider" />
+            <ul class="menu-group">
+              <li>
+                <button type="button" class="menu-item">ログアウト</button>
               </li>
             </ul>
           </div>
