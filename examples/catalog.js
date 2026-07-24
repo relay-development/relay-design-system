@@ -6,7 +6,7 @@
  *
  * (The old in-page sidebar scroll-spy was dropped: navigation is now
  *  page-to-page, and the active link is marked at build time via
- *  aria-current="page" / .is-active by build-pages.mjs.)
+ *  aria-current="page" by build-pages.mjs.)
  */
 
 // Search Input — clear (×) button clears the field in the same container.

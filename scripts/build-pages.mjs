@@ -226,6 +226,9 @@ const ogpHash = createHash("md5")
 const OGP_IMAGE_URL = `${SITE_URL}assets/ogp.png?v=${ogpHash}`;
 
 // ── Sidebar nav (grouped, active link marked) ───────────────────────────────
+// 項目は DS の menu コンポーネント (menu-group / menu-item) で組む。現在地は
+// aria-current="page"。.menu コンテナは使わない (背景・パディングは docs-sidebar
+// が兼ねるため。二重になる)。
 function navHtml(activeFile) {
   const groups = [];
   for (const p of PAGES) {
@@ -243,21 +246,23 @@ function navHtml(activeFile) {
     .map((g) => {
       const links = g.items
         .map((p) => {
-          const active = p.file === activeFile
-            ? ' class="is-active" aria-current="page"'
-            : "";
-          return `          <a href="./${p.file}"${active}>${p.label}</a>`;
+          const active = p.file === activeFile ? ' aria-current="page"' : "";
+          return `            <li><a class="menu-item" href="./${p.file}"${active}>${p.label}</a></li>`;
         })
         .join("\n");
       if (COLLAPSIBLE.has(g.title)) {
         return `        <details class="docs-sidebar-group" data-nav-group="${g.title}">
           <summary class="docs-sidebar-group-title">${g.title}${chevron}</summary>
+          <ul class="menu-group">
 ${links}
+          </ul>
         </details>`;
       }
       return `        <div class="docs-sidebar-group">
           <div class="docs-sidebar-group-title">${g.title}</div>
+          <ul class="menu-group">
 ${links}
+          </ul>
         </div>`;
     })
     .join("\n\n");

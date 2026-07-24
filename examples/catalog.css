@@ -277,28 +277,9 @@ summary.docs-sidebar-group-title::-webkit-details-marker { display: none; }
 }
 details[open] > summary .docs-sidebar-group-chevron { transform: rotate(180deg); }
 
-.docs-sidebar-nav a {
-  display: block;
-  padding: 6px 8px;
-  font-size: var(--text-sm);
-  line-height: var(--text-sm--line-height);
-  color: var(--color-fg-high);
-  border-radius: 6px;
-  /* テキストリンクは常に下線 (DESIGN.md 原則)。menu コンポーネントの a と同じ書き方 */
-  text-decoration: underline;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
-  transition: background-color 0.12s ease, color 0.12s ease;
-}
-.docs-sidebar-nav a:hover {
-  background: var(--color-neutral-50);
-  color: var(--color-fg-high);
-}
-.docs-sidebar-nav a.is-active {
-  background: var(--color-primary-50);
-  color: var(--color-primary-700);
-  font-weight: 600;
-}
+/* ナビ項目のスタイルは DS の menu コンポーネント (menu-group / menu-item) に
+ * 委ねる (下線・hover・aria-current="page" の現在地表示もそちらの仕様)。
+ * .menu コンテナは背景・パディングが docs-sidebar と二重になるため使わない */
 
 .docs-main {
   flex: 1;
