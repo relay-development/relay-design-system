@@ -4,7 +4,7 @@
         <h2 class="typo-2xlarge">リンクテキスト</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-            <p class="typo-article text-fg-high mb-6">文章の中に置く、別のページへ移動できるリンクです。緑色の下線付きで、リンクであることが一目で分かります。</p>
+            <p class="typo-article text-fg-high mb-6">文章の中に置く、別のページへ移動できるリンクです。下線付きで、リンクであることが一目で分かります。色は緑（標準）・ニュートラル・白（inverse、暗い背景用）の 3 種類です。</p>
       <!-- ===== state マトリクス ===== -->
       <div class="card mb-6 overflow-hidden">
         <div class="card-header">
@@ -47,6 +47,43 @@
           <p class="typo-small text-fg-middle">
             同一サイト内リンク（アイコンなし）:
             <a class="link" href="#"><span class="link-label">同じサイト内のページ</span></a>
+          </p>
+        </div>
+      </div>
+
+      <!-- ===== カラー ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">カラー</h3>
+          <p class="card-subtitle">default（緑）/ neutral（<code class="px-1 bg-neutral-100 rounded">.link-neutral</code>）/ inverse（<code class="px-1 bg-neutral-100 rounded">.link-inverse</code>、暗い背景用）。下線は色によらず常に付く</p>
+        </div>
+        <div class="card-body space-y-6">
+          <div class="grid grid-cols-[100px_1fr] gap-4 items-center">
+            <span class="typo-xsmall text-fg-low">default</span>
+            <div>
+              <a class="link" href="#"><span class="link-label">リンクテキスト</span></a>
+            </div>
+
+            <span class="typo-xsmall text-fg-low">neutral</span>
+            <div>
+              <a class="link link-neutral" href="#"><span class="link-label">リンクテキスト</span></a>
+            </div>
+
+            <span class="typo-xsmall text-fg-low">neutral hover</span>
+            <div>
+              <a class="link link-neutral is-hover-preview" href="#"><span class="link-label">リンクテキスト</span></a>
+            </div>
+
+            <span class="typo-xsmall text-fg-low">inverse</span>
+            <div class="bg-neutral-900 rounded-sm p-3 inline-flex gap-6">
+              <a class="link link-inverse" href="#"><span class="link-label">リンクテキスト</span></a>
+              <a class="link link-inverse is-hover-preview" href="#"><span class="link-label">hover</span></a>
+            </div>
+          </div>
+          <p class="typo-article text-fg-middle">
+            ニュートラルは緑を目立たせたくない補助的なリンク（フッター・メタ情報・表のセル内等）に、inverse は暗い背景（neutral-800 以上・primary-700 以上等）の上に使います。本文中の主要リンクは default（緑）のままにしてください。色を
+            <code class="px-1 bg-neutral-100 rounded">text-*</code>
+            ユーティリティで自作すると hover 色が追従しないため、色はこの 3 択です。
           </p>
         </div>
       </div>

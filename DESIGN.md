@@ -141,7 +141,7 @@ Simple Table       : <table class="simple-table"><tr><th>ラベル</th><td>値</
 Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
-Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit
+Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit。緑を抑えたい補助リンクは .link-neutral、暗い背景上は .link-inverse（白）
 Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)
 ```
 

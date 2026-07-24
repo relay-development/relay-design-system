@@ -88,7 +88,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
 | 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
 | 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
-| 17 | Link          | `.link`, `.link-label`（緑下線 + external-link アイコン、enable=primary-700 / hover=primary-800） |
+| 17 | Link          | `.link`, `.link-label`, `.link-neutral`, `.link-inverse`（下線 + external-link アイコン。色は緑 primary-700/800 / neutral fg-middle/high / inverse 白＝暗い背景用の 3 種） |
 | 18 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
 | 19 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-item`（項目は a / button、現在地は `aria-current="page"`） |
 | 20 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
