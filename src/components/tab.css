@@ -37,6 +37,7 @@
  *   OK: role="tablist" / role="tab"、選択は aria-selected="true"。
  *   OK: variant は solid / line から選ぶ。
  *   NG: ページ遷移リンクの並びに使わない → 同一ページ内の表示切替に使う。
+ *   ※ tab はボタン状の切替 UI（リンクに見えない見た目）のため、「テキストリンクは常に下線」原則の例外として下線なし。
  *   NG: 選択状態をクラスだけで示さない → aria-selected を使う。
  *
  * Usage:

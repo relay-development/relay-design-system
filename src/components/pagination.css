@@ -19,6 +19,7 @@
  * 使用法:
  *   OK: 現在ページは aria-current="page"。端では矢印を aria-disabled="true"。
  *   OK: 省略は pagination-ellipsis で示す。
+ *   ※ pagination-item はボタン状チップ（リンクに見えない見た目）のため、「テキストリンクは常に下線」原則の例外として下線なし。
  *   NG: 現在ページもリンクで押せるようにしない → aria-current で示す。
  *   NG: 無限スクロールで足りる場面に無理に足さない。
  *
