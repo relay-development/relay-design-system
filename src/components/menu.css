@@ -5,10 +5,10 @@
  *   button で操作を並べるアクションメニュー（設定・ログアウト等）にも使う。
  *
  *   props (menu-item):
- *     element  : a（遷移） / button（操作）
- *                ※ 見た目は共通だが下線だけ分岐する: a は「テキストリンクは常に下線」
- *                  原則 (DESIGN.md) に従い常時下線、button は操作でありリンクでは
- *                  ないため下線なし。
+ *     element  : a（遷移） / button（操作）— 見た目は共通（下線なし）
+ *                ※ menu-item は角丸・背景付きの「項目形状」でありテキストリンク
+ *                  ではないため、「テキストリンクは常に下線」原則 (DESIGN.md) の
+ *                  例外として a にも下線を付けない。
  *     state    : default / hover / current  → :hover / aria-current="page"
  *     icon     : 左アイコン 24px (Lucide、任意)
  *     trailing : 末尾装飾アイコン 16px (menu-item-trailing。external-link 等、任意)
@@ -16,8 +16,7 @@
  *
  *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線。
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
- *   item     : padding 12, gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px。
- *              a の menu-item は常時下線 (link と同じ from-font / skip-ink なし)
+ *   item     : padding 12, gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px
  *   colors   : default = fg/middle、hover = bg neutral/100 + fg/high、
  *              current = bg primary/50 + bold primary/600
  *              （primary は「現在地」の意味に予約し、hover はニュートラルで示す）
@@ -31,7 +30,7 @@
  *
  * 使用法:
  *   OK: ナビ用途は nav 要素で包んで aria-label を付け、現在地に aria-current="page" を付ける。
- *   OK: 項目は遷移なら a、操作（ログアウト等）なら button を使う。a には自動で下線が付き、button には付かない。
+ *   OK: 項目は遷移なら a、操作（ログアウト等）なら button を使う。どちらも下線なし（項目形状のため「常に下線」原則の例外）。
  *   OK: 左アイコンは任意。付けるなら同じグループ内では有無を揃える（テキストの頭が揃わなくなるため）。
  *   OK: 外部リンク等の末尾装飾アイコンは menu-item-trailing（16px・右端寄せ）。左アイコンの 24px と混同しない。
  *   OK: グループは menu-group、区切りは menu-divider。幅は親要素で決める（サイドナビは w-70 = 280px 目安）。
@@ -87,23 +86,17 @@
   }
 
   /* ============================================================
-   * Item — a（遷移）と button（操作）で同じ見た目。下線だけ分岐する
+   * Item — a（遷移）と button（操作）で同じ見た目
    * ============================================================ */
+  /* menu-item は角丸・背景付きの「項目形状」でありテキストリンクではないため、
+   * 「テキストリンクは常に下線」原則 (DESIGN.md) の例外として a も下線なし */
   .menu-item {
     @apply flex items-center gap-2 w-full p-3 rounded-sm
            text-sm leading-6 tracking-wider font-normal
-           text-fg-middle cursor-pointer
+           text-fg-middle no-underline cursor-pointer
            bg-transparent border-0 text-left
            transition-colors duration-150;
     font-family: inherit;   /* button 要素は font が継承されないため明示 */
-  }
-
-  /* テキストリンクは常に下線 (DESIGN.md 原則)。遷移の a のみ下線を付け、
-   * 操作の button はリンクではないため付けない。書き方は link と同じ */
-  a.menu-item {
-    @apply underline;
-    text-underline-position: from-font;
-    text-decoration-skip-ink: none;
   }
   .menu-item .icon {
     @apply w-6 h-6 shrink-0;   /* 24px */
