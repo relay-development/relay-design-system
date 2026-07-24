@@ -1,0 +1,65 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="page-shell">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">ページシェル</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+            <p class="typo-article text-fg-high mb-6">ページのコンテンツ領域を標準幅（<code class="px-1 bg-neutral-100 rounded">--container-page</code> = 1220px 暫定）に中央寄せするラッパーです。ヘッダー・フッター・main それぞれの内側に置くと、帯（背景色）は全幅のまま中身の幅が揃います。長文の本文はこの内側でさらに <code class="px-1 bg-neutral-100 rounded">max-w-article</code>（672px）で絞ります。</p>
+
+      <!-- ===== コンテナ幅トークン ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">コンテナ幅トークン</h3>
+          <p class="card-subtitle">ページシェルは page、長文本文は article。サイズ名（<code class="px-1 bg-neutral-100 rounded">max-w-5xl</code> 等）の新規使用は非推奨</p>
+        </div>
+        <div class="card-body overflow-x-auto">
+          <table class="simple-table">
+            <tbody>
+              <tr>
+                <th>--container-page</th>
+                <td>76.25rem (1220px)</td>
+                <td><code class="typo-xsmall px-1 bg-neutral-100 rounded">max-w-page</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">.page-shell</code></td>
+                <td>ページシェル（ヘッダー / フッター / 一覧）</td>
+              </tr>
+              <tr>
+                <th>--container-article</th>
+                <td>42rem (672px)</td>
+                <td><code class="typo-xsmall px-1 bg-neutral-100 rounded">max-w-article</code></td>
+                <td>長文本文（規約・記事系）</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ===== 使用例: ヘッダー + 本文 ===== -->
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">使用例: ヘッダー + 本文</h3>
+          <p class="card-subtitle">帯は全幅・中身は <code class="px-1 bg-neutral-100 rounded">.page-shell</code> で標準幅（点線 = シェルの端）。このプレビュー枠は 1220px より狭いため、実際の画面では左右余白がさらに広がります</p>
+        </div>
+        <div class="card-body p-0">
+          <header class="bg-surface border-b border-stroke-low">
+            <div class="page-shell border-x border-dashed border-stroke-middle flex items-center justify-between py-4">
+              <span class="typo-medium font-bold text-fg-high">relay</span>
+              <nav aria-label="デモヘッダー" class="flex gap-6">
+                <a class="link" href="#page-shell"><span class="link-label">案件を探す</span></a>
+                <a class="link" href="#page-shell"><span class="link-label">マイページ</span></a>
+              </nav>
+            </div>
+          </header>
+          <div class="bg-neutral-50">
+            <main class="page-shell border-x border-dashed border-stroke-middle py-8">
+              <h4 class="typo-xlarge mb-4">ページタイトル</h4>
+              <p class="typo-article text-fg-high mb-6">一覧やカードグリッドなど、通常のコンテンツはページシェルの幅いっぱいに置きます。</p>
+              <article class="max-w-article border-x border-dashed border-stroke-middle">
+                <p class="typo-article text-fg-high">利用規約や記事のような長文は、ページシェルの内側でさらに <code class="px-1 bg-neutral-100 rounded">max-w-article</code> で行長を絞ると読みやすくなります（この段落がその幅です）。</p>
+              </article>
+            </main>
+          </div>
+        </div>
+      </div>
+
+      <!-- usage:auto:page-shell -->
+    </section>
+  </main>

@@ -3,6 +3,7 @@
 @import "./tokens/colors.css";
 @import "./tokens/typography.css";
 @import "./tokens/spacing.css";
+@import "./tokens/container.css";
 @import "./tokens/radius.css";
 @import "./tokens/shadow.css";
 
@@ -33,6 +34,11 @@
 @import "./components/modal.css";
 @import "./components/tooltip.css";
 @import "./components/switch.css";
+@import "./components/page-shell.css";
 
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";
+
+/* コンテナ幅ユーティリティは利用プロジェクト側で使われる前提のため、
+ * コンテンツスキャンに関係なく必ず dist に含める（safelist 相当） */
+@source inline("max-w-page max-w-article");
