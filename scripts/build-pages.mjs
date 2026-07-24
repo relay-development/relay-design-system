@@ -195,7 +195,7 @@ const PAGES = [
   { file: "alert.html",        group: "Components", label: "アラート",        title: "アラート",        desc: "アラート (info / success / warning / negative)" },
   { file: "link-text.html",    group: "Components", label: "リンクテキスト",   title: "リンクテキスト",   desc: "緑下線 + 外部リンクアイコン" },
   { file: "breadcrumb.html",   group: "Components", label: "パンくずリスト",   title: "パンくずリスト",   desc: "chevron 区切りの階層ナビ" },
-  { file: "side-nav.html",     group: "Components", label: "サイドナビ",       title: "サイドナビ",       desc: "現在地を示す縦型ナビゲーション" },
+  { file: "menu.html",         group: "Components", label: "メニュー",         title: "メニュー",         desc: "縦型のナビ / アクションメニュー" },
   { file: "pagination.html",   group: "Components", label: "ページネーション", title: "ページネーション", desc: "ページ送りナビゲーション" },
   { file: "stepper.html",      group: "Components", label: "ステッパー",       title: "ステッパー",       desc: "複数ステップの進捗表示" },
   { file: "modal.html",        group: "Components", label: "モーダル",         title: "モーダル",         desc: "最前面に重ねる確認ダイアログ" },

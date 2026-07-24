@@ -90,7 +90,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
 | 17 | Link          | `.link`, `.link-label`（緑下線 + external-link アイコン、enable=primary-700 / hover=primary-800） |
 | 18 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
-| 19 | Side Nav      | `.sidenav`, `.sidenav-group`, `.sidenav-divider`, `.sidenav-item`（現在地は `aria-current="page"`） |
+| 19 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-item`（項目は a / button、現在地は `aria-current="page"`） |
 | 20 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
 | 21 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
 | 22 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |

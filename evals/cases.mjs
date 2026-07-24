@@ -70,10 +70,10 @@ export const CASES = [
     id: "settings-nav",
     prompt:
       "設定画面に、プロフィール・通知・セキュリティの 3 セクションを行き来できるナビゲーションを付けてください。いま自分がどのセクションにいるかが分かるようにしてください。",
-    mustClasses: ["sidenav", "sidenav-item"],
+    mustClasses: ["menu", "menu-item"],
     mustPatterns: [{ pattern: 'aria-current="page"', label: "現在地は aria-current（独自 is-* クラスでない）" }],
     rubric: [
-      "ナビゲーションに sidenav を使っている（独自のリスト+ハイライトの手書きではない）",
+      "ナビゲーションに menu を使っている（独自のリスト+ハイライトの手書きではない）",
       "現在地の表現が aria-current で、is-active 等の独自状態クラスを使っていない",
       "セクション間の遷移がリンク（a 要素）で、button を遷移に流用していない",
     ],
