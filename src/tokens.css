@@ -239,6 +239,12 @@
   /* ===== Spacing base ===== */
   --spacing: 0.25rem;
 
+  /* ===== Container (コンテンツ領域幅) ===== */
+  /* page は旧サイト実測 1220px 初期値の暫定。丸め（76rem / 80rem）はデザイナー判断
+     （変更は src/tokens/container.css とこの 2 箇所） */
+  --container-page:    76.25rem;   /* 1220px — ページシェル（ヘッダー / フッター / 一覧） */
+  --container-article: 42rem;      /* 672px — 長文本文（規約・記事系） */
+
   /* ===== Radius ===== */
   --radius-none: 0;
   --radius-xs:   0.25rem;   /* 4px */
