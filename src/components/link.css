@@ -5,12 +5,16 @@
  *
  *   props:
  *     state       : enable / hover         → :hover / .is-hover-preview
+ *     color       : default(緑) / neutral  → .link-neutral
  *     isOpenInNew : true | false           → 末尾に external-link アイコン (16px)
  *     label       : string
  *
- *   色: enable = primary/700、hover = primary/800
+ *   色: default = enable primary/700、hover primary/800
  *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と不足のため
  *       primary/700 (約 7.0:1) に上げ、WCAG 2.2 AAA を満たす。
+ *     neutral = enable fg/middle (slate-700 約 10.4:1)、hover fg/high
+ *     ※ menu の a 項目と同じ配色。緑が主張しすぎる密な UI（フッター・メタ情報・
+ *       表のセル内リンク等）向け。下線は色によらず常に付く。
  *   タイポ: font-size / line-height は周囲の本文を inherit（medium ウェイト + underline）。
  *     ※ 本文中に置くリンクは必ず本文とフォントサイズを揃える。サイズを固定すると
  *       typo-small (14px) 等の本文に入れたとき行が不揃いになるため、inherit で
@@ -24,9 +28,11 @@
  * 使用法:
  *   OK: 本文中に置き font-size は周囲から inherit（サイズを固定しない）。
  *   OK: 別タブは target="_blank" rel="noopener noreferrer" ＋外部リンクアイコン。
+ *   OK: 緑を目立たせたくない補助的なリンク（フッター・メタ情報・表のセル内等）は link-neutral。本文中の主要リンクは default（緑）のまま。
  *   NG: 送信などのアクションに link を使わない → button。
  *   NG: フォントサイズを固定しない → 本文と行が不揃いになる。inherit のまま。
  *   NG: enable 色を primary/500 に下げない → 白背景でコントラスト不足。primary/700 を保つ。
+ *   NG: text-* ユーティリティでリンク色を自作しない → hover 色が追従しない。色は default / link-neutral の 2 択。
  *
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
@@ -34,6 +40,7 @@
  *     <svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg>
  *   </a>
  *   外部アイコン無し: <a class="link"><span class="link-label">前のページ</span></a>
+ *   ニュートラル色: <a class="link link-neutral"><span class="link-label">利用規約</span></a>
  */
 
 @layer components {
@@ -65,6 +72,17 @@
   .link:hover:not([aria-disabled="true"]),
   .link.is-hover-preview {
     @apply text-primary-800;
+  }
+
+  /* Neutral カラー — 緑を目立たせたくない補助的なリンク向け。
+   * menu の a 項目と同じ fg/middle → hover fg/high。
+   * default の hover 規則より後に置き、同一詳細度で上書きする */
+  .link.link-neutral {
+    @apply text-fg-middle;
+  }
+  .link.link-neutral:hover:not([aria-disabled="true"]),
+  .link.link-neutral.is-hover-preview {
+    @apply text-fg-high;
   }
 
   /* Focus ring */
