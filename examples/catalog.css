@@ -222,6 +222,7 @@
   padding: 0 8px 16px;
   border-bottom: 1px solid var(--color-stroke-low);
   margin-bottom: 16px;
+  /* ロゴのロックアップ（リンクに見えない見た目）のため「常に下線」原則の例外 */
   text-decoration: none;
 }
 .docs-sidebar-brand .brand-dot {
@@ -283,7 +284,10 @@ details[open] > summary .docs-sidebar-group-chevron { transform: rotate(180deg);
   line-height: var(--text-sm--line-height);
   color: var(--color-fg-high);
   border-radius: 6px;
-  text-decoration: none;
+  /* テキストリンクは常に下線 (DESIGN.md 原則)。menu コンポーネントの a と同じ書き方 */
+  text-decoration: underline;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
   transition: background-color 0.12s ease, color 0.12s ease;
 }
 .docs-sidebar-nav a:hover {
@@ -440,6 +444,8 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   overflow: hidden;
 }
 .page-card-label { padding: calc(var(--spacing) * 3); }
+/* カード全面をクリック領域にするカード型リンク（リンクに見えない見た目）のため、
+ * 「テキストリンクは常に下線」原則の例外として下線なし（カタログ内部専用クラス） */
 .page-card-link { text-decoration: none; }
 .page-card-link::after {
   content: "";
