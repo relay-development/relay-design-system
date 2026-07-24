@@ -31,7 +31,7 @@
  *
  * 機能:
  *   同じ領域で表示内容を切り替えるディスクロージャー。情報を一度に出しすぎない。
- *   手続きの進捗は stepper、ページ送りは pagination、サイト移動は sidenav。
+ *   手続きの進捗は stepper、ページ送りは pagination、サイト移動は menu（サイドナビ）。
  *
  * 使用法:
  *   OK: role="tablist" / role="tab"、選択は aria-selected="true"。

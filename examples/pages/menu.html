@@ -1,0 +1,155 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="menu">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">メニュー</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+            <p class="typo-article text-fg-high mb-6">縦に項目を並べる汎用メニューです。いま開いているページを示しながら移動できるナビゲーション（サイドナビ）にも、設定・ログアウトなどの操作を並べるアクションメニューにも使えます。幅は親要素で決めます（サイドナビ用途は <code class="px-1 bg-neutral-100 rounded">w-70</code> = 280px が目安）。</p>
+      <!-- ===== 項目の状態 ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">項目の状態</h3>
+          <p class="card-subtitle">default / hover / focus / current。hover と current は同じ見た目（背景 primary/50 + 太字）</p>
+        </div>
+        <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
+          <span class="typo-xsmall text-fg-low">default</span>
+          <nav class="menu w-70" aria-label="状態: default">
+            <ul class="menu-group">
+              <li>
+                <a class="menu-item" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">hover</span>
+          <nav class="menu w-70" aria-label="状態: hover">
+            <ul class="menu-group">
+              <li>
+                <a class="menu-item is-hover-preview" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">focus</span>
+          <nav class="menu w-70" aria-label="状態: focus">
+            <ul class="menu-group">
+              <li>
+                <a class="menu-item is-focus-preview" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <span class="typo-xsmall text-fg-low">current</span>
+          <nav class="menu w-70" aria-label="状態: current">
+            <ul class="menu-group">
+              <li>
+                <a class="menu-item" href="#menu" aria-current="page">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  メニュー項目
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ===== 使用例: ナビゲーション ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">使用例: ナビゲーション（サイドナビ）</h3>
+          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">nav</code> 要素で包み、現在地に <code class="px-1 bg-neutral-100 rounded">aria-current="page"</code>。グループは <code class="px-1 bg-neutral-100 rounded">.menu-divider</code> で区切る</p>
+        </div>
+        <div class="card-body">
+          <nav class="menu w-70" aria-label="マイページ">
+            <ul class="menu-group">
+              <li>
+                <a class="menu-item" href="#menu" aria-current="page">
+                  <svg class="icon"><use href="./icons.svg#lucide-smile"></use></svg>
+                  マイページTOP
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-files"></use></svg>
+                  財務情報購入履歴
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-medal"></use></svg>
+                  プレミアム会員登録
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-folder-cog"></use></svg>
+                  おすすめ案件設定
+                </a>
+              </li>
+            </ul>
+            <hr class="menu-divider" />
+            <ul class="menu-group">
+              <li>
+                <a class="menu-item" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-shield-check"></use></svg>
+                  基本情報（本人確認）
+                </a>
+              </li>
+              <li>
+                <a class="menu-item" href="#menu">
+                  <svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>
+                  アカウント設定
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+
+      <!-- ===== 使用例: アクションメニュー ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例: アクションメニュー</h3>
+          <p class="card-subtitle">操作の項目は <code class="px-1 bg-neutral-100 rounded">button</code> 要素で書く（遷移は a）。ナビゲーションではないので nav では包まない</p>
+        </div>
+        <div class="card-body">
+          <div class="menu w-64">
+            <ul class="menu-group">
+              <li>
+                <button type="button" class="menu-item">
+                  <svg class="icon"><use href="./icons.svg#lucide-pencil"></use></svg>
+                  プロフィールを編集
+                </button>
+              </li>
+              <li>
+                <button type="button" class="menu-item">
+                  <svg class="icon"><use href="./icons.svg#lucide-bell"></use></svg>
+                  通知設定
+                </button>
+              </li>
+            </ul>
+            <hr class="menu-divider" />
+            <ul class="menu-group">
+              <li>
+                <button type="button" class="menu-item">
+                  <svg class="icon"><use href="./icons.svg#lucide-x-circle"></use></svg>
+                  ログアウト
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- usage:auto:menu -->
+    </section>
+  </main>

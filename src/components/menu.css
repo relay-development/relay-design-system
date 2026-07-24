@@ -1,0 +1,107 @@
+/*
+ * Menu (メニュー) — Side Nav (Figma 3049:1649 sidebar) を汎用化
+ *
+ *   縦に項目を並べる汎用メニュー。リンクで移動するナビゲーション（サイドナビ）にも、
+ *   button で操作を並べるアクションメニュー（設定・ログアウト等）にも使う。
+ *
+ *   props (menu-item):
+ *     element : a（遷移） / button（操作）
+ *     state   : default / hover / current  → :hover / aria-current="page"
+ *     icon    : 24px アイコン (Lucide、任意)
+ *     label   : string
+ *
+ *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線。
+ *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
+ *   item     : padding 12, gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px
+ *   colors   : default = fg/low、current / hover = bg primary/50 + bold primary/600
+ *     ※ Figma は current 文字色 primary/500 だが、primary/50 背景で約 2.4:1 と
+ *       AA 不足のため、リンクテキストと同様 primary/600 に上げている。
+ *
+ * 機能:
+ *   縦に項目を並べる汎用メニュー。現在地を示しながら階層を移動するナビゲーション
+ *   （マイページのサイドナビ等）と、操作を並べるアクションメニューの両方に使う。
+ *   サイト階層のパス表示は breadcrumb、横並びのコンテンツ切替は tab。
+ *
+ * 使用法:
+ *   OK: ナビ用途は nav 要素で包んで aria-label を付け、現在地に aria-current="page" を付ける。
+ *   OK: 項目は遷移なら a、操作（ログアウト等）なら button を使う。
+ *   OK: グループは menu-group、区切りは menu-divider。幅は親要素で決める（サイドナビは w-70 = 280px 目安）。
+ *   NG: 現在地をクラスだけで示さない → aria-current="page" を付ける。
+ *   NG: 横並びのコンテンツ切替に流用しない → tab。
+ *   NG: 操作項目に a を使わない → 遷移は a / 実行は button。
+ *
+ * Usage:
+ *   <nav class="menu w-70" aria-label="マイページ">
+ *     <ul class="menu-group">
+ *       <li>
+ *         <a class="menu-item" href="…" aria-current="page">
+ *           <svg class="icon"><use href="./icons.svg#lucide-smile"></use></svg>
+ *           マイページTOP
+ *         </a>
+ *       </li>
+ *       …
+ *     </ul>
+ *     <hr class="menu-divider" />
+ *     <ul class="menu-group">
+ *       <li>
+ *         <button type="button" class="menu-item">
+ *           <svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>
+ *           アカウント設定
+ *         </button>
+ *       </li>
+ *     </ul>
+ *   </nav>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container / group / divider
+   * ============================================================ */
+  .menu {
+    @apply flex flex-col gap-4 bg-surface rounded-md p-4;
+    /* 幅は親要素に従う。サイドナビ用途は利用側で w-70 (280px = Figma 仕様) を指定 */
+  }
+
+  .menu-group {
+    @apply flex flex-col gap-1 m-0 p-0 list-none;
+  }
+
+  .menu-divider {
+    @apply m-0 border-0 border-t border-solid border-stroke-middle;
+  }
+
+  /* ============================================================
+   * Item — a（遷移）と button（操作）で同じ見た目
+   * ============================================================ */
+  .menu-item {
+    @apply flex items-center gap-2 w-full p-3 rounded-sm
+           text-sm leading-6 tracking-wider font-normal
+           text-fg-low no-underline cursor-pointer
+           bg-transparent border-0 text-left
+           transition-colors duration-150;
+    font-family: inherit;   /* button 要素は font が継承されないため明示 */
+  }
+  .menu-item .icon {
+    @apply w-6 h-6 shrink-0;   /* 24px */
+  }
+
+  /* Current (現在地) — ARIA 属性で指定 */
+  .menu-item[aria-current="page"] {
+    @apply bg-primary-50 font-bold;
+    color: var(--color-primary-600);
+  }
+
+  /* Hover — current と同じ見た目 (カタログ用 .is-hover-preview も同条件) */
+  .menu-item:hover,
+  .menu-item.is-hover-preview {
+    @apply bg-primary-50 font-bold;
+    color: var(--color-primary-600);
+  }
+
+  /* Focus ring */
+  .menu-item:focus-visible,
+  .menu-item.is-focus-preview {
+    outline: none;
+    box-shadow: var(--shadow-focus-ring);
+  }
+}
