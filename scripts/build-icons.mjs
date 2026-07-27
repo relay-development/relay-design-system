@@ -25,13 +25,16 @@ export const ICONS = [
   "info", "check-circle", "alert-triangle", "alert-circle", "x-circle",
   // Action
   "plus", "minus", "x", "check", "pencil", "trash-2", "copy", "download",
+  "upload", "refresh-cw", "send",
   // Navigation
   "chevron-up", "chevron-down", "chevron-left", "chevron-right",
-  "chevrons-up-down", "arrow-left",
+  "chevrons-up-down", "arrow-left", "menu", "more-horizontal", "more-vertical",
+  "home",
   // Object
   "file", "files", "folder", "folder-cog", "link", "external-link", "image",
   // User
   "user", "users", "smile", "shield-check", "medal", "settings", "help-circle",
+  "log-in", "log-out",
   // Search / Filter
   "search", "filter", "hash",
   // Visibility
