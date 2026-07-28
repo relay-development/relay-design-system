@@ -56,7 +56,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 トークンの値一覧（色 / タイポ / 余白 / 角丸 / 影）と使用ルールは [DESIGN.md](DESIGN.md) を参照してください。
 すべて CSS 変数なので `:root { --color-primary-500: #ff5a36; }` のように上書き可能です。
 
-### 4. アイコン（Lucide SVG sprite・52 種）
+### 4. アイコン（Lucide SVG sprite・53 種）
 
 ```html
 <svg class="icon icon-md">

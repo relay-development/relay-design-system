@@ -42,7 +42,7 @@ export const ICONS = [
   // Time / Date
   "calendar", "clock",
   // Communication
-  "mail", "bell",
+  "mail", "bell", "phone",
 ];
 
 const SOURCE_DIR = path.join(projectRoot, "node_modules", "lucide-static", "icons");
