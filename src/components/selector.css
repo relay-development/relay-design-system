@@ -2,14 +2,17 @@
  * Selector — recreated from Figma component set 3120:5008 (セレクター)
  *
  *   構造:
- *     [container]
- *       [optional left icon slot — primary/500 colored]
- *       [native <select> field]
- *       [right chevron up/down — via CSS, neutral/600]
+ *     [container — relative]
+ *       [optional left icon slot — primary/500 colored, absolute overlay]
+ *       [native <select> field — 枠全体に広がる（枠内はどこでもクリック可能）]
+ *       [right chevron up/down — via CSS, neutral/600, absolute overlay]
+ *
+ *   アイコンとシェブロンは pointer-events: none のオーバーレイで、
+ *   クリックはすべて下の <select> に落ちる。
  *
  *   props: size × state × isInvalid × isEmpty (same as Input)
  *
- *   sizes (h / padding-x):
+ *   sizes (h / inset-x):
  *     sm: 32 / 4
  *     md: 40 / 8
  *     lg: 48 / 12
@@ -51,7 +54,7 @@
    * Container
    * ============================================================ */
   .selector {
-    @apply flex items-center gap-1 w-full
+    @apply relative flex items-center w-full
            bg-white border border-solid border-neutral-400 rounded-sm
            transition-colors duration-150 cursor-pointer;
   }
@@ -83,40 +86,56 @@
   }
 
   /* ============================================================
-   * Sizes — Figma exact
+   * Sizes — Figma exact (heights only; horizontal insets live on
+   * the field padding and the icon / chevron overlays below)
    * ============================================================ */
-  .selector-sm { height: 32px; padding-left: 4px;  padding-right: 4px;  }
-  .selector-md { height: 40px; padding-left: 8px;  padding-right: 8px;  }
-  .selector-lg { height: 48px; padding-left: 12px; padding-right: 12px; }
-  /* Compensate the extra 1px border when error */
-  .selector-sm.selector-error { padding-left: 3px;  padding-right: 3px;  }
-  .selector-md.selector-error { padding-left: 7px;  padding-right: 7px;  }
-  .selector-lg.selector-error { padding-left: 11px; padding-right: 11px; }
+  .selector-sm { height: 32px; }
+  .selector-md { height: 40px; }
+  .selector-lg { height: 48px; }
 
   /* ============================================================
-   * Left icon slot — colored primary/500
+   * Left icon slot — colored primary/500, overlay (click-through)
    * ============================================================ */
   .selector-icon {
-    @apply shrink-0 inline-flex items-center justify-center
+    @apply absolute top-1/2 -translate-y-1/2 pointer-events-none
+           inline-flex items-center justify-center
            w-6 h-6 text-primary-500;
   }
   .selector-icon > svg { @apply w-5 h-5; }
+  .selector-sm .selector-icon { left: 4px; }
+  .selector-md .selector-icon { left: 8px; }
+  .selector-lg .selector-icon { left: 12px; }
+  /* Compensate the extra 1px border when error */
+  .selector-sm.selector-error .selector-icon { left: 3px; }
+  .selector-md.selector-error .selector-icon { left: 7px; }
+  .selector-lg.selector-error .selector-icon { left: 11px; }
 
   /* ============================================================
-   * Native <select> field — appearance reset, transparent
+   * Native <select> field — appearance reset, transparent.
+   * Fills the whole container so every pixel inside the border
+   * opens the dropdown. Horizontal padding = old container
+   * padding + gap + (icon / chevron widths where they overlay).
    * ============================================================ */
   .selector-field {
-    @apply flex-1 min-w-0 bg-transparent border-0 outline-none cursor-pointer
+    @apply w-full h-full min-w-0 bg-transparent border-0 outline-none cursor-pointer
            text-fg-high appearance-none;
     /* Remove default arrow on some browsers */
     background-image: none;
-    padding-left: 4px;
-    padding-right: 4px;
   }
-  .selector-sm .selector-field { @apply text-sm leading-6; }
-  .selector-md .selector-field { @apply text-base leading-6; }
-  .selector-lg .selector-field { @apply text-base leading-6; }
-  .selector-lg .selector-field { padding-left: 8px; padding-right: 8px; }
+  .selector-sm .selector-field { @apply text-sm leading-6;   padding-left: 8px;  padding-right: 32px; }
+  .selector-md .selector-field { @apply text-base leading-6; padding-left: 12px; padding-right: 36px; }
+  .selector-lg .selector-field { @apply text-base leading-6; padding-left: 20px; padding-right: 44px; }
+  /* With left icon: + icon 24px + gap 4px */
+  .selector-sm:has(.selector-icon) .selector-field { padding-left: 36px; }
+  .selector-md:has(.selector-icon) .selector-field { padding-left: 40px; }
+  .selector-lg:has(.selector-icon) .selector-field { padding-left: 48px; }
+  /* Compensate the extra 1px border when error */
+  .selector-sm.selector-error .selector-field { padding-left: 7px;  padding-right: 31px; }
+  .selector-md.selector-error .selector-field { padding-left: 11px; padding-right: 35px; }
+  .selector-lg.selector-error .selector-field { padding-left: 19px; padding-right: 43px; }
+  .selector-sm.selector-error:has(.selector-icon) .selector-field { padding-left: 35px; }
+  .selector-md.selector-error:has(.selector-icon) .selector-field { padding-left: 39px; }
+  .selector-lg.selector-error:has(.selector-icon) .selector-field { padding-left: 47px; }
 
   /* Empty (placeholder) — option[value=""] selected */
   .selector:has(.selector-field option[value=""]:checked) .selector-field {
@@ -124,11 +143,15 @@
   }
 
   /* ============================================================
-   * Right chevron-up-down — Lucide icon via inline SVG mask
+   * Right chevron-up-down — Lucide icon via inline SVG mask,
+   * overlay (click-through)
    * ============================================================ */
   .selector::after {
     content: "";
-    flex-shrink: 0;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
     width: 20px;
     height: 20px;
     background-color: var(--color-neutral-600);
@@ -141,5 +164,12 @@
     -webkit-mask-size: contain;
             mask-size: contain;
   }
+  .selector-sm::after { right: 4px; }
+  .selector-md::after { right: 8px; }
+  .selector-lg::after { right: 12px; }
+  /* Compensate the extra 1px border when error */
+  .selector-sm.selector-error::after { right: 3px; }
+  .selector-md.selector-error::after { right: 7px; }
+  .selector-lg.selector-error::after { right: 11px; }
   .selector.is-disabled::after { background-color: var(--color-neutral-400); }
 }
