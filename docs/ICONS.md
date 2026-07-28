@@ -1,6 +1,6 @@
 # Icons（Lucide SVG sprite）
 
-[Lucide](https://lucide.dev) から 52 アイコンを SVG sprite として同梱しています。JS フレームワーク不要、`currentColor` で着色追従します。
+[Lucide](https://lucide.dev) から 53 アイコンを SVG sprite として同梱しています。JS フレームワーク不要、`currentColor` で着色追従します。
 
 ## 使い方
 
