@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.20.0",
+      "date": "2026-07-28",
+      "title": "セレクターのクリック範囲修正と phone アイコン追加",
+      "summary": "selector の枠内なのにクリックが反応しない領域（上下の余白・アイコン枠・シェブロン上）を解消し、枠のどこを押してもドロップダウンが開くようになりました。マークアップの変更は不要で、見た目も従来どおりです。同梱アイコンには phone を追加し 53 種になりました。"
+    },
+    {
       "version": "0.19.0",
       "date": "2026-07-27",
       "title": "同梱アイコンを 52 種に拡充",
