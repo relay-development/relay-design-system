@@ -409,12 +409,12 @@
                 <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <nav class="menu w-full mb-4" aria-label="デモ: 現在地なし"><ul class="menu-group">
-                <li><a class="menu-item" href="#menu" style="background-color: var(--color-primary-50); font-weight: 700;">マイページ</a></li>
+                <li><a class="menu-item" href="#menu">マイページ</a></li>
                 <li><a class="menu-item" href="#menu">アカウント設定</a></li>
               </ul></nav>
-              <p class="typo-small text-fg-middle">見た目だけ現在地に似せて <code class="typo-xsmall">aria-current</code> を付けないと、SR には現在地が伝わらない。</p>
+              <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-current</code> が無いと DS の現在地スタイルも当たらず、視覚的にも SR 的にも現在地が示されない。</p>
               <pre class="code-sample mt-3" data-code>
-&lt;a class="menu-item" [[style="background:…;font-weight:700"]]&gt;マイページ&lt;/a&gt;</pre>
+&lt;a class="menu-item" href="…"&gt;マイページ&lt;/a&gt;  &lt;!-- [[aria-current なし]] --&gt;</pre>
             </div>
           </div>
         </div>
