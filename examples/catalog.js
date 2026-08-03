@@ -86,13 +86,17 @@ document.addEventListener("click", (e) => {
 });
 
 // Tabs — mutually exclusive selection within [data-tabgroup].
+// aria-controls が指すパネルがあれば、選択タブのパネルだけ表示する（無ければ選択状態の切替のみ）。
 document.addEventListener("click", (e) => {
   const tab = e.target.closest(".tab");
   if (!tab || tab.disabled) return;
   const group = tab.closest("[data-tabgroup]");
   if (!group) return;
   group.querySelectorAll(".tab").forEach((t) => {
-    t.setAttribute("aria-selected", t === tab ? "true" : "false");
+    const selected = t === tab;
+    t.setAttribute("aria-selected", selected ? "true" : "false");
+    const panel = t.getAttribute("aria-controls") && document.getElementById(t.getAttribute("aria-controls"));
+    if (panel) panel.toggleAttribute("hidden", !selected);
   });
 });
 
