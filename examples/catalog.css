@@ -589,9 +589,16 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
  * コンポーネント本体の .tabs-line はコンテンツ幅（inline-flex）で、下線は各タブ
  * の border-bottom のみ。カタログのドキュメントタブ（概要/ガイドライン/…、
  * data-tab-param を持つ）は全幅化し、最後のタブより右側までベースラインを伸ばす。
+ * コンテナに border を引くとタブ自身の border と 1px ずれて二重になるため、
+ * 末尾に伸びる擬似要素で「タブと同じ位置の 1px」を右側へ延長する。
  * tab.html のコンポーネントデモ（data-tab-param なし）は従来どおり。 */
 .tabs-line[data-tab-param] {
   display: flex;
   width: 100%;
+}
+.tabs-line[data-tab-param]::after {
+  content: "";
+  flex: 1 1 auto;
+  align-self: stretch;
   border-bottom: 1px solid var(--color-stroke-middle);
 }
