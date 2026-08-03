@@ -6,9 +6,10 @@
       </div>
             <p class="typo-article text-fg-high mb-6">「保存」「キャンセル」など、操作のきっかけになる最も基本的なパーツです。重要度や場面に応じて色・形・大きさを選べます。</p>
 
-      <!-- ===== Tabs: 概要 / アクセシビリティ ===== -->
+      <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
       <div role="tablist" data-tabgroup aria-label="ボタンのドキュメント" class="tabs tabs-line mb-8">
         <button type="button" role="tab" id="button-tab-overview" class="tab tab-line" aria-selected="true" aria-controls="button-panel-overview">概要</button>
+        <button type="button" role="tab" id="button-tab-guideline" class="tab tab-line" aria-selected="false" aria-controls="button-panel-guideline">ガイドライン</button>
         <button type="button" role="tab" id="button-tab-a11y" class="tab tab-line" aria-selected="false" aria-controls="button-panel-a11y">アクセシビリティ</button>
       </div>
 
@@ -200,6 +201,10 @@
       </div>
 
       <!-- usage:auto:button -->
+      </div><!-- /#button-panel-overview -->
+
+      <!-- ===== Guideline panel ===== -->
+      <div id="button-panel-guideline" role="tabpanel" aria-labelledby="button-tab-guideline" hidden>
 
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">
@@ -280,7 +285,7 @@
           </div>
         </div>
       </div>
-      </div><!-- /#button-panel-overview -->
+      </div><!-- /#button-panel-guideline -->
 
       <!-- ===== Accessibility panel ===== -->
       <div id="button-panel-a11y" role="tabpanel" aria-labelledby="button-tab-a11y" hidden>
