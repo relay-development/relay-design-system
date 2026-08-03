@@ -5,6 +5,15 @@
         <span class="badge badge-soft-primary">component</span>
       </div>
             <p class="typo-article text-fg-high mb-6">入力欄の上に置く「項目名 ＋ 必須/任意などのバッジ ＋ 補足説明」のセットです。</p>
+
+      <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
+      <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="ラベルコントロールのドキュメント" class="tabs tabs-line mb-8">
+        <button type="button" role="tab" id="label-control-tab-overview" class="tab tab-line" aria-selected="true" aria-controls="label-control-panel-overview">概要</button>
+        <button type="button" role="tab" id="label-control-tab-guideline" class="tab tab-line" aria-selected="false" aria-controls="label-control-panel-guideline">ガイドライン</button>
+        <button type="button" role="tab" id="label-control-tab-a11y" class="tab tab-line" aria-selected="false" aria-controls="label-control-panel-a11y">アクセシビリティ</button>
+      </div>
+
+      <div id="label-control-panel-overview" role="tabpanel" aria-labelledby="label-control-tab-overview">
       <!-- Size comparison -->
       <div class="card mb-6">
         <div class="card-header">
@@ -117,7 +126,192 @@
         </div>
       </div>
 
-      <!-- usage:auto:label-control -->
+      <!-- func:auto:label-control -->
+      </div><!-- /#label-control-panel-overview -->
+
+      <!-- ===== Guideline panel ===== -->
+      <div id="label-control-panel-guideline" role="tabpanel" aria-labelledby="label-control-tab-guideline" hidden>
+
+      <!-- 使用法（テキスト・MCP ヘッダ正本と同期） -->
+      <!-- guide:auto:label-control -->
+
+      <!-- Demo: 必須・任意はバッジで明示 -->
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">必須・任意はバッジで明示</h3>
+            <span class="typo-xsmall text-fg-low">入力可否の手がかり</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="label-control mb-4">
+              <div class="label-control-row"><span class="label-control-text">電話番号</span><span class="label-badge label-badge-required">必須</span></div>
+            </div>
+            <p class="typo-small text-fg-middle">必須・任意をバッジ＋テキストで示す。色だけに頼らず、どの欄が必須か一目で分かる。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;div class="label-control-row"&gt;
+  &lt;label class="label-control-text"&gt;電話番号&lt;/label&gt;
+  [[&lt;span class="label-badge label-badge-required"&gt;必須&lt;/span&gt;]]
+&lt;/div&gt;</pre>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="label-control mb-4">
+              <div class="label-control-row"><span class="label-control-text">電話番号</span></div>
+            </div>
+            <p class="typo-small text-fg-middle">バッジが無いと必須か任意か分からない。「＊」の色や記号だけで示さない。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;div class="label-control-row"&gt;
+  &lt;label class="label-control-text"&gt;電話番号&lt;/label&gt;  &lt;!-- [[必須/任意 不明]] --&gt;
+&lt;/div&gt;</pre>
+          </div>
+        </div>
+      </div>
+      </div><!-- /#label-control-panel-guideline -->
+
+      <!-- ===== Accessibility panel ===== -->
+      <div id="label-control-panel-a11y" role="tabpanel" aria-labelledby="label-control-tab-a11y" hidden>
+
+        <div class="alert alert-info mb-8">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <div class="alert-content">
+            <p class="alert-title">ラベルコントロールのアクセシビリティ</p>
+            <p class="alert-body">ラベルコントロールは「項目名＋バッジ＋補足」の見た目を提供します。<strong>入力欄との関連付け</strong>（<code class="typo-xsmall">for</code>／<code class="typo-xsmall">id</code>・<code class="typo-xsmall">aria-describedby</code>）はプロダクト側で必ず行います。WCAG 2.2 全基準は <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティ</span></a> ページを参照。</p>
+          </div>
+        </div>
+
+        <!-- 1. 期待される配慮 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">期待される配慮</h3>
+            <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">必須・任意・非公開などはバッジ＋テキストで示し、色だけに頼らない。補足はサポートテキストで明示する。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">ラベル・バッジ・補足は rem / トークンで拡大に追従し、折り返しても崩れない。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle">ラベルを入力欄と関連付けると、ラベルのクリックで入力欄にフォーカスできる。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle"><code class="typo-xsmall">&lt;label for&gt;</code>／<code class="typo-xsmall">id</code> で名前を、サポート文は <code class="typo-xsmall">aria-describedby</code> で説明を、必須は <code class="typo-xsmall">required</code> で状態を入力欄に結び付ける。</p></div>
+          </div>
+        </div>
+
+        <!-- 2. DS が担保する機能 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">DS が担保する機能</h3>
+            <p class="card-subtitle">追加実装なしで満たされる</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>必須／任意／編集不可／非公開／入力サポートの各バッジは<strong>テキスト入り</strong>で、色だけに依存しない</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>ラベル・バッジ・補足のコントラストを <code class="typo-xsmall">fg</code> ロールで確保</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>サポートテキスト（<code class="typo-xsmall">label-control-support</code>）の下地を提供</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 実装時の必須対応 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">実装時の必須対応</h3>
+            <p class="card-subtitle">プロダクト側で担保する</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">label-control-text</code> を <code class="typo-xsmall">&lt;label for&gt;</code> にして入力欄の <code class="typo-xsmall">id</code> と結び付ける</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>サポート文に <code class="typo-xsmall">id</code> を付け、入力欄の <code class="typo-xsmall">aria-describedby</code> で参照する</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>必須は <code class="typo-xsmall">label-badge-required</code>（視覚）＋入力欄の <code class="typo-xsmall">required</code>（プログラム的）を両方付ける</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>1 つのラベルは 1 つの入力欄に対応させる（複数欄をまとめるなら <code class="typo-xsmall">fieldset/legend</code>）</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. テスト方法 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">テスト方法</h3>
+            <p class="card-subtitle">キーボード / スクリーンリーダー / 自動チェック</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">操作</span><span>ラベルのテキストをクリックすると対応する入力欄にフォーカスが移る</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>入力欄で「ラベル名、必須、サポート文」がまとめて読まれる</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">自動</span><span>axe / Lighthouse で label 関連付け・<code class="typo-xsmall">aria-describedby</code> の参照先・コントラストを確認</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Demo: ラベルと入力欄を関連付ける -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">ラベルと入力欄を <code class="typo-xsmall">for</code>／<code class="typo-xsmall">id</code> で関連付ける</h3>
+              <span class="typo-xsmall text-fg-low">情報と関係性 — WCAG 1.3.1 / 3.3.2</span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="space-y-2 mb-4">
+                <div class="label-control">
+                  <div class="label-control-row"><label class="label-control-text" for="lc-a-email">メールアドレス</label><span class="label-badge label-badge-required">必須</span></div>
+                  <p class="label-control-support" id="lc-a-sup">ログインに使用します</p>
+                </div>
+                <input id="lc-a-email" type="email" class="input" placeholder="you@example.com" required aria-describedby="lc-a-sup" />
+              </div>
+              <p class="typo-small text-fg-middle"><code class="typo-xsmall">label for</code>／<code class="typo-xsmall">id</code> で名前を、補足は <code class="typo-xsmall">aria-describedby</code> で、必須は <code class="typo-xsmall">required</code> で結び付ける。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;label class="label-control-text" [[for="email"]]&gt;メールアドレス&lt;/label&gt;
+&lt;p class="label-control-support" [[id="sup"]]&gt;ログインに使用します&lt;/p&gt;
+&lt;input [[id="email"]] type="email" [[required aria-describedby="sup"]] /&gt;</pre>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="space-y-2 mb-4">
+                <div class="label-control">
+                  <div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div>
+                  <p class="label-control-support">ログインに使用します</p>
+                </div>
+                <input type="email" class="input" placeholder="you@example.com" />
+              </div>
+              <p class="typo-small text-fg-middle">見た目だけで関連付けない。<code class="typo-xsmall">for</code>／<code class="typo-xsmall">id</code> が無いと名前も補足も必須も入力欄に伝わらない。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;span class="label-control-text"&gt;メールアドレス&lt;/span&gt;  &lt;!-- [[for なし]] --&gt;
+&lt;input type="email" class="input" /&gt;  &lt;!-- [[id/aria/required なし]] --&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 関連する達成基準 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">関連する達成基準（WCAG 2.2）</h3>
+          </div>
+          <div class="card-body">
+            <p class="typo-small text-fg-low leading-7">
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.1 情報及び関係性</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#labels-or-instructions" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.2 ラベル又は説明文</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#use-of-color" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.1 色の使用</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.2 名前・役割・値</span></a>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /#label-control-panel-a11y -->
+
     </section>
   </main>
 
