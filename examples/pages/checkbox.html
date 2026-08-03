@@ -340,6 +340,86 @@
           </div>
         </div>
 
+        <!-- ===== Accessibility — visual Good/Don't demos ===== -->
+        <!-- Demo: エラーは色だけに頼らない -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">エラーは色だけに頼らない</h3>
+              <span class="typo-xsmall text-fg-low">色の使用 — WCAG 1.4.1 / 3.3.1</span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="flex flex-col gap-1 mb-4">
+                <label class="checkbox-label"><input type="checkbox" class="checkbox checkbox-error" aria-invalid="true" aria-describedby="cb-a11y-err" />利用規約に同意する</label>
+                <p id="cb-a11y-err" class="flex items-center gap-1 typo-xsmall text-negative-600"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>同意が必要です</p>
+              </div>
+              <p class="typo-small text-fg-middle">境界色に加えエラーテキストを <code class="typo-xsmall">aria-describedby</code> で関連付ける。色を認識できなくても理由が伝わる。</p>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="mb-4"><label class="checkbox-label"><input type="checkbox" class="checkbox checkbox-error" />利用規約に同意する</label></div>
+              <p class="typo-small text-fg-middle">赤い境界線だけでは、色を区別できない人にエラーだと伝わらない。</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demo: グループには見出し（fieldset / legend） -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">グループには見出し（<code class="typo-xsmall">fieldset</code> / <code class="typo-xsmall">legend</code>）</h3>
+              <span class="typo-xsmall text-fg-low">情報と関係性 — WCAG 1.3.1</span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <fieldset class="border-0 p-0 m-0 mb-4">
+                <legend class="typo-small font-semibold text-fg-high mb-2 p-0">通知の受け取り方</legend>
+                <div class="flex flex-col gap-2">
+                  <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />メール</label>
+                  <label class="checkbox-label"><input type="checkbox" class="checkbox" />SMS</label>
+                </div>
+              </fieldset>
+              <p class="typo-small text-fg-middle"><code class="typo-xsmall">fieldset</code> ＋ <code class="typo-xsmall">legend</code> でグループ名を与えると、SR が各項目を「通知の受け取り方」の一部として読む。</p>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="mb-4">
+                <p class="typo-small font-semibold text-fg-high mb-2">通知の受け取り方</p>
+                <div class="flex flex-col gap-2">
+                  <label class="checkbox-label"><input type="checkbox" class="checkbox" checked />メール</label>
+                  <label class="checkbox-label"><input type="checkbox" class="checkbox" />SMS</label>
+                </div>
+              </div>
+              <p class="typo-small text-fg-middle">見出しを <code class="typo-xsmall">&lt;p&gt;</code> で置くだけでは、SR 上でグループとして関連付かない。</p>
+            </div>
+          </div>
+        </div>
+
         <!-- 関連する達成基準 -->
         <div class="card">
           <div class="card-header">
