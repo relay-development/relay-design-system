@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.22.0",
+      "date": "2026-08-03",
+      "title": "アクセシビリティを MCP に公開＋フォーカスリング修正",
+      "summary": "AI 生成向けに、MCP へアクセシビリティ情報を追加しました。新ツール get_accessibility が WCAG 2.2 のチェックリスト（DS が担保する範囲・プロダクト側で必須の実装）を返し、get_component は各コンポーネントの「アクセシビリティ（実装時の必須対応）」を返します。あわせてカタログの全コンポーネントページを 概要 / ガイドライン / アクセシビリティ の 3 タブ構成に統一。ボタン系（button / icon-button / alert / filter-chip / search-input）でキーボードフォーカスリングが表示されない不具合も修正しました（Tailwind v4 対応）。"
+    },
+    {
       "version": "0.21.0",
       "date": "2026-07-29",
       "title": "リモート MCP サーバーの新仕様(2026-07-28)両対応",
