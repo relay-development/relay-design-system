@@ -200,11 +200,89 @@
         </div>
       </div>
 
-      <!-- usage:auto:button -->
+      <!-- func:auto:button -->
       </div><!-- /#button-panel-overview -->
 
       <!-- ===== Guideline panel ===== -->
       <div id="button-panel-guideline" role="tabpanel" aria-labelledby="button-tab-guideline" hidden>
+
+      <!-- 使用法（テキスト・MCP ヘッダ正本と同期） -->
+      <!-- guide:auto:button -->
+
+      <!-- ===== Usage — visual Good/Don't demos ===== -->
+      <!-- Demo: 破壊的操作は negative -->
+      <div class="card mb-4 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">破壊的操作は <code class="typo-xsmall">btn-negative</code></h3>
+            <span class="typo-xsmall text-fg-low">色でも危険を伝える</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <button type="button" class="btn btn-md btn-neutral btn-ghost">キャンセル</button>
+              <button type="button" class="btn btn-md btn-negative btn-solid">削除する</button>
+            </div>
+            <p class="typo-small text-fg-middle">削除など取り消せない操作は <code class="typo-xsmall">btn-negative</code>。色で危険を示す。</p>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <button type="button" class="btn btn-md btn-neutral btn-ghost">キャンセル</button>
+              <button type="button" class="btn btn-md btn-primary btn-solid">削除する</button>
+            </div>
+            <p class="typo-small text-fg-middle">削除を primary にすると通常操作と区別できず、誤操作を招く。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo: 遷移は link -->
+      <div class="card mb-4 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">ページ遷移は <code class="typo-xsmall">link</code>（btn でスタイルしない）</h3>
+            <span class="typo-xsmall text-fg-low">要素の役割を合わせる</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <a class="link" href="#"><span class="link-label">詳細ページを見る</span></a>
+            </div>
+            <p class="typo-small text-fg-middle">遷移は <code class="typo-xsmall">link</code>。SR に「リンク」と伝わり、新規タブ・右クリックも効く。</p>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <button type="button" class="btn btn-md btn-neutral btn-outline">詳細ページを見る</button>
+            </div>
+            <p class="typo-small text-fg-middle">遷移を <code class="typo-xsmall">btn</code> でスタイルしない。役割が「ボタン」になり遷移手段が壊れる。</p>
+          </div>
+        </div>
+      </div>
 
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">

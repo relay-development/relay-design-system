@@ -38,14 +38,10 @@ try {
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
-/** Render the 機能 card + 使用法 card for a component (separate cards), or "". */
-function renderUsageCard(c) {
-  if (!c || (!c.function && !c.usage)) return "";
-  const cards = [];
-
-  // 機能 card — what the component is for.
-  if (c.function) {
-    cards.push(`      <div class="card mb-8">
+/** 機能 card — what the component is for. Returns card HTML or "". */
+function renderFuncCard(c) {
+  if (!c?.function) return "";
+  return `      <div class="card mb-8">
         <div class="card-header">
           <h3 class="card-title">機能</h3>
           <p class="card-subtitle">このコンポーネントの用途</p>
@@ -53,14 +49,15 @@ function renderUsageCard(c) {
         <div class="card-body">
           <p class="typo-article text-fg-high">${esc(c.function).replace(/\n/g, "<br>")}</p>
         </div>
-      </div>`);
-  }
+      </div>`;
+}
 
-  // 使用法 card — OK / NG patterns side by side.
+/** 使用法 card — OK / NG patterns side by side. Returns card HTML or "". */
+function renderGuideCard(c) {
   const li = (mark, cls, t) =>
     `              <li class="flex gap-2"><span class="${cls} shrink-0 font-bold">${mark}</span><span>${esc(t)}</span></li>`;
-  const ok = (c.usage?.ok || []).map((t) => li("✓", "text-success-700", t)).join("\n");
-  const ng = (c.usage?.ng || []).map((t) => li("✕", "text-negative-600", t)).join("\n");
+  const ok = (c?.usage?.ok || []).map((t) => li("✓", "text-success-700", t)).join("\n");
+  const ng = (c?.usage?.ng || []).map((t) => li("✕", "text-negative-600", t)).join("\n");
   const okBlock = ok
     ? `            <div class="p-5">
               <p class="typo-medium font-bold text-success-700 mb-3">OK</p>
@@ -77,8 +74,8 @@ ${ng}
               </ul>
             </div>`
     : "";
-  if (okBlock || ngBlock) {
-    cards.push(`      <div class="card overflow-hidden mb-8">
+  if (!okBlock && !ngBlock) return "";
+  return `      <div class="card overflow-hidden mb-8">
         <div class="card-header">
           <h3 class="card-title">使用法</h3>
           <p class="card-subtitle">推奨される使い方と、やりがちな NG パターン</p>
@@ -86,21 +83,39 @@ ${ng}
         <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
 ${[okBlock, ngBlock].filter(Boolean).join("\n")}
         </div>
-      </div>`);
-  }
+      </div>`;
+}
 
-  // 直前要素に下マージンが無いページ（badge / card 等）でも一定の間隔を保つため、
-  // 先頭カードに mt-8 を付ける。直前が mb-8 のページでは隣接マージンが相殺され 32px のまま。
-  if (cards.length) cards[0] = cards[0].replace('<div class="card', '<div class="card mt-8');
+// 直前要素に下マージンが無いページ（badge / card 等）でも一定の間隔を保つため、
+// 注入の先頭カードに mt-8 を付ける。直前が mb-8 のページでは隣接マージンが相殺され 32px のまま。
+const withTopMargin = (html) =>
+  html ? html.replace('<div class="card', '<div class="card mt-8') : "";
 
+/** Render the 機能 card + 使用法 card for a component (separate cards), or "". */
+function renderUsageCard(c) {
+  if (!c || (!c.function && !c.usage)) return "";
+  const cards = [renderFuncCard(c), renderGuideCard(c)].filter(Boolean);
+  if (cards.length) cards[0] = withTopMargin(cards[0]);
   return cards.join("\n");
 }
 
-/** Replace every `<!-- usage:auto:<name> -->` marker with the rendered card. */
+/**
+ * Replace injection markers with rendered cards:
+ *   `<!-- usage:auto:<name> -->` → 機能 + 使用法（既存・両方）
+ *   `<!-- func:auto:<name> -->`  → 機能のみ
+ *   `<!-- guide:auto:<name> -->` → 使用法のみ
+ */
 function injectUsage(content) {
-  return content.replace(/<!-- usage:auto:([\w-]+) -->/g, (_, name) =>
-    renderUsageCard(mcpComponents.get(name)),
-  );
+  return content
+    .replace(/<!-- usage:auto:([\w-]+) -->/g, (_, name) =>
+      renderUsageCard(mcpComponents.get(name)),
+    )
+    .replace(/<!-- func:auto:([\w-]+) -->/g, (_, name) =>
+      withTopMargin(renderFuncCard(mcpComponents.get(name))),
+    )
+    .replace(/<!-- guide:auto:([\w-]+) -->/g, (_, name) =>
+      withTopMargin(renderGuideCard(mcpComponents.get(name))),
+    );
 }
 
 // ── リリースログ auto-injection ──────────────────────────────────────────────
