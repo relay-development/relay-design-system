@@ -119,22 +119,6 @@
           </div>
         </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <!-- Don't: horizontal -->
-            <div class="p-6 bg-negative-50">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
-                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
-                </span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <div class="flex flex-wrap items-center gap-6 mb-4">
-                <label class="radio-label"><input type="radio" name="ng-r" class="radio" checked />選択肢A</label>
-                <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢B</label>
-                <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢C</label>
-                <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢D</label>
-              </div>
-              <p class="typo-small text-fg-middle">ラジオボタンを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなり、選択肢の追加・改行で崩れやすくなります。</p>
-            </div>
             <!-- Good: vertical -->
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -150,6 +134,22 @@
                 <label class="radio-label"><input type="radio" name="ok-r" class="radio" />選択肢D</label>
               </div>
               <p class="typo-small text-fg-middle">ラジオボタンは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
+            </div>
+            <!-- Don't: horizontal -->
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-6 mb-4">
+                <label class="radio-label"><input type="radio" name="ng-r" class="radio" checked />選択肢A</label>
+                <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢B</label>
+                <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢C</label>
+                <label class="radio-label"><input type="radio" name="ng-r" class="radio" />選択肢D</label>
+              </div>
+              <p class="typo-small text-fg-middle">ラジオボタンを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなり、選択肢の追加・改行で崩れやすくなります。</p>
             </div>
           </div>
       </div>

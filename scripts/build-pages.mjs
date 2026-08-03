@@ -70,7 +70,7 @@ ${ok}
             </div>`
     : "";
   const ngBlock = ng
-    ? `            <div class="p-5 bg-negative-50">
+    ? `            <div class="p-5">
               <p class="typo-medium font-bold text-negative-600 mb-3">NG</p>
               <ul class="typo-small text-fg-middle space-y-2">
 ${ng}

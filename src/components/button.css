@@ -20,6 +20,8 @@
  *   NG: 1 画面に btn-primary を複数置かない → 主従が伝わらない。副次は neutral/ghost。
  *   NG: 色を #hex 直書きしない → btn-primary 等のクラスで色は決まる。
  *   NG: アイコンだけのボタンに btn を使わない → アイコン単体は icon-btn（アイコンボタン）に aria-label を付ける。
+ *   NG: リストの各行に「削除」等の同ラベル btn を並べたまま放置しない
+ *       → 対象を <span class="sr-only">（りんご）</span> で後置し、アクセシブル名を一意にする。
  *
  * Usage:
  *   <button class="btn btn-md btn-primary btn-solid">ボタン</button>
