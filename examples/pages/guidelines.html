@@ -16,19 +16,6 @@
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">複数選択なのに ◯ を使う</p>
-              <div class="flex flex-col gap-2 mb-4">
-                <label class="radio-label"><input type="radio" name="dont-shape" class="radio" checked />メール</label>
-                <label class="radio-label"><input type="radio" name="dont-shape" class="radio" />SMS</label>
-                <label class="radio-label"><input type="radio" name="dont-shape" class="radio" />プッシュ</label>
-              </div>
-              <p class="typo-small text-fg-middle">形状を入れ替えたり独自シェイプにすると、何個選べるのか直感的に判断できなくなる。</p>
-            </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
                 <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
@@ -40,6 +27,19 @@
               </div>
               <p class="typo-small text-fg-middle">形状で「複数選択可」「単一選択」が一目でわかる。標準を守ることが最大の親切。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">複数選択なのに ◯ を使う</p>
+              <div class="flex flex-col gap-2 mb-4">
+                <label class="radio-label"><input type="radio" name="dont-shape" class="radio" checked />メール</label>
+                <label class="radio-label"><input type="radio" name="dont-shape" class="radio" />SMS</label>
+                <label class="radio-label"><input type="radio" name="dont-shape" class="radio" />プッシュ</label>
+              </div>
+              <p class="typo-small text-fg-middle">形状を入れ替えたり独自シェイプにすると、何個選べるのか直感的に判断できなくなる。</p>
+            </div>
           </div>
         </div>
 
@@ -49,20 +49,6 @@
             <h3 class="card-title">グループを見出しで区切る</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">見出し無しで複数グループを並列に</p>
-              <div class="flex flex-col gap-2 mb-4">
-                <label class="radio-label"><input type="radio" name="dont-grp" class="radio" checked />通常配送</label>
-                <label class="radio-label"><input type="radio" name="dont-grp" class="radio" />お急ぎ便</label>
-                <label class="radio-label"><input type="radio" name="dont-grp2" class="radio" checked />クレジットカード</label>
-                <label class="radio-label"><input type="radio" name="dont-grp2" class="radio" />代引き</label>
-              </div>
-              <p class="typo-small text-fg-middle">どこまでが 1 グループか判別できず、誤選択や混乱の原因に。</p>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
@@ -87,6 +73,20 @@
               </div>
               <p class="typo-small text-fg-middle"><code class="typo-xsmall">fieldset/legend</code> や Label Control で囲い、別グループは余白で離す。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">見出し無しで複数グループを並列に</p>
+              <div class="flex flex-col gap-2 mb-4">
+                <label class="radio-label"><input type="radio" name="dont-grp" class="radio" checked />通常配送</label>
+                <label class="radio-label"><input type="radio" name="dont-grp" class="radio" />お急ぎ便</label>
+                <label class="radio-label"><input type="radio" name="dont-grp2" class="radio" checked />クレジットカード</label>
+                <label class="radio-label"><input type="radio" name="dont-grp2" class="radio" />代引き</label>
+              </div>
+              <p class="typo-small text-fg-middle">どこまでが 1 グループか判別できず、誤選択や混乱の原因に。</p>
+            </div>
           </div>
         </div>
 
@@ -99,18 +99,6 @@
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">否定形のラベルで二重否定が発生</p>
-              <div class="flex flex-col gap-2 mb-4">
-                <label class="checkbox-label"><input type="checkbox" class="checkbox" />メール通知を受け取らない</label>
-                <label class="checkbox-label"><input type="checkbox" class="checkbox" />マーケティング配信を停止しない</label>
-              </div>
-              <p class="typo-small text-fg-middle">「チェックする = 受け取らない」のような二重否定はユーザを混乱させる。</p>
-            </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
                 <span class="typo-medium font-bold text-success-700">Good</span>
               </div>
@@ -121,6 +109,18 @@
               </div>
               <p class="typo-small text-fg-middle">チェック = 効く側に意味を寄せる。結果が明快になる。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">否定形のラベルで二重否定が発生</p>
+              <div class="flex flex-col gap-2 mb-4">
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />メール通知を受け取らない</label>
+                <label class="checkbox-label"><input type="checkbox" class="checkbox" />マーケティング配信を停止しない</label>
+              </div>
+              <p class="typo-small text-fg-middle">「チェックする = 受け取らない」のような二重否定はユーザを混乱させる。</p>
+            </div>
           </div>
         </div>
 
@@ -130,19 +130,6 @@
             <h3 class="card-title">少数の選択肢は radio で並べる</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">3 個の選択肢を dropdown に隠す</p>
-              <div class="mb-4">
-                <div class="selector selector-md">
-                  <select class="selector-field"><option value="">配送方法を選択</option><option value="std">通常配送</option><option value="exp">お急ぎ便</option><option value="bulk">まとめ便</option></select>
-                </div>
-              </div>
-              <p class="typo-small text-fg-middle">クリックして開くまで選択肢が見えず、比較もしづらい。</p>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
@@ -156,6 +143,19 @@
               </fieldset>
               <p class="typo-small text-fg-middle">全選択肢が同時に見え、クリック数も減る。8 個以上ならドロップダウンを検討。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">3 個の選択肢を dropdown に隠す</p>
+              <div class="mb-4">
+                <div class="selector selector-md">
+                  <select class="selector-field"><option value="">配送方法を選択</option><option value="std">通常配送</option><option value="exp">お急ぎ便</option><option value="bulk">まとめ便</option></select>
+                </div>
+              </div>
+              <p class="typo-small text-fg-middle">クリックして開くまで選択肢が見えず、比較もしづらい。</p>
+            </div>
           </div>
         </div>
 
@@ -165,19 +165,6 @@
             <h3 class="card-title">安全な初期値を選択しておく</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">何も選択されていない初期状態</p>
-              <fieldset class="radio-group mb-4">
-                <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />標準プラン</label>
-                <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />詳細プラン</label>
-                <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />カスタム</label>
-              </fieldset>
-              <p class="typo-small text-fg-middle">「常に 1 つ選ばれている」という radio の規約を破ってしまう。</p>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
@@ -191,6 +178,19 @@
               </fieldset>
               <p class="typo-small text-fg-middle">ユーザの 80% が選ぶ値をデフォルトに。空状態が必要ならトグル等を検討。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">何も選択されていない初期状態</p>
+              <fieldset class="radio-group mb-4">
+                <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />標準プラン</label>
+                <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />詳細プラン</label>
+                <label class="radio-label"><input type="radio" name="g6-bad" class="radio" />カスタム</label>
+              </fieldset>
+              <p class="typo-small text-fg-middle">「常に 1 つ選ばれている」という radio の規約を破ってしまう。</p>
+            </div>
           </div>
         </div>
 
@@ -200,19 +200,6 @@
             <h3 class="card-title">「その他」を用意する</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">想定したケースだけで網羅性が低い</p>
-              <fieldset class="radio-group mb-4">
-                <label class="radio-label"><input type="radio" name="g7-bad" class="radio" checked />SNS</label>
-                <label class="radio-label"><input type="radio" name="g7-bad" class="radio" />検索エンジン</label>
-                <label class="radio-label"><input type="radio" name="g7-bad" class="radio" />友人の紹介</label>
-              </fieldset>
-              <p class="typo-small text-fg-middle">該当なしのユーザは適当な選択肢を選ぶしかなく、データが歪む。</p>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
@@ -227,6 +214,19 @@
               </fieldset>
               <p class="typo-small text-fg-middle">「その他」選択時は自由入力欄を表示するとデータの質も上がる。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">想定したケースだけで網羅性が低い</p>
+              <fieldset class="radio-group mb-4">
+                <label class="radio-label"><input type="radio" name="g7-bad" class="radio" checked />SNS</label>
+                <label class="radio-label"><input type="radio" name="g7-bad" class="radio" />検索エンジン</label>
+                <label class="radio-label"><input type="radio" name="g7-bad" class="radio" />友人の紹介</label>
+              </fieldset>
+              <p class="typo-small text-fg-middle">該当なしのユーザは適当な選択肢を選ぶしかなく、データが歪む。</p>
+            </div>
           </div>
         </div>
 
@@ -236,6 +236,15 @@
             <h3 class="card-title">ラベル全体をクリック可能にする</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <p class="font-semibold mb-3"><code class="typo-xsmall">&lt;label&gt;</code> でラップ</p>
+              <div class="mb-4"><label class="checkbox-label"><input type="checkbox" class="checkbox" />利用規約に同意する</label></div>
+              <p class="typo-small text-fg-middle">テキスト部分をクリックしても切り替わる。<code class="typo-xsmall">.checkbox-label</code> / <code class="typo-xsmall">.radio-label</code> で本デザインシステムは自動対応。</p>
+            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
@@ -248,15 +257,6 @@
               </div>
               <p class="typo-small text-fg-middle">小さな box しかクリックターゲットがなく、フィッツの法則を無視。スマホで特に押しにくい。</p>
             </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-success-700">Good</span>
-              </div>
-              <p class="font-semibold mb-3"><code class="typo-xsmall">&lt;label&gt;</code> でラップ</p>
-              <div class="mb-4"><label class="checkbox-label"><input type="checkbox" class="checkbox" />利用規約に同意する</label></div>
-              <p class="typo-small text-fg-middle">テキスト部分をクリックしても切り替わる。<code class="typo-xsmall">.checkbox-label</code> / <code class="typo-xsmall">.radio-label</code> で本デザインシステムは自動対応。</p>
-            </div>
           </div>
         </div>
 
@@ -266,16 +266,6 @@
             <h3 class="card-title">アクセスキーを提供する</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">input だけ、ラベル関連なし</p>
-              <pre class="text-[11px] font-mono bg-white border border-stroke-low rounded-sm p-3 leading-5 text-fg-middle overflow-x-auto mb-4"><code>&lt;input type="checkbox"&gt;
-&lt;span&gt;Mail&lt;/span&gt;</code></pre>
-              <p class="typo-small text-fg-middle">スクリーンリーダーが選択肢名を読み上げず、Tab で辿る順序も保証されない。</p>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
@@ -288,6 +278,16 @@
 &lt;/label&gt;</code></pre>
               <p class="typo-small text-fg-middle">キーボード操作と支援技術の両方に対応。Native input + <code class="typo-xsmall">&lt;label&gt;</code> でほぼ自動。</p>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">input だけ、ラベル関連なし</p>
+              <pre class="text-[11px] font-mono bg-white border border-stroke-low rounded-sm p-3 leading-5 text-fg-middle overflow-x-auto mb-4"><code>&lt;input type="checkbox"&gt;
+&lt;span&gt;Mail&lt;/span&gt;</code></pre>
+              <p class="typo-small text-fg-middle">スクリーンリーダーが選択肢名を読み上げず、Tab で辿る順序も保証されない。</p>
+            </div>
           </div>
         </div>
 
@@ -297,20 +297,6 @@
             <h3 class="card-title">即時実行せず確定ボタンを挟む</h3>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <p class="font-semibold mb-3">クリックで即フォーム送信</p>
-              <fieldset class="radio-group mb-4">
-                <label class="radio-label"><input type="radio" name="g10-bad" class="radio" checked />Free</label>
-                <label class="radio-label"><input type="radio" name="g10-bad" class="radio" />Pro</label>
-                <label class="radio-label"><input type="radio" name="g10-bad" class="radio" />Enterprise</label>
-              </fieldset>
-              <p class="typo-xsmall text-fg-low mb-4">(選択した瞬間に切替・送信)</p>
-              <p class="typo-small text-fg-middle">誤クリックがそのまま意図しないアクションに繋がり、取り消しが効かない。</p>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
@@ -324,6 +310,20 @@
               </fieldset>
               <button type="button" class="btn btn-sm btn-primary btn-solid mb-4">プランを変更する</button>
               <p class="typo-small text-fg-middle">設定変更だけにとどめ、画面遷移や送信は <strong>ボタン</strong> で。ユーザの意志を待つ。</p>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="font-semibold mb-3">クリックで即フォーム送信</p>
+              <fieldset class="radio-group mb-4">
+                <label class="radio-label"><input type="radio" name="g10-bad" class="radio" checked />Free</label>
+                <label class="radio-label"><input type="radio" name="g10-bad" class="radio" />Pro</label>
+                <label class="radio-label"><input type="radio" name="g10-bad" class="radio" />Enterprise</label>
+              </fieldset>
+              <p class="typo-xsmall text-fg-low mb-4">(選択した瞬間に切替・送信)</p>
+              <p class="typo-small text-fg-middle">誤クリックがそのまま意図しないアクションに繋がり、取り消しが効かない。</p>
             </div>
           </div>
         </div>

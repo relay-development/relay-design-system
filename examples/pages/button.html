@@ -212,20 +212,6 @@
             </div>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <!-- Don't -->
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
-                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
-                </span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <div class="flex items-center gap-3 mb-4">
-                <button type="button" class="btn btn-sm btn-primary btn-outline">キャンセル</button>
-                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
-              </div>
-              <p class="typo-small text-fg-middle">サイズが異なるボタンを隣り合わせで使用することは避けてください。</p>
-            </div>
             <!-- Good -->
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -240,15 +226,6 @@
               </div>
               <p class="typo-small text-fg-middle">並ぶボタンは同じサイズで揃え、ヒエラルキーは variant（solid / outline）で表現する。</p>
             </div>
-          </div>
-        </div>
-
-        <!-- Rule 2: don't combine two strong solids -->
-        <div class="card overflow-hidden">
-          <div class="card-header">
-            <h3 class="card-title">NG パターン — solid ボタンの並列</h3>
-          </div>
-          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <!-- Don't -->
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -258,11 +235,20 @@
                 <span class="typo-medium font-bold text-negative-600">Don't</span>
               </div>
               <div class="flex items-center gap-3 mb-4">
-                <button type="button" class="btn btn-md btn-secondary btn-solid">確認する</button>
+                <button type="button" class="btn btn-sm btn-primary btn-outline">キャンセル</button>
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
               </div>
-              <p class="typo-small text-fg-middle">塗りつぶしの色が異なる場合、2 つの solid ボタンを隣り合わせで使用することは避けてください。</p>
+              <p class="typo-small text-fg-middle">サイズが異なるボタンを隣り合わせで使用することは避けてください。</p>
             </div>
+          </div>
+        </div>
+
+        <!-- Rule 2: don't combine two strong solids -->
+        <div class="card overflow-hidden">
+          <div class="card-header">
+            <h3 class="card-title">NG パターン — solid ボタンの並列</h3>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <!-- Good -->
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -276,6 +262,20 @@
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
               </div>
               <p class="typo-small text-fg-middle">主アクション 1 つだけを solid にして強調し、副アクションは neutral / subtle で抑える。</p>
+            </div>
+            <!-- Don't -->
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="btn btn-md btn-secondary btn-solid">確認する</button>
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              </div>
+              <p class="typo-small text-fg-middle">塗りつぶしの色が異なる場合、2 つの solid ボタンを隣り合わせで使用することは避けてください。</p>
             </div>
           </div>
         </div>
@@ -304,23 +304,6 @@
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
-                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
-                </span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <div class="flex items-center gap-3 mb-4">
-                <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button>
-              </div>
-              <p class="typo-small text-fg-middle">アイコンだけで <code class="typo-xsmall">aria-label</code> が無い。</p>
-              <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">（名前なし・「ボタン」とだけ読まれる）</code></p>
-              <pre class="code-sample mt-3">
-<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"icon-btn …"</span><span class="tok-punc">&gt;</span>
-  <span class="tok-punc">&lt;</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>…<span class="tok-punc">&lt;/</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>
-<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- aria-label なし → 名前が読まれない --&gt;</span></pre>
-            </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
                 </span>
@@ -336,6 +319,23 @@
   <span class="tok-punc">&lt;</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>…<span class="tok-punc">&lt;/</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>
 <span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span></pre>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button>
+              </div>
+              <p class="typo-small text-fg-middle">アイコンだけで <code class="typo-xsmall">aria-label</code> が無い。</p>
+              <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">（名前なし・「ボタン」とだけ読まれる）</code></p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"icon-btn …"</span><span class="tok-punc">&gt;</span>
+  <span class="tok-punc">&lt;</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>…<span class="tok-punc">&lt;/</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>
+<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- aria-label なし → 名前が読まれない --&gt;</span></pre>
+            </div>
           </div>
         </div>
 
@@ -348,23 +348,6 @@
             </div>
           </div>
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
-                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
-                </span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <ul class="space-y-2 mb-4">
-                <li class="flex items-center justify-between gap-3"><span class="typo-small text-fg-high">りんご</span><button type="button" class="btn btn-sm btn-negative btn-ghost">削除</button></li>
-                <li class="flex items-center justify-between gap-3"><span class="typo-small text-fg-high">みかん</span><button type="button" class="btn btn-sm btn-negative btn-ghost">削除</button></li>
-                <li class="flex items-center justify-between gap-3"><span class="typo-small text-fg-high">ぶどう</span><button type="button" class="btn btn-sm btn-negative btn-ghost">削除</button></li>
-              </ul>
-              <p class="typo-small text-fg-middle">全ボタンが「削除」。どの行の削除か区別できない。</p>
-              <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">削除 / 削除 / 削除</code></p>
-              <pre class="code-sample mt-3">
-<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>削除<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- 各行すべて同じ名前 --&gt;</span></pre>
-            </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
@@ -382,6 +365,23 @@
               <pre class="code-sample mt-3">
 <span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>削除<mark><span class="tok-punc">&lt;</span><span class="tok-tag">span</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"sr-only"</span><span class="tok-punc">&gt;</span>（りんご）<span class="tok-punc">&lt;/</span><span class="tok-tag">span</span><span class="tok-punc">&gt;</span></mark><span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span></pre>
             </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <ul class="space-y-2 mb-4">
+                <li class="flex items-center justify-between gap-3"><span class="typo-small text-fg-high">りんご</span><button type="button" class="btn btn-sm btn-negative btn-ghost">削除</button></li>
+                <li class="flex items-center justify-between gap-3"><span class="typo-small text-fg-high">みかん</span><button type="button" class="btn btn-sm btn-negative btn-ghost">削除</button></li>
+                <li class="flex items-center justify-between gap-3"><span class="typo-small text-fg-high">ぶどう</span><button type="button" class="btn btn-sm btn-negative btn-ghost">削除</button></li>
+              </ul>
+              <p class="typo-small text-fg-middle">全ボタンが「削除」。どの行の削除か区別できない。</p>
+              <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">削除 / 削除 / 削除</code></p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>削除<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- 各行すべて同じ名前 --&gt;</span></pre>
+            </div>
           </div>
         </div>
 
@@ -396,20 +396,6 @@
           <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
-                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
-                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
-                </span>
-                <span class="typo-medium font-bold text-negative-600">Don't</span>
-              </div>
-              <div class="flex items-center gap-3 mb-4">
-                <button type="button" class="btn btn-md btn-primary btn-solid" aria-label="保存">保存</button>
-              </div>
-              <p class="typo-small text-fg-middle">可視テキストと同じ <code class="typo-xsmall">aria-label</code> は冗長。翻訳ズレの温床にもなる。</p>
-              <pre class="code-sample mt-3">
-<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span> <span class="tok-attr">aria-label</span><span class="tok-punc">=</span><span class="tok-str">"保存"</span><span class="tok-punc">&gt;</span>保存<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- 可視テキストと重複 --&gt;</span></pre>
-            </div>
-            <div class="p-6">
-              <div class="flex items-center gap-2 mb-4">
                 <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
                   <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
                 </span>
@@ -421,6 +407,20 @@
               <p class="typo-small text-fg-middle">可視テキストがそのままアクセシブルネームになる。<code class="typo-xsmall">aria-label</code> は不要。</p>
               <pre class="code-sample mt-3">
 <span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>保存<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span></pre>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                  <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+                </span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex items-center gap-3 mb-4">
+                <button type="button" class="btn btn-md btn-primary btn-solid" aria-label="保存">保存</button>
+              </div>
+              <p class="typo-small text-fg-middle">可視テキストと同じ <code class="typo-xsmall">aria-label</code> は冗長。翻訳ズレの温床にもなる。</p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span> <span class="tok-attr">aria-label</span><span class="tok-punc">=</span><span class="tok-str">"保存"</span><span class="tok-punc">&gt;</span>保存<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- 可視テキストと重複 --&gt;</span></pre>
             </div>
           </div>
         </div>
