@@ -63,6 +63,9 @@
               <span class="badge badge-soft-danger">却下</span>
             </div>
             <p class="typo-small text-fg-middle">ラベル文言で状態を伝える。色を認識できなくても意味が分かる。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;span class="badge badge-soft-success"&gt;[[承認済み]]&lt;/span&gt;
+&lt;span class="badge badge-soft-danger"&gt;[[却下]]&lt;/span&gt;</pre>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-4">
@@ -74,6 +77,9 @@
               <span class="badge badge-soft-danger">状態</span>
             </div>
             <p class="typo-small text-fg-middle">文言が同じで、意味の違いを色だけに委ねない。色が区別できないと差が伝わらない。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;span class="badge badge-soft-success"&gt;[[状態]]&lt;/span&gt;
+&lt;span class="badge badge-soft-danger"&gt;[[状態]]&lt;/span&gt;</pre>
           </div>
         </div>
       </div>
@@ -169,6 +175,9 @@
                 <button type="button" class="btn btn-sm btn-neutral btn-outline">未読を開く</button>
               </div>
               <p class="typo-small text-fg-middle">バッジは件数の表示だけを担い、操作は <code class="typo-xsmall">button</code> に持たせる。フォーカス・キーボード操作ができる。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;span class="badge badge-soft-info"&gt;3&lt;/span&gt;
+&lt;[[button]] type="button" class="btn btn-sm"&gt;未読を開く&lt;/button&gt;</pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -179,6 +188,8 @@
                 <span class="badge badge-soft-neutral" style="cursor: pointer;">絞り込み ✕</span>
               </div>
               <p class="typo-small text-fg-middle">バッジをクリック要素にしない。<code class="typo-xsmall">span</code> はフォーカスできず、キーボードや SR から操作できない。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;[[span]] class="badge badge-soft-neutral" onclick="…"&gt;絞り込み ✕&lt;/span&gt;</pre>
             </div>
           </div>
         </div>

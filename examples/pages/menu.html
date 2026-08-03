@@ -235,6 +235,9 @@
               <li><button type="button" class="menu-item"><svg class="icon"><use href="./icons.svg#lucide-x-circle"></use></svg>ログアウト（操作）</button></li>
             </ul></div>
             <p class="typo-small text-fg-middle">ページ遷移は <code class="typo-xsmall">&lt;a href&gt;</code>、その場の操作は <code class="typo-xsmall">&lt;button&gt;</code>。SR に役割が正しく伝わり、遷移は新規タブ・右クリックも効く。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;a class="menu-item" [[href="…"]]&gt;案件一覧&lt;/a&gt;
+&lt;[[button]] type="button" class="menu-item"&gt;ログアウト&lt;/button&gt;</pre>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-4">
@@ -246,6 +249,8 @@
               <li><button type="button" class="menu-item"><svg class="icon"><use href="./icons.svg#lucide-x-circle"></use></svg>ログアウト（操作）</button></li>
             </ul></div>
             <p class="typo-small text-fg-middle">遷移を <code class="typo-xsmall">button</code> にしない。役割が「ボタン」になり、遷移手段（新規タブ等）が失われる。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;[[button]] type="button" class="menu-item"&gt;案件一覧&lt;/button&gt;</pre>
           </div>
         </div>
       </div>
@@ -269,6 +274,9 @@
               <li><a class="menu-item" href="#menu"><svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>アカウント設定</a></li>
             </ul></div>
             <p class="typo-small text-fg-middle">同じグループは全項目にアイコンを付ける（または全て無し）。ラベル開始位置が揃い、走査しやすい。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;a class="menu-item"&gt;[[&lt;svg class="icon"&gt;…&lt;/svg&gt;]]マイページ&lt;/a&gt;
+&lt;a class="menu-item"&gt;[[&lt;svg class="icon"&gt;…&lt;/svg&gt;]]アカウント設定&lt;/a&gt;</pre>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-4">
@@ -280,6 +288,9 @@
               <li><a class="menu-item" href="#menu">アカウント設定</a></li>
             </ul></div>
             <p class="typo-small text-fg-middle">一部だけアイコンを付けると、ラベル開始位置がずれて視線が乱れる。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;a class="menu-item"&gt;&lt;svg class="icon"&gt;…&lt;/svg&gt;マイページ&lt;/a&gt;
+&lt;a class="menu-item"&gt;[[アカウント設定]]&lt;/a&gt;</pre>
           </div>
         </div>
       </div>
@@ -389,6 +400,8 @@
                 <li><a class="menu-item" href="#menu">アカウント設定</a></li>
               </ul></nav>
               <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-current="page"</code> を付けると、背景＋太字に加え SR が「現在のページ」と読む。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;a class="menu-item" [[aria-current="page"]]&gt;マイページ&lt;/a&gt;</pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -400,6 +413,8 @@
                 <li><a class="menu-item" href="#menu">アカウント設定</a></li>
               </ul></nav>
               <p class="typo-small text-fg-middle">見た目だけ現在地に似せて <code class="typo-xsmall">aria-current</code> を付けないと、SR には現在地が伝わらない。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;a class="menu-item" [[style="background:…;font-weight:700"]]&gt;マイページ&lt;/a&gt;</pre>
             </div>
           </div>
         </div>

@@ -178,6 +178,10 @@
             </div>
             <div class="mb-4"><label class="checkbox-label"><input type="checkbox" class="checkbox" checked />利用規約に同意する</label></div>
             <p class="typo-small text-fg-middle"><code class="typo-xsmall">&lt;label class="checkbox-label"&gt;</code> でテキストごと包む。文字クリックでも切替でき、名前も自動で結び付く。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;label class="checkbox-label"&gt;
+  [[&lt;input type="checkbox" class="checkbox" /&gt;]]利用規約に同意する
+&lt;/label&gt;</pre>
           </div>
           <div class="p-6">
             <div class="flex items-center gap-2 mb-4">
@@ -188,6 +192,9 @@
             </div>
             <div class="mb-4 flex items-center gap-2"><input type="checkbox" class="checkbox" checked /><span class="typo-small text-fg-high">利用規約に同意する</span></div>
             <p class="typo-small text-fg-middle">input とテキストを別要素で並べない。文字クリックで切替できず、名前も結び付かない。</p>
+            <pre class="code-sample mt-3" data-code>
+[[&lt;input type="checkbox" class="checkbox" /&gt;]]
+&lt;span&gt;利用規約に同意する&lt;/span&gt;</pre>
           </div>
         </div>
       </div>
@@ -216,6 +223,10 @@
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢D</label>
               </div>
               <p class="typo-small text-fg-middle">チェックボックスは縦並びで配置する。1 視線で全選択肢を上から下へ走査でき、選択肢が増えても自然に拡張できる。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;div class="flex [[flex-col]] gap-2"&gt;
+  &lt;label class="checkbox-label"&gt;…&lt;/label&gt;
+&lt;/div&gt;</pre>
             </div>
             <!-- Don't: horizontal -->
             <div class="p-6">
@@ -232,6 +243,10 @@
                 <label class="checkbox-label"><input type="checkbox" class="checkbox" />選択肢D</label>
               </div>
               <p class="typo-small text-fg-middle">チェックボックスを横並びで使用することは避けてください。視線が左右に飛び、選択肢同士のグルーピングが弱くなる上、選択肢の追加・改行で崩れやすくなります。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;div class="flex [[flex-wrap]] gap-6"&gt;
+  &lt;label class="checkbox-label"&gt;…&lt;/label&gt;
+&lt;/div&gt;</pre>
             </div>
           </div>
       </div>
@@ -362,6 +377,12 @@
                 <p id="cb-a11y-err" class="flex items-center gap-1 typo-xsmall text-negative-600"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>同意が必要です</p>
               </div>
               <p class="typo-small text-fg-middle">境界色に加えエラーテキストを <code class="typo-xsmall">aria-describedby</code> で関連付ける。色を認識できなくても理由が伝わる。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;label class="checkbox-label"&gt;
+  &lt;input class="checkbox checkbox-error"
+    [[aria-invalid="true" aria-describedby="err"]] /&gt;同意する
+&lt;/label&gt;
+&lt;p [[id="err"]]&gt;同意が必要です&lt;/p&gt;</pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -372,6 +393,10 @@
               </div>
               <div class="mb-4"><label class="checkbox-label"><input type="checkbox" class="checkbox checkbox-error" />利用規約に同意する</label></div>
               <p class="typo-small text-fg-middle">赤い境界線だけでは、色を区別できない人にエラーだと伝わらない。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;label class="checkbox-label"&gt;
+  &lt;input class="checkbox [[checkbox-error]]" /&gt;同意する
+&lt;/label&gt;</pre>
             </div>
           </div>
         </div>
@@ -400,6 +425,12 @@
                 </div>
               </fieldset>
               <p class="typo-small text-fg-middle"><code class="typo-xsmall">fieldset</code> ＋ <code class="typo-xsmall">legend</code> でグループ名を与えると、SR が各項目を「通知の受け取り方」の一部として読む。</p>
+              <pre class="code-sample mt-3" data-code>
+[[&lt;fieldset&gt;]]
+  [[&lt;legend&gt;通知の受け取り方&lt;/legend&gt;]]
+  &lt;label class="checkbox-label"&gt;…メール&lt;/label&gt;
+  &lt;label class="checkbox-label"&gt;…SMS&lt;/label&gt;
+&lt;/fieldset&gt;</pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -416,6 +447,10 @@
                 </div>
               </div>
               <p class="typo-small text-fg-middle">見出しを <code class="typo-xsmall">&lt;p&gt;</code> で置くだけでは、SR 上でグループとして関連付かない。</p>
+              <pre class="code-sample mt-3" data-code>
+[[&lt;p&gt;通知の受け取り方&lt;/p&gt;]]
+&lt;label class="checkbox-label"&gt;…メール&lt;/label&gt;
+&lt;label class="checkbox-label"&gt;…SMS&lt;/label&gt;</pre>
             </div>
           </div>
         </div>

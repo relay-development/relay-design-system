@@ -38,6 +38,72 @@ try {
 const esc = (s) =>
   String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
+// ── Code sample syntax highlighting ──────────────────────────────────────────
+// カタログの `<pre class="code-sample" data-code>…</pre>` を、ビルド時に
+// タグ / 属性 / 文字列 / 記号へトークン分割してハイライトする。中身は素の
+// （エスケープ済み）HTML スニペットを書くだけでよく、手で span を張らない。
+// `[[ … ]]` で囲んだ範囲は <mark>（要点ハイライト）になる。
+const decodeEntities = (s) =>
+  s
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&amp;/g, "&");
+
+function highlightHtmlSnippet(rawEscaped) {
+  const code = decodeEntities(rawEscaped);
+  const escText = (s) =>
+    s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  let out = "";
+  let i = 0;
+  const n = code.length;
+  while (i < n) {
+    if (code[i] === "<") {
+      let j = i + 1;
+      let slash = "";
+      if (code[j] === "/") { slash = "/"; j++; }
+      out += `<span class="tok-punc">&lt;${slash}</span>`;
+      let name = "";
+      while (j < n && /[a-zA-Z0-9-]/.test(code[j])) { name += code[j]; j++; }
+      if (name) out += `<span class="tok-tag">${name}</span>`;
+      while (j < n && code[j] !== ">") {
+        const ch = code[j];
+        if (/\s/.test(ch)) { out += ch; j++; continue; }
+        if (ch === "/") { out += `<span class="tok-punc">/</span>`; j++; continue; }
+        if (ch === "=") { out += `<span class="tok-punc">=</span>`; j++; continue; }
+        if (ch === '"' || ch === "'") {
+          let k = j + 1;
+          while (k < n && code[k] !== ch) k++;
+          out += `<span class="tok-str">${escText(code.slice(j, Math.min(k + 1, n)))}</span>`;
+          j = k < n ? k + 1 : n;
+          continue;
+        }
+        let attr = "";
+        while (j < n && /[a-zA-Z0-9:_-]/.test(code[j])) { attr += code[j]; j++; }
+        if (attr) { out += `<span class="tok-attr">${attr}</span>`; continue; }
+        out += escText(ch); j++;
+      }
+      if (code[j] === ">") { out += `<span class="tok-punc">&gt;</span>`; j++; }
+      i = j;
+    } else {
+      let t = "";
+      while (i < n && code[i] !== "<") { t += code[i]; i++; }
+      out += escText(t);
+    }
+  }
+  return out.replace(/\[\[/g, "<mark>").replace(/\]\]/g, "</mark>");
+}
+
+/** `<pre class="code-sample" data-code>…</pre>` の中身をハイライトして data-code を外す。 */
+function highlightCodeSamples(content) {
+  return content.replace(
+    /<pre ([^>]*?)\bdata-code\b\s*>([\s\S]*?)<\/pre>/g,
+    (_, attrs, inner) =>
+      `<pre ${attrs.trim()}>${highlightHtmlSnippet(inner)}</pre>`,
+  );
+}
+
 /** 機能 card — what the component is for. Returns card HTML or "". */
 function renderFuncCard(c) {
   if (!c?.function) return "";
@@ -368,7 +434,7 @@ function readFragment(file) {
 const all = [INDEX, ...PAGES];
 let written = 0;
 for (const p of all) {
-  const content = injectReleases(injectUsage(readFragment(p.file)));
+  const content = highlightCodeSamples(injectReleases(injectUsage(readFragment(p.file))));
   const html = render({ title: p.title, group: p.group, content, activeFile: p.file, desc: p.desc });
   writeFileSync(resolve(EXAMPLES, p.file), html, "utf8");
   written++;
