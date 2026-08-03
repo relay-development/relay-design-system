@@ -119,7 +119,7 @@ function renderFuncCard(c) {
 }
 
 /** 使用法 card — OK / NG patterns side by side. Returns card HTML or "". */
-function renderGuideCard(c) {
+function renderGuideCard(c, mb = "mb-8") {
   const li = (mark, cls, t) =>
     `              <li class="flex gap-2"><span class="${cls} shrink-0 font-bold">${mark}</span><span>${esc(t)}</span></li>`;
   const ok = (c?.usage?.ok || []).map((t) => li("✓", "text-success-700", t)).join("\n");
@@ -141,7 +141,7 @@ ${ng}
             </div>`
     : "";
   if (!okBlock && !ngBlock) return "";
-  return `      <div class="card overflow-hidden mb-8">
+  return `      <div class="card overflow-hidden ${mb}">
         <div class="card-header">
           <h3 class="card-title">使用法</h3>
           <p class="card-subtitle">推奨される使い方と、やりがちな NG パターン</p>
@@ -179,8 +179,10 @@ function injectUsage(content) {
     .replace(/<!-- func:auto:([\w-]+) -->/g, (_, name) =>
       withTopMargin(renderFuncCard(mcpComponents.get(name))),
     )
+    // guide:auto はガイドラインタブの先頭カード。隣接するデモカード（mb-4・
+    // 上マージンなし）と揃えるため、上マージンを付けず mb-4 で描画する。
     .replace(/<!-- guide:auto:([\w-]+) -->/g, (_, name) =>
-      withTopMargin(renderGuideCard(mcpComponents.get(name))),
+      renderGuideCard(mcpComponents.get(name), "mb-4"),
     );
 }
 
