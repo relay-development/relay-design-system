@@ -57,10 +57,18 @@
            rounded-sm
            cursor-pointer
            transition-colors duration-150
-           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+           focus:outline-none;
     width: 198px;
     padding: 8px;
     gap: 8px;
+  }
+  /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
+   * 描画されない問題への対処。生 CSS で outline-style を solid に固定） */
+  .filter-chip:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: 2px;
   }
 
   .filter-chip:hover:not(:disabled):not([aria-pressed="true"]),

@@ -40,8 +40,16 @@
            rounded-sm border border-transparent
            transition-colors duration-150
            focus:outline-none
-           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600
            disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+  /* キーボードフォーカスリング — 生 CSS で outline-style を確実に solid にする。
+   * Tailwind v4 では focus:outline-none が --tw-outline-style:none を立て、
+   * focus-visible:outline-2 では outline-style が none のまま描画されないため。 */
+  .btn:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: 2px;
   }
 
   /* ============================================================

@@ -73,7 +73,15 @@
            text-neutral-900
            opacity-30 hover:opacity-40
            transition-opacity duration-150
-           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+           focus:outline-none;
+  }
+  /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
+   * 描画されない問題への対処。生 CSS で outline-style を solid に固定） */
+  .alert-close:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: 2px;
   }
   .alert-close > svg { @apply w-5 h-5; }
 

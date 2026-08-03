@@ -147,7 +147,7 @@
     @apply shrink-0 inline-flex items-center justify-center
            bg-transparent border-0 cursor-pointer
            text-neutral-400 hover:text-neutral-500
-           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600
+           focus:outline-none
            rounded-full;
   }
   /* button hit area follows size scale */
@@ -178,8 +178,18 @@
            bg-primary-700 hover:bg-primary-800
            border-0 rounded-sm cursor-pointer
            transition-colors duration-150
-           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+           focus:outline-none;
   }
   .search-input-md .search-input-submit { @apply h-8 px-3 py-1 text-sm leading-6; }
   .search-input-lg .search-input-submit { @apply h-10 px-6 py-2 text-sm leading-6; }
+
+  /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
+   * 描画されない問題への対処。生 CSS で outline-style を solid に固定） */
+  .search-input-clear:focus-visible,
+  .search-input-submit:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: 2px;
+  }
 }
