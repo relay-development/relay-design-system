@@ -584,3 +584,14 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   border-radius: var(--radius-xs);
   padding: 0 2px;
 }
+
+/* ── Doc page tabs — baseline extends full width ─────────────────────────────
+ * コンポーネント本体の .tabs-line はコンテンツ幅（inline-flex）で、下線は各タブ
+ * の border-bottom のみ。カタログのドキュメントタブ（概要/ガイドライン/…、
+ * data-tab-param を持つ）は全幅化し、最後のタブより右側までベースラインを伸ばす。
+ * tab.html のコンポーネントデモ（data-tab-param なし）は従来どおり。 */
+.tabs-line[data-tab-param] {
+  display: flex;
+  width: 100%;
+  border-bottom: 1px solid var(--color-stroke-middle);
+}
