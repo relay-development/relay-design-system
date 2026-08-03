@@ -553,3 +553,34 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
    * 横スクロール側に逃がす */
   .status-grid { min-width: calc(var(--spacing) * 120); }   /* 480 */
 }
+
+/* ── Code sample — シンタックスハイライト付きコードブロック（カタログ専用） ──
+ * アクセシビリティ実演などで、実際の HTML マークアップを "コードエディター風" に
+ * 見せるための最小ハイライト。トークンは <span class="tok-*"> で手動付与する。
+ *   tok-tag  タグ名   / tok-attr 属性名 / tok-str 文字列値 / tok-punc 記号
+ *   tok-cmt  コメント（説明の吹き出し用） */
+.code-sample {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: var(--text-xs);
+  line-height: calc(var(--spacing) * 5);   /* 20px */
+  color: var(--color-fg-high);
+  background-color: var(--color-neutral-50);
+  border: 1px solid var(--color-stroke-low);
+  border-radius: var(--radius-md);
+  padding: calc(var(--spacing) * 4);
+  overflow-x: auto;
+  white-space: pre;
+  tab-size: 2;
+}
+.code-sample .tok-tag  { color: var(--color-primary-700); }
+.code-sample .tok-attr { color: var(--color-info-600); }
+.code-sample .tok-str  { color: var(--color-info-900); }
+.code-sample .tok-punc { color: var(--color-fg-low); }
+.code-sample .tok-cmt  { color: var(--color-fg-low); font-style: italic; }
+/* 注目させたい行/断片を淡くハイライト（Good の要点など） */
+.code-sample mark {
+  background-color: var(--color-info-50);
+  color: inherit;
+  border-radius: var(--radius-xs);
+  padding: 0 2px;
+}

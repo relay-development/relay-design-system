@@ -314,6 +314,10 @@
               </div>
               <p class="typo-small text-fg-middle">アイコンだけで <code class="typo-xsmall">aria-label</code> が無い。</p>
               <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">（名前なし・「ボタン」とだけ読まれる）</code></p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"icon-btn …"</span><span class="tok-punc">&gt;</span>
+  <span class="tok-punc">&lt;</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>…<span class="tok-punc">&lt;/</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>
+<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- aria-label なし → 名前が読まれない --&gt;</span></pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -327,6 +331,10 @@
               </div>
               <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-label="削除"</code> で操作名を与える。</p>
               <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">削除</code></p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"icon-btn …"</span> <mark><span class="tok-attr">aria-label</span><span class="tok-punc">=</span><span class="tok-str">"削除"</span></mark><span class="tok-punc">&gt;</span>
+  <span class="tok-punc">&lt;</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>…<span class="tok-punc">&lt;/</span><span class="tok-tag">svg</span><span class="tok-punc">&gt;</span>
+<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span></pre>
             </div>
           </div>
         </div>
@@ -354,6 +362,8 @@
               </ul>
               <p class="typo-small text-fg-middle">全ボタンが「削除」。どの行の削除か区別できない。</p>
               <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">削除 / 削除 / 削除</code></p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>削除<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- 各行すべて同じ名前 --&gt;</span></pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -369,6 +379,8 @@
               </ul>
               <p class="typo-small text-fg-middle">対象を <code class="typo-xsmall">.sr-only</code> で後置。見た目は「削除」のまま、名前は一意。</p>
               <p class="typo-xsmall text-fg-low mt-2">読み上げ名: <code class="typo-xsmall px-1 bg-neutral-100 rounded">削除（りんご）/ 削除（みかん）/ 削除（ぶどう）</code></p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>削除<mark><span class="tok-punc">&lt;</span><span class="tok-tag">span</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"sr-only"</span><span class="tok-punc">&gt;</span>（りんご）<span class="tok-punc">&lt;/</span><span class="tok-tag">span</span><span class="tok-punc">&gt;</span></mark><span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span></pre>
             </div>
           </div>
         </div>
@@ -393,6 +405,8 @@
                 <button type="button" class="btn btn-md btn-primary btn-solid" aria-label="保存">保存</button>
               </div>
               <p class="typo-small text-fg-middle">可視テキストと同じ <code class="typo-xsmall">aria-label</code> は冗長。翻訳ズレの温床にもなる。</p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span> <span class="tok-attr">aria-label</span><span class="tok-punc">=</span><span class="tok-str">"保存"</span><span class="tok-punc">&gt;</span>保存<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span>  <span class="tok-cmt">&lt;!-- 可視テキストと重複 --&gt;</span></pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -405,6 +419,8 @@
                 <button type="button" class="btn btn-md btn-primary btn-solid">保存</button>
               </div>
               <p class="typo-small text-fg-middle">可視テキストがそのままアクセシブルネームになる。<code class="typo-xsmall">aria-label</code> は不要。</p>
+              <pre class="code-sample mt-3">
+<span class="tok-punc">&lt;</span><span class="tok-tag">button</span> <span class="tok-attr">class</span><span class="tok-punc">=</span><span class="tok-str">"btn …"</span><span class="tok-punc">&gt;</span>保存<span class="tok-punc">&lt;/</span><span class="tok-tag">button</span><span class="tok-punc">&gt;</span></pre>
             </div>
           </div>
         </div>
