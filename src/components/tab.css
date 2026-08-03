@@ -40,6 +40,12 @@
  *   ※ tab はボタン状の切替 UI（リンクに見えない見た目）のため、「テキストリンクは常に下線」原則の例外として下線なし。
  *   NG: 選択状態をクラスだけで示さない → aria-selected を使う。
  *
+ *
+ * アクセシビリティ:
+ *   role="tablist"/"tab"/"tabpanel" を付け、選択タブだけ aria-selected="true"
+ *   タブ→パネルを aria-controls、パネル→タブを aria-labelledby で結ぶ
+ *   矢印キー移動（roving tabindex: 選択 tabindex=0 / 他 -1）を実装する
+ *   ページ遷移には使わない（遷移は menu/link）
  * Usage:
  *   <div role="tablist" class="tabs tabs-solid">
  *     <button role="tab" class="tab tab-solid" aria-selected="true">ラベル</button>

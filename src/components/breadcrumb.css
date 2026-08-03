@@ -18,6 +18,11 @@
  *   NG: 現在ページをリンクにしない → aria-current="page" の breadcrumb-current。
  *   NG: 階層が 1 つしかないページに無理に置かない → 階層がある時だけ使う。
  *
+ *
+ * アクセシビリティ:
+ *   <nav aria-label="パンくずリスト"> で包む
+ *   末尾（現在地）は非リンクにし aria-current="page" を付ける
+ *   区切り記号の要素に aria-hidden="true"（読み上げノイズを防ぐ）
  * Usage:
  *   <nav class="breadcrumb" aria-label="パンくずリスト">
  *     <ol>

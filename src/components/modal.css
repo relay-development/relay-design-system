@@ -44,7 +44,13 @@
  *   OK: aria-labelledby でタイトルと関連付ける。
  *   NG: 情報表示だけに多用しない → 操作を止める必要がある時に限る。
  *   NG: 閉じる手段（閉じるボタン / Esc）を消さない。
- */
+  *
+ * アクセシビリティ:
+ *   <dialog aria-labelledby> でモーダルタイトルを名前にする
+ *   開くときは showModal()（open 直書き・show() はトラップ/不活性化が効かない）
+ *   閉じるボタンに aria-label="閉じる"、閉じた後フォーカスを呼び出し元に戻す
+ *   不可逆な操作は本文で明示し、主アクションを negative にする
+*/
 
 @layer components {
   .modal {

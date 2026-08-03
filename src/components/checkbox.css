@@ -40,6 +40,12 @@
  *   NG: ラベルを否定形で書かない（「メール通知を受け取らない」等） → チェックで二重否定になる。肯定形で書き、チェック＝有効に揃える。
  *   NG: チェックした瞬間に送信・保存を実行しない → 確定ボタンを挟む。
  *
+ *
+ * アクセシビリティ:
+ *   各 checkbox にラベル（checkbox-label で内包 か aria-labelledby）
+ *   選択肢グループは fieldset+legend か label-control で見出しを付ける
+ *   不確定は属性でなく JS プロパティ el.indeterminate=true
+ *   エラー時は aria-invalid="true" + aria-describedby。sm(16px) はラベル併用で 24px 確保
  * Usage:
  *   <label class="checkbox-label">
  *     <input type="checkbox" class="checkbox" />

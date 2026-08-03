@@ -147,6 +147,14 @@ async function buildComponents() {
       console.warn(`[build-mcp] ${file}: 使用法 ブロックがあるが OK:/NG: 行を検出できません`);
     }
 
+    // アクセシビリティ — 実装時に必須の a11y 対応を 1 行 1 項目で。get_component が
+    // 使用法の直後に出す。詳細な WCAG チェックリストは get_accessibility（正本は
+    // docs/ACCESSIBILITY.md）。
+    const a11yBlock = sliceDocLabel(doc, "アクセシビリティ");
+    const accessibility = a11yBlock
+      ? a11yBlock.split("\n").map((l) => l.trim()).filter(Boolean)
+      : null;
+
     components.push({
       name,
       nameJa,
@@ -154,6 +162,7 @@ async function buildComponents() {
       summary: deriveSummary(doc, name),
       function: functionDoc,
       usage,
+      accessibility,
       classes: extractClasses(css),
       doc,
       snippet,
@@ -300,17 +309,36 @@ async function buildDesign() {
   return { philosophy, principles, forbidden, full: md };
 }
 
+/**
+ * docs/ACCESSIBILITY.md — WCAG 2.2 (A/AA/AAA) 実務チェックリスト。get_accessibility
+ * が全文を返す。DS 担保早見表とプロダクト必須実装表を要約として別途スライスする。
+ */
+async function buildAccessibility() {
+  let md;
+  try {
+    md = await readFile(path.join(projectRoot, "docs/ACCESSIBILITY.md"), "utf8");
+  } catch {
+    return null; // 未配置（古い checkout）— get_accessibility は案内のみ返す
+  }
+  return {
+    full: md,
+    provides: sliceSection(md, "## 6. DS が既に提供する保証早見表", "1,2"),
+    productMust: sliceSection(md, "## 7. プロダクト側で実装が必須なもの", "1,2"),
+  };
+}
+
 async function main() {
   const pkg = JSON.parse(
     await readFile(path.join(projectRoot, "package.json"), "utf8"),
   );
 
-  const [components, tokens, design, assets, sprintKit] = await Promise.all([
+  const [components, tokens, design, assets, sprintKit, accessibility] = await Promise.all([
     buildComponents(),
     buildTokens(),
     buildDesign(),
     buildAssets(),
     buildSprintKit(),
+    buildAccessibility(),
   ]);
 
   const index = {
@@ -318,7 +346,7 @@ async function main() {
     version: pkg.version,
     catalogUrl: "https://relay-development.github.io/relay-design-system",
     generatedFrom:
-      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, .claude/agents/*.md, .claude/workflows/*.js, .claude/hooks/*.mjs",
+      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, docs/ACCESSIBILITY.md, .claude/agents/*.md, .claude/workflows/*.js, .claude/hooks/*.mjs",
     components,
     tokens,
     assets,
@@ -327,6 +355,7 @@ async function main() {
     principles: design.principles,
     forbiddenPatterns: design.forbidden,
     designConstitution: design.full,
+    accessibility,
   };
 
   const outDir = path.join(projectRoot, "dist");

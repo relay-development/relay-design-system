@@ -44,7 +44,13 @@
  *   OK: 左列 <th>（ラベル）、右列 <td>（値）。連続ラベルは rowspan でまとめられる。
  *   NG: 複数件の比較に使わない → data-table。
  *   NG: 罫線・余白を直書きしない → .simple-table の既定を使う。
- */
+  *
+ * アクセシビリティ:
+ *   項目名の <th> に scope="row" を付ける
+ *   表に <caption> か aria-label で名前を付ける
+ *   rowspan でまとめる場合、行見出しと内容の対応が崩れないか SR で確認する
+ *   値が無い項目は空欄でなく — 等で明示する
+*/
 
 @layer components {
   .simple-table {

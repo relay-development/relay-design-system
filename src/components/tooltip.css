@@ -41,6 +41,12 @@
  *   NG: 操作に不可欠な情報（エラー・必須条件）を入れない → 見えるテキストや alert で常時表示する。
  *   NG: span や div などフォーカス不能な要素だけに付けない → キーボード利用者に表示されなくなる。
  *
+ *
+ * アクセシビリティ:
+ *   トリガーに aria-describedby、吹き出しに role="tooltip" と一致する id
+ *   Dismissible: Esc で閉じられるよう JS を補う（CSS のみでは不足）
+ *   トリガーはフォーカス可能な要素（button/link）にする
+ *   重要な情報・操作を tooltip だけに置かない（本文でも提供する）
  * Usage:
  *   <span class="tooltip">
  *     <button type="button" class="btn btn-md btn-primary btn-outline" aria-describedby="tip-1">保存</button>

@@ -1,6 +1,6 @@
 # relay Design System MCP — ツールリファレンス
 
-relay Design System の MCP サーバーが提供する **8 つのツール** と、その使い方をまとめる。
+relay Design System の MCP サーバーが提供する **9 つのツール** と、その使い方をまとめる。
 
 - **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
@@ -16,12 +16,13 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 |---|---|---|---|
 | 1 | `get_setup` | なし | CSS 導入手順と確認方法（**最初に呼ぶ**） |
 | 2 | `get_design_principles` | なし | 必須ルール＋禁止パターン要約 |
-| 3 | `list_components` | なし | 全コンポーネントの一覧 |
-| 4 | `get_component` | `name` | 指定コンポーネントの完全仕様 |
-| 5 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
-| 6 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
-| 7 | `search` | `query` | 横断あいまい検索 |
-| 8 | `get_sprint_kit` | なし | スプリント開発キットの配布（Claude Code 向け） |
+| 3 | `get_accessibility` | なし | WCAG 2.2 チェックリスト（DS 担保範囲＋プロダクト必須実装） |
+| 4 | `list_components` | なし | 全コンポーネントの一覧 |
+| 5 | `get_component` | `name` | 指定コンポーネントの完全仕様（機能／使用法／**アクセシビリティ**含む） |
+| 6 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
+| 7 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
+| 8 | `search` | `query` | 横断あいまい検索 |
+| 9 | `get_sprint_kit` | なし | スプリント開発キットの配布（Claude Code 向け） |
 
 ---
 
@@ -49,7 +50,18 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ---
 
-## 3. `list_components` — コンポーネント一覧
+## 3. `get_accessibility` — WCAG 2.2 チェックリスト
+
+**入力**: なし
+
+**何ができる**: relay を採用したプロダクトが WCAG 2.2（A / AA / AAA）に準拠するための実務チェックリスト（正本は `docs/ACCESSIBILITY.md`）を返す。冒頭に要約 2 表 —「DS が既に提供する保証」と「プロダクト側で実装が必須なもの」— を置き、続けて全文（各達成基準の DS 担保度・プロダクト責務・検証ツール）を返す。
+
+- アクセシブルな UI を**生成・レビュー**するときの基準
+- コンポーネント個別の必須対応は `get_component("<name>")` の**「アクセシビリティ」節**（各コンポーネント CSS ヘッダの `アクセシビリティ:` が正本）を参照
+
+---
+
+## 4. `list_components` — コンポーネント一覧
 
 **入力**: なし
 
@@ -57,7 +69,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ---
 
-## 4. `get_component(name)` — 完全仕様 ★中心ツール
+## 5. `get_component(name)` — 完全仕様 ★中心ツール
 
 **入力**: `name`（コンポーネント英名。例: `button` / `input` / `alert` / `card`。和名・クラス名でも解決される）
 
@@ -74,7 +86,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ---
 
-## 5. `get_tokens(category?)` — デザイントークン
+## 6. `get_tokens(category?)` — デザイントークン
 
 **入力**: `category`（任意。`colors` / `container` / `typography` / `spacing` / `radius` / `shadow`。省略で全件）
 
@@ -82,7 +94,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ---
 
-## 6. `list_assets` — ブランドアセット
+## 7. `list_assets` — ブランドアセット
 
 **入力**: なし
 
@@ -90,7 +102,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ---
 
-## 7. `search(query)` — 横断あいまい検索
+## 8. `search(query)` — 横断あいまい検索
 
 **入力**: `query`（検索キーワード。日本語可）
 
@@ -98,7 +110,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 
 ---
 
-## 8. `get_sprint_kit` — スプリント開発キットの配布（Claude Code 向け）
+## 9. `get_sprint_kit` — スプリント開発キットの配布（Claude Code 向け）
 
 **入力**: なし
 

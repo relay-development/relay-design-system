@@ -87,7 +87,7 @@
 
         <h3 class="typo-xlarge mb-4">使えるツール</h3>
         <p class="typo-article text-fg-high mb-4">
-          登録すると、AI から次の 8 つのツールが使えるようになります。「relay のスタイルでログイン画面を作って」のように頼むと、AI がこれらを呼び出して規約準拠の UI を生成します。
+          登録すると、AI から次の 9 つのツールが使えるようになります。「relay のスタイルでログイン画面を作って」のように頼むと、AI がこれらを呼び出して規約準拠の UI を生成します。
         </p>
 
         <div class="card overflow-hidden">
@@ -102,13 +102,14 @@
                 <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_component</code></td><td>指定コンポーネントの完全仕様（props・状態・色・usage・クラス・コピペ HTML・Figma リンク）</td></tr>
                 <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_tokens</code></td><td>デザイントークン（color / typography / spacing / radius / shadow）</td></tr>
                 <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_design_principles</code></td><td>必須ルール（ハードコード禁止・semantic color 等）+ 禁止パターン Top 10</td></tr>
+                <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_accessibility</code></td><td>WCAG 2.2 チェックリスト（DS 担保範囲＋プロダクト必須実装）。個別対応は get_component の「アクセシビリティ」節</td></tr>
                 <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">list_assets</code></td><td>ブランドアセット（ロゴ / イラスト）一覧 + 直リンク URL</td></tr>
                 <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">search</code></td><td>コンポーネント / トークン / 規約 / アセットの横断検索</td></tr>
                 <tr><td><code class="typo-xsmall px-1 bg-neutral-100 rounded">get_sprint_kit</code></td><td>スプリント開発キット（planner / generator / evaluator subagent + sprint workflow）の配布。Claude Code 向け</td></tr>
               </tbody>
             </table>
             <p class="typo-small text-fg-middle mt-4">
-              公開データは <code class="typo-xsmall px-1 bg-neutral-100 rounded">DESIGN.md</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/components</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/tokens</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">snippets</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">.claude</code> から生成されています。
+              公開データは <code class="typo-xsmall px-1 bg-neutral-100 rounded">DESIGN.md</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">docs/ACCESSIBILITY.md</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/components</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">src/tokens</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">snippets</code> / <code class="typo-xsmall px-1 bg-neutral-100 rounded">.claude</code> から生成されています。
             </p>
           </div>
         </div>

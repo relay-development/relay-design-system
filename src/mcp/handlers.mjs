@@ -15,6 +15,7 @@
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
  *     get_tokens(category?)    — colors / container / typography / spacing / radius / shadow
  *     get_design_principles    — non-negotiable rules + forbidden patterns
+ *     get_accessibility        — WCAG 2.2 チェックリスト（DS 担保範囲 + プロダクト必須実装）
  *     list_assets              — brand assets (logo / illustrations) with直リンク URL
  *     search(query)            — fuzzy search across components / tokens / principles
  *     get_sprint_kit           — planner/generator/evaluator agents + sprint workflow + hardcode gate hook の配布
@@ -50,6 +51,7 @@ export const INSTRUCTIONS = [
   "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
+  "5. アクセシビリティ: get_component の「アクセシビリティ」節（そのコンポーネントの実装必須対応）を必ず反映し、全体方針・WCAG 準拠は get_accessibility を参照する（aria-label / ラベル関連付け / role・aria-current 等を省略しない）。",
   "",
   "【事前知識で答えない】",
   "relay のクラス名・トークン値・コンポーネント仕様に関する回答は、UI を実装しない場合（質問への回答・コードレビュー・相談）でも、事前知識のみで答えず必ず get_component / get_tokens / search で確認してから答えること。仕様は更新されるため、記憶に頼ると古い・存在しないクラス（例: .badge-error — 正しくは .badge-solid-danger）を案内する恐れがある。",
@@ -138,9 +140,14 @@ function formatComponent(c) {
     for (const ng of c.usage.ng || []) out.push(`- ❌ ${ng}`);
     out.push("");
   }
+  if (c.accessibility && c.accessibility.length) {
+    out.push("## アクセシビリティ（実装時の必須対応）", "");
+    for (const a of c.accessibility) out.push(`- ${a}`);
+    out.push("", "> WCAG 2.2 の全体チェックリスト（DS 担保範囲・プロダクト必須実装）は get_accessibility を参照。", "");
+  }
 
-  // 仕様（doc）からは 機能/使用法 ブロックを除いて重複表示を避ける（doc 全文は index に保持）。
-  const spec = c.doc ? stripDocLabels(c.doc, ["機能", "使用法"]) : "";
+  // 仕様（doc）からは 機能/使用法/アクセシビリティ ブロックを除いて重複表示を避ける（doc 全文は index に保持）。
+  const spec = c.doc ? stripDocLabels(c.doc, ["機能", "使用法", "アクセシビリティ"]) : "";
   out.push(`## 仕様（src/components/${c.name}.css ヘッダより）`, "", spec || "（ドキュメントコメントなし）", "");
   out.push(`## CSS クラス（${c.classes.length}）`, "", c.classes.map((x) => `.${x}`).join(", "), "");
   out.push("## コピペ用 HTML スニペット", "");
@@ -268,6 +275,28 @@ function formatPrinciples() {
     "",
     index.forbiddenPatterns || "(forbidden patterns 未取得)",
   ].join("\n");
+}
+
+/**
+ * WCAG 2.2 (A/AA/AAA) チェックリスト。冒頭に「DS 担保範囲／プロダクト必須実装」の
+ * 要約を出し、続けて全文（docs/ACCESSIBILITY.md）を返す。コンポーネント個別の必須
+ * 対応は get_component の「アクセシビリティ」節を参照。
+ */
+function formatAccessibility() {
+  const a = index.accessibility;
+  if (!a) {
+    return "アクセシビリティのチェックリスト（docs/ACCESSIBILITY.md）が index に見つかりません。カタログの『アクセシビリティ』ページを参照してください。";
+  }
+  const out = [
+    "# relay Design System — アクセシビリティ（WCAG 2.2 実務チェックリスト）",
+    "",
+    "relay を採用したプロダクトが WCAG 2.2（A / AA / AAA）に準拠するための、DS 担保範囲とプロダクト側責務のチェックリスト。コンポーネント個別の必須対応は get_component(\"<name>\") の「アクセシビリティ」節を参照。",
+    "",
+  ];
+  if (a.provides) out.push(a.provides, "");
+  if (a.productMust) out.push(a.productMust, "");
+  if (a.full) out.push("---", "", "## 全文（docs/ACCESSIBILITY.md）", "", a.full);
+  return out.join("\n");
 }
 
 /**
@@ -428,7 +457,7 @@ export const TOOLS = [
   {
     name: "get_component",
     description:
-      "指定コンポーネントの完全仕様を返す。機能（用途・代替コンポーネントとの使い分け）と使用法（OK/NG パターン）を先頭に、続いて props・状態・色マッピング・usage 例・CSS クラス一覧・コピペ用 HTML スニペット。name は 'button' / 'input' など（英名）。",
+      "指定コンポーネントの完全仕様を返す。機能（用途・代替コンポーネントとの使い分け）・使用法（OK/NG パターン）・アクセシビリティ（実装時の必須対応）を先頭に、続いて props・状態・色マッピング・usage 例・CSS クラス一覧・コピペ用 HTML スニペット。name は 'button' / 'input' など（英名）。",
     inputSchema: {
       type: "object",
       properties: { name: { type: "string", description: "コンポーネント英名（例: button, input, alert, card）" } },
@@ -452,6 +481,12 @@ export const TOOLS = [
     name: "get_design_principles",
     description:
       "relay のデザイン原則（ゆったりとした余白・わかりやすい表現・明瞭な色使い）、Non-Negotiable Principles（ハードコード禁止・semantic color・blessed spacing・typo セマンティック層・ARIA 状態 等）、禁止パターン要約を返す。コード生成前のガードに使う。",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "get_accessibility",
+    description:
+      "relay のアクセシビリティ実務チェックリスト（WCAG 2.2 A/AA/AAA）を返す。DS が担保する範囲とプロダクト側で実装が必須な項目、検証ツールを含む。アクセシブルな UI を生成・レビューするとき、またコンポーネント個別の必須対応（get_component の「アクセシビリティ」節）の全体像を把握するときに使う。",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
@@ -508,6 +543,8 @@ export function callTool(name, args = {}) {
     }
     case "get_design_principles":
       return { text: formatPrinciples() };
+    case "get_accessibility":
+      return { text: formatAccessibility() };
     case "list_assets":
       return { text: formatAssets() };
     case "search":

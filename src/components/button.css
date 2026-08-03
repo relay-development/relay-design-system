@@ -23,6 +23,12 @@
  *   NG: リストの各行に「削除」等の同ラベル btn を並べたまま放置しない
  *       → 対象を <span class="sr-only">（りんご）</span> で後置し、アクセシブル名を一意にする。
  *
+ *
+ * アクセシビリティ:
+ *   アイコンのみのボタンには aria-label（可視テキストと重複する label は付けない）
+ *   同じ操作が並ぶ時は対象を含めてアクセシブルネームを一意化する
+ *   遷移には使わない（遷移は link）。主操作は 1 画面 1 つ、破壊的操作は negative
+ *   ネイティブ button で役割・状態が確立、:focus-visible で info/600 のフォーカスリング（DS 担保）
  * Usage:
  *   <button class="btn btn-md btn-primary btn-solid">ボタン</button>
  *   <button class="btn btn-lg btn-negative btn-outline">削除</button>

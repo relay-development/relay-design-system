@@ -34,7 +34,13 @@
  *   OK: thead に列見出し、tbody に行データを置く。
  *   NG: 1 件の項目一覧（キー/値）に使わない → simple-table。
  *   NG: 罫線・余白を直書きしない → .data-table の既定を使う。
- */
+  *
+ * アクセシビリティ:
+ *   列見出しを <th scope="col">（データセルは td）にする
+ *   表に <caption> か aria-label で名前を付ける
+ *   空セルは空白にせず — で「値なし」を示す
+ *   幅広は overflow-x:auto のコンテナで包み、キーボードでもスクロール可能にする
+*/
 
 @layer components {
   .data-table {

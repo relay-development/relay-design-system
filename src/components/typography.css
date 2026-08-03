@@ -38,6 +38,12 @@
  *   OK: medium 以下のサイズは weight を font-bold 等で上書きできる。
  *   NG: typo-large 以上で weight を bold 未満に下げない (font-semibold / font-medium 等) → デフォルトの bold のまま使う。
  *   NG: text-sm / font-size を直書きしない → .typo-* を使う。
+ *
+ * アクセシビリティ:
+ *   見た目の typo-* と実際の見出し要素（h1〜h6）を一致させる（typo-* を div に当てて見出し風にしない）
+ *   本文は text-fg-high / fg-middle でコントラストを確保（typo-article は fg-high 必須）
+ *   font-size を px 直書きせず .typo-*（rem）で 200% 拡大・テキスト間隔調整に追従させる
+ *   両端揃え（justify）を避け、行間・字間はトークン基準に保つ
  *   NG: 既定サイズを下げて本文を small で組まない → 本文の基準は medium (16px)。
  *   NG: 行間を独自指定しない → 8 の倍数の規定 line-height を保つ。
  *

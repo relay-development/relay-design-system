@@ -19,6 +19,12 @@
  *   NG: aria-label を省略しない → 何のボタンか読み上げられない。
  *   NG: 遷移に使わない → href のナビゲーションは link。
  *
+ *
+ * アクセシビリティ:
+ *   すべてのアイコンボタンに aria-label（操作名）を付ける
+ *   アイコン SVG は aria-hidden="true"（装飾）
+ *   同じ操作が並ぶ時は対象を aria-label に含めて一意化する
+ *   遷移には使わない（遷移は link）。sm(32px) 以上でターゲット最小 24px を満たす（DS 担保）
  * Usage:
  *   <button class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ">
  *     <svg viewBox="0 0 24 24">…</svg>

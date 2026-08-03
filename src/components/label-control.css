@@ -16,6 +16,12 @@
  *   NG: 必須を色だけで示さない → テキストの label-badge-required を使う。
  *   NG: 対象フィールドと切り離して遠くに置かない → 直上に置く。
  *
+ *
+ * アクセシビリティ:
+ *   label-control-text を <label for> にして入力欄の id と結ぶ
+ *   サポート文に id を付け、入力欄の aria-describedby で参照する
+ *   必須は label-badge-required（視覚）+ 入力欄の required（プログラム的）を両方付ける
+ *   必須/任意は色でなくバッジ＋テキストで示す
  * Usage:
  *   <div class="label-control">
  *     <div class="label-control-row">

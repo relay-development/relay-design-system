@@ -39,6 +39,11 @@
  *   NG: text-* ユーティリティでリンク色を自作しない → hover 色が追従しない。色は default / link-neutral / link-inverse の 3 択。
  *   NG: 白背景で link-inverse を使わない → 見えなくなる。暗い背景専用。
  *
+ *
+ * アクセシビリティ:
+ *   リンク文言だけで目的が分かるようにする（「こちら」「詳細」を避ける）
+ *   新規タブは target="_blank"+rel="noopener noreferrer" と、外部/新規タブの手がかりを添える
+ *   下線を消さない（色は 3 種のクラスから選ぶ）。遷移でなく操作なら button を使う
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
  *     <span class="link-label">リンクテキスト</span>

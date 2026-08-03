@@ -39,6 +39,12 @@
  *   NG: 少数（2〜7）の選択肢には使わず radio で見せる → 一覧性が上がる。
  *   NG: エラー色を直書きしない → invalid 用クラスを使う。
  *
+ * アクセシビリティ:
+ *   可視ラベルを for/id か aria-labelledby で関連付ける
+ *   先頭プレースホルダは value=""（有効値を誤って初期選択させない）
+ *   装飾アイコン（selector-icon）は aria-hidden="true"
+ *   エラー時は aria-invalid="true" + aria-describedby でメッセージを関連付け
+ *
  * Usage:
  *   <div class="selector selector-md">
  *     <span class="selector-icon"><svg>…</svg></span>   (optional)
