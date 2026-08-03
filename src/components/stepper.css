@@ -32,6 +32,12 @@
  *   NG: 単なる表示切替（タブ）に使わない → tab。
  *   NG: 完了を色だけで示さない → is-completed ＋ check アイコンで示す。
  *
+ *
+ * アクセシビリティ:
+ *   現在のステップに aria-current="step" を付ける
+ *   完了は .is-completed に加え読み上げ用テキスト（.sr-only「完了」）で補う（ARIA に完了属性が無い）
+ *   マーカーの数字・チェック SVG は aria-hidden="true"
+ *   <ol> に aria-label（例: 申請の進捗）を付ける
  * Usage:
  *   <ol class="stepper" aria-label="申請の進捗">
  *     <li class="stepper-step is-completed">

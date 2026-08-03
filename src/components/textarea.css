@@ -36,7 +36,12 @@
  *   OK: textarea-control で囲み、必要なら maxlength ＋ textarea-counter を出す。
  *   NG: 1 行入力に使わない → input。
  *   NG: エラー色を直書きしない → isInvalid 用クラスを使う。
- */
+  *
+ * アクセシビリティ:
+ *   可視ラベルを for/id か aria-labelledby で関連付ける（placeholder をラベルにしない）
+ *   サポート/エラーを aria-describedby、エラー時は aria-invalid="true"
+ *   文字数カウンターは aria-live="polite" で残量・超過を通知（maxlength 併用）
+*/
 
 @layer components {
   /* ============================================================

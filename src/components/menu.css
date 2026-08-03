@@ -41,6 +41,12 @@
  *   NG: 横並びのコンテンツ切替に流用しない → tab。
  *   NG: 操作項目に a を使わない → 遷移は a / 実行は button。
  *
+ *
+ * アクセシビリティ:
+ *   ナビは <nav aria-label="…"> で包む（複数あれば固有ラベル）
+ *   現在地に aria-current="page"（色・太字だけに頼らない）
+ *   遷移は <a>、操作は <button> と要素で役割を分ける
+ *   装飾アイコンは aria-hidden。ネイティブ nav のため矢印キーは不要（Tab/Enter）
  * Usage:
  *   <nav class="menu w-70" aria-label="マイページ">
  *     <ul class="menu-group">

@@ -104,7 +104,7 @@ function checkComponentCount() {
 }
 
 // ---------------------------------------------------------------------------
-// 3. ヘッダ規約 — 先頭コメントに 機能: / 使用法:（MCP get_component の正本）
+// 3. ヘッダ規約 — 先頭コメントに 機能: / 使用法: / アクセシビリティ:（MCP get_component の正本）
 // ---------------------------------------------------------------------------
 
 function checkComponentHeaders() {
@@ -117,7 +117,7 @@ function checkComponentHeaders() {
       continue;
     }
     const header = src.slice(0, src.indexOf("*/"));
-    for (const sectionName of ["機能:", "使用法:"]) {
+    for (const sectionName of ["機能:", "使用法:", "アクセシビリティ:"]) {
       if (!header.includes(sectionName)) {
         fail("component-header", `${rel}: ヘッダコメントに「${sectionName}」セクションがありません（MCP get_component の正本のため必須）`);
       }

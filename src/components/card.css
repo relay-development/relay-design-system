@@ -13,7 +13,12 @@
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
- */
+  *
+ * アクセシビリティ:
+ *   card-title は文脈に合う見出し要素（h2〜h4）にし、レベルを飛ばさない
+ *   カード全体をリンクにするなら 1 つの <a> で包む（リンク/ボタンを入れ子にしない）
+ *   見出し・補足が無いなら card で囲まない（過剰な入れ子を避ける）
+*/
 
 @layer components {
   .card {

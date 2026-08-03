@@ -7,7 +7,7 @@
             <p class="typo-article text-fg-high mb-6">「保存」「キャンセル」など、操作のきっかけになる最も基本的なパーツです。重要度や場面に応じて色・形・大きさを選べます。</p>
 
       <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
-      <div role="tablist" data-tabgroup aria-label="ボタンのドキュメント" class="tabs tabs-line mb-8">
+      <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="ボタンのドキュメント" class="tabs tabs-line mb-8">
         <button type="button" role="tab" id="button-tab-overview" class="tab tab-line" aria-selected="true" aria-controls="button-panel-overview">概要</button>
         <button type="button" role="tab" id="button-tab-guideline" class="tab tab-line" aria-selected="false" aria-controls="button-panel-guideline">ガイドライン</button>
         <button type="button" role="tab" id="button-tab-a11y" class="tab tab-line" aria-selected="false" aria-controls="button-panel-a11y">アクセシビリティ</button>
@@ -200,11 +200,89 @@
         </div>
       </div>
 
-      <!-- usage:auto:button -->
+      <!-- func:auto:button -->
       </div><!-- /#button-panel-overview -->
 
       <!-- ===== Guideline panel ===== -->
       <div id="button-panel-guideline" role="tabpanel" aria-labelledby="button-tab-guideline" hidden>
+
+      <!-- 使用法（テキスト・MCP ヘッダ正本と同期） -->
+      <!-- guide:auto:button -->
+
+      <!-- ===== Usage — visual Good/Don't demos ===== -->
+      <!-- Demo: 破壊的操作は negative -->
+      <div class="card mb-4 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">破壊的操作は <code class="typo-xsmall">btn-negative</code></h3>
+            <span class="typo-xsmall text-fg-low">色でも危険を伝える</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <button type="button" class="btn btn-md btn-neutral btn-ghost">キャンセル</button>
+              <button type="button" class="btn btn-md btn-negative btn-solid">削除する</button>
+            </div>
+            <p class="typo-small text-fg-middle">削除など取り消せない操作は <code class="typo-xsmall">btn-negative</code>。色で危険を示す。</p>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <button type="button" class="btn btn-md btn-neutral btn-ghost">キャンセル</button>
+              <button type="button" class="btn btn-md btn-primary btn-solid">削除する</button>
+            </div>
+            <p class="typo-small text-fg-middle">削除を primary にすると通常操作と区別できず、誤操作を招く。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo: 遷移は link -->
+      <div class="card mb-4 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">ページ遷移は <code class="typo-xsmall">link</code>（btn でスタイルしない）</h3>
+            <span class="typo-xsmall text-fg-low">要素の役割を合わせる</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <a class="link" href="#"><span class="link-label">詳細ページを見る</span></a>
+            </div>
+            <p class="typo-small text-fg-middle">遷移は <code class="typo-xsmall">link</code>。SR に「リンク」と伝わり、新規タブ・右クリックも効く。</p>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white">
+                <svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+              </span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="flex items-center gap-3 mb-4">
+              <button type="button" class="btn btn-md btn-neutral btn-outline">詳細ページを見る</button>
+            </div>
+            <p class="typo-small text-fg-middle">遷移を <code class="typo-xsmall">btn</code> でスタイルしない。役割が「ボタン」になり遷移手段が壊れる。</p>
+          </div>
+        </div>
+      </div>
 
       <!-- ===== NG patterns ===== -->
       <div class="mb-8">
@@ -298,6 +376,79 @@
           </div>
         </div>
 
+        <!-- 1. 期待される配慮 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">期待される配慮</h3>
+            <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">ラベルは可視テキスト、アイコンのみは <code class="typo-xsmall">aria-label</code>。主操作は 1 画面 1 つ（primary）、破壊的操作は negative で色でも示す。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">サイズは sm32 / md40 / lg48 / xl72。<code class="typo-xsmall">lg</code> 以上で 44px（AAA ターゲット）。文字は rem で拡大に追従。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> で到達、<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter/Space</kbd> で実行。フォーカスリング（info/600・2px・offset 2px）が出る。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle">ネイティブ <code class="typo-xsmall">&lt;button&gt;</code> で役割・名前・状態が確立。名前は可視テキスト／<code class="typo-xsmall">aria-label</code>、非同期中は <code class="typo-xsmall">data-loading</code>、無効は <code class="typo-xsmall">disabled</code> で伝える。</p></div>
+          </div>
+        </div>
+
+        <!-- 2. DS が担保する機能 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">DS が担保する機能</h3>
+            <p class="card-subtitle">追加実装なしで満たされる</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>ネイティブ <code class="typo-xsmall">&lt;button&gt;</code> ベース — 役割・名前・状態が標準で確立</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>キーボードフォーカスリング（<code class="typo-xsmall">:focus-visible</code>・info/600・2px・offset 2px）</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>各テーマの文字色は背景に対しコントラストを確保</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span><code class="typo-xsmall">lg</code>（48px）以上でターゲット拡張（WCAG 2.5.5）を満たす</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 実装時の必須対応 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">実装時の必須対応</h3>
+            <p class="card-subtitle">プロダクト側で担保する</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>アイコンのみのボタンに <code class="typo-xsmall">aria-label</code>（可視テキストと重複する label は付けない）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>同じ操作が並ぶ時は対象を含めてアクセシブルネームを一意化する</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>ページ遷移には使わない → <code class="typo-xsmall">link</code>。主操作は 1 画面 1 つ、破壊的操作は negative</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>非同期処理中は <code class="typo-xsmall">data-loading</code> で二重送信を防ぐ</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. テスト方法 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">テスト方法</h3>
+            <p class="card-subtitle">キーボード / スクリーンリーダー / 自動チェック</p>
+          </div>
+          <div class="card-body space-y-4">
+            <table class="w-full typo-small">
+              <thead>
+                <tr class="text-fg-low typo-xsmall border-b border-stroke-low">
+                  <th class="text-left px-3 py-2 font-medium w-40">キー</th>
+                  <th class="text-left px-3 py-2 font-medium">動作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-stroke-low"><td class="px-3 py-2 align-top"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> / <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Shift+Tab</kbd></td><td class="px-3 py-2 align-top text-fg-middle">各ボタンへ移動（フォーカスリング表示）</td></tr>
+                <tr><td class="px-3 py-2 align-top"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter</kbd> / <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Space</kbd></td><td class="px-3 py-2 align-top text-fg-middle">操作を実行する</td></tr>
+              </tbody>
+            </table>
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>ボタン名（可視テキスト or <code class="typo-xsmall">aria-label</code>）が読まれ、並ぶ同操作の対象が区別できる</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">自動</span><span>axe / Lighthouse で name・コントラスト・ターゲットサイズを確認</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ===== 視覚デモ ===== -->
         <!-- A11y 1: アイコンボタンにはアクセシブルネーム -->
         <div class="card mb-4 overflow-hidden">
           <div class="card-header">
@@ -472,6 +623,23 @@
               <button type="button" class="btn btn-lg btn-neutral btn-outline">ボタン</button>
               <span class="typo-xsmall"><span class="badge badge-soft-primary">AAA 44px ✓</span> <span class="text-fg-low ml-1">h48 — タッチ主体の画面はこれ以上を基本に</span></span>
             </div>
+          </div>
+        </div>
+
+        <!-- 関連する達成基準 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">関連する達成基準（WCAG 2.2）</h3>
+          </div>
+          <div class="card-body">
+            <p class="typo-small text-fg-low leading-7">
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.2 名前・役割・値</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#non-text-content" target="_blank" rel="noopener noreferrer"><span class="link-label">1.1.1 非テキストコンテンツ</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#link-purpose-in-context" target="_blank" rel="noopener noreferrer"><span class="link-label">2.4.4 リンクの目的</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#focus-visible" target="_blank" rel="noopener noreferrer"><span class="link-label">2.4.7 フォーカスの可視化</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#label-in-name" target="_blank" rel="noopener noreferrer"><span class="link-label">2.5.3 ラベルを含む名前</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#target-size-minimum" target="_blank" rel="noopener noreferrer"><span class="link-label">2.5.8 ターゲットのサイズ（最低限）</span></a>
+            </p>
           </div>
         </div>
 

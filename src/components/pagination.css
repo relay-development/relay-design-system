@@ -23,6 +23,12 @@
  *   NG: 現在ページもリンクで押せるようにしない → aria-current で示す。
  *   NG: 無限スクロールで足りる場面に無理に足さない。
  *
+ *
+ * アクセシビリティ:
+ *   <nav aria-label="ページネーション"> で包む
+ *   現在ページに aria-current="page"、前/次の矢印に aria-label を付ける
+ *   端で押せない矢印は aria-disabled="true"、省略記号は aria-hidden="true"
+ *   1 ページに収まる時は表示しない
  * Usage:
  *   <nav class="pagination" aria-label="ページネーション">
  *     <ul>

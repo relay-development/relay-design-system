@@ -11,6 +11,12 @@
  *   NG: 色やサイズを #hex/px で直書きしない → text-* と icon-* を使う。
  *   NG: 意味のあるアイコンを無ラベルで置かない → 必要なら aria-label を併記。
  *
+ * アクセシビリティ:
+ *   装飾アイコンは aria-hidden="true"（意味を持たないアイコンは読み上げない）
+ *   単独で情報を表すアイコンは aria-label か <title> で代替テキストを与える
+ *   アイコンボタンでは icon-btn 側に aria-label、アイコン SVG は aria-hidden
+ *   色は currentColor 継承。前景は fg/text ロールでコントラストを確保
+ *
  * Usage:
  *
  *   <svg class="icon icon-md">

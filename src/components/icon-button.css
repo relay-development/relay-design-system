@@ -19,6 +19,12 @@
  *   NG: aria-label を省略しない → 何のボタンか読み上げられない。
  *   NG: 遷移に使わない → href のナビゲーションは link。
  *
+ *
+ * アクセシビリティ:
+ *   すべてのアイコンボタンに aria-label（操作名）を付ける
+ *   アイコン SVG は aria-hidden="true"（装飾）
+ *   同じ操作が並ぶ時は対象を aria-label に含めて一意化する
+ *   遷移には使わない（遷移は link）。sm(32px) 以上でターゲット最小 24px を満たす（DS 担保）
  * Usage:
  *   <button class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ">
  *     <svg viewBox="0 0 24 24">…</svg>
@@ -34,8 +40,15 @@
            rounded-sm border border-transparent
            transition-colors duration-150 cursor-pointer
            focus:outline-none
-           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600
            disabled:cursor-not-allowed disabled:pointer-events-none;
+  }
+  /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
+   * outline-style:none のまま描画されない問題への対処。button と同様に生 CSS） */
+  .icon-btn:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: 2px;
   }
 
   /* icon is always 24×24 regardless of button size */

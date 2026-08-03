@@ -35,6 +35,12 @@
  *   NG: フォーム送信で確定する入力に使わない → checkbox を使う。
  *   NG: ラベルを状態で言い換えない（ON にする/OFF にする 等）→ 状態はスイッチ自体が示すので、ラベルは「通知を受け取る」のような機能名で固定する。
  *
+ *
+ * アクセシビリティ:
+ *   各スイッチにラベル（switch-label で内包 か aria-labelledby）
+ *   即時反映の操作に使う（保存ボタンで確定する項目は checkbox）
+ *   switch-sm(高さ20px) はラベル併用でタッチ領域 24px 以上を確保
+ *   role=switch で「オン/オフ」が伝わる。状態を色だけで表さない
  * Usage:
  *   <label class="switch-label">
  *     <input type="checkbox" role="switch" class="switch" />

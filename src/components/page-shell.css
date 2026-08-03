@@ -20,6 +20,12 @@
  *   NG: max-w-5xl 等のサイズ名でコンテナ幅を新規に書かない → max-w-page / max-w-article。
  *   NG: page-shell を入れ子にしない → 帯ごとに 1 つ。
  *
+ * アクセシビリティ:
+ *   ランドマーク要素（header / nav / main / footer）で領域を構造化する
+ *   ページに h1 を 1 つ置き、見出しレベルを飛ばさない
+ *   本文冒頭に「本文へスキップ」リンク（skip link）を置く
+ *   page-shell は帯ごとに 1 つ（入れ子にしない）。DOM 順＝読み上げ順を保つ
+ *
  * Usage:
  *   <header class="bg-surface border-b border-stroke-low">
  *     <div class="page-shell flex items-center justify-between py-4">…</div>

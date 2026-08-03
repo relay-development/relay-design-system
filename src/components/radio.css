@@ -40,6 +40,12 @@
  *   NG: 選択肢が多すぎる時に radio を大量に並べない → selector。
  *   NG: 選択した瞬間に送信・ページ遷移を実行しない → 確定ボタンを挟む。
  *
+ *
+ * アクセシビリティ:
+ *   同じグループの radio に必ず同じ name（単一選択の要）
+ *   グループは fieldset+legend か label-control で見出しを付ける
+ *   各 radio に radio-label でラベルを内包する
+ *   エラーは aria-invalid + aria-describedby をグループに関連付け（選択移動はネイティブの矢印キー）
  * Usage:
  *   <label class="radio-label">
  *     <input type="radio" name="plan" class="radio" />

@@ -12,7 +12,12 @@
  *   OK: 強調度に応じて solid / soft を使い分ける。
  *   NG: クリック操作に使わない → button / link / filter-chip。
  *   NG: 長文を入れない → 1〜2 語のラベルに留める。
- */
+  *
+ * アクセシビリティ:
+ *   状態・分類は色だけでなくラベル文言で示す
+ *   件数・ステータスは文脈と結びつける（近接見出し や aria-label で「未読 3 件」）
+ *   操作にはバッジを使わない（button/link）。装飾で情報が重複するなら aria-hidden="true"
+*/
 
 @layer components {
   .badge {

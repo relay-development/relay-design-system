@@ -45,7 +45,13 @@
  *   OK: 件数表示は filter-chip-count。
  *   NG: 単一選択しか許さない設問に並べない → radio。
  *   NG: チップ形状を独自シェイプに変えない → 何個選べるか直感が崩れる（guidelines 参照）。
- */
+  *
+ * アクセシビリティ:
+ *   選択状態を aria-pressed="true/false" で表し、トグルで更新する
+ *   左アイコン・チェックの SVG は aria-hidden="true"
+ *   件数はラベルと共に読まれるようにする（例: 自治体連携 124件）
+ *   選択は色だけでなくチェックでも示す（DS 担保）
+*/
 
 @layer components {
   /* ============================================================
@@ -57,10 +63,18 @@
            rounded-sm
            cursor-pointer
            transition-colors duration-150
-           focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-info-600;
+           focus:outline-none;
     width: 198px;
     padding: 8px;
     gap: 8px;
+  }
+  /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
+   * 描画されない問題への対処。生 CSS で outline-style を solid に固定） */
+  .filter-chip:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: 2px;
   }
 
   .filter-chip:hover:not(:disabled):not([aria-pressed="true"]),
