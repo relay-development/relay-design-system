@@ -87,17 +87,42 @@ document.addEventListener("click", (e) => {
 
 // Tabs — mutually exclusive selection within [data-tabgroup].
 // aria-controls が指すパネルがあれば、選択タブのパネルだけ表示する（無ければ選択状態の切替のみ）。
-document.addEventListener("click", (e) => {
-  const tab = e.target.closest(".tab");
-  if (!tab || tab.disabled) return;
-  const group = tab.closest("[data-tabgroup]");
-  if (!group) return;
+// data-tab-param を持つグループは、選択タブを URL クエリ (?<param>=<key>) に反映し、
+// リロード・共有・ブックマークでタブ状態を復元できるようにする。
+// タブの key は data-tab-key、無ければ aria-controls の末尾セグメント
+// （button-panel-guideline → "guideline"）。
+const tabKey = (tab) =>
+  tab.dataset.tabKey || (tab.getAttribute("aria-controls") || "").split("-").pop();
+
+function selectTab(group, tab, updateUrl) {
   group.querySelectorAll(".tab").forEach((t) => {
     const selected = t === tab;
     t.setAttribute("aria-selected", selected ? "true" : "false");
     const panel = t.getAttribute("aria-controls") && document.getElementById(t.getAttribute("aria-controls"));
     if (panel) panel.toggleAttribute("hidden", !selected);
   });
+  const param = group.dataset.tabParam;
+  if (updateUrl && param) {
+    const url = new URL(location.href);
+    url.searchParams.set(param, tabKey(tab));
+    history.replaceState(null, "", url);
+  }
+}
+
+document.addEventListener("click", (e) => {
+  const tab = e.target.closest(".tab");
+  if (!tab || tab.disabled) return;
+  const group = tab.closest("[data-tabgroup]");
+  if (!group) return;
+  selectTab(group, tab, true);
+});
+
+// 初期表示: URL クエリからタブを復元（該当グループのみ・不一致なら既定のまま）。
+document.querySelectorAll("[data-tabgroup][data-tab-param]").forEach((group) => {
+  const key = new URL(location.href).searchParams.get(group.dataset.tabParam);
+  if (!key) return;
+  const tab = [...group.querySelectorAll(".tab")].find((t) => tabKey(t) === key);
+  if (tab) selectTab(group, tab, false);
 });
 
 // Modal — data-modal-open="<dialog id>" で showModal()、data-modal-close で閉じる。
