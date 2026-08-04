@@ -163,42 +163,6 @@
 
       <!-- 使用法（テキスト・MCP ヘッダ正本と同期） -->
       <!-- guide:auto:icon-button -->
-
-      <!-- Demo: アイコンだけのボタンには aria-label -->
-      <div class="card mb-8 overflow-hidden">
-        <div class="card-header">
-          <div class="flex items-baseline justify-between">
-            <h3 class="card-title">アイコンだけのボタンには <code class="typo-xsmall">aria-label</code></h3>
-            <span class="typo-xsmall text-fg-low">操作名を必ず与える</span>
-          </div>
-        </div>
-        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
-              <span class="typo-medium font-bold text-success-700">Good</span>
-            </div>
-            <div class="mb-4"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></div>
-            <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-label="削除"</code> で操作名を与える。アイコン SVG は装飾なので <code class="typo-xsmall">aria-hidden</code>。</p>
-            <pre class="code-sample mt-3" data-code>
-&lt;button class="icon-btn …" [[aria-label="削除"]]&gt;
-  &lt;svg aria-hidden="true"&gt;…&lt;/svg&gt;
-&lt;/button&gt;</pre>
-          </div>
-          <div class="p-6">
-            <div class="flex items-center gap-2 mb-4">
-              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
-              <span class="typo-medium font-bold text-negative-600">Don't</span>
-            </div>
-            <div class="mb-4"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></div>
-            <p class="typo-small text-fg-middle">名前が無いと SR で「ボタン」としか読まれず、何の操作か伝わらない。</p>
-            <pre class="code-sample mt-3" data-code>
-&lt;button class="icon-btn …"&gt;  &lt;!-- [[aria-label なし]] --&gt;
-  &lt;svg&gt;…&lt;/svg&gt;
-&lt;/button&gt;</pre>
-          </div>
-        </div>
-      </div>
       </div><!-- /#icon-button-panel-guideline -->
 
       <!-- ===== Accessibility panel ===== -->
@@ -281,6 +245,42 @@
               <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span><code class="typo-xsmall">aria-label</code> の操作名が読まれる（「ボタン」だけにならない）</span></li>
               <li class="flex gap-2"><span class="text-fg-low shrink-0">自動</span><span>axe / Lighthouse で name（<code class="typo-xsmall">aria-label</code>）・コントラスト・ターゲットサイズを確認</span></li>
             </ul>
+          </div>
+        </div>
+
+        <!-- Demo: アイコンだけのボタンには aria-label -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">アイコンだけのボタンには <code class="typo-xsmall">aria-label</code></h3>
+              <span class="typo-xsmall text-fg-low">達成基準：WCAG <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.2 名前・役割・値</span></a> / <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#non-text-content" target="_blank" rel="noopener noreferrer"><span class="link-label">1.1.1 非テキストコンテンツ</span></a></span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="mb-4"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-label="削除"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></div>
+              <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-label="削除"</code> で操作名を与える。アイコン SVG は装飾なので <code class="typo-xsmall">aria-hidden</code>。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;button class="icon-btn …" [[aria-label="削除"]]&gt;
+  &lt;svg aria-hidden="true"&gt;…&lt;/svg&gt;
+&lt;/button&gt;</pre>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="mb-4"><button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/></svg></button></div>
+              <p class="typo-small text-fg-middle">名前が無いと SR で「ボタン」としか読まれず、何の操作か伝わらない。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;button class="icon-btn …"&gt;  &lt;!-- [[aria-label なし]] --&gt;
+  &lt;svg&gt;…&lt;/svg&gt;
+&lt;/button&gt;</pre>
+            </div>
           </div>
         </div>
 
