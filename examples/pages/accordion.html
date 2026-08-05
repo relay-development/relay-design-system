@@ -1,0 +1,326 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="accordion">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">アコーディオン</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-article text-fg-high mb-6">見出しを開閉して本文を出し入れする開示コンポーネントです。長いページの情報を折り畳んで一覧性を上げます。ネイティブ <code class="typo-small">&lt;details&gt;</code> / <code class="typo-small">&lt;summary&gt;</code> ベースで、開閉とキーボード操作はブラウザ標準に任せます（JS 不要）。</p>
+
+      <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
+      <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="アコーディオンのドキュメント" class="tabs tabs-line mb-8">
+        <button type="button" role="tab" id="accordion-tab-overview" class="tab tab-line" aria-selected="true" aria-controls="accordion-panel-overview">概要</button>
+        <button type="button" role="tab" id="accordion-tab-guideline" class="tab tab-line" aria-selected="false" aria-controls="accordion-panel-guideline">ガイドライン</button>
+        <button type="button" role="tab" id="accordion-tab-a11y" class="tab tab-line" aria-selected="false" aria-controls="accordion-panel-a11y">アクセシビリティ</button>
+      </div>
+
+      <div id="accordion-panel-overview" role="tabpanel" aria-labelledby="accordion-tab-overview">
+      <!-- 基本 -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">基本</h3>
+          <p class="card-subtitle">開閉アイコンは見出しの左。既定で開くものは <code class="typo-xsmall">&lt;details open&gt;</code></p>
+        </div>
+        <div class="card-body">
+          <div class="accordion">
+            <details class="accordion-item" open>
+              <summary class="accordion-trigger">
+                <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                <span class="accordion-label">配送について</span>
+              </summary>
+              <div class="accordion-panel">通常 3〜5 営業日でお届けします。地域や在庫状況により前後する場合があります。</div>
+            </details>
+            <details class="accordion-item">
+              <summary class="accordion-trigger">
+                <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                <span class="accordion-label">返品・交換について</span>
+              </summary>
+              <div class="accordion-panel">商品到着後 7 日以内にご連絡ください。未使用・未開封のものに限り承ります。</div>
+            </details>
+            <details class="accordion-item">
+              <summary class="accordion-trigger">
+                <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                <span class="accordion-label">支払い方法について</span>
+              </summary>
+              <div class="accordion-panel">クレジットカード・銀行振込・代金引換に対応しています。</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- 使用例 -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">使用例 — FAQ</h3>
+          <p class="card-subtitle">見出しをクリック、または <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> + <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter</kbd> / <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Space</kbd> で開閉</p>
+        </div>
+        <div class="card-body">
+          <div class="accordion">
+            <details class="accordion-item">
+              <summary class="accordion-trigger">
+                <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                <span class="accordion-label">アカウントを解約するには？</span>
+              </summary>
+              <div class="accordion-panel">設定 &gt; アカウント &gt; 解約 から手続きできます。解約後もデータは 30 日間保持されます。</div>
+            </details>
+            <details class="accordion-item">
+              <summary class="accordion-trigger">
+                <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                <span class="accordion-label">パスワードを忘れた場合は？</span>
+              </summary>
+              <div class="accordion-panel">ログイン画面の「パスワードを忘れた方」から、登録メールアドレス宛に再設定リンクを送信できます。</div>
+            </details>
+          </div>
+        </div>
+      </div>
+
+      <!-- func:auto:accordion -->
+      </div><!-- /#accordion-panel-overview -->
+
+      <!-- ===== Guideline panel ===== -->
+      <div id="accordion-panel-guideline" role="tabpanel" aria-labelledby="accordion-tab-guideline" hidden>
+
+      <!-- 使用法（テキスト・MCP ヘッダ正本と同期） -->
+      <!-- guide:auto:accordion -->
+
+      <!-- Demo: 開閉アイコンは見出しの左に置く -->
+      <div class="card mb-4 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">開閉アイコンは見出しの「左」に置く</h3>
+            <span class="typo-xsmall text-fg-low">視野狭窄で右端を見落とさない</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="accordion mb-4">
+              <details class="accordion-item" open>
+                <summary class="accordion-trigger">
+                  <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                  <span class="accordion-label">配送について</span>
+                </summary>
+                <div class="accordion-panel">通常 3〜5 営業日でお届けします。</div>
+              </details>
+            </div>
+            <p class="typo-small text-fg-middle">アイコンを見出しの左に置くと、見出しと操作の起点が同じ視野に入る。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;summary class="accordion-trigger"&gt;
+  [[&lt;svg class="accordion-icon"&gt;…&lt;/svg&gt;]]  &lt;!-- 左 --&gt;
+  &lt;span class="accordion-label"&gt;配送について&lt;/span&gt;
+&lt;/summary&gt;</pre>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="accordion mb-4">
+              <details class="accordion-item" open>
+                <summary class="accordion-trigger">
+                  <span class="accordion-label">配送について</span>
+                  <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                </summary>
+                <div class="accordion-panel">通常 3〜5 営業日でお届けします。</div>
+              </details>
+            </div>
+            <p class="typo-small text-fg-middle">アイコンを右端だけに置くと、視野狭窄の利用者が開閉できることに気づきにくい。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;summary class="accordion-trigger"&gt;
+  &lt;span class="accordion-label"&gt;配送について&lt;/span&gt;
+  [[&lt;svg class="accordion-icon"&gt;…&lt;/svg&gt;]]  &lt;!-- 右端 --&gt;
+&lt;/summary&gt;</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo: 重要情報は折り畳みの中だけに置かない -->
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">重要・必須の情報は折り畳みの中だけに置かない</h3>
+            <span class="typo-xsmall text-fg-low">常時表示との使い分け</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="alert alert-warning mb-4">
+              <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg></span>
+              <div class="alert-content"><p class="alert-body">解約後 30 日でデータは削除されます</p></div>
+            </div>
+            <p class="typo-small text-fg-middle">見落とせない注意は alert 等で常時表示し、補足だけをアコーディオンに入れる。</p>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="accordion mb-4">
+              <details class="accordion-item">
+                <summary class="accordion-trigger">
+                  <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                  <span class="accordion-label">注意事項</span>
+                </summary>
+                <div class="accordion-panel">解約後 30 日でデータは削除されます。</div>
+              </details>
+            </div>
+            <p class="typo-small text-fg-middle">必須の注意を折り畳みの中だけに隠すと、開かない利用者に伝わらない。</p>
+          </div>
+        </div>
+      </div>
+      </div><!-- /#accordion-panel-guideline -->
+
+      <!-- ===== Accessibility panel ===== -->
+      <div id="accordion-panel-a11y" role="tabpanel" aria-labelledby="accordion-tab-a11y" hidden>
+
+        <div class="alert alert-info mb-8">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <div class="alert-content">
+            <p class="alert-title">アコーディオンのアクセシビリティ</p>
+            <p class="alert-body">ネイティブ <code class="typo-xsmall">&lt;details&gt;</code> / <code class="typo-xsmall">&lt;summary&gt;</code> ベースで、トグルの役割・展開状態・キーボード操作が標準で確立します。開閉アイコンは見出しの<strong>左</strong>に置き、視野狭窄でも操作要素を見落とさないようにしています。WCAG 2.2 全基準は <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティ</span></a> ページを参照。</p>
+          </div>
+        </div>
+
+        <!-- 1. 期待される配慮 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">期待される配慮</h3>
+            <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">開閉アイコンは見出しの左に置き、open で回転させて状態を示す。開閉は形（回転）とネイティブの展開状態の両方で伝える。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">文字は rem / トークンで拡大に追従。見出し・本文とも折り返して破綻しない。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> で見出しへ到達、<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter</kbd> / <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Space</kbd> で開閉。フォーカスリング（info/600・2px）が出る。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle"><code class="typo-xsmall">&lt;summary&gt;</code> が「展開 / 折りたたみ」ボタンとして読まれ、開閉状態も伝わる。</p></div>
+          </div>
+        </div>
+
+        <!-- 2. DS が担保する機能 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">DS が担保する機能</h3>
+            <p class="card-subtitle">追加実装なしで満たされる</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>ネイティブ <code class="typo-xsmall">&lt;details&gt;</code> / <code class="typo-xsmall">&lt;summary&gt;</code> — 役割・展開状態・キーボード操作が標準で確立（JS 不要）</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>キーボードフォーカスリング（<code class="typo-xsmall">:focus-visible</code>・info/600・2px）</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>開閉アイコンを見出しの左に配置（<code class="typo-xsmall">accordion-icon</code>）</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>ヘッダの雛形で「重要情報を折り畳みの中だけに置かない」を明示（MCP <code class="typo-xsmall">get_component</code> の正本）</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 実装時の必須対応 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">実装時の必須対応</h3>
+            <p class="card-subtitle">プロダクト側で担保する</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>トリガーは必ず <code class="typo-xsmall">&lt;summary&gt;</code>（<code class="typo-xsmall">accordion-trigger</code>）にする — div 等にするとキーボード操作が失われる</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>開閉アイコンは見出しの左に置く（右端だけにしない）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>重要・必須の情報を折り畳みの中だけに置かない → alert 等で常時表示する</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>見出しは意味の順序どおりに並べる（見た目の順序と一致させる）</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. テスト方法 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">テスト方法</h3>
+            <p class="card-subtitle">キーボード / スクリーンリーダー / 自動チェック</p>
+          </div>
+          <div class="card-body space-y-4">
+            <table class="w-full typo-small">
+              <thead>
+                <tr class="text-fg-low typo-xsmall border-b border-stroke-low">
+                  <th class="text-left px-3 py-2 font-medium w-40">キー</th>
+                  <th class="text-left px-3 py-2 font-medium">動作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-stroke-low"><td class="px-3 py-2 align-top"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> / <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Shift+Tab</kbd></td><td class="px-3 py-2 align-top text-fg-middle">各見出し（summary）へ移動する</td></tr>
+                <tr><td class="px-3 py-2 align-top"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter</kbd> / <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Space</kbd></td><td class="px-3 py-2 align-top text-fg-middle">開閉を切り替える</td></tr>
+              </tbody>
+            </table>
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>見出しが「展開 / 折りたたみ」ボタンとして読まれ、状態変化が伝わる</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">自動</span><span>axe / Lighthouse で役割・フォーカス可視化・コントラストを確認</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Demo: 開閉アイコンは左（達成基準リンク付き） -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">開閉アイコンは見出しの左に置く</h3>
+              <span class="typo-xsmall text-fg-low">達成基準：WCAG <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.1 情報及び関係性</span></a> / <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.2 名前・役割・値</span></a></span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="accordion mb-4">
+                <details class="accordion-item" open>
+                  <summary class="accordion-trigger">
+                    <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+                    <span class="accordion-label">よくある質問</span>
+                  </summary>
+                  <div class="accordion-panel">見出しの左のアイコンが開閉の起点だと一目でわかる。</div>
+                </details>
+              </div>
+              <pre class="code-sample mt-3" data-code>
+&lt;details class="accordion-item"&gt;
+  &lt;summary class="accordion-trigger"&gt;
+    [[&lt;svg class="accordion-icon"&gt;…&lt;/svg&gt;]]  &lt;!-- 左 --&gt;
+    &lt;span class="accordion-label"&gt;よくある質問&lt;/span&gt;
+  &lt;/summary&gt;
+  &lt;div class="accordion-panel"&gt;…&lt;/div&gt;
+&lt;/details&gt;</pre>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <p class="typo-small text-fg-middle mb-4">トリガーを <code class="typo-xsmall">&lt;div&gt;</code> で自作すると、キーボードで開けず役割も伝わらない。</p>
+              <pre class="code-sample mt-3" data-code>
+[[&lt;div]] class="accordion-trigger" onclick="…"&gt;   &lt;!-- NG --&gt;
+  &lt;span&gt;よくある質問&lt;/span&gt;
+[[&lt;/div&gt;]]  &lt;!-- summary でないため Tab/Enter で開けない --&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 関連する達成基準 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">関連する達成基準（WCAG 2.2）</h3>
+          </div>
+          <div class="card-body">
+            <p class="typo-small text-fg-low leading-7">
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.1 情報及び関係性</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank" rel="noopener noreferrer"><span class="link-label">2.1.1 キーボード</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#focus-visible" target="_blank" rel="noopener noreferrer"><span class="link-label">2.4.7 フォーカスの可視化</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.2 名前・役割・値</span></a>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /#accordion-panel-a11y -->
+
+    </section>
+  </main>

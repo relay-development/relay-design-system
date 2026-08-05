@@ -68,7 +68,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 
 ---
 
-## コンポーネント一覧（25 個）
+## コンポーネント一覧（26 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -96,7 +96,8 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 22 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
 | 23 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
 | 24 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
-| 25 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ。長文本文は `max-w-article`） |
+| 25 | Accordion     | `.accordion`, `.accordion-item`, `.accordion-trigger`, `.accordion-icon`, `.accordion-label`, `.accordion-panel`（ネイティブ `<details>`/`<summary>` ベース。開閉アイコンは見出しの左） |
+| 26 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ。長文本文は `max-w-article`） |
 
 主要コンポーネントの完成形 HTML は `snippets/*.html` を（全コンポーネントのスニペットは MCP `get_component` またはプレビューサイト）、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
 

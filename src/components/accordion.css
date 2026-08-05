@@ -1,0 +1,119 @@
+/*
+ * Accordion (アコーディオン) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   見出しをクリック / キーで開閉して本文を出し入れする開示（disclosure）。
+ *   ネイティブ <details>/<summary> ベースで、開閉・キーボード操作
+ *   （Enter / Space・フォーカス）はブラウザ標準に任せる（JS 不要）。
+ *   開閉アイコン（chevron）は視野狭窄でも見落とさないよう見出しの「左」に置く。
+ *
+ *   構造:
+ *     <div class="accordion">
+ *       <details class="accordion-item" open>
+ *         <summary class="accordion-trigger">
+ *           <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+ *           <span class="accordion-label">見出し</span>
+ *         </summary>
+ *         <div class="accordion-panel">本文</div>
+ *       </details>
+ *       ...
+ *     </div>
+ *
+ *   props: item state = open / closed（<details open> で初期展開）
+ *   色 / 余白:
+ *     container : border stroke/middle・rounded-md
+ *     trigger   : px-4 py-4・text-base bold・hover bg neutral/50
+ *     icon      : 20px・fg/middle・open で 90° 回転（右向き→下向き）
+ *     panel     : px-4 pb-4・左は pl-11 で見出しラベルと揃える・16/32 本文
+ *
+ * 機能:
+ *   見出しの開閉で本文を出し入れする開示コンポーネント。長いページの情報を
+ *   折り畳んで一覧性を上げる。常時見せたい情報や、操作を止めて確認させる用途は
+ *   使わない（前者は常時表示、後者は modal）。
+ *
+ * 使用法:
+ *   OK: 開閉アイコン（chevron）は見出しの左に置き、open で回転させて状態を示す。
+ *   OK: 各 details は独立して開閉できる。既定で開くものは <details open>。
+ *   OK: トリガーは必ず <summary>（accordion-trigger）にする（キーボード操作が標準で付く）。
+ *   NG: 重要・必須の情報を折り畳みの中だけに置かない → 常時見える場所でも提供する。
+ *   NG: chevron を見出しの右端だけに置かない → 視野狭窄で見落とすため左に置く。
+ *   NG: 遷移や実行のトリガーにしない → 遷移は link、実行は button。
+ *
+ * アクセシビリティ:
+ *   <details>/<summary> によりトグルの役割・展開状態・キーボード操作（Enter/Space）が標準で確立
+ *   開閉アイコンは見出しの左に置き、視野狭窄でも操作要素を見落とさないようにする
+ *   :focus-visible で info/600 のフォーカスリングを出す（トリガー全体が対象）
+ *   見出しは意味の順序どおりに並べ、重要情報を折り畳みの中だけに置かない
+ * Usage:
+ *   <div class="accordion">
+ *     <details class="accordion-item" open>
+ *       <summary class="accordion-trigger">
+ *         <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+ *         <span class="accordion-label">配送について</span>
+ *       </summary>
+ *       <div class="accordion-panel">通常 3〜5 営業日でお届けします。</div>
+ *     </details>
+ *     <details class="accordion-item">
+ *       <summary class="accordion-trigger">
+ *         <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+ *         <span class="accordion-label">返品・交換について</span>
+ *       </summary>
+ *       <div class="accordion-panel">商品到着後 7 日以内にご連絡ください。</div>
+ *     </details>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container — 枠で囲み、item 間を区切り線で分ける
+   * ============================================================ */
+  .accordion {
+    @apply border border-solid border-stroke-middle rounded-md overflow-hidden;
+  }
+  .accordion-item + .accordion-item {
+    @apply border-t border-solid border-stroke-middle;
+  }
+
+  /* ============================================================
+   * Trigger (summary) — chevron を左に置いた見出し
+   * ============================================================ */
+  .accordion-trigger {
+    @apply flex items-center gap-2 px-4 py-4
+           text-base leading-6 font-bold text-fg-high
+           cursor-pointer select-none list-none
+           transition-colors duration-150;
+  }
+  .accordion-trigger:hover {
+    @apply bg-neutral-50;
+  }
+  /* デフォルトの開閉マーカー（▶）を消す */
+  .accordion-trigger::-webkit-details-marker {
+    display: none;
+  }
+  /* キーボードフォーカスリング — 生 CSS で outline-style を確実に solid にする
+     （Tailwind v4 の focus:outline-none が --tw-outline-style:none を立てる問題を回避）。
+     container の overflow-hidden で切れないよう offset は内側（-2px）。 */
+  .accordion-trigger:focus-visible {
+    outline-width: 2px;
+    outline-style: solid;
+    outline-color: var(--color-info-600);
+    outline-offset: -2px;
+  }
+
+  /* chevron — 閉=右向き / 開=下向き（90° 回転） */
+  .accordion-icon {
+    @apply w-5 h-5 shrink-0 text-fg-middle transition-transform duration-150;
+  }
+  .accordion-item[open] > .accordion-trigger .accordion-icon {
+    @apply rotate-90;
+  }
+  .accordion-label {
+    @apply flex-1;
+  }
+
+  /* ============================================================
+   * Panel — 本文（読み物として 16/32、左はラベルと揃える）
+   * ============================================================ */
+  .accordion-panel {
+    @apply px-4 pb-4 pl-11 text-base leading-8 font-normal text-fg-high;
+  }
+}
