@@ -13,20 +13,22 @@
   </select>
 </div>
 
-<!-- Error -->
+<!-- Error — エラーメッセージは選択欄の「真下」に置き、aria で関連付ける -->
 <div class="space-y-2">
   <div class="label-control">
     <div class="label-control-row">
       <label class="label-control-text" for="plan">プラン</label>
       <span class="label-badge label-badge-required">必須</span>
     </div>
-    <p class="label-control-support">プランを選択してください</p>
   </div>
-  <select id="plan" class="select select-error">
-    <option value="">未選択</option>
-    <option value="free">Free</option>
-    <option value="pro">Pro</option>
-  </select>
+  <div>
+    <select id="plan" class="select select-error" aria-invalid="true" aria-describedby="plan-err">
+      <option value="">未選択</option>
+      <option value="free">Free</option>
+      <option value="pro">Pro</option>
+    </select>
+    <p id="plan-err" class="field-error-text">＊プランを選択してください</p>
+  </div>
 </div>
 
 <!-- Disabled -->

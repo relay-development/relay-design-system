@@ -22,6 +22,7 @@
  *   サポート文に id を付け、入力欄の aria-describedby で参照する
  *   必須は label-badge-required（視覚）+ 入力欄の required（プログラム的）を両方付ける
  *   必須/任意は色でなくバッジ＋テキストで示す
+ *   エラー/補足は field-error-text / field-support-text を入力欄の直後（真下）に置き、aria-describedby で結ぶ（操作対象と同じ視野に入れる）
  * Usage:
  *   <div class="label-control">
  *     <div class="label-control-row">
@@ -35,6 +36,11 @@
  *     </div>
  *     <p class="label-control-support">サポートテキスト</p>
  *   </div>
+ *
+ *   // エラー/補足は入力欄の「真下」に置く（field-*-text + aria-describedby）
+ *   <input id="pw" type="password" class="input input-md input-error"
+ *          aria-invalid="true" aria-describedby="pw-err" />
+ *   <p id="pw-err" class="field-error-text">＊8 文字以上で入力してください</p>
  */
 
 @layer components {
@@ -64,6 +70,20 @@
   }
   .label-control-sm .label-control-support {
     @apply text-xs leading-4;
+  }
+
+  /* ============================================================
+   * Field messages — 入力欄の「真下」に置くメッセージ。
+   *   視野狭窄でも操作対象と一緒に視野へ入るよう、コントロール直後に置く。
+   *   input / select / selector と組み合わせ、id を振って入力欄の
+   *   aria-describedby で関連付ける（エラー時は入力欄に aria-invalid="true"）。
+   *   （textarea はフッタ内に .textarea-error-text を持つ）
+   * ============================================================ */
+  .field-error-text {
+    @apply mt-1 text-xs leading-4 text-negative-500;
+  }
+  .field-support-text {
+    @apply mt-1 text-xs leading-4 text-fg-low;
   }
 
   /* ============================================================

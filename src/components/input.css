@@ -32,7 +32,7 @@
  *
  * アクセシビリティ:
  *   可視ラベルを for/id か aria-labelledby で関連付ける（placeholder をラベルにしない）
- *   サポート/エラー文を aria-describedby、エラー時は aria-invalid="true"
+ *   サポート/エラー文を aria-describedby、エラー時は aria-invalid="true"（メッセージは field-error-text で入力欄の真下に置く）
  *   氏名・メール・電話等は autocomplete を付与、入力目的に合う type を選ぶ
  * Usage:
  *   <input type="text" class="input input-md" placeholder="入力内容" />
