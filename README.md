@@ -74,7 +74,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 |---|---|---|
 | 1 | Button         | `.btn` + `.btn-{primary,secondary,neutral,negative}` + `.btn-{solid,outline,subtle,ghost}` + `.btn-{sm,md,lg,xl}` |
 | 2 | Icon Button    | `.icon-btn` + `.icon-btn-{primary,neutral,negative}` + `.icon-btn-{sm,md,lg}` + `.icon-btn-{solid,outline,ghost}` |
-| 3 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}` |
+| 3 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}`, `.field-error-text`, `.field-support-text` |
 | 4 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
 | 5 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,icon}`, `.search-input-{sm,md,lg}` |
 | 6 | Selector       | `.selector`, `.selector-{field,icon,error}`, `.selector-{sm,md,lg}` |

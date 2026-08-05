@@ -92,12 +92,14 @@
           <div class="space-y-2">
             <div class="label-control">
               <div class="label-control-row">
-                <span class="label-control-text">パスワード</span>
+                <label class="label-control-text" for="ov-pw">パスワード</label>
                 <span class="label-badge label-badge-required">必須</span>
               </div>
-              <p class="label-control-support">8文字以上で入力してください</p>
             </div>
-            <input type="password" class="input input-md input-error" value="abc" />
+            <div>
+              <input id="ov-pw" type="password" class="input input-md input-error" value="abc" aria-invalid="true" aria-describedby="ov-pw-err" />
+              <p id="ov-pw-err" class="field-error-text">＊8文字以上で入力してください</p>
+            </div>
           </div>
         </div>
       </div>
@@ -253,13 +255,13 @@
               <div class="space-y-1 mb-4">
                 <label class="label-control-text" for="in-good-pw">パスワード</label>
                 <input id="in-good-pw" type="password" class="input input-md input-error" value="abc" aria-invalid="true" aria-describedby="in-pw-err" />
-                <p id="in-pw-err" class="flex items-center gap-1 typo-xsmall text-negative-600"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>8 文字以上で入力してください</p>
+                <p id="in-pw-err" class="field-error-text flex items-center gap-1"><svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>8 文字以上で入力してください</p>
               </div>
               <p class="typo-small text-fg-middle">境界色＋エラーテキストを <code class="typo-xsmall">aria-describedby</code>／<code class="typo-xsmall">aria-invalid</code> で関連付ける。</p>
               <pre class="code-sample mt-3" data-code>
 &lt;input class="input input-md input-error"
   [[aria-invalid="true" aria-describedby="err"]] /&gt;
-&lt;p [[id="err"]]&gt;8 文字以上で入力してください&lt;/p&gt;</pre>
+&lt;p [[id="err"]] class="field-error-text"&gt;8 文字以上で入力してください&lt;/p&gt;</pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
