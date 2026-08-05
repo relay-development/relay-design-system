@@ -43,10 +43,15 @@
  *
  *
  * アクセシビリティ:
+ *   （WCAG 1.4.13 ホバー又はフォーカスで表示されるコンテンツ）
  *   トリガーに aria-describedby、吹き出しに role="tooltip" と一致する id
- *   Dismissible: Esc で閉じられるよう JS を補う（CSS のみでは不足）
+ *   Hoverable: 表示中は吹き出しに pointer-events を戻し、上にマウスを移しても消えない（DS 担保）
+ *   Persistent: hover/focus が外れるまで表示を維持（DS 担保）
+ *   Dismissible: Esc で閉じられるよう JS を補う（CSS のみでは不足＝プロダクト側）
  *   トリガーはフォーカス可能な要素（button/link）にする
- *   重要な情報・操作を tooltip だけに置かない（本文でも提供する）
+ *   ホバーでの表示・非表示に依存させない — 重要な情報・操作は tooltip だけに置かず、
+ *   本文や label-control の補足など常時見える場所でも提供する（視野狭窄の利用者は
+ *   ホバーで起きる変化に気づきにくい）
  * Usage:
  *   <span class="tooltip">
  *     <button type="button" class="btn btn-md btn-primary btn-outline" aria-describedby="tip-1">保存</button>
@@ -87,11 +92,13 @@
     transform: rotate(45deg);
   }
 
-  /* 表示条件: hover / キーボードフォーカス / カタログ用プレビュー */
+  /* 表示条件: hover / キーボードフォーカス / カタログ用プレビュー
+     表示中は pointer-events を戻し、吹き出しの上にマウスを移しても消えない
+     ようにする（WCAG 1.4.13 の「ホバー可能」。視野狭窄でも読み切れる）。 */
   .tooltip:hover .tooltip-content,
   .tooltip:focus-within .tooltip-content,
   .tooltip-content.is-open-preview {
-    @apply visible opacity-100;
+    @apply visible opacity-100 pointer-events-auto;
   }
 
   /* ============================================================
