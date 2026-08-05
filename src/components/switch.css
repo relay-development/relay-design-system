@@ -41,6 +41,7 @@
  *   即時反映の操作に使う（保存ボタンで確定する項目は checkbox）
  *   switch-sm(高さ20px) はラベル併用でタッチ領域 24px 以上を確保
  *   role=switch で「オン/オフ」が伝わる。状態を色だけで表さない
+ *   強制カラーモードではトラックに輪郭線を出し、ON は Highlight の塗りで示す（背景色/つまみ画像に依存しない）
  * Usage:
  *   <label class="switch-label">
  *     <input type="checkbox" role="switch" class="switch" />
@@ -122,5 +123,32 @@
   }
   .switch-label:has(input.switch:disabled) {
     @apply text-fg-disabled cursor-not-allowed;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   トラックの背景色 (neutral/primary) が無視されると ON/OFF が
+   *   区別できなくなる。トラックに輪郭線を出して形を見せ、ON はシステムの
+   *   選択色 (Highlight) の塗りで示す（OFF=空のトラック / ON=塗られたトラック）。
+   *   ※ システムカラーキーワードは強制カラー対応の正式な指定方法であり
+   *     ハードコード禁止の例外 (DESIGN.md「ハードコードを許容する例外」)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    /* トラック輪郭を出して形を見せ（bg は無視されるため）、ON は選択色で塗る。
+       OFF=空のトラック / ON=塗られたトラック で状態を判別できる。
+       :hover 版まで含めて後勝ちで上書き（!important 不使用）。 */
+    .switch {
+      border: 1px solid CanvasText;
+    }
+    .switch:checked:not(:disabled),
+    .switch:checked:hover:not(:disabled) {
+      background-color: Highlight;
+    }
+    .switch:disabled {
+      border-color: GrayText;
+    }
+    .switch:checked:disabled {
+      background-color: GrayText;
+    }
   }
 }

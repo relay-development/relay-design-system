@@ -46,6 +46,7 @@
  *   選択肢グループは fieldset+legend か label-control で見出しを付ける
  *   不確定は属性でなく JS プロパティ el.indeterminate=true
  *   エラー時は aria-invalid="true" + aria-describedby。sm(16px) はラベル併用で 24px 確保
+ *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の塗りで示す（背景色/背景画像に依存しない）
  * Usage:
  *   <label class="checkbox-label">
  *     <input type="checkbox" class="checkbox" />
@@ -152,5 +153,38 @@
   }
   .checkbox-label:has(input.checkbox:disabled) {
     @apply text-fg-disabled cursor-not-allowed;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   強制カラー時は背景色・背景画像が無視され、bg-primary の塗りが
+   *   消えるため「空の箱 / チェック済みの箱」が区別できなくなる。
+   *   選択状態をシステムの選択色 (Highlight) の塗りで示し、枠は既定で
+   *   CanvasText 化されるので 未選択=空の箱 / 選択=塗られた箱 で判別可能。
+   *   ※ システムカラーキーワードは強制カラー対応の正式な指定方法であり
+   *     ハードコード禁止の例外 (DESIGN.md「ハードコードを許容する例外」)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    /* enabled かつ checked/indeterminate（valid/error・hover 含む）→ 選択色で塗る。
+       既存の状態ルールと同じ詳細度に揃え、後勝ちで上書きする（!important 不使用）。 */
+    .checkbox:checked:not(:disabled):not(.checkbox-error),
+    .checkbox:indeterminate:not(:disabled):not(.checkbox-error),
+    .checkbox:checked:hover:not(:disabled):not(.checkbox-error),
+    .checkbox:indeterminate:hover:not(:disabled):not(.checkbox-error),
+    .checkbox-error:checked:not(:disabled),
+    .checkbox-error:indeterminate:not(:disabled),
+    .checkbox-error:checked:hover:not(:disabled),
+    .checkbox-error:indeterminate:hover:not(:disabled) {
+      background-color: Highlight;
+      border-color: Highlight;
+    }
+    /* disabled かつ checked/indeterminate → GrayText で「無効な選択済み」を示す */
+    .checkbox:disabled:checked:not(.checkbox-error),
+    .checkbox:disabled:indeterminate:not(.checkbox-error),
+    .checkbox-error:disabled:checked,
+    .checkbox-error:disabled:indeterminate {
+      background-color: GrayText;
+      border-color: GrayText;
+    }
   }
 }

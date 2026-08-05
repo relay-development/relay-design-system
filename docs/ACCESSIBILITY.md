@@ -325,6 +325,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 - `.input-error` は色 + アイコン + テキストで通知
 - `.alert-{success,negative,warning,info}` は色 + アイコン + 文言
 - Filter Chip の active は色 + チェックアイコン
+- `.checkbox` / `.radio` / `.switch` は**強制カラーモード**（Windows ハイコントラスト等）でも選択状態が判別できる。`@media (forced-colors: active)` で選択済みを `Highlight` の塗り、スイッチの輪郭を `CanvasText` で示し、背景色・背景画像に依存しない
 
 **プロダクト側の責務**:
 - リンクは色だけで本文と区別せず、**下線** or アイコンで補強
@@ -333,6 +334,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 **チェック**:
 - [ ] グレースケール化しても意味が伝わる
 - [ ] エラーが赤だけでなく文言・アイコンで示される
+- [ ] 強制カラーモードで checkbox / radio / switch の選択状態が分かる
 
 ---
 
