@@ -46,6 +46,7 @@
  *   グループは fieldset+legend か label-control で見出しを付ける
  *   各 radio に radio-label でラベルを内包する
  *   エラーは aria-invalid + aria-describedby をグループに関連付け（選択移動はネイティブの矢印キー）
+ *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の塗りで示す（内側ドットの背景画像に依存しない）
  * Usage:
  *   <label class="radio-label">
  *     <input type="radio" name="plan" class="radio" />
@@ -136,4 +137,26 @@
    * ============================================================ */
   .radio-group { @apply flex flex-col gap-2; }
   .radio-group-horizontal { @apply flex flex-row flex-wrap gap-4; }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   内側ドットは currentColor の radial-gradient (背景画像) なので、
+   *   強制カラー時に確実に見えるようシステムの選択色 (Highlight) で描き、
+   *   枠色も Highlight にして「ドット無し=未選択 / ドット有り=選択」を明示。
+   *   ※ システムカラーキーワードは強制カラー対応の正式な指定方法であり
+   *     ハードコード禁止の例外 (DESIGN.md「ハードコードを許容する例外」)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    /* 内側ドットは background-image のため強制カラーで除去され、リングだけでは
+       選択/未選択を判別できない。checkbox と同様に円全体を選択色で塗って
+       「空の円=未選択 / 塗られた円=選択」で示す（background-color は強制カラーでも honored）。
+       background-color の競合は base .radio のみ＝後勝ちで上書き（!important 不使用）。 */
+    .radio:checked:not(:disabled),
+    .radio:checked:hover:not(:disabled) {
+      background-color: Highlight;
+    }
+    .radio:disabled:checked {
+      background-color: GrayText;
+    }
+  }
 }

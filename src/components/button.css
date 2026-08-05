@@ -29,6 +29,7 @@
  *   同じ操作が並ぶ時は対象を含めてアクセシブルネームを一意化する
  *   遷移には使わない（遷移は link）。主操作は 1 画面 1 つ、破壊的操作は negative
  *   ネイティブ button で役割・状態が確立、:focus-visible で info/600 のフォーカスリング（DS 担保）
+ *   強制カラーモードでは全ボタンに輪郭線を出し、solid は塗り直して「塗り=主/枠=副/文字=3次」を色に依らず保つ
  * Usage:
  *   <button class="btn btn-md btn-primary btn-solid">ボタン</button>
  *   <button class="btn btn-lg btn-negative btn-outline">削除</button>
@@ -299,5 +300,44 @@
 
   @keyframes btn-spin {
     to { transform: rotate(360deg); }
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   solid の塗りは背景色で表現しているため強制カラー時に消え、solid /
+   *   outline / ghost の変種ヒエラルキー（＝重要度の非色ヒント）が失われる。
+   *   すべてのボタンに輪郭線を出し（ghost/subtle も「ボタン」と分かるように）、
+   *   solid は ButtonText の面で塗り直して「塗り=主 / 枠のみ=副 / 文字=3次」を保つ。
+   *   これにより重要度を色だけに依存しない（デジタル庁 DS の指針）。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .btn {
+      border-color: ButtonText;
+    }
+    .btn-primary.btn-solid,
+    .btn-secondary.btn-solid,
+    .btn-neutral.btn-solid,
+    .btn-negative.btn-solid,
+    .btn-primary.btn-solid:hover:not(:disabled),
+    .btn-secondary.btn-solid:hover:not(:disabled),
+    .btn-neutral.btn-solid:hover:not(:disabled),
+    .btn-negative.btn-solid:hover:not(:disabled) {
+      background-color: ButtonText;
+      color: ButtonFace;
+      border-color: ButtonText;
+    }
+    .btn:disabled {
+      color: GrayText;
+      border-color: GrayText;
+    }
+    .btn-primary.btn-solid:disabled,
+    .btn-secondary.btn-solid:disabled,
+    .btn-neutral.btn-solid:disabled,
+    .btn-negative.btn-solid:disabled {
+      background-color: GrayText;
+      color: ButtonFace;
+      border-color: GrayText;
+    }
   }
 }
