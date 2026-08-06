@@ -67,10 +67,19 @@
    * Container — 枠で囲み、item 間を区切り線で分ける
    * ============================================================ */
   .accordion {
-    @apply border border-solid border-stroke-middle rounded-md overflow-hidden;
+    @apply border border-solid border-stroke-middle rounded-md;
   }
   .accordion-item + .accordion-item {
     @apply border-t border-solid border-stroke-middle;
+  }
+  /* 角丸は overflow-hidden ではなく first/last の trigger 側で作る。
+     overflow-hidden を使うと :focus-visible のリングがコンテナ角丸で
+     クリップされ見切れるため、trigger の hover 背景だけを角丸に合わせる。 */
+  .accordion-item:first-child > .accordion-trigger {
+    @apply rounded-t-md;
+  }
+  .accordion-item:last-child:not([open]) > .accordion-trigger {
+    @apply rounded-b-md;
   }
 
   /* ============================================================
@@ -91,12 +100,12 @@
   }
   /* キーボードフォーカスリング — 生 CSS で outline-style を確実に solid にする
      （Tailwind v4 の focus:outline-none が --tw-outline-style:none を立てる問題を回避）。
-     container の overflow-hidden で切れないよう offset は内側（-2px）。 */
+     container の overflow-hidden を外したので offset は外側（2px）に出して切れないようにする。 */
   .accordion-trigger:focus-visible {
     outline-width: 2px;
     outline-style: solid;
     outline-color: var(--color-info-600);
-    outline-offset: -2px;
+    outline-offset: 2px;
   }
 
   /* chevron — 閉=右向き / 開=下向き（90° 回転） */
