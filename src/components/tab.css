@@ -22,7 +22,7 @@
  *     solid not-selected: bg white,        border stroke/middle,            text fg/middle
  *     solid     selected: bg primary/700,  border transparent,              text white (7.0:1 AAA)
  *     line  not-selected: bg transparent,  border-b 1 stroke/middle,        text fg/middle
- *     line      selected: bg transparent,  border-b 2 primary/700,          text primary/700 (7.0:1 AAA)
+ *     line      selected: bg transparent,  border-b 4 primary/700,          text primary/700 (7.0:1 AAA)
  *
  *   states:
  *     hover : 背景 / ボーダー / 色を 1 段濃く
@@ -133,10 +133,10 @@
 
   .tab-line[aria-selected="true"] {
     color: var(--color-primary-700);
-    border-bottom-width: 2px;
+    border-bottom-width: 4px;
     border-bottom-color: var(--color-primary-700);
-    /* compensate the extra 1px so total visual height stays in sync */
-    padding-bottom: 7px;
+    /* compensate the extra 3px so total visual height stays in sync */
+    padding-bottom: 5px;
   }
   .tab-line[aria-selected="true"]:hover:not(:disabled),
   .tab-line[aria-selected="true"].is-hover-preview {
