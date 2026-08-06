@@ -840,12 +840,18 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 - `--shadow-focus-ring` (`0 0 0 3px #2563eb`) または `outline-info-600`
 - checkbox / radio は `box-shadow: var(--shadow-focus-ring)`
 
+**必須ルール（DS・プロダクト共通）**:
+- **色は info 青（`#2563eb`）固定** — `--shadow-focus-ring` / `outline-info-600` のみ使う。primary 緑など他の色に変えない。
+- **リングを絶対に見切れさせない** — 祖先の `overflow: hidden` / `clip` でフォーカスリングをクリップしない。角丸コンテナで子要素を囲む場合は `overflow-hidden` に頼らず、first/last の子側で角丸を作ってリングを全周表示する（例: accordion）。`outline-offset` を負にして内側へ逃がす回避も、角丸コーナーで切れるため不可。
+
 **プロダクト側の責務**:
 - カスタム要素を作る時もフォーカススタイルを保つ
 - `outline: none` を理由なく付けない
 
 **チェック**:
 - [ ] Tab フォーカスが常に視覚的に明確
+- [ ] リングの色が info 青（`#2563eb`）である
+- [ ] リングが祖先の `overflow-hidden` 等で見切れていない（全周見える）
 
 ---
 
@@ -912,6 +918,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 **チェック**:
 - [ ] フォーカスリングが背景と 3:1 以上
 - [ ] リングの太さ・面積が十分
+- [ ] リングが祖先の `overflow-hidden` 等で見切れていない（全周見える。詳細は 2.4.7）
 
 ---
 
