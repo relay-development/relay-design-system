@@ -244,6 +244,18 @@
   color: var(--color-fg-middle);
   margin-top: 2px;
 }
+/* カタログ独自のフォーカス可能要素（ブランドリンク / グループ開閉 summary / メニュートグル）
+ * にも DS の info 青リングを出す。未指定だとブラウザ既定 outline（色が異なる・角丸で見切れる）
+ * が出るため上書きする（DESIGN.md #8: リングは info 青固定・見切れ禁止）。
+ * リングは各要素自身に出すので sidebar の overflow では見切れない（padding 内に収まる）。 */
+.docs-sidebar-brand:focus-visible,
+summary.docs-sidebar-group-title:focus-visible,
+.docs-sidebar-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus-ring);
+  border-radius: var(--radius-sm);
+}
+
 .docs-sidebar-nav { display: flex; flex-direction: column; gap: 16px; }
 .docs-sidebar-group {
   display: flex;
@@ -434,6 +446,13 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   inset: 0;
 }
 .page-card:hover .page-card-link { text-decoration: none; }
+/* キーボードフォーカスは info 青の DS リング（--shadow-focus-ring）でカード全体を囲む。
+ * ブラウザ既定の細い outline だとラベル文字だけを囲み全面リンクなのに視認性が低い。
+ * リングはカード自身に出すので card の overflow:hidden では見切れない（DESIGN.md #8）。 */
+.page-card:has(.page-card-link:focus-visible) {
+  box-shadow: var(--shadow-focus-ring);
+}
+.page-card-link:focus-visible { outline: none; }
 
 /* ============================================================
  * Release log — 縦タイムライン (releases.html)
