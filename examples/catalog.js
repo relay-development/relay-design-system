@@ -203,6 +203,32 @@ document.addEventListener("click", async (e) => {
   setTimeout(() => bubble.remove(), 1200);
 });
 
+// Menu — 矢印キーで項目間をフォーカス移動する（Tab に「加えた」操作。Tab 順は変えない）。
+// ↑/↓ で前後の .menu-item、Home/End で先頭/末尾へ。端でループし、無効・非表示項目は飛ばす。
+// roving tabindex は使わない（使うと Tab で 1 項目しか辿れなくなるため）。
+document.addEventListener("keydown", (e) => {
+  if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) return;
+  const item = e.target.closest(".menu-item");
+  if (!item) return;
+  const scope = item.closest(".menu, .docs-sidebar-nav");
+  if (!scope) return;
+  const items = [...scope.querySelectorAll(".menu-item")].filter(
+    (el) =>
+      !el.disabled &&
+      !el.classList.contains("is-disabled") &&
+      el.offsetParent !== null, // 折り畳み中 (details 閉) / モバイル非表示は除外
+  );
+  const i = items.indexOf(item);
+  if (items.length < 2 || i === -1) return;
+  const target =
+    e.key === "ArrowDown" ? items[(i + 1) % items.length]
+    : e.key === "ArrowUp" ? items[(i - 1 + items.length) % items.length]
+    : e.key === "Home" ? items[0]
+    : items[items.length - 1];
+  e.preventDefault(); // 矢印での画面スクロールを抑止
+  target.focus();
+});
+
 // Mobile hamburger — サイドナビの開閉 (768px 以下で表示されるトグル)
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".docs-sidebar-toggle");

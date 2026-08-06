@@ -46,7 +46,10 @@
  *   ナビは <nav aria-label="…"> で包む（複数あれば固有ラベル）
  *   現在地に aria-current="page"（色・太字だけに頼らない）
  *   遷移は <a>、操作は <button> と要素で役割を分ける
- *   装飾アイコンは aria-hidden。ネイティブ nav のため矢印キーは不要（Tab/Enter）
+ *   装飾アイコンは aria-hidden。Tab/Enter で操作でき、加えて上下矢印キーでも項目間を移動できる
+ *     （↑/↓ で前後の項目、Home/End で先頭/末尾へ・端でループ。roving tabindex は使わず全項目を
+ *      Tab 順に残すので、ネイティブ nav の Tab ナビゲーションを損なわない「追加」操作）。
+ *     矢印キー移動は利用側で JS を付与する（挙動の実装例はカタログ examples/catalog.js の Menu ハンドラ）
  * Usage:
  *   <nav class="menu w-70" aria-label="マイページ">
  *     <ul class="menu-group">
