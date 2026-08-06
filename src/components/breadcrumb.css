@@ -35,7 +35,7 @@
 
 @layer components {
   .breadcrumb ol {
-    @apply flex flex-wrap items-center list-none m-0 p-0;
+    @apply flex flex-wrap items-center list-none m-0 p-0 gap-y-2;
   }
 
   .breadcrumb li {
@@ -50,8 +50,8 @@
     @apply w-4 h-4;
   }
 
-  /* 現在ページ（非リンク）— .link と同サイズ (16/32) で行を揃える */
+  /* 現在ページ（非リンク）— typo-small / typo-medium と同じ行間 (16/24) で行を揃える */
   .breadcrumb-current {
-    @apply text-base leading-8 font-medium text-fg-high;
+    @apply text-base leading-6 font-medium text-fg-high;
   }
 }
