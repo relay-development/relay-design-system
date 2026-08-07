@@ -243,6 +243,7 @@
   /* page は旧サイト実測 1220px 初期値の暫定。丸め（76rem / 80rem）はデザイナー判断
      （変更は src/tokens/container.css とこの 2 箇所） */
   --container-page:    76.25rem;   /* 1220px — ページシェル（ヘッダー / フッター / 一覧） */
+  --container-content: 56.25rem;   /* 900px — 主コンテンツ（フォーム / 設定 / 詳細） */
   --container-article: 42rem;      /* 672px — 長文本文（規約・記事系） */
 
   /* ===== Radius ===== */

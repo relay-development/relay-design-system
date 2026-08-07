@@ -4,9 +4,12 @@
  *   ヘッダー / フッター / main の内側に置き、コンテンツを --container-page
  *   (1220px 暫定) に中央寄せする定型 3 点セット（max-width + 中央寄せ + 左右余白）。
  *
- *   props: なし（単一クラス）
+ *   props:
+ *     .page-shell-content … max-width を --container-content (900px) に絞る。
+ *                           一覧より狭く記事より広い主コンテンツ（フォーム / 設定 / 詳細）向け。
  *
- *   寸法: max-width = var(--container-page) / margin-inline auto /
+ *   寸法: max-width = var(--container-page)（.page-shell-content 併用時は
+ *         var(--container-content) = 900px）/ margin-inline auto /
  *         padding-inline 16px（画面が狭いときの左右余白）
  *
  * 機能:
@@ -16,8 +19,10 @@
  *
  * 使用法:
  *   OK: 全幅の帯（header / footer / section）の直下に置き、中身をこの中に入れる。
+ *   OK: フォームや設定・詳細など主コンテンツを一覧より狭くしたいときは
+ *       page-shell に .page-shell-content を併記して 900px に絞る。
  *   OK: 長文の本文は page-shell の内側でさらに max-w-article で絞る。
- *   NG: max-w-5xl 等のサイズ名でコンテナ幅を新規に書かない → max-w-page / max-w-article。
+ *   NG: max-w-5xl 等のサイズ名でコンテナ幅を新規に書かない → max-w-page / max-w-content / max-w-article。
  *   NG: page-shell を入れ子にしない → 帯ごとに 1 つ。
  *
  * アクセシビリティ:
@@ -33,6 +38,9 @@
  *   <main>
  *     <div class="page-shell py-16">…一覧やカードグリッド…</div>
  *   </main>
+ *   <main>
+ *     <div class="page-shell page-shell-content py-16">…フォームや設定…</div>
+ *   </main>
  */
 
 @layer components {
@@ -40,5 +48,9 @@
     max-width: var(--container-page);
     margin-inline: auto;
     padding-inline: calc(var(--spacing) * 4);   /* 16px */
+  }
+
+  .page-shell-content {
+    max-width: var(--container-content);   /* 900px — フォーム / 設定 / 詳細 */
   }
 }

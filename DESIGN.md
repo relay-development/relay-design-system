@@ -80,11 +80,12 @@ spacing/12 = 48px      spacing/16 = 64px
 ### Container (コンテンツ領域幅)
 
 ```
---container-page    : 76.25rem (1220px)  → max-w-page / .page-shell   ページシェル (ヘッダー / フッター / 一覧)
---container-article : 42rem (672px)      → max-w-article              長文本文 (規約・記事系)
+--container-page    : 76.25rem (1220px)  → max-w-page / .page-shell            ページシェル (ヘッダー / フッター / 一覧)
+--container-content : 56.25rem (900px)   → max-w-content / .page-shell-content 主コンテンツ (フォーム / 設定 / 詳細)
+--container-article : 42rem (672px)      → max-w-article                       長文本文 (規約・記事系)
 ```
 
-**ページシェルは page、長文本文は article。** サイズ名 (`max-w-5xl` 等) の新規使用は非推奨。
+**一覧・帯は page、フォームや設定・詳細は content、長文本文は article。** サイズ名 (`max-w-5xl` 等) の新規使用は非推奨。
 page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判断、正本は `src/tokens/container.css`）。
 
 ### Typography
@@ -147,7 +148,7 @@ Card               : <div class="card"><div class="card-header">...</div><div cl
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
 Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit。緑を抑えたい補助リンクは .link-neutral、暗い背景上は .link-inverse（白）
-Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)
+Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)。フォームや設定・詳細は <div class="page-shell page-shell-content"> で 900px に絞る
 ```
 
 > **サイズは例外を除き `md` をデフォルトに。** `btn` / `icon-btn` / `input` / `selector` / `textarea` 等のサイズ付きコンポーネントは、特段の理由（密なツールバーで `sm`、ヒーロー CTA で `lg/xl` 等）がない限り `*-md` を使う。`icon` も既定は `icon-md` (20px)。タイポグラフィの `.typo-medium` 基準と揃えると画面全体のリズムが安定する。
@@ -194,7 +195,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | テキストリンク（a 要素）の下線省略・hover 時のみ下線 | 常に下線。省略はボタン形状・アイコンボタン・メニュー項目等「テキストリンクに見えない見た目」を意図的に選んだ場合のみ |
 | フォーカスリングの色変更（primary 緑など）・祖先の `overflow-hidden` での見切れ | info 青（`--shadow-focus-ring` / `outline-info-600`）のまま全周表示。角丸コンテナは `overflow-hidden` に頼らず first/last 子側で角丸を作る |
 | 恒常的な surface の elevation をシャドウで表現（`card-elevated` の常用等） | ボーダー + 背景色で区切る。シャドウは modal / tooltip 等の重なりレイヤーのみ |
-| コンテナ幅をサイズ名で新規指定（`max-w-5xl` 等） | 用途名の `max-w-page` / `max-w-article`（または `.page-shell`） |
+| コンテナ幅をサイズ名で新規指定（`max-w-5xl` 等） | 用途名の `max-w-page` / `max-w-content` / `max-w-article`（または `.page-shell` / `.page-shell-content`） |
 | main へ直 push | feature branch + PR |
 
 ### ハードコードを許容する例外
