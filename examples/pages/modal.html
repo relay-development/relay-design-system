@@ -264,6 +264,54 @@
           </div>
         </div>
 
+        <!-- Demo: フォーカスの移動と復帰 -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">フォーカスの移動と復帰</h3>
+              <span class="typo-xsmall text-fg-low">達成基準：WCAG <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#focus-order" target="_blank" rel="noopener noreferrer"><span class="link-label">2.4.3 フォーカス順序</span></a></span>
+            </div>
+          </div>
+          <div class="card-body space-y-4">
+            <p class="typo-article text-fg-high">モーダルを開くとキーボードフォーカスはモーダル内へ移り、閉じるとフォーカスは開く前にいた要素（呼び出し元のボタン）へ戻ります。<code class="typo-xsmall">showModal()</code> と <code class="typo-xsmall">close()</code> を使うだけで、この移動と復帰はネイティブ <code class="typo-xsmall">&lt;dialog&gt;</code> が自動で行うため、フォーカスを保存・復元する独自コードは不要です。</p>
+
+            <ol class="typo-article text-fg-middle space-y-1 list-decimal pl-5">
+              <li><code class="typo-xsmall">showModal()</code> で開くと、モーダル内の先頭のフォーカス可能な要素へフォーカスが移る</li>
+              <li>開いている間、<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> はモーダル内で循環し、背景の要素へは出ない</li>
+              <li><code class="typo-xsmall">close()</code>（<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Esc</kbd>・閉じるボタン・背景クリック）で閉じると、フォーカスが呼び出し元へ戻る</li>
+            </ol>
+
+            <div class="flex flex-wrap items-center gap-3">
+              <button type="button" class="btn btn-md btn-primary btn-solid" data-modal-open="demo-modal-focus">開いて確かめる</button>
+              <span class="typo-small text-fg-middle">開いた後 <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Esc</kbd> で閉じると、フォーカスがこのボタンへ戻ります。</span>
+            </div>
+
+            <pre class="code-sample" data-code>
+// 開く — [[showModal()]] がフォーカスをモーダル内へ移す
+document.getElementById("my-modal").[[showModal()]]();
+
+// 閉じる — [[close()]] でフォーカスが呼び出し元ボタンへ自動で戻る
+//（open 属性の直書きや show() ではこの移動・復帰は働かない）
+dialog.[[close()]]();</pre>
+          </div>
+        </div>
+
+        <!-- フォーカス復帰デモ用モーダル -->
+        <dialog class="modal" id="demo-modal-focus" aria-labelledby="demo-modal-focus-title">
+          <div class="modal-header">
+            <h2 class="modal-title" id="demo-modal-focus-title">フォーカスはここへ移りました</h2>
+            <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" data-modal-close aria-label="閉じる">
+              <svg class="icon"><use href="./icons.svg#lucide-x"></use></svg>
+            </button>
+          </div>
+          <div class="modal-body">
+            開いた時点でフォーカスはこのモーダル内へ入っています。<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Esc</kbd> か下のボタンで閉じると、フォーカスは「開いて確かめる」ボタンへ戻ります。
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-md btn-neutral btn-subtle" data-modal-close>閉じる</button>
+          </div>
+        </dialog>
+
         <!-- 関連する達成基準 -->
         <div class="card">
           <div class="card-header">
