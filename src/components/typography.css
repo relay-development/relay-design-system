@@ -10,17 +10,22 @@
  *   8x8 ベースグリッドに合わせるため、line-height は常に 8 の倍数。
  *   ルール: height = Math.ceil((size * 1.3) / 8) * 8
  *
- *   ┌──────────┬──────┬──────┬─────────┬─────────────────────┐
- *   │ class    │ size │ line │ weight  │ 用途                │
- *   ├──────────┼──────┼──────┼─────────┼─────────────────────┤
- *   │ xsmall   │  12  │  16  │ medium  │ キャプション・注釈  │
- *   │ small    │  14  │  24  │ medium  │ 補助テキスト        │
- *   │ medium   │  16  │  24  │ medium  │ 本文 (base)         │
- *   │ large    │  20  │  32  │ bold    │ サブ見出し          │
- *   │ xlarge   │  24  │  32  │ bold    │ セクション見出し    │
- *   │ 2xlarge  │  32  │  40  │ bold    │ ページタイトル      │
- *   │ 3xlarge  │  40  │  48  │ bold    │ Display             │
- *   └──────────┴──────┴──────┴─────────┴─────────────────────┘
+ *   レスポンシブ: 見出し／Display (large 以上) はモバイル (<md/768px) で 1 段小さい
+ *   トークンに落ち、md 以上で下表の size に戻る。本文 (medium 以下・article) は
+ *   16px 基準を守るためモバイルでも縮めない。size 列は「モバイル→md 以上」表記
+ *   (単一値は両者共通)。md+ の値は従来と同一なので既存のデスクトップ表示は不変。
+ *
+ *   ┌──────────┬────────────┬───────────┬─────────┬─────────────────────┐
+ *   │ class    │ size (m→md)│ line(m→md)│ weight  │ 用途                │
+ *   ├──────────┼────────────┼───────────┼─────────┼─────────────────────┤
+ *   │ xsmall   │     12     │    16     │ medium  │ キャプション・注釈  │
+ *   │ small    │     14     │    24     │ medium  │ 補助テキスト        │
+ *   │ medium   │     16     │    24     │ medium  │ 本文 (base)         │
+ *   │ large    │     20     │    32     │ bold    │ サブ見出し          │
+ *   │ xlarge   │   20→24    │    32     │ bold    │ セクション見出し    │
+ *   │ 2xlarge  │   24→32    │   32→40   │ bold    │ ページタイトル      │
+ *   │ 3xlarge  │   32→40    │   40→48   │ bold    │ Display             │
+ *   └──────────┴────────────┴───────────┴─────────┴─────────────────────┘
  *
  *   別枠: .typo-article (16 / 32 / normal) — 案件詳細記事など「読み物」用の
  *   独立スケール。本文 16px に 1 段広い行間 (32) と regular weight を与え、
@@ -31,13 +36,17 @@
  *   Figma の命名サイズに 1:1 対応する意味づけテキストスタイル層（.typo-*）。
  *   ベースは typo-medium (16px)。本文も各コンポーネント内のテキストも
  *   medium を基準サイズとして使い、補助/見出しはそこからの相対で選ぶ。
+ *   見出し／Display (large 以上) はクラス自体がレスポンシブで、モバイルで自動的に
+ *   1 段小さくなり md (768px) 以上で規定サイズに戻る（本文は縮めない）。
  *
  * 使用法:
  *   OK: 基準は typo-medium (16px)。本文・各コンポーネントのテキストは medium をベースに。
  *   OK: 補助/キャプションは small/xsmall、見出しは large 以上を 16px ベースから相対で選ぶ。
  *   OK: medium 以下のサイズは weight を font-bold 等で上書きできる。
+ *   OK: 見出しのレスポンシブは .typo-xlarge/2xlarge/3xlarge が自前で持つ。md:text-* で手動調整しない。
  *   NG: typo-large 以上で weight を bold 未満に下げない (font-semibold / font-medium 等) → デフォルトの bold のまま使う。
  *   NG: text-sm / font-size を直書きしない → .typo-* を使う。
+ *   NG: 本文 (medium 以下・article) をモバイルで縮める指定を足さない → 16px 基準を守る。
  *
  * アクセシビリティ:
  *   見た目の typo-* と実際の見出し要素（h1〜h6）を一致させる（typo-* を div に当てて見出し風にしない）
@@ -54,16 +63,20 @@
  */
 
 @layer components {
-  /* Body sizes — Medium weight by default */
+  /* Body sizes — Medium weight by default. 本文は可読性・200% 拡大の下限として
+     モバイルでも縮めない（サイズはブレークポイント非依存）。 */
   .typo-xsmall  { @apply text-xs   leading-4  font-medium; }   /* 12 / 16 */
   .typo-small   { @apply text-sm   leading-6  font-medium; }   /* 14 / 24 */
   .typo-medium  { @apply text-base leading-6  font-medium; }   /* 16 / 24 */
 
-  /* Heading / Display sizes — Bold weight (large 以上は bold 以上必須) */
-  .typo-large   { @apply text-lg   leading-8  font-bold;   }   /* 20 / 32 */
-  .typo-xlarge  { @apply text-xl   leading-8  font-bold;   }   /* 24 / 32 */
-  .typo-2xlarge { @apply text-2xl  leading-10 font-bold;   }   /* 32 / 40 */
-  .typo-3xlarge { @apply text-3xl  leading-12 font-bold;   }   /* 40 / 48 */
+  /* Heading / Display sizes — Bold weight (large 以上は bold 以上必須)。
+     見出し／Display はモバイル (<md/768px) で 1 段小さいトークンに落ち、md 以上で
+     デフォルトサイズに戻る（本文は縮めず見出しだけレスポンシブ）。各段の line-height は
+     8 の倍数を保つ。md+ の値は従来と同一のため、デスクトップ表示は不変。 */
+  .typo-large   { @apply text-lg   leading-8  font-bold;   }                          /* 20/32（固定） */
+  .typo-xlarge  { @apply text-lg   leading-8  font-bold  md:text-xl;   }              /* 20/32 → 24/32 */
+  .typo-2xlarge { @apply text-xl   leading-8  font-bold  md:text-2xl md:leading-10; } /* 24/32 → 32/40 */
+  .typo-3xlarge { @apply text-2xl  leading-10 font-bold  md:text-3xl md:leading-12; } /* 32/40 → 40/48 */
 
   /* Long-form / article — 記事・読み物用の独立スケール (16 / 32 / normal)。
      長文の可読性のため body より広い行間。weight は font-* で上書き可。

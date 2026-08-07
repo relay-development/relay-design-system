@@ -94,12 +94,15 @@ page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判�
 .typo-small     : 14px / 24px
 .typo-medium    : 16px / 24px  ← 本文 default
 .typo-large     : 20px / 32px  ← ここから weight bold 必須
-.typo-xlarge    : 24px / 32px
-.typo-2xlarge   : 32px / 40px  ← セクション見出し
-.typo-3xlarge   : 40px / 48px  ← ページタイトル
+.typo-xlarge    : 20→24px / 32px   ← モバイル→md(768px)。以下同じ
+.typo-2xlarge   : 24→32px / 32→40px ← セクション見出し
+.typo-3xlarge   : 32→40px / 40→48px ← ページタイトル
 .typo-article   : 16px / 32px  ← 記事・読み物用 (regular, 広め行間) の独立スケール
 フォントスタック : Noto Sans JP, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, sans-serif
 ウェイト         : font-{thin,light,normal,medium,bold,black} (100..900)
+
+見出し (large 以上) はモバイルで 1 段小さくなり md 以上で規定サイズに戻る（クラス自体が
+レスポンシブ。md:text-* を手で足さない）。本文 (medium 以下・article) は 16px 基準を守り縮めない。
 ```
 
 **ベースは `.typo-medium`（16px）。** 本文も各コンポーネント内のテキストも medium（16px）を基準サイズとして使う。補助・キャプションで下げる（small/xsmall）、見出しで上げる（large 以上）のは、この 16px ベースからの相対調整として選ぶ。
