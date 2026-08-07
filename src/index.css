@@ -42,4 +42,4 @@
 
 /* コンテナ幅ユーティリティは利用プロジェクト側で使われる前提のため、
  * コンテンツスキャンに関係なく必ず dist に含める（safelist 相当） */
-@source inline("max-w-page max-w-article");
+@source inline("max-w-page max-w-content max-w-article");

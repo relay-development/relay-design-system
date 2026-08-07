@@ -6,9 +6,11 @@
  * 参照する幅に「どこで使うか」の名前を付ける。
  *
  *   container/page    = 76.25rem (1220px) → max-w-page    ページシェル（ヘッダー / フッター / 一覧）
+ *   container/content = 56.25rem (900px)  → max-w-content 主コンテンツ（フォーム / 設定 / 詳細）
  *   container/article = 42rem    (672px)  → max-w-article 長文本文（規約・記事系）
  *
- * 使い分け: ページシェルは page、長文本文は article。
+ * 使い分け: 一覧・ヘッダー / フッターの帯は page、フォームや設定・詳細など
+ * 一覧より狭く記事より広い主コンテンツは content、長文本文は article。
  * サイズ名ユーティリティ（max-w-5xl 等）の新規使用は非推奨。
  *
  * ※ page の値は旧サイト実測 1220px を初期値とした暫定値。76rem (1216px) /
@@ -18,5 +20,6 @@
 
 @theme {
   --container-page:    76.25rem;   /* 1220px */
+  --container-content: 56.25rem;   /* 900px */
   --container-article: 42rem;      /* 672px */
 }
