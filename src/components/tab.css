@@ -46,6 +46,7 @@
  *   タブ→パネルを aria-controls、パネル→タブを aria-labelledby で結ぶ
  *   矢印キー移動（roving tabindex: 選択 tabindex=0 / 他 -1）を実装する
  *   ページ遷移には使わない（遷移は menu/link）
+ *   強制カラーモードでは選択タブを Highlight で示す（solid=塗り / line=4px 下線）。選択を色だけに依存しない
  * Usage:
  *   <div role="tablist" class="tabs tabs-solid">
  *     <button role="tab" class="tab tab-solid" aria-selected="true">ラベル</button>
@@ -149,5 +150,52 @@
    * ============================================================ */
   .tab-count {
     @apply shrink-0 text-base leading-6 font-bold;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   選択状態を primary/700 の「色」だけで示しているため強制カラー時に消え、
+   *   どのタブが選択中か分からなくなる。選択タブを Highlight で示す
+   *   （checkbox / radio / switch と同じ「選択色=Highlight」の流儀）。
+   *   - solid: 選択チップを Highlight で塗り、非選択(輪郭のみ)と明確に区別する。
+   *     文字色 HighlightText が Canvas 色の text backplate と同化して消えるのを防ぐため
+   *     forced-color-adjust:none で backplate を抑止する（button の solid と同じ対処）。
+   *   - line : 選択下線を Highlight の 4px にし、太さ＋色の両方で選択を示す。
+   *   focus は box-shadow のリングで示しており強制カラーでは影が無視され見えないため、
+   *   outline を出してキーボードフォーカスを可視化する。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .tab:focus-visible:not(:disabled),
+    .tab.is-focus-preview {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+
+    /* solid: 選択チップを Highlight で塗る（後勝ちで hover 版も上書き） */
+    .tab-solid[aria-selected="true"],
+    .tab-solid[aria-selected="true"]:hover:not(:disabled),
+    .tab-solid[aria-selected="true"].is-hover-preview {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+      border-color: Highlight;
+    }
+    .tab-solid:disabled[aria-selected="true"] {
+      forced-color-adjust: none;
+      background-color: GrayText;
+      color: Canvas;
+      border-color: GrayText;
+    }
+
+    /* line: 選択下線を Highlight にする（太さ 4px は既存ルールで保持） */
+    .tab-line[aria-selected="true"],
+    .tab-line[aria-selected="true"]:hover:not(:disabled),
+    .tab-line[aria-selected="true"].is-hover-preview {
+      border-bottom-color: Highlight;
+    }
+    .tab-line:disabled[aria-selected="true"] {
+      border-bottom-color: GrayText;
+    }
   }
 }
