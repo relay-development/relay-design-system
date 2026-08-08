@@ -44,6 +44,7 @@
  *   先頭プレースホルダは value=""（有効値を誤って初期選択させない）
  *   装飾アイコン（selector-icon）は aria-hidden="true"
  *   エラー時は aria-invalid="true" + aria-describedby でメッセージを関連付け
+ *   強制カラーモードでは chevron の塗りを system color で描き直し、矢印が消えないようにする
  *
  * Usage:
  *   <div class="selector selector-md">
@@ -178,4 +179,16 @@
   .selector-md.selector-error::after { right: 7px; }
   .selector-lg.selector-error::after { right: 11px; }
   .selector.is-disabled::after { background-color: var(--color-neutral-400); }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   chevron は mask-image ＋ background-color(塗り) で描いており、強制カラーでは
+   *   background が Canvas 化して矢印が消える（枠は border なので残る）。
+   *   塗りを system color で描き直して矢印を見せる（無効時は GrayText）。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .selector::after            { background-color: CanvasText; }
+    .selector.is-disabled::after { background-color: GrayText; }
+  }
 }

@@ -50,6 +50,7 @@
  *     （↑/↓ で前後の項目、Home/End で先頭/末尾へ・端でループ。roving tabindex は使わず全項目を
  *      Tab 順に残すので、ネイティブ nav の Tab ナビゲーションを損なわない「追加」操作）。
  *     矢印キー移動は利用側で JS を付与する（挙動の実装例はカタログ examples/catalog.js の Menu ハンドラ）
+ *   強制カラーモードでは現在地を Highlight で塗り、フォーカスを outline で可視化する（背景色ハイライトが消えるため）
  * Usage:
  *   <nav class="menu w-70" aria-label="マイページ">
  *     <ul class="menu-group">
@@ -147,5 +148,27 @@
   .menu-item.is-focus-preview {
     outline: none;
     box-shadow: var(--shadow-focus-ring);
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   現在地を bg(primary/50)＋太字で示すが、強制カラーでは背景が Canvas 化して
+   *   ハイライトが消え、太字だけになり弱い。Highlight で塗って明確に示す
+   *   （backplate 対策で forced-color-adjust:none）。
+   *   focus は box-shadow リングで影が無視され見えないため outline を出す。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .menu-item:focus-visible,
+    .menu-item.is-focus-preview {
+      outline: 2px solid CanvasText;
+      outline-offset: -2px;
+    }
+    .menu-item[aria-current="page"],
+    .menu-item[aria-current="page"]:hover {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+    }
   }
 }
