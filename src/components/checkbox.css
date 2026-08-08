@@ -46,7 +46,7 @@
  *   選択肢グループは fieldset+legend か label-control で見出しを付ける
  *   不確定は属性でなく JS プロパティ el.indeterminate=true
  *   エラー時は aria-invalid="true" + aria-describedby。sm(16px) はラベル併用で 24px 確保
- *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の塗りで示す（背景色/背景画像に依存しない）
+ *   強制カラーモードでは選択済みを Highlight の枠で示し、白いチェック/ダッシュを Canvas 上に出す（塗ると白グリフが低コントラストになるため）。フォーカスは outline で可視化
  * Usage:
  *   <label class="checkbox-label">
  *     <input type="checkbox" class="checkbox" />
@@ -165,8 +165,17 @@
    *     ハードコード禁止の例外 (DESIGN.md「ハードコードを許容する例外」)。
    * ============================================================ */
   @media (forced-colors: active) {
-    /* enabled かつ checked/indeterminate（valid/error・hover 含む）→ 選択色で塗る。
-       既存の状態ルールと同じ詳細度に揃え、後勝ちで上書きする（!important 不使用）。 */
+    /* focus: box-shadow のリングは強制カラーで消えるため outline を出す
+       （全 focusable で outline 2px solid CanvasText / offset 2px に統一）。 */
+    .checkbox:focus-visible {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+    /* 選択は「枠色」で示す。チェック/ダッシュのグリフは url() SVG(白) で強制カラーでも
+       残るため、Highlight(明るい)で塗ると白グリフが同化して低コントラストになる。
+       塗らずに（bg は Canvas 化）枠を Highlight にし、白グリフを Canvas 上に出して
+       チェックとダッシュを高コントラストで判別できるようにする（既存の状態ルールと
+       同詳細度で後勝ち・!important 不使用）。 */
     .checkbox:checked:not(:disabled):not(.checkbox-error),
     .checkbox:indeterminate:not(:disabled):not(.checkbox-error),
     .checkbox:checked:hover:not(:disabled):not(.checkbox-error),
@@ -175,15 +184,13 @@
     .checkbox-error:indeterminate:not(:disabled),
     .checkbox-error:checked:hover:not(:disabled),
     .checkbox-error:indeterminate:hover:not(:disabled) {
-      background-color: Highlight;
       border-color: Highlight;
     }
-    /* disabled かつ checked/indeterminate → GrayText で「無効な選択済み」を示す */
+    /* disabled かつ checked/indeterminate → GrayText の枠で「無効な選択済み」を示す */
     .checkbox:disabled:checked:not(.checkbox-error),
     .checkbox:disabled:indeterminate:not(.checkbox-error),
     .checkbox-error:disabled:checked,
     .checkbox-error:disabled:indeterminate {
-      background-color: GrayText;
       border-color: GrayText;
     }
   }

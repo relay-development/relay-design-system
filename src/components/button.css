@@ -321,6 +321,10 @@
     .btn {
       border-color: ButtonText;
     }
+    /* focus: 全 focusable で outline を CanvasText に統一（normal は info/600） */
+    .btn:focus-visible {
+      outline-color: CanvasText;
+    }
     .btn-primary.btn-solid,
     .btn-secondary.btn-solid,
     .btn-neutral.btn-solid,
