@@ -309,6 +309,12 @@
    *   すべてのボタンに輪郭線を出し（ghost/subtle も「ボタン」と分かるように）、
    *   solid は ButtonText の面で塗り直して「塗り=主 / 枠のみ=副 / 文字=3次」を保つ。
    *   これにより重要度を色だけに依存しない（デジタル庁 DS の指針）。
+   *
+   *   solid は forced-color-adjust:none で text backplate を無効化する。
+   *   多くの暗色テーマで ButtonFace == Canvas(#000) のため、文字色 ButtonFace が
+   *   ブラウザが文字背後に敷く Canvas 色の backplate と同化し、ラベルが黒い矩形に
+   *   埋没して消える。none にすると backplate が出ず、system color はそのまま解決
+   *   されるので「ButtonText の面に ButtonFace の文字」を確実に見せられる。
    *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
    * ============================================================ */
   @media (forced-colors: active) {
@@ -323,9 +329,22 @@
     .btn-secondary.btn-solid:hover:not(:disabled),
     .btn-neutral.btn-solid:hover:not(:disabled),
     .btn-negative.btn-solid:hover:not(:disabled) {
+      forced-color-adjust: none;   /* backplate を止めてラベルの黒消えを防ぐ */
       background-color: ButtonText;
       color: ButtonFace;
       border-color: ButtonText;
+    }
+    /* loading スピナーは面色(ButtonFace)で描き、ButtonText の面上で見えるようにする
+       （既定の var(--color-white) のままだと白面に白リングで消える）。 */
+    .btn-primary.btn-solid[data-loading]::after,
+    .btn-primary.btn-solid.btn-loading::after,
+    .btn-secondary.btn-solid[data-loading]::after,
+    .btn-secondary.btn-solid.btn-loading::after,
+    .btn-neutral.btn-solid[data-loading]::after,
+    .btn-neutral.btn-solid.btn-loading::after,
+    .btn-negative.btn-solid[data-loading]::after,
+    .btn-negative.btn-solid.btn-loading::after {
+      color: ButtonFace;
     }
     .btn:disabled {
       color: GrayText;
@@ -335,6 +354,7 @@
     .btn-secondary.btn-solid:disabled,
     .btn-neutral.btn-solid:disabled,
     .btn-negative.btn-solid:disabled {
+      forced-color-adjust: none;   /* enabled solid と同じく backplate を止める */
       background-color: GrayText;
       color: ButtonFace;
       border-color: GrayText;
