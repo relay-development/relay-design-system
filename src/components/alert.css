@@ -33,6 +33,7 @@
  *   内容に合うテーマを選び、色と文言を一致させる
  *   閉じられる場合は alert-close に aria-label="閉じる"
  *   一時表示のトースト代わりに使わない（alert はページ内常設）
+ *   強制カラーモードでは閉じる(×)ボタンの opacity を戻し、円と × に内部コントラストを付けて可視化する
  * Usage:
  *   <div class="alert alert-info">
  *     <span class="alert-icon"><svg viewBox="0 0 24 24">…</svg></span>
@@ -89,9 +90,16 @@
     outline-color: var(--color-info-600);
     outline-offset: 2px;
   }
-  /* 強制カラーモード: フォーカスの outline を CanvasText に統一（全 focusable 共通） */
+  /* 強制カラーモード: フォーカスの outline を CanvasText に統一（全 focusable 共通）。
+     閉じるボタンは「円(currentColor) ＋ 白い ×」＋ opacity 0.3 で描いており、強制カラーでは
+     円と × が両方 CanvasText に寄って同化し、さらに減光で薄くなって見えない。
+     opacity を戻し、円を CanvasText の面／× を Canvas 色で抜いて内部コントラストを確保する
+     （白い丸に黒い × ＝ 閉じると判別できる。× のみ版は fill=currentColor のまま白で可視）。 */
   @media (forced-colors: active) {
     .alert-close:focus-visible { outline-color: CanvasText; }
+    .alert-close { opacity: 1; }
+    .alert-close svg circle { fill: CanvasText; }
+    .alert-close svg path { stroke: Canvas; }
   }
   .alert-close > svg { @apply w-5 h-5; }
 
