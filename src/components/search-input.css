@@ -58,6 +58,10 @@
     @apply border-neutral-500;
   }
 
+  /* フォーカスリング — DS 標準（--shadow-focus-ring）。border 変化だけでは分かりにくいため追加。
+   * valid / error 両方に出す（:hover には出さない）。強制カラーは別途 outline で可視化。 */
+  .search-input:focus-within:not(.is-disabled) { box-shadow: var(--shadow-focus-ring); }
+
   /* Disabled (use .is-disabled class on container) */
   .search-input.is-disabled {
     @apply bg-neutral-50 border-neutral-200 cursor-not-allowed;

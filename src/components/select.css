@@ -26,7 +26,7 @@
            bg-surface border border-stroke-high rounded-sm
            appearance-none cursor-pointer
            transition-colors duration-150
-           focus:outline-none focus:border-info-600 focus:ring-2 focus:ring-info-600/20
+           focus:outline-none focus:border-info-600
            disabled:bg-neutral-50 disabled:text-fg-disabled disabled:cursor-not-allowed;
 
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%2364748b'><path fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.06l3.71-3.83a.75.75 0 111.08 1.04l-4.25 4.39a.75.75 0 01-1.08 0L5.21 8.27a.75.75 0 01.02-1.06z' clip-rule='evenodd'/></svg>");
@@ -36,8 +36,12 @@
   }
 
   .select-error {
-    @apply border-negative-500 focus:border-negative-500 focus:ring-negative-500/20;
+    @apply border-negative-500 focus:border-negative-500;
   }
+
+  /* フォーカスリング — DS 標準（--shadow-focus-ring）に統一（従来は 20% 透明の薄い ring）。
+   * valid / error 両方に出す。強制カラーは別途 outline で可視化。 */
+  .select:focus:not(:disabled) { box-shadow: var(--shadow-focus-ring); }
 
   /* 強制カラーモード: フォーカスを border 色＋ring(box-shadow) で示しているが、強制カラーでは
      影は無視され border も CanvasText になりフォーカスが判別できない。outline を出して

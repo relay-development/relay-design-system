@@ -70,6 +70,10 @@
     @apply border-neutral-500;
   }
 
+  /* フォーカスリング — DS 標準（--shadow-focus-ring）。border 変化だけでは分かりにくいため追加。
+   * valid / error 両方に出す（:hover には出さない）。強制カラーは別途 outline で可視化。 */
+  .selector:focus-within:not(.is-disabled) { box-shadow: var(--shadow-focus-ring); }
+
   /* Disabled — use .is-disabled class on the wrapper to mirror the
    * <select disabled> state without relying on :has() everywhere. */
   .selector.is-disabled {
