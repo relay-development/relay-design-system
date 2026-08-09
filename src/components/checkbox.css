@@ -46,7 +46,7 @@
  *   選択肢グループは fieldset+legend か label-control で見出しを付ける
  *   不確定は属性でなく JS プロパティ el.indeterminate=true
  *   エラー時は aria-invalid="true" + aria-describedby。sm(16px) はラベル併用で 24px 確保
- *   強制カラーモードでは選択済みを Highlight の枠で示し、白いチェック/ダッシュを Canvas 上に出す（塗ると白グリフが低コントラストになるため）。フォーカスは outline で可視化
+ *   強制カラーモードでは選択済みを Highlight の枠で示し、チェック/ダッシュは dark=白 / light=黒 を prefers-color-scheme で出し分けて両テーマで可視化する。フォーカスは outline で可視化
  * Usage:
  *   <label class="checkbox-label">
  *     <input type="checkbox" class="checkbox" />
@@ -171,11 +171,9 @@
       outline: 2px solid CanvasText;
       outline-offset: 2px;
     }
-    /* 選択は「枠色」で示す。チェック/ダッシュのグリフは url() SVG(白) で強制カラーでも
-       残るため、Highlight(明るい)で塗ると白グリフが同化して低コントラストになる。
-       塗らずに（bg は Canvas 化）枠を Highlight にし、白グリフを Canvas 上に出して
-       チェックとダッシュを高コントラストで判別できるようにする（既存の状態ルールと
-       同詳細度で後勝ち・!important 不使用）。 */
+    /* 選択は塗らず枠 Highlight で示す（グリフ有無＋枠色で判別）。チェック/ダッシュの
+       グリフ(ベイク白)は Canvas が黒の dark では見えるが、Canvas が白の light では
+       消えるため、下の prefers-color-scheme:light ブロックで黒グリフに差し替える。 */
     .checkbox:checked:not(:disabled):not(.checkbox-error),
     .checkbox:indeterminate:not(:disabled):not(.checkbox-error),
     .checkbox:checked:hover:not(:disabled):not(.checkbox-error),
@@ -192,6 +190,18 @@
     .checkbox-error:disabled:checked,
     .checkbox-error:disabled:indeterminate {
       border-color: GrayText;
+    }
+  }
+
+  /* light 強制カラーは Canvas が白のため、ベイク白のグリフが白×白で消える。
+     黒グリフに差し替える（background の data-URL SVG では currentColor/CanvasText が
+     テーマ間で不安定なため、明暗が連動する prefers-color-scheme で literal を出し分ける）。 */
+  @media (forced-colors: active) and (prefers-color-scheme: light) {
+    .checkbox:checked {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='4 11 8 15 16 5'/></svg>");
+    }
+    .checkbox:indeterminate {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='black' stroke-width='3' stroke-linecap='round'><line x1='5' y1='10' x2='15' y2='10'/></svg>");
     }
   }
 }
