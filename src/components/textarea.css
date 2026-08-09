@@ -78,6 +78,10 @@
     @apply border-neutral-500;
   }
 
+  /* フォーカスリング — DS 標準（--shadow-focus-ring）。border 変化だけでは分かりにくいため追加。
+   * valid / error 両方に出す（:hover には出さない）。強制カラーは別途 outline で可視化。 */
+  .textarea:focus:not(:disabled) { box-shadow: var(--shadow-focus-ring); }
+
   /* ============================================================
    * Size — font-size + line-height (8-multiple)
    * ============================================================ */
