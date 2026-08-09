@@ -42,7 +42,7 @@
  *
  *
  * アクセシビリティ:
- *   各 checkbox にラベル（checkbox-label で内包 か aria-labelledby）
+ *   アクセシブルネームは DS 非担保。実装で必ず付与する — 各 checkbox にラベルを checkbox-label で内包 か aria-labelledby で関連付ける
  *   選択肢グループは fieldset+legend か label-control で見出しを付ける
  *   不確定は属性でなく JS プロパティ el.indeterminate=true
  *   エラー時は aria-invalid="true" + aria-describedby。sm(16px) はラベル併用で 24px 確保

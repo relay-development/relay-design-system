@@ -40,7 +40,8 @@
  *   NG: エラー色を直書きしない → invalid 用クラスを使う。
  *
  * アクセシビリティ:
- *   可視ラベルを for/id か aria-labelledby で関連付ける
+ *   アクセシブルネームは DS 非担保（部品自体は名前を持たない）。実装で必ず付与する —
+ *     可視ラベルを for/id か aria-labelledby で関連付ける（無理なら aria-label）
  *   先頭プレースホルダは value=""（有効値を誤って初期選択させない）
  *   装飾アイコン（selector-icon）は aria-hidden="true"
  *   エラー時は aria-invalid="true" + aria-describedby でメッセージを関連付け

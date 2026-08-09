@@ -31,7 +31,8 @@
  *
  *
  * アクセシビリティ:
- *   可視ラベルを for/id か aria-labelledby で関連付ける（placeholder をラベルにしない）
+ *   アクセシブルネームは DS 非担保（部品自体は名前を持たない）。実装で必ず付与する —
+ *     可視ラベルを for/id か aria-labelledby で関連付ける（無理なら aria-label）。placeholder はラベルにしない
  *   サポート/エラー文を aria-describedby、エラー時は aria-invalid="true"（メッセージは field-error-text で入力欄の真下に置く）
  *   氏名・メール・電話等は autocomplete を付与、入力目的に合う type を選ぶ
  *   強制カラーモードでは border だけではフォーカスが判別できないため outline で可視化する

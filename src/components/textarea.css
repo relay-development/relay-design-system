@@ -38,7 +38,8 @@
  *   NG: エラー色を直書きしない → isInvalid 用クラスを使う。
   *
  * アクセシビリティ:
- *   可視ラベルを for/id か aria-labelledby で関連付ける（placeholder をラベルにしない）
+ *   アクセシブルネームは DS 非担保（部品自体は名前を持たない）。実装で必ず付与する —
+ *     可視ラベルを for/id か aria-labelledby で関連付ける（無理なら aria-label）。placeholder はラベルにしない
  *   サポート/エラーを aria-describedby、エラー時は aria-invalid="true"
  *   文字数カウンターは aria-live="polite" で残量・超過を通知（maxlength 併用）
  *   強制カラーモードでは border だけではフォーカスが判別できないため outline で可視化する
