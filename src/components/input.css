@@ -61,10 +61,13 @@
   .input:hover:not(:disabled):not(.input-error)  { @apply border-neutral-500; }
   .input:focus:not(:disabled):not(.input-error) { @apply border-neutral-500; }
 
-  /* フォーカスリング — DS 標準（他コンポーネントと同じ --shadow-focus-ring）。
+  /* フォーカスリング — outline + offset で枠との間に少し隙間を空ける（button と同じ方式）。
    * 従来は border 色の変化だけでキーボードフォーカスが分かりにくかったため追加。
-   * valid / error 両方に出す（:hover には出さない）。強制カラーは別途 outline で可視化。 */
-  .input:focus:not(:disabled) { box-shadow: var(--shadow-focus-ring); }
+   * valid / error 両方に出す（:hover には出さない）。強制カラー時は outline 色を CanvasText 化。 */
+  .input:focus:not(:disabled) {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
 
   /* ============================================================
    * Size — height / padding / font (Figma exact)
