@@ -29,6 +29,7 @@
  *   現在ページに aria-current="page"、前/次の矢印に aria-label を付ける
  *   端で押せない矢印は aria-disabled="true"、省略記号は aria-hidden="true"
  *   1 ページに収まる時は表示しない
+ *   強制カラーモードでは現在ページを Highlight で塗り、フォーカスを outline で可視化する（色だけに依存しない）
  * Usage:
  *   <nav class="pagination" aria-label="ページネーション">
  *     <ul>
@@ -97,5 +98,27 @@
   .pagination-ellipsis {
     @apply inline-flex items-center justify-center w-10 h-10
            text-sm leading-6 text-fg-low select-none;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   現在ページを bg(primary/700)＋透明枠で示しており、強制カラーでは背景が
+   *   Canvas 化・透明枠は透明のままで、現在ページが他と区別できなくなる。
+   *   Highlight で塗って明確に示す（backplate 対策で forced-color-adjust:none）。
+   *   focus は box-shadow リングで影が無視され見えないため outline を出す。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .pagination-item:focus-visible:not([aria-disabled="true"]),
+    .pagination-item.is-focus-preview {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
+    .pagination-item[aria-current="page"] {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+      border-color: Highlight;
+    }
   }
 }

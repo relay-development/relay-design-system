@@ -38,6 +38,7 @@
  *   完了は .is-completed に加え読み上げ用テキスト（.sr-only「完了」）で補う（ARIA に完了属性が無い）
  *   マーカーの数字・チェック SVG は aria-hidden="true"
  *   <ol> に aria-label（例: 申請の進捗）を付ける
+ *   強制カラーモードでは全マーカーに輪郭を出し、完了=塗り＋チェック / 現在=Highlight 枠で状態を保つ（接続線も system color で描き直す）
  * Usage:
  *   <ol class="stepper" aria-label="申請の進捗">
  *     <li class="stepper-step is-completed">
@@ -125,5 +126,39 @@
   }
   .stepper-step.is-completed .stepper-label {
     @apply text-fg-middle;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   マーカーの円と接続線を background(塗り) で描いているため、強制カラーでは
+   *   背景が Canvas 化して塗りベースの円・線が消える（border を持つ現在地の円だけ残る）。
+   *   全マーカーに輪郭を出して円を見せ、状態は形＋system color で示す:
+   *     completed = 塗り(CanvasText)＋抜きチェック / current = Highlight の輪郭 /
+   *     upcoming  = CanvasText の輪郭のみ。接続線も system color で描き直す。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    /* 全マーカーに輪郭を出す（bg 依存の円が消えるため） */
+    .stepper-marker {
+      border: 2px solid CanvasText;
+    }
+    /* 完了: 塗り＋チェックで示す（塗られた円=完了）。CanvasText で塗り check を Canvas 色で抜く */
+    .stepper-step.is-completed .stepper-marker {
+      forced-color-adjust: none;
+      background-color: CanvasText;
+      color: Canvas;
+      border-color: CanvasText;
+    }
+    /* 現在地: Highlight の輪郭で強調 */
+    .stepper-step[aria-current="step"] .stepper-marker {
+      border-color: Highlight;
+    }
+    /* 接続線も background 描画で消えるため system color で描き直す */
+    .stepper-step + .stepper-step::before {
+      background-color: CanvasText;
+    }
+    .stepper-step.is-completed + .stepper-step::before {
+      background-color: Highlight;
+    }
   }
 }

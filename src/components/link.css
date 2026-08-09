@@ -44,6 +44,7 @@
  *   リンク文言だけで目的が分かるようにする（「こちら」「詳細」を避ける）
  *   新規タブは target="_blank"+rel="noopener noreferrer" と、外部/新規タブの手がかりを添える
  *   下線を消さない（色は 3 種のクラスから選ぶ）。遷移でなく操作なら button を使う
+ *   強制カラーモードでは box-shadow のフォーカスリングが消えるため outline で可視化する
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
  *     <span class="link-label">リンクテキスト</span>
@@ -112,5 +113,16 @@
     outline: none;
     border-radius: var(--radius-xs);
     box-shadow: var(--shadow-focus-ring);
+  }
+
+  /* 強制カラーモード: box-shadow のフォーカスリングは影が無視され見えないため
+   * outline を出してキーボードフォーカスを可視化する。
+   * ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。 */
+  @media (forced-colors: active) {
+    .link:focus-visible,
+    .link.is-focus-preview {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
   }
 }

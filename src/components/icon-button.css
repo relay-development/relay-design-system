@@ -50,6 +50,10 @@
     outline-color: var(--color-info-600);
     outline-offset: 2px;
   }
+  /* 強制カラーモード: フォーカスの outline を CanvasText に統一（全 focusable 共通） */
+  @media (forced-colors: active) {
+    .icon-btn:focus-visible { outline-color: CanvasText; }
+  }
 
   /* icon is always 24×24 regardless of button size */
   .icon-btn > svg { @apply w-6 h-6; }
