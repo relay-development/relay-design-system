@@ -172,6 +172,15 @@
       outline-offset: 2px;
     }
 
+    /* disabled は他コンポーネント（button 等）と同じく GrayText の不透明表示に揃える。
+       通常モードは opacity 0.5 で「押せない感」を出すが、強制カラーでは opacity が
+       GrayText を暗くして他コンポーネントと色がズレて見えるため、opacity を戻して
+       GrayText の色だけで無効を示す。 */
+    .tab:disabled,
+    .tab.is-disabled {
+      opacity: 1;
+    }
+
     /* solid: 選択チップを Highlight で塗る（後勝ちで hover 版も上書き） */
     .tab-solid[aria-selected="true"],
     .tab-solid[aria-selected="true"]:hover:not(:disabled),
