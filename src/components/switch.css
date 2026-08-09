@@ -37,7 +37,7 @@
  *
  *
  * アクセシビリティ:
- *   各スイッチにラベル（switch-label で内包 か aria-labelledby）
+ *   アクセシブルネームは DS 非担保。実装で必ず付与する — 各スイッチにラベルを switch-label で内包 か aria-labelledby で関連付ける
  *   即時反映の操作に使う（保存ボタンで確定する項目は checkbox）
  *   switch-sm(高さ20px) はラベル併用でタッチ領域 24px 以上を確保
  *   role=switch で「オン/オフ」が伝わる。状態を色だけで表さない

@@ -44,7 +44,7 @@
  * アクセシビリティ:
  *   同じグループの radio に必ず同じ name（単一選択の要）
  *   グループは fieldset+legend か label-control で見出しを付ける
- *   各 radio に radio-label でラベルを内包する
+ *   アクセシブルネームは DS 非担保。実装で必ず付与する — 各 radio にラベルを radio-label で内包 か aria-labelledby で関連付ける
  *   エラーは aria-invalid + aria-describedby をグループに関連付け（選択移動はネイティブの矢印キー）
  *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の枠＋中央ドットで示す（ドットは radial-gradient でなく url() SVG で描き強制カラーでも残す）。フォーカスは outline で可視化
  * Usage:

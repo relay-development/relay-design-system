@@ -12,7 +12,8 @@
  *   NG: 色・角丸を直書きしない → .select の既定（トークン）を保つ。
   *
  * アクセシビリティ:
- *   可視ラベルを for/id か aria-labelledby で関連付ける
+ *   アクセシブルネームは DS 非担保（部品自体は名前を持たない）。実装で必ず付与する —
+ *     可視ラベルを for/id か aria-labelledby で関連付ける（無理なら aria-label）
  *   先頭プレースホルダは value=""（有効値を誤って初期選択させない）
  *   エラー時は aria-invalid="true" + aria-describedby でメッセージを関連付け
  *   メッセージは field-error-text で選択欄の「真下」に置く（操作対象と同じ視野に入れる）
