@@ -52,6 +52,7 @@
  *   ホバーでの表示・非表示に依存させない — 重要な情報・操作は tooltip だけに置かず、
  *   本文や label-control の補足など常時見える場所でも提供する（視野狭窄の利用者は
  *   ホバーで起きる変化に気づきにくい）
+ *   強制カラーモードでは影が無視されるため、吹き出しと矢印に CanvasText の輪郭線を出して縁取る
  * Usage:
  *   <span class="tooltip">
  *     <button type="button" class="btn btn-md btn-primary btn-outline" aria-describedby="tip-1">保存</button>
@@ -165,5 +166,21 @@
     top: 50%;
     margin-left: 0;   /* top 配置の横センタリング用マージンを打ち消す */
     margin-top: calc(var(--spacing) * -1);
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   吹き出しの立体感は box-shadow(shadow-md) だけで表現しているため、
+   *   強制カラーでは影が無視されて吹き出しが背景 (Canvas) と同化し、輪郭が
+   *   完全に消える。吹き出しと矢印に CanvasText の輪郭線を出して縁取る。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .tooltip-content {
+      border: 1px solid CanvasText;
+    }
+    .tooltip-content::before {
+      border: 1px solid CanvasText;
+    }
   }
 }
