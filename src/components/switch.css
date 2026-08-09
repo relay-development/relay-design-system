@@ -41,7 +41,7 @@
  *   即時反映の操作に使う（保存ボタンで確定する項目は checkbox）
  *   switch-sm(高さ20px) はラベル併用でタッチ領域 24px 以上を確保
  *   role=switch で「オン/オフ」が伝わる。状態を色だけで表さない
- *   強制カラーモードではトラックに輪郭線を出し、ON は Highlight の塗りで示す（背景色/つまみ画像に依存しない）。フォーカスは outline で可視化
+ *   強制カラーモードではトラックに輪郭線を出し、ON は Highlight の塗りで示す。つまみは白塗り＋黒枠にして light/dark どちらの OFF/ON トラック上でも見えるようにする。フォーカスは outline で可視化
  * Usage:
  *   <label class="switch-label">
  *     <input type="checkbox" role="switch" class="switch" />
@@ -146,6 +146,10 @@
        :hover 版まで含めて後勝ちで上書き（!important 不使用）。 */
     .switch {
       border: 1px solid CanvasText;
+      /* つまみをベイク白のままにすると light の OFF（白トラック）で白×白で消える。
+         白塗り＋黒枠にして、どのトラック（Canvas/Highlight）・どのテーマでも
+         塗りか枠のどちらかが必ず対比するようにする（両位置で見える）。 */
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='9' fill='white' stroke='black' stroke-width='1.5'/></svg>");
     }
     .switch:checked:not(:disabled),
     .switch:checked:hover:not(:disabled) {

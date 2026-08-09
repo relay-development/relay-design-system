@@ -46,7 +46,7 @@
  *   グループは fieldset+legend か label-control で見出しを付ける
  *   アクセシブルネームは DS 非担保。実装で必ず付与する — 各 radio にラベルを radio-label で内包 か aria-labelledby で関連付ける
  *   エラーは aria-invalid + aria-describedby をグループに関連付け（選択移動はネイティブの矢印キー）
- *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の枠＋中央ドットで示す（ドットは radial-gradient でなく url() SVG で描き強制カラーでも残す）。フォーカスは outline で可視化
+ *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の枠＋中央ドットで示す（ドットは url() SVG。dark=白 / light=黒 を prefers-color-scheme で出し分け）。フォーカスは outline で可視化
  * Usage:
  *   <label class="radio-label">
  *     <input type="radio" name="plan" class="radio" />
@@ -155,10 +155,10 @@
     }
     /* 内側ドットは radial-gradient(background-image) のため強制カラーで除去され、
        べた塗りだけになって「選択された感」が弱く分かりにくい。url() の SVG 円に
-       差し替えると強制カラーでも残り system color に再配色されるので、従来どおり
-       「未選択=空円 / 選択=枠(Highlight)＋中央ドット」で明確に区別できる。
-       塗らずドットを Canvas 上に出してコントラストを確保する（dot は大きめ r=6=直径60%）。
-       base .radio:checked の gradient より後勝ちで上書き（!important 不使用）。 */
+       差し替えて従来どおり「未選択=空円 / 選択=枠(Highlight)＋中央ドット」で示す（dot は
+       大きめ r=6=直径60%）。ベイク白のドットは Canvas が黒の dark では見えるが、Canvas が
+       白の light では消えるため、下の prefers-color-scheme:light ブロックで黒に差し替える。
+       base の gradient より後勝ち（!important 不使用）。 */
     .radio:checked {
       background-color: Canvas;
       background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='6' fill='white'/></svg>");
@@ -171,6 +171,15 @@
     .radio:checked:not(:disabled):not(.radio-error),
     .radio:checked:hover:not(:disabled):not(.radio-error) {
       border-color: Highlight;
+    }
+  }
+
+  /* light 強制カラーは Canvas が白のため、ベイク白のドットが白×白で消える。黒に差し替える
+     （background の data-URL SVG では currentColor/CanvasText がテーマ間で不安定なため
+     prefers-color-scheme で literal を出し分ける）。 */
+  @media (forced-colors: active) and (prefers-color-scheme: light) {
+    .radio:checked {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='6' fill='black'/></svg>");
     }
   }
 }
