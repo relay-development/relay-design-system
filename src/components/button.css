@@ -52,7 +52,8 @@
   /* キーボードフォーカスリング — 生 CSS で outline-style を確実に solid にする。
    * Tailwind v4 では focus:outline-none が --tw-outline-style:none を立て、
    * focus-visible:outline-2 では outline-style が none のまま描画されないため。 */
-  .btn:focus-visible {
+  .btn:focus-visible,
+  .btn.is-focus-preview {
     outline-width: 2px;
     outline-style: solid;
     outline-color: var(--color-info-600);
@@ -80,7 +81,8 @@
     color: var(--color-white);
   }
   .btn-primary.btn-solid:hover:not(:disabled),
-  .btn-primary.btn-solid:active:not(:disabled) { background-color: var(--color-primary-800); }
+  .btn-primary.btn-solid:active:not(:disabled),
+  .btn-primary.btn-solid.is-hover-preview:not(:disabled) { background-color: var(--color-primary-800); }
   .btn-primary.btn-solid:disabled              { background-color: var(--color-primary-200); }
 
   .btn-primary.btn-outline {
@@ -124,7 +126,8 @@
     color: var(--color-neutral-900);
   }
   .btn-secondary.btn-solid:hover:not(:disabled),
-  .btn-secondary.btn-solid:active:not(:disabled) { background-color: var(--color-secondary-500); }
+  .btn-secondary.btn-solid:active:not(:disabled),
+  .btn-secondary.btn-solid.is-hover-preview:not(:disabled) { background-color: var(--color-secondary-500); }
   .btn-secondary.btn-solid:disabled {
     background-color: var(--color-secondary-200);
     color: var(--color-neutral-400);
@@ -174,7 +177,8 @@
     color: var(--color-white);
   }
   .btn-neutral.btn-solid:hover:not(:disabled),
-  .btn-neutral.btn-solid:active:not(:disabled) { background-color: var(--color-neutral-800); }
+  .btn-neutral.btn-solid:active:not(:disabled),
+  .btn-neutral.btn-solid.is-hover-preview:not(:disabled) { background-color: var(--color-neutral-800); }
   .btn-neutral.btn-solid:disabled              { background-color: var(--color-neutral-200); }
 
   .btn-neutral.btn-outline {
@@ -219,7 +223,8 @@
     color: var(--color-white);
   }
   .btn-negative.btn-solid:hover:not(:disabled),
-  .btn-negative.btn-solid:active:not(:disabled) { background-color: var(--color-negative-600); }
+  .btn-negative.btn-solid:active:not(:disabled),
+  .btn-negative.btn-solid.is-hover-preview:not(:disabled) { background-color: var(--color-negative-600); }
   .btn-negative.btn-solid:disabled              { background-color: var(--color-negative-200); }
 
   .btn-negative.btn-outline {
@@ -322,7 +327,8 @@
       border-color: ButtonText;
     }
     /* focus: 全 focusable で outline を CanvasText に統一（normal は info/600） */
-    .btn:focus-visible {
+    .btn:focus-visible,
+    .btn.is-focus-preview {
       outline-color: CanvasText;
     }
     .btn-primary.btn-solid,
@@ -332,7 +338,11 @@
     .btn-primary.btn-solid:hover:not(:disabled),
     .btn-secondary.btn-solid:hover:not(:disabled),
     .btn-neutral.btn-solid:hover:not(:disabled),
-    .btn-negative.btn-solid:hover:not(:disabled) {
+    .btn-negative.btn-solid:hover:not(:disabled),
+    .btn-primary.btn-solid.is-hover-preview:not(:disabled),
+    .btn-secondary.btn-solid.is-hover-preview:not(:disabled),
+    .btn-neutral.btn-solid.is-hover-preview:not(:disabled),
+    .btn-negative.btn-solid.is-hover-preview:not(:disabled) {
       forced-color-adjust: none;   /* backplate を止めてラベルの黒消えを防ぐ */
       background-color: ButtonText;
       color: ButtonFace;
