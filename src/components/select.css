@@ -16,6 +16,7 @@
  *   先頭プレースホルダは value=""（有効値を誤って初期選択させない）
  *   エラー時は aria-invalid="true" + aria-describedby でメッセージを関連付け
  *   メッセージは field-error-text で選択欄の「真下」に置く（操作対象と同じ視野に入れる）
+ *   強制カラーモードでは border/ring だけではフォーカスが判別できないため outline で可視化する
 */
 
 @layer components {
@@ -36,5 +37,16 @@
 
   .select-error {
     @apply border-negative-500 focus:border-negative-500 focus:ring-negative-500/20;
+  }
+
+  /* 強制カラーモード: フォーカスを border 色＋ring(box-shadow) で示しているが、強制カラーでは
+     影は無視され border も CanvasText になりフォーカスが判別できない。outline を出して
+     可視化する（全 focusable 共通の outline 2px solid CanvasText / offset 2px）。
+     ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。 */
+  @media (forced-colors: active) {
+    .select:focus:not(:disabled) {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
   }
 }

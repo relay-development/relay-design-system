@@ -41,6 +41,7 @@
  *   可視ラベルを for/id か aria-labelledby で関連付ける（placeholder をラベルにしない）
  *   サポート/エラーを aria-describedby、エラー時は aria-invalid="true"
  *   文字数カウンターは aria-live="polite" で残量・超過を通知（maxlength 併用）
+ *   強制カラーモードでは border だけではフォーカスが判別できないため outline で可視化する
 */
 
 @layer components {
@@ -122,5 +123,16 @@
   .textarea-control.is-invalid .textarea-counter,
   .textarea-counter.is-invalid {
     @apply text-negative-500;
+  }
+
+  /* 強制カラーモード: フォーカスを border 色の変化だけで示しているが、強制カラーでは
+     border がどの状態でも CanvasText になりフォーカスが判別できない。outline を出して
+     可視化する（全 focusable 共通の outline 2px solid CanvasText / offset 2px）。
+     ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。 */
+  @media (forced-colors: active) {
+    .textarea:focus:not(:disabled) {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
   }
 }

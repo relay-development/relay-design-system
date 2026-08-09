@@ -34,6 +34,7 @@
  *   可視ラベルを for/id か aria-labelledby で関連付ける（placeholder をラベルにしない）
  *   サポート/エラー文を aria-describedby、エラー時は aria-invalid="true"（メッセージは field-error-text で入力欄の真下に置く）
  *   氏名・メール・電話等は autocomplete を付与、入力目的に合う type を選ぶ
+ *   強制カラーモードでは border だけではフォーカスが判別できないため outline で可視化する
  * Usage:
  *   <input type="text" class="input input-md" placeholder="入力内容" />
  *   <input type="email" class="input input-md input-error" />
@@ -84,5 +85,16 @@
   }
   .input-error:disabled {
     @apply bg-neutral-50 border-negative-200 text-fg-disabled;
+  }
+
+  /* 強制カラーモード: フォーカスを border 色の変化だけで示しているが、強制カラーでは
+     border がどの状態でも CanvasText になりフォーカスが判別できない。outline を出して
+     可視化する（全 focusable 共通の outline 2px solid CanvasText / offset 2px）。
+     ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。 */
+  @media (forced-colors: active) {
+    .input:focus:not(:disabled) {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
   }
 }

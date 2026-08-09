@@ -44,7 +44,7 @@
  *   先頭プレースホルダは value=""（有効値を誤って初期選択させない）
  *   装飾アイコン（selector-icon）は aria-hidden="true"
  *   エラー時は aria-invalid="true" + aria-describedby でメッセージを関連付け
- *   強制カラーモードでは chevron の塗りを system color で描き直し、矢印が消えないようにする
+ *   強制カラーモードでは chevron の塗りを system color で描き直し、矢印が消えないようにする。フォーカスは border だけでは判別できないため outline で可視化する
  *
  * Usage:
  *   <div class="selector selector-md">
@@ -185,10 +185,16 @@
    *   chevron は mask-image ＋ background-color(塗り) で描いており、強制カラーでは
    *   background が Canvas 化して矢印が消える（枠は border なので残る）。
    *   塗りを system color で描き直して矢印を見せる（無効時は GrayText）。
+   *   フォーカスは border 色の変化だけで示しており強制カラーでは判別できないため
+   *   outline を出す（全 focusable 共通の outline 2px solid CanvasText / offset 2px）。
    *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
    * ============================================================ */
   @media (forced-colors: active) {
     .selector::after            { background-color: CanvasText; }
     .selector.is-disabled::after { background-color: GrayText; }
+    .selector:focus-within:not(.is-disabled) {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
   }
 }
