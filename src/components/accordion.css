@@ -41,8 +41,9 @@
  * アクセシビリティ:
  *   <details>/<summary> によりトグルの役割・展開状態・キーボード操作（Enter/Space）が標準で確立
  *   開閉アイコンは見出しの左に置き、視野狭窄でも操作要素を見落とさないようにする
- *   :focus-visible で info/600 のフォーカスリングを出す（トリガー全体が対象）
+ *   :focus-visible で info/600 のフォーカスリングを出す（トリガー全体が対象。強制カラーは CanvasText の outline）
  *   見出しは意味の順序どおりに並べ、重要情報を折り畳みの中だけに置かない
+ *   強制カラーモードでは chevron の色を CanvasText にして可視化する（色クラスを svg 直付けすると強制変換されず暗いまま残るため）
  * Usage:
  *   <div class="accordion">
  *     <details class="accordion-item" open>
@@ -128,5 +129,18 @@
    * ============================================================ */
   .accordion-panel {
     @apply px-4 pb-4 pl-11 text-base leading-8 font-normal text-fg-high;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   chevron は色クラス (text-fg-middle) を <svg> 要素自身に持つ。SVG は
+   *   強制カラーで色が system color に変換されず著者色 (slate-700) のまま残る
+   *   ため、暗い背景で矢印が見えなくなる（色を親から継承するアイコンは可視）。
+   *   CanvasText を明示して確実に可視化する（base の text-fg-middle よりソース順で
+   *   後に置き後勝ち・!important 不使用）。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .accordion-icon { color: CanvasText; }
   }
 }
