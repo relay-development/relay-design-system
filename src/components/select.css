@@ -39,9 +39,12 @@
     @apply border-negative-500 focus:border-negative-500;
   }
 
-  /* フォーカスリング — DS 標準（--shadow-focus-ring）に統一（従来は 20% 透明の薄い ring）。
-   * valid / error 両方に出す。強制カラーは別途 outline で可視化。 */
-  .select:focus:not(:disabled) { box-shadow: var(--shadow-focus-ring); }
+  /* フォーカスリング — outline + offset で枠との間に少し隙間を空ける（button と同じ方式）。
+   * 従来は 20% 透明の薄い ring だった。valid / error 両方に出す。強制カラー時は CanvasText 化。 */
+  .select:focus:not(:disabled) {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
 
   /* 強制カラーモード: フォーカスを border 色＋ring(box-shadow) で示しているが、強制カラーでは
      影は無視され border も CanvasText になりフォーカスが判別できない。outline を出して

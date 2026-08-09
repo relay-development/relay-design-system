@@ -78,9 +78,12 @@
     @apply border-neutral-500;
   }
 
-  /* フォーカスリング — DS 標準（--shadow-focus-ring）。border 変化だけでは分かりにくいため追加。
-   * valid / error 両方に出す（:hover には出さない）。強制カラーは別途 outline で可視化。 */
-  .textarea:focus:not(:disabled) { box-shadow: var(--shadow-focus-ring); }
+  /* フォーカスリング — outline + offset で枠との間に少し隙間を空ける（button と同じ方式）。
+   * valid / error 両方に出す（:hover には出さない）。強制カラー時は outline 色を CanvasText 化。 */
+  .textarea:focus:not(:disabled) {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
 
   /* ============================================================
    * Size — font-size + line-height (8-multiple)
