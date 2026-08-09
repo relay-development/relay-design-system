@@ -46,7 +46,7 @@
  *   グループは fieldset+legend か label-control で見出しを付ける
  *   各 radio に radio-label でラベルを内包する
  *   エラーは aria-invalid + aria-describedby をグループに関連付け（選択移動はネイティブの矢印キー）
- *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の塗りで示す（内側ドットの背景画像に依存しない）。フォーカスは outline で可視化
+ *   強制カラーモードでも選択状態が分かるよう、選択済みは Highlight の枠＋中央ドットで示す（ドットは radial-gradient でなく url() SVG で描き強制カラーでも残す）。フォーカスは outline で可視化
  * Usage:
  *   <label class="radio-label">
  *     <input type="radio" name="plan" class="radio" />
@@ -154,19 +154,23 @@
       outline-offset: 2px;
     }
     /* 内側ドットは radial-gradient(background-image) のため強制カラーで除去され、
-       リングだけでは選択/未選択を判別できない。円全体を選択色 (Highlight) で塗って
-       「空の円=未選択 / 塗られた円=選択」で示す（background-color は honored）。
-       ドットが描画される実装向けに currentColor を HighlightText にし、
-       塗り (Highlight) と同化して低コントラストにならないようにする。
-       background-color の競合は base .radio のみ＝後勝ちで上書き（!important 不使用）。 */
-    .radio:checked:not(:disabled),
-    .radio:checked:hover:not(:disabled) {
-      background-color: Highlight;
-      color: HighlightText;
+       べた塗りだけになって「選択された感」が弱く分かりにくい。url() の SVG 円に
+       差し替えると強制カラーでも残り system color に再配色されるので、従来どおり
+       「未選択=空円 / 選択=枠(Highlight)＋中央ドット」で明確に区別できる。
+       塗らずドットを Canvas 上に出してコントラストを確保する（dot は大きめ r=6=直径60%）。
+       base .radio:checked の gradient より後勝ちで上書き（!important 不使用）。 */
+    .radio:checked {
+      background-color: Canvas;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><circle cx='10' cy='10' r='6' fill='white'/></svg>");
+      background-size: 100% 100%;
+      background-position: center;
+      background-repeat: no-repeat;
     }
-    .radio:disabled:checked {
-      background-color: GrayText;
-      color: Canvas;
+    /* 枠も選択色に（base の :not(.radio-error) 付きルールと同詳細度＝後勝ち）。
+       未選択(CanvasText の枠)と枠色でも差がつく。 */
+    .radio:checked:not(:disabled):not(.radio-error),
+    .radio:checked:hover:not(:disabled):not(.radio-error) {
+      border-color: Highlight;
     }
   }
 }
