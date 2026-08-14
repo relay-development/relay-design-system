@@ -2,7 +2,7 @@
 
 relay Design System の MCP サーバーが提供する **9 つのツール** と、その使い方をまとめる。
 
-- **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
+- **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
 - 実体: [src/mcp/handlers.mjs](../src/mcp/handlers.mjs)（両トランスポート共有）。データは `dist/mcp-index.json`（[scripts/build-mcp.mjs](../scripts/build-mcp.mjs) が正本ファイルから生成）。
 
@@ -156,7 +156,7 @@ npm パッケージに `relay-ds-mcp` という stdio MCP サーバーが同梱�
 
 URL を登録するだけで使える。中身は公開情報のため **authless**（認証なし）・stateless で、Cloudflare Workers の無料枠で動く（[src/mcp/worker.mjs](../src/mcp/worker.mjs)）。
 
-- **エンドポイント**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
+- **エンドポイント**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 - **claude.ai**: Settings → Connectors → Add custom connector → 上記 URL を貼る（認証不要）
 - stdio 版とまったく同じツール／リソースを返す（ロジックは [src/mcp/handlers.mjs](../src/mcp/handlers.mjs) で共通化）
 

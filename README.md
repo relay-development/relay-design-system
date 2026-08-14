@@ -108,7 +108,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 AI（Claude Code / Cursor / claude.ai 等）にこのデザインシステムの**コンポーネント仕様・トークン・必須ルール**を直接読ませる MCP サーバーを提供しています。ハードコード値や規約違反を避けた relay 準拠の UI を生成しやすくなります。
 
 - **ローカル版（stdio）**: npm パッケージに `relay-ds-mcp` として同梱
-- **リモート版（URL 登録のみ・Node 不要）**: `https://relay-design-system-mcp.s-taguchi.workers.dev/mcp`
+- **リモート版（URL 登録のみ・Node 不要）**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 
 セットアップ手順と 9 つのツールの仕様は [docs/MCP-TOOLS.md](docs/MCP-TOOLS.md) を参照。
 
