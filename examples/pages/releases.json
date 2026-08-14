@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.25.1",
+      "date": "2026-08-14",
+      "title": "リモート MCP の URL 変更（ドキュメントのみ）",
+      "summary": "リモート MCP サーバーの URL が https://relay-design-system-mcp.relaytown.workers.dev/mcp に変わりました。旧 URL（s-taguchi.workers.dev）は失効しているため、Claude Code / claude.ai などに旧 URL で登録している場合は新 URL で再登録してください。README・MCP ツールリファレンス・カタログの MCP ページの記載を更新したのみで、CSS・トークン・コンポーネントの変更は一切ありません。"
+    },
+    {
       "version": "0.25.0",
       "date": "2026-08-10",
       "title": "強制カラーモード（ハイコントラスト）対応と中間コンテンツ幅の追加",
