@@ -9,7 +9,8 @@
  *   npm run eval:report            # 全履歴（新しい順に最大 20 件）
  *   npm run eval:report -- --all   # 全件
  *
- * 凡例: ✓ PASS / ✗ FAIL / － そのお題を含まない実行（--case 指定など）
+ * 凡例: ✓ PASS / ✗ FAIL（品質） / G 生成失敗 / J 審査不能 / － そのお題を含まない実行
+ *       G / J は測定側の故障（品質シグナルではない）。計には数えず !n で件数を示す。
  *       行末の * は機械チェックのみ（--skip-judge）の実行
  */
 
@@ -17,6 +18,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { CASES } from "./cases.mjs";
+import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const resultsDir = path.join(__dirname, "results");
@@ -59,22 +61,32 @@ for (const run of shown) {
   const byId = new Map((run.results ?? []).map((r) => [r.id, r]));
   const cells = ids.map((i) => {
     const r = byId.get(i);
-    return col(r ? (r.pass ? "✓" : "✗") : "－", idW);
+    return col(r ? STATUS_SYMBOL[classifyResult(r)] : "－", idW);
   });
   const date = (run.ranAt ?? run.file).slice(0, 16).replace("T", " ");
   const flag = run.skipJudge ? " *" : "";
-  console.log(col(date, 18) + col(run.dsVersion ?? "?", 9) + cells.join("") + `${run.passed}/${run.total}${flag}`);
+  const statuses = (run.results ?? []).map(classifyResult);
+  const errN = statuses.filter(isError).length;
+  const passN = statuses.filter((s) => s === "pass").length;
+  const tally = `${passN}/${statuses.length - errN}${errN ? ` !${errN}` : ""}`;
+  console.log(col(date, 18) + col(run.dsVersion ?? "?", 9) + cells.join("") + `${tally}${flag}`);
 }
-console.log("\n凡例: ✓ PASS / ✗ FAIL / － 対象外の実行。* は機械チェックのみ（--skip-judge）");
+console.log("\n凡例: ✓ PASS / ✗ FAIL（品質） / G 生成失敗（ハーネス） / J 審査不能（審査員の故障） / － 対象外の実行");
+console.log("      G / J は品質シグナルではない。計は PASS/測定数（!n = 測定不能 n 件）。* は機械チェックのみ（--skip-judge）");
 
 // 直近 2 回のフル実行（全お題）の差分を要約
 const full = shown.filter((r) => (r.results ?? []).length === CASES.length);
 if (full.length >= 2) {
   const [prev, last] = full.slice(-2);
   const prevById = new Map(prev.results.map((r) => [r.id, r]));
-  const changes = last.results.filter((r) => prevById.get(r.id) && prevById.get(r.id).pass !== r.pass);
+  const changes = last.results.filter((r) => {
+    const p = prevById.get(r.id);
+    return p && classifyResult(p) !== classifyResult(r);
+  });
   if (changes.length) {
     console.log("\n直近のフル実行間の変化:");
-    for (const r of changes) console.log(`  ${r.pass ? "✗→✓" : "✓→✗"} ${r.id}`);
+    for (const r of changes) {
+      console.log(`  ${STATUS_SYMBOL[classifyResult(prevById.get(r.id))]}→${STATUS_SYMBOL[classifyResult(r)]} ${r.id}`);
+    }
   }
 }
