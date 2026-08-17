@@ -11,6 +11,12 @@
  *   mustClasses  — 生成物に必須の relay クラス（機械チェック・Phase 1）
  *   mustPatterns — 生成物に必須の正規表現（機械チェック・Phase 1）
  *   rubric       — LLM 審査員の採点項目（Phase 2 で使用。定義のみ先行）
+ *
+ * お題の追加元:
+ *   実運用（本体サイトのリプレイス等）で実際に AI がやらかした失敗を一般化して
+ *   追加する（机上で発明しない）。出典はお題のコメントに書く。対象は
+ *   「DS の知識で防げたはずの違反」のみ — チーム判断・プロダクト固有の決定は
+ *   お題にしない（それは期待側の問題であり DS では防げない）。
  */
 
 export const CASES = [
@@ -76,6 +82,52 @@ export const CASES = [
       "ナビゲーションに menu を使っている（独自のリスト+ハイライトの手書きではない）",
       "現在地の表現が aria-current で、is-active 等の独自状態クラスを使っていない",
       "セクション間の遷移がリンク（a 要素）で、button を遷移に流用していない",
+    ],
+  },
+  // ---- 以下は本体サイトのリプレイス作業（2026-08）で実際に起きた失敗の一般化 ----
+  // 出典の詳細: evals/ds-replace-first-vs-final.md（ローカル専用・コミットしない）
+  {
+    // 出典: Q&A を details/summary + 独自 CSS で自作し、後から accordion に置換された
+    id: "faq-accordion",
+    prompt:
+      "サービスの「よくある質問」セクションを作ってください。質問を 6 件ほど載せ、回答は最初は閉じておき、質問を押すと開くようにしてください。",
+    mustClasses: ["accordion", "accordion-item", "accordion-trigger"],
+    mustPatterns: [
+      { pattern: "<details", label: "ネイティブ <details> ベース（accordion の正本仕様。独自 JS 開閉でない）" },
+    ],
+    rubric: [
+      "開閉 UI に accordion を使っている（details/summary への独自 CSS や独自 JS の自作ではない）",
+      "トリガーが summary（accordion-trigger）で、div の onclick 等キーボード操作できない自作トリガーでない",
+      "開閉アイコン（chevron）が見出しの左にある（右端だけに置いていない）",
+      "is-open 等の独自状態クラスを発明していない（開閉状態は details の open に任せる）",
+    ],
+  },
+  {
+    // 出典: 絞り込みが select/checkbox の change で自動送信になっていて WCAG 3.2.2 で作り直し。
+    //       select がアクセシブルネームなし（placeholder 頼み）で後追い修正
+    id: "listing-filter",
+    prompt:
+      "物件一覧のページに、エリア（都道府県から 1 つ選択）と種別（売買・賃貸から複数選択可）で絞り込める UI を付けてください。",
+    mustClasses: ["select", "checkbox", "btn"],
+    mustPatterns: [],
+    rubric: [
+      "絞り込みの実行が明示的なボタンで行われ、select / checkbox の change で自動送信・自動リロードする作りになっていない（WCAG 3.2.2）",
+      "select にアクセシブルネームがある（label の関連付け or aria-label。placeholder 頼みにしない）",
+      "チェックボックスに checkbox コンポーネントを使い、label がクリック可能に関連付いている（for/id または包含）",
+    ],
+  },
+  {
+    // 出典: 「テキストリンクは常に下線」原則の適用が揺れた（ナビは menu-item 例外、本文は下線必須）
+    id: "article-links",
+    prompt:
+      "事業承継の基礎を解説する記事の本文セクションを作ってください。本文の途中で、関連する 2 つの解説記事へ読者を誘導してください。",
+    mustClasses: ["link", "typo-article"],
+    mustPatterns: [],
+    rubric: [
+      "関連記事への誘導が a 要素のテキストリンク（link）で、下線が常時ある（下線を消す・hover 時のみ下線にする細工をしていない）",
+      "遷移に button を流用していない",
+      "記事本文が typo-article を使い、text-fg-high とセットになっている",
+      "見出しに typo-* のセマンティック階層を使っている",
     ],
   },
 ];
