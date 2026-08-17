@@ -7,7 +7,7 @@
         </div>
 
         <p class="typo-article text-fg-high mb-6">
-          AI エージェントに UI を作らせる時代、「AI がデザインシステムのルール通りに作れているか」は誰も確かめていませんでした。relay では<strong>固定のお題を AI に解かせ、ルール通りに作れたかを採点する回帰テスト（evals）</strong>を運用しています。デザインシステムやドキュメントを変えたとき、また AI モデル自体が更新されたときに、生成品質が静かに劣化していないかをスコアで検知します。
+          AI エージェントに UI を作らせる時代、「AI がデザインシステムのルール通りに作れているか」は誰も確かめていませんでした。relay では<strong>固定のお題（現在 8 件）を AI に解かせ、ルール通りに作れたかを採点する回帰テスト（evals）</strong>を運用しています。デザインシステムやドキュメントを変えたとき、また AI モデル自体が更新されたときに、生成品質が静かに劣化していないかをスコアで検知します。
         </p>
 
         <h3 class="typo-xlarge mb-4">hooks と evals — 防ぐ仕組みと測る仕組み</h3>
@@ -56,6 +56,7 @@
                 <li>色・余白などのハードコード（配布中の hooks と同一判定）</li>
                 <li>実在しないクラスの捏造（例: <code class="typo-xsmall px-1 bg-neutral-100 rounded">btn-outline</code> のような架空 variant）</li>
                 <li>必須マークアップ（<code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-current</code> など）</li>
+                <li>全お題共通のアクセシビリティ検査（<code class="typo-xsmall px-1 bg-neutral-100 rounded">lang</code> 指定・img の <code class="typo-xsmall px-1 bg-neutral-100 rounded">alt</code>・装飾 svg の <code class="typo-xsmall px-1 bg-neutral-100 rounded">aria-hidden</code>）</li>
               </ul>
             </div>
           </div>
@@ -74,46 +75,111 @@
           </div>
         </div>
 
+        <h3 class="typo-xlarge mb-4">結果は 4 区分 — 品質の低下と測定の故障を混同しない</h3>
+        <p class="typo-article text-fg-high mb-4">
+          運用してみると、スコアが落ちる理由は「AI の生成品質」だけではありませんでした。生成そのものの失敗や審査員の不調が混ざると、劣化が本物かどうか判別できません。そこで結果を 4 区分で記録し、<strong>品質の失敗（FAIL）だけをデザインシステム改善のシグナル</strong>として扱います。
+        </p>
+        <div class="overflow-x-auto mb-6">
+            <table class="simple-table">
+              <thead>
+                <tr>
+                  <th>区分</th>
+                  <th>意味</th>
+                  <th>対処</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th><span class="badge badge-soft-success">PASS</span></th>
+                  <td>全チェック合格</td>
+                  <td>—</td>
+                </tr>
+                <tr>
+                  <th><span class="badge badge-soft-danger">FAIL</span></th>
+                  <td>採点したうえで不合格。<strong>唯一の品質シグナル</strong></td>
+                  <td>デザインシステム側の知識を直す</td>
+                </tr>
+                <tr>
+                  <th><span class="badge badge-soft-neutral">生成失敗</span></th>
+                  <td>生成自体が失敗（測定の故障）</td>
+                  <td>テスト基盤側を直す。品質劣化と読まない</td>
+                </tr>
+                <tr>
+                  <th><span class="badge badge-soft-neutral">審査不能</span></th>
+                  <td>審査員の応答を解析できず判定不能</td>
+                  <td>自動リトライ → それでも駄目なら再実行</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
         <h3 class="typo-xlarge mb-4">定点観測 — 静かな劣化をスコアで検知</h3>
         <p class="typo-article text-fg-high mb-4">
-          毎回同じ試験を回し、結果をスコアとして蓄積します。推移表で「いつから・どのお題が落ち始めたか」を追えるため、利用者からの「最近生成が変」という報告より先に劣化へ気づけます。
+          毎回同じ試験を回し、結果をスコアとして蓄積します。推移表で「いつから・どのお題が落ち始めたか」を追えるため、利用者からの「最近生成が変」という報告より先に劣化へ気づけます。品質スコアは<strong>測定できた判定だけ</strong>で読みます（生成失敗・審査不能は分母に含めません）。
         </p>
         <div class="overflow-x-auto mb-4">
             <table class="simple-table">
               <thead>
                 <tr>
                   <th>実行日</th>
-                  <th>削除確認</th>
-                  <th>招待フォーム</th>
-                  <th>契約一覧</th>
-                  <th>空状態</th>
-                  <th>設定ナビ</th>
-                  <th>計</th>
+                  <th>品質（PASS/測定数）</th>
+                  <th>測定不能</th>
+                  <th>メモ</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>2026-07-21</td>
-                  <td><span class="badge badge-soft-success">PASS</span></td>
-                  <td><span class="badge badge-soft-success">PASS</span></td>
-                  <td><span class="badge badge-soft-success">PASS</span></td>
-                  <td><span class="badge badge-soft-success">PASS</span></td>
-                  <td><span class="badge badge-soft-success">PASS</span></td>
-                  <td>5/5</td>
+                  <td><span class="badge badge-soft-success">5/5</span></td>
+                  <td>0</td>
+                  <td>ベースライン</td>
+                </tr>
+                <tr>
+                  <td>07-23 / 07-24 / 07-28</td>
+                  <td><span class="badge badge-soft-success">5/5</span> × 3 回</td>
+                  <td>0</td>
+                  <td>安定して満点</td>
+                </tr>
+                <tr>
+                  <td>08-03</td>
+                  <td><span class="badge badge-soft-warning">2/3</span></td>
+                  <td>2</td>
+                  <td>生成失敗・審査不能が混入し始める</td>
+                </tr>
+                <tr>
+                  <td>08-05（2 回）</td>
+                  <td><span class="badge badge-soft-warning">1/2・2/3</span></td>
+                  <td>3・2</td>
+                  <td>見かけは 1/5 まで低下。4 区分の導入で<strong>大半が測定の故障</strong>と判明</td>
+                </tr>
+                <tr>
+                  <td>08-17</td>
+                  <td><span class="badge badge-soft-warning">4/5</span></td>
+                  <td>0</td>
+                  <td>本物の品質課題は設定ナビ 1 件に絞られ、追跡中</td>
                 </tr>
               </tbody>
             </table>
         </div>
-        <p class="typo-small text-fg-middle mb-6">
-          2026-07-21 時点のベースライン。以降、週次の実行で行が増えていきます。
+        <p class="typo-article text-fg-high mb-6">
+          8 月の「スコア急落」は、2 値の読み方では品質劣化に見えましたが、区分してみると大半がテスト基盤の故障でした。<strong>測定を疑える仕組みがないと、健全な改善はできない</strong> — 4 区分はその実体験から生まれた設計です。
+        </p>
+
+        <h3 class="typo-xlarge mb-4">お題はどこから来るか — 実運用の失敗を試験に変える</h3>
+        <p class="typo-article text-fg-high mb-4">
+          お題は机上で発明せず、2 つの源から増やします。ひとつは<strong>実運用の失敗</strong> — relay を実プロダクトへ導入する作業で AI の実装が期待と違った箇所のうち、「デザインシステムの知識で防げたはずの違反」を一般化してお題化します（チーム固有のデザイン判断はお題にしません）。もうひとつは<strong>アクセシビリティの責任境界</strong> — デザインシステムが完全担保する項目はコンポーネントを使わせることで守り、プロダクト側が書くべき項目（aria 属性・ラベル関連付けなど）を試験が測ります。
+        </p>
+        <p class="typo-article text-fg-high mb-6">
+          この仕組みはすでに機能しています。実運用で起きた「絞り込みフォームが選択と同時に自動送信される」という失敗をお題化して初回実行したところ、<strong>AI は同じ失敗をそのまま再現</strong>しました。つまりあの失敗は偶然ではなく、デザインシステムの知識にある再現性の高い穴だと確定 — 次の改善ターゲットが試験によって特定されました。
         </p>
 
         <h3 class="typo-xlarge mb-4">これから</h3>
         <ul class="space-y-2 typo-article text-fg-high list-disc pl-5 mb-6">
-          <li>週 1 回の定点観測でスコアの安定性を検証する</li>
-          <li>ルール（MCP・DESIGN.md・コンポーネント仕様）を変更する PR は、前後で evals を回して効果を測定する</li>
+          <li>試験が特定した知識の穴（ナビ・絞り込みフォーム）をデザインシステム側の改善で潰し、前後のスコアで効果を証明する</li>
+          <li>8 月に頻発した生成失敗（測定の故障）の原因を解消し、測定を安定させる</li>
+          <li>ルール（MCP・DESIGN.md・コンポーネント仕様）を変更する PR は、直したい振る舞いのお題を先に追加してから変更する（テスト先行）</li>
           <li>スコアが安定したら CI に組み込み、試験に落ちたルール変更はマージできないようにする</li>
-          <li>新しいコンポーネントを追加したら試験のお題も 1 本追加し、デザインシステムが育つほど試験も育てる</li>
+          <li>実運用で見つかった失敗を継続的にお題へ還流し、デザインシステムが使われるほど試験も育てる</li>
         </ul>
         <p class="typo-article text-fg-high mb-6">
           デザイナーは「なぜこちらを選ぶのか」という判断軸を明文化し、それがそのまま試験になります。relay Design System は「UI パーツの提供」から<strong>「品質を保ち続ける仕組みの提供」</strong>へ。
