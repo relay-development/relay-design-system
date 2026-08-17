@@ -12,12 +12,32 @@
  *   mustPatterns — 生成物に必須の正規表現（機械チェック・Phase 1）
  *   rubric       — LLM 審査員の採点項目（Phase 2 で使用。定義のみ先行）
  *
- * お題の追加元:
- *   実運用（本体サイトのリプレイス等）で実際に AI がやらかした失敗を一般化して
- *   追加する（机上で発明しない）。出典はお題のコメントに書く。対象は
- *   「DS の知識で防げたはずの違反」のみ — チーム判断・プロダクト固有の決定は
- *   お題にしない（それは期待側の問題であり DS では防げない）。
+ * お題の追加元（2 系統）:
+ *   1. 実運用の失敗 — 本体サイトのリプレイス等で実際に AI がやらかした失敗を
+ *      一般化して追加する（机上で発明しない）。出典はお題のコメントに書く。
+ *      対象は「DS の知識で防げたはずの違反」のみ — チーム判断・プロダクト固有の
+ *      決定はお題にしない（それは期待側の問題であり DS では防げない）。
+ *   2. アクセシビリティの責任境界 — docs/ACCESSIBILITY.md の DS マーカーのうち
+ *      ⚠️（DS+プロダクト共同）/ 🔧（プロダクト側）がエージェントの責務 =
+ *      rubric / mustPatterns の導出元。✅（DS 完全担保）は mustClasses で
+ *      「そのコンポーネントを使ったか」だけ守れば十分（保証はクラス使用が前提）。
+ *      お題が使うコンポーネントの get_component「アクセシビリティ」節も併読する。
  */
+
+/*
+ * 全お題共通の機械チェック（run.mjs が各お題の mustPatterns に自動で合算する）。
+ * 責任境界の ⚠️/🔧 のうち「どの UI でも成立し、正規表現で測れるもの」だけを置く。
+ * forbid: true は「マッチしたら不合格」（アンチパターン検知）。
+ */
+export const COMMON_PATTERNS = [
+  { pattern: "<html[^>]*\\slang=", label: "html に lang 指定（WCAG 3.1.1）" },
+  { pattern: "<img\\b(?![^>]*\\balt=)", forbid: true, label: "alt なしの img（WCAG 1.1.1。装飾なら alt=\"\"）" },
+  {
+    pattern: "<svg(?![^>]*\\b(aria-hidden|aria-label|aria-labelledby|role)=)",
+    forbid: true,
+    label: "a11y 属性なしの svg（装飾は aria-hidden=\"true\"、意味があるなら aria-label。WCAG 1.1.1）",
+  },
+];
 
 export const CASES = [
   {

@@ -34,7 +34,7 @@ npm run eval:report                  # 実行履歴の推移表（無料）
 |---|---|---|---|
 | hardcode | 生 hex / px / 独自状態クラス等 | `.claude/hooks/relay-hardcode-gate.mjs`（配布中のゲートと同一判定） | 無料 |
 | classes | 必須クラスの使用 / 捏造 variant（例: `btn-outline`）の検知 | `dist/mcp-index.json` | 無料 |
-| patterns | `aria-current` 等の必須マークアップ | cases.mjs の `mustPatterns` | 無料 |
+| patterns | `aria-current` 等の必須マークアップ + 全お題共通の a11y チェック（`lang` / img `alt` / svg の a11y 属性） | cases.mjs の `mustPatterns` + `COMMON_PATTERNS` | 無料 |
 | rubric | コンポーネント選定の適切さ等、機械で測れない判断 | cases.mjs の `rubric` を LLM 審査員が判定 | LLM 1〜votes 回/お題 |
 
 LLM 審査員の設計（機械で測れるものは機械に寄せ、LLM には判断だけを残す）:

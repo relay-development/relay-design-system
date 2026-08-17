@@ -14,7 +14,8 @@
  *                    （利用者に配布しているゲートと同一判定）
  *      - classes   — mustClasses が使われているか / relay クラスの捏造
  *                    variant（例: btn-outline）がないか（dist/mcp-index.json と照合）
- *      - patterns  — mustPatterns（aria-current 等）を満たすか
+ *      - patterns  — mustPatterns（aria-current 等）+ 全お題共通の COMMON_PATTERNS
+ *                    （lang / img alt / svg の a11y 属性。a11y 責任境界の ⚠️/🔧 由来）
  *   4. LLM 審査員で採点（Phase 2）:
  *      - rubric    — cases.mjs の審査項目を claude CLI（ツールなし・単発）に
  *                    JSON で判定させる。全項目 must 扱いで 1 つでも NO なら不合格。
@@ -40,7 +41,7 @@ import { execFileSync, execSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { CASES } from "./cases.mjs";
+import { CASES, COMMON_PATTERNS } from "./cases.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
@@ -164,8 +165,12 @@ function checkClasses(html, mustClasses, known) {
   };
 }
 
+/** mustPatterns（必須）+ COMMON_PATTERNS（全お題共通。forbid はマッチで不合格）を判定 */
 function checkPatterns(html, mustPatterns) {
-  const failed = mustPatterns.filter((p) => !new RegExp(p.pattern).test(html));
+  const failed = [...COMMON_PATTERNS, ...mustPatterns].filter((p) => {
+    const hit = new RegExp(p.pattern).test(html);
+    return p.forbid ? hit : !hit;
+  });
   return { pass: failed.length === 0, failed: failed.map((p) => p.label) };
 }
 
