@@ -14,13 +14,16 @@
  *                    （利用者に配布しているゲートと同一判定）
  *      - classes   — mustClasses が使われているか / relay クラスの捏造
  *                    variant（例: btn-outline）がないか（dist/mcp-index.json と照合）
- *      - patterns  — mustPatterns（aria-current 等）を満たすか
+ *      - patterns  — mustPatterns（aria-current 等）+ 全お題共通の COMMON_PATTERNS
+ *                    （lang / img alt / svg の a11y 属性。a11y 責任境界の ⚠️/🔧 由来）
  *   4. LLM 審査員で採点（Phase 2）:
  *      - rubric    — cases.mjs の審査項目を claude CLI（ツールなし・単発）に
  *                    JSON で判定させる。全項目 must 扱いで 1 つでも NO なら不合格。
  *                    判定に迷う場合は不合格に倒す指示（審査の甘化防止）
  *   5. 結果を console と evals/results/<timestamp>.json に出力し、
  *      直前の実行結果と比較して変化を表示する（Phase 3: 定点観測）
+ *      結果は pass / fail / error:generation / error:judge の 4 区分で記録し、
+ *      品質の失敗と測定側の故障を混同しない（分類規則は status.mjs が正本）
  *
  * 実行（サブスク枠で LLM が走る。1 回 = 生成 お題数 + 審査 お題数×votes）:
  *   npm run eval                     # 全お題（生成 + 機械チェック + LLM 審査）
@@ -40,7 +43,8 @@ import { execFileSync, execSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { CASES } from "./cases.mjs";
+import { CASES, COMMON_PATTERNS } from "./cases.mjs";
+import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
@@ -164,8 +168,12 @@ function checkClasses(html, mustClasses, known) {
   };
 }
 
+/** mustPatterns（必須）+ COMMON_PATTERNS（全お題共通。forbid はマッチで不合格）を判定 */
 function checkPatterns(html, mustPatterns) {
-  const failed = mustPatterns.filter((p) => !new RegExp(p.pattern).test(html));
+  const failed = [...COMMON_PATTERNS, ...mustPatterns].filter((p) => {
+    const hit = new RegExp(p.pattern).test(html);
+    return p.forbid ? hit : !hit;
+  });
   return { pass: failed.length === 0, failed: failed.map((p) => p.label) };
 }
 
@@ -234,7 +242,8 @@ function judgeRubric(claudeBin, c, html) {
   const reasons = c.rubric.map(() => "");
   let validVotes = 0;
   for (let v = 0; v < votes; v++) {
-    const verdicts = judgeOnce(claudeBin, c, html);
+    // 応答の解析失敗は審査員側の故障（品質シグナルではない）なので 1 回だけ再試行する
+    const verdicts = judgeOnce(claudeBin, c, html) ?? judgeOnce(claudeBin, c, html);
     if (!verdicts) continue;
     validVotes++;
     for (const vd of verdicts) {
@@ -275,7 +284,8 @@ function printComparison(prev, results) {
   for (const r of results) {
     const p = prevById.get(r.id);
     if (!p) continue;
-    if (p.pass !== r.pass) changes.push(`  ${p.pass ? "✓→✗" : "✗→✓"} ${r.id}`);
+    const [ps, rs] = [classifyResult(p), classifyResult(r)];
+    if (ps !== rs) changes.push(`  ${STATUS_SYMBOL[ps]}→${STATUS_SYMBOL[rs]} ${r.id}`);
   }
   console.log(`\n== 前回比（${prev.file}）==`);
   if (changes.length) for (const c of changes) console.log(c);
@@ -328,14 +338,14 @@ for (const c of cases) {
     process.stdout.write("  生成中…（数分かかることがあります）\n");
     const gen = generate(claudeBin, c);
     if (!gen.ok) {
-      console.error(`  ✗ 生成失敗: ${gen.detail}`);
-      results.push({ id: c.id, generated: false, pass: false });
+      console.error(`  G 生成失敗（ハーネス起因・品質シグナルではない）: ${gen.detail}`);
+      results.push({ id: c.id, generated: false, pass: false, status: "error:generation" });
       continue;
     }
   }
   if (!fs.existsSync(outPath)) {
-    console.error(`  ✗ 生成物がありません: evals/output/${c.id}.html`);
-    results.push({ id: c.id, generated: false, pass: false });
+    console.error(`  G 生成物がありません（ハーネス起因・品質シグナルではない）: evals/output/${c.id}.html`);
+    results.push({ id: c.id, generated: false, pass: false, status: "error:generation" });
     continue;
   }
 
@@ -354,7 +364,7 @@ for (const c of cases) {
     process.stdout.write(`  審査中…（LLM 審査員 × ${votes}）\n`);
     rubric = judgeRubric(claudeBin, c, html);
     if (rubric.error) {
-      console.log(`  ✗ rubric — ${rubric.error}`);
+      console.log(`  J rubric 判定不能（審査員の故障・品質シグナルではない）— ${rubric.error}`);
     } else {
       console.log(`  ${rubric.pass ? "✓" : "✗"} rubric（${rubric.items.filter((i) => i.pass).length}/${rubric.items.length}）`);
       for (const it of rubric.items.filter((i) => !i.pass)) {
@@ -363,11 +373,15 @@ for (const c of cases) {
     }
   }
 
-  const pass = hardcode.pass && classes.pass && patterns.pass && (skipJudge || rubric.pass);
-  results.push({ id: c.id, generated: true, pass, hardcode, classes, patterns, ...(rubric ? { rubric } : {}) });
+  const machinePass = hardcode.pass && classes.pass && patterns.pass;
+  const pass = machinePass && (skipJudge || rubric.pass);
+  // 審査員が判定不能でも、機械チェックが落ちていれば品質 fail は確定している
+  const status = rubric?.error ? (machinePass ? "error:judge" : "fail") : pass ? "pass" : "fail";
+  results.push({ id: c.id, generated: true, status, pass, hardcode, classes, patterns, ...(rubric ? { rubric } : {}) });
 }
 
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+const errorCount = results.filter((r) => isError(classifyResult(r))).length;
 const summary = {
   ranAt: new Date().toISOString(),
   dsVersion: JSON.parse(fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")).version,
@@ -378,12 +392,18 @@ const summary = {
   votes,
   passed: results.filter((r) => r.pass).length,
   total: results.length,
+  errors: errorCount,
   results,
 };
 const resultPath = path.join(resultsDir, `${stamp}.json`);
 fs.writeFileSync(resultPath, JSON.stringify(summary, null, 2));
 
-console.log(`\n== ${summary.passed}/${summary.total} PASS ==`);
+if (errorCount) {
+  console.log(`\n== PASS ${summary.passed} / FAIL ${summary.total - summary.passed - errorCount} / 測定不能 ${errorCount}（全 ${summary.total}）==`);
+  console.log("   測定不能（G/J）はハーネス・審査員の故障で、品質シグナルではありません（詳細は結果 JSON の status）");
+} else {
+  console.log(`\n== ${summary.passed}/${summary.total} PASS ==`);
+}
 printComparison(previous, results);
 console.log(`\n結果: evals/results/${path.basename(resultPath)}（生成物: evals/output/*.html をブラウザで目視可）`);
 console.log("履歴の一覧: npm run eval:report");
