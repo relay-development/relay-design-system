@@ -29,8 +29,8 @@ eval の合否は LLM 審査員（rubric 判定）に依存している。**審�
 
 | 日付 | お題 | 審査員の判定 | 人の判定 | 画面 | メモ |
 |---|---|---|---|---|---|
-| 2026-08-17 | listing-filter | FAIL<br>・select の change で即時絞り込み（実行ボタンなし）<br>・checkbox でなく filter-chip で代用 | 妥当 | —（上書きで消失） | 生成物と突き合わせて確認。ただし根因は基準側にもあり: checkbox ヘッダが絞り込み用途を filter-chip へ誘導していた + お題が送信シナリオであることを明示していなかった → 境界明文化とお題修正で対応 |
-| 2026-08-17 | settings-nav | FAIL<br>・menu / menu-item 不使用<br>・現在地の aria-current なし | 妥当 | —（上書きで消失） | 生成物は tab で実装（選定コメントつき）。審査は正しい。根因は menu/tab の境界が形状ベースだったこと → ヘッダ修正で対応 |
+| 2026-08-17 | listing-filter | FAIL<br>・select の change で即時絞り込み（実行ボタンなし）<br>・checkbox でなく filter-chip で代用 | 妥当 | [再現を開く](audited/2026-08-17-listing-filter-fail-repro.html) | 生成物と突き合わせて確認。ただし根因は基準側にもあり: checkbox ヘッダが絞り込み用途を filter-chip へ誘導していた + お題が送信シナリオであることを明示していなかった → 境界明文化とお題修正で対応 |
+| 2026-08-17 | settings-nav | FAIL<br>・menu / menu-item 不使用<br>・現在地の aria-current なし | 妥当 | —（消失。再現も 2 回試行したが今回は menu を選び再現せず） | 生成物は tab で実装（選定コメントつき）。審査は正しい。根因は menu/tab の境界が形状ベースだったこと → ヘッダ修正で対応 |
 | 2026-08-17 | settings-nav | PASS | 妥当 | [開く](audited/2026-08-17-settings-nav.html) | 境界明文化後の再実行（rubric 3/3）。生成物に nav.menu + menu-item + aria-current="page" を確認 |
 | 2026-08-18 | delete-confirmation | PASS | 妥当※ | [開く](audited/2026-08-18-delete-confirmation.html) | 8/5 の判定を遡り監査。dialog / btn-negative / キャンセル導線を生成物で確認 |
 | 2026-08-18 | invite-form | PASS | 妥当※ | [開く](audited/2026-08-18-invite-form.html) | 8/5 の判定を遡り監査。label-badge-required/optional・btn-primary が 1 つだけ・typo-small 逃げなしを確認 |
@@ -40,5 +40,6 @@ eval の合否は LLM 審査員（rubric 判定）に依存している。**審�
 | 2026-08-18 | article-links | PASS | 妥当※ | [開く](audited/2026-08-18-article-links.html) | 8/17 の判定を遡り監査。link・typo-article + text-fg-high、下線消しなしを確認 |
 
 ※ 2026-08-18 の 6 件は主要根拠の機械突き合わせによる遡り監査（Claude Code 実施・目視の再確認歓迎）。
+※ 「再現」は原本がアーカイブ導入（8/18）前に上書きで失われたため、当時と同じ DS 知識・お題文言で再生成した再現品（同型の失敗を確認済み）。監査証跡の原本ではない。
 これで現存する生成物に対する判定はすべて監査済み。7 月分の判定（5/5 連発期）は生成物が
 失われており監査不能 — この穴を塞ぐのが上記のアーカイブ（8/18 導入）。
