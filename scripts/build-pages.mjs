@@ -12,7 +12,7 @@
  * at "/") and on GitHub Pages (served under "/relay-design-system/").
  */
 import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, copyFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -244,6 +244,87 @@ function injectReleases(content) {
   return content.replace(/<!-- releases:auto -->/g, renderReleaseTimeline);
 }
 
+// ── 監査ログ auto-injection ──────────────────────────────────────────────────
+// evals/review-log.md（正本）の「## 監査記録」テーブルをパースして描画し、
+// review-log.html の `<!-- review-log:auto -->` マーカーに差し込む。
+// 手書き複製を作らないため、ログの追記は md 側にだけ行えばカタログに反映される。
+
+function verdictBadge(text) {
+  const cls = text.includes("誤判定")
+    ? "badge-soft-danger"
+    : text.includes("基準側")
+      ? "badge-soft-warning"
+      : text.startsWith("妥当")
+        ? "badge-soft-success"
+        : "badge-soft-neutral";
+  return `<span class="badge ${cls}">${esc(text)}</span>`;
+}
+
+/** 審査員の判定セル: 先頭が PASS/FAIL、`<br>・` 区切りで FAIL 理由が続く（md 側の書式） */
+function renderJudgeCell(text) {
+  const [verdict, ...reasons] = text.split(/<br\s*\/?>/i).map((s) => s.trim());
+  const head = `<span class="font-bold text-fg-high">${esc(verdict)}</span>`;
+  if (!reasons.length) return head;
+  const items = reasons
+    .map((r) => `<li>${esc(r.replace(/^・/, ""))}</li>`)
+    .join("");
+  return `${head}<ul class="list-disc pl-5 m-0 mt-1">${items}</ul>`;
+}
+
+function renderReviewLog() {
+  const md = readFileSync(resolve(ROOT, "evals/review-log.md"), "utf8");
+  const section = md.split(/^## 監査記録$/m)[1] ?? "";
+  const lines = section.split("\n");
+  const cellsOf = (l) => l.split("|").slice(1, -1).map((c) => c.trim());
+  const rows = lines
+    .filter((l) => l.startsWith("|"))
+    .map(cellsOf)
+    .filter((c) => c.length >= 6 && c[0] !== "日付" && !c[0].startsWith("---"));
+  const notes = lines.filter((l) => l.startsWith("※")).join(" ");
+  // 画面セル: md の [開く](audited/<file>) をカタログ同梱の ./eval-outputs/<file> リンクに変換
+  const screenCell = (text) => {
+    const m = text.match(/\[([^\]]+)\]\(audited\/([^)]+)\)/);
+    if (!m) return `<span class="text-fg-low">${esc(text)}</span>`;
+    return `<a class="link" href="./eval-outputs/${esc(m[2])}" target="_blank" rel="noopener noreferrer"><span class="link-label">${esc(m[1])}</span><svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg></a>`;
+  };
+  const body = rows
+    .map(
+      (c) => `                <tr>
+                  <td>${esc(c[0])}</td>
+                  <td><code class="typo-xsmall">${esc(c[1])}</code></td>
+                  <td>${renderJudgeCell(c[2])}</td>
+                  <td>${verdictBadge(c[3])}</td>
+                  <td>${screenCell(c[4])}</td>
+                  <td>${esc(c[5])}</td>
+                </tr>`,
+    )
+    .join("\n");
+  const notesHtml = notes
+    ? `\n        <p class="typo-article text-fg-high mt-4">${esc(notes)}</p>`
+    : "";
+  return `<div class="overflow-x-auto">
+            <table class="simple-table">
+              <thead>
+                <tr>
+                  <th>日付</th>
+                  <th>お題</th>
+                  <th>審査員の判定</th>
+                  <th>人の判定</th>
+                  <th>画面</th>
+                  <th>メモ</th>
+                </tr>
+              </thead>
+              <tbody>
+${body}
+              </tbody>
+            </table>
+        </div>${notesHtml}`;
+}
+
+function injectReviewLog(content) {
+  return content.replace(/<!-- review-log:auto -->/g, renderReviewLog);
+}
+
 // ── Master page list (single source of truth for nav + titles) ──────────────
 // group: sidebar group title (pages with the same group are bundled together).
 // label: sidebar link text.  title: <title> + landing card heading.
@@ -251,6 +332,7 @@ const PAGES = [
   { file: "mcp.html",           group: "イントロダクション", label: "MCP サーバー", title: "MCP サーバー", desc: "AI コーディングツールに relay の規約・トークン・コンポーネントを理解させる" },
   { file: "accessibility.html", group: "イントロダクション", label: "取り組み", title: "アクセシビリティについての取り組み", desc: "WCAG 2.2 AAA に向けたデザインシステムの担保とプロダクト側の責務" },
   { file: "evals.html",         group: "イントロダクション", label: "品質評価", title: "品質評価（evals）", desc: "AI が DS のルール通りに作れるかを測る定期健康診断とスコアの定点観測" },
+  { file: "review-log.html",    group: "イントロダクション", label: "監査ログ", title: "審査員の監査ログ", desc: "品質評価の AI 審査員の判定を、人が抜き取り監査した記録" },
   { file: "releases.html",      group: "イントロダクション", label: "リリースログ", title: "リリースログ", desc: "各バージョンの変更点の要約と GitHub リリースノートへのリンク" },
 
   { file: "color.html",      group: "Foundations", label: "色",      title: "色",           desc: "カラースケール / セマンティックロール / WCAG コントラスト" },
@@ -437,7 +519,7 @@ function readFragment(file) {
 const all = [INDEX, ...PAGES];
 let written = 0;
 for (const p of all) {
-  const content = highlightCodeSamples(injectReleases(injectUsage(readFragment(p.file))));
+  const content = highlightCodeSamples(injectReviewLog(injectReleases(injectUsage(readFragment(p.file)))));
   const html = render({ title: p.title, group: p.group, content, activeFile: p.file, desc: p.desc });
   writeFileSync(resolve(EXAMPLES, p.file), html, "utf8");
   written++;
@@ -449,6 +531,24 @@ for (const f of readdirSync(PAGES_DIR)) {
   if (f.endsWith(".html") && !known.has(f)) {
     console.warn(`⚠ orphan fragment (no PAGES entry): examples/pages/${f}`);
   }
+}
+
+// 監査済みスナップショット（evals/audited/ = 正本）を examples/eval-outputs/ に同梱する。
+// 監査ログページの「画面」リンク先。スナップショットは ./relay.css を参照するため配布 CSS も隣に置く
+const auditedDir = resolve(ROOT, "evals/audited");
+if (existsSync(auditedDir)) {
+  const outDir = resolve(EXAMPLES, "eval-outputs");
+  mkdirSync(outDir, { recursive: true });
+  let copied = 0;
+  for (const f of readdirSync(auditedDir)) {
+    if (!f.endsWith(".html")) continue;
+    copyFileSync(resolve(auditedDir, f), resolve(outDir, f));
+    copied++;
+  }
+  const relayCss = resolve(ROOT, "dist/relay.css");
+  if (existsSync(relayCss)) copyFileSync(relayCss, resolve(outDir, "relay.css"));
+  else console.warn("⚠ dist/relay.css がありません — eval-outputs のスナップショットがスタイルなしになります（vite build で生成）");
+  console.log(`✓ Copied ${copied} audited snapshots into examples/eval-outputs/`);
 }
 
 console.log(`✓ Generated ${written} pages into examples/ (index + ${PAGES.length} others)`);

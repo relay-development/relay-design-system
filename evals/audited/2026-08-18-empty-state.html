@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>プロジェクト一覧 — relay</title>
+  <link rel="stylesheet" href="./relay.css">
+  <style>
+    /* docs/ACCESSIBILITY.md 2.3.3（アニメ抑制）— プロダクト側の必須実装 */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-page">
+
+  <!-- アイコンスプライト（Lucide のパスをインライン定義。外部 .svg は参照しない） -->
+  <svg class="hidden" aria-hidden="true" focusable="false">
+    <symbol id="lucide-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m9 18 6-6-6-6"></path>
+    </symbol>
+    <symbol id="lucide-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"></path>
+    </symbol>
+    <symbol id="lucide-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"></path>
+      <path d="M12 5v14"></path>
+    </symbol>
+  </svg>
+
+  <a class="link sr-only focus:not-sr-only" href="#main"><span class="link-label">本文へスキップ</span></a>
+
+  <header class="bg-surface border-b border-stroke-low">
+    <div class="page-shell flex items-center py-4">
+      <p class="typo-medium font-bold text-fg-high">relay プロジェクト管理</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-shell py-16">
+
+      <nav class="breadcrumb mb-8" aria-label="パンくずリスト">
+        <ol>
+          <li><a class="link" href="#"><span class="link-label">ホーム</span></a></li>
+          <li class="breadcrumb-sep" aria-hidden="true">
+            <svg class="icon"><use href="#lucide-chevron-right"></use></svg>
+          </li>
+          <li><span class="breadcrumb-current" aria-current="page">プロジェクト</span></li>
+        </ol>
+      </nav>
+
+      <h1 class="typo-2xlarge text-fg-high">プロジェクト</h1>
+      <p class="typo-medium text-fg-middle mt-2">
+        案件ごとにメンバーと資料をまとめて管理できます。作成したプロジェクトは、このページに一覧で表示されます。
+      </p>
+
+      <!-- 空状態: 一覧に出すものが無いので、代わりに最初の一手を示す -->
+      <section class="mt-12" aria-labelledby="empty-heading">
+        <div class="card">
+          <div class="card-body text-center">
+            <!-- 白い surface 上の淡い primary-50 は境界が曖昧になるためボーダーで輪郭を出す -->
+            <span class="flex items-center justify-center w-16 h-16 mx-auto rounded-full bg-primary-50 border border-stroke-middle text-primary-700" aria-hidden="true">
+              <svg class="icon icon-xl"><use href="#lucide-folder"></use></svg>
+            </span>
+
+            <h2 id="empty-heading" class="typo-xlarge text-fg-high mt-6">プロジェクトがまだありません</h2>
+
+            <p class="typo-medium text-fg-middle max-w-article mx-auto mt-4">
+              最初のプロジェクトを作ると、ここに一覧で表示されます。決めるのはプロジェクト名だけで、期間や説明はあとから追加できます。
+            </p>
+
+            <div class="mt-8">
+              <!-- 主操作は 1 画面 1 つ。押すと作成ダイアログを開く「操作」なので button
+                   （ページ遷移ではないため link にしない）。重要操作なのでターゲット
+                   44px 以上を満たす lg を使う（docs/ACCESSIBILITY.md 2.5.5） -->
+              <button type="button" class="btn btn-lg btn-primary btn-solid">
+                <svg class="icon icon-md" aria-hidden="true"><use href="#lucide-plus"></use></svg>
+                プロジェクトを作成
+              </button>
+            </div>
+
+            <p class="typo-medium text-fg-middle mt-6">
+              <a class="link" href="#"><span class="link-label">プロジェクト管理のヘルプを見る</span></a>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 作成のあとに何をすればいいかまで示して、次の行動で迷わせない -->
+      <section class="mt-8" aria-labelledby="steps-heading">
+        <div class="card">
+          <div class="card-header">
+            <h2 id="steps-heading" class="card-title">はじめかた</h2>
+          </div>
+          <div class="card-body">
+            <p class="typo-medium text-fg-middle">
+              次の 3 つの手順で、チームでプロジェクトを使いはじめられます。1 番目だけ終わらせれば、残りはあとからでも進められます。
+            </p>
+
+            <ol class="flex flex-col gap-6 mt-6">
+              <li class="flex gap-4">
+                <span class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full bg-primary-50 border border-stroke-middle text-primary-700 typo-medium font-bold" aria-hidden="true">1</span>
+                <div>
+                  <h3 class="typo-medium font-bold text-fg-high">プロジェクトを作成する</h3>
+                  <p class="typo-medium text-fg-middle mt-2">
+                    上の「プロジェクトを作成」から、プロジェクト名と担当者を入力します。保存するとすぐに一覧へ表示されます。
+                  </p>
+                </div>
+              </li>
+              <li class="flex gap-4">
+                <span class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full bg-primary-50 border border-stroke-middle text-primary-700 typo-medium font-bold" aria-hidden="true">2</span>
+                <div>
+                  <h3 class="typo-medium font-bold text-fg-high">メンバーを招待する</h3>
+                  <p class="typo-medium text-fg-middle mt-2">
+                    一緒に進める人のメールアドレスを入力して招待します。招待した人には案内メールが届きます。
+                  </p>
+                </div>
+              </li>
+              <li class="flex gap-4">
+                <span class="flex items-center justify-center shrink-0 w-8 h-8 rounded-full bg-primary-50 border border-stroke-middle text-primary-700 typo-medium font-bold" aria-hidden="true">3</span>
+                <div>
+                  <h3 class="typo-medium font-bold text-fg-high">資料をアップロードする</h3>
+                  <p class="typo-medium text-fg-middle mt-2">
+                    見積書や契約書を追加すると、プロジェクトのメンバー全員が同じ資料を見られるようになります。
+                  </p>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-surface border-t border-stroke-low">
+    <div class="page-shell py-8">
+      <p class="typo-medium text-fg-middle">
+        操作方法がわからないときは
+        <a class="link link-neutral" href="#"><span class="link-label">プロジェクト管理のヘルプ</span></a>
+        をご覧ください。
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

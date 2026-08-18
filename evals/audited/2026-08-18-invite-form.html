@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>メンバーを招待 — relay</title>
+  <link rel="stylesheet" href="./relay.css">
+  <style>
+    /* WCAG 2.3.3: DS 側が未対応のため、プロダクト側でアニメーションを抑制する */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* WCAG 2.4.1 スキップリンク: 通常は .sr-only、フォーカス時だけ可視化する。
+       色・タイポは relay の .link に任せ、ここでは幾何と spacing トークンだけを扱う。 */
+    .skip-link:focus {
+      clip-path: none;
+      white-space: normal;
+      position: static;
+      display: inline-block;
+      width: auto;
+      height: auto;
+      margin: 0;
+      padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+      overflow: visible;
+    }
+  </style>
+</head>
+<body class="bg-page text-fg-high">
+
+  <!-- アイコン定義: 外部 .svg を参照せず、ページ内の <symbol> を <use> で参照する -->
+  <svg hidden aria-hidden="true">
+    <symbol id="icon-check-circle" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/>
+    </symbol>
+    <symbol id="icon-alert-circle" viewBox="0 0 20 20">
+      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 6a1 1 0 112 0v4a1 1 0 11-2 0V6zm1 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/>
+    </symbol>
+  </svg>
+
+  <a href="#main" class="link sr-only skip-link">本文へスキップ</a>
+
+  <header class="bg-surface border-b border-stroke-low">
+    <div class="page-shell flex items-center py-4">
+      <p class="typo-large">relay</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-shell py-16">
+      <div class="max-w-article">
+
+        <h1 class="typo-2xlarge">メンバーを招待</h1>
+        <p class="typo-article text-fg-high mt-4">
+          招待したい人のメールアドレスと役割を入力して送信すると、その人に招待メールが届きます。
+          相手が招待メールから参加した時点でメンバーに追加されます。
+        </p>
+
+        <!-- WCAG 4.1.3: 送信結果を差し込む常設のライブリージョン -->
+        <div id="invite-result" class="mt-8" role="status" aria-live="polite"></div>
+
+        <form id="invite-form" class="mt-8" novalidate>
+          <div class="space-y-6">
+
+            <!-- メールアドレス（必須） -->
+            <div class="space-y-2">
+              <div class="label-control">
+                <div class="label-control-row">
+                  <label class="label-control-text" for="invite-email">メールアドレス</label>
+                  <span class="label-badge label-badge-required">必須</span>
+                </div>
+                <p class="label-control-support" id="invite-email-support">
+                  招待メールの送り先になります。
+                </p>
+              </div>
+              <input
+                id="invite-email"
+                name="email"
+                type="email"
+                class="input input-md w-full"
+                placeholder="you@example.com"
+                autocomplete="email"
+                aria-describedby="invite-email-support"
+                required
+              >
+              <p class="typo-medium text-negative-600 flex items-center gap-2" id="invite-email-error" hidden>
+                <svg class="icon icon-md" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <use href="#icon-alert-circle"></use>
+                </svg>
+                <span id="invite-email-error-text"></span>
+              </p>
+            </div>
+
+            <!-- 役割（必須・単一選択） -->
+            <div>
+              <div class="label-control mb-2">
+                <div class="label-control-row">
+                  <span class="label-control-text" id="invite-role-label">役割</span>
+                  <span class="label-badge label-badge-required" id="invite-role-badge">必須</span>
+                </div>
+                <p class="label-control-support" id="invite-role-support">
+                  管理者はメンバーと請求の管理、編集者は案件の作成と編集、閲覧者は閲覧だけができます。
+                  はじめは閲覧者が選ばれています。役割はあとからでも変更できます。
+                </p>
+              </div>
+              <fieldset
+                class="radio-group"
+                aria-labelledby="invite-role-label invite-role-badge"
+                aria-describedby="invite-role-support"
+              >
+                <label class="radio-label">
+                  <input type="radio" name="role" value="admin" class="radio"> 管理者
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="role" value="editor" class="radio"> 編集者
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="role" value="viewer" class="radio" checked> 閲覧者
+                </label>
+              </fieldset>
+            </div>
+
+            <!-- 補足メモ（任意） -->
+            <div class="space-y-2">
+              <div class="label-control">
+                <div class="label-control-row">
+                  <label class="label-control-text" for="invite-note">補足メモ</label>
+                  <span class="label-badge label-badge-optional">任意</span>
+                </div>
+                <p class="label-control-support" id="invite-note-support">
+                  招待メールに添える一言を書けます。相手にもそのまま表示されます。
+                </p>
+              </div>
+              <div class="textarea-control">
+                <textarea
+                  id="invite-note"
+                  name="note"
+                  class="textarea textarea-md"
+                  rows="4"
+                  maxlength="200"
+                  placeholder="来月から一緒にプロジェクトを進めます。よろしくお願いします。"
+                  aria-describedby="invite-note-support"
+                ></textarea>
+                <div class="textarea-footer">
+                  <span class="textarea-counter" id="invite-note-counter" aria-live="polite">0/200</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="flex flex-wrap justify-end gap-4 mt-8">
+            <button type="button" class="btn btn-md btn-neutral btn-outline" id="invite-reset">入力を消す</button>
+            <button type="submit" class="btn btn-md btn-primary btn-solid">招待を送信</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById('invite-form');
+    const email = document.getElementById('invite-email');
+    const emailError = document.getElementById('invite-email-error');
+    const emailErrorText = document.getElementById('invite-email-error-text');
+    const note = document.getElementById('invite-note');
+    const counter = document.getElementById('invite-note-counter');
+    const result = document.getElementById('invite-result');
+
+    const ROLE_LABELS = { admin: '管理者', editor: '編集者', viewer: '閲覧者' };
+
+    function updateCounter() {
+      counter.textContent = note.value.length + '/' + note.maxLength;
+    }
+
+    // WCAG 3.3.1 / 3.3.3: どこが問題かをテキストで示し、直し方まで書く
+    function showEmailError(message) {
+      emailErrorText.textContent = message;
+      emailError.hidden = false;
+      email.classList.add('input-error');
+      email.setAttribute('aria-invalid', 'true');
+      email.setAttribute('aria-describedby', 'invite-email-support invite-email-error');
+    }
+
+    function clearEmailError() {
+      emailError.hidden = true;
+      email.classList.remove('input-error');
+      email.removeAttribute('aria-invalid');
+      email.setAttribute('aria-describedby', 'invite-email-support');
+    }
+
+    // 結果は alert をページ内に常設する（トーストのように自動で消さない）
+    function showSuccess(address, role) {
+      result.textContent = '';
+
+      const alert = document.createElement('div');
+      alert.className = 'alert alert-success';
+
+      const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      icon.setAttribute('class', 'alert-icon');
+      icon.setAttribute('viewBox', '0 0 20 20');
+      icon.setAttribute('fill', 'currentColor');
+      icon.setAttribute('aria-hidden', 'true');
+      const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      use.setAttribute('href', '#icon-check-circle');
+      icon.appendChild(use);
+
+      const content = document.createElement('div');
+      content.className = 'alert-content';
+      const title = document.createElement('p');
+      title.className = 'alert-title';
+      title.textContent = '招待を送信しました';
+      const body = document.createElement('p');
+      body.className = 'alert-body';
+      body.textContent = address + ' を' + role + 'として招待しました。相手が招待メールから参加すると、メンバー一覧に表示されます。';
+      content.append(title, body);
+
+      alert.append(icon, content);
+      result.appendChild(alert);
+    }
+
+    note.addEventListener('input', updateCounter);
+    email.addEventListener('input', clearEmailError);
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const address = email.value.trim();
+
+      if (address === '') {
+        result.textContent = '';
+        showEmailError('メールアドレスを入力してください。');
+        email.focus();
+        return;
+      }
+      if (!email.checkValidity()) {
+        result.textContent = '';
+        showEmailError('メールアドレスの形式が違います。例: you@example.com');
+        email.focus();
+        return;
+      }
+
+      const role = ROLE_LABELS[form.elements.role.value];
+
+      clearEmailError();
+      showSuccess(address, role);
+
+      form.reset();
+      updateCounter();
+    });
+
+    document.getElementById('invite-reset').addEventListener('click', () => {
+      form.reset();
+      updateCounter();
+      clearEmailError();
+      result.textContent = '';
+    });
+
+    updateCounter();
+  </script>
+</body>
+</html>

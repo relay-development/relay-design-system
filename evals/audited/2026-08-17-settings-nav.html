@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>設定 — relay</title>
+  <link rel="stylesheet" href="./relay.css" />
+  <style>
+    /* 2.3.3 アニメ抑制はプロダクト側責務（docs/ACCESSIBILITY.md 推奨スニペット） */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-page text-fg-high">
+  <a class="sr-only focus:not-sr-only" href="#main">本文へスキップ</a>
+
+  <!-- アイコン（Lucide 準拠のインライン sprite。装飾用途のみ） -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none" aria-hidden="true">
+    <symbol id="lucide-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="lucide-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </symbol>
+    <symbol id="lucide-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+    </symbol>
+  </svg>
+
+  <header class="bg-surface border-b border-stroke-low">
+    <div class="page-shell flex items-center justify-between py-4">
+      <span class="typo-large">relay</span>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-shell page-shell-content py-16">
+      <h1 class="typo-2xlarge mb-2">設定</h1>
+      <p class="typo-medium text-fg-middle mb-8">アカウントの設定を確認・変更できます。</p>
+
+      <div class="flex flex-col gap-8 sm:flex-row">
+        <nav class="menu w-70 max-w-full shrink-0" aria-label="設定セクション">
+          <ul class="menu-group">
+            <li>
+              <a class="menu-item" href="#profile" aria-current="page">
+                <svg class="icon" aria-hidden="true"><use href="#lucide-user"></use></svg>
+                プロフィール
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="#notifications">
+                <svg class="icon" aria-hidden="true"><use href="#lucide-bell"></use></svg>
+                通知
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="#security">
+                <svg class="icon" aria-hidden="true"><use href="#lucide-shield"></use></svg>
+                セキュリティ
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="flex-1 min-w-0">
+          <section id="profile" aria-labelledby="profile-heading" tabindex="-1">
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title" id="profile-heading">プロフィール</h2>
+                <p class="card-subtitle">ほかの利用者に表示される情報です</p>
+              </div>
+              <div class="card-body space-y-6">
+                <div class="space-y-2">
+                  <div class="label-control">
+                    <div class="label-control-row">
+                      <label class="label-control-text" for="profile-name">氏名</label>
+                      <span class="label-badge label-badge-required">必須</span>
+                    </div>
+                  </div>
+                  <input id="profile-name" type="text" class="input input-md" value="山田 花子" autocomplete="name" required />
+                </div>
+                <div class="space-y-2">
+                  <div class="label-control">
+                    <div class="label-control-row">
+                      <label class="label-control-text" for="profile-email">メールアドレス</label>
+                      <span class="label-badge label-badge-required">必須</span>
+                    </div>
+                    <p class="label-control-support" id="profile-email-support">ログインとお知らせの受信に使用します</p>
+                  </div>
+                  <input id="profile-email" type="email" class="input input-md" value="s.taguchi@example.jp" autocomplete="email" aria-describedby="profile-email-support" required />
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-md btn-neutral btn-outline">キャンセル</button>
+                <button type="button" class="btn btn-md btn-primary btn-solid">変更を保存</button>
+              </div>
+            </div>
+          </section>
+
+          <section id="notifications" aria-labelledby="notifications-heading" tabindex="-1" hidden>
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title" id="notifications-heading">通知</h2>
+                <p class="card-subtitle">切り替えた内容はすぐに反映されます</p>
+              </div>
+              <div class="card-body space-y-6">
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" checked />
+                  お知らせメールを受け取る
+                </label>
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" checked />
+                  コメントの通知を受け取る
+                </label>
+                <label class="switch-label">
+                  <input type="checkbox" role="switch" class="switch" />
+                  週間レポートを受け取る
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <section id="security" aria-labelledby="security-heading" tabindex="-1" hidden>
+            <div class="card">
+              <div class="card-header">
+                <h2 class="card-title" id="security-heading">セキュリティ</h2>
+                <p class="card-subtitle">パスワードを変更できます</p>
+              </div>
+              <div class="card-body space-y-6">
+                <div class="space-y-2">
+                  <div class="label-control">
+                    <div class="label-control-row">
+                      <label class="label-control-text" for="current-password">現在のパスワード</label>
+                      <span class="label-badge label-badge-required">必須</span>
+                    </div>
+                  </div>
+                  <input id="current-password" type="password" class="input input-md" autocomplete="current-password" required />
+                </div>
+                <div class="space-y-2">
+                  <div class="label-control">
+                    <div class="label-control-row">
+                      <label class="label-control-text" for="new-password">新しいパスワード</label>
+                      <span class="label-badge label-badge-required">必須</span>
+                    </div>
+                    <p class="label-control-support" id="new-password-support">8 文字以上で、英字と数字を組み合わせてください</p>
+                  </div>
+                  <input id="new-password" type="password" class="input input-md" autocomplete="new-password" aria-describedby="new-password-support" required />
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="button" class="btn btn-md btn-primary btn-solid">パスワードを変更</button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-stroke-low">
+    <div class="page-shell py-8">
+      <p class="typo-medium text-fg-low">© 2026 relay</p>
+    </div>
+  </footer>
+
+  <script>
+    (() => {
+      const nav = document.querySelector('nav[aria-label="設定セクション"]');
+      const links = Array.from(nav.querySelectorAll('a.menu-item'));
+      const sections = {};
+      const titles = {};
+      links.forEach((link) => {
+        const id = link.getAttribute('href').slice(1);
+        sections[id] = document.getElementById(id);
+        titles[id] = link.textContent.trim();
+      });
+      const DEFAULT_ID = 'profile';
+
+      function show(id, moveFocus) {
+        if (!sections[id]) id = DEFAULT_ID;
+        Object.entries(sections).forEach(([key, section]) => {
+          section.hidden = key !== id;
+        });
+        links.forEach((link) => {
+          if (link.getAttribute('href').slice(1) === id) {
+            link.setAttribute('aria-current', 'page');
+          } else {
+            link.removeAttribute('aria-current');
+          }
+        });
+        document.title = titles[id] + ' | 設定 — relay';
+        if (moveFocus) sections[id].focus();
+      }
+
+      window.addEventListener('hashchange', () => {
+        show(location.hash.slice(1) || DEFAULT_ID, true);
+      });
+      show(location.hash.slice(1) || DEFAULT_ID, false);
+
+      // menu の必須対応: ↑/↓ で前後の項目、Home/End で先頭/末尾へ（端でループ）。
+      // roving tabindex は使わず、全項目を Tab 順に残す「追加」操作。
+      nav.addEventListener('keydown', (event) => {
+        const index = links.indexOf(document.activeElement);
+        if (index === -1) return;
+        let next = null;
+        if (event.key === 'ArrowDown') next = (index + 1) % links.length;
+        else if (event.key === 'ArrowUp') next = (index - 1 + links.length) % links.length;
+        else if (event.key === 'Home') next = 0;
+        else if (event.key === 'End') next = links.length - 1;
+        if (next !== null) {
+          event.preventDefault();
+          links[next].focus();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

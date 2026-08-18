@@ -21,6 +21,9 @@ examples/icons.svg
 # template + examples/pages/*.html fragments. Sources tracked, output not.
 examples/*.html
 
+# Audited eval snapshots copied at build time (source of truth: evals/audited/)
+examples/eval-outputs/
+
 # Playwright MCP session artifacts (browser snapshots)
 .playwright-mcp/
 

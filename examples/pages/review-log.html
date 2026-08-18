@@ -1,0 +1,50 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="review-log">
+      <div class="mb-8">
+        <div class="flex items-baseline justify-between mb-8">
+          <h2 class="typo-2xlarge">審査員の監査ログ</h2>
+          <span class="typo-xsmall text-fg-middle">審査員の定期健康診断</span>
+        </div>
+
+        <p class="typo-article text-fg-high mb-6">
+          <a class="link" href="./evals.html"><span class="link-label">品質評価（evals）</span></a>の合否は AI 審査員の判定に依存しています。では、<strong>その審査員自体は信頼できるのか？</strong> — このページは、審査員の判定と生成物を人が突き合わせて監査した記録です。生成の健康診断が evals なら、こちらは<strong>審査員の健康診断</strong>。測る仕組みそのものを疑える状態を保つことで、スコアを信頼できるものにします。
+        </p>
+
+        <h3 class="typo-xlarge mb-4">運用</h3>
+        <ul class="space-y-2 typo-article text-fg-high list-disc pl-5 mb-6">
+          <li><strong>月 1 回を目安に抜き取り監査</strong>。審査の判定が直感と合わないとき・採点基準を変えたときは随時</li>
+          <li>審査員の判定（合否と理由）と、その実行で採点された HTML のアーカイブを突き合わせる。採点対象はすべて実行ごとに保存されるため、過去の判定も後から検証できる</li>
+          <li><strong>誤判定が見つかったら採点基準か審査員への指示を直し</strong>、その変更の根拠としてこのログを引く</li>
+        </ul>
+
+        <h3 class="typo-xlarge mb-4">判定の凡例</h3>
+        <div class="overflow-x-auto mb-6">
+            <table class="simple-table">
+              <tbody>
+                <tr>
+                  <th><span class="badge badge-soft-success">妥当</span></th>
+                  <td>審査員の判定どおり。合否・理由とも生成物と整合していた</td>
+                </tr>
+                <tr>
+                  <th><span class="badge badge-soft-danger">誤判定</span></th>
+                  <td>偽陽性（合格すべきものを落とした）または偽陰性（違反を見逃した）</td>
+                </tr>
+                <tr>
+                  <th><span class="badge badge-soft-warning">基準側の問題</span></th>
+                  <td>審査は正しいが、採点基準の文言が悪い（基準を直す）</td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+
+        <h3 class="typo-xlarge mb-4">監査記録</h3>
+        <!-- review-log:auto -->
+
+        <p class="typo-article text-fg-high mt-6">
+          このページは <code class="typo-xsmall px-1 bg-neutral-100 rounded">evals/review-log.md</code>（正本）からビルド時に自動生成されます。記録の追記・運用の詳細は
+          <a class="link" href="https://github.com/relay-development/relay-design-system/blob/main/evals/review-log.md" target="_blank" rel="noopener noreferrer"><span class="link-label">GitHub の evals/review-log.md</span><svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg></a>
+          を参照してください。
+        </p>
+      </div>
+    </section>
+  </main>
