@@ -23,4 +23,6 @@
   上書きで失われた生成物を、当時と同じ DS 知識・お題文言で再生成した再現品
 - `2026-08-17-listing-filter-fail-repro.html`: 当時の FAIL と同型
   （filter-chip で代用・change で即時絞り込み・checkbox 不使用）を機械チェックで確認済み
-- settings-nav の FAIL 版は 2 回再生成しても再現しなかった（今回は menu を正しく選択）ため再現品なし
+- settings-nav の FAIL 版は 2 回再生成しても再現しなかった（今回は menu を正しく選択）ため
+  再現品は作らず、改めて全チェックで検査した結果を `2026-08-18-settings-nav.html` として登録
+  （境界明文化前の知識での正式な PASS。review-log の同日行を参照）
