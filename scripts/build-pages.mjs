@@ -260,6 +260,17 @@ function verdictBadge(text) {
   return `<span class="badge ${cls}">${esc(text)}</span>`;
 }
 
+/** 審査員の判定セル: 先頭が PASS/FAIL、`<br>・` 区切りで FAIL 理由が続く（md 側の書式） */
+function renderJudgeCell(text) {
+  const [verdict, ...reasons] = text.split(/<br\s*\/?>/i).map((s) => s.trim());
+  const head = `<span class="font-bold text-fg-high">${esc(verdict)}</span>`;
+  if (!reasons.length) return head;
+  const items = reasons
+    .map((r) => `<li>${esc(r.replace(/^・/, ""))}</li>`)
+    .join("");
+  return `${head}<ul class="list-disc pl-5 m-0 mt-1">${items}</ul>`;
+}
+
 function renderReviewLog() {
   const md = readFileSync(resolve(ROOT, "evals/review-log.md"), "utf8");
   const section = md.split(/^## 監査記録$/m)[1] ?? "";
@@ -275,7 +286,7 @@ function renderReviewLog() {
       (c) => `                <tr>
                   <td>${esc(c[0])}</td>
                   <td><code class="typo-xsmall">${esc(c[1])}</code></td>
-                  <td>${esc(c[2])}</td>
+                  <td>${renderJudgeCell(c[2])}</td>
                   <td>${verdictBadge(c[3])}</td>
                   <td>${esc(c[4])}</td>
                 </tr>`,
