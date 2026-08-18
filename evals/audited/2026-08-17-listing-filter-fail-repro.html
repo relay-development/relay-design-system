@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>物件一覧 | relay 不動産</title>
+  <link rel="stylesheet" href="./relay.css" />
+</head>
+<body class="bg-page text-fg-high">
+
+  <!-- インラインアイコン定義（filter-chip のチェックマーク用） -->
+  <svg hidden aria-hidden="true">
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path d="M20 6 9 17l-5-5" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+    </symbol>
+  </svg>
+
+  <a href="#main" class="link sr-only focus:not-sr-only">本文へスキップ</a>
+
+  <header class="bg-surface border-b border-stroke-low">
+    <div class="page-shell flex items-center justify-between py-4">
+      <p class="typo-large">relay 不動産</p>
+      <nav aria-label="グローバルナビゲーション">
+        <ul class="flex items-center gap-6">
+          <li><a href="#" class="link" aria-current="page">物件一覧</a></li>
+          <li><a href="#" class="link">お気に入り</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="page-shell py-16 space-y-8">
+
+      <h1 class="typo-2xlarge">物件一覧</h1>
+
+      <!-- 絞り込み -->
+      <section aria-labelledby="filter-heading" class="card">
+        <div class="card-header">
+          <h2 id="filter-heading" class="card-title">絞り込み</h2>
+          <p class="card-subtitle">エリアと種別を選ぶと、一覧がすぐに絞り込まれます</p>
+        </div>
+        <div class="card-body">
+          <div class="flex flex-wrap items-end gap-6">
+
+            <!-- エリア（都道府県から 1 つ選択） -->
+            <div class="space-y-2 w-full max-w-xs">
+              <div class="label-control">
+                <div class="label-control-row">
+                  <label class="label-control-text" for="filter-area">エリア</label>
+                </div>
+              </div>
+              <select id="filter-area" class="select">
+                <option value="">すべてのエリア</option>
+                <option value="北海道">北海道</option>
+                <option value="青森県">青森県</option>
+                <option value="岩手県">岩手県</option>
+                <option value="宮城県">宮城県</option>
+                <option value="秋田県">秋田県</option>
+                <option value="山形県">山形県</option>
+                <option value="福島県">福島県</option>
+                <option value="茨城県">茨城県</option>
+                <option value="栃木県">栃木県</option>
+                <option value="群馬県">群馬県</option>
+                <option value="埼玉県">埼玉県</option>
+                <option value="千葉県">千葉県</option>
+                <option value="東京都">東京都</option>
+                <option value="神奈川県">神奈川県</option>
+                <option value="新潟県">新潟県</option>
+                <option value="富山県">富山県</option>
+                <option value="石川県">石川県</option>
+                <option value="福井県">福井県</option>
+                <option value="山梨県">山梨県</option>
+                <option value="長野県">長野県</option>
+                <option value="岐阜県">岐阜県</option>
+                <option value="静岡県">静岡県</option>
+                <option value="愛知県">愛知県</option>
+                <option value="三重県">三重県</option>
+                <option value="滋賀県">滋賀県</option>
+                <option value="京都府">京都府</option>
+                <option value="大阪府">大阪府</option>
+                <option value="兵庫県">兵庫県</option>
+                <option value="奈良県">奈良県</option>
+                <option value="和歌山県">和歌山県</option>
+                <option value="鳥取県">鳥取県</option>
+                <option value="島根県">島根県</option>
+                <option value="岡山県">岡山県</option>
+                <option value="広島県">広島県</option>
+                <option value="山口県">山口県</option>
+                <option value="徳島県">徳島県</option>
+                <option value="香川県">香川県</option>
+                <option value="愛媛県">愛媛県</option>
+                <option value="高知県">高知県</option>
+                <option value="福岡県">福岡県</option>
+                <option value="佐賀県">佐賀県</option>
+                <option value="長崎県">長崎県</option>
+                <option value="熊本県">熊本県</option>
+                <option value="大分県">大分県</option>
+                <option value="宮崎県">宮崎県</option>
+                <option value="鹿児島県">鹿児島県</option>
+                <option value="沖縄県">沖縄県</option>
+              </select>
+            </div>
+
+            <!-- 種別（複数選択可） -->
+            <div class="space-y-2">
+              <div class="label-control">
+                <div class="label-control-row">
+                  <span class="label-control-text" id="filter-type-label">種別</span>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2" role="group" aria-labelledby="filter-type-label">
+                <button type="button" class="filter-chip" aria-pressed="false" data-type="sale">
+                  <span class="filter-chip-main">
+                    <span class="filter-chip-label">売買</span>
+                  </span>
+                  <span class="filter-chip-count">4件</span>
+                  <span class="filter-chip-check" aria-hidden="true">
+                    <span class="filter-chip-check-circle">
+                      <svg viewBox="0 0 24 24"><use href="#icon-check" /></svg>
+                    </span>
+                  </span>
+                </button>
+                <button type="button" class="filter-chip" aria-pressed="false" data-type="rent">
+                  <span class="filter-chip-main">
+                    <span class="filter-chip-label">賃貸</span>
+                  </span>
+                  <span class="filter-chip-count">6件</span>
+                  <span class="filter-chip-check" aria-hidden="true">
+                    <span class="filter-chip-check-circle">
+                      <svg viewBox="0 0 24 24"><use href="#icon-check" /></svg>
+                    </span>
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            <button type="button" id="filter-clear" class="btn btn-md btn-neutral btn-outline">条件をクリア</button>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- 検索結果 -->
+      <section aria-labelledby="result-heading" class="space-y-4">
+        <div class="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 id="result-heading" class="typo-large">検索結果</h2>
+          <p id="result-count" class="typo-medium text-fg-middle" aria-live="polite">全 10 件中 10 件を表示しています</p>
+        </div>
+
+        <div id="result-table-wrap" class="overflow-x-auto">
+          <table class="data-table" aria-labelledby="result-heading">
+            <thead>
+              <tr>
+                <th scope="col">物件名</th>
+                <th scope="col">種別</th>
+                <th scope="col">エリア</th>
+                <th scope="col">所在地</th>
+                <th scope="col">価格・賃料</th>
+                <th scope="col">間取り</th>
+                <th scope="col">専有面積</th>
+              </tr>
+            </thead>
+            <tbody id="result-body">
+              <tr data-pref="東京都" data-type="rent">
+                <td><a href="#" class="link">グランレイ品川タワー 1203号室</a></td>
+                <td><span class="badge badge-soft-neutral">賃貸</span></td>
+                <td>東京都</td>
+                <td>品川区東品川</td>
+                <td>24.8万円 / 月</td>
+                <td>1LDK</td>
+                <td>42.3㎡</td>
+              </tr>
+              <tr data-pref="東京都" data-type="sale">
+                <td><a href="#" class="link">サンライトコート吉祥寺</a></td>
+                <td><span class="badge badge-soft-primary">売買</span></td>
+                <td>東京都</td>
+                <td>武蔵野市吉祥寺本町</td>
+                <td>6,480万円</td>
+                <td>2LDK</td>
+                <td>58.6㎡</td>
+              </tr>
+              <tr data-pref="神奈川県" data-type="rent">
+                <td><a href="#" class="link">リバーサイド横浜みなと</a></td>
+                <td><span class="badge badge-soft-neutral">賃貸</span></td>
+                <td>神奈川県</td>
+                <td>横浜市西区みなとみらい</td>
+                <td>15.2万円 / 月</td>
+                <td>1DK</td>
+                <td>35.1㎡</td>
+              </tr>
+              <tr data-pref="神奈川県" data-type="sale">
+                <td><a href="#" class="link">鎌倉山手の戸建て</a></td>
+                <td><span class="badge badge-soft-primary">売買</span></td>
+                <td>神奈川県</td>
+                <td>鎌倉市山ノ内</td>
+                <td>8,900万円</td>
+                <td>4LDK</td>
+                <td>112.4㎡</td>
+              </tr>
+              <tr data-pref="大阪府" data-type="rent">
+                <td><a href="#" class="link">梅田セントラルレジデンス</a></td>
+                <td><span class="badge badge-soft-neutral">賃貸</span></td>
+                <td>大阪府</td>
+                <td>大阪市北区梅田</td>
+                <td>13.6万円 / 月</td>
+                <td>1LDK</td>
+                <td>40.2㎡</td>
+              </tr>
+              <tr data-pref="大阪府" data-type="sale">
+                <td><a href="#" class="link">なんばグリーンハイツ</a></td>
+                <td><span class="badge badge-soft-primary">売買</span></td>
+                <td>大阪府</td>
+                <td>大阪市浪速区難波中</td>
+                <td>3,980万円</td>
+                <td>3LDK</td>
+                <td>68.9㎡</td>
+              </tr>
+              <tr data-pref="愛知県" data-type="rent">
+                <td><a href="#" class="link">栄ステーションフラット</a></td>
+                <td><span class="badge badge-soft-neutral">賃貸</span></td>
+                <td>愛知県</td>
+                <td>名古屋市中区栄</td>
+                <td>9.8万円 / 月</td>
+                <td>1K</td>
+                <td>28.4㎡</td>
+              </tr>
+              <tr data-pref="福岡県" data-type="rent">
+                <td><a href="#" class="link">博多キャナルサイド</a></td>
+                <td><span class="badge badge-soft-neutral">賃貸</span></td>
+                <td>福岡県</td>
+                <td>福岡市博多区住吉</td>
+                <td>8.6万円 / 月</td>
+                <td>1LDK</td>
+                <td>38.7㎡</td>
+              </tr>
+              <tr data-pref="福岡県" data-type="sale">
+                <td><a href="#" class="link">大濠公園ビューテラス</a></td>
+                <td><span class="badge badge-soft-primary">売買</span></td>
+                <td>福岡県</td>
+                <td>福岡市中央区大濠公園</td>
+                <td>5,250万円</td>
+                <td>3LDK</td>
+                <td>75.0㎡</td>
+              </tr>
+              <tr data-pref="北海道" data-type="rent">
+                <td><a href="#" class="link">札幌大通ガーデン</a></td>
+                <td><span class="badge badge-soft-neutral">賃貸</span></td>
+                <td>北海道</td>
+                <td>札幌市中央区大通西</td>
+                <td>7.2万円 / 月</td>
+                <td>2LDK</td>
+                <td>55.8㎡</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p id="result-empty" class="typo-medium text-fg-middle py-8" hidden>
+          条件に合う物件が見つかりませんでした。エリアや種別の条件を変えてお試しください。
+        </p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="bg-surface border-t border-stroke-low">
+    <div class="page-shell py-8">
+      <p class="typo-medium text-fg-low">© 2026 relay 不動産</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var areaSelect = document.getElementById("filter-area");
+      var chips = Array.prototype.slice.call(document.querySelectorAll(".filter-chip[data-type]"));
+      var rows = Array.prototype.slice.call(document.querySelectorAll("#result-body tr"));
+      var countText = document.getElementById("result-count");
+      var tableWrap = document.getElementById("result-table-wrap");
+      var emptyText = document.getElementById("result-empty");
+      var clearButton = document.getElementById("filter-clear");
+
+      function applyFilters() {
+        var pref = areaSelect.value;
+        var selectedTypes = chips
+          .filter(function (chip) { return chip.getAttribute("aria-pressed") === "true"; })
+          .map(function (chip) { return chip.dataset.type; });
+
+        var visibleCount = 0;
+        rows.forEach(function (row) {
+          var matchesPref = pref === "" || row.dataset.pref === pref;
+          var matchesType = selectedTypes.length === 0 || selectedTypes.indexOf(row.dataset.type) !== -1;
+          var show = matchesPref && matchesType;
+          row.hidden = !show;
+          if (show) visibleCount += 1;
+        });
+
+        countText.textContent = "全 " + rows.length + " 件中 " + visibleCount + " 件を表示しています";
+        tableWrap.hidden = visibleCount === 0;
+        emptyText.hidden = visibleCount !== 0;
+      }
+
+      areaSelect.addEventListener("change", applyFilters);
+
+      chips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          var pressed = chip.getAttribute("aria-pressed") === "true";
+          chip.setAttribute("aria-pressed", pressed ? "false" : "true");
+          applyFilters();
+        });
+      });
+
+      clearButton.addEventListener("click", function () {
+        areaSelect.value = "";
+        chips.forEach(function (chip) { chip.setAttribute("aria-pressed", "false"); });
+        applyFilters();
+      });
+    })();
+  </script>
+</body>
+</html>

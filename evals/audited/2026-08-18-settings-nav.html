@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>設定 | relay</title>
+  <link rel="stylesheet" href="./relay.css" />
+  <style>
+    /* skip link: 通常は画面外、フォーカス時のみ表示（装飾値はトークン/ユーティリティ側で指定） */
+    .skip-link {
+      position: absolute;
+      inset-inline-start: 0;
+      inset-block-start: 0;
+      transform: translateY(-200%);
+    }
+    .skip-link:focus {
+      transform: none;
+    }
+  </style>
+</head>
+<body class="bg-neutral-50">
+
+  <!-- Lucide アイコン（インライン sprite 定義） -->
+  <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
+    <symbol id="lucide-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+      <circle cx="12" cy="7" r="4" />
+    </symbol>
+    <symbol id="lucide-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+    </symbol>
+    <symbol id="lucide-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z" />
+    </symbol>
+  </svg>
+
+  <a class="skip-link link bg-surface p-2" href="#main-content">本文へスキップ</a>
+
+  <header class="bg-surface border-b border-stroke-low">
+    <div class="page-shell flex items-center justify-between py-4">
+      <p class="typo-large text-fg-high">relay</p>
+      <p class="typo-medium text-fg-middle">山田 太郎 さん</p>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="page-shell page-shell-content py-16">
+      <h1 class="typo-2xlarge text-fg-high mb-8">設定</h1>
+
+      <div class="flex items-start gap-8">
+
+        <!-- セクションナビゲーション（現在地は aria-current="page" で示す） -->
+        <nav class="menu w-70 shrink-0 border border-stroke-middle" aria-label="設定" data-settings-nav>
+          <ul class="menu-group">
+            <li>
+              <a class="menu-item" href="#section-profile" aria-current="page">
+                <svg class="icon" aria-hidden="true"><use href="#lucide-user"></use></svg>
+                プロフィール
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="#section-notifications">
+                <svg class="icon" aria-hidden="true"><use href="#lucide-bell"></use></svg>
+                通知
+              </a>
+            </li>
+            <li>
+              <a class="menu-item" href="#section-security">
+                <svg class="icon" aria-hidden="true"><use href="#lucide-shield"></use></svg>
+                セキュリティ
+              </a>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="flex-1 min-w-0">
+
+          <!-- プロフィール -->
+          <section id="section-profile" aria-labelledby="profile-title">
+            <form novalidate>
+              <div class="card">
+                <div class="card-header">
+                  <h2 id="profile-title" class="card-title">プロフィール</h2>
+                  <p class="card-subtitle">ほかの利用者に表示される基本情報です</p>
+                </div>
+                <div class="card-body space-y-6">
+                  <div class="space-y-2">
+                    <div class="label-control">
+                      <div class="label-control-row">
+                        <label class="label-control-text" for="profile-name">氏名</label>
+                        <span class="label-badge label-badge-required">必須</span>
+                      </div>
+                    </div>
+                    <input id="profile-name" type="text" class="input input-md" value="山田 太郎" autocomplete="name" required />
+                  </div>
+                  <div class="space-y-2">
+                    <div class="label-control">
+                      <div class="label-control-row">
+                        <label class="label-control-text" for="profile-email">メールアドレス</label>
+                        <span class="label-badge label-badge-required">必須</span>
+                      </div>
+                      <p class="label-control-support" id="profile-email-support">ログインと通知の受け取りに使用します</p>
+                    </div>
+                    <input id="profile-email" type="email" class="input input-md" value="taro.yamada@example.com" autocomplete="email" aria-describedby="profile-email-support" required />
+                  </div>
+                  <div class="space-y-2">
+                    <div class="label-control">
+                      <div class="label-control-row">
+                        <label class="label-control-text" for="profile-department">所属部署</label>
+                        <span class="label-badge label-badge-optional">任意</span>
+                      </div>
+                    </div>
+                    <input id="profile-department" type="text" class="input input-md" placeholder="例: 営業部" autocomplete="organization-title" />
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-md btn-primary btn-solid">保存</button>
+                </div>
+              </div>
+            </form>
+          </section>
+
+          <!-- 通知 -->
+          <section id="section-notifications" aria-labelledby="notifications-title" hidden>
+            <div class="card">
+              <div class="card-header">
+                <h2 id="notifications-title" class="card-title">通知</h2>
+                <p class="card-subtitle">切り替えた内容はすぐに反映されます</p>
+              </div>
+              <div class="card-body">
+                <div class="flex flex-col gap-6">
+                  <label class="switch-label">
+                    <input type="checkbox" role="switch" class="switch" checked />
+                    メールで通知を受け取る
+                  </label>
+                  <label class="switch-label">
+                    <input type="checkbox" role="switch" class="switch" checked />
+                    アプリのプッシュ通知を受け取る
+                  </label>
+                  <label class="switch-label">
+                    <input type="checkbox" role="switch" class="switch" />
+                    週間サマリーを受け取る
+                  </label>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- セキュリティ -->
+          <section id="section-security" aria-labelledby="security-title" hidden>
+            <form novalidate>
+              <div class="card">
+                <div class="card-header">
+                  <h2 id="security-title" class="card-title">セキュリティ</h2>
+                  <p class="card-subtitle">パスワードの変更ができます</p>
+                </div>
+                <div class="card-body space-y-6">
+                  <div class="space-y-2">
+                    <div class="label-control">
+                      <div class="label-control-row">
+                        <label class="label-control-text" for="current-password">現在のパスワード</label>
+                        <span class="label-badge label-badge-required">必須</span>
+                      </div>
+                    </div>
+                    <input id="current-password" type="password" class="input input-md" autocomplete="current-password" required />
+                  </div>
+                  <div class="space-y-2">
+                    <div class="label-control">
+                      <div class="label-control-row">
+                        <label class="label-control-text" for="new-password">新しいパスワード</label>
+                        <span class="label-badge label-badge-required">必須</span>
+                      </div>
+                      <p class="label-control-support" id="new-password-support">8 文字以上で、英字と数字を組み合わせてください</p>
+                    </div>
+                    <input id="new-password" type="password" class="input input-md" autocomplete="new-password" aria-describedby="new-password-support" required />
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-md btn-primary btn-solid">パスワードを変更</button>
+                </div>
+              </div>
+            </form>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const nav = document.querySelector("[data-settings-nav]");
+    const links = Array.from(nav.querySelectorAll(".menu-item"));
+    const sections = links.map((link) => document.querySelector(link.getAttribute("href")));
+
+    function activate(link) {
+      links.forEach((l, i) => {
+        const isCurrent = l === link;
+        if (isCurrent) {
+          l.setAttribute("aria-current", "page");
+        } else {
+          l.removeAttribute("aria-current");
+        }
+        sections[i].hidden = !isCurrent;
+      });
+    }
+
+    links.forEach((link) => {
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+        activate(link);
+        history.replaceState(null, "", link.getAttribute("href"));
+      });
+    });
+
+    // ↑/↓ で前後の項目、Home/End で先頭/末尾へ移動（端でループ）。
+    // roving tabindex は使わず、Tab 順は全項目そのまま残す（menu の必須対応）。
+    nav.addEventListener("keydown", (event) => {
+      const index = links.indexOf(document.activeElement);
+      if (index === -1) return;
+      let next = null;
+      if (event.key === "ArrowDown") next = (index + 1) % links.length;
+      else if (event.key === "ArrowUp") next = (index - 1 + links.length) % links.length;
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = links.length - 1;
+      if (next !== null) {
+        event.preventDefault();
+        links[next].focus();
+      }
+    });
+
+    // フォーム送信はデモのため抑止（実装時は API 呼び出しに置き換える）
+    document.querySelectorAll("form").forEach((form) => {
+      form.addEventListener("submit", (event) => event.preventDefault());
+    });
+
+    const initial = links.find((link) => link.getAttribute("href") === location.hash) ?? links[0];
+    activate(initial);
+  </script>
+</body>
+</html>
