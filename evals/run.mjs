@@ -97,7 +97,8 @@ function generationPrompt(c) {
     "制約:",
     "- relay Design System の仕様は MCP ツール（relay-ds）で必ず確認しながら実装すること。",
     "- CSS は同じディレクトリに relay.css として配置済み。<head> で <link rel=\"stylesheet\" href=\"./relay.css\"> を読み込むこと（npm セットアップは不要）。",
-    "- アイコンが必要な場合は、インライン SVG（<symbol> 定義 + <use href=\"#id\">）にするか省略する。外部 .svg ファイルへの参照は書かない。",
+    "- アイコンが必要な場合は、インライン SVG（<symbol> 定義 + <use href=\"#id\">）にするか省略する（アイコン用の外部 .svg 参照は書かない）。",
+    "- ロゴ・イラストが必要な場合は list_assets の直リンク URL を <img> でそのまま使う（独自に描かない）。",
     "- 完成したら保存したファイルパスを 1 行報告して終了。",
   ].join("\n");
 }

@@ -50,7 +50,7 @@ export const INSTRUCTIONS = [
   "1. get_design_principles で必須ルールと禁止パターンを、list_components でコンポーネントの全体像を把握する。",
   "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
-  "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。",
+  "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。空状態・ヒーロー・案内・完了画面などイラストが場面に合うときは、独自の SVG イラストを描かず必ず list_assets から選ぶこと。",
   "5. アクセシビリティ: get_component の「アクセシビリティ」節（そのコンポーネントの実装必須対応）を必ず反映し、全体方針・WCAG 準拠は get_accessibility を参照する（aria-label / ラベル関連付け / role・aria-current 等を省略しない）。",
   "",
   "【事前知識で答えない】",
@@ -247,6 +247,7 @@ function formatAssets() {
   out.push(
     "ロゴ・イラストの画像素材。URL は直リンク（GitHub raw・内容ハッシュ無しの固定URL）なので、",
     "そのまま `<img src=\"{URL}\">` や Markdown `![{用途}]({URL})` で埋め込める。relay 以外の独自ロゴ・イラストは使わないこと。",
+    "空状態・ヒーロー・案内・完了画面などイラストが合う場面では、独自の SVG イラストを描かずここから選ぶ（1 点で十分。alt は下表の用途を使う）。",
     "",
     "| 名前 | 形式 | 用途 | URL |",
     "|---|---|---|---|",
@@ -492,7 +493,7 @@ export const TOOLS = [
   {
     name: "list_assets",
     description:
-      "relay のブランドアセット（サービスロゴ・イラスト）一覧を直リンク URL 付きで返す。生成物にロゴやイラストを埋め込むときに使う（独自ロゴを作らない）。",
+      "relay のブランドアセット（サービスロゴ・イラスト）一覧を直リンク URL 付きで返す。空状態・ヒーロー・案内・完了画面などイラストが合う場面では、独自の SVG イラストを描かずここから選ぶこと（独自ロゴ・独自イラストは禁止）。",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
