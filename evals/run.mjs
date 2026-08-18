@@ -22,6 +22,8 @@
  *                    判定に迷う場合は不合格に倒す指示（審査の甘化防止）
  *   5. 結果を console と evals/results/<timestamp>.json に出力し、
  *      直前の実行結果と比較して変化を表示する（Phase 3: 定点観測）
+ *      採点した HTML は evals/results/outputs/<timestamp>/ にアーカイブする
+ *      （output/ は次の生成で上書きされるため。判定の遡り監査用: review-log.md）
  *      結果は pass / fail / error:generation / error:judge の 4 区分で記録し、
  *      品質の失敗と測定側の故障を混同しない（分類規則は status.mjs が正本）
  *
@@ -329,6 +331,10 @@ else console.warn("⚠ dist/relay.css がありません（npm run build で生�
 const claudeBin = skipGenerate && skipJudge ? null : resolveClaudeBin();
 const previous = loadPreviousSummary();
 const results = [];
+const stamp = new Date().toISOString().replace(/[:.]/g, "-");
+// 採点対象の HTML は実行ごとにアーカイブする。output/ は次の生成で上書きされるため、
+// これが無いと「過去の判定が妥当だったか」を後から監査できない（運用: evals/review-log.md）
+const archiveDir = path.join(resultsDir, "outputs", stamp);
 
 for (const c of cases) {
   const outPath = path.join(outputDir, `${c.id}.html`);
@@ -350,6 +356,8 @@ for (const c of cases) {
   }
 
   const html = fs.readFileSync(outPath, "utf8");
+  fs.mkdirSync(archiveDir, { recursive: true });
+  fs.copyFileSync(outPath, path.join(archiveDir, `${c.id}.html`));
   const hardcode = checkHardcode(outPath);
   const classes = checkClasses(html, c.mustClasses, known);
   const patterns = checkPatterns(html, c.mustPatterns);
@@ -377,10 +385,19 @@ for (const c of cases) {
   const pass = machinePass && (skipJudge || rubric.pass);
   // 審査員が判定不能でも、機械チェックが落ちていれば品質 fail は確定している
   const status = rubric?.error ? (machinePass ? "error:judge" : "fail") : pass ? "pass" : "fail";
-  results.push({ id: c.id, generated: true, status, pass, hardcode, classes, patterns, ...(rubric ? { rubric } : {}) });
+  results.push({
+    id: c.id,
+    generated: true,
+    status,
+    pass,
+    output: `outputs/${stamp}/${c.id}.html`, // 採点した HTML のアーカイブ（resultsDir 相対）
+    hardcode,
+    classes,
+    patterns,
+    ...(rubric ? { rubric } : {}),
+  });
 }
 
-const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 const errorCount = results.filter((r) => isError(classifyResult(r))).length;
 const summary = {
   ranAt: new Date().toISOString(),
