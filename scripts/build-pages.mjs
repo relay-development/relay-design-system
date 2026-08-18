@@ -12,7 +12,7 @@
  * at "/") and on GitHub Pages (served under "/relay-design-system/").
  */
 import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { readFileSync, writeFileSync, readdirSync, existsSync, mkdirSync, copyFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -279,8 +279,14 @@ function renderReviewLog() {
   const rows = lines
     .filter((l) => l.startsWith("|"))
     .map(cellsOf)
-    .filter((c) => c.length >= 5 && c[0] !== "日付" && !c[0].startsWith("---"));
+    .filter((c) => c.length >= 6 && c[0] !== "日付" && !c[0].startsWith("---"));
   const notes = lines.filter((l) => l.startsWith("※")).join(" ");
+  // 画面セル: md の [開く](audited/<file>) をカタログ同梱の ./eval-outputs/<file> リンクに変換
+  const screenCell = (text) => {
+    const m = text.match(/\[([^\]]+)\]\(audited\/([^)]+)\)/);
+    if (!m) return `<span class="text-fg-low">${esc(text)}</span>`;
+    return `<a class="link" href="./eval-outputs/${esc(m[2])}" target="_blank" rel="noopener noreferrer"><span class="link-label">${esc(m[1])}</span><svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg></a>`;
+  };
   const body = rows
     .map(
       (c) => `                <tr>
@@ -288,7 +294,8 @@ function renderReviewLog() {
                   <td><code class="typo-xsmall">${esc(c[1])}</code></td>
                   <td>${renderJudgeCell(c[2])}</td>
                   <td>${verdictBadge(c[3])}</td>
-                  <td>${esc(c[4])}</td>
+                  <td>${screenCell(c[4])}</td>
+                  <td>${esc(c[5])}</td>
                 </tr>`,
     )
     .join("\n");
@@ -303,6 +310,7 @@ function renderReviewLog() {
                   <th>お題</th>
                   <th>審査員の判定</th>
                   <th>人の判定</th>
+                  <th>画面</th>
                   <th>メモ</th>
                 </tr>
               </thead>
@@ -523,6 +531,24 @@ for (const f of readdirSync(PAGES_DIR)) {
   if (f.endsWith(".html") && !known.has(f)) {
     console.warn(`⚠ orphan fragment (no PAGES entry): examples/pages/${f}`);
   }
+}
+
+// 監査済みスナップショット（evals/audited/ = 正本）を examples/eval-outputs/ に同梱する。
+// 監査ログページの「画面」リンク先。スナップショットは ./relay.css を参照するため配布 CSS も隣に置く
+const auditedDir = resolve(ROOT, "evals/audited");
+if (existsSync(auditedDir)) {
+  const outDir = resolve(EXAMPLES, "eval-outputs");
+  mkdirSync(outDir, { recursive: true });
+  let copied = 0;
+  for (const f of readdirSync(auditedDir)) {
+    if (!f.endsWith(".html")) continue;
+    copyFileSync(resolve(auditedDir, f), resolve(outDir, f));
+    copied++;
+  }
+  const relayCss = resolve(ROOT, "dist/relay.css");
+  if (existsSync(relayCss)) copyFileSync(relayCss, resolve(outDir, "relay.css"));
+  else console.warn("⚠ dist/relay.css がありません — eval-outputs のスナップショットがスタイルなしになります（vite build で生成）");
+  console.log(`✓ Copied ${copied} audited snapshots into examples/eval-outputs/`);
 }
 
 console.log(`✓ Generated ${written} pages into examples/ (index + ${PAGES.length} others)`);

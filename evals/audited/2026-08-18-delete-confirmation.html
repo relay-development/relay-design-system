@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>メンバー — relay 組織設定</title>
+  <link rel="stylesheet" href="./relay.css" />
+</head>
+<body class="bg-page text-fg-high font-sans antialiased">
+
+  <!-- ===== アイコンスプライト（relay 同梱の lucide 定義と同じ形式） ===== -->
+  <svg class="hidden" aria-hidden="true">
+    <defs>
+      <symbol id="lucide-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m9 18 6-6-6-6" />
+      </symbol>
+      <symbol id="lucide-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M5 12h14" />
+        <path d="M12 5v14" />
+      </symbol>
+      <symbol id="lucide-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6 6 18" />
+        <path d="m6 6 12 12" />
+      </symbol>
+      <symbol id="lucide-trash-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M10 11v6" />
+        <path d="M14 11v6" />
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+        <path d="M3 6h18" />
+        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      </symbol>
+      <symbol id="lucide-alert-triangle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3" />
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
+      </symbol>
+      <symbol id="lucide-check-circle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21.801 10A10 10 0 1 1 17 3.335" />
+        <path d="m9 11 3 3L22 4" />
+      </symbol>
+      <symbol id="lucide-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M12 16v-4" />
+        <path d="M12 8h.01" />
+      </symbol>
+    </defs>
+  </svg>
+
+  <a class="link sr-only" href="#main"><span class="link-label">本文へスキップ</span></a>
+
+  <!-- ===== ヘッダー ===== -->
+  <header class="bg-surface border-b border-stroke-middle">
+    <div class="page-shell flex items-center justify-between gap-4 py-4">
+      <p class="typo-large">relay</p>
+      <p class="typo-medium text-fg-middle">株式会社ライトライト</p>
+    </div>
+  </header>
+
+  <!-- ===== 本文 ===== -->
+  <main id="main">
+    <div class="page-shell flex flex-col gap-8 py-12">
+
+      <nav class="breadcrumb" aria-label="パンくずリスト">
+        <ol>
+          <li><a class="link" href="#"><span class="link-label">組織設定</span></a></li>
+          <li class="breadcrumb-sep" aria-hidden="true"><svg class="icon"><use href="#lucide-chevron-right"></use></svg></li>
+          <li><span class="breadcrumb-current" aria-current="page">メンバー</span></li>
+        </ol>
+      </nav>
+
+      <div class="flex flex-col items-start justify-between gap-4 sm:flex-row">
+        <div class="flex flex-col gap-1">
+          <h1 class="typo-2xlarge">メンバー</h1>
+          <p class="typo-medium text-fg-middle">この組織には <span id="member-count">5</span> 人のメンバーがいます。</p>
+        </div>
+        <button type="button" class="btn btn-md btn-primary btn-solid">
+          <svg class="icon icon-sm" aria-hidden="true"><use href="#lucide-plus"></use></svg>
+          メンバーを招待
+        </button>
+      </div>
+
+      <!-- 削除の結果通知（削除後に表示する） -->
+      <div class="alert alert-success" role="status" id="result-alert" tabindex="-1" hidden>
+        <span class="alert-icon"><svg aria-hidden="true"><use href="#lucide-check-circle"></use></svg></span>
+        <div class="alert-content">
+          <p class="alert-title">アカウントを削除しました</p>
+          <p class="alert-body" id="result-text"></p>
+        </div>
+        <button type="button" class="alert-close" id="result-close" aria-label="閉じる">
+          <svg aria-hidden="true"><use href="#lucide-x"></use></svg>
+        </button>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="data-table">
+          <caption class="sr-only">メンバー一覧</caption>
+          <thead>
+            <tr>
+              <th scope="col">メンバー</th>
+              <th scope="col">権限</th>
+              <th scope="col">ステータス</th>
+              <th scope="col">最終ログイン</th>
+              <th scope="col">操作</th>
+            </tr>
+          </thead>
+          <tbody id="member-rows">
+            <tr>
+              <td>
+                <span class="flex flex-col gap-1">
+                  <span class="font-bold">田中 美咲</span>
+                  <span class="text-fg-middle">misaki.tanaka@example.com</span>
+                </span>
+              </td>
+              <td>オーナー</td>
+              <td><span class="badge badge-soft-success">参加中</span></td>
+              <td>2026-08-05</td>
+              <td><span class="text-fg-low">オーナーは削除できません</span></td>
+            </tr>
+            <tr>
+              <td>
+                <span class="flex flex-col gap-1">
+                  <span class="font-bold">佐藤 健</span>
+                  <span class="text-fg-middle">ken.sato@example.com</span>
+                </span>
+              </td>
+              <td>管理者</td>
+              <td><span class="badge badge-soft-success">参加中</span></td>
+              <td>2026-08-04</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-negative btn-ghost"
+                        data-delete-trigger
+                        data-member-name="佐藤 健"
+                        data-member-email="ken.sato@example.com"
+                        data-member-role="管理者">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                  削除<span class="sr-only">（佐藤 健）</span>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="flex flex-col gap-1">
+                  <span class="font-bold">鈴木 陽菜</span>
+                  <span class="text-fg-middle">hina.suzuki@example.com</span>
+                </span>
+              </td>
+              <td>メンバー</td>
+              <td><span class="badge badge-soft-success">参加中</span></td>
+              <td>2026-08-01</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-negative btn-ghost"
+                        data-delete-trigger
+                        data-member-name="鈴木 陽菜"
+                        data-member-email="hina.suzuki@example.com"
+                        data-member-role="メンバー">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                  削除<span class="sr-only">（鈴木 陽菜）</span>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="flex flex-col gap-1">
+                  <span class="font-bold">山田 太郎</span>
+                  <span class="text-fg-middle">taro.yamada@example.com</span>
+                </span>
+              </td>
+              <td>メンバー</td>
+              <td><span class="badge badge-soft-info">招待中</span></td>
+              <td>—</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-negative btn-ghost"
+                        data-delete-trigger
+                        data-member-name="山田 太郎"
+                        data-member-email="taro.yamada@example.com"
+                        data-member-role="メンバー">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                  削除<span class="sr-only">（山田 太郎）</span>
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <span class="flex flex-col gap-1">
+                  <span class="font-bold">高橋 蓮</span>
+                  <span class="text-fg-middle">ren.takahashi@example.com</span>
+                </span>
+              </td>
+              <td>メンバー</td>
+              <td><span class="badge badge-soft-neutral">利用停止中</span></td>
+              <td>2026-06-12</td>
+              <td>
+                <button type="button" class="btn btn-sm btn-negative btn-ghost"
+                        data-delete-trigger
+                        data-member-name="高橋 蓮"
+                        data-member-email="ren.takahashi@example.com"
+                        data-member-role="メンバー">
+                  <svg class="icon icon-sm" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+                  削除<span class="sr-only">（高橋 蓮）</span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="alert alert-neutral">
+        <span class="alert-icon"><svg aria-hidden="true"><use href="#lucide-info"></use></svg></span>
+        <div class="alert-content">
+          <p class="alert-title">アカウントを削除する前に</p>
+          <p class="alert-body">
+            削除するとそのメンバーのアカウントと個人設定は完全に消え、あとから元に戻すことはできません。
+            共有中のドキュメントとコメントは組織に残ります。誤って消してしまわないよう、確認画面でメールアドレスの入力をお願いしています。
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ===== 削除確認モーダル ===== -->
+  <dialog class="modal" id="delete-modal" aria-labelledby="dc-title" aria-describedby="dc-desc">
+    <div class="modal-header">
+      <h2 class="modal-title" id="dc-title">アカウントを削除しますか？</h2>
+      <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" data-modal-close aria-label="閉じる">
+        <svg aria-hidden="true"><use href="#lucide-x"></use></svg>
+      </button>
+    </div>
+
+    <div class="modal-body flex flex-col gap-6">
+      <div class="alert alert-warning" id="dc-desc">
+        <span class="alert-icon"><svg aria-hidden="true"><use href="#lucide-alert-triangle"></use></svg></span>
+        <div class="alert-content">
+          <p class="alert-title">削除すると元に戻せません</p>
+          <p class="alert-body">
+            このメンバーのアカウントと個人設定は完全に削除されます。同じ人をもう一度招待しても、元の状態には戻りません。
+          </p>
+        </div>
+      </div>
+
+      <table class="simple-table">
+        <caption class="sr-only">削除するメンバー</caption>
+        <tbody>
+          <tr>
+            <th scope="row">氏名</th>
+            <td>
+              <span class="inline-flex items-center gap-2">
+                <span id="dc-name">—</span>
+                <span class="badge badge-soft-neutral" id="dc-role">—</span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">メールアドレス</th>
+            <td id="dc-email">—</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="flex flex-col gap-2">
+        <div class="label-control">
+          <div class="label-control-row">
+            <label class="label-control-text" for="dc-confirm">確認のためメールアドレスを入力</label>
+            <span class="label-badge label-badge-required">必須</span>
+          </div>
+          <p class="label-control-support" id="dc-support">上に表示されているメールアドレスを入力すると、「削除する」が押せるようになります。</p>
+        </div>
+        <input type="text" class="input input-lg" id="dc-confirm" required
+               autocomplete="off" spellcheck="false" aria-describedby="dc-support" />
+        <p class="typo-small text-negative-600" id="dc-error" role="alert" hidden>
+          メールアドレスが一致しません。上に表示されているものをそのまま入力してください。
+        </p>
+        <p class="sr-only" role="status" id="dc-live"></p>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-lg btn-neutral btn-outline" data-modal-close>キャンセル</button>
+      <button type="button" class="btn btn-lg btn-negative btn-solid" id="dc-submit" disabled>
+        <svg class="icon icon-md" aria-hidden="true"><use href="#lucide-trash-2"></use></svg>
+        削除する
+      </button>
+    </div>
+  </dialog>
+
+  <script>
+    (function () {
+      const modal   = document.getElementById('delete-modal');
+      const nameEl  = document.getElementById('dc-name');
+      const roleEl  = document.getElementById('dc-role');
+      const mailEl  = document.getElementById('dc-email');
+      const input   = document.getElementById('dc-confirm');
+      const errorEl = document.getElementById('dc-error');
+      const liveEl  = document.getElementById('dc-live');
+      const submit  = document.getElementById('dc-submit');
+      const rows    = document.getElementById('member-rows');
+      const countEl = document.getElementById('member-count');
+      const result      = document.getElementById('result-alert');
+      const resultText  = document.getElementById('result-text');
+      const resultClose = document.getElementById('result-close');
+
+      let trigger = null;   // 呼び出し元のボタン（閉じたらここへフォーカスを戻す）
+      let target  = null;   // 削除対象 { name, email, role, row }
+      let deleted = false;
+
+      function resetForm() {
+        input.value = '';
+        clearError();
+        submit.disabled = true;
+        liveEl.textContent = '';
+      }
+
+      function matches() {
+        return !!target && input.value.trim().toLowerCase() === target.email.toLowerCase();
+      }
+
+      function showError() {
+        input.classList.add('input-error');
+        input.setAttribute('aria-invalid', 'true');
+        input.setAttribute('aria-describedby', 'dc-support dc-error');
+        errorEl.hidden = false;
+      }
+
+      function clearError() {
+        input.classList.remove('input-error');
+        input.removeAttribute('aria-invalid');
+        input.setAttribute('aria-describedby', 'dc-support');
+        errorEl.hidden = true;
+      }
+
+      // 行の「削除」→ 確認モーダルを開く
+      document.querySelectorAll('[data-delete-trigger]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          trigger = btn;
+          target = {
+            name:  btn.dataset.memberName,
+            email: btn.dataset.memberEmail,
+            role:  btn.dataset.memberRole,
+            row:   btn.closest('tr')
+          };
+          nameEl.textContent = target.name;
+          roleEl.textContent = target.role;
+          mailEl.textContent = target.email;
+          deleted = false;
+          resetForm();
+          modal.showModal();
+        });
+      });
+
+      // メールアドレスが一致するまで「削除する」は押せない
+      input.addEventListener('input', function () {
+        const ok = matches();
+        submit.disabled = !ok;
+        if (ok) {
+          clearError();
+          liveEl.textContent = 'メールアドレスが一致しました。「削除する」が押せます。';
+        } else {
+          liveEl.textContent = '';
+          if (input.value.trim() === '') clearError();
+        }
+      });
+
+      input.addEventListener('blur', function () {
+        if (input.value.trim() !== '' && !matches()) showError();
+      });
+
+      // 削除を実行
+      submit.addEventListener('click', function () {
+        if (!matches()) return;
+        const name = target.name;
+        target.row.remove();
+        countEl.textContent = String(rows.querySelectorAll('tr').length);
+        deleted = true;
+        modal.close();
+        resultText.textContent = name + ' さんのアカウントを削除しました。この操作は取り消せません。';
+        result.hidden = false;
+        result.focus();
+      });
+
+      // 閉じる（キャンセル / × / Esc）
+      modal.querySelectorAll('[data-modal-close]').forEach(function (btn) {
+        btn.addEventListener('click', function () { modal.close(); });
+      });
+
+      modal.addEventListener('close', function () {
+        // 削除した場合は呼び出し元の行が無いので、通知（role="status"）へフォーカスを移す
+        if (!deleted && trigger && document.contains(trigger)) trigger.focus();
+        resetForm();
+        trigger = null;
+        target = null;
+      });
+
+      resultClose.addEventListener('click', function () {
+        result.hidden = true;
+      });
+    })();
+  </script>
+
+</body>
+</html>
