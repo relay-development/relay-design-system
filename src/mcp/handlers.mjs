@@ -143,7 +143,7 @@ function formatComponent(c) {
   if (c.accessibility && c.accessibility.length) {
     out.push("## アクセシビリティ（実装時の必須対応）", "");
     for (const a of c.accessibility) out.push(`- ${a}`);
-    out.push("", "> WCAG 2.2 の全体チェックリスト（DS 担保範囲・プロダクト必須実装）は get_accessibility を参照。", "");
+    out.push("", "> WCAG 2.2 の全体チェックリスト（DS 担保範囲・プロダクト必須実装）は get_accessibility を参照（topic で節指定可）。", "");
   }
 
   // 仕様（doc）からは 機能/使用法/アクセシビリティ ブロックを除いて重複表示を避ける（doc 全文は index に保持）。
@@ -279,24 +279,113 @@ function formatPrinciples() {
 }
 
 /**
- * WCAG 2.2 (A/AA/AAA) チェックリスト。冒頭に「DS 担保範囲／プロダクト必須実装」の
- * 要約を出し、続けて全文（docs/ACCESSIBILITY.md）を返す。コンポーネント個別の必須
- * 対応は get_component の「アクセシビリティ」節を参照。
+ * docs/ACCESSIBILITY.md を「## グループ」「### 節」の 2 階層セクションに分割する。
+ * ## 直下の本文（担保早見表など ### を持たない章）も topic で引けるよう、
+ * グループ自身も直下本文つきのセクションとして持つ。
  */
-function formatAccessibility() {
+function splitA11ySections(full) {
+  const sections = [];
+  let group = null;
+  let current = null;
+  for (const line of full.split("\n")) {
+    if (/^## /.test(line)) {
+      if (current) sections.push(current);
+      group = line.replace(/^## /, "").trim();
+      current = { level: 2, group, heading: group, body: [] };
+      continue;
+    }
+    if (/^### /.test(line)) {
+      if (current) sections.push(current);
+      current = { level: 3, group, heading: line.replace(/^### /, "").trim(), body: [] };
+      continue;
+    }
+    if (current) current.body.push(line);
+  }
+  if (current) sections.push(current);
+  return sections;
+}
+
+function a11yToc(sections) {
+  const out = [];
+  for (const s of sections) {
+    if (s.level === 2) out.push(`- **${s.heading}**`);
+    else out.push(`  - ${s.heading}`);
+  }
+  return out;
+}
+
+/**
+ * WCAG 2.2 (A/AA/AAA) チェックリスト。topic 未指定なら要約（DS 担保範囲／プロダクト
+ * 必須実装）と節目次を返し、topic 指定で該当節の本文だけを返す 2 段構え。
+ * 以前は全文 31K 字を一括で返しており、実測（evals の行動ログ）で 1 回の応答が
+ * 全ツール応答合計の約半分を占めていたため、必要な節に絞って取得する形に変更した。
+ * コンポーネント個別の必須対応は get_component の「アクセシビリティ」節を参照。
+ */
+function formatAccessibility(topic) {
   const a = index.accessibility;
   if (!a) {
     return "アクセシビリティのチェックリスト（docs/ACCESSIBILITY.md）が index に見つかりません。カタログの『アクセシビリティ』ページを参照してください。";
   }
+  const header = ["# relay Design System — アクセシビリティ（WCAG 2.2 実務チェックリスト）", ""];
+  if (!a.full) {
+    // 旧 index（全文なし）: 要約だけ返す
+    const out = [...header];
+    if (a.provides) out.push(a.provides, "");
+    if (a.productMust) out.push(a.productMust, "");
+    return out.join("\n");
+  }
+  const sections = splitA11ySections(a.full);
+
+  if (topic) {
+    const q = String(topic).toLowerCase();
+    let hits = sections.filter((s) => s.heading.toLowerCase().includes(q));
+    let via = "見出し一致";
+    if (!hits.length) {
+      hits = sections.filter((s) => s.body.join("\n").toLowerCase().includes(q));
+      via = "本文一致";
+    }
+    if (!hits.length) {
+      return [
+        ...header,
+        `topic "${topic}" に一致する節がありません。以下の目次から選び直してください:`,
+        "",
+        ...a11yToc(sections),
+      ].join("\n");
+    }
+    const MAX = 5;
+    const out = [
+      ...header,
+      `## topic "${topic}" の該当節（${via} ${hits.length} 件${hits.length > MAX ? `・先頭 ${MAX} 件を表示。絞り込むには topic をより具体的に` : ""}）`,
+      "",
+    ];
+    for (const s of hits.slice(0, MAX)) {
+      out.push(`### ${s.heading}${s.level === 3 ? `（${s.group}）` : ""}`);
+      if (s.level === 2) {
+        // グループ一致は直下本文 + 所属節の見出し一覧（全節の本文は返さない）
+        out.push(...s.body);
+        const children = sections.filter((c) => c.level === 3 && c.group === s.heading);
+        if (children.length) {
+          out.push("", "所属する節（topic で個別指定して本文を取得）:", ...children.map((c) => `- ${c.heading}`));
+        }
+      } else {
+        out.push(...s.body);
+      }
+      out.push("");
+    }
+    out.push("> コンポーネント個別の必須対応は get_component の「アクセシビリティ」節を参照。");
+    return out.join("\n");
+  }
+
   const out = [
-    "# relay Design System — アクセシビリティ（WCAG 2.2 実務チェックリスト）",
-    "",
-    "relay を採用したプロダクトが WCAG 2.2（A / AA / AAA）に準拠するための、DS 担保範囲とプロダクト側責務のチェックリスト。コンポーネント個別の必須対応は get_component(\"<name>\") の「アクセシビリティ」節を参照。",
+    ...header,
+    "relay を採用したプロダクトが WCAG 2.2（A / AA / AAA）に準拠するための、DS 担保範囲とプロダクト側責務のチェックリスト。" +
+      '節の本文は topic（見出しの部分一致。例: "2.4.1" / "スキップ" / "タイムアウト"）を指定して取得すること。' +
+      'コンポーネント個別の必須対応は get_component("<name>") の「アクセシビリティ」節を参照。',
     "",
   ];
   if (a.provides) out.push(a.provides, "");
   if (a.productMust) out.push(a.productMust, "");
-  if (a.full) out.push("---", "", "## 全文（docs/ACCESSIBILITY.md）", "", a.full);
+  out.push("---", "", "## 節目次（本文は topic で指定して取得）", "", ...a11yToc(sections));
   return out.join("\n");
 }
 
@@ -441,7 +530,7 @@ function runSearch(query) {
     out.push(
       "ヒットなし。探しものに応じて: コンポーネント一覧は list_components、トークン実値は get_tokens、" +
         "設計原則・禁止パターンは get_design_principles、アクセシビリティやユーティリティ" +
-        "（sr-only / スキップリンク / フォーカスリング等）の実装ガイドは get_accessibility を参照してください。",
+        "（sr-only / スキップリンク / フォーカスリング等）の実装ガイドは get_accessibility（topic で節指定可）を参照してください。",
     );
   }
   return out.join("\n");
@@ -494,8 +583,18 @@ export const TOOLS = [
   {
     name: "get_accessibility",
     description:
-      "relay のアクセシビリティ実務チェックリスト（WCAG 2.2 A/AA/AAA）を返す。DS が担保する範囲とプロダクト側で実装が必須な項目、検証ツールを含む。アクセシブルな UI を生成・レビューするとき、またコンポーネント個別の必須対応（get_component の「アクセシビリティ」節）の全体像を把握するときに使う。",
-    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+      "relay のアクセシビリティ実務チェックリスト（WCAG 2.2 A/AA/AAA）。topic 未指定なら DS 担保範囲・プロダクト必須実装の要約と節目次を返す。実装知識（スキップリンク・フォーカス・タイムアウト等）が必要なときは目次から topic を指定して該当節の本文を取得する。コンポーネント個別の必須対応は get_component の「アクセシビリティ」節を参照。",
+    inputSchema: {
+      type: "object",
+      properties: {
+        topic: {
+          type: "string",
+          description:
+            '節の絞り込みキーワード。見出しの部分一致（なければ本文の全文検索）。例: "2.4.1" / "スキップ" / "フォーカス" / "タイムアウト"。未指定なら要約 + 節目次',
+        },
+      },
+      additionalProperties: false,
+    },
   },
   {
     name: "list_assets",
@@ -552,7 +651,7 @@ export function callTool(name, args = {}) {
     case "get_design_principles":
       return { text: formatPrinciples() };
     case "get_accessibility":
-      return { text: formatAccessibility() };
+      return { text: formatAccessibility(args.topic) };
     case "list_assets":
       return { text: formatAssets() };
     case "search":
