@@ -36,7 +36,9 @@
  *   npm run eval -- --case <id>      # 1 お題のみ
  *   npm run eval -- --skip-generate  # 生成を飛ばし既存 output を再採点（審査のみ消費）
  *   npm run eval -- --skip-judge     # LLM 審査を飛ばし機械チェックのみ（無料）
- *   npm run eval -- --votes 3        # 審査を 3 回実行し多数決（判定のブレ対策。既定 1）
+ *   npm run eval -- --votes 3        # 審査を 3 回実行し多数決（審査側のブレ対策。既定 1）
+ *   npm run eval -- --trials 2       # 各お題を 2 回生成し全勝のみ PASS（pass^k。生成側のブレ対策。
+ *                                      生成・審査コストが k 倍になる点に注意。既定 1）
  *   npm run eval:report              # 過去の実行履歴を一覧表示（定点観測ビュー）
  *
  * 環境変数:
@@ -63,6 +65,11 @@ const onlyCase = args.includes("--case") ? args[args.indexOf("--case") + 1] : nu
 const skipGenerate = args.includes("--skip-generate");
 const skipJudge = args.includes("--skip-judge");
 const votes = args.includes("--votes") ? Math.max(1, Number(args[args.indexOf("--votes") + 1]) || 1) : 1;
+let trials = args.includes("--trials") ? Math.max(1, Number(args[args.indexOf("--trials") + 1]) || 1) : 1;
+if (skipGenerate && trials > 1) {
+  console.warn("⚠ --skip-generate では --trials を無視します（既存の生成物 1 つを再採点するだけのため）");
+  trials = 1;
+}
 
 /* ------------------------------------------------------------- claude CLI */
 
@@ -379,20 +386,22 @@ const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 // これが無いと「過去の判定が妥当だったか」を後から監査できない（運用: evals/review-log.md）
 const archiveDir = path.join(resultsDir, "outputs", stamp);
 
-for (const c of cases) {
+/** 1 トライアル = 生成 1 回 + 採点一式。suffix はアーカイブのファイル名用（trial 1 は ""） */
+function runTrial(c, suffix) {
   const outPath = path.join(outputDir, `${c.id}.html`);
-  process.stdout.write(`\n■ ${c.id}\n`);
 
   // 生成時の行動ログ。error:generation でも保存する（ハーネス故障の診断に使うため）
   let transcriptRef = null;
   let agentMetrics = null;
   if (!skipGenerate) {
     process.stdout.write("  生成中…（数分かかることがあります）\n");
+    // 生成が書き込みに失敗したとき、前回実行・前トライアルの残骸を誤って採点しないよう先に消す
+    fs.rmSync(outPath, { force: true });
     const gen = generate(claudeBin, c);
     if (gen.transcript) {
       fs.mkdirSync(archiveDir, { recursive: true });
-      fs.writeFileSync(path.join(archiveDir, `${c.id}.transcript.jsonl`), gen.transcript);
-      transcriptRef = `outputs/${stamp}/${c.id}.transcript.jsonl`;
+      fs.writeFileSync(path.join(archiveDir, `${c.id}${suffix}.transcript.jsonl`), gen.transcript);
+      transcriptRef = `outputs/${stamp}/${c.id}${suffix}.transcript.jsonl`;
       agentMetrics = summarizeTranscript(gen.transcript);
       const calls = Object.entries(agentMetrics.toolCalls)
         .map(([name, n]) => (n > 1 ? `${name}×${n}` : name))
@@ -403,25 +412,27 @@ for (const c of cases) {
     }
     if (!gen.ok) {
       console.error(`  G 生成失敗（ハーネス起因・品質シグナルではない）: ${gen.detail}`);
-      results.push({
-        id: c.id,
+      return {
         generated: false,
         pass: false,
         status: "error:generation",
         ...(transcriptRef ? { transcript: transcriptRef, agentMetrics } : {}),
-      });
-      continue;
+      };
     }
   }
   if (!fs.existsSync(outPath)) {
     console.error(`  G 生成物がありません（ハーネス起因・品質シグナルではない）: evals/output/${c.id}.html`);
-    results.push({ id: c.id, generated: false, pass: false, status: "error:generation" });
-    continue;
+    return {
+      generated: false,
+      pass: false,
+      status: "error:generation",
+      ...(transcriptRef ? { transcript: transcriptRef, agentMetrics } : {}),
+    };
   }
 
   const html = fs.readFileSync(outPath, "utf8");
   fs.mkdirSync(archiveDir, { recursive: true });
-  fs.copyFileSync(outPath, path.join(archiveDir, `${c.id}.html`));
+  fs.copyFileSync(outPath, path.join(archiveDir, `${c.id}${suffix}.html`));
   const hardcode = checkHardcode(outPath);
   const classes = checkClasses(html, c.mustClasses, known);
   const patterns = checkPatterns(html, c.mustPatterns);
@@ -449,17 +460,45 @@ for (const c of cases) {
   const pass = machinePass && (skipJudge || rubric.pass);
   // 審査員が判定不能でも、機械チェックが落ちていれば品質 fail は確定している
   const status = rubric?.error ? (machinePass ? "error:judge" : "fail") : pass ? "pass" : "fail";
-  results.push({
-    id: c.id,
+  return {
     generated: true,
     status,
     pass,
-    output: `outputs/${stamp}/${c.id}.html`, // 採点した HTML のアーカイブ（resultsDir 相対）
+    output: `outputs/${stamp}/${c.id}${suffix}.html`, // 採点した HTML のアーカイブ（resultsDir 相対）
     ...(transcriptRef ? { transcript: transcriptRef, agentMetrics } : {}), // 生成時の行動ログ（同上）
     hardcode,
     classes,
     patterns,
     ...(rubric ? { rubric } : {}),
+  };
+}
+
+for (const c of cases) {
+  process.stdout.write(`\n■ ${c.id}\n`);
+  const trialResults = [];
+  for (let t = 1; t <= trials; t++) {
+    if (trials > 1) process.stdout.write(`  ── trial ${t}/${trials}\n`);
+    trialResults.push(runTrial(c, t === 1 ? "" : `.trial${t}`));
+  }
+  if (trials === 1) {
+    results.push({ id: c.id, ...trialResults[0] });
+    continue;
+  }
+  // pass^k 集約: 全トライアル合格のときだけ pass。fail が 1 つでもあれば品質 fail が確定。
+  // fail がなく error:* が混ざる場合は「全勝の確認ができていない」ので error 側に倒す
+  const status = trialResults.some((r) => r.status === "fail")
+    ? "fail"
+    : trialResults.every((r) => r.status === "pass")
+      ? "pass"
+      : trialResults.find((r) => isError(r.status)).status;
+  const passCount = trialResults.filter((r) => r.status === "pass").length;
+  console.log(`  ⇒ pass^${trials}: ${passCount}/${trials} trials PASS → ${STATUS_SYMBOL[status]}`);
+  results.push({
+    id: c.id,
+    generated: trialResults.some((r) => r.generated),
+    status,
+    pass: status === "pass",
+    trials: trialResults.map((r, i) => ({ trial: i + 1, ...r })),
   });
 }
 
@@ -472,6 +511,7 @@ const summary = {
   skipGenerate,
   skipJudge,
   votes,
+  trials,
   passed: results.filter((r) => r.pass).length,
   total: results.length,
   errors: errorCount,

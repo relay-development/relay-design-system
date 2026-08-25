@@ -14,7 +14,8 @@ npm run eval                     # 全お題（生成 + 機械チェック + LLM
 npm run eval -- --case invite-form   # 1 お題のみ
 npm run eval -- --skip-generate      # 既存の生成物を再採点（LLM 審査のみ消費）
 npm run eval -- --skip-judge         # 機械チェックのみ（LLM 不使用・無料）
-npm run eval -- --votes 3            # 審査 3 回の多数決（判定のブレ対策）
+npm run eval -- --votes 3            # 審査 3 回の多数決（審査側のブレ対策）
+npm run eval -- --trials 2           # 各お題を 2 回生成し全勝のみ PASS（pass^k・生成側のブレ対策。コスト k 倍）
 npm run eval:report                  # 実行履歴の推移表（無料）
 ```
 
@@ -27,6 +28,10 @@ npm run eval:report                  # 実行履歴の推移表（無料）
 - **週 1 回** フル実行（`npm run eval`）— モデル更新によるドリフト検知。実行後に `npm run eval:report` で推移を確認
 - **MCP（`src/mcp/`）・DESIGN.md・コンポーネントヘッダを変更した PR の前後** — 変更の効果測定。
   実行のたびに直前の結果との差分（✓→✗ / ✗→✓ 等）が自動表示される
+- 前回比で ✓→✗ の変化が出たら: 劣化と断定する前に `--case <id> --trials 2` で再確認する。
+  生成は非決定的なので 1 回の ✗ は「劣化」でなく「生成の運」のことがある（pass^k の考え方。
+  `--votes` が審査側のブレ対策であるのに対し `--trials` は生成側）。--trials 時の結果 JSON は
+  お題ごとに `trials` 配列へ各トライアルの詳細が入り、全勝のときだけ `pass` になる
 - FAIL したら: まず該当 JSON の `status` を見て品質の失敗（fail）か測定の故障（error:*）かを確認する。
   fail なら項目別の reason と生成物（output/*.html）を見比べ、「DS 側の知識の問題」か
   「お題・ルーブリックの問題」かを切り分けてから直す。error:* は DS でなくハーネス側を直す
