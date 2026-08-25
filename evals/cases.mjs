@@ -168,4 +168,50 @@ export const CASES = [
       "見出しに typo-* のセマンティック階層を使っている",
     ],
   },
+  // ---- capability（改善メーター）— 新しく教えた知識が「教えた場面の外」でも効くかを測る ----
+  // 100% が前提ではない。合格が安定して飽和したら kind を外して regression に昇格する
+  {
+    // 出典: 2026-08-25 の行動ログ — スキップリンクの実装知識は search の索引外にあり、
+    // エージェントは search 空振り後に自力で get_accessibility へ到達して解決した（#245 で誘導を改善）。
+    // a11y 知識への到達 + ACCESSIBILITY.md 2.4.1 の正本レシピ（sr-only focus:not-sr-only）の
+    // 実装まで完走できるかを測る
+    id: "skip-link",
+    kind: "capability",
+    prompt:
+      "グローバルナビゲーションと長い記事本文があるページを作ってください。キーボードだけで操作する人が、毎回ナビゲーションの全項目を通過しなくても本文へ到達できるようにしてください。",
+    mustClasses: ["typo-article"],
+    mustPatterns: [
+      { pattern: "[\"'\\s]sr-only\\b", label: "スキップリンクを sr-only で視覚非表示（ACCESSIBILITY.md 2.4.1 の正本レシピ）" },
+      { pattern: "focus:not-sr-only", label: "フォーカス時に可視化（focus:not-sr-only）" },
+      { pattern: "href=\"#", label: "本文へのページ内リンク" },
+    ],
+    rubric: [
+      "スキップリンクが body 直後（最初のフォーカス可能要素）にあり、リンク先の id が本文側に実在する",
+      "ナビが nav、本文が main のランドマーク構造になっている",
+      "記事本文が typo-article + text-fg-high で組まれている",
+    ],
+  },
+  {
+    // 出典: #243（ブランドアセットを能動的に使わせる知識）の効果測定。
+    // empty-state（regression）は「そっけなくならないように」というヒント付きで守る側。
+    // こちらはヒントなしの別場面（完了画面）で、場面に合うイラストを能動的に
+    // list_assets から選べるかを測る
+    id: "completion-screen",
+    kind: "capability",
+    prompt:
+      "問い合わせフォームを送信したあとに表示する完了画面を作ってください。ユーザーが送信できたことを確信でき、次に何をすればよいか迷わないようにしてください。",
+    mustClasses: ["btn"],
+    mustPatterns: [
+      {
+        pattern: "raw\\.githubusercontent\\.com/relay-development/relay-design-system/main/examples/assets/",
+        label: "イラストは公式ブランドアセット（list_assets の直リンク）— ヒントなしで能動的に選べるか",
+      },
+    ],
+    rubric: [
+      "送信完了が見出しで明確に伝わり、次の行動（トップへ戻る等）への導線がある",
+      "視覚要素はブランドアセット（list_assets）で、独自の SVG イラストを描いていない",
+      "装飾過多でない（アセットは 1 点で十分。過剰なグラデーション・紙吹雪的装飾がない）",
+      "テキスト色は fg-{high,middle,low} ロール、見出し・本文に typo-* 階層を使っている",
+    ],
+  },
 ];
