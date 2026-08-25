@@ -29,9 +29,9 @@ snippets/              ← 利用者向けコピペ HTML
 scripts/               ← build-icons / build-mcp / build-pages
 docs/                  ← 詳細ドキュメント（下記リンク集参照）
 .claude/
-  agents/              ← スプリントキット正本（planner / generator / evaluator。MCP get_sprint_kit が配布）
-  workflows/           ← sprint.js（generator ⇄ evaluator の自動往復 Workflow）
-  hooks/               ← relay-hardcode-gate.mjs（ハードコード検知 hook。sprint kit として配布）
+  agents/              ← planner / generator / evaluator（このリポジトリのローカル開発用。旧 sprint kit — MCP 配布は 2026-08 に終了）
+  workflows/           ← sprint.js（generator ⇄ evaluator の自動往復 Workflow。同上ローカル用）
+  hooks/               ← relay-hardcode-gate.mjs（ハードコード検知 hook の正本。利用側へは get_setup が単体導入を案内）
 ```
 
 ---

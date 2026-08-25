@@ -253,40 +253,6 @@ async function buildAssets() {
   return assets;
 }
 
-/**
- * Bundle the sprint development kit: the subagent definitions (.claude/agents/*.md),
- * workflow scripts (.claude/workflows/*.js) and hook scripts (.claude/hooks/*.mjs)
- * that drive the planner → generator
- * ⇄ evaluator sprint loop. The MCP server ships these verbatim via get_sprint_kit
- * so consuming projects can install them into their own .claude/ directory —
- * agents/workflows only run from the local filesystem, so the MCP acts as the
- * distribution channel, not the runtime.
- */
-async function buildSprintKit() {
-  const readDir = async (rel, ext) => {
-    const dir = path.join(projectRoot, rel);
-    let files;
-    try {
-      files = (await readdir(dir)).filter((f) => f.endsWith(ext)).sort();
-    } catch {
-      return []; // directory absent (older checkout) — ship an empty kit rather than fail
-    }
-    return Promise.all(
-      files.map(async (f) => ({
-        name: f.replace(new RegExp(`\\${ext}$`), ""),
-        path: `${rel}/${f}`,
-        content: (await readFile(path.join(dir, f), "utf8")).trimEnd() + "\n",
-      })),
-    );
-  };
-  const [agents, workflows, hooks] = await Promise.all([
-    readDir(".claude/agents", ".md"),
-    readDir(".claude/workflows", ".js"),
-    readDir(".claude/hooks", ".mjs"),
-  ]);
-  return { agents, workflows, hooks };
-}
-
 /** Slice a markdown section that starts at a heading and ends at the next heading of <= depth. */
 function sliceSection(md, startHeading, stopDepths) {
   const lines = md.split("\n");
@@ -332,12 +298,11 @@ async function main() {
     await readFile(path.join(projectRoot, "package.json"), "utf8"),
   );
 
-  const [components, tokens, design, assets, sprintKit, accessibility] = await Promise.all([
+  const [components, tokens, design, assets, accessibility] = await Promise.all([
     buildComponents(),
     buildTokens(),
     buildDesign(),
     buildAssets(),
-    buildSprintKit(),
     buildAccessibility(),
   ]);
 
@@ -350,7 +315,6 @@ async function main() {
     components,
     tokens,
     assets,
-    sprintKit,
     designPhilosophy: design.philosophy,
     principles: design.principles,
     forbiddenPatterns: design.forbidden,
@@ -368,8 +332,7 @@ async function main() {
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
       `${components.length} components, ${tokenCount} tokens, ` +
       `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ` +
-      `${components.filter((c) => c.function).length} with 機能, ` +
-      `sprint kit ${sprintKit.agents.length} agents + ${sprintKit.workflows.length} workflows + ${sprintKit.hooks.length} hooks`,
+      `${components.filter((c) => c.function).length} with 機能`,
   );
 }
 

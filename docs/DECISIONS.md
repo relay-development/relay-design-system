@@ -42,3 +42,12 @@ Netlify のクレジット上限超過のため移行済み。GitHub Pages は p
 - **Figma の役割**: 新しいコンポーネント・画面のデザイン探求。固まったデザインをコードに取り込んだ時点で正式版になる
 - Figma への書き戻し・継続同期は行わない（必要になれば都度判断）
 - コンポーネント CSS ヘッダの `recreated from Figma component set NNNN:NNNN` 表記は出自の記録として維持する（build-mcp のパースにも使用しているため書式を変えない）
+
+## sprint kit の解体 — 配布は hook 単体へ縮小（2026-08）
+
+スプリント開発キット（planner / generator / evaluator subagent + sprint workflow + hardcode gate hook）の MCP 配布（`get_sprint_kit` ツール・`relay://skill/sprint` リソース・`sprint` プロンプト）を廃止した。
+
+- **理由**: キット一式の導入は利用側にとって重く、実際に届けたい価値の大半は「書いた瞬間にハードコードを弾く」hook にあった。知識（instructions・ヘッダ・get_accessibility 等）は MCP 接続だけで全員に届くのに対し、キットは能動的な一式インストールを要求し、導入率が上がらない
+- **後継**: hardcode gate hook のみ `get_setup` のセットアップ手順で単体導入を案内する（raw URL から取得 + settings.json への hooks 追記の 2 手順）。正本は `.claude/hooks/relay-hardcode-gate.mjs` のまま
+- **ローカルは維持**: `.claude/agents/` / `.claude/workflows/` はこのリポジトリ自身の開発（planner / generator / evaluator subagent と sprint workflow）で引き続き使う。配布をやめただけで、ファイルと運用は残る
+- 復活させる場合は index への同梱（build-mcp の buildSprintKit）とツール/リソース/プロンプト定義を git 履歴から戻す

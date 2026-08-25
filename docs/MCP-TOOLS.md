@@ -1,6 +1,6 @@
 # relay Design System MCP — ツールリファレンス
 
-relay Design System の MCP サーバーが提供する **9 つのツール** と、その使い方をまとめる。
+relay Design System の MCP サーバーが提供する **8 つのツール** と、その使い方をまとめる。
 
 - **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
@@ -22,7 +22,6 @@ relay Design System の MCP サーバーが提供する **9 つのツール** �
 | 6 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
 | 7 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
 | 8 | `search` | `query` | 横断あいまい検索 |
-| 9 | `get_sprint_kit` | なし | スプリント開発キットの配布（Claude Code 向け） |
 
 ---
 
@@ -35,6 +34,8 @@ relay Design System の MCP サーバーが提供する **9 つのツール** �
 **なぜ最初に呼ぶか**: relay のクラス（`.btn` / `.card` / `.input` 等）は npm パッケージ `@light-right/design-system` の CSS が読み込まれて初めて効く。MCP はクラス名やトークンの「知識」を渡すだけで CSS 実体は渡さないため、未導入のまま relay クラスを書いても見た目が変わらず、ハードコードに逃げる結果になる。UI 着手前のセットアップ確認に使う。
 
 導入済みプロジェクト向けには**バージョン確認**の手順も含む（MCP の知識の基準バージョンと利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS を正とする）。
+
+**ハードコード検知 hook の単体導入案内（2026-08 追加・Claude Code 向け）**: セットアップ手順の最後に、`relay-hardcode-gate.mjs`（Write/Edit 直後にハードコード違反を検知して Claude に即フィードバックする PostToolUse フック）を単体導入する案内を含む — リポジトリの raw URL から hook 本体を取得し、`.claude/settings.json` に hooks 設定をマージする 2 手順。正本は [.claude/hooks/relay-hardcode-gate.mjs](../.claude/hooks/relay-hardcode-gate.mjs)。旧 sprint kit（2026-08 解体）ではキット一式の同梱物だったが、hook だけを軽量に届ける形に変えた。
 
 ---
 
@@ -111,27 +112,6 @@ relay Design System の MCP サーバーが提供する **9 つのツール** �
 
 ---
 
-## 9. `get_sprint_kit` — スプリント開発キットの配布（Claude Code 向け）
-
-**入力**: なし
-
-**何ができる**: relay 流のスプリント開発を回すための subagent 定義 3 つ（`planner` / `generator` / `evaluator`）と Workflow スクリプト（`sprint`）、ハードコード検知フック（`relay-hardcode-gate`・任意）を、インストール手順付きで一式返す。「実装 → 評価 → 修正」を PASS まで自動往復させたいときに呼ぶ。
-
-**仕組み（重要）**: subagent / workflow / hook は**利用側プロジェクトのローカル `.claude/` に実在して初めて動く**ため、MCP は配布のみを担う。受け取った AI がレスポンス内の手順に従って `.claude/agents/*.md` / `.claude/workflows/sprint.js` / `.claude/hooks/*.mjs` を書き込んで使う。正本はこのリポジトリの [.claude/agents/](../.claude/agents/) / [.claude/workflows/](../.claude/workflows/) / [.claude/hooks/](../.claude/hooks/)（`build:mcp-index` が同梱）。
-
-**書き込み時ゲート（フック・任意）**: `relay-hardcode-gate.mjs` は Write/Edit 直後に発火する PostToolUse フックで、生 hex 色・font-size 生値・祝福外 spacing・独自状態クラス・外部スプライト参照を検知して Claude に即フィードバックする（exit 2 で stderr が返る）。evaluator が見つける前に書き込み時点で弾くので、機械的違反にスプリントのラウンドを消費しない。有効化には利用側プロジェクトの `.claude/settings.json` への hooks 設定追記が必要（手順に明記済み）。**このリポジトリ自体では有効化しない**（コンポーネント CSS にはヘッダコメントで管理された正当な例外があるため）。
-
-**標準フロー（企画 → ユーザー承認 → 実装）**: Workflow スクリプトは実行中にユーザーへ確認を取れないため、承認ゲートはメインエージェントが挟む設計。planner が `docs/sprint-plan.md` を出力 → 計画を要約提示してユーザー承認を待つ → 承認後に各スプリントを `{ name: "sprint", args: { task: "<1機能>" } }` で実行、という順序をキットの手順と `sprint` プロンプトの両方に明記している。実装する 1 機能が確定済みの場合のみ企画を飛ばして sprint workflow を直接実行してよい。
-
-**最低ラウンド数**: 1 ラウンドの評価では確認漏れが多発するため、sprint workflow は PASS 判定でも**最低 `minRounds`（既定 3）ラウンドは実装⇄評価を回す**。早期 PASS 後の残りラウンドは「再点検」に切り替わり、generator はセルフチェック再実行、evaluator は前回と異なる観点（キーボード操作・レスポンシブ・エッジケース入力等）での再監査を行う。
-
-**注意**:
-
-- agent 定義の `tools:` は claude.ai コネクタ接続時の名前（`mcp__claude_ai_relay-design-system__*`）で書かれており、stdio 接続などサーバー名が異なる環境では実際のツール名への置換が必要（手順に明記済み）
-- evaluator は Playwright MCP による実機確認を前提とする
-
----
-
 ## セットアップ
 
 ### ローカル版（stdio）
@@ -177,8 +157,8 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 - **接続時の常駐ガイダンス（instructions）**: 旧プロトコル（〜2025-11-25）では `initialize`、新プロトコル（2026-07-28〜）では `server/discover` の結果として配布（リモートサーバーは両対応）。接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
 - **事前知識で答えないルール（instructions 内）**: 実装を伴わない質問・レビュー・相談でも、relay の仕様に関する回答は必ずツールで確認してから行うことを instructions で強制。AI が記憶で答えて古い・存在しないクラスを案内するハルシネーションを防ぐ（SmartHR Design System の SKILL.md 方式）。
 - **バージョンずれ対策**: instructions・get_setup・get_component の 3 箇所で「この知識は v〇〇 基準。利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS を正とする」を明示。MCP の知識と実 CSS のバージョン差で「クラスが効かない → ハードコードに逃げる」事故を防ぐ。
-- **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。スプリント開発キットも `relay://skill/sprint` としてスキル形式（手順書＋ファイル一式）で読める。
-- **prompts**: `sprint` プロンプトを公開。Claude Code ではスラッシュコマンド（`/mcp__<サーバー名>__sprint`）として現れ、1 コマンドで「キット未導入なら get_sprint_kit でインストール → planner で企画 → ユーザー承認 🛑 → 承認後に Workflow 実行」まで誘導する（引数 `task` に要望・議事録等の planner への入力を渡せる）。
+- **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。DESIGN.md（`relay://design-constitution`）と各コンポーネント仕様（`relay://component/<name>`）。
+- **prompts**: 現在は空（スプリント開発キットの解体〈2026-08〉に伴い `sprint` プロンプトを廃止。トランスポートとの API 互換のため機構自体は残す）。
 
 ---
 
