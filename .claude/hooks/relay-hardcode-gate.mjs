@@ -23,9 +23,12 @@
  *   { "hooks": { "PostToolUse": [ { "matcher": "Write|Edit",
  *     "hooks": [ { "type": "command", "command": "node .claude/hooks/relay-hardcode-gate.mjs" } ] } ] } }
  *
- * 注意: relay-design-system リポジトリ自体ではこのフックを有効化しない
- * （コンポーネント CSS にはヘッダコメントで管理された正当な例外があるため）。
- * これは get_sprint_kit 経由で利用側プロジェクトに配布するためのファイル。
+ * --include <正規表現>（任意）: file_path がマッチするファイルだけを検査する。
+ * relay-design-system リポジトリ自体での有効化に使う — DS ソース（src/ のトークン定義・
+ * ヘッダコメントで管理された正当な例外を含むコンポーネント CSS）や、トークン実値を
+ * 文中に表記するカタログ断片（examples/pages/）を誤検知しないよう、エージェント生成物と
+ * 利用者向けコードだけにスコープする（配線は .claude/settings.json）。
+ * 利用側プロジェクトは従来どおり引数なし = 全対象ファイル検査で変更なし。
  */
 import { readFileSync } from "node:fs";
 
@@ -67,6 +70,17 @@ function main() {
   }
   const filePath = input?.tool_input?.file_path;
   if (!filePath || !TARGET_EXT.test(filePath)) return 0;
+
+  // --include <正規表現>: マッチするパスだけ検査（DS リポジトリ自身でのスコープ運用向け）
+  const includeIdx = process.argv.indexOf("--include");
+  if (includeIdx !== -1) {
+    const pattern = process.argv[includeIdx + 1];
+    try {
+      if (!pattern || !new RegExp(pattern).test(filePath)) return 0;
+    } catch {
+      return 0; // 正規表現が不正 — 邪魔をしない
+    }
+  }
 
   let content;
   try {
