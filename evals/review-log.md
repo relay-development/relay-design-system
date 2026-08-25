@@ -39,6 +39,7 @@ eval の合否は LLM 審査員（rubric 判定）に依存している。**審�
 | 2026-08-18 | faq-accordion | PASS | 妥当※ | [開く](audited/2026-08-18-faq-accordion.html) | 8/17 の判定を遡り監査。details + accordion-trigger/icon、独自 is-open なしを確認 |
 | 2026-08-18 | article-links | PASS | 妥当※ | [開く](audited/2026-08-18-article-links.html) | 8/17 の判定を遡り監査。link・typo-article + text-fg-high、下線消しなしを確認 |
 | 2026-08-18 | settings-nav | PASS | 妥当※ | [開く](audited/2026-08-18-settings-nav.html) | 消失した FAIL 版の再現を試みたが、境界明文化「前」の知識でも 2 回とも menu を正しく選んだため、改めて全チェックで検査（審査 3/3）。nav.menu + aria-current を確認。旧知識でも常に失敗するわけではない（揺らぎ）ことの記録 |
+| 2026-08-25 | completion-screen | FAIL<br>・alertアイコンをpath手描きの独自SVGで描画 | 基準側の問題 | [開く](audited/2026-08-25-completion-screen.html) | capability ベースライン初回（#248）。生成物はブランドアセットを使用済み（機械チェック ✓）で、審査が落としたのはチェックマーク等の inline SVG **アイコン**。ハーネスの生成制約はアイコンの inline SVG を明示許可しており、rubric がアイコンとイラストを区別していなかった → rubric の文言を修正（この行の PR）。同実行の classes fail（btn 不使用）は本物の capability シグナルとして残す |
 
 ※ 2026-08-18 の 6 件は主要根拠の機械突き合わせによる遡り監査（Claude Code 実施・目視の再確認歓迎）。
 ※ 「再現」は原本がアーカイブ導入（8/18）前に上書きで失われたため、当時と同じ DS 知識・お題文言で再生成した再現品（同型の失敗を確認済み）。監査証跡の原本ではない。
