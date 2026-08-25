@@ -5,9 +5,9 @@ site/
 *.log
 .vite/
 .netlify/
-# .claude はローカル設定（settings.local.json 等）のみ無視し、
-# sprint kit の正本（agents / workflows / hooks — MCP get_sprint_kit が配布）と
-# リポジトリ標準の hooks 配線（settings.json — hardcode gate をスコープ付きで有効化）は追跡する
+# .claude はローカル設定（settings.local.json 等）のみ無視し、以下は追跡する:
+# agents / workflows（ローカル開発用の旧 sprint kit）、hooks（hardcode gate の正本 —
+# 利用側へは get_setup が単体導入を案内）、settings.json（リポジトリ標準の hooks 配線）
 .claude/*
 !.claude/agents/
 !.claude/workflows/
