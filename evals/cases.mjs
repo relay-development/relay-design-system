@@ -11,6 +11,11 @@
  *   mustClasses  — 生成物に必須の relay クラス（機械チェック・Phase 1）
  *   mustPatterns — 生成物に必須の正規表現（機械チェック・Phase 1）
  *   rubric       — LLM 審査員の採点項目（Phase 2 で使用。定義のみ先行）
+ *   kind         — お題の種類（省略時 "regression"）:
+ *     regression — 既存の守り。合格率 ~100% 維持が前提で、fail は即対応（exit code 非 0）
+ *     capability — 新しく教えた知識が効いているかの改善メーター。100% が前提ではなく、
+ *                  fail は exit code に影響しない（DS 改善の効果を測る側のお題）。
+ *                  合格が安定して飽和したら kind を外して regression に昇格する
  *
  * お題の追加元（2 系統）:
  *   1. 実運用の失敗 — 本体サイトのリプレイス等で実際に AI がやらかした失敗を
@@ -38,6 +43,9 @@ export const COMMON_PATTERNS = [
     label: "a11y 属性なしの svg（装飾は aria-hidden=\"true\"、意味があるなら aria-label。WCAG 1.1.1）",
   },
 ];
+
+/** kind の解決（省略時 regression）。run.mjs / report.mjs 共用 */
+export const kindOf = (c) => c?.kind ?? "regression";
 
 export const CASES = [
   {
