@@ -8,7 +8,11 @@
  * 仕組み:
  *   1. build:mcp-index で作業ツリーの最新知識から MCP インデックスを生成
  *   2. お題ごとに claude CLI をヘッドレス起動（stdio MCP = src/mcp/server.mjs を接続）
- *      → evals/output/<id>.html に単一 HTML を生成させる
+ *      → evals/output/<id>.html に単一 HTML を生成させる。
+ *      生成時の行動ログ（stream-json 全記録）を evals/results/outputs/<stamp>/<id>.transcript.jsonl
+ *      に保存し、ツール呼び出し内訳・ターン数を結果 JSON の agentMetrics に集計する。
+ *      FAIL 時に「MCP を引いた上で違反した（知識の問題）」か「引かずに書いた（誘導の問題）」かを
+ *      推測でなくログで切り分けるため（トランスクリプト確認の運用は README 参照）
  *   3. 機械チェックで採点（Phase 1）:
  *      - hardcode  — .claude/hooks/relay-hardcode-gate.mjs をサブプロセス実行
  *                    （利用者に配布しているゲートと同一判定）
@@ -116,17 +120,55 @@ function generate(claudeBin, c) {
     "Write,mcp__relay-ds",
     "--max-turns",
     "50",
+    // 行動ログ（ツール呼び出しの全記録）を stdout に JSONL で受ける（--verbose は stream-json の必須条件）
+    "--output-format",
+    "stream-json",
+    "--verbose",
   ];
   if (process.env.EVAL_MODEL) cliArgs.push("--model", process.env.EVAL_MODEL);
   const res = spawnSync(claudeBin, cliArgs, {
     cwd: projectRoot,
     encoding: "utf8",
     timeout: 15 * 60 * 1000,
+    maxBuffer: 64 * 1024 * 1024, // トランスクリプトは Write の HTML 全文や MCP 応答を含み既定 1MB を超える
     stdio: ["ignore", "pipe", "pipe"],
   });
-  if (res.error) return { ok: false, detail: String(res.error) };
-  if (res.status !== 0) return { ok: false, detail: (res.stderr || res.stdout || "").slice(-500) };
-  return { ok: true };
+  const transcript = res.stdout ?? "";
+  if (res.error) return { ok: false, detail: String(res.error), transcript };
+  if (res.status !== 0) return { ok: false, detail: (res.stderr || res.stdout || "").slice(-500), transcript };
+  return { ok: true, transcript };
+}
+
+/**
+ * stream-json トランスクリプトからツール呼び出し内訳・ターン数等を集計する（診断用の付加情報。
+ * 解析できない行は読み飛ばし、集計不能でも採点は続行する）
+ */
+function summarizeTranscript(jsonl) {
+  const toolCalls = {};
+  let numTurns = null;
+  let durationMs = null;
+  let usage = null;
+  for (const line of jsonl.split("\n")) {
+    if (!line.trim()) continue;
+    let ev;
+    try {
+      ev = JSON.parse(line);
+    } catch {
+      continue;
+    }
+    if (ev.type === "assistant") {
+      for (const block of ev.message?.content ?? []) {
+        if (block.type !== "tool_use") continue;
+        const name = String(block.name).replace(/^mcp__relay-ds__/, "");
+        toolCalls[name] = (toolCalls[name] ?? 0) + 1;
+      }
+    } else if (ev.type === "result") {
+      numTurns = ev.num_turns ?? null;
+      durationMs = ev.duration_ms ?? null;
+      usage = ev.usage ?? null;
+    }
+  }
+  return { toolCalls, numTurns, durationMs, usage };
 }
 
 /* ------------------------------------------------------------- 機械チェック */
@@ -341,12 +383,33 @@ for (const c of cases) {
   const outPath = path.join(outputDir, `${c.id}.html`);
   process.stdout.write(`\n■ ${c.id}\n`);
 
+  // 生成時の行動ログ。error:generation でも保存する（ハーネス故障の診断に使うため）
+  let transcriptRef = null;
+  let agentMetrics = null;
   if (!skipGenerate) {
     process.stdout.write("  生成中…（数分かかることがあります）\n");
     const gen = generate(claudeBin, c);
+    if (gen.transcript) {
+      fs.mkdirSync(archiveDir, { recursive: true });
+      fs.writeFileSync(path.join(archiveDir, `${c.id}.transcript.jsonl`), gen.transcript);
+      transcriptRef = `outputs/${stamp}/${c.id}.transcript.jsonl`;
+      agentMetrics = summarizeTranscript(gen.transcript);
+      const calls = Object.entries(agentMetrics.toolCalls)
+        .map(([name, n]) => (n > 1 ? `${name}×${n}` : name))
+        .join(", ");
+      console.log(
+        `  ⚙ ${calls || "ツール呼び出しなし"}${agentMetrics.numTurns != null ? ` — ${agentMetrics.numTurns} turns` : ""}`,
+      );
+    }
     if (!gen.ok) {
       console.error(`  G 生成失敗（ハーネス起因・品質シグナルではない）: ${gen.detail}`);
-      results.push({ id: c.id, generated: false, pass: false, status: "error:generation" });
+      results.push({
+        id: c.id,
+        generated: false,
+        pass: false,
+        status: "error:generation",
+        ...(transcriptRef ? { transcript: transcriptRef, agentMetrics } : {}),
+      });
       continue;
     }
   }
@@ -392,6 +455,7 @@ for (const c of cases) {
     status,
     pass,
     output: `outputs/${stamp}/${c.id}.html`, // 採点した HTML のアーカイブ（resultsDir 相対）
+    ...(transcriptRef ? { transcript: transcriptRef, agentMetrics } : {}), // 生成時の行動ログ（同上）
     hardcode,
     classes,
     patterns,
