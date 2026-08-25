@@ -435,7 +435,14 @@ function runSearch(query) {
     out.push("");
   }
   if (!compHits.length && !tokenHits.length && !assetHits.length) {
-    out.push("ヒットなし。list_components / get_tokens / get_design_principles を試してください。");
+    // 誘導先は「どのツールに何があるか」を添える。a11y・ユーティリティは search の索引外なので
+    // get_accessibility への誘導が必須（実例: 「スキップリンク sr-only」の検索が空振りし、
+    // エージェントが誘導に頼らず自力で get_accessibility に到達して正解を得た）
+    out.push(
+      "ヒットなし。探しものに応じて: コンポーネント一覧は list_components、トークン実値は get_tokens、" +
+        "設計原則・禁止パターンは get_design_principles、アクセシビリティやユーティリティ" +
+        "（sr-only / スキップリンク / フォーカスリング等）の実装ガイドは get_accessibility を参照してください。",
+    );
   }
   return out.join("\n");
 }
