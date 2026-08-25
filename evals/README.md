@@ -19,6 +19,8 @@ npm run eval:report                  # 実行履歴の推移表（無料）
 ```
 
 生成物は `evals/output/*.html`（ブラウザで目視可）、結果は `evals/results/*.json`（いずれも gitignored）。
+生成時の行動ログ（ツール呼び出しの全記録）も `evals/results/outputs/<実行スタンプ>/<id>.transcript.jsonl`
+に保存され、ツール呼び出し内訳・ターン数は結果 JSON の `agentMetrics` に集計される。
 
 ## いつ回すか（定点観測の運用）
 
@@ -28,6 +30,10 @@ npm run eval:report                  # 実行履歴の推移表（無料）
 - FAIL したら: まず該当 JSON の `status` を見て品質の失敗（fail）か測定の故障（error:*）かを確認する。
   fail なら項目別の reason と生成物（output/*.html）を見比べ、「DS 側の知識の問題」か
   「お題・ルーブリックの問題」かを切り分けてから直す。error:* は DS でなくハーネス側を直す
+- fail の切り分けには生成時の行動ログ（`results/outputs/<実行スタンプ>/<id>.transcript.jsonl`、
+  結果 JSON の `transcript` が指す）も使う。該当コンポーネントの `get_component` を
+  **引いた上で違反した**なら知識（ヘッダ・DESIGN.md）の内容を、**引かずに書いた**なら
+  誘導（MCP instructions・ツール説明）を直す。呼び出し内訳は結果 JSON の `agentMetrics` で一覧できる
 
 ## 結果の 4 区分（品質の失敗と測定の故障を混同しない）
 
