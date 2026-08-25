@@ -54,6 +54,23 @@ npm run eval:report                  # 実行履歴の推移表（無料）
 機械チェックが落ちている場合は審査員が判定不能でも品質 fail が確定しているので `fail` になる。
 `eval:report` では G（生成失敗）/ J（審査不能）で表示され、計にも数えない（`!n` 表記）。
 
+## お題の 2 区分（regression / capability）
+
+お題には `kind` を付けられる（省略時 `regression`。[cases.mjs](cases.mjs) の
+ヘッダコメント参照。Anthropic の [agent evals 記事](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)の区分）:
+
+| kind | 役割 | 合格率の見方 | exit code |
+|---|---|---|---|
+| `regression` | 既存の守り。DS 変更・モデル更新で壊れていないか | **~100% 維持が前提**。fail は即対応 | fail で非 0 |
+| `capability` | 新しく教えた知識が効いているかの**改善メーター** | 100% が前提ではない。DS を改善すると上がる側 | fail でも 0（error:* は非 0） |
+
+- capability お題が 1 つ以上あると、実行サマリーと `eval:report` の計が R / C に分かれる
+- **昇格**: capability の合格が安定して飽和したら（合格率 100% が続き改善シグナルを
+  生まなくなったら）`kind` を外して regression に昇格する。逆に「全部 100% で
+  改善の余地が測れない」状態は capability お題の不足を疑う
+- 追加するときは、直近で DS に教えた知識（例: ブランドアセットの能動的使用）を
+  検証できる意図レベルのお題にする（作り方の規律は cases.mjs ヘッダの 2 系統と同じ）
+
 ## 採点
 
 | チェック | 内容 | 判定元 | コスト |

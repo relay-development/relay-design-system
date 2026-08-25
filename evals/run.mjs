@@ -51,7 +51,7 @@ import { execFileSync, execSync, spawnSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { CASES, COMMON_PATTERNS } from "./cases.mjs";
+import { CASES, COMMON_PATTERNS, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -481,7 +481,7 @@ for (const c of cases) {
     trialResults.push(runTrial(c, t === 1 ? "" : `.trial${t}`));
   }
   if (trials === 1) {
-    results.push({ id: c.id, ...trialResults[0] });
+    results.push({ id: c.id, kind: kindOf(c), ...trialResults[0] });
     continue;
   }
   // pass^k 集約: 全トライアル合格のときだけ pass。fail が 1 つでもあれば品質 fail が確定。
@@ -495,6 +495,7 @@ for (const c of cases) {
   console.log(`  ⇒ pass^${trials}: ${passCount}/${trials} trials PASS → ${STATUS_SYMBOL[status]}`);
   results.push({
     id: c.id,
+    kind: kindOf(c),
     generated: trialResults.some((r) => r.generated),
     status,
     pass: status === "pass",
@@ -520,13 +521,24 @@ const summary = {
 const resultPath = path.join(resultsDir, `${stamp}.json`);
 fs.writeFileSync(resultPath, JSON.stringify(summary, null, 2));
 
+const capability = results.filter((r) => (r.kind ?? "regression") === "capability");
 if (errorCount) {
   console.log(`\n== PASS ${summary.passed} / FAIL ${summary.total - summary.passed - errorCount} / 測定不能 ${errorCount}（全 ${summary.total}）==`);
   console.log("   測定不能（G/J）はハーネス・審査員の故障で、品質シグナルではありません（詳細は結果 JSON の status）");
 } else {
   console.log(`\n== ${summary.passed}/${summary.total} PASS ==`);
 }
+if (capability.length) {
+  const regr = results.filter((r) => (r.kind ?? "regression") === "regression");
+  const tally = (rs) => `${rs.filter((r) => r.pass).length}/${rs.length}`;
+  console.log(`   regression ${tally(regr)}（守り: 100% 維持が前提）/ capability ${tally(capability)}（改善メーター: fail は exit code に影響しない）`);
+}
 printComparison(previous, results);
 console.log(`\n結果: evals/results/${path.basename(resultPath)}（生成物: evals/output/*.html をブラウザで目視可）`);
 console.log("履歴の一覧: npm run eval:report");
-process.exit(summary.passed === summary.total ? 0 : 1);
+// exit code は「守り」の状態を表す: regression の不合格と測定の故障（error:*）だけを非 0 にする。
+// capability の fail は改善余地の測定値であり退行ではないため exit code に影響させない
+const regressionAllPass = results
+  .filter((r) => (r.kind ?? "regression") === "regression")
+  .every((r) => r.pass);
+process.exit(regressionAllPass && !errorCount ? 0 : 1);
