@@ -27,6 +27,8 @@
  * 機能:
  *   コンテンツがナビゲーション可能であることを示すインラインリンク。
  *   結果が「移動」なら link、「処理の実行」なら button。
+ *   例外: 完了画面・空状態などの「画面の主導線（CTA）」は、移動でも link でなく
+ *   a タグ + btn で目立たせる（詳細は button の機能・使用法を参照）。
  *
  * 使用法:
  *   OK: 本文中に置き font-size は周囲から inherit（サイズを固定しない）。
@@ -34,6 +36,7 @@
  *   OK: 緑を目立たせたくない補助的なリンク（フッター・メタ情報・表のセル内等）は link-neutral。本文中の主要リンクは default（緑）のまま。
  *   OK: 暗い背景（neutral/800 以上・primary/700 以上等）の上では白文字の link-inverse を使う。
  *   NG: 送信などのアクションに link を使わない → button。
+ *   NG: 完了画面・空状態の主導線（CTA）を link だけで済ませない → 迷わせないため a + btn（button ヘッダ参照）。
  *   NG: フォントサイズを固定しない → 本文と行が不揃いになる。inherit のまま。
  *   NG: enable 色を primary/500 に下げない → 白背景でコントラスト不足。primary/700 を保つ。
  *   NG: text-* ユーティリティでリンク色を自作しない → hover 色が追従しない。色は default / link-neutral / link-inverse の 3 択。

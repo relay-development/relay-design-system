@@ -98,15 +98,26 @@ function sliceDocLabel(doc, label) {
   return body.join("\n").trim() || null;
 }
 
-/** Split a 使用法 block into { ok[], ng[] } from leading OK:/NG: bullet lines. */
+/**
+ * Split a 使用法 block into { ok[], ng[] } from leading OK:/NG: bullet lines.
+ * OK:/NG: で始まらない行は直前の項目の継続行として連結する（例: 長い NG の
+ * 「→ 是正」を 2 行目に書くケース。従来は継続行が黙って捨てられていた）。
+ */
 function parseOkNg(block) {
   if (!block) return null;
   const ok = [];
   const ng = [];
+  let current = null; // 直前に push した配列（継続行の連結先）
   for (const raw of block.split("\n")) {
-    const m = raw.trim().match(/^(OK|NG):\s*(.+)$/);
-    if (!m) continue;
-    (m[1] === "OK" ? ok : ng).push(m[2].trim());
+    const line = raw.trim();
+    if (!line) continue;
+    const m = line.match(/^(OK|NG):\s*(.+)$/);
+    if (m) {
+      current = m[1] === "OK" ? ok : ng;
+      current.push(m[2].trim());
+    } else if (current && current.length) {
+      current[current.length - 1] += ` ${line}`;
+    }
   }
   return ok.length || ng.length ? { ok, ng } : null;
 }
