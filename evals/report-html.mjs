@@ -67,6 +67,17 @@ if (!targetResults.length) {
 }
 
 const esc = (s) => String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+/* 生成された画面を iframe 表示するため、対象実行のアーカイブへ relay.css を置く
+ *（生成物は <link href="./relay.css"> を参照している。コピーは冪等） */
+const builtCss = path.resolve(__dirname, "../dist/relay.css");
+const cssReady = fs.existsSync(builtCss);
+if (cssReady) {
+  const dirs = new Set(targetResults.flatMap((r) => (r.trials ?? [r]).map((t) => t.output && path.dirname(path.join(resultsDir, t.output)))).filter(Boolean));
+  for (const d of dirs) if (fs.existsSync(d)) fs.copyFileSync(builtCss, path.join(d, "relay.css"));
+} else {
+  console.warn("⚠ dist/relay.css がありません（npm run build で生成）。画面プレビューはスタイルなしになります。");
+}
 const jst = (iso) => (iso ?? "").replace("T", " ").slice(0, 16);
 
 /* ---- ツール分類（アーティファクトの可視化と同じ区分・配色） ---- */
@@ -192,6 +203,9 @@ function trialHtml(r, label, prevResult) {
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
     ${seqRows ? `<h4>呼び出しシーケンス</h4><div class="seq-wrap"><table class="seq"><thead><tr><th>経過</th><th>ツール</th><th>入力</th><th>応答</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
+    ${htmlPath && fs.existsSync(htmlPath) ? `<h4>生成された画面</h4>
+    <iframe class="screen" src="${esc(r.output)}" loading="lazy" title="${esc(label)} の生成物"></iframe>
+    <p class="muted"><a href="${esc(r.output)}" target="_blank">別タブで開く</a> — 採点対象そのもの（アーカイブ）。スタイルはレポート生成時にコピーした relay.css</p>` : ""}
     ${signals.length ? `<h4>この記録から見えたシグナル（自動検出）</h4><ul class="signals">${signals.map((s) => `<li>${s}</li>`).join("")}</ul><p class="muted">※ 機械的な候補の検出まで。改善と呼ぶかは 3 方向（知識 / 基準 / お題）の切り分けで判断する</p>` : ""}
   </details>`;
 }
@@ -314,6 +328,7 @@ table{border-collapse:collapse;font-size:12.5px}
 .match{display:flex;flex-wrap:wrap;gap:6px}
 .mcard{border:1px solid var(--line);border-radius:6px;padding:2px 10px;font-size:11.5px;background:var(--bg)}
 .mcard.ok{color:var(--pass)}.mcard.ng{color:var(--fail);border-color:var(--fail);font-weight:700}
+.screen{width:100%;height:460px;border:1px solid var(--line2);border-radius:8px;background:#fff}
 footer{margin-top:40px;border-top:1px solid var(--line);padding-top:10px;font-size:11.5px;color:var(--low)}
 </style></head><body><div class="wrap">
 <h1>relay evals レポート</h1>
