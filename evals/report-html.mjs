@@ -264,14 +264,10 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>relay evals レポート ${esc(jst(target.ranAt ?? target.stamp))}</title>
 <style>
-:root{--bg:#fafcfb;--panel:#fff;--ink:#1d2723;--mid:#3c4a44;--low:#5f6b65;--line:#e3eae6;--line2:#cbd6d0;
+:root{color-scheme:light;--bg:#fafcfb;--panel:#fff;--ink:#1d2723;--mid:#3c4a44;--low:#5f6b65;--line:#e3eae6;--line2:#cbd6d0;
 --pass:#1b805e;--pass-bg:#eef9f4;--fail:#b91c1c;--fail-bg:#fef2f2;--err:#64748b;
 --found:#2563eb;--comp:#1b805e;--asset:#b45309;--a11y:#7c3aed;--harness:#6b7280;--write:#1d2723;
 --warn:#b45309;--warn-bg:#fffbeb}
-@media(prefers-color-scheme:dark){:root{--bg:#141816;--panel:#1a201d;--ink:#e4ebe7;--mid:#c3cdc7;--low:#94a09a;--line:#2a332e;--line2:#3c4741;
---pass:#3ecb98;--pass-bg:rgba(48,182,134,.1);--fail:#fca5a5;--fail-bg:rgba(239,68,68,.12);--err:#94a3b8;
---found:#3b82f6;--comp:#1f9d6e;--asset:#c2700a;--a11y:#8b5cf6;--harness:#7b8680;--write:#e4ebe7;
---warn:#fcd34d;--warn-bg:rgba(245,158,11,.1)}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--mid);font:14px/1.7 "Hiragino Sans",sans-serif}
 .wrap{max-width:980px;margin:0 auto;padding:32px 20px 64px}
 h1{font-size:20px;color:var(--ink)}h2{font-size:15px;color:var(--ink);margin:36px 0 8px}
