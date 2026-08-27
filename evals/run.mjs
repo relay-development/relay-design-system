@@ -53,6 +53,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { CASES, COMMON_PATTERNS, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
+import { summarizeTranscript } from "./transcript.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
@@ -144,38 +145,6 @@ function generate(claudeBin, c) {
   if (res.error) return { ok: false, detail: String(res.error), transcript };
   if (res.status !== 0) return { ok: false, detail: (res.stderr || res.stdout || "").slice(-500), transcript };
   return { ok: true, transcript };
-}
-
-/**
- * stream-json トランスクリプトからツール呼び出し内訳・ターン数等を集計する（診断用の付加情報。
- * 解析できない行は読み飛ばし、集計不能でも採点は続行する）
- */
-function summarizeTranscript(jsonl) {
-  const toolCalls = {};
-  let numTurns = null;
-  let durationMs = null;
-  let usage = null;
-  for (const line of jsonl.split("\n")) {
-    if (!line.trim()) continue;
-    let ev;
-    try {
-      ev = JSON.parse(line);
-    } catch {
-      continue;
-    }
-    if (ev.type === "assistant") {
-      for (const block of ev.message?.content ?? []) {
-        if (block.type !== "tool_use") continue;
-        const name = String(block.name).replace(/^mcp__relay-ds__/, "");
-        toolCalls[name] = (toolCalls[name] ?? 0) + 1;
-      }
-    } else if (ev.type === "result") {
-      numTurns = ev.num_turns ?? null;
-      durationMs = ev.duration_ms ?? null;
-      usage = ev.usage ?? null;
-    }
-  }
-  return { toolCalls, numTurns, durationMs, usage };
 }
 
 /* ------------------------------------------------------------- 機械チェック */

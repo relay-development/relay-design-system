@@ -17,6 +17,7 @@ npm run eval -- --skip-judge         # 機械チェックのみ（LLM 不使用�
 npm run eval -- --votes 3            # 審査 3 回の多数決（審査側のブレ対策）
 npm run eval -- --trials 2           # 各お題を 2 回生成し全勝のみ PASS（pass^k・生成側のブレ対策。コスト k 倍）
 npm run eval:report                  # 実行履歴の推移表（無料）
+npm run eval:report:html             # HTML レポート（推移 + 最新実行のシーケンス・突合。無料。読み方: .claude/skills/eval-report）
 ```
 
 生成物は `evals/output/*.html`（ブラウザで目視可）、結果は `evals/results/*.json`（いずれも gitignored）。
