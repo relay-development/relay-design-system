@@ -59,6 +59,7 @@ if (!target) {
 const prev = runs.filter((r) => r.stamp < target.stamp).at(-1) ?? null;
 
 const kindById = new Map(CASES.map((c) => [c.id, kindOf(c)]));
+const caseById = new Map(CASES.map((c) => [c.id, c]));
 const kindOfResult = (r) => r.kind ?? kindById.get(r.id) ?? "regression";
 const targetResults = (target.results ?? []).filter((r) => !caseArg || r.id === caseArg);
 if (!targetResults.length) {
@@ -265,11 +266,23 @@ const cards = targetResults.map((r) => {
   const kind = kindOfResult(r);
   const trials = r.trials ?? [r];
   const prevResult = prevById.get(r.id) ?? null;
+  const def = caseById.get(r.id);
+  const specBox = def ? `
+    <h4>お題（意図レベルの日本語指示。コンポーネント名は与えない）</h4>
+    <div class="case-box">
+      <blockquote>${esc(def.prompt)}</blockquote>
+      <div class="criteria">
+        ${def.mustClasses?.length ? `<div class="row"><span class="k">必須クラス</span><span>${def.mustClasses.map((c) => `<code>${esc(c)}</code>`).join("")}<span class="muted">機械チェック</span></span></div>` : ""}
+        ${def.mustPatterns?.length ? `<div class="row"><span class="k">必須パターン</span><span>${def.mustPatterns.map((p) => `<code>${esc(p.pattern)}</code> ${esc(p.label)}`).join("<br>")}<span class="muted"> — 機械チェック</span></span></div>` : ""}
+        ${def.rubric?.length ? `<div class="row"><span class="k">審査観点</span><span><ul>${def.rubric.map((x) => `<li>${esc(x)}</li>`).join("")}</ul><span class="muted">LLM 審査員の採点項目（rubric）。加えて全お題共通の a11y チェック（lang / img alt / svg 属性）が走る</span></span></div>` : ""}
+      </div>
+    </div>` : "";
   return `
   <section class="case">
     <h3><span class="chip k-${kind}">${kind}</span> <span class="mono">${esc(r.id)}</span>
       <span class="sym s-${classifyResult(r).replace(":", "-")}">${STATUS_SYMBOL[classifyResult(r)]}</span>
       ${r.trials ? `<span class="meta">pass^${trials.length}（全勝のみ PASS）</span>` : ""}</h3>
+    ${specBox}
     ${trials.map((tr, i) => trialHtml(tr, r.trials ? `trial ${i + 1}/${trials.length}` : "実行", i === 0 ? prevResult : null)).join("")}
   </section>`;
 }).join("");
@@ -359,6 +372,14 @@ table{border-collapse:collapse;font-size:12.5px}
 .mcard .name{font-size:12.5px;display:block}
 .mcard .used{font-size:11px;font-weight:600;display:block;line-height:1.5}
 .mcard.ok .used{color:var(--ok)}.mcard.ng{border-color:var(--fail)}.mcard.ng .used{color:var(--fail)}
+/* お題・達成基準 */
+.case-box{background:color-mix(in srgb,var(--hair) 30%,var(--panel));border:1px solid var(--hair);border-radius:8px;padding:16px 18px}
+.case-box blockquote{margin:0 0 14px;padding:2px 0 2px 14px;border-left:3px solid var(--c-comp);font-size:14px;line-height:1.85;color:var(--ink);max-width:44em}
+.criteria{display:grid;gap:6px;font-size:12.5px;color:var(--muted)}
+.criteria .row{display:flex;gap:10px}
+.criteria .k{flex:none;width:88px;font-size:11px;letter-spacing:.06em;padding-top:2px}
+.criteria code{font-family:"SF Mono",ui-monospace,monospace;font-size:11.5px;background:var(--panel);border:1px solid var(--hair-strong);border-radius:4px;padding:0 5px;margin-right:4px}
+.criteria ul{margin:0;padding-left:18px}.criteria li{margin:2px 0}
 /* 生成画面 */
 .frame-box{border:1px solid var(--hair-strong);border-radius:8px;overflow:hidden;background:#fff}
 .frame-box iframe{display:block;width:100%;height:560px;border:none;background:#fff}
