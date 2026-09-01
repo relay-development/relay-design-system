@@ -189,10 +189,20 @@ function checkClasses(html, mustClasses, known) {
   };
 }
 
+/** aria-hidden="true" の要素とその中身を除去する（祖先が非表示の装飾は a11y 禁止チェックの対象外）。
+ *  同名タグの深いネストは扱わない簡易版だが、装飾アイコン（span/li で svg を包む）の実パターンには十分。 */
+function stripAriaHidden(html) {
+  const re = /<(\w+)\b[^>]*\baria-hidden=["']?true["']?[^>]*>[\s\S]*?<\/\1>/gi;
+  let s = html, prev;
+  do { prev = s; s = s.replace(re, ""); } while (s !== prev);
+  return s;
+}
+
 /** mustPatterns（必須）+ COMMON_PATTERNS（全お題共通。forbid はマッチで不合格）を判定 */
 function checkPatterns(html, mustPatterns) {
+  const forbidHtml = stripAriaHidden(html); // 祖先が aria-hidden の装飾（svg/img 等）は禁止対象から外す
   const failed = [...COMMON_PATTERNS, ...mustPatterns].filter((p) => {
-    const hit = new RegExp(p.pattern).test(html);
+    const hit = new RegExp(p.pattern).test(p.forbid ? forbidHtml : html);
     return p.forbid ? hit : !hit;
   });
   return { pass: failed.length === 0, failed: failed.map((p) => p.label) };

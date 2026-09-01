@@ -103,8 +103,8 @@ export const CASES = [
     rubric: [
       "最初のアクション（プロジェクト作成）が btn-primary で明確に示されている",
       "見出し・説明文に typo-* のセマンティック階層を使っている",
-      "テキスト色は fg-{high,middle,low} ロールを使っている（neutral-* 直指定でない）",
-      "視覚要素はブランドアセットのイラスト（list_assets）で、独自の SVG イラストを描いていない",
+      "本文・見出し・補助テキストの色は fg-{high,middle,low} ロールを使っている（neutral-* をテキスト色に直指定していない。装飾バッジ・アバター等の意図的なブランド配色は対象外）",
+      "場面の挿絵を独自の inline SVG で手描きしていない（公式ブランドアセットの使用自体は必須パターンで機械確認済み。ここでは手描きイラストの不在のみ見る）。チェックマーク等の小さな UI アイコンの inline SVG は違反ではない — 審査対象は挿絵・イラストのみ",
       "装飾過多でない（AI スロップ的な過剰イラスト・グラデーションがない。アセット 1 点で十分）",
     ],
   },
@@ -146,12 +146,12 @@ export const CASES = [
     id: "listing-filter",
     prompt:
       "物件一覧のページに、エリア（都道府県から 1 つ選択）と種別（売買・賃貸から複数選択可）で絞り込める UI を付けてください。絞り込んだ結果の一覧は、URL を共有すれば他の人もそのまま開けるようにしてください。",
-    mustClasses: ["select", "checkbox", "btn"],
+    mustClasses: ["selector-field", "checkbox", "btn"],
     mustPatterns: [],
     rubric: [
       "絞り込みの実行が明示的なボタンで行われ、select / checkbox の change で自動送信・自動リロードする作りになっていない（WCAG 3.2.2）",
       "select にアクセシブルネームがある（label の関連付け or aria-label。placeholder 頼みにしない）",
-      "チェックボックスに checkbox コンポーネントを使い、label がクリック可能に関連付いている（for/id または包含）",
+      "各チェックボックスが押せるラベルに関連付いている（input を checkbox-label で内包する、または for/id で紐付ける。どちらの方式でも可）",
     ],
   },
   {
