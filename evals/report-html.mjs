@@ -199,7 +199,8 @@ function trialHtml(r, label, prevResult) {
     if (c.at != null) prevAt = c.at;
     const size = c.size ?? 0;
     const cat = CAT_OF(c.name);
-    return `${gapRow}<tr>
+    const isLocalFs = ["Bash", "Read", "Grep", "Glob"].includes(c.name); // MCP 外でローカルファイルを覗いた手つき
+    return `${gapRow}<tr${isLocalFs ? ' class="fs"' : ""}>
       <td class="t mono">${c.at != null ? `${c.at}s` : "?"}</td>
       <td class="tool mono"><i class="dot c-${cat}"></i>${esc(c.name)}</td>
       <td class="in">${esc(input)}</td>
@@ -216,7 +217,7 @@ function trialHtml(r, label, prevResult) {
     ${failParts.length ? `<h4>不合格の内訳</h4><ul class="fails">${failParts.map((f) => `<li>${f}</li>`).join("")}</ul>` : ""}
     <h4>計測サマリー</h4>${tiles}
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
-    ${seqRows ? `<h4>呼び出しシーケンス</h4><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
+    ${seqRows ? `<h4>呼び出しシーケンス</h4><p class="muted">薄く敷いた行はローカルファイル参照（Bash / Read / Grep / Glob）＝ MCP の知識でなく実物を覗きにいった手つき。試験環境の実ファイルに依存している疑いのシグナル。</p><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
     ${htmlPath && fs.existsSync(htmlPath) ? `<h4>生成された画面</h4>
     <div class="frame-box"><iframe src="${esc(r.output)}" loading="lazy" title="${esc(label)} の生成物"></iframe></div>
@@ -382,6 +383,8 @@ table{border-collapse:collapse;font-size:12.5px}
 .bar-num{font-size:11px;color:var(--muted);white-space:nowrap}
 .gap td{padding:4px 12px;font-size:11.5px;color:var(--muted);background:color-mix(in srgb,var(--hair) 35%,transparent);border-top:1px dashed var(--hair-strong);border-bottom:1px dashed var(--hair-strong)}
 .gap .lead{letter-spacing:.2em}
+/* ローカルファイル参照（Bash/Read/Grep/Glob）= MCP 外で実物を覗いた行を薄く敷く */
+.log tr.fs td{background:color-mix(in srgb,var(--c-asset) 9%,transparent)}
 /* 突合 */
 .match{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
 .mcard{border:1px solid var(--hair);border-radius:8px;background:var(--panel);padding:9px 12px 8px;min-width:0}
