@@ -37,7 +37,7 @@ export function summarizeTranscript(jsonl) {
 
 /**
  * 時系列のツール呼び出しシーケンスを取り出す（レポートの表用）。
- * 各要素: { at: 開始からの秒, name, input, size: tool_result の文字数 }
+ * 各要素: { at: 開始からの秒, name, input, size: tool_result の文字数, head: 応答冒頭 160 字 }
  */
 export function parseToolSequence(jsonl) {
   const calls = [];
@@ -69,7 +69,9 @@ export function parseToolSequence(jsonl) {
       for (const block of ev.message.content) {
         if (block.type !== "tool_result" || !pending.has(block.tool_use_id)) continue;
         const text = typeof block.content === "string" ? block.content : JSON.stringify(block.content ?? "");
-        pending.get(block.tool_use_id).size = text.length;
+        const call = pending.get(block.tool_use_id);
+        call.size = text.length;
+        call.head = text.slice(0, 160); // シグナル自動検出用（「ヒットなし」等の検知）
       }
     }
   }
