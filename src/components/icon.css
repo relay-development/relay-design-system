@@ -19,9 +19,10 @@
  *
  * Usage:
  *
- *   <svg class="icon icon-md">
+ *   <svg class="icon icon-md" aria-hidden="true">
  *     <use href="path/to/icons.svg#lucide-search"></use>
  *   </svg>
+ *   （装飾アイコンは aria-hidden="true"。単独で意味を持つときは aria-hidden を外し aria-label か <title> を付ける）
  *
  * The sprite's <symbol> elements carry stroke / fill / linecap / linejoin
  * attributes from Lucide itself, so we don't need to repeat them here —

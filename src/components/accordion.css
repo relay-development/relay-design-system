@@ -10,7 +10,7 @@
  *     <div class="accordion">
  *       <details class="accordion-item" open>
  *         <summary class="accordion-trigger">
- *           <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+ *           <svg class="accordion-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-right"></use></svg>
  *           <span class="accordion-label">見出し</span>
  *         </summary>
  *         <div class="accordion-panel">本文</div>
@@ -48,14 +48,14 @@
  *   <div class="accordion">
  *     <details class="accordion-item" open>
  *       <summary class="accordion-trigger">
- *         <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+ *         <svg class="accordion-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-right"></use></svg>
  *         <span class="accordion-label">配送について</span>
  *       </summary>
  *       <div class="accordion-panel">通常 3〜5 営業日でお届けします。</div>
  *     </details>
  *     <details class="accordion-item">
  *       <summary class="accordion-trigger">
- *         <svg class="accordion-icon"><use href="./icons.svg#lucide-chevron-right"></use></svg>
+ *         <svg class="accordion-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-right"></use></svg>
  *         <span class="accordion-label">返品・交換について</span>
  *       </summary>
  *       <div class="accordion-panel">商品到着後 7 日以内にご連絡ください。</div>

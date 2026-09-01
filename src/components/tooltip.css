@@ -9,7 +9,7 @@
  *     <span class="tooltip">
  *       <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost"
  *               aria-describedby="tip-help" aria-label="ヘルプ">
- *         <svg class="icon"><use href="./icons.svg#lucide-info"></use></svg>
+ *         <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-info"></use></svg>
  *       </button>
  *       <span class="tooltip-content" id="tip-help" role="tooltip">補足テキスト</span>
  *     </span>

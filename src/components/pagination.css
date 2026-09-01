@@ -33,12 +33,12 @@
  * Usage:
  *   <nav class="pagination" aria-label="ページネーション">
  *     <ul>
- *       <li><a class="pagination-item" href="…" aria-label="前のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
+ *       <li><a class="pagination-item" href="…" aria-label="前のページ"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-left"></use></svg></a></li>
  *       <li><a class="pagination-item" href="…">1</a></li>
  *       <li><a class="pagination-item" href="…" aria-current="page">2</a></li>
  *       <li><span class="pagination-ellipsis" aria-hidden="true">…</span></li>
  *       <li><a class="pagination-item" href="…">10</a></li>
- *       <li><a class="pagination-item" href="…" aria-label="次のページ"><svg class="icon"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
+ *       <li><a class="pagination-item" href="…" aria-label="次のページ"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-right"></use></svg></a></li>
  *     </ul>
  *   </nav>
  */

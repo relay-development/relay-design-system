@@ -51,7 +51,7 @@
  * Usage:
  *   <a class="link" href="…" target="_blank" rel="noopener noreferrer">
  *     <span class="link-label">リンクテキスト</span>
- *     <svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg>
+ *     <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
  *   </a>
  *   外部アイコン無し: <a class="link"><span class="link-label">前のページ</span></a>
  *   ニュートラル色: <a class="link link-neutral"><span class="link-label">利用規約</span></a>
