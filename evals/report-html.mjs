@@ -179,20 +179,34 @@ function trialHtml(r, label, prevResult) {
     const tail = lastCall && write && write.at - lastCall.at > total * 0.25
       ? `<span class="tail" style="left:${pct(lastCall.at)}%;width:${pct(write.at - lastCall.at)}%" title="組み立て（呼び出しなし）${Math.round(write.at - lastCall.at)}s"></span>` : "";
     const ticks = [0, 30, 60, 120, 180, 240].filter((s) => s < total).map((s) => `<b style="left:${pct(s)}%">${s}s</b>`).join("");
-    timeline = `<div class="strip">${tail}<span class="track"></span>${dots}${ticks}</div>
-      <div class="legend">${Object.entries(CAT_LABEL).map(([k, l]) => `<span><i class="dot c-${k}"></i>${l}</span>`).join("")}</div>`;
+    timeline = `<div class="strip-box"><div class="strip">${tail}<span class="track"></span>${dots}${ticks}</div>
+      <div class="legend">${Object.entries(CAT_LABEL).map(([k, l]) => `<span><i class="dot c-${k}"></i>${l}</span>`).join("")}</div></div>`;
   }
 
+  const maxSize = Math.max(1, ...seq.map((c) => c.size ?? 0));
+  const gapMin = total ? Math.max(12, total * 0.12) : Infinity; // 呼び出し間の無言をギャップ行で示す
+  let prevAt = null;
   const seqRows = seq.map((c) => {
     const input = c.name === "get_component" ? c.input?.name
       : c.input?.topic ? `topic: ${c.input.topic}`
       : c.input?.query ? `「${c.input.query}」`
       : c.input?.category ?? (Object.keys(c.input ?? {}).length ? JSON.stringify(c.input).slice(0, 48) : "—");
-    return `<tr><td class="t">${c.at ?? "?"}s</td><td class="mono"><i class="dot c-${CAT_OF(c.name)}"></i>${esc(c.name)}</td><td class="in">${esc(input)}</td><td class="t">${c.size?.toLocaleString() ?? "?"} 字</td></tr>`;
+    let gapRow = "";
+    if (prevAt != null && c.at != null && c.at - prevAt >= gapMin) {
+      gapRow = `<tr class="gap"><td class="t mono">+${Math.round(c.at - prevAt)}s</td><td colspan="3"><span class="lead">⋯⋯</span>　思考・組み立て（呼び出しなし）</td></tr>`;
+    }
+    if (c.at != null) prevAt = c.at;
+    const size = c.size ?? 0;
+    const cat = CAT_OF(c.name);
+    return `${gapRow}<tr>
+      <td class="t mono">${c.at != null ? `${c.at}s` : "?"}</td>
+      <td class="tool mono"><i class="dot c-${cat}"></i>${esc(c.name)}</td>
+      <td class="in">${esc(input)}</td>
+      <td><div class="bar-row"><div class="bar" style="width:${Math.max(2, (size / maxSize) * 130)}px;background:var(--c-${cat})"></div><span class="bar-num mono">${size ? size.toLocaleString() : "?"} 字</span></div></td></tr>`;
   }).join("");
 
   const matchCards = match
-    ? `<div class="match">${match.map((x) => `<span class="mcard ${x.used ? "ok" : "ng"}"><b class="mono">${esc(x.name)}</b> ${x.used ? `✓ ${esc(x.sample)}` : "✗ 未使用"}</span>`).join("")}</div>` : "";
+    ? `<div class="match">${match.map((x) => `<div class="mcard ${x.used ? "ok" : "ng"}"><span class="name mono">${esc(x.name)}</span><span class="used">${x.used ? `✓ ${esc(x.sample)}` : "✗ 未使用"}</span></div>`).join("")}</div>` : "";
 
   return `
   <details class="trial" ${status !== "pass" || signals.length ? "open" : ""}>
@@ -201,10 +215,10 @@ function trialHtml(r, label, prevResult) {
     ${failParts.length ? `<h4>不合格の内訳</h4><ul class="fails">${failParts.map((f) => `<li>${f}</li>`).join("")}</ul>` : ""}
     <h4>計測サマリー</h4>${tiles}
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
-    ${seqRows ? `<h4>呼び出しシーケンス</h4><div class="seq-wrap"><table class="seq"><thead><tr><th>経過</th><th>ツール</th><th>入力</th><th>応答</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
+    ${seqRows ? `<h4>呼び出しシーケンス</h4><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
     ${htmlPath && fs.existsSync(htmlPath) ? `<h4>生成された画面</h4>
-    <iframe class="screen" src="${esc(r.output)}" loading="lazy" title="${esc(label)} の生成物"></iframe>
+    <div class="frame-box"><iframe src="${esc(r.output)}" loading="lazy" title="${esc(label)} の生成物"></iframe></div>
     <p class="muted"><a href="${esc(r.output)}" target="_blank">別タブで開く</a> — 採点対象そのもの（アーカイブ）。スタイルはレポート生成時にコピーした relay.css</p>` : ""}
     ${signals.length ? `<h4>この記録から見えたシグナル（自動検出）</h4><ul class="signals">${signals.map((s) => `<li>${s}</li>`).join("")}</ul><p class="muted">※ 機械的な候補の検出まで。改善と呼ぶかは 3 方向（知識 / 基準 / お題）の切り分けで判断する</p>` : ""}
   </details>`;
@@ -264,80 +278,107 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>relay evals レポート ${esc(jst(target.ranAt ?? target.stamp))}</title>
 <style>
-:root{color-scheme:light;--bg:#fafcfb;--panel:#fff;--ink:#1d2723;--mid:#3c4a44;--low:#5f6b65;--line:#e3eae6;--line2:#cbd6d0;
---pass:#1b805e;--pass-bg:#eef9f4;--fail:#b91c1c;--fail-bg:#fef2f2;--err:#64748b;
---found:#2563eb;--comp:#1b805e;--asset:#b45309;--a11y:#7c3aed;--harness:#6b7280;--write:#1d2723;
---warn:#b45309;--warn-bg:#fffbeb}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--mid);font:14px/1.7 "Hiragino Sans",sans-serif}
-.wrap{max-width:980px;margin:0 auto;padding:32px 20px 64px}
-h1{font-size:20px;color:var(--ink)}h2{font-size:15px;color:var(--ink);margin:36px 0 8px}
-h4{font-size:11.5px;letter-spacing:.06em;color:var(--low);margin:14px 0 6px;font-weight:600}
-.mono{font-family:ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
-.muted{color:var(--low);font-size:12px}.meta{color:var(--low);font-size:11.5px;font-weight:400;margin-left:8px}
-.headline{font-size:15px;padding:12px 16px;border:1px solid var(--line);border-radius:8px;background:var(--panel);color:var(--ink)}
-.cond{font-size:12px;color:var(--low);margin-top:4px}
-.sym{font-weight:700}.s-pass{color:var(--pass)}.s-fail{color:var(--fail)}.s-error-generation,.s-error-judge{color:var(--err)}
+:root{color-scheme:light;
+--paper:#fafcfb;--panel:#fff;--ink:#1d2723;--mid:#3c4a44;--muted:#5f6b65;--hair:#e3eae6;--hair-strong:#cbd6d0;
+--ok:#1b805e;--ok-bg:#eef9f4;--fail:#b91c1c;--fail-bg:#fef2f2;--err:#64748b;--warn:#b45309;--warn-bg:#fffbeb;
+--c-found:#2563eb;--c-comp:#1b805e;--c-asset:#b45309;--c-a11y:#7c3aed;--c-harness:#6b7280;--c-write:#1d2723}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--mid);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:14px;line-height:1.75;font-feature-settings:"palt"}
+.mono{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:980px;margin:0 auto;padding:48px 24px 72px}
+.eyebrow{font-size:11px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+h1{font-size:26px;font-weight:600;letter-spacing:.01em;color:var(--ink);margin:6px 0 4px;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 20px}
+h2{font-size:15px;font-weight:600;color:var(--ink);margin:44px 0 4px}
+.h2-note{font-size:12.5px;color:var(--muted);margin:0 0 16px}
+h4{font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:600;margin:20px 0 6px;text-transform:uppercase}
+.muted{color:var(--muted);font-size:12px}.meta{color:var(--muted);font-size:11.5px;font-weight:400;margin-left:8px}
+.sym{font-weight:700}.s-pass{color:var(--ok)}.s-fail{color:var(--fail)}.s-error-generation,.s-error-judge{color:var(--err)}
+.headline{font-size:15px;padding:14px 18px;border:1px solid var(--hair);border-radius:10px;background:var(--panel);color:var(--ink)}
+.cond{font-size:12px;color:var(--muted);margin-top:6px;line-height:1.7}
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 0}
+.chip{font-size:12px;padding:3px 10px;border:1px solid var(--hair-strong);border-radius:999px;color:var(--muted);background:var(--panel)}
+.chip.pass{color:var(--ok);border-color:var(--ok);font-weight:600}
+.k-regression{color:var(--ok);border-color:var(--ok);font-weight:600}.k-capability{color:var(--warn);border-color:var(--warn);font-weight:600}
 /* 履歴マトリクス */
-.matrix-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--panel)}
+.matrix-wrap{overflow-x:auto;border:1px solid var(--hair);border-radius:10px;background:var(--panel)}
 table{border-collapse:collapse;font-size:12.5px}
-.matrix td,.matrix th{border-bottom:1px solid var(--line);padding:4px 9px;text-align:center}
-.matrix .band th{font-size:10.5px;font-weight:700;padding:6px 8px;border-bottom:2px solid var(--line2)}
-.matrix .b-reg{color:var(--pass);background:var(--pass-bg)}.matrix .b-cap{color:var(--warn);background:var(--warn-bg)}
-.matrix .b-cap-l{border-left:2px solid var(--line2)}
+.matrix td,.matrix th{border-bottom:1px solid var(--hair);padding:5px 9px;text-align:center}
+.matrix .band th{font-size:10.5px;font-weight:700;padding:7px 8px;border-bottom:2px solid var(--hair-strong)}
+.matrix .b-reg{color:var(--ok);background:var(--ok-bg)}.matrix .b-cap{color:var(--warn);background:var(--warn-bg)}
+.matrix .b-cap-l{border-left:2px solid var(--hair-strong)}
 .matrix td.sticky,.matrix th.sticky{position:sticky;left:0;background:var(--panel);text-align:left;white-space:nowrap;z-index:1}
-.matrix td.t{color:var(--low);font-size:11.5px}
-.rot span{writing-mode:vertical-rl;font-size:11px;color:var(--low);font-weight:400}
-.matrix tr.target td{background:var(--pass-bg)}
-.none{color:var(--line2)}
+.matrix td.t{color:var(--muted);font-size:11.5px}
+.rot span{writing-mode:vertical-rl;font-size:11px;color:var(--muted);font-weight:400}
+.matrix tr.target td{background:var(--ok-bg)}
+.none{color:var(--hair-strong)}
 /* お題カード */
-.case{border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:12px 0;background:var(--panel)}
-.case h3{font-size:13.5px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.chip{font-size:10.5px;font-weight:700;border-radius:999px;padding:0 8px}
-.k-regression{color:var(--pass);background:var(--pass-bg)}.k-capability{color:var(--warn);background:var(--warn-bg)}
-.trial{margin:8px 0 2px;border-top:1px dashed var(--line2);padding-top:6px}
-.trial summary{cursor:pointer;font-size:12.5px}
-.fails{margin:4px 0;padding-left:20px;color:var(--fail);font-size:12.5px}
-.signals{margin:4px 0;padding-left:20px;font-size:12.5px;color:var(--ink)}
-.signals li{margin:2px 0}
+.case{border:1px solid var(--hair);border-radius:10px;padding:16px 18px;margin:14px 0;background:var(--panel)}
+.case h3{font-size:14px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600}
+.trial{margin:12px 0 2px;border-top:1px solid var(--hair);padding-top:10px}
+.trial summary{cursor:pointer;font-size:13px;color:var(--ink)}
+.fails{margin:6px 0;padding-left:20px;color:var(--fail);font-size:12.5px;line-height:1.7}
+.signals{margin:6px 0;padding-left:20px;font-size:12.5px;color:var(--ink);line-height:1.7}
+.signals li{margin:3px 0}
 /* 計測タイル */
-.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
-.tile{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:var(--bg)}
-.tile .k{font-size:10.5px;color:var(--low)}.tile .v{font-size:16px;font-weight:700;color:var(--ink)}.tile .v small{font-size:11px;font-weight:400;color:var(--low)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.tile{background:var(--panel);border:1px solid var(--hair);border-radius:8px;padding:14px 16px 12px}
+.tile .k{font-size:11.5px;color:var(--muted)}
+.tile .v{font-size:24px;font-weight:600;line-height:1.3;color:var(--ink)}
+.tile .v small{font-size:12px;font-weight:400;color:var(--muted);margin-left:2px}
+.tile .v.sym{font-size:15px}
 /* タイムライン */
-.strip{position:relative;height:44px;margin:2px 0}
-.strip .track{position:absolute;left:0;right:0;top:18px;height:2px;background:var(--line2)}
-.strip .tail{position:absolute;top:13px;height:12px;border:1px dashed var(--line2);border-radius:4px;background:transparent}
-.strip .dot,.legend .dot,.seq .dot{display:inline-block;width:9px;height:9px;border-radius:50%}
-.strip .dot{position:absolute;top:14.5px;transform:translateX(-50%);border:2px solid var(--panel)}
-.strip b{position:absolute;top:30px;transform:translateX(-50%);font-size:10px;color:var(--low);font-weight:400}
-.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:11px;color:var(--low)}
-.legend span{display:inline-flex;align-items:center;gap:5px}
-.c-found{background:var(--found)}.c-comp{background:var(--comp)}.c-asset{background:var(--asset)}.c-a11y{background:var(--a11y)}.c-harness{background:var(--harness)}.c-write{background:var(--write)}
-/* シーケンス */
-.seq-wrap{overflow-x:auto}.seq{width:100%}
-.seq th{font-size:10.5px;color:var(--low);text-align:left;padding:2px 8px;border-bottom:1px solid var(--line)}
-.seq td{padding:2px 8px;border-bottom:1px solid var(--line);font-size:12px}
-.seq td.t{text-align:right;white-space:nowrap;color:var(--low)}
-.seq .dot{width:7px;height:7px;margin-right:6px}
-.seq .in{color:var(--low);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.strip-box{background:var(--panel);border:1px solid var(--hair);border-radius:8px;padding:18px 20px 10px}
+.strip{position:relative;height:52px}
+.strip .track{position:absolute;left:0;right:0;top:22px;height:2px;background:var(--hair-strong)}
+.strip .tail{position:absolute;top:16px;height:14px;border:1px dashed var(--hair-strong);border-radius:4px;background:color-mix(in srgb,var(--c-write) 8%,transparent)}
+.strip .dot,.legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%}
+.strip .dot{position:absolute;top:18px;transform:translateX(-50%);border:2px solid var(--panel)}
+.strip b{position:absolute;top:36px;transform:translateX(-50%);font-size:10.5px;color:var(--muted);font-weight:400}
+.legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.c-found{background:var(--c-found)}.c-comp{background:var(--c-comp)}.c-asset{background:var(--c-asset)}.c-a11y{background:var(--c-a11y)}.c-harness{background:var(--c-harness)}.c-write{background:var(--c-write)}
+/* シーケンス（応答サイズをバー表示） */
+.log{border:1px solid var(--hair);border-radius:8px;background:var(--panel);overflow-x:auto}
+.log table{width:100%;min-width:560px}
+.log th{text-align:left;font-size:11px;letter-spacing:.08em;color:var(--muted);font-weight:600;padding:10px 12px 8px;border-bottom:1px solid var(--hair)}
+.log td{padding:7px 12px;border-bottom:1px solid var(--hair);font-size:13px;vertical-align:middle}
+.log tr:last-child td{border-bottom:none}
+.log .t{text-align:right;color:var(--muted);font-size:12px;white-space:nowrap;width:64px}
+.log .tool{white-space:nowrap;font-size:12.5px}.log .tool .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px}
+.log .in{color:var(--muted);font-size:12px;max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-row{display:flex;align-items:center;gap:8px}
+.bar{height:8px;border-radius:0 4px 4px 0;min-width:2px}
+.bar-num{font-size:11px;color:var(--muted);white-space:nowrap}
+.gap td{padding:4px 12px;font-size:11.5px;color:var(--muted);background:color-mix(in srgb,var(--hair) 35%,transparent);border-top:1px dashed var(--hair-strong);border-bottom:1px dashed var(--hair-strong)}
+.gap .lead{letter-spacing:.2em}
 /* 突合 */
-.match{display:flex;flex-wrap:wrap;gap:6px}
-.mcard{border:1px solid var(--line);border-radius:6px;padding:2px 10px;font-size:11.5px;background:var(--bg)}
-.mcard.ok{color:var(--pass)}.mcard.ng{color:var(--fail);border-color:var(--fail);font-weight:700}
-.screen{width:100%;height:460px;border:1px solid var(--line2);border-radius:8px;background:#fff}
-footer{margin-top:40px;border-top:1px solid var(--line);padding-top:10px;font-size:11.5px;color:var(--low)}
+.match{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.mcard{border:1px solid var(--hair);border-radius:8px;background:var(--panel);padding:9px 12px 8px;min-width:0}
+.mcard .name{font-size:12.5px;display:block}
+.mcard .used{font-size:11px;font-weight:600;display:block;line-height:1.5}
+.mcard.ok .used{color:var(--ok)}.mcard.ng{border-color:var(--fail)}.mcard.ng .used{color:var(--fail)}
+/* 生成画面 */
+.frame-box{border:1px solid var(--hair-strong);border-radius:8px;overflow:hidden;background:#fff}
+.frame-box iframe{display:block;width:100%;height:560px;border:none;background:#fff}
+footer{margin-top:48px;border-top:1px solid var(--hair);padding-top:14px;font-size:11.5px;color:var(--muted);line-height:1.7}
+footer code,.cond code{font-family:"SF Mono",ui-monospace,monospace;font-size:11px}
 </style></head><body><div class="wrap">
-<h1>relay evals レポート</h1>
-<p class="muted">自動生成: <span class="mono">npm run eval:report:html${stampArg ? ` -- --stamp ${esc(stampArg)}` : ""}${caseArg ? ` --case ${esc(caseArg)}` : ""}</span>（正本: evals/results/）</p>
+<div class="eyebrow">relay Design System · agent eval レポート</div>
+<h1>evals レポート</h1>
+<p class="sub">自動生成（LLM 不使用）: <span class="mono">npm run eval:report:html${stampArg ? ` -- --stamp ${esc(stampArg)}` : ""}${caseArg ? ` --case ${esc(caseArg)}` : ""}</span>　正本: evals/results/</p>
 <div class="headline"><b>${headline}</b>
 <div class="cond">${esc(jst(target.ranAt ?? target.stamp))} 実行${target.stamp === runs.at(-1).stamp ? "（最新）" : "（過去の実行を表示中）"} ・ model: ${esc(target.model ?? "?")} ・ judge: ${esc(target.judgeModel ?? "なし(--skip-judge)")} ・ votes ${target.votes ?? 1} ・ trials ${target.trials ?? 1} ・ v${esc(target.dsVersion ?? "?")}</div></div>
 
-<h2>履歴推移（新しい順・${shownRuns.length}/${runs.length} 件${showAll ? "" : "。全件は --all"}）</h2>
+<h2>履歴推移</h2>
+<p class="h2-note">新しい順・${shownRuns.length}/${runs.length} 件${showAll ? "" : "（全件は --all）"}。列は kind でグループ化 — 緑帯 regression は 100% 維持が前提、琥珀帯 capability は改善メーター。</p>
 <div class="matrix-wrap"><table class="matrix"><thead>${hasCapability ? bandRow : ""}${headRow}</thead><tbody>${matrixRows}</tbody></table></div>
 <p class="muted">✓ PASS / ✗ FAIL（品質） / G 生成失敗 / J 審査不能（G/J は品質シグナルでない） / · その実行の対象外 / * 機械チェックのみ / ◀ このレポートの対象実行。
 regression の ✗ は即対応、capability の ✗ は改善余地の測定値（exit code にも影響しない）。</p>
 
-<h2>対象実行の詳細（お題別${caseArg ? ` — ${esc(caseArg)} で絞り込み` : ""}）</h2>
+<h2>対象実行の詳細</h2>
+<p class="h2-note">お題別${caseArg ? ` — ${esc(caseArg)} で絞り込み` : ""}。FAIL・シグナル検出のトライアルは自動で展開。全 PASS でも行動ログにシグナルは出るので読み飛ばさない。</p>
 ${cards}
 
 <footer>relay Design System evals ・ 読み方と所見の書き方: .claude/skills/eval-report/SKILL.md ・
