@@ -262,7 +262,7 @@ const matrixRows = shownRuns.slice().reverse().map((run) => {
 
 /* お題別カード */
 const prevById = new Map((prev?.results ?? []).map((r) => [r.id, r]));
-const cards = targetResults.map((r) => {
+const cards = targetResults.map((r, idx) => {
   const kind = kindOfResult(r);
   const trials = r.trials ?? [r];
   const prevResult = prevById.get(r.id) ?? null;
@@ -278,7 +278,7 @@ const cards = targetResults.map((r) => {
       </div>
     </div>` : "";
   return `
-  <section class="case">
+  <section class="case" id="panel-${esc(r.id)}" role="tabpanel" aria-labelledby="tab-${esc(r.id)}"${idx ? " hidden" : ""}>
     <h3><span class="chip k-${kind}">${kind}</span> <span class="mono">${esc(r.id)}</span>
       <span class="sym s-${classifyResult(r).replace(":", "-")}">${STATUS_SYMBOL[classifyResult(r)]}</span>
       ${r.trials ? `<span class="meta">pass^${trials.length}（全勝のみ PASS）</span>` : ""}</h3>
@@ -286,6 +286,12 @@ const cards = targetResults.map((r) => {
     ${trials.map((tr, i) => trialHtml(tr, r.trials ? `trial ${i + 1}/${trials.length}` : "実行", i === 0 ? prevResult : null)).join("")}
   </section>`;
 }).join("");
+
+/* お題タブ（tablist）— 詳細を1件ずつ切り替えて縦スクロールを抑える */
+const tabbar = `<div class="tabs" role="tablist" aria-label="お題別の詳細">${targetResults.map((r, idx) => {
+  const st = classifyResult(r);
+  return `<button type="button" role="tab" id="tab-${esc(r.id)}" class="tab k-${kindOfResult(r)}${idx ? "" : " active"}" aria-selected="${idx ? "false" : "true"}" aria-controls="panel-${esc(r.id)}" tabindex="${idx ? "-1" : "0"}"><span class="sym s-${st.replace(":", "-")}">${STATUS_SYMBOL[st]}</span> <span class="mono">${esc(r.id)}</span></button>`;
+}).join("")}</div>`;
 
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -326,8 +332,18 @@ table{border-collapse:collapse;font-size:12.5px}
 .rot span{writing-mode:vertical-rl;font-size:11px;color:var(--muted);font-weight:400}
 .matrix tr.target td{background:var(--ok-bg)}
 .none{color:var(--hair-strong)}
+/* お題タブ */
+.tabs{display:flex;flex-wrap:wrap;gap:2px;margin:4px 0 16px;border-bottom:1px solid var(--hair)}
+.tab{font-family:inherit;font-size:12.5px;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;padding:8px 12px;margin-bottom:-1px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.tab .mono{font-size:12px}
+.tab .sym{font-weight:700}
+.tab:hover{color:var(--ink)}
+.tab.active{color:var(--ink);border-bottom-color:var(--c-comp);font-weight:600}
+.tab.k-capability.active{border-bottom-color:var(--warn)}
+.tab:focus-visible{outline:2px solid var(--c-found);outline-offset:2px;border-radius:4px}
 /* お題カード */
 .case{border:1px solid var(--hair);border-radius:10px;padding:16px 18px;margin:14px 0;background:var(--panel)}
+.case[hidden]{display:none}
 .case h3{font-size:14px;color:var(--ink);margin:0;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-weight:600}
 .trial{margin:12px 0 2px;border-top:1px solid var(--hair);padding-top:10px}
 .trial summary{cursor:pointer;font-size:13px;color:var(--ink)}
@@ -399,12 +415,44 @@ footer code,.cond code{font-family:"SF Mono",ui-monospace,monospace;font-size:11
 regression の ✗ は即対応、capability の ✗ は改善余地の測定値（exit code にも影響しない）。</p>
 
 <h2>対象実行の詳細</h2>
-<p class="h2-note">お題別${caseArg ? ` — ${esc(caseArg)} で絞り込み` : ""}。FAIL・シグナル検出のトライアルは自動で展開。全 PASS でも行動ログにシグナルは出るので読み飛ばさない。</p>
+<p class="h2-note">お題別${caseArg ? ` — ${esc(caseArg)} で絞り込み` : ""}。タブで1件ずつ表示（← → で移動）。FAIL・シグナル検出のトライアルは自動で展開。全 PASS でも行動ログにシグナルは出るので読み飛ばさない。</p>
+${tabbar}
 ${cards}
 
 <footer>relay Design System evals ・ 読み方と所見の書き方: .claude/skills/eval-report/SKILL.md ・
 切り分けは「知識 / 基準 / お題」の 3 方向（分水嶺: 正しい知識を持つ理想のエージェントなら安定して合格できるか）</footer>
-</div></body></html>`;
+</div>
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tabs [role=tab]'));
+  if(!tabs.length)return;
+  function select(tab,focus){
+    tabs.forEach(function(t){
+      var on=t===tab;
+      t.setAttribute('aria-selected',on?'true':'false');
+      t.tabIndex=on?0:-1;
+      t.classList.toggle('active',on);
+      var p=document.getElementById(t.getAttribute('aria-controls'));
+      if(p)p.hidden=!on;
+    });
+    if(focus)tab.focus();
+    try{history.replaceState(null,'','#case-'+tab.id.slice(4));}catch(e){}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t,false);});
+    t.addEventListener('keydown',function(e){
+      var j=null,k=e.key;
+      if(k==='ArrowRight'||k==='ArrowDown')j=(i+1)%tabs.length;
+      else if(k==='ArrowLeft'||k==='ArrowUp')j=(i-1+tabs.length)%tabs.length;
+      else if(k==='Home')j=0;else if(k==='End')j=tabs.length-1;
+      if(j!==null){e.preventDefault();select(tabs[j],true);}
+    });
+  });
+  var m=(location.hash||'').match(/^#case-(.+)$/);
+  if(m){var t=document.getElementById('tab-'+m[1]);if(t)select(t,false);}
+})();
+</script>
+</body></html>`;
 
 const outPath = path.join(resultsDir, "report.html");
 fs.writeFileSync(outPath, html);
