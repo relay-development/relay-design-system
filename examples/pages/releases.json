@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.26.1",
+      "date": "2026-09-02",
+      "title": "標準ユーティリティの安定化 + アイコン a11y + MCP のクラス検索",
+      "summary": "relay.css は Tailwind の JIT ビルドのため、カタログで未使用の標準ユーティリティ（例: sm:flex-row・md:grid-cols-3・focus:not-sr-only）が dist に含まれず「書いても効かない」ことがありました。レイアウト/間隔/整列/表示/サイズ/オーバーフロー/位置/アクセシビリティの標準ユーティリティと、役割ベースのセマンティック色（text-fg-* / bg-surface / border-stroke-* 等）を safelist で常に含めるようにし、素の Tailwind ユーティリティが確実に効くようにしました（relay.css は 124→174KB、gzip はほぼ不変）。MCP は search がクラスの存在に答えるようになり（「このクラスは効く？」を確認できる）、get_setup にユーティリティの使い方を追記。装飾アイコンの手本例に aria-hidden=\"true\" を追加し、コピーした実装が WCAG 1.1.1 を満たすようにしました。破壊的変更・新規クラス削除はありません。"
+    },
+    {
       "version": "0.26.0",
       "date": "2026-09-01",
       "title": "MCP の知識強化とコンポーネント選定境界の明文化",
