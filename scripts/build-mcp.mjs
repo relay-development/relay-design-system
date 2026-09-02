@@ -66,6 +66,31 @@ function extractClasses(css) {
   return [...classes].sort();
 }
 
+/**
+ * ビルド済み dist/relay.css から「HTML で使える全クラス名」を抽出する。
+ * Tailwind の JIT で dist に実在するクラスの権威ある一覧（safelist の実体）。
+ * これを index に載せることで、search が「このクラスは効くか」に答えられ、
+ * 利用者・AI が実 CSS を grep して確認する必要がなくなる。
+ * CSS のエスケープ（`.sm\:flex-row` `.w-1\/2`）は外して HTML 上の表記に戻す。
+ */
+async function buildAllClasses() {
+  const cssPath = path.join(projectRoot, "dist/relay.css");
+  let css;
+  try {
+    css = await readFile(cssPath, "utf8");
+  } catch {
+    console.warn("[build-mcp] dist/relay.css が無いため allClasses は空（先に vite build が必要）");
+    return [];
+  }
+  const body = stripCssComments(css);
+  const set = new Set();
+  // `.` + （語字 or バックスラッシュ・エスケープ）の連続。未エスケープの `:`（擬似クラス）で止まる
+  for (const m of body.matchAll(/\.((?:[a-zA-Z0-9_%-]|\\.)+)/g)) {
+    set.add(m[1].replace(/\\/g, "")); // \: → :, \/ → / に戻す
+  }
+  return [...set].sort();
+}
+
 /** Best-effort one-line summary from the header doc (skips boilerplate lines). */
 function deriveSummary(doc, componentName) {
   const lines = doc.split("\n").map((l) => l.trim());
@@ -317,6 +342,8 @@ async function main() {
     buildAccessibility(),
   ]);
 
+  const allClasses = await buildAllClasses();
+
   const index = {
     name: pkg.name,
     version: pkg.version,
@@ -326,6 +353,7 @@ async function main() {
     components,
     tokens,
     assets,
+    allClasses,
     designPhilosophy: design.philosophy,
     principles: design.principles,
     forbiddenPatterns: design.forbidden,
@@ -343,7 +371,7 @@ async function main() {
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
       `${components.length} components, ${tokenCount} tokens, ` +
       `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ` +
-      `${components.filter((c) => c.function).length} with 機能`,
+      `${allClasses.length} classes, ${components.filter((c) => c.function).length} with 機能`,
   );
 }
 
