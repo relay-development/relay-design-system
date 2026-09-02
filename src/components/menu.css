@@ -58,7 +58,7 @@
  *     <ul class="menu-group">
  *       <li>
  *         <a class="menu-item" href="…" aria-current="page">
- *           <svg class="icon"><use href="./icons.svg#lucide-smile"></use></svg>
+ *           <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-smile"></use></svg>
  *           マイページTOP
  *         </a>
  *       </li>
@@ -68,15 +68,15 @@
  *     <ul class="menu-group">
  *       <li>
  *         <button type="button" class="menu-item">
- *           <svg class="icon"><use href="./icons.svg#lucide-settings"></use></svg>
+ *           <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-settings"></use></svg>
  *           アカウント設定
  *         </button>
  *       </li>
  *       <li>
  *         <a class="menu-item" href="…" target="_blank" rel="noopener noreferrer">
- *           <svg class="icon"><use href="./icons.svg#lucide-help-circle"></use></svg>
+ *           <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-help-circle"></use></svg>
  *           ヘルプセンター
- *           <svg class="icon menu-item-trailing"><use href="./icons.svg#lucide-external-link"></use></svg>
+ *           <svg class="icon menu-item-trailing" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg>
  *         </a>
  *       </li>
  *     </ul>

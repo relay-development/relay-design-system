@@ -12,7 +12,7 @@
  *         <h2 class="modal-title" id="my-modal-title">タイトル</h2>
  *         <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost"
  *                 data-modal-close aria-label="閉じる">
- *           <svg class="icon"><use href="./icons.svg#lucide-x"></use></svg>
+ *           <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
  *         </button>
  *       </div>
  *       <div class="modal-body">本文</div>

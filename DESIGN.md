@@ -161,8 +161,10 @@ Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定�
 
 ```
 import iconsUrl from "@light-right/design-system/icons";
-<svg class="icon icon-md"><use href={`${iconsUrl}#lucide-search`} /></svg>
+<svg class="icon icon-md" aria-hidden="true"><use href={`${iconsUrl}#lucide-search`} /></svg>
 ```
+
+装飾アイコンは `aria-hidden="true"`（読み上げさせない）。単独で意味を運ぶアイコンは `aria-hidden` を外し `aria-label` か `<title>` を付ける。アイコンボタンは `icon-btn` 側に `aria-label`、SVG は `aria-hidden`。
 
 ```
 .icon-xs = 12px  /  .icon-sm = 16px  /  .icon-md = 20px (default)  /  .icon-lg = 24px  /  .icon-xl = 32px
