@@ -147,8 +147,47 @@ function detectSignals(seq, match, r, prevResult) {
   return signals;
 }
 
+/* ---- お題1件の計測指標（前回比較用。行動ログから grep/search も数える） ---- */
+function caseMetrics(result) {
+  if (!result) return null;
+  const m = result.agentMetrics ?? {};
+  const seqPath = result.transcript ? path.join(resultsDir, result.transcript) : null;
+  const seq = seqPath && fs.existsSync(seqPath) ? parseToolSequence(fs.readFileSync(seqPath, "utf8")) : [];
+  return {
+    dur: m.durationMs ? Math.round(m.durationMs / 1000) : null,
+    turns: m.numTurns ?? null,
+    tools: seq.length || null,
+    out: m.usage?.output_tokens ?? null,
+    think: m.usage?.output_tokens_details?.thinking_tokens ?? null,
+    grep: seq.filter((c) => c.name === "Bash" && /grep[^"]*relay\.css/.test(c.input?.command ?? "")).length,
+    search: seq.filter((c) => c.name === "search").length,
+  };
+}
+const fmtDur = (s) => (s == null ? "?" : `${Math.floor(s / 60)}分${String(s % 60).padStart(2, "0")}秒`);
+/** 前→後のセル。lowerBetter=true は減少が改善（緑）、false は増加が改善 */
+function cmpCell(a, b, lowerBetter, fmt = (x) => (x == null ? "?" : x.toLocaleString())) {
+  if (a == null && b == null) return "—";
+  const cls = a === b || a == null || b == null ? "" : (lowerBetter ? b < a : b > a) ? "d-good" : "d-bad";
+  return `<span class="${cls}">${fmt(a)} → ${fmt(b)}</span>`;
+}
+function cmpBlock(cur, base, baseLabel) {
+  if (!base) return "";
+  const rows = [
+    ["所要", cmpCell(base.dur, cur.dur, true, fmtDur)],
+    ["ターン", cmpCell(base.turns, cur.turns, true)],
+    ["ツール呼び出し", cmpCell(base.tools, cur.tools, true)],
+    ["出力トークン", cmpCell(base.out, cur.out, true)],
+    ["うち思考", cmpCell(base.think, cur.think, true)],
+    ["grep(relay.css)", cmpCell(base.grep, cur.grep, true)],
+    ["search", cmpCell(base.search, cur.search, false)],
+  ];
+  return `<h4>前回比（${esc(baseLabel)} → 今回）</h4>
+    <div class="log"><table class="cmp"><tbody>${rows.map(([k, v]) => `<tr><td class="ck">${k}</td><td>${v}</td></tr>`).join("")}</tbody></table></div>
+    <p class="muted">grep(relay.css) 減・search 増・所要/ターン減が改善方向（緑）。実 CSS を覗かず MCP で組めているほど良い。</p>`;
+}
+
 /* ---- トライアル 1 件の詳細 ---- */
-function trialHtml(r, label, prevResult) {
+function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
   const status = classifyResult(r);
   const seqPath = r.transcript ? path.join(resultsDir, r.transcript) : null;
   const seq = seqPath && fs.existsSync(seqPath) ? parseToolSequence(fs.readFileSync(seqPath, "utf8")) : [];
@@ -222,6 +261,7 @@ function trialHtml(r, label, prevResult) {
       <span class="meta">${m.numTurns ?? "?"} turns / ${dur != null ? dur + "s" : "?"}</span></summary>
     ${failParts.length ? `<h4>不合格の内訳</h4><ul class="fails">${failParts.map((f) => `<li>${f}</li>`).join("")}</ul>` : ""}
     <h4>計測サマリー</h4>${tiles}
+    ${cmpResult ? cmpBlock(caseMetrics(r), caseMetrics(cmpResult), cmpLabel) : ""}
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
     ${seqRows ? `<h4>呼び出しシーケンス</h4><p class="muted">薄く敷いた行はローカルファイル参照（Bash / Read / Grep / Glob）＝ MCP の知識でなく実物を覗きにいった手つき。試験環境の実ファイルに依存している疑いのシグナル。</p><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
@@ -269,10 +309,14 @@ const matrixRows = shownRuns.slice().reverse().map((run) => {
 
 /* お題別カード */
 const prevById = new Map((prev?.results ?? []).map((r) => [r.id, r]));
+// 前回比の基準: --compare 指定時はそのラン、なければ直前ラン
+const cmpById = new Map(((baseRun ?? prev)?.results ?? []).map((r) => [r.id, r]));
+const cmpLabel = jst((baseRun ?? prev)?.ranAt ?? (baseRun ?? prev)?.stamp ?? "");
 const cards = targetResults.map((r, idx) => {
   const kind = kindOfResult(r);
   const trials = r.trials ?? [r];
   const prevResult = prevById.get(r.id) ?? null;
+  const cmpResult = cmpById.get(r.id) ?? null;
   const def = caseById.get(r.id);
   const specBox = def ? `
     <h4>お題（意図レベルの日本語指示。コンポーネント名は与えない）</h4>
@@ -290,7 +334,7 @@ const cards = targetResults.map((r, idx) => {
       <span class="sym s-${classifyResult(r).replace(":", "-")}">${STATUS_SYMBOL[classifyResult(r)]}</span>
       ${r.trials ? `<span class="meta">pass^${trials.length}（全勝のみ PASS）</span>` : ""}</h3>
     ${specBox}
-    ${trials.map((tr, i) => trialHtml(tr, r.trials ? `trial ${i + 1}/${trials.length}` : "実行", i === 0 ? prevResult : null)).join("")}
+    ${trials.map((tr, i) => trialHtml(tr, r.trials ? `trial ${i + 1}/${trials.length}` : "実行", i === 0 ? prevResult : null, i === 0 ? cmpResult : null, cmpLabel)).join("")}
   </section>`;
 }).join("");
 
@@ -404,6 +448,7 @@ table{border-collapse:collapse;font-size:12.5px}
 .cmp .d-good{color:var(--ok);font-weight:600}
 .cmp .d-bad{color:var(--fail);font-weight:600}
 .cmp .sym{margin:0 1px}
+.cmp .ck{color:var(--muted);width:140px;font-size:12px}
 /* お題タブ */
 .tabs{display:flex;flex-wrap:wrap;gap:2px;margin:4px 0 16px;border-bottom:1px solid var(--hair)}
 .tab{font-family:inherit;font-size:12.5px;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;padding:8px 12px;margin-bottom:-1px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
