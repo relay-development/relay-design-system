@@ -33,6 +33,7 @@ const args = process.argv.slice(2);
 const showAll = args.includes("--all");
 const stampArg = args.includes("--stamp") ? args[args.indexOf("--stamp") + 1] : null;
 const caseArg = args.includes("--case") ? args[args.indexOf("--case") + 1] : null;
+const compareArg = args.includes("--compare") ? args[args.indexOf("--compare") + 1] : null;
 
 /* ------------------------------------------------------------- data */
 
@@ -57,6 +58,11 @@ if (!target) {
   process.exit(1);
 }
 const prev = runs.filter((r) => r.stamp < target.stamp).at(-1) ?? null;
+const baseRun = compareArg ? runs.find((r) => r.stamp.startsWith(compareArg)) : null;
+if (compareArg && !baseRun) {
+  console.error(`--compare "${compareArg}" に一致する実行がありません。候補: ${runs.slice(-8).map((r) => r.stamp).join(", ")}`);
+  process.exit(1);
+}
 
 const kindById = new Map(CASES.map((c) => [c.id, kindOf(c)]));
 const caseById = new Map(CASES.map((c) => [c.id, c]));
@@ -294,6 +300,65 @@ const tabbar = `<div class="tabs" role="tablist" aria-label="お題別の詳細"
   return `<button type="button" role="tab" id="tab-${esc(r.id)}" class="tab k-${kindOfResult(r)}${idx ? "" : " active"}" aria-selected="${idx ? "false" : "true"}" aria-controls="panel-${esc(r.id)}" tabindex="${idx ? "-1" : "0"}"><span class="sym s-${st.replace(":", "-")}">${STATUS_SYMBOL[st]}</span> <span class="mono">${esc(r.id)}</span></button>`;
 }).join("")}</div>`;
 
+/* ---- 実行間の比較（--compare）: 各お題の行動ログ指標が前後でどう変わったか ---- */
+function grepRelayCssCount(run, id) {
+  const r = (run.results ?? []).find((x) => x.id === id);
+  if (!r?.transcript) return null;
+  const p = path.join(resultsDir, r.transcript);
+  if (!fs.existsSync(p)) return null;
+  let n = 0;
+  for (const line of fs.readFileSync(p, "utf8").split("\n")) {
+    if (!line.trim()) continue;
+    let ev; try { ev = JSON.parse(line); } catch { continue; }
+    if (ev.type !== "assistant") continue;
+    for (const b of ev.message?.content ?? []) {
+      if (b.type === "tool_use" && b.name === "Bash" && /grep[^"]*relay\.css/.test(b.input?.command ?? "")) n++;
+    }
+  }
+  return n;
+}
+function metricsOf(run, id) {
+  const r = (run.results ?? []).find((x) => x.id === id);
+  if (!r) return null;
+  const m = r.agentMetrics ?? {};
+  const tc = m.toolCalls ?? {};
+  return {
+    status: classifyResult(r),
+    turns: m.numTurns ?? null,
+    tools: Object.values(tc).reduce((a, b) => a + b, 0) || null,
+    bash: tc.Bash ?? 0,
+    search: tc.search ?? 0,
+    grep: grepRelayCssCount(run, id),
+  };
+}
+function compareSection(base, tgt) {
+  const ids = colIds.filter((id) => (base.results ?? []).some((r) => r.id === id) || (tgt.results ?? []).some((r) => r.id === id));
+  const cell = (a, b, lowerBetter = false) => {
+    if (a == null && b == null) return "—";
+    const same = a === b;
+    const better = lowerBetter ? b < a : b > a;
+    const cls = same ? "" : better ? "d-good" : "d-bad";
+    return `<span class="${cls}">${a ?? "?"} → ${b ?? "?"}</span>`;
+  };
+  const rows = ids.map((id) => {
+    const A = metricsOf(base, id), B = metricsOf(tgt, id);
+    const sa = A?.status ?? "—", sb = B?.status ?? "—";
+    const stChip = `<span class="sym s-${String(sa).replace(":", "-")}">${STATUS_SYMBOL[sa] ?? "—"}</span>→<span class="sym s-${String(sb).replace(":", "-")}">${STATUS_SYMBOL[sb] ?? "—"}</span>`;
+    return `<tr><td class="mono">${esc(id)}</td><td>${stChip}</td>
+      <td>${cell(A?.grep, B?.grep, true)}</td>
+      <td>${cell(A?.search, B?.search)}</td>
+      <td>${cell(A?.bash, B?.bash, true)}</td>
+      <td>${cell(A?.turns, B?.turns, true)}</td>
+      <td>${cell(A?.tools, B?.tools, true)}</td></tr>`;
+  }).join("");
+  return `<h2>実行間の比較（行動ログ指標）</h2>
+  <p class="h2-note">${esc(jst(base.ranAt ?? base.stamp))} → ${esc(jst(tgt.ranAt ?? tgt.stamp))}。各お題が前後でどう変わったか。<b>grep(relay.css)</b> が実 CSS を覗いた回数（少ないほど良い＝MCP知識で組めている）、<b>search</b> は MCP でクラス等を確認した回数。緑=改善方向 / 赤=悪化方向。</p>
+  <div class="matrix-wrap"><table class="matrix cmp">
+    <thead><tr><th class="sticky">お題</th><th>判定</th><th>grep(relay.css)</th><th>search</th><th>Bash</th><th>ターン</th><th>ツール計</th></tr></thead>
+    <tbody>${rows}</tbody></table></div>
+  <p class="muted">grep(relay.css) が減り search が増えていれば、実ファイル依存から MCP での確認へ移行した証拠（A: safelist + B: クラス一覧公開の効果）。</p>`;
+}
+
 const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>relay evals レポート ${esc(jst(target.ranAt ?? target.stamp))}</title>
@@ -333,6 +398,12 @@ table{border-collapse:collapse;font-size:12.5px}
 .rot span{writing-mode:vertical-rl;font-size:11px;color:var(--muted);font-weight:400}
 .matrix tr.target td{background:var(--ok-bg)}
 .none{color:var(--hair-strong)}
+/* 比較テーブル */
+.cmp td{text-align:left;padding:7px 12px;font-size:12.5px}
+.cmp th{padding:8px 12px}
+.cmp .d-good{color:var(--ok);font-weight:600}
+.cmp .d-bad{color:var(--fail);font-weight:600}
+.cmp .sym{margin:0 1px}
 /* お題タブ */
 .tabs{display:flex;flex-wrap:wrap;gap:2px;margin:4px 0 16px;border-bottom:1px solid var(--hair)}
 .tab{font-family:inherit;font-size:12.5px;cursor:pointer;background:none;border:none;border-bottom:2px solid transparent;padding:8px 12px;margin-bottom:-1px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
@@ -410,6 +481,8 @@ footer code,.cond code{font-family:"SF Mono",ui-monospace,monospace;font-size:11
 <p class="sub">自動生成（LLM 不使用）: <span class="mono">npm run eval:report:html${stampArg ? ` -- --stamp ${esc(stampArg)}` : ""}${caseArg ? ` --case ${esc(caseArg)}` : ""}</span>　正本: evals/results/</p>
 <div class="headline"><b>${headline}</b>
 <div class="cond">${esc(jst(target.ranAt ?? target.stamp))} 実行${target.stamp === runs.at(-1).stamp ? "（最新）" : "（過去の実行を表示中）"} ・ model: ${esc(target.model ?? "?")} ・ judge: ${esc(target.judgeModel ?? "なし(--skip-judge)")} ・ votes ${target.votes ?? 1} ・ trials ${target.trials ?? 1} ・ v${esc(target.dsVersion ?? "?")}</div></div>
+
+${baseRun ? compareSection(baseRun, target) : ""}
 
 <h2>履歴推移</h2>
 <p class="h2-note">新しい順・${shownRuns.length}/${runs.length} 件${showAll ? "" : "（全件は --all）"}。列は kind でグループ化 — 緑帯 regression は 100% 維持が前提、琥珀帯 capability は改善メーター。</p>
