@@ -254,6 +254,10 @@ function formatSetup() {
     "- 正当な例外（第三者ブランド色）は同一行コメントに「ブランド」/ brand と書けばスキップされる",
     "- hook が認識されないときは Claude Code のセッションを再起動する。claude.ai 等 hooks の無い環境ではこの手順は不要（スキップしてよい）",
     "",
+    "## 6. レイアウト・間隔は標準 Tailwind ユーティリティで組む",
+    "relay.css には標準ユーティリティ（`flex` / `grid` / `gap-*` / `p-*` / `m-*` / `w-*` / `h-*` / `text-{left,center,right}` / `overflow-*` / `sr-only` 等 ＋ `sm:` `md:` `lg:` `focus:` 変種）と、役割ベースのセマンティック色（`text-fg-{high,middle,low}` / `bg-surface` / `border-stroke-*` / `bg-primary-600` 等）が **safelist 済みで常に含まれる**。import 済みの relay.css に実在するので、**実 CSS ファイルを grep して存在確認する必要はない**。特定のクラスが使えるか確かめたいときだけ `search(\"クラス名\")` を呼ぶ（実在すれば「存在します」と返る）。",
+    "- 任意値（`p-[13px]` 等）・生 hex 色は従来どおり不可 → トークン／ユーティリティ経由で書く（ハードコード hook が弾く）。",
+    "",
     "導入できたらまず **get_design_principles**（必須ルール・禁止パターン）と **list_components**（コンポーネント全体像）を読む。",
     "その後、使うコンポーネントごとに **get_component** を呼び、具体値が要るときだけ **get_tokens** を参照して UI を実装する。",
     "アイコンは `@light-right/design-system/icons`（SVG sprite）、ロゴ/イラストは list_assets を参照。",
@@ -445,7 +449,20 @@ function runSearch(query) {
       (a.alt && a.alt.toLowerCase().includes(q)),
   );
 
+  // クラス存在チェック — 「このクラスは relay.css に実在し効くか」に答え、実 CSS を grep させない。
+  // クラス名は大小・記号を保つため元のクエリで照合する（Tailwind は小文字）。
+  const rawQ = String(query || "").trim().replace(/^\./, "");
+  const all = index.allClasses || [];
+  const classExact = all.includes(rawQ);
+  const classPrefix = !classExact && rawQ.length >= 2 ? all.filter((c) => c.startsWith(rawQ)).slice(0, 15) : [];
+
   const out = [`# 検索結果: "${query}"`, ""];
+  if (classExact) {
+    out.push(`## クラス \`${rawQ}\` は relay.css に存在します（そのまま使えます・実 CSS の grep 不要）`, "");
+  }
+  if (classPrefix.length) {
+    out.push(`## \`${rawQ}…\` で始まる実在クラス（relay.css に含まれる）`, "", ...classPrefix.map((c) => `- \`${c}\``), "");
+  }
   if (compHits.length) {
     out.push("## コンポーネント（get_component で詳細）", "");
     for (const c of compHits) {
@@ -466,7 +483,7 @@ function runSearch(query) {
     }
     out.push("");
   }
-  if (!compHits.length && !tokenHits.length && !assetHits.length) {
+  if (!compHits.length && !tokenHits.length && !assetHits.length && !classExact && !classPrefix.length) {
     // 誘導先は「どのツールに何があるか」を添える。a11y・ユーティリティは search の索引外なので
     // get_accessibility への誘導が必須（実例: 「スキップリンク sr-only」の検索が空振りし、
     // エージェントが誘導に頼らず自力で get_accessibility に到達して正解を得た）
