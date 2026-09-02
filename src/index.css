@@ -43,3 +43,61 @@
 /* コンテナ幅ユーティリティは利用プロジェクト側で使われる前提のため、
  * コンテンツスキャンに関係なく必ず dist に含める（safelist 相当） */
 @source inline("max-w-page max-w-content max-w-article");
+
+/* ── 標準ユーティリティ safelist ───────────────────────────────────────
+ * relay.css は Tailwind の JIT でビルドされるため、カタログで使われていない
+ * ユーティリティは dist に含まれない。利用者・AI エージェントが「素の Tailwind
+ * ユーティリティは効く」前提でレイアウトを組めるよう、レイアウト/間隔/整列/表示/
+ * サイズ/オーバーフロー/位置/a11y と、トークン由来のセマンティック色を必ず含める。
+ * 対象外: 任意値（p-[13px]）・生 hex 等のハードコード（それは hook で禁止のまま）。
+ * ※ inline() は該当ユーティリティが無ければ何も出力しないので過剰指定は安全。
+ * ------------------------------------------------------------------ */
+
+/* 表示・フレックス/グリッドの「形」（レスポンシブ sm/md/lg 付き） */
+@source inline("{sm:,md:,lg:,}{block,inline-block,inline,flex,inline-flex,grid,inline-grid,hidden,contents,table,table-cell,table-row,table-header-group,table-row-group}");
+@source inline("{sm:,md:,lg:,}flex-{row,row-reverse,col,col-reverse,wrap,wrap-reverse,nowrap,1,auto,initial,none}");
+@source inline("{sm:,md:,lg:,}{grow,grow-0,shrink,shrink-0}");
+@source inline("{sm:,md:,lg:,}items-{start,end,center,baseline,stretch}");
+@source inline("{sm:,md:,lg:,}justify-{start,end,center,between,around,evenly}");
+@source inline("{sm:,md:,lg:,}content-{start,end,center,between,around,stretch}");
+@source inline("{sm:,md:,lg:,}self-{auto,start,end,center,stretch}");
+@source inline("{sm:,md:,lg:,}grid-cols-{1,2,3,4,5,6,7,8,12,none}");
+@source inline("{sm:,md:,lg:,}col-span-{1,2,3,4,5,6,full}");
+@source inline("{sm:,md:,lg:,}text-{left,center,right,justify}");
+
+/* 間隔: gap / space / padding / margin（scale 0〜16。レスポンシブは主要ステップのみ） */
+@source inline("{gap,gap-x,gap-y}-{0,0.5,1,1.5,2,2.5,3,3.5,4,5,6,7,8,10,12,16}");
+@source inline("{space-x,space-y}-{0,0.5,1,1.5,2,2.5,3,4,5,6,8,10,12}");
+@source inline("{p,px,py,pt,pr,pb,pl}-{0,0.5,1,1.5,2,2.5,3,3.5,4,5,6,7,8,10,12,14,16,20,24}");
+@source inline("{m,mx,my,mt,mr,mb,ml}-{0,0.5,1,1.5,2,2.5,3,4,5,6,8,10,12,16,auto}");
+@source inline("{sm:,md:,lg:,}{gap,gap-x,gap-y,p,px,py,pt,pb,m,mx,my,mt,mb}-{0,1,2,3,4,6,8,12}");
+
+/* サイズ */
+@source inline("{sm:,md:,lg:,}w-{full,auto,fit,px,0,1/2,1/3,2/3,1/4,3/4,screen,min,max}");
+@source inline("h-{full,auto,fit,px,0,screen,min,max,4,5,6,8,10,12,14,16,20,24}");
+@source inline("size-{3,4,5,6,8,10,12}");
+@source inline("min-w-0 min-w-full max-w-full min-h-0 min-h-full min-h-screen");
+@source inline("max-w-{3xs,2xs,xs,sm,md,lg,xl,2xl,3xl,4xl,5xl,6xl,7xl,prose,none,full}");
+
+/* タイポ補助（型は typo-* が主。ここは配置・折返し・ウェイトのみ） */
+@source inline("font-{normal,medium,semibold,bold}");
+@source inline("{whitespace-{normal,nowrap,pre,pre-line,pre-wrap},break-words,break-all,truncate}");
+@source inline("leading-{none,tight,snug,normal,relaxed,loose}");
+@source inline("{list-none,list-disc,list-decimal,list-inside,list-outside}");
+@source inline("align-{baseline,top,middle,bottom,text-top,text-bottom}");
+
+/* オーバーフロー・位置・重なり */
+@source inline("overflow-{auto,hidden,visible,scroll} overflow-x-{auto,hidden,scroll,visible} overflow-y-{auto,hidden,scroll,visible}");
+@source inline("{relative,absolute,fixed,sticky,static}");
+@source inline("inset-0 inset-x-0 inset-y-0 top-0 right-0 bottom-0 left-0");
+@source inline("z-{0,10,20,30,40,50}");
+
+/* アクセシビリティ・その他構造 */
+@source inline("sr-only not-sr-only focus:not-sr-only");
+@source inline("{cursor-pointer,cursor-default,cursor-not-allowed,select-none,pointer-events-none}");
+
+/* セマンティック色（@theme トークン由来。役割 × プロパティのみ。任意色/hex は対象外） */
+@source inline("{text,bg,border,fill,stroke}-fg-{high,middle,low,placeholder,disabled}");
+@source inline("{text,bg}-fg-{high,middle,low}-inverse");
+@source inline("border-stroke-{high,middle,low} bg-{surface,page,page-green} border-stroke-{high,middle,low}-inverse");
+@source inline("{text,bg,border}-{primary,secondary,neutral,success,warning,negative,info}-{50,100,200,300,400,500,600,700,800,900,950}");
