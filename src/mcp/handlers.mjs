@@ -461,9 +461,12 @@ function runSearch(query) {
     .map((t) => t.trim().replace(/^\./, ""))
     .filter(Boolean);
   // 英単語 2 語のあいまい検索（"external link" 等）を誤って一括判定に回さないよう、
-  // 全トークンが「実在クラス」か「Tailwind らしい記号（- / :）を含む」場合だけ一括判定にする。
+  // 「実在クラス」か「Tailwind らしい記号（- / :）を含む」トークンが 2 つ以上あるときだけ一括判定にする。
+  // 旧条件（全トークンが該当）は、存在しない素の語（underline / block / ol 等）が 1 つ混ざるだけで
+  // 一括判定から外れ「ヒットなし」に落ちていた（evals 2026-09-03: 10 お題で 13 回の投げ直し）。
+  const classLike = (t) => all.includes(t) || /[-:]/.test(t);
   const bulkClassMode =
-    tokens.length >= 2 && tokens.every((t) => isClassShaped(t) && (all.includes(t) || /[-:]/.test(t)));
+    tokens.length >= 2 && tokens.every(isClassShaped) && tokens.filter(classLike).length >= 2;
   const rawQ = tokens.length === 1 ? tokens[0] : "";
   const classExact = !!rawQ && all.includes(rawQ);
   const classPrefix = !classExact && rawQ.length >= 2 ? all.filter((c) => c.startsWith(rawQ)).slice(0, 15) : [];
