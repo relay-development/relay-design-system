@@ -26,6 +26,9 @@
  *   NG: アイコンだけのボタンに btn を使わない → アイコン単体は icon-btn（アイコンボタン）に aria-label を付ける。
  *   NG: リストの各行に「削除」等の同ラベル btn を並べたまま放置しない
  *       → 対象を <span class="sr-only">（りんご）</span> で後置し、アクセシブル名を一意にする。
+ *   NG: サイズの異なるボタンを隣り合わせに置かない → 同じ並びは同じ btn-{sm,md,lg}（既定は md）。
+ *   NG: 塗り色の異なる solid ボタンを 2 つ並べない（primary solid + negative solid 等）→ 主従が消える。
+ *       並べるのは solid 1 つ＋ outline / ghost にする。
  *
  *
  * アクセシビリティ:
