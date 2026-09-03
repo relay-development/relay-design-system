@@ -83,3 +83,21 @@ Netlify のクレジット上限超過のため移行済み。GitHub Pages は p
 - **選ばなかった案**: 見た目だけ揃えてクラスを 2 つ残す → エージェントの select / selector-field
   の揺れが解消しない。selector を廃止 → アイコン枠を失い Figma との対応が切れる
 
+## Tailwind の自動ソース検出を止める — dist に入るクラスは @source で明示（2026-09）
+
+`@import "tailwindcss"` の既定は .gitignore 外の全ファイルをコンテンツとして走査するため、
+docs / README / `src/mcp/handlers.mjs` の文章中に書いたクラス名がそのまま utility として
+dist/relay.css に生成されていた。#271 で get_setup の例文に書いた `tabular-nums`、禁止例として
+書いた `p-[13px]` まで dist に入り、「relay.css に存在するクラス」の集合が文書の書き方に
+左右される状態だった（search の「存在しません」の検証が例文を書いた瞬間に崩れる）。
+
+- `@import "tailwindcss" source(none)` にし、走査対象を `@source`（examples / snippets）と
+  `@source inline(...)` の safelist だけにする
+- 切り替えで消えるクラスは 11 件。うち `outline-info-600` / `shadow-focus-ring` /
+  `shadow-destructive` / `transition-colors` / `transition-opacity` / `duration-150` は
+  DESIGN.md・ACCESSIBILITY.md が利用側に案内しているため明示 safelist に移した
+- `blur` / `container` / `w-1` / `p-[13px]` / `tabular-nums` は文書・エージェント定義の文中から
+  偶然拾われていただけなので落とした（`tabular-nums` は金額の桁揃え用に意図して足す候補。
+  足すなら safelist に書き、search の例文も差し替える）
+- 以後、utility を dist に足したいときは index.css の safelist に書く。文書に書いても入らない
+
