@@ -146,7 +146,10 @@ export const CASES = [
     id: "listing-filter",
     prompt:
       "物件一覧のページに、エリア（都道府県から 1 つ選択）と種別（売買・賃貸から複数選択可）で絞り込める UI を付けてください。絞り込んだ結果の一覧は、URL を共有すれば他の人もそのまま開けるようにしてください。",
-    mustClasses: ["selector-field", "checkbox", "btn"],
+    // 2026-09-03: select / selector を統合し、ネイティブ <select> は単体でも selector 内でも
+    // class="select" が正本になった（selector-field は非推奨エイリアス）。#262 の
+    // 「select は実在しない」は誤りで、.select は当時から dist に存在していた。
+    mustClasses: ["select", "checkbox", "btn"],
     mustPatterns: [],
     rubric: [
       "絞り込みの実行が明示的なボタンで行われ、select / checkbox の change で自動送信・自動リロードする作りになっていない（WCAG 3.2.2）",

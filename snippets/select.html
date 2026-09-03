@@ -35,3 +35,15 @@
 <select class="select" disabled>
   <option>編集できません</option>
 </select>
+
+<!-- アイコン枠・サイズ・エラー枠が要るときは selector で包む（中の select は同じ .select） -->
+<div class="selector selector-md">
+  <span class="selector-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/><rect x="2" y="6" width="20" height="14" rx="2"/></svg>
+  </span>
+  <select class="select" aria-label="業種">
+    <option value="">業種を選択</option>
+    <option value="a">業種A</option>
+    <option value="b">業種B</option>
+  </select>
+</div>

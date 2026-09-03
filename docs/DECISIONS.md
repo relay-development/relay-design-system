@@ -66,3 +66,20 @@ Netlify のクレジット上限超過のため移行済み。GitHub Pages は p
 - get_setup §6 に「relay.css はミニファイ済みで grep は存在確認に使えない。確認は search で」を明記
 - 効果測定は `npm run eval` の前後比較（grep(relay.css) 数・Bash 数・search 数）で行う。1 回同士の比較は生成ブレが大きいので `--trials 2` 以上で見る
 
+## select / selector の統合 — ネイティブ select の正本クラスは `.select`（2026-09）
+
+`select`（単体・枠 stroke/high・14px）と `selector`（wrapper・枠 neutral/400・16px・Figma 由来）が
+同じネイティブ select の 2 系統として並存し、見た目も中のクラス名（`.select` / `.selector-field`）も
+揺れていた。evals（listing-filter 2026-09-03）では都道府県の単一選択に `.select` を使った正しい
+生成物が、必須クラス `selector-field` の機械チェックで落ちた（#262 が「select は実在しない
+クラス」と誤認して必須クラスを書き換えていたのが直接原因）。
+
+- **正本**: ネイティブ `<select>` のクラスは単体でも selector 内でも `class="select"` の 1 つ
+- **見た目**: `.select` 単体は Figma 由来の selector-md に揃える（枠 neutral/400、16/24、h 40、
+  hover neutral/500、error 2px negative/500、placeholder は text/placeholder）
+- **selector**: wrapper のまま。中の `.select` に対して枠・背景シェブロン・padding を無効化し、
+  枠・シェブロン・サイズ・アイコン枠を wrapper が引き受ける（CSS は `:is(.select, .selector-field)`）
+- **非推奨**: `.selector-field` はエイリアスとして残す（minor で導入、次の major で削除）
+- **選ばなかった案**: 見た目だけ揃えてクラスを 2 つ残す → エージェントの select / selector-field
+  の揺れが解消しない。selector を廃止 → アイコン枠を失い Figma との対応が切れる
+
