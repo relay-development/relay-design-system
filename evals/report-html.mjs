@@ -34,6 +34,7 @@ const showAll = args.includes("--all");
 const stampArg = args.includes("--stamp") ? args[args.indexOf("--stamp") + 1] : null;
 const caseArg = args.includes("--case") ? args[args.indexOf("--case") + 1] : null;
 const compareArg = args.includes("--compare") ? args[args.indexOf("--compare") + 1] : null;
+const noScreens = args.includes("--no-screens"); // 生成画面 iframe を省く（Artifact 公開用。相対参照が効かないため）
 
 /* ------------------------------------------------------------- data */
 
@@ -147,6 +148,14 @@ function detectSignals(seq, match, r, prevResult) {
   return signals;
 }
 
+/**
+ * Bash コマンドが relay.css を grep したか。
+ * grep と relay.css が同一コマンド内にあれば拾う（クォートで囲ったパス
+ * `grep ... "…/relay.css"` や `for c in …; do grep … relay.css` も対象）。
+ * 旧実装 /grep[^"]*relay\.css/ はダブルクォートで途切れて過小カウントしていた。
+ */
+const isRelayCssGrep = (cmd) => /\bgrep\b/.test(cmd ?? "") && /relay\.css/.test(cmd ?? "");
+
 /* ---- お題1件の計測指標（前回比較用。行動ログから grep/search も数える） ---- */
 function caseMetrics(result) {
   if (!result) return null;
@@ -159,7 +168,7 @@ function caseMetrics(result) {
     tools: seq.length || null,
     out: m.usage?.output_tokens ?? null,
     think: m.usage?.output_tokens_details?.thinking_tokens ?? null,
-    grep: seq.filter((c) => c.name === "Bash" && /grep[^"]*relay\.css/.test(c.input?.command ?? "")).length,
+    grep: seq.filter((c) => c.name === "Bash" && isRelayCssGrep(c.input?.command)).length,
     search: seq.filter((c) => c.name === "search").length,
   };
 }
@@ -265,7 +274,7 @@ function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
     ${seqRows ? `<h4>呼び出しシーケンス</h4><p class="muted">薄く敷いた行はローカルファイル参照（Bash / Read / Grep / Glob）＝ MCP の知識でなく実物を覗きにいった手つき。試験環境の実ファイルに依存している疑いのシグナル。</p><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
-    ${htmlPath && fs.existsSync(htmlPath) ? `<h4>生成された画面</h4>
+    ${htmlPath && fs.existsSync(htmlPath) && !noScreens ? `<h4>生成された画面</h4>
     <div class="frame-box"><iframe src="${esc(r.output)}" loading="lazy" title="${esc(label)} の生成物"></iframe></div>
     <p class="muted"><a href="${esc(r.output)}" target="_blank">別タブで開く</a> — 採点対象そのもの（アーカイブ）。スタイルはレポート生成時にコピーした relay.css</p>` : ""}
     ${signals.length ? `<h4>この記録から見えたシグナル（自動検出）</h4><ul class="signals">${signals.map((s) => `<li>${s}</li>`).join("")}</ul><p class="muted">※ 機械的な候補の検出まで。改善と呼ぶかは 3 方向（知識 / 基準 / お題）の切り分けで判断する</p>` : ""}
@@ -356,7 +365,7 @@ function grepRelayCssCount(run, id) {
     let ev; try { ev = JSON.parse(line); } catch { continue; }
     if (ev.type !== "assistant") continue;
     for (const b of ev.message?.content ?? []) {
-      if (b.type === "tool_use" && b.name === "Bash" && /grep[^"]*relay\.css/.test(b.input?.command ?? "")) n++;
+      if (b.type === "tool_use" && b.name === "Bash" && isRelayCssGrep(b.input?.command)) n++;
     }
   }
   return n;
