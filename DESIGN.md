@@ -137,7 +137,8 @@ Button サイズ      : btn-{sm,md,lg,xl} = h-{8,10,12,18} = 32 / 40 / 48 / 72 p
 Icon Button        : <button class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ">...</button>
 Input              : <input class="input input-md" />  /  エラー時: + .input-error
 Search Input       : <div class="search-input search-input-md">...field + clear + submit...</div>
-Selector / Select  : <div class="selector selector-md">...</div>
+Select             : <select class="select">...</select>  ← ネイティブ select は常に .select（見た目は Input と同一）
+Selector           : <div class="selector selector-md"><select class="select">...</select></div>  ← アイコン枠・サイズ・エラー枠が要るとき（selector-field は非推奨エイリアス）
 Textarea           : <div class="textarea-control"><textarea class="textarea textarea-md" maxlength="100"></textarea>...</div>
 Checkbox / Radio   : <label class="checkbox-label"><input type="checkbox" class="checkbox" />ラベル</label>
 Label Control      : <div class="label-control">...label + label-badge-{required,optional} + 入力欄...</div>
