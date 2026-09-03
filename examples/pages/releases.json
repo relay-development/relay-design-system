@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.27.0",
+      "date": "2026-09-03",
+      "title": "select / selector の統合 + MCP のクラス一括判定 + 正本ヘッダの補強",
+      "summary": "ネイティブ <select> のクラスを .select に統一しました。単体でも selector で包んでも class=\"select\" で、見た目は Figma 由来の selector に揃います（枠 neutral/400・文字 16px・高さ 40px）。旧 .select 単体は枠色と文字サイズが変わります。旧 .selector-field は非推奨エイリアスとして残しています（次の major で削除）。MCP は search がクラスの不在を「存在しません」と明言し、空白区切りで複数クラスを 1 回で ○× 判定できるようになりました（実 CSS を grep せずに確認できます）。CSS ヘッダ（MCP の正本）に、filter-chip のチェック構造（filter-chip-check-circle 必須）、checkbox / radio の縦並び、button のサイズ・solid 混在禁止、menu のアイコン混在禁止を追記し、スニペットに filter-chip を追加。ビルドは Tailwind の自動ソース検出を止め、dist に入る utility を safelist で明示しました。これに伴い文書から偶然拾われていた blur / container / w-1 / p-[13px] / tabular-nums は dist から外れます。"
+    },
+    {
       "version": "0.26.1",
       "date": "2026-09-02",
       "title": "標準ユーティリティの安定化 + アイコン a11y + MCP のクラス検索",
