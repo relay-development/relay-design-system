@@ -28,6 +28,8 @@
  *      直前の実行結果と比較して変化を表示する（Phase 3: 定点観測）
  *      採点した HTML は evals/results/outputs/<timestamp>/ にアーカイブする
  *      （output/ は次の生成で上書きされるため。判定の遡り監査用: review-log.md）
+ *      生成前に output/ の他お題 HTML は削除する（エージェントが隣の生成物を参照する汚染防止。
+ *      --skip-generate の再採点では消さない）
  *      結果は pass / fail / error:generation / error:judge の 4 区分で記録し、
  *      品質の失敗と測定側の故障を混同しない（分類規則は status.mjs が正本）
  *
@@ -376,6 +378,13 @@ function runTrial(c, suffix) {
     process.stdout.write("  生成中…（数分かかることがあります）\n");
     // 生成が書き込みに失敗したとき、前回実行・前トライアルの残骸を誤って採点しないよう先に消す
     fs.rmSync(outPath, { force: true });
+    // 他お題の生成物も消す（relay.css だけ残す）。エージェントはお題の指示で evals/output を ls
+    // するため、前のお題の HTML が残っていると「隣の答案」を読んで写せてしまう
+    // （実例: settings-nav が skip-link.html / invite-form.html を Read・sed した 2026-09-03）。
+    // 採点済みの生成物は各トライアル末で results/outputs/<stamp>/ にアーカイブされているので消して問題ない。
+    for (const f of fs.readdirSync(outputDir)) {
+      if (f.endsWith(".html")) fs.rmSync(path.join(outputDir, f), { force: true });
+    }
     const gen = generate(claudeBin, c);
     if (gen.transcript) {
       fs.mkdirSync(archiveDir, { recursive: true });
