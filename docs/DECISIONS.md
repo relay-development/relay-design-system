@@ -51,3 +51,18 @@ Netlify のクレジット上限超過のため移行済み。GitHub Pages は p
 - **後継**: hardcode gate hook のみ `get_setup` のセットアップ手順で単体導入を案内する（raw URL から取得 + settings.json への hooks 追記の 2 手順）。正本は `.claude/hooks/relay-hardcode-gate.mjs` のまま
 - **ローカルは維持**: `.claude/agents/` / `.claude/workflows/` はこのリポジトリ自身の開発（planner / generator / evaluator subagent と sprint workflow）で引き続き使う。配布をやめただけで、ファイルと運用は残る
 - 復活させる場合は index への同梱（build-mcp の buildSprintKit）とツール/リソース/プロンプト定義を git 履歴から戻す
+
+## search はクラスの「不在」を明言し、複数クラスを一括判定する（2026-09）
+
+#266 で search がクラス存在に答えるようにしたが、evals の行動ログで次の逃避が観測された（status-table 2026-09-02）。
+
+- `search("tabular-nums")` が「ヒットなし」と返る → 否定が曖昧なため AI は search を信用せず、実 CSS の grep に切り替えた
+- 確認したいユーティリティが 30 個超あり、1 件ずつ search するより grep ループの方が速いと判断した → Bash ガード（for ループ拒否・複数操作は承認要）とミニファイ CSS（1 行なので `grep -n` が全文を返す）に阻まれ、20 回中 7 回が空振り
+
+対応:
+
+- クラス形のクエリで見つからなければ「relay.css に存在しません（書いても効かない）」と明言する（「ヒットなし」への誘導文は出さない）
+- 空白・カンマ区切りで複数渡されたら件ごとの ○× 表を 1 回で返す（一括判定の条件は全トークンが実在クラスか `-` / `:` を含むこと。英単語 2 語のあいまい検索を巻き込まない）
+- get_setup §6 に「relay.css はミニファイ済みで grep は存在確認に使えない。確認は search で」を明記
+- 効果測定は `npm run eval` の前後比較（grep(relay.css) 数・Bash 数・search 数）で行う。1 回同士の比較は生成ブレが大きいので `--trials 2` 以上で見る
+
