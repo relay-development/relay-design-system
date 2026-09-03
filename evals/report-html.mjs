@@ -157,8 +157,11 @@ function detectSignals(seq, match, r, prevResult) {
 const isRelayCssGrep = (cmd) => /\bgrep\b/.test(cmd ?? "") && /relay\.css/.test(cmd ?? "");
 
 /* ---- お題1件の計測指標（前回比較用。行動ログから grep/search も数える） ---- */
+/** --trials 形式（result.trials[]）は trial 1 を代表値にする（カードの前回比も i===0 のみ比較するのと揃える） */
+const primaryTrial = (r) => (r?.trials ? r.trials[0] : r);
 function caseMetrics(result) {
   if (!result) return null;
+  result = primaryTrial(result);
   const m = result.agentMetrics ?? {};
   const seqPath = result.transcript ? path.join(resultsDir, result.transcript) : null;
   const seq = seqPath && fs.existsSync(seqPath) ? parseToolSequence(fs.readFileSync(seqPath, "utf8")) : [];
@@ -355,7 +358,7 @@ const tabbar = `<div class="tabs" role="tablist" aria-label="お題別の詳細"
 
 /* ---- 実行間の比較（--compare）: 各お題の行動ログ指標が前後でどう変わったか ---- */
 function grepRelayCssCount(run, id) {
-  const r = (run.results ?? []).find((x) => x.id === id);
+  const r = primaryTrial((run.results ?? []).find((x) => x.id === id));
   if (!r?.transcript) return null;
   const p = path.join(resultsDir, r.transcript);
   if (!fs.existsSync(p)) return null;
@@ -373,7 +376,7 @@ function grepRelayCssCount(run, id) {
 function metricsOf(run, id) {
   const r = (run.results ?? []).find((x) => x.id === id);
   if (!r) return null;
-  const m = r.agentMetrics ?? {};
+  const m = primaryTrial(r).agentMetrics ?? {};
   const tc = m.toolCalls ?? {};
   return {
     status: classifyResult(r),
