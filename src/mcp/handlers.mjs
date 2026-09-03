@@ -255,7 +255,8 @@ function formatSetup() {
     "- hook が認識されないときは Claude Code のセッションを再起動する。claude.ai 等 hooks の無い環境ではこの手順は不要（スキップしてよい）",
     "",
     "## 6. レイアウト・間隔は標準 Tailwind ユーティリティで組む",
-    "relay.css には標準ユーティリティ（`flex` / `grid` / `gap-*` / `p-*` / `m-*` / `w-*` / `h-*` / `text-{left,center,right}` / `overflow-*` / `sr-only` 等 ＋ `sm:` `md:` `lg:` `focus:` 変種）と、役割ベースのセマンティック色（`text-fg-{high,middle,low}` / `bg-surface` / `border-stroke-*` / `bg-primary-600` 等）が **safelist 済みで常に含まれる**。import 済みの relay.css に実在するので、**実 CSS ファイルを grep して存在確認する必要はない**。特定のクラスが使えるか確かめたいときだけ `search(\"クラス名\")` を呼ぶ（実在すれば「存在します」と返る）。",
+    "relay.css には標準ユーティリティ（`flex` / `grid` / `gap-*` / `p-*` / `m-*` / `w-*` / `h-*` / `text-{left,center,right}` / `overflow-*` / `sr-only` 等 ＋ `sm:` `md:` `lg:` `focus:` 変種）と、役割ベースのセマンティック色（`text-fg-{high,middle,low}` / `bg-surface` / `border-stroke-*` / `bg-primary-600` 等）が **safelist 済みで常に含まれる**。import 済みの relay.css に実在するので、**実 CSS ファイルを grep して存在確認する必要はない**。特定のクラスが使えるか確かめたいときだけ `search(\"クラス名\")` を呼ぶ（実在すれば「存在します」、無ければ「存在しません」と明言して返る）。複数まとめて確かめるなら空白区切りで 1 回に渡す（例: `search(\"flex-1 md:grid-cols-3 tabular-nums\")` → 件ごとの ○×表）。",
+    "- relay.css は 1 行にミニファイされている。grep しても全文が返るだけで存在確認には使えないので、確認は必ず search で行う。",
     "- 任意値（`p-[13px]` 等）・生 hex 色は従来どおり不可 → トークン／ユーティリティ経由で書く（ハードコード hook が弾く）。",
     "",
     "導入できたらまず **get_design_principles**（必須ルール・禁止パターン）と **list_components**（コンポーネント全体像）を読む。",
@@ -451,14 +452,59 @@ function runSearch(query) {
 
   // クラス存在チェック — 「このクラスは relay.css に実在し効くか」に答え、実 CSS を grep させない。
   // クラス名は大小・記号を保つため元のクエリで照合する（Tailwind は小文字）。
-  const rawQ = String(query || "").trim().replace(/^\./, "");
+  // 空白・カンマ区切りで複数渡されたら一括判定（確認したいクラスが多いと AI は grep に流れるため、
+  // 1 回の呼び出しで全件に答える。実例: 30 個超の存在確認を grep ループで試み 7 回失敗した）。
   const all = index.allClasses || [];
-  const classExact = all.includes(rawQ);
+  const isClassShaped = (t) => /^[a-z0-9][a-z0-9:_\-\/.%!\[\]()#]*$/i.test(t);
+  const tokens = String(query || "")
+    .split(/[\s,]+/)
+    .map((t) => t.trim().replace(/^\./, ""))
+    .filter(Boolean);
+  // 英単語 2 語のあいまい検索（"external link" 等）を誤って一括判定に回さないよう、
+  // 全トークンが「実在クラス」か「Tailwind らしい記号（- / :）を含む」場合だけ一括判定にする。
+  const bulkClassMode =
+    tokens.length >= 2 && tokens.every((t) => isClassShaped(t) && (all.includes(t) || /[-:]/.test(t)));
+  const rawQ = tokens.length === 1 ? tokens[0] : "";
+  const classExact = !!rawQ && all.includes(rawQ);
   const classPrefix = !classExact && rawQ.length >= 2 ? all.filter((c) => c.startsWith(rawQ)).slice(0, 15) : [];
+  // クラス形（ASCII・記号のみ）で見つからなければ「存在しない」と明言する。
+  // 「ヒットなし」だけだと AI は search の否定を信用せず実 CSS を grep しに行く（実例: tabular-nums）。
+  const classMissing = !!rawQ && !classExact && isClassShaped(rawQ) && (/[-:]/.test(rawQ) || !compHits.length && !tokenHits.length && !assetHits.length);
+
+  if (bulkClassMode) {
+    const rows = tokens.map((t) => {
+      if (all.includes(t)) return `| \`${t}\` | ✅ 存在 | |`;
+      const cand = all.filter((c) => c.startsWith(t)).slice(0, 5);
+      return `| \`${t}\` | ❌ なし | ${cand.length ? cand.map((c) => `\`${c}\``).join(" ") : ""} |`;
+    });
+    const missing = tokens.filter((t) => !all.includes(t));
+    return [
+      `# クラス存在チェック（${tokens.length} 件）`,
+      "",
+      "| クラス | relay.css | 前方一致の実在候補 |",
+      "|---|---|---|",
+      ...rows,
+      "",
+      missing.length
+        ? `❌ の ${missing.length} 件は relay.css に含まれず、書いても効かない。候補列から選ぶか、別のユーティリティ／コンポーネントで組み替える。`
+        : "全件 relay.css に存在する。そのまま使える。",
+      "この結果が正本なので、実 CSS ファイルを grep して再確認する必要はない。",
+    ].join("\n");
+  }
 
   const out = [`# 検索結果: "${query}"`, ""];
   if (classExact) {
     out.push(`## クラス \`${rawQ}\` は relay.css に存在します（そのまま使えます・実 CSS の grep 不要）`, "");
+  }
+  if (classMissing) {
+    out.push(
+      `## クラス \`${rawQ}\` は relay.css に存在しません（safelist 外。書いても効かない・実 CSS を grep しても見つからない）`,
+      "",
+      classPrefix.length
+        ? "下の前方一致候補から選ぶか、別のユーティリティ／コンポーネントで組み替えてください。"
+        : "別のユーティリティ／コンポーネントで組み替えてください（複数クラスの一括確認は空白区切りで search に渡せます）。",
+      "",
+    );
   }
   if (classPrefix.length) {
     out.push(`## \`${rawQ}…\` で始まる実在クラス（relay.css に含まれる）`, "", ...classPrefix.map((c) => `- \`${c}\``), "");
@@ -483,7 +529,7 @@ function runSearch(query) {
     }
     out.push("");
   }
-  if (!compHits.length && !tokenHits.length && !assetHits.length && !classExact && !classPrefix.length) {
+  if (!compHits.length && !tokenHits.length && !assetHits.length && !classExact && !classPrefix.length && !classMissing) {
     // 誘導先は「どのツールに何があるか」を添える。a11y・ユーティリティは search の索引外なので
     // get_accessibility への誘導が必須（実例: 「スキップリンク sr-only」の検索が空振りし、
     // エージェントが誘導に頼らず自力で get_accessibility に到達して正解を得た）
@@ -565,7 +611,7 @@ export const TOOLS = [
   {
     name: "search",
     description:
-      "コンポーネント / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。",
+      "コンポーネント / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。クラス名を渡すと relay.css に存在するか／しないかを明言して返す（実 CSS の grep 不要）。空白区切りで複数渡せば一括で ○× 表になる（例: 'flex-1 md:grid-cols-3 tabular-nums'）。",
     inputSchema: {
       type: "object",
       properties: { query: { type: "string", description: "検索キーワード（日本語可）" } },
