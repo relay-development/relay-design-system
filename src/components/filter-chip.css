@@ -5,14 +5,23 @@
  *   ボタンとして使うことを想定し、`<button type="button">` ベースで実装する。
  *
  *   構造:
- *     <button class="filter-chip" aria-pressed="true|false">
+ *     <button type="button" class="filter-chip" aria-pressed="true|false">
  *       <span class="filter-chip-main">
- *         <span class="filter-chip-icon"><svg>#</svg></span>
+ *         <span class="filter-chip-icon"><svg aria-hidden="true">#</svg></span>   (任意)
  *         <span class="filter-chip-label">自治体連携</span>
  *       </span>
  *       <span class="filter-chip-count">124件</span>
- *       <span class="filter-chip-check"><svg>✓</svg></span>   (selected のみ表示)
+ *       <span class="filter-chip-check">                                  (selected のみ表示)
+ *         <span class="filter-chip-check-circle">
+ *           <svg viewBox="0 0 24 24" aria-hidden="true">✓</svg>
+ *         </span>
+ *       </span>
  *     </button>
+ *
+ *   チェックマークは filter-chip-check > filter-chip-check-circle > svg の 3 層。
+ *   svg のサイズ（10px）と塗りまるは filter-chip-check-circle が決めるので、この
+ *   wrapper を省くと svg にサイズ規則が当たらず、ブラウザ既定の 300×150px で描かれて
+ *   レイアウトが崩れる。完成形は snippets/filter-chip.html を参照。
  *
  *   props: isSelected (aria-pressed) × state (enable / hover / disabled)
  *
@@ -49,7 +58,10 @@
  *       checkbox / select + 明示的な適用ボタンにする（選択と同時に送信するとユーザーの
  *       予期しないコンテキスト変化になる: WCAG 3.2.2）。
  *   NG: チップ形状を独自シェイプに変えない → 何個選べるか直感が崩れる（guidelines 参照）。
-  *
+ *   NG: filter-chip-check の中に svg を直置きしない → filter-chip-check-circle で必ず包む。
+ *       省くと svg が既定サイズ（300×150px）で描かれチップを突き抜ける（evals status-table
+ *       2026-09-03 で実例）。sprite の <use> を使う場合も同じ 3 層構造にする。
+ *
  * アクセシビリティ:
  *   選択状態を aria-pressed="true/false" で表し、トグルで更新する
  *   左アイコン・チェックの SVG は aria-hidden="true"
