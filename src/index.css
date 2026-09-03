@@ -1,4 +1,8 @@
-@import "tailwindcss";
+/* source(none): Tailwind v4 の自動ソース検出（.gitignore 外の全ファイル走査）を止める。
+ * 自動検出のままだと docs / README / src/mcp のハンドラ文中に書いたクラス名（例: tabular-nums、
+ * 禁止例として書いた p-[13px]）まで utility として dist に生まれ、「relay.css に存在する
+ * クラス」の集合が文章に左右されていた（2026-09 に判明）。走査対象は下の @source で明示する。 */
+@import "tailwindcss" source(none);
 
 @import "./tokens/colors.css";
 @import "./tokens/typography.css";
@@ -95,6 +99,11 @@
 /* アクセシビリティ・その他構造 */
 @source inline("sr-only not-sr-only focus:not-sr-only");
 @source inline("{cursor-pointer,cursor-default,cursor-not-allowed,select-none,pointer-events-none}");
+
+/* フォーカスリング・モーション（DESIGN.md / docs/ACCESSIBILITY.md が利用側に案内している utility。
+ * 以前は自動ソース検出が文書から拾って偶然 dist に含まれていたものを、明示 safelist に移した） */
+@source inline("outline-info-600 shadow-focus-ring shadow-destructive");
+@source inline("transition-colors transition-opacity duration-150");
 
 /* セマンティック色（@theme トークン由来。役割 × プロパティのみ。任意色/hex は対象外） */
 @source inline("{text,bg,border,fill,stroke}-fg-{high,middle,low,placeholder,disabled}");
