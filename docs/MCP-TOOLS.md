@@ -1,6 +1,6 @@
 # relay Design System MCP — ツールリファレンス
 
-relay Design System の MCP サーバーが提供する **8 つのツール** と、その使い方をまとめる。
+relay Design System の MCP サーバーが提供する **9 つのツール** と、その使い方をまとめる。
 
 - **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
