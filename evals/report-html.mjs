@@ -129,7 +129,12 @@ function detectSignals(seq, match, r, prevResult) {
   const signals = [];
   const totalSize = seq.reduce((n, c) => n + (c.size ?? 0), 0);
   for (const c of seq) {
-    if (c.name === "search" && ((c.size ?? 0) < 300 || /ヒットなし/.test(c.head ?? ""))) {
+    // 空振り = 「ヒットなし」を返したとき。#271 以降、クラス存在の肯定/否定や一括 ○× 表は設計上短い応答
+    // （150〜250 字）なので、サイズだけで判定すると正常応答が全部「空振り候補」に見える（誤検知の実例:
+    // faq-accordion 2026-09-04「border-t は存在します」152 字）。サイズ条件は存在チェック系を除いたときだけ使う。
+    const head = c.head ?? "";
+    const isClassAnswer = /存在します|存在しません|クラス存在チェック/.test(head);
+    if (c.name === "search" && (/ヒットなし/.test(head) || ((c.size ?? 0) < 300 && !isClassAnswer))) {
       signals.push(`search の空振り候補（${c.input?.query ? `「${esc(String(c.input.query))}」` : ""}応答 ${c.size ?? "?"} 字）— 語彙・誘導の穴の可能性`);
     }
     if ((c.size ?? 0) > 8000 && totalSize && c.size / totalSize > 0.35) {
