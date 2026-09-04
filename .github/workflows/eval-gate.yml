@@ -1,0 +1,134 @@
+name: Agent eval gate
+
+# ルール（エージェントが読む知識）を変える PR だけ、agent eval の regression お題を回して
+# 回帰ゲートにする。生成・審査で LLM（Anthropic API）を消費するため paths で対象を絞る。
+#   - 対象: MCP 実装 / コンポーネント CSS ヘッダ / トークン / DESIGN.md / a11y 文書 / スニペット /
+#           アセット一覧 / index ビルド / お題定義 / ランナー本体
+#   - 合否: regression の全 PASS（capability は測定値のみ・ゲート対象外）= run.mjs の exit code
+#   - 結果: PR にコメント（evals/summary-md.mjs）+ Artifact（結果 JSON・生成物・行動ログ・HTML レポート）
+#   - 回避: PR に `skip-eval` ラベルを付ける（文言だけの修正など）。手動実行は workflow_dispatch
+# 必要な Secret: ANTHROPIC_API_KEY（Claude Code CLI をヘッドレスで動かす）。
+# 任意の Variable: EVAL_MODEL / EVAL_JUDGE_MODEL（未設定なら CLI の既定モデル）。
+# 読み方・切り分け: .claude/skills/eval-report/SKILL.md、運用: evals/README.md
+
+on:
+  pull_request:
+    paths:
+      - "src/mcp/**"
+      - "src/components/**"
+      - "src/tokens/**"
+      - "DESIGN.md"
+      - "docs/ACCESSIBILITY.md"
+      - "snippets/**"
+      - "examples/pages/assets.html"
+      - "scripts/build-mcp.mjs"
+      - "scripts/build-icons.mjs"
+      - "evals/cases.mjs"
+      - "evals/run.mjs"
+      - ".github/workflows/eval-gate.yml"
+  workflow_dispatch:
+    inputs:
+      kind:
+        description: "対象 kind（regression / capability / all）"
+        default: "regression"
+      trials:
+        description: "各お題の生成回数（pass^k）"
+        default: "1"
+
+permissions:
+  contents: read
+  pull-requests: write
+
+# 同じ PR で push が続いたら前の実行を止める（LLM コストの節約）
+concurrency:
+  group: eval-gate-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  eval:
+    if: ${{ !contains(github.event.pull_request.labels.*.name, 'skip-eval') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      # dist/relay.css（生成物が読み込む CSS）・icons.svg・mcp-index.json（MCP の知識）を PR の内容で作る
+      - name: Build DS + MCP index
+        run: npm run build
+
+      - name: Install Claude Code CLI
+        run: npm i -g @anthropic-ai/claude-code
+
+      - name: Run agent eval
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          CLAUDE_BIN: claude
+          EVAL_MODEL: ${{ vars.EVAL_MODEL }}
+          EVAL_JUDGE_MODEL: ${{ vars.EVAL_JUDGE_MODEL }}
+          KIND: ${{ github.event.inputs.kind || 'regression' }}
+          TRIALS: ${{ github.event.inputs.trials || '1' }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then
+            echo "::error::Secret ANTHROPIC_API_KEY が未設定です（Settings → Secrets and variables → Actions）"; exit 1
+          fi
+          set +e
+          if [ "$KIND" = "all" ]; then
+            node evals/run.mjs --trials "$TRIALS"
+          else
+            node evals/run.mjs --kind "$KIND" --trials "$TRIALS"
+          fi
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+        id: run
+
+      - name: Build HTML report + summary
+        if: always()
+        run: |
+          npm run -s eval:report:html -- --no-screens || true
+          node evals/summary-md.mjs > evals/results/summary.md
+          cat evals/results/summary.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: |
+            evals/results/*.json
+            evals/results/report.html
+            evals/results/summary.md
+            evals/results/outputs/
+          retention-days: 30
+
+      # PR コメントは 1 つを更新し続ける（push ごとに増やさない）
+      - name: Comment on PR
+        if: always() && github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require("fs");
+            const marker = "<!-- agent-eval-gate -->";
+            const body = marker + "\n" + fs.readFileSync("evals/results/summary.md", "utf8") +
+              `\n\n[ワークフロー実行](${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId})`;
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo, issue_number: context.issue.number, per_page: 100,
+            });
+            const mine = comments.find((c) => c.body?.startsWith(marker));
+            if (mine) await github.rest.issues.updateComment({ ...context.repo, comment_id: mine.id, body });
+            else await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+
+      - name: Gate
+        if: always()
+        run: |
+          if [ "${{ steps.run.outputs.exit }}" != "0" ]; then
+            echo "::error::regression お題に FAIL または測定エラーがあります。PR コメント / Artifact の行動ログで 知識・採点基準・お題 の 3 方向で切り分けてください（生成ブレの疑いは Re-run）"; exit 1
+          fi

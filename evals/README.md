@@ -102,6 +102,29 @@ LLM 審査員の設計（機械で測れるものは機械に寄せ、LLM には
   人の確定判定と一致することを確認してから切り替える。ズレたら rubric の文言か judgePrompt を
   先に直す（人ラベル付き参照セットとして監査記録を再利用する較正手順）
 
+## CI ゲート（ルール変更 PR のみ）
+
+[.github/workflows/eval-gate.yml](../.github/workflows/eval-gate.yml) が、エージェントの知識に当たるファイルを
+変えた PR でだけ regression お題を回し、全 PASS を必須ステータスにする。
+
+- **対象パス**: `src/mcp/**` / `src/components/**` / `src/tokens/**` / `DESIGN.md` / `docs/ACCESSIBILITY.md` /
+  `snippets/**` / `examples/pages/assets.html` / `scripts/build-mcp.mjs` / `scripts/build-icons.mjs` /
+  `evals/cases.mjs` / `evals/run.mjs`（それ以外の PR では走らない）
+- **合否**: `node evals/run.mjs --kind regression` の exit code（regression 全 PASS かつ測定エラーなし）。
+  capability は走らない（週次の手動フル実行で見る）
+- **結果**: PR に要約コメント（[summary-md.mjs](summary-md.mjs)。push ごとに同じコメントを更新）と
+  Artifact `eval-results`（結果 JSON・生成物・行動ログ・HTML レポート）。切り分けは
+  [.claude/skills/eval-report](../.claude/skills/eval-report/SKILL.md) の 3 方向（知識 / 採点基準 / お題）
+- **回避**: 文言だけの修正など明らかに挙動に影響しない PR は `skip-eval` ラベルで飛ばす。
+  手動実行（`workflow_dispatch`）では kind / trials を指定できる
+- **生成ブレへの対処**: 1 trial なので ✓→✗ が出たらまず Re-run。2 回続けて落ちたら劣化として扱う
+  （ローカルで `--case <id> --trials 2` も可）
+- **必要な設定**: Secret `ANTHROPIC_API_KEY`（Claude Code CLI をヘッドレスで動かす。サブスク枠ではなく API 課金）。
+  任意で Variable `EVAL_MODEL` / `EVAL_JUDGE_MODEL`。ブランチ保護の必須ステータスに `eval` を追加すると
+  ゲートとして効く（[docs/CONTRIBUTING.md](../docs/CONTRIBUTING.md#整合性チェックci)）
+- **コストの目安**: regression 8 お題で生成側 入力 約 40 万 + キャッシュ読み 約 350 万 + 出力 約 7 万トークン、
+  所要 20〜30 分（2026-09-03 のフル実行実績から。審査は別途 8 回）
+
 ## 人のレビューの記録先（2 つ）
 
 | ファイル | 何を書くか | 扱い |
@@ -114,4 +137,4 @@ LLM 審査員の設計（機械で測れるものは機械に寄せ、LLM には
 - ~~Phase 1: 機械チェック~~（済）
 - ~~Phase 2: LLM 審査員~~（済）
 - ~~Phase 3: 前回比較 + 履歴レポート~~（済。週次実行は手動運用）
-- **Phase 4**: ルール変更 PR に限定した CI ゲート化 — スコアが数週間安定してから判断
+- ~~Phase 4: ルール変更 PR に限定した CI ゲート化~~（済。下記「CI ゲート」参照）

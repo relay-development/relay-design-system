@@ -36,6 +36,7 @@
  * 実行（サブスク枠で LLM が走る。1 回 = 生成 お題数 + 審査 お題数×votes）:
  *   npm run eval                     # 全お題（生成 + 機械チェック + LLM 審査）
  *   npm run eval -- --case <id>      # 1 お題のみ
+ *   npm run eval -- --kind regression # kind で絞る（regression / capability。CI ゲートは regression のみ）
  *   npm run eval -- --skip-generate  # 生成を飛ばし既存 output を再採点（審査のみ消費）
  *   npm run eval -- --skip-judge     # LLM 審査を飛ばし機械チェックのみ（無料）
  *   npm run eval -- --votes 3        # 審査を 3 回実行し多数決（審査側のブレ対策。既定 1）
@@ -65,6 +66,7 @@ const hookPath = path.join(projectRoot, ".claude/hooks/relay-hardcode-gate.mjs")
 
 const args = process.argv.slice(2);
 const onlyCase = args.includes("--case") ? args[args.indexOf("--case") + 1] : null;
+const onlyKind = args.includes("--kind") ? args[args.indexOf("--kind") + 1] : null;
 const skipGenerate = args.includes("--skip-generate");
 const skipJudge = args.includes("--skip-judge");
 const votes = args.includes("--votes") ? Math.max(1, Number(args[args.indexOf("--votes") + 1]) || 1) : 1;
@@ -78,10 +80,14 @@ if (skipGenerate && trials > 1) {
 
 function resolveClaudeBin() {
   if (process.env.CLAUDE_BIN) return process.env.CLAUDE_BIN;
-  try {
-    return execSync("command -v claude", { encoding: "utf8", shell: "/bin/zsh" }).trim();
-  } catch {
-    /* PATH に無い → VSCode 拡張同梱のバイナリを探す */
+  // zsh 前提だと Linux CI（sh/bash のみ）で常に失敗するため、zsh → sh の順で試す
+  for (const shell of ["/bin/zsh", "/bin/sh"]) {
+    try {
+      if (!fs.existsSync(shell)) continue;
+      return execSync("command -v claude", { encoding: "utf8", shell }).trim();
+    } catch {
+      /* 次の shell へ。全部外れたら VSCode 拡張同梱のバイナリを探す */
+    }
   }
   const extDir = path.join(process.env.HOME ?? "", ".vscode/extensions");
   const candidates = fs.existsSync(extDir)
@@ -330,9 +336,13 @@ function printComparison(prev, results) {
 
 /* ------------------------------------------------------------- main */
 
-const cases = onlyCase ? CASES.filter((c) => c.id === onlyCase) : CASES;
+if (onlyKind && !["regression", "capability"].includes(onlyKind)) {
+  console.error(`--kind は regression / capability のどちらか（指定: "${onlyKind}"）`);
+  process.exit(1);
+}
+const cases = CASES.filter((c) => (!onlyCase || c.id === onlyCase) && (!onlyKind || kindOf(c) === onlyKind));
 if (!cases.length) {
-  console.error(`お題 "${onlyCase}" がありません。利用可能: ${CASES.map((c) => c.id).join(", ")}`);
+  console.error(`該当するお題がありません（--case ${onlyCase ?? "-"} / --kind ${onlyKind ?? "-"}）。利用可能: ${CASES.map((c) => c.id).join(", ")}`);
   process.exit(1);
 }
 

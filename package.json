@@ -48,6 +48,7 @@
     "eval": "node evals/run.mjs",
     "eval:report": "node evals/report.mjs",
     "eval:report:html": "node evals/report-html.mjs",
+    "eval:summary": "node evals/summary-md.mjs",
     "build:mcp": "npm run build:mcp-index && esbuild src/mcp/server.mjs --bundle --platform=node --format=esm --packages=bundle --outfile=dist/mcp.mjs --banner:js=\"#!/usr/bin/env node\" && chmod +x dist/mcp.mjs",
     "dev:mcp-remote": "wrangler dev",
     "deploy:mcp": "wrangler deploy",

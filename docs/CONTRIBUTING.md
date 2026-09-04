@@ -108,6 +108,10 @@ PR を出すと `check-consistency` ワークフローが自動実行され、�
 
 CI が落ちたら、エラーメッセージの指示に従いドキュメント側の表記を更新する。意図的に文言を変えた場合は `scripts/check-consistency.mjs` のパターン定義（`ICON_CLAIMS` 等）も更新する。
 
+### agent eval ゲート（ルール変更 PR のみ）
+
+`src/mcp/**`・`src/components/**`・`src/tokens/**`・`DESIGN.md`・`docs/ACCESSIBILITY.md`・`snippets/**` など、AI エージェントが読む知識に当たるファイルを変えた PR では `eval-gate` ワークフローが走り、regression お題の全 PASS を要求する（LLM を消費するため対象パス以外では走らない）。結果は PR コメントと Artifact に出る。落ちたら [evals/README.md](../evals/README.md#ci-ゲートルール変更-pr-のみ) の手順で 知識 / 採点基準 / お題 の 3 方向に切り分ける。文言だけの修正は `skip-eval` ラベルで回避できる。
+
 ## 関連ドキュメント
 
 - [COMPONENT-WORKFLOW.md](COMPONENT-WORKFLOW.md) — Figma → 新規コンポーネント追加の Phase 0〜9
