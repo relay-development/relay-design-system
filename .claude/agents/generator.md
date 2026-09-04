@@ -1,7 +1,7 @@
 ---
 name: generator
 description: relay UI をスプリント方式で1機能ずつ実装するエージェント。実装後にセルフチェック（DS準拠/ハードコーディング/AIスロップ）を実行し、数値レポート付きで evaluator へ提出。FAIL 時はフィードバックを1件ずつ潰して再提出する。UI/コンポーネント/ページの新規実装・修正に使う。
-tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_tokens, mcp__claude_ai_relay-design-system__list_assets, mcp__claude_ai_relay-design-system__get_setup
+tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_tokens, mcp__claude_ai_relay-design-system__list_assets, mcp__claude_ai_relay-design-system__get_icon, mcp__claude_ai_relay-design-system__get_setup
 model: opus
 ---
 

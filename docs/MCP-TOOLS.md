@@ -1,6 +1,6 @@
 # relay Design System MCP — ツールリファレンス
 
-relay Design System の MCP サーバーが提供する **8 つのツール** と、その使い方をまとめる。
+relay Design System の MCP サーバーが提供する **9 つのツール** と、その使い方をまとめる。
 
 - **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
@@ -22,6 +22,7 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 | 6 | `get_tokens` | `category?` | デザイントークン（解決済み実値） |
 | 7 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
 | 8 | `search` | `query` | 横断あいまい検索 |
+| 9 | `get_icon` | `name?` | 同梱 Lucide アイコンの `<symbol>` と参照方法（省略で一覧） |
 
 ---
 
@@ -116,6 +117,21 @@ relay Design System の MCP サーバーが提供する **8 つのツール** �
 - 複数一括: 空白・カンマ区切りで渡すと件ごとの ○× 表で返す。`search("flex-1 md:grid-cols-3 tabular-nums label-control-text")`。確認したいクラスが多いとき 1 件ずつ呼ばせると AI は grep ループに流れるので、こちらを使う
 - 一括判定になるのは全トークンがクラス形（ASCII・記号のみ）で、かつ「実在クラス」または `-` / `:` を含むトークンが 2 つ以上あるとき。`external link` のような英単語 2 語は従来どおりあいまい検索。存在しない素の語（`underline` 等）が混ざっても他がクラスなら一括判定に入り、その語は ❌ で返る
 - relay.css は 1 行にミニファイされているため grep での存在確認は機能しない。存在確認は必ずこのツールで行う
+
+---
+
+## 9. `get_icon(name?)` — 同梱アイコンの symbol と参照方法
+
+**入力**: `name`（アイコン名。`lucide-` 接頭辞は省略可。省略すると同梱 53 種の一覧）
+
+**何ができる**: Lucide スプライト（dist/icons.svg）に同梱されたアイコンの `<symbol>` markup と、2 通りの参照方法を返す。
+
+- A: スプライトを参照できる環境（npm 導入済み・HTTP 配信）→ `<use href="…/icons.svg#lucide-名前">`
+- B: 外部スプライトを参照できない環境（単一 HTML ファイル・file:// 表示・メール等）→ 返された `<symbol>` を文書内に一度定義し `<use href="#lucide-名前">`
+
+**なぜ要るか**: 以前はアイコン仕様がスプライト前提の書き方しか示さず、単一 HTML を書くエージェントは dist/icons.svg を grep して symbol を掘り出すか、SVG パスを自作していた（evals 2026-09-03: settings-nav / faq-accordion が Bash 6〜7 回）。B の markup を MCP が返すことで、どの環境でも同じ Lucide アイコンを同じクラス（`icon icon-md`）で使える。
+
+`search` にアイコン名を渡した場合も候補を示して get_icon へ誘導する。
 
 ---
 

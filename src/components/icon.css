@@ -10,6 +10,11 @@
  *   OK: <use href="...#lucide-名前"> で参照する。
  *   NG: 色やサイズを #hex/px で直書きしない → text-* と icon-* を使う。
  *   NG: 意味のあるアイコンを無ラベルで置かない → 必要なら aria-label を併記。
+ *   NG: class="icon" だけでサイズクラスを省かない → icon-{xs,sm,md,lg,xl} を必ず併記。
+ *       .icon 単体にはサイズが無く、省くと SVG 既定の 300×150px で描かれてレイアウトを突き抜ける。
+ *   OK: 外部スプライトを参照できない環境（単一 HTML ファイル・file:// 表示・メール等）では、
+ *       <symbol> を文書内に一度定義して <use href="#lucide-名前"> で参照する。symbol の markup は
+ *       MCP の get_icon("名前") が返す（自分でパスを描いたり icons.svg を grep したりしない）。
  *
  * アクセシビリティ:
  *   装飾アイコンは aria-hidden="true"（意味を持たないアイコンは読み上げない）
