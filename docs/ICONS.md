@@ -22,6 +22,20 @@ import iconsUrl from "@light-right/design-system/icons";
 </svg>
 ```
 
+### 単一 HTML ファイル / file:// で表示する場合（インライン symbol）
+
+外部の `icons.svg#id` 参照は file:// で開いた文書では描かれません（別ファイル扱いになるため）。プロトタイプの単一 HTML やメールなどスプライトを配信できない場面では、必要なアイコンの `<symbol>` を文書内に一度定義し、同一文書の `#id` で参照します。
+
+```html
+<svg hidden aria-hidden="true" focusable="false">
+  <symbol id="lucide-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">…</symbol>
+</svg>
+
+<svg class="icon icon-md" aria-hidden="true"><use href="#lucide-search"></use></svg>
+```
+
+symbol の markup は MCP の `get_icon("search")` がそのまま返します（自分でパスを描いたり dist/icons.svg を grep したりする必要はありません）。どちらの書き方でも class は `icon` + サイズクラス（`icon-md` 等）を必ず併記します。`.icon` 単体にはサイズが無く、省くと SVG 既定の 300×150px で描かれます。
+
 ## サイズ
 
 | クラス | px |

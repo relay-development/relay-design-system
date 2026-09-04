@@ -73,6 +73,25 @@ function extractClasses(css) {
  * 利用者・AI が実 CSS を grep して確認する必要がなくなる。
  * CSS のエスケープ（`.sm\:flex-row` `.w-1\/2`）は外して HTML 上の表記に戻す。
  */
+/** dist/icons.svg（Lucide sprite）の <symbol> を name ごとに切り出す。
+ *  get_icon が「外部スプライトを参照できない環境向けの inline 定義」を返すための正本。 */
+async function buildIcons() {
+  let svg;
+  try {
+    svg = await readFile(path.join(projectRoot, "dist/icons.svg"), "utf8");
+  } catch {
+    console.warn("[build-mcp] dist/icons.svg が無いため icons は空（先に npm run build:icons が必要）");
+    return [];
+  }
+  const icons = [];
+  for (const m of svg.matchAll(/<symbol id="lucide-([a-z0-9-]+)"([^>]*)>([\s\S]*?)<\/symbol>/g)) {
+    const attrs = m[2].trim();
+    const body = m[3].replace(/\s+/g, " ").replace(/> </g, "><").trim();
+    icons.push({ name: m[1], symbol: `<symbol id="lucide-${m[1]}" ${attrs}>${body}</symbol>` });
+  }
+  return icons;
+}
+
 async function buildAllClasses() {
   const cssPath = path.join(projectRoot, "dist/relay.css");
   let css;
@@ -343,6 +362,7 @@ async function main() {
   ]);
 
   const allClasses = await buildAllClasses();
+  const icons = await buildIcons();
 
   const index = {
     name: pkg.name,
@@ -354,6 +374,7 @@ async function main() {
     tokens,
     assets,
     allClasses,
+    icons,
     designPhilosophy: design.philosophy,
     principles: design.principles,
     forbiddenPatterns: design.forbidden,
@@ -370,7 +391,7 @@ async function main() {
   console.log(
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
       `${components.length} components, ${tokenCount} tokens, ` +
-      `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ` +
+      `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ${icons.length} icons, ` +
       `${allClasses.length} classes, ${components.filter((c) => c.function).length} with 機能`,
   );
 }

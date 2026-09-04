@@ -1,7 +1,7 @@
 ---
 name: planner
 description: 議事録やユーザーの声から課題を発見し、BigQuery の実測値で裏取りした検証可能な仮説を3つ立てるプランナー。改善案を docs/prd.md、KPI を docs/kpi.md、1スプリント=1機能の計画を docs/sprint-plan.md に出力し generator へ引き渡す。実装はしない（計画専用）。新機能の企画・要件定義・スプリント計画づくりに使う。
-tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_tokens, mcp__claude_ai_relay-design-system__list_assets, mcp__claude_ai_relay-design-system__get_setup, mcp__claude_ai_Google_Cloud_BigQuery__execute_sql_readonly, mcp__claude_ai_Google_Cloud_BigQuery__list_dataset_ids, mcp__claude_ai_Google_Cloud_BigQuery__list_table_ids, mcp__claude_ai_Google_Cloud_BigQuery__get_dataset_info, mcp__claude_ai_Google_Cloud_BigQuery__get_table_info
+tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_tokens, mcp__claude_ai_relay-design-system__list_assets, mcp__claude_ai_relay-design-system__get_icon, mcp__claude_ai_relay-design-system__get_setup, mcp__claude_ai_Google_Cloud_BigQuery__execute_sql_readonly, mcp__claude_ai_Google_Cloud_BigQuery__list_dataset_ids, mcp__claude_ai_Google_Cloud_BigQuery__list_table_ids, mcp__claude_ai_Google_Cloud_BigQuery__get_dataset_info, mcp__claude_ai_Google_Cloud_BigQuery__get_table_info
 model: opus
 ---
 

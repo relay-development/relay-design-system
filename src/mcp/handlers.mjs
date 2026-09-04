@@ -50,6 +50,7 @@ export const INSTRUCTIONS = [
   "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。空状態・ヒーロー・案内・完了画面などイラストが場面に合うときは、独自の SVG イラストを描かず必ず list_assets から選ぶこと。",
+  "4b. アイコンは get_icon(\"名前\") で取得する（Lucide 同梱、名前一覧は get_icon を引数なしで）。スプライトを参照できる環境では <use href=\"…/icons.svg#lucide-名前\">、単一 HTML ファイルや file:// 表示など外部スプライトを参照できない場面では get_icon が返す <symbol> を文書内に定義して <use href=\"#lucide-名前\"> で参照する。自分で SVG パスを描いたり dist/icons.svg を grep したりしない。どちらの場合も class は icon + icon-{xs,sm,md,lg,xl}（サイズクラス必須）。",
   "5. アクセシビリティ: get_component の「アクセシビリティ」節（そのコンポーネントの実装必須対応）を必ず反映し、全体方針・WCAG 準拠は get_accessibility を参照する（aria-label / ラベル関連付け / role・aria-current 等を省略しない）。",
   "",
   "【事前知識で答えない】",
@@ -261,7 +262,67 @@ function formatSetup() {
     "",
     "導入できたらまず **get_design_principles**（必須ルール・禁止パターン）と **list_components**（コンポーネント全体像）を読む。",
     "その後、使うコンポーネントごとに **get_component** を呼び、具体値が要るときだけ **get_tokens** を参照して UI を実装する。",
-    "アイコンは `@light-right/design-system/icons`（SVG sprite）、ロゴ/イラストは list_assets を参照。",
+    "アイコンは **get_icon**（Lucide sprite の symbol と参照方法。外部スプライトが使えない環境向けの inline 定義も返す）、ロゴ/イラストは **list_assets** を参照。",
+  ].join("\n");
+}
+
+/* ---------------------------------------------------------------- icons */
+
+function formatIcon(name) {
+  const icons = index.icons || [];
+  if (!icons.length) return "アイコン索引が空です（build-mcp が dist/icons.svg を読めていません）。";
+  const q = String(name || "").trim().toLowerCase().replace(/^lucide-/, "");
+  if (!q) {
+    return [
+      `# 同梱アイコン（Lucide、${icons.length} 種）`,
+      "",
+      "get_icon(\"名前\") で <symbol> markup と参照方法を取得する。",
+      "",
+      icons.map((i) => `\`${i.name}\``).join(" / "),
+      "",
+      "サイズは icon-{xs,sm,md,lg,xl}（12/16/20/24/32px）。`.icon` 単体にはサイズが無いので必ず併記する。色は currentColor（text-* で着色）。",
+    ].join("\n");
+  }
+  const exact = icons.find((i) => i.name === q);
+  if (!exact) {
+    const cand = icons.filter((i) => i.name.includes(q)).map((i) => `\`${i.name}\``);
+    return [
+      `# アイコン \`${q}\` は同梱されていません`,
+      "",
+      cand.length ? `近い名前: ${cand.join(" / ")}` : "一覧は get_icon を引数なしで呼ぶ。",
+      "",
+      "同梱外のアイコンは自作せず、近い同梱アイコンで代替するか省略する（追加が要るなら DS 側で build-icons に登録する）。",
+    ].join("\n");
+  }
+  const id = `lucide-${exact.name}`;
+  return [
+    `# アイコン \`${exact.name}\`（\`#${id}\`）`,
+    "",
+    "## 使い方 A: スプライトを参照できる環境（npm 導入済み・HTTP 配信）",
+    "",
+    "```html",
+    `<svg class="icon icon-md" aria-hidden="true"><use href="node_modules/@light-right/design-system/dist/icons.svg#${id}"></use></svg>`,
+    "```",
+    "ビルドツールなら `import iconsUrl from \"@light-right/design-system/icons\"` の URL を href に使う。",
+    "",
+    "## 使い方 B: 外部スプライトを参照できない環境（単一 HTML ファイル・file:// 表示・メール等）",
+    "",
+    "文書内に一度だけ <symbol> を定義し、同一文書の `#id` で参照する（外部 .svg#id は file:// で表示されない）:",
+    "",
+    "```html",
+    '<svg hidden aria-hidden="true" focusable="false">',
+    `  ${exact.symbol}`,
+    "</svg>",
+    "",
+    `<svg class="icon icon-md" aria-hidden="true"><use href="#${id}"></use></svg>`,
+    "```",
+    "",
+    "## 共通ルール",
+    "",
+    "- class は `icon` + サイズ `icon-{xs,sm,md,lg,xl}`（12/16/20/24/32px）。`.icon` 単体にはサイズが無く、省くと SVG 既定の 300×150px で描かれる",
+    "- 色は currentColor。`text-primary-500` / `text-fg-low` 等で着色し、hex を書かない",
+    "- 装飾なら aria-hidden=\"true\"。単独で意味を持つなら aria-hidden を外して aria-label か <title> を付ける",
+    "- filter-chip のチェックや search-input のクリア等、コンポーネントが自前の svg 枠を持つ場合はそのコンポーネントの構造（get_component）に従う",
   ].join("\n");
 }
 
@@ -450,6 +511,8 @@ function runSearch(query) {
       (a.alt && a.alt.toLowerCase().includes(q)),
   );
 
+  const iconHits = (index.icons || []).filter((i) => i.name.includes(q.replace(/^lucide-/, ""))).slice(0, 12);
+
   // クラス存在チェック — 「このクラスは relay.css に実在し効くか」に答え、実 CSS を grep させない。
   // クラス名は大小・記号を保つため元のクエリで照合する（Tailwind は小文字）。
   // 空白・カンマ区切りで複数渡されたら一括判定（確認したいクラスが多いと AI は grep に流れるため、
@@ -532,7 +595,12 @@ function runSearch(query) {
     }
     out.push("");
   }
-  if (!compHits.length && !tokenHits.length && !assetHits.length && !classExact && !classPrefix.length && !classMissing) {
+  if (iconHits.length) {
+    out.push("## アイコン（get_icon で <symbol> と参照方法を取得）", "");
+    for (const i of iconHits) out.push(`- \`lucide-${i.name}\` → get_icon("${i.name}")`);
+    out.push("");
+  }
+  if (!compHits.length && !tokenHits.length && !assetHits.length && !iconHits.length && !classExact && !classPrefix.length && !classMissing) {
     // 誘導先は「どのツールに何があるか」を添える。a11y・ユーティリティは search の索引外なので
     // get_accessibility への誘導が必須（実例: 「スキップリンク sr-only」の検索が空振りし、
     // エージェントが誘導に頼らず自力で get_accessibility に到達して正解を得た）
@@ -612,6 +680,16 @@ export const TOOLS = [
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
+    name: "get_icon",
+    description:
+      "同梱 Lucide アイコンの <symbol> markup と参照方法を返す。name 省略で一覧。スプライト（icons.svg）を参照できる環境と、単一 HTML / file:// など参照できない環境（<symbol> を文書内に定義して <use href=\"#id\">）の両方の書き方を返すので、SVG パスを自作したり icons.svg を grep したりしない。",
+    inputSchema: {
+      type: "object",
+      properties: { name: { type: "string", description: "アイコン名（lucide- 接頭辞は省略可。例: search, chevron-down）。省略で一覧" } },
+      additionalProperties: false,
+    },
+  },
+  {
     name: "search",
     description:
       "コンポーネント / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。クラス名を渡すと relay.css に存在するか／しないかを明言して返す（実 CSS の grep 不要）。空白区切りで複数渡せば一括で ○× 表になる（例: 'flex-1 md:grid-cols-3 tabular-nums'）。",
@@ -657,6 +735,8 @@ export function callTool(name, args = {}) {
       return { text: formatAccessibility(args.topic) };
     case "list_assets":
       return { text: formatAssets() };
+    case "get_icon":
+      return { text: formatIcon(args.name) };
     case "search":
       return { text: runSearch(args.query) };
     default:

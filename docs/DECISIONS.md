@@ -101,3 +101,20 @@ dist/relay.css に生成されていた。#271 で get_setup の例文に書い�
   足すなら safelist に書き、search の例文も差し替える）
 - 以後、utility を dist に足したいときは index.css の safelist に書く。文書に書いても入らない
 
+## アイコンは get_icon で symbol を配る — スプライト前提と単一 HTML の矛盾を解く（2026-09）
+
+icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…icons.svg#id">` で参照する前提だったが、
+外部 `.svg#id` 参照は file:// で開いた文書では描かれない。evals の生成物（単一 HTML）はこの制約下に
+あるため、ハードコード hook とお題指示は「外部スプライト参照禁止・inline symbol にせよ」としていた。
+結果、エージェントは仕様に従えず、dist/icons.svg を grep して symbol を掘り出すか SVG パスを自作していた
+（2026-09-03: settings-nav / faq-accordion が Bash 6〜7 回、`.icon` にサイズクラスを付けず 300×150px に崩れる例も）。
+
+- **正本は変えない**: スプライトが DS の配布形。仕様に「参照できない環境では symbol を文書内に定義する」
+  書き方を正式な使い方 B として追加し、両方で同じ class（icon + icon-{size}）を使うと明記
+- **MCP に get_icon を追加**: build-mcp が dist/icons.svg から 53 symbol を index に載せ、get_icon(name) が
+  A（スプライト参照）と B（inline 定義）の markup を返す。name 省略で一覧、未同梱なら近い名前を返し自作を止める。
+  search にアイコン名を渡しても get_icon へ誘導する
+- **ハーネス**: お題指示を「get_icon で symbol を取得して inline」に書き換え。hook の外部スプライト禁止は
+  file:// 表示の都合なので維持（評価環境固有のルールであり、利用側プロジェクトには適用されない）
+- **ヘッダ**: icon.css に「サイズクラス必須（省くと 300×150px）」と使い方 B を追記（filter-chip の巨大チェックと同根）
+
