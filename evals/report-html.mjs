@@ -24,6 +24,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { CASES, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
+import { previousMeasurements } from "./history.mjs";
 import { parseToolSequence } from "./transcript.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -58,7 +59,7 @@ if (!target) {
   console.error(`--stamp "${stampArg}" に一致する実行がありません。候補: ${runs.slice(-5).map((r) => r.stamp).join(", ")}`);
   process.exit(1);
 }
-const prev = runs.filter((r) => r.stamp < target.stamp).at(-1) ?? null;
+const previous = previousMeasurements(runs.filter((r) => r.stamp < target.stamp));
 const baseRun = compareArg ? runs.find((r) => r.stamp.startsWith(compareArg)) : null;
 if (compareArg && !baseRun) {
   console.error(`--compare "${compareArg}" に一致する実行がありません。候補: ${runs.slice(-8).map((r) => r.stamp).join(", ")}`);
@@ -325,15 +326,15 @@ const matrixRows = shownRuns.slice().reverse().map((run) => {
 }).join("");
 
 /* お題別カード */
-const prevById = new Map((prev?.results ?? []).map((r) => [r.id, r]));
-// 前回比の基準: --compare 指定時はそのラン、なければ直前ラン
-const cmpById = new Map(((baseRun ?? prev)?.results ?? []).map((r) => [r.id, r]));
-const cmpLabel = jst((baseRun ?? prev)?.ranAt ?? (baseRun ?? prev)?.stamp ?? "");
 const cards = targetResults.map((r, idx) => {
   const kind = kindOfResult(r);
   const trials = r.trials ?? [r];
-  const prevResult = prevById.get(r.id) ?? null;
-  const cmpResult = cmpById.get(r.id) ?? null;
+  const prior = previous.get(r.id);
+  const prevResult = prior?.result ?? null;
+  // 明示的な --compare は維持し、既定ではお題ごとの前回計測を使う。
+  const cmpResult = baseRun ? baseRun.results?.find((p) => p.id === r.id) : prevResult;
+  const cmpRun = baseRun ?? prior?.run;
+  const cmpLabel = cmpRun ? jst(cmpRun.ranAt ?? cmpRun.stamp) : "";
   const def = caseById.get(r.id);
   const specBox = def ? `
     <h4>お題（意図レベルの日本語指示。コンポーネント名は与えない）</h4>

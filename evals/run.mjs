@@ -55,6 +55,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { CASES, COMMON_PATTERNS, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
+import { previousMeasurements } from "./history.mjs";
 import { summarizeTranscript } from "./transcript.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -298,33 +299,29 @@ function judgeRubric(claudeBin, c, html) {
 
 /* ------------------------------------------------------------- 定点観測 */
 
-/** 直前の実行結果（あれば）を読み込む。現在の実行を書き込む前に呼ぶこと */
+/** 現在の実行を書き込む前に、お題ごとの前回計測を読み込む。 */
 function loadPreviousSummary() {
-  if (!fs.existsSync(resultsDir)) return null;
-  const files = fs.readdirSync(resultsDir).filter((f) => f.endsWith(".json")).sort();
-  if (!files.length) return null;
-  try {
-    return { file: files.at(-1), ...JSON.parse(fs.readFileSync(path.join(resultsDir, files.at(-1)), "utf8")) };
-  } catch {
-    return null;
-  }
+  const runs = fs.existsSync(resultsDir) ? fs.readdirSync(resultsDir)
+    .filter((f) => f.endsWith(".json")).sort().flatMap((file) => {
+      try { return [{ ...JSON.parse(fs.readFileSync(path.join(resultsDir, file), "utf8")), file }]; }
+      catch { return []; }
+    }) : [];
+  return previousMeasurements(runs);
 }
 
-function printComparison(prev, results) {
-  if (!prev) return;
-  const prevById = new Map((prev.results ?? []).map((r) => [r.id, r]));
-  const changes = [];
+function printComparison(previous, results) {
+  console.log("\n== 前回比（お題ごとの前回計測・測定不能は除外）==");
   for (const r of results) {
-    const p = prevById.get(r.id);
-    if (!p) continue;
-    const [ps, rs] = [classifyResult(p), classifyResult(r)];
-    if (ps !== rs) changes.push(`  ${STATUS_SYMBOL[ps]}→${STATUS_SYMBOL[rs]} ${r.id}`);
-  }
-  console.log(`\n== 前回比（${prev.file}）==`);
-  if (changes.length) for (const c of changes) console.log(c);
-  else console.log("  変化なし");
-  if (Boolean(prev.skipJudge) !== skipJudge || Boolean(prev.skipGenerate) !== skipGenerate) {
-    console.log("  ※ 前回と実行条件（--skip-*）が異なるため単純比較できない可能性あり");
+    const prior = previous.get(r.id);
+    if (!prior) {
+      console.log(`  ${r.id}: 前回計測なし`);
+      continue;
+    }
+    const { run, result } = prior;
+    console.log(`  ${STATUS_SYMBOL[classifyResult(result)]}→${STATUS_SYMBOL[classifyResult(r)]} ${r.id}（${run.file}）`);
+    if (Boolean(run.skipJudge) !== skipJudge || Boolean(run.skipGenerate) !== skipGenerate) {
+      console.log("    ※ 前回と実行条件（--skip-*）が異なるため単純比較できない可能性あり");
+    }
   }
 }
 

@@ -17,6 +17,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { previousMeasurements } from "./history.mjs";
 import { CASES, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
 
@@ -94,19 +95,15 @@ if (hasCapability) {
   console.log("      R = regression（守り・100% 維持が前提）/ C = capability（改善メーター・100% が前提ではない）");
 }
 
-// 直近 2 回のフル実行（全お題）の差分を要約
-const full = shown.filter((r) => (r.results ?? []).length === CASES.length);
-if (full.length >= 2) {
-  const [prev, last] = full.slice(-2);
-  const prevById = new Map(prev.results.map((r) => [r.id, r]));
-  const changes = last.results.filter((r) => {
-    const p = prevById.get(r.id);
-    return p && classifyResult(p) !== classifyResult(r);
-  });
-  if (changes.length) {
-    console.log("\n直近のフル実行間の変化:");
-    for (const r of changes) {
-      console.log(`  ${STATUS_SYMBOL[classifyResult(prevById.get(r.id))]}→${STATUS_SYMBOL[classifyResult(r)]} ${r.id}`);
-    }
+// 最新実行の各お題を、表示件数に関係なくそのお題の前回計測と比較する。
+const last = runs.at(-1);
+const previous = previousMeasurements(runs.slice(0, -1));
+console.log("\n最新実行の前回比（お題ごとの前回計測・測定不能は除外）:");
+for (const r of last.results ?? []) {
+  const prior = previous.get(r.id);
+  if (!prior) {
+    console.log(`  ${r.id}: 前回計測なし`);
+    continue;
   }
+  console.log(`  ${STATUS_SYMBOL[classifyResult(prior.result)]}→${STATUS_SYMBOL[classifyResult(r)]} ${r.id}（${prior.run.file}）`);
 }
