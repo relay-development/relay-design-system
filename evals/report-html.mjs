@@ -322,7 +322,7 @@ const matrixRows = shownRuns.slice().reverse().map((run) => {
   const rt = tally(run);
   const tallyText = `${rt.R.total ? `R ${rt.R.pass}/${rt.R.total}` : ""} ${rt.C.total ? `C ${rt.C.pass}/${rt.C.total}` : ""}`.trim() || "—";
   const isTarget = run.stamp === target.stamp;
-  return `<tr class="${isTarget ? "target" : ""}"><td class="sticky t">${jst(run.ranAt ?? run.stamp)}${run.skipJudge ? " *" : ""}${isTarget ? " ◀" : ""}</td>${cells}<td class="t">${tallyText}</td></tr>`;
+  return `<tr class="${isTarget ? "target" : ""}"><td class="sticky t">${jst(run.ranAt ?? run.stamp)}${run.skipJudge ? " *" : ""}${isTarget ? " ◀" : ""}<br>${esc(run.model ?? "(cli default)")}</td>${cells}<td class="t">${tallyText}</td></tr>`;
 }).join("");
 
 /* お題別カード */
@@ -334,7 +334,7 @@ const cards = targetResults.map((r, idx) => {
   // 明示的な --compare は維持し、既定ではお題ごとの前回計測を使う。
   const cmpResult = baseRun ? baseRun.results?.find((p) => p.id === r.id) : prevResult;
   const cmpRun = baseRun ?? prior?.run;
-  const cmpLabel = cmpRun ? jst(cmpRun.ranAt ?? cmpRun.stamp) : "";
+  const cmpLabel = cmpRun ? `${jst(cmpRun.ranAt ?? cmpRun.stamp)} / ${cmpRun.model ?? "(cli default)"}` : "";
   const def = caseById.get(r.id);
   const specBox = def ? `
     <h4>お題（意図レベルの日本語指示。コンポーネント名は与えない）</h4>
@@ -543,7 +543,7 @@ footer code,.cond code{font-family:"SF Mono",ui-monospace,monospace;font-size:11
 <h1>evals レポート</h1>
 <p class="sub">自動生成（LLM 不使用）: <span class="mono">npm run eval:report:html${stampArg ? ` -- --stamp ${esc(stampArg)}` : ""}${caseArg ? ` --case ${esc(caseArg)}` : ""}</span>　正本: evals/results/</p>
 <div class="headline"><b>${headline}</b>
-<div class="cond">${esc(jst(target.ranAt ?? target.stamp))} 実行${target.stamp === runs.at(-1).stamp ? "（最新）" : "（過去の実行を表示中）"} ・ model: ${esc(target.model ?? "?")} ・ judge: ${esc(target.judgeModel ?? "なし(--skip-judge)")} ・ votes ${target.votes ?? 1} ・ trials ${target.trials ?? 1} ・ v${esc(target.dsVersion ?? "?")}</div></div>
+<div class="cond">${esc(jst(target.ranAt ?? target.stamp))} 実行${target.stamp === runs.at(-1).stamp ? "（最新）" : "（過去の実行を表示中）"} ・ provider: ${esc(target.provider ?? "claude")} ・ model: ${esc(target.model ?? "?")}${target.reasoningEffort ? ` ・ reasoning: ${esc(target.reasoningEffort)}` : ""} ・ judge: ${esc(target.judgeModel ?? "なし(--skip-judge)")} ・ votes ${target.votes ?? 1} ・ trials ${target.trials ?? 1} ・ v${esc(target.dsVersion ?? "?")}</div></div>
 
 ${baseRun ? compareSection(baseRun, target) : ""}
 

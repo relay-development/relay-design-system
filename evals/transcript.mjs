@@ -8,6 +8,7 @@
 
 /** ツール呼び出し内訳・ターン数等を集計する（結果 JSON の agentMetrics になる） */
 export function summarizeTranscript(jsonl) {
+  jsonl = normalizeCodex(jsonl);
   const toolCalls = {};
   let numTurns = null;
   let durationMs = null;
@@ -40,6 +41,7 @@ export function summarizeTranscript(jsonl) {
  * 各要素: { at: 開始からの秒, name, input, size: tool_result の文字数, head: 応答冒頭 160 字 }
  */
 export function parseToolSequence(jsonl) {
+  jsonl = normalizeCodex(jsonl);
   const calls = [];
   const pending = new Map();
   let t0 = null;
@@ -76,4 +78,45 @@ export function parseToolSequence(jsonl) {
     }
   }
   return calls;
+}
+
+/** 生の Codex JSONL は保存したまま、共通ビュー用のイベントへ変換する。 */
+function normalizeCodex(jsonl) {
+  const events = jsonl.split("\n").flatMap((line) => {
+    try { return [JSON.parse(line)]; } catch { return []; }
+  });
+  if (!events.some((e) => e.type === "eval.metadata" && e.provider === "codex")) return jsonl;
+  const normalized = [];
+  let usage = null;
+  for (const e of events) {
+    if (e.type === "turn.completed" && e.usage) {
+      usage = e.usage;
+    }
+    if (e.type !== "item.completed") continue;
+    const item = e.item ?? {};
+    let name, input, content;
+    if (item.type === "mcp_tool_call") {
+      name = item.server === "relay-ds" ? item.tool : `${item.server}.${item.tool}`;
+      input = item.arguments;
+      content = item.result ?? item.error;
+    } else if (item.type === "command_execution") {
+      name = "Bash";
+      input = { command: item.command };
+      content = item.aggregated_output;
+    } else if (item.type === "file_change") {
+      name = "apply_patch";
+      input = { changes: item.changes };
+      content = item.status;
+    } else continue;
+    normalized.push({ type: "assistant", message: { content: [{ type: "tool_use", id: item.id, name, input }] } });
+    normalized.push({ type: "user", message: { content: [{ type: "tool_result", tool_use_id: item.id, content }] } });
+  }
+  const meta = events.find((e) => e.type === "eval.metadata");
+  normalized.push({ type: "result", duration_ms: meta.duration_ms,
+    // Codex の turn はユーザーターン。Claude の num_turns と互換でないので不明扱い。
+    num_turns: null, usage: usage ? { ...usage,
+      cache_read_input_tokens: usage.cached_input_tokens ?? null,
+      output_tokens_details: usage.reasoning_output_tokens == null ? undefined : { thinking_tokens: usage.reasoning_output_tokens },
+    } : null });
+  return normalized.map((e) => JSON.stringify(e)).join("\n");
 }

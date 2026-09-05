@@ -56,6 +56,7 @@ import { fileURLToPath } from "node:url";
 import { CASES, COMMON_PATTERNS, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
 import { previousMeasurements } from "./history.mjs";
+import { generateCodex } from "./codex.mjs";
 import { summarizeTranscript } from "./transcript.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -65,6 +66,8 @@ const resultsDir = path.join(__dirname, "results");
 const hookPath = path.join(projectRoot, ".claude/hooks/relay-hardcode-gate.mjs");
 
 const args = process.argv.slice(2);
+const provider = process.env.EVAL_PROVIDER ?? "claude";
+if (!["claude", "codex"].includes(provider)) throw new Error("EVAL_PROVIDER must be claude or codex");
 const onlyCase = args.includes("--case") ? args[args.indexOf("--case") + 1] : null;
 const skipGenerate = args.includes("--skip-generate");
 const skipJudge = args.includes("--skip-judge");
@@ -128,7 +131,7 @@ function generate(claudeBin, c) {
     MCP_CONFIG,
     "--strict-mcp-config",
     "--allowedTools",
-    "Write,mcp__relay-ds",
+    "Write,Edit,mcp__relay-ds",
     "--max-turns",
     "50",
     // 行動ログ（ツール呼び出しの全記録）を stdout に JSONL で受ける（--verbose は stream-json の必須条件）
@@ -327,7 +330,11 @@ function printComparison(previous, results) {
 
 /* ------------------------------------------------------------- main */
 
-const cases = onlyCase ? CASES.filter((c) => c.id === onlyCase) : CASES;
+const requestedIds = onlyCase ? onlyCase.split(",") : null;
+if (requestedIds?.some((id) => !CASES.some((c) => c.id === id))) {
+  throw new Error(`不明なお題: ${requestedIds.filter((id) => !CASES.some((c) => c.id === id)).join(", ")}`);
+}
+const cases = requestedIds ? CASES.filter((c) => requestedIds.includes(c.id)) : CASES;
 if (!cases.length) {
   console.error(`お題 "${onlyCase}" がありません。利用可能: ${CASES.map((c) => c.id).join(", ")}`);
   process.exit(1);
@@ -356,7 +363,7 @@ const builtCss = path.join(projectRoot, "dist/relay.css");
 if (fs.existsSync(builtCss)) fs.copyFileSync(builtCss, path.join(outputDir, "relay.css"));
 else console.warn("⚠ dist/relay.css がありません（npm run build で生成）。採点は可能ですが目視確認はできません。");
 
-const claudeBin = skipGenerate && skipJudge ? null : resolveClaudeBin();
+const claudeBin = skipJudge && (skipGenerate || provider === "codex") ? null : resolveClaudeBin();
 const previous = loadPreviousSummary();
 const results = [];
 const stamp = new Date().toISOString().replace(/[:.]/g, "-");
@@ -382,7 +389,9 @@ function runTrial(c, suffix) {
     for (const f of fs.readdirSync(outputDir)) {
       if (f.endsWith(".html")) fs.rmSync(path.join(outputDir, f), { force: true });
     }
-    const gen = generate(claudeBin, c);
+    const gen = provider === "codex"
+      ? generateCodex({ projectRoot, outputDir, id: c.id, prompt: generationPrompt(c).replace("Write ツールで", "ファイル編集ツールで") })
+      : generate(claudeBin, c);
     if (gen.transcript) {
       fs.mkdirSync(archiveDir, { recursive: true });
       fs.writeFileSync(path.join(archiveDir, `${c.id}${suffix}.transcript.jsonl`), gen.transcript);
@@ -492,7 +501,9 @@ const errorCount = results.filter((r) => isError(classifyResult(r))).length;
 const summary = {
   ranAt: new Date().toISOString(),
   dsVersion: JSON.parse(fs.readFileSync(path.join(projectRoot, "package.json"), "utf8")).version,
-  model: process.env.EVAL_MODEL ?? "(cli default)",
+  provider,
+  reasoningEffort: provider === "codex" ? process.env.EVAL_REASONING_EFFORT ?? "medium" : null,
+  model: process.env.EVAL_MODEL ?? (provider === "codex" ? "gpt-6-astra" : "(cli default)"),
   judgeModel: skipJudge ? null : process.env.EVAL_JUDGE_MODEL ?? "(cli default)",
   skipGenerate,
   skipJudge,

@@ -10,8 +10,10 @@
 ## 実行
 
 ```sh
+EVAL_PROVIDER=codex EVAL_MODEL=gpt-6-astra EVAL_JUDGE_MODEL=claude-fable-5-1 npm run eval  # Astra 生成 + Fable 審査
 npm run eval                     # 全お題（生成 + 機械チェック + LLM 審査 = サブスク枠を消費）
 npm run eval -- --case invite-form   # 1 お題のみ
+npm run eval -- --case empty-state,settings-nav  # 指定した複数お題のみ
 npm run eval -- --skip-generate      # 既存の生成物を再採点（LLM 審査のみ消費）
 npm run eval -- --skip-judge         # 機械チェックのみ（LLM 不使用・無料）
 npm run eval -- --votes 3            # 審査 3 回の多数決（審査側のブレ対策）
@@ -23,6 +25,15 @@ npm run eval:report:html             # HTML レポート（推移 + 最新実行
 生成物は `evals/output/*.html`（ブラウザで目視可）、結果は `evals/results/*.json`（いずれも gitignored）。
 生成時の行動ログ（ツール呼び出しの全記録）も `evals/results/outputs/<実行スタンプ>/<id>.transcript.jsonl`
 に保存され、ツール呼び出し内訳・ターン数は結果 JSON の `agentMetrics` に集計される。
+
+Claude の生成は Write / Edit / relay MCP を許可する。Codex は `codex exec` を使い、
+一時作業領域・workspace-write・relay MCP のみの設定で生成する（個人 config は読み込まない）。
+`CODEX_BIN` で実行ファイル、`EVAL_REASONING_EFFORT` で推論設定（既定 medium）を指定できる。
+審査は両方とも Claude CLI。モデル比較では `EVAL_JUDGE_MODEL` を固定する。
+モデルと CLI・プロンプト環境が異なるため、純粋なモデル差だけの測定ではない。
+Codex の生 JSONL も保存し、MCP 呼び出し・ファイル変更・コマンド・出力トークンを共通表示する。
+Codex のユーザーターン数は Claude のエージェントターン数と意味が異なるため表示しない。
+取得できない思考トークン・時刻は不明扱いにし、ゼロとみなさない。
 
 比較はお題ごとに直近の測定可能な結果（PASS / FAIL）まで遡る。単独実行も比較対象に含み、
 生成失敗・審査不能（G / J）は飛ばす。HTML の各カードには、そのお題の比較元日時を表示する。
