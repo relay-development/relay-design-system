@@ -10,8 +10,10 @@
 ## 実行
 
 ```sh
+EVAL_PROVIDER=codex EVAL_MODEL=gpt-6-astra EVAL_JUDGE_MODEL=claude-fable-5-1 npm run eval  # Astra 生成 + Fable 審査
 npm run eval                     # 全お題（生成 + 機械チェック + LLM 審査 = サブスク枠を消費）
 npm run eval -- --case invite-form   # 1 お題のみ
+npm run eval -- --case empty-state,settings-nav  # 指定した複数お題のみ
 npm run eval -- --skip-generate      # 既存の生成物を再採点（LLM 審査のみ消費）
 npm run eval -- --skip-judge         # 機械チェックのみ（LLM 不使用・無料）
 npm run eval -- --votes 3            # 審査 3 回の多数決（審査側のブレ対策）
@@ -24,11 +26,25 @@ npm run eval:report:html             # HTML レポート（推移 + 最新実行
 生成時の行動ログ（ツール呼び出しの全記録）も `evals/results/outputs/<実行スタンプ>/<id>.transcript.jsonl`
 に保存され、ツール呼び出し内訳・ターン数は結果 JSON の `agentMetrics` に集計される。
 
+Claude の生成は Write / Edit / relay MCP を許可する。Codex は `codex exec` を使い、
+一時作業領域・workspace-write・relay MCP のみの設定で生成する（個人 config は読み込まない）。
+`CODEX_BIN` で実行ファイル、`EVAL_REASONING_EFFORT` で推論設定（既定 medium）を指定できる。
+審査は両方とも Claude CLI。モデル比較では `EVAL_JUDGE_MODEL` を固定する。
+モデルと CLI・プロンプト環境が異なるため、純粋なモデル差だけの測定ではない。
+Codex の生 JSONL も保存し、MCP 呼び出し・ファイル変更・コマンド・出力トークンを共通表示する。
+Codex のユーザーターン数は Claude のエージェントターン数と意味が異なるため表示しない。
+取得できない思考トークン・時刻は不明扱いにし、ゼロとみなさない。
+
+比較はお題ごとに直近の測定可能な結果（PASS / FAIL）まで遡る。単独実行も比較対象に含み、
+生成失敗・審査不能（G / J）は飛ばす。HTML の各カードには、そのお題の比較元日時を表示する。
+`--compare` で実行を明示した場合は、その指定を優先する。
+履歴から除外する記録は `evals/results/excluded/` へ移す（元ログは保持し、表示・比較には含めない）。
+
 ## いつ回すか（定点観測の運用）
 
 - **週 1 回** フル実行（`npm run eval`）— モデル更新によるドリフト検知。実行後に `npm run eval:report` で推移を確認
 - **MCP（`src/mcp/`）・DESIGN.md・コンポーネントヘッダを変更した PR の前後** — 変更の効果測定。
-  実行のたびに直前の結果との差分（✓→✗ / ✗→✓ 等）が自動表示される
+  実行のたびに各お題の前回計測との差分（✓→✗ / ✗→✓ 等）が自動表示される
 - 前回比で ✓→✗ の変化が出たら: 劣化と断定する前に `--case <id> --trials 2` で再確認する。
   生成は非決定的なので 1 回の ✗ は「劣化」でなく「生成の運」のことがある（pass^k の考え方。
   `--votes` が審査側のブレ対策であるのに対し `--trials` は生成側）。--trials 時の結果 JSON は
