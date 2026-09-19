@@ -17,6 +17,7 @@
  *     npm run eval:report:html -- --stamp <接頭辞> # 過去の実行を指定（例: 2026-08-25T06-18）
  *     npm run eval:report:html -- --case <id>     # お題で絞り込み
  *     npm run eval:report:html -- --all           # 履歴マトリクスを全件表示（既定 20 件）
+ *     npm run eval:report:html -- --compare <接頭辞> --out compare.html  # 比較元を指定し別ファイルに出す
  */
 
 import fs from "node:fs";
@@ -25,7 +26,7 @@ import { fileURLToPath } from "node:url";
 import { CASES, kindOf } from "./cases.mjs";
 import { STATUS_SYMBOL, classifyResult, isError } from "./status.mjs";
 import { previousMeasurements } from "./history.mjs";
-import { parseToolSequence } from "./transcript.mjs";
+import { parseToolSequence, summarizeTranscript } from "./transcript.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const resultsDir = path.join(__dirname, "results");
@@ -36,6 +37,7 @@ const stampArg = args.includes("--stamp") ? args[args.indexOf("--stamp") + 1] : 
 const caseArg = args.includes("--case") ? args[args.indexOf("--case") + 1] : null;
 const compareArg = args.includes("--compare") ? args[args.indexOf("--compare") + 1] : null;
 const noScreens = args.includes("--no-screens"); // 生成画面 iframe を省く（Artifact 公開用。相対参照が効かないため）
+const outArg = args.includes("--out") ? args[args.indexOf("--out") + 1] : null; // 出力ファイル名（results/ 直下。iframe の相対参照を保つため）
 
 /* ------------------------------------------------------------- data */
 
@@ -165,10 +167,29 @@ const isRelayCssGrep = (cmd) => /\bgrep\b/.test(cmd ?? "") && /relay\.css/.test(
 /* ---- お題1件の計測指標（前回比較用。行動ログから grep/search も数える） ---- */
 /** --trials 形式（result.trials[]）は trial 1 を代表値にする（カードの前回比も i===0 のみ比較するのと揃える） */
 const primaryTrial = (r) => (r?.trials ? r.trials[0] : r);
+function inputTokens(m) {
+  const u = m.usage;
+  if (u?.input_tokens == null) return null;
+  // Codex input_tokens includes cached input; Claude reports caches separately.
+  return u.input_tokens + (m.codexTurns || u.cached_input_tokens != null ? 0
+    : (u.cache_read_input_tokens ?? 0) + (u.cache_creation_input_tokens ?? 0));
+}
+function reportMetrics(result) {
+  const saved = result.agentMetrics ?? {};
+  const file = result.transcript && path.join(resultsDir, result.transcript);
+  if (!file || !fs.existsSync(file)) return saved;
+  const raw = fs.readFileSync(file, "utf8");
+  const parsed = summarizeTranscript(raw);
+  return { ...saved, numTurns: saved.numTurns ?? parsed.numTurns,
+    durationMs: saved.durationMs ?? parsed.durationMs,
+    codexTurns: raw.split("\n").some((line) => {
+      try { const e = JSON.parse(line); return e.type === "eval.metadata" && e.provider === "codex"; } catch { return false; }
+    }) };
+}
 function caseMetrics(result) {
   if (!result) return null;
   result = primaryTrial(result);
-  const m = result.agentMetrics ?? {};
+  const m = reportMetrics(result);
   const seqPath = result.transcript ? path.join(resultsDir, result.transcript) : null;
   const seq = seqPath && fs.existsSync(seqPath) ? parseToolSequence(fs.readFileSync(seqPath, "utf8")) : [];
   return {
@@ -176,17 +197,18 @@ function caseMetrics(result) {
     turns: m.numTurns ?? null,
     tools: seq.length || null,
     out: m.usage?.output_tokens ?? null,
+    input: inputTokens(m),
     think: m.usage?.output_tokens_details?.thinking_tokens ?? null,
     grep: seq.filter((c) => c.name === "Bash" && isRelayCssGrep(c.input?.command)).length,
     search: seq.filter((c) => c.name === "search").length,
   };
 }
 const fmtDur = (s) => (s == null ? "?" : `${Math.floor(s / 60)}分${String(s % 60).padStart(2, "0")}秒`);
-/** 前→後のセル。lowerBetter=true は減少が改善（緑）、false は増加が改善 */
-function cmpCell(a, b, lowerBetter, fmt = (x) => (x == null ? "?" : x.toLocaleString())) {
-  if (a == null && b == null) return "—";
-  const cls = a === b || a == null || b == null ? "" : (lowerBetter ? b < a : b > a) ? "d-good" : "d-bad";
-  return `<span class="${cls}">${fmt(a)} → ${fmt(b)}</span>`;
+/** 今回（左）/ 前回（右）の 2 セル。今回の値を、前回より改善なら緑・悪化なら赤で塗る。lowerBetter=true は減少が改善 */
+function cmpCell(base, cur, lowerBetter, fmt = (x) => (x == null ? "?" : x.toLocaleString())) {
+  if (base == null && cur == null) return "<td>—</td><td>—</td>";
+  const cls = cur === base || base == null || cur == null ? "" : (lowerBetter ? cur < base : cur > base) ? "d-good" : "d-bad";
+  return `<td><span class="${cls}">${fmt(cur)}</span></td><td>${fmt(base)}</td>`;
 }
 function cmpBlock(cur, base, baseLabel) {
   if (!base) return "";
@@ -196,11 +218,12 @@ function cmpBlock(cur, base, baseLabel) {
     ["ツール呼び出し", cmpCell(base.tools, cur.tools, true)],
     ["出力トークン", cmpCell(base.out, cur.out, true)],
     ["うち思考", cmpCell(base.think, cur.think, true)],
+    ["入力トークン（キャッシュ含む）", cmpCell(base.input, cur.input, true)],
     ["grep(relay.css)", cmpCell(base.grep, cur.grep, true)],
     ["search", cmpCell(base.search, cur.search, false)],
   ];
-  return `<h4>前回比（${esc(baseLabel)} → 今回）</h4>
-    <div class="log"><table class="cmp"><tbody>${rows.map(([k, v]) => `<tr><td class="ck">${k}</td><td>${v}</td></tr>`).join("")}</tbody></table></div>
+  return `<p class="muted">ターン数は Codex がユーザーターン、Claude がエージェントターンです。数え方が異なります。</p><h4>前回比（今回 / 前回 ${esc(baseLabel)}）</h4>
+    <div class="log"><table class="cmp"><thead><tr><th class="ck"></th><th>今回</th><th>前回</th></tr></thead><tbody>${rows.map(([k, v]) => `<tr><td class="ck">${k}</td>${v}</tr>`).join("")}</tbody></table></div>
     <p class="muted">grep(relay.css) 減・search 増・所要/ターン減が改善方向（緑）。実 CSS を覗かず MCP で組めているほど良い。</p>`;
 }
 
@@ -209,7 +232,7 @@ function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
   const status = classifyResult(r);
   const seqPath = r.transcript ? path.join(resultsDir, r.transcript) : null;
   const seq = seqPath && fs.existsSync(seqPath) ? parseToolSequence(fs.readFileSync(seqPath, "utf8")) : [];
-  const m = r.agentMetrics ?? {};
+  const m = reportMetrics(r);
   const htmlPath = r.output ? path.join(resultsDir, r.output) : null;
   const match = seq.length ? matchFetchedToUsed(seq, htmlPath) : null;
   const signals = detectSignals(seq, match, r, prevResult);
@@ -226,9 +249,10 @@ function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
     <div class="tiles">
       <div class="tile"><div class="k">判定</div><div class="v sym s-${status.replace(":", "-")}">${STATUS_SYMBOL[status]} ${status}</div></div>
       <div class="tile"><div class="k">所要</div><div class="v">${dur != null ? `${Math.floor(dur / 60)}分${String(dur % 60).padStart(2, "0")}秒` : "?"}</div></div>
-      <div class="tile"><div class="k">ターン</div><div class="v">${m.numTurns ?? "?"}</div></div>
+      <div class="tile"><div class="k">ターン${m.codexTurns ? "（ユーザー）" : "（エージェント）"}</div><div class="v">${m.numTurns ?? "?"}</div></div>
       <div class="tile"><div class="k">ツール呼び出し</div><div class="v">${seq.length || "?"}<small>回</small></div></div>
       <div class="tile"><div class="k">出力トークン</div><div class="v">${m.usage?.output_tokens?.toLocaleString() ?? "?"}</div><div class="k">うち思考 ${m.usage?.output_tokens_details?.thinking_tokens?.toLocaleString() ?? "?"}</div></div>
+      <div class="tile"><div class="k">入力トークン</div><div class="v">${inputTokens(m)?.toLocaleString() ?? "?"}</div><div class="k">キャッシュを含む生成全体の合計</div></div>
     </div>`;
 
   /* タイムライン（横ストリップに区分色の点を打つ） */
@@ -281,7 +305,7 @@ function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
     <h4>計測サマリー</h4>${tiles}
     ${cmpResult ? cmpBlock(caseMetrics(r), caseMetrics(cmpResult), cmpLabel) : ""}
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
-    ${seqRows ? `<h4>呼び出しシーケンス</h4><p class="muted">薄く敷いた行はローカルファイル参照（Bash / Read / Grep / Glob）＝ MCP の知識でなく実物を覗きにいった手つき。試験環境の実ファイルに依存している疑いのシグナル。</p><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
+    ${seqRows ? `<h4>呼び出しシーケンス</h4>${seq.some((c) => c.at == null) ? `<p class="muted">個別の呼び出し時刻はログに未記録です。全体の所要時間は上部に表示しています。</p>` : ""}<p class="muted">薄く敷いた行はローカルファイル参照（Bash / Read / Grep / Glob）＝ MCP の知識でなく実物を覗きにいった手つき。試験環境の実ファイルに依存している疑いのシグナル。</p><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
     ${htmlPath && fs.existsSync(htmlPath) && !noScreens ? `<h4>生成された画面</h4>
     <div class="frame-box"><iframe src="${esc(r.output)}" loading="lazy" title="${esc(label)} の生成物"></iframe></div>
@@ -382,7 +406,7 @@ function grepRelayCssCount(run, id) {
 function metricsOf(run, id) {
   const r = (run.results ?? []).find((x) => x.id === id);
   if (!r) return null;
-  const m = primaryTrial(r).agentMetrics ?? {};
+  const m = reportMetrics(primaryTrial(r));
   const tc = m.toolCalls ?? {};
   return {
     status: classifyResult(r),
@@ -593,6 +617,7 @@ ${cards}
 </script>
 </body></html>`;
 
-const outPath = path.join(resultsDir, "report.html");
+const outName = outArg ? path.basename(outArg).replace(/\.html?$/, "") + ".html" : "report.html";
+const outPath = path.join(resultsDir, outName);
 fs.writeFileSync(outPath, html);
-console.log(`evals/results/report.html を生成しました（${(html.length / 1024).toFixed(0)}KB・対象 ${targetResults.length} お題・${jst(target.ranAt ?? target.stamp)} 実行）`);
+console.log(`evals/results/${outName} を生成しました（${(html.length / 1024).toFixed(0)}KB・対象 ${targetResults.length} お題・${jst(target.ranAt ?? target.stamp)} 実行）`);

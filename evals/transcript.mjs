@@ -113,8 +113,8 @@ function normalizeCodex(jsonl) {
   }
   const meta = events.find((e) => e.type === "eval.metadata");
   normalized.push({ type: "result", duration_ms: meta.duration_ms,
-    // Codex の turn はユーザーターン。Claude の num_turns と互換でないので不明扱い。
-    num_turns: null, usage: usage ? { ...usage,
+    // Codex はユーザーターン数。Claude のエージェントターン数とは定義が異なる。
+    num_turns: events.filter((e) => e.type === "turn.started").length || null, usage: usage ? { ...usage,
       cache_read_input_tokens: usage.cached_input_tokens ?? null,
       output_tokens_details: usage.reasoning_output_tokens == null ? undefined : { thinking_tokens: usage.reasoning_output_tokens },
     } : null });
