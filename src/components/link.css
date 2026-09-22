@@ -18,7 +18,9 @@
  *     inverse = enable fg/high-inverse (white)、hover fg/middle-inverse (slate-200)
  *     ※ 暗い背景（neutral/800 以上・primary/700 以上等）専用。white は
  *       primary/700 上でも 7.0:1 (AAA)。hover は 1 段落として変化を示す。
- *   タイポ: font-size / line-height は周囲の本文を inherit（medium ウェイト + underline）。
+ *   タイポ: font-size / line-height は周囲の本文を inherit（bold ウェイト + underline）。
+ *     ※ ウェイトは bold（700）。本文（regular）の中でリンクが下線だけに頼らず視認できるよう、
+ *       2026-09 に medium（500）から引き上げた（本文強調 `typo-medium font-bold` と同じ段）。
  *     ※ 本文中に置くリンクは必ず本文とフォントサイズを揃える。サイズを固定すると
  *       typo-small (14px) 等の本文に入れたとき行が不揃いになるため、inherit で
  *       周囲のサイズに自動追従させる（典型は typo-medium 16/32 の本文）。
@@ -61,7 +63,7 @@
 @layer components {
   .link {
     @apply inline-flex items-center gap-1
-           font-medium
+           font-bold
            text-primary-700 no-underline
            cursor-pointer;
     /* 本文とフォントサイズを揃える: 周囲の typo-* から継承 */

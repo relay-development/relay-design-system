@@ -8,6 +8,9 @@
  *     区切り             : lucide chevron-right 16px を .breadcrumb-sep でラップ
  *     現在ページ (isCurrent=true): .breadcrumb-current（リンクにせず aria-current="page"）
  *
+ *   ウェイト: 項目（.link）・現在ページともに bold（700）。link が medium → bold に
+ *     なった 2026-09 に、現在地だけ細く見えて強弱が逆転しないよう揃えた。
+ *
  * 機能:
  *   現在のページ階層を示し、親階層へ戻れるようにするナビゲーション。
  *   ページ内の節移動ではなくサイト階層のパス表示に使う。
@@ -50,8 +53,9 @@
     @apply w-4 h-4;
   }
 
-  /* 現在ページ（非リンク）— typo-small / typo-medium と同じ行間 (16/24) で行を揃える */
+  /* 現在ページ（非リンク）— typo-small / typo-medium と同じ行間 (16/24) で行を揃える。
+   * ウェイトは項目の .link（bold）と揃える */
   .breadcrumb-current {
-    @apply text-base leading-6 font-medium text-fg-high;
+    @apply text-base leading-6 font-bold text-fg-high;
   }
 }

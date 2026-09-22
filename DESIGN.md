@@ -154,7 +154,7 @@ Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定�
 
 > **サイズは例外を除き `md` をデフォルトに。** `btn` / `icon-btn` / `input` / `selector` / `textarea` 等のサイズ付きコンポーネントは、特段の理由（密なツールバーで `sm`、ヒーロー CTA で `lg/xl` 等）がない限り `*-md` を使う。`icon` も既定は `icon-md` (20px)。タイポグラフィの `.typo-medium` 基準と揃えると画面全体のリズムが安定する。
 
-> **リンクテキストは必ず本文とフォントサイズを揃える。** `.link` は `font-size`/`line-height` を周囲から inherit するので、置いた本文 (typo-small / typo-medium 等) のサイズに自動追従する。リンクだけ別サイズにしない（末尾アイコンも 1em で連動）。
+> **リンクテキストは必ず本文とフォントサイズを揃える。** `.link` は `font-size`/`line-height` を周囲から inherit するので、置いた本文 (typo-small / typo-medium 等) のサイズに自動追従する。リンクだけ別サイズにしない（末尾アイコンも 1em で連動）。ウェイトは bold 固定なので `font-*` を足さない。
 
 全コンポーネントのクラス一覧は [README.md](README.md)、完成形 HTML は `snippets/*.html` を参照。
 
