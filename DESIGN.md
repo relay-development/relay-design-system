@@ -144,7 +144,8 @@ Checkbox / Radio   : <label class="checkbox-label"><input type="checkbox" class=
 Label Control      : <div class="label-control">...label + label-badge-{required,optional} + 入力欄...</div>
 Filter Chip        : <button class="filter-chip" aria-pressed="false">...</button>
 Tab                : <div class="tabs tabs-solid"><button class="tab tab-solid" aria-selected="true">...</button>...</div>
-Simple Table       : <table class="simple-table"><tr><th>ラベル</th><td>値</td></tr>...</table>
+Simple Table       : <table class="simple-table"><tr><th scope="row">ラベル</th><td>値</td></tr>...</table>  ← 1 件の詳細（キー/値）。ラベル列 128px 固定、列幅は触らない
+Data Table         : <table class="data-table"><thead><tr><th scope="col">…</th></tr></thead>…</table>  ← 複数件の比較。列幅は「締める列」だけ指定: 固定書式の列（日付・状態・金額・操作）は th と同列の td に .data-table-fit（数値は .data-table-num）、自由文は .data-table-text の 1 列、残りは自動幅。収まらなければ <div class="data-table-wrap" tabindex="0"> で横スクロール
 Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
@@ -199,6 +200,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | テキストリンクを素の `<a>`・独自クラス（`.text-link` 等）・`underline text-primary-700` の直付けで自作 | 置き場所を問わず `.link` + `.link-label`（補助は `.link-neutral`、暗い背景は `.link-inverse`）。ボタン形状の主導線は a + `.btn`、ナビ項目は `.menu-item` |
 | フォーカスリングの色変更（primary 緑など）・祖先の `overflow-hidden` での見切れ | info 青（`--shadow-focus-ring` / `outline-info-600`）のまま全周表示。角丸コンテナは `overflow-hidden` に頼らず first/last 子側で角丸を作る |
 | 恒常的な surface の elevation をシャドウで表現（`card-elevated` の常用等） | ボーダー + 背景色で区切る。シャドウは modal / tooltip 等の重なりレイヤーのみ |
+| テーブルの全列に `w-*` を配る・全セルに `whitespace-nowrap`・列幅や文字を詰めて 1 画面に収める | 締める列だけ `.data-table-fit` / `.data-table-num`、自由文は `.data-table-text` の 1 列に余白を渡す。収まらない幅は `.data-table-wrap` で横スクロール |
 | コンテナ幅をサイズ名で新規指定（`max-w-5xl` 等） | 用途名の `max-w-page` / `max-w-content` / `max-w-article`（または `.page-shell` / `.page-shell-content`） |
 | main へ直 push | feature branch + PR |
 

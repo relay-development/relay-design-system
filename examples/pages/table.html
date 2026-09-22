@@ -98,6 +98,74 @@
         </div>
       </div>
 
+      <!-- ===== 列幅 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">列幅 — 締める列だけ指定し、自由文に余白を渡す</h3>
+          <p class="card-subtitle">固定書式の列（日付・状態・金額・操作）は <code class="px-1 bg-neutral-100 rounded">data-table-fit</code>（数値は <code class="px-1 bg-neutral-100 rounded">data-table-num</code>）を th と同列の td 全てに付けて内容幅に締める。自由文は <code class="px-1 bg-neutral-100 rounded">data-table-text</code> の 1 列。列が多く収まらないときは <code class="px-1 bg-neutral-100 rounded">data-table-wrap</code>（<code class="px-1 bg-neutral-100 rounded">tabindex="0"</code>）で包んで横スクロール — 列幅を詰めて無理に収めない</p>
+        </div>
+        <div class="card-body">
+          <div class="data-table-wrap" tabindex="0">
+            <table class="data-table">
+              <caption class="sr-only">契約一覧</caption>
+              <thead>
+                <tr>
+                  <th scope="col">契約名</th>
+                  <th scope="col" class="data-table-text">概要</th>
+                  <th scope="col" class="data-table-num">金額</th>
+                  <th scope="col" class="data-table-fit">更新日</th>
+                  <th scope="col" class="data-table-fit">状態</th>
+                  <th scope="col" class="data-table-fit"><span class="sr-only">操作</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>本社ビル賃貸借契約</td>
+                  <td class="data-table-text">本社ビル 3〜5 階の賃貸借。更新は 2 年ごとで、次回更新時に面積の見直しを予定。</td>
+                  <td class="data-table-num">1,200,000円</td>
+                  <td class="data-table-fit">2026/09/01</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-success">有効</span></td>
+                  <td class="data-table-fit"><a class="link" href="#table"><span class="link-label">詳細を見る<span class="sr-only">（本社ビル賃貸借契約）</span></span></a></td>
+                </tr>
+                <tr>
+                  <td>清掃業務委託契約</td>
+                  <td class="data-table-text">共用部の日常清掃と月 1 回の定期清掃。</td>
+                  <td class="data-table-num">85,000円</td>
+                  <td class="data-table-fit">2026/03/31</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-danger">期限切れ</span></td>
+                  <td class="data-table-fit"><a class="link" href="#table"><span class="link-label">詳細を見る<span class="sr-only">（清掃業務委託契約）</span></span></a></td>
+                </tr>
+                <tr>
+                  <td>会計ソフト利用契約</td>
+                  <td class="data-table-text">クラウド会計の年間ライセンス。5 ユーザーまで。</td>
+                  <td class="data-table-num">96,000円</td>
+                  <td class="data-table-fit">2026/12/15</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-warning">審査中</span></td>
+                  <td class="data-table-fit"><a class="link" href="#table"><span class="link-label">詳細を見る<span class="sr-only">（会計ソフト利用契約）</span></span></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pre class="code-sample mt-4" data-code>
+&lt;div class="data-table-wrap" tabindex="0"&gt;
+  &lt;table class="data-table"&gt;
+    &lt;thead&gt;&lt;tr&gt;
+      &lt;th scope="col"&gt;契約名&lt;/th&gt;                              &lt;!-- 幅指定なし: 余白を吸う --&gt;
+      &lt;th scope="col" class="data-table-text"&gt;概要&lt;/th&gt;       &lt;!-- 自由文: 折り返し + 最小幅 --&gt;
+      &lt;th scope="col" class="data-table-num"&gt;金額&lt;/th&gt;        &lt;!-- 数値: 右寄せ + 等幅数字 --&gt;
+      &lt;th scope="col" class="data-table-fit"&gt;状態&lt;/th&gt;        &lt;!-- 固定書式: 内容幅に締める --&gt;
+    &lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;&lt;tr&gt;
+      &lt;td&gt;本社ビル賃貸借契約&lt;/td&gt;
+      &lt;td class="data-table-text"&gt;…&lt;/td&gt;
+      &lt;td class="data-table-num"&gt;1,200,000円&lt;/td&gt;
+      &lt;td class="data-table-fit"&gt;&lt;span class="badge badge-soft-success"&gt;有効&lt;/span&gt;&lt;/td&gt;
+    &lt;/tr&gt;&lt;/tbody&gt;
+  &lt;/table&gt;
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+
       <!-- func:auto:data-table -->
       </div><!-- /#table-panel-overview -->
 
@@ -138,6 +206,40 @@
             <pre class="code-sample mt-3" data-code>
 &lt;!-- 1 件の詳細は simple-table を使う --&gt;
 &lt;table class="[[simple-table]]"&gt;&lt;tr&gt;&lt;th scope="row"&gt;担当者&lt;/th&gt;&lt;td&gt;山田&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</pre>
+          </div>
+        </div>
+      </div>
+      <!-- Demo: 列幅 -->
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">列幅は「締める列」だけ指定する</h3>
+            <span class="typo-xsmall text-fg-low">レイアウト崩れの防止</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <table class="data-table mb-4"><thead><tr><th scope="col">案件</th><th scope="col" class="data-table-num">金額</th><th scope="col" class="data-table-fit">状態</th></tr></thead><tbody><tr><td>老舗旅館の事業譲渡（温泉街・客室 12）</td><td class="data-table-num">35,000,000円</td><td class="data-table-fit"><span class="badge badge-soft-success">公開中</span></td></tr><tr><td>製麺所</td><td class="data-table-num">8,500,000円</td><td class="data-table-fit"><span class="badge badge-soft-warning">交渉中</span></td></tr></tbody></table>
+            <p class="typo-small text-fg-middle">状態は <code class="typo-xsmall">data-table-fit</code>、金額は <code class="typo-xsmall">data-table-num</code> で内容幅に締め、案件名（幅指定なし）が余白を吸う。バッジも金額も折れない。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;th scope="col"&gt;案件&lt;/th&gt;
+&lt;th scope="col" class="[[data-table-num]]"&gt;金額&lt;/th&gt;
+&lt;th scope="col" class="[[data-table-fit]]"&gt;状態&lt;/th&gt;</pre>
+          </div>
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <table class="data-table mb-4"><thead><tr><th scope="col" class="w-1/3">案件</th><th scope="col" class="w-1/3">金額</th><th scope="col" class="w-1/3">状態</th></tr></thead><tbody><tr><td>老舗旅館の事業譲渡（温泉街・客室 12）</td><td>35,000,000円</td><td><span class="badge badge-soft-success">公開中</span></td></tr><tr><td>製麺所</td><td>8,500,000円</td><td><span class="badge badge-soft-warning">交渉中</span></td></tr></tbody></table>
+            <p class="typo-small text-fg-middle">全列に <code class="typo-xsmall">w-1/3</code> を配ると案件名が数文字で折れ、金額・状態には余白だけが残る。全セル <code class="typo-xsmall">whitespace-nowrap</code> は逆に親幅を突き抜ける。収まらない幅は <code class="typo-xsmall">data-table-wrap</code> で横スクロールへ。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;!-- 全列に幅を配らない・全セルに nowrap を付けない --&gt;
+&lt;th class="w-1/3"&gt;案件&lt;/th&gt;&lt;th class="w-1/3"&gt;金額&lt;/th&gt;…</pre>
           </div>
         </div>
       </div>

@@ -1,0 +1,32 @@
+<!-- 1 件の詳細をキー/値で縦に並べる。ラベルは th scope="row"、表の名前は caption で。
+     ラベル列は 128px 固定・値列が残り全幅（列幅は触らない。長いラベルは折り返す） -->
+<table class="simple-table">
+  <caption class="sr-only">案件の基本情報</caption>
+  <tbody>
+    <tr>
+      <th scope="row">事業者名</th>
+      <td>株式会社サンプル</td>
+    </tr>
+    <tr>
+      <th scope="row">所在地</th>
+      <td>宮崎県宮崎市</td>
+    </tr>
+    <tr>
+      <th scope="row">従業員数</th>
+      <td><span class="text-fg-middle">—</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 連続するラベルに 1 つの値を rowspan で被せる（merge） -->
+<table class="simple-table">
+  <caption class="sr-only">関連リンク</caption>
+  <tbody>
+    <tr>
+      <th scope="row">関連リンク</th>
+      <td rowspan="3"><a class="link" href="#"><span class="link-label">公式サイト</span></a></td>
+    </tr>
+    <tr><th scope="row">タグ A</th></tr>
+    <tr><th scope="row">タグ B</th></tr>
+  </tbody>
+</table>

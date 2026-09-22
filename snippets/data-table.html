@@ -1,0 +1,60 @@
+<!-- 基本: thead に列見出し（th scope="col"）、tbody に行データ。表の名前は caption で -->
+<table class="data-table">
+  <caption class="sr-only">案件一覧</caption>
+  <thead>
+    <tr>
+      <th scope="col">案件名</th>
+      <th scope="col">担当者</th>
+      <th scope="col" class="data-table-fit">状態</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A プロジェクト</td>
+      <td>山田 太郎</td>
+      <td class="data-table-fit"><span class="badge badge-soft-success">公開中</span></td>
+    </tr>
+    <tr>
+      <td>B プロジェクト</td>
+      <td><span class="text-fg-middle">—</span></td>
+      <td class="data-table-fit"><span class="badge badge-soft-warning">審査中</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- 列が多い表: data-table-wrap で包み（tabindex="0" でキーボードでもスクロール可）、
+     固定書式の列は th と同列の td 全てに data-table-fit（数値は data-table-num）、
+     自由文の列は data-table-text。幅指定なしの列（契約名）が余白を吸う -->
+<div class="data-table-wrap" tabindex="0">
+  <table class="data-table">
+    <caption class="sr-only">契約一覧</caption>
+    <thead>
+      <tr>
+        <th scope="col">契約名</th>
+        <th scope="col" class="data-table-text">概要</th>
+        <th scope="col" class="data-table-num">金額</th>
+        <th scope="col" class="data-table-fit">更新日</th>
+        <th scope="col" class="data-table-fit">状態</th>
+        <th scope="col" class="data-table-fit"><span class="sr-only">操作</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>本社ビル賃貸借契約</td>
+        <td class="data-table-text">本社ビル 3〜5 階の賃貸借。更新は 2 年ごとで、次回更新時に面積の見直しを予定。</td>
+        <td class="data-table-num">1,200,000円</td>
+        <td class="data-table-fit">2026/09/01</td>
+        <td class="data-table-fit"><span class="badge badge-soft-success">有効</span></td>
+        <td class="data-table-fit"><a class="link" href="#"><span class="link-label">詳細を見る<span class="sr-only">（本社ビル賃貸借契約）</span></span></a></td>
+      </tr>
+      <tr>
+        <td>清掃業務委託契約</td>
+        <td class="data-table-text">共用部の日常清掃と月 1 回の定期清掃。</td>
+        <td class="data-table-num">85,000円</td>
+        <td class="data-table-fit">2026/03/31</td>
+        <td class="data-table-fit"><span class="badge badge-soft-danger">期限切れ</span></td>
+        <td class="data-table-fit"><a class="link" href="#"><span class="link-label">詳細を見る<span class="sr-only">（清掃業務委託契約）</span></span></a></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

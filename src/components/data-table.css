@@ -10,14 +10,39 @@
  *
  *   構造（native <table> ベース）:
  *
- *     <table class="data-table">
- *       <thead>
- *         <tr><th>Item</th><th>Name</th><th>Description</th></tr>
- *       </thead>
- *       <tbody>
- *         <tr><td>1</td><td>Container</td><td>コンテナ要素</td></tr>
- *       </tbody>
- *     </table>
+ *     <div class="data-table-wrap" tabindex="0">                       (列が多いときだけ)
+ *       <table class="data-table">
+ *         <thead>
+ *           <tr>
+ *             <th scope="col">契約名</th>
+ *             <th scope="col" class="data-table-text">概要</th>
+ *             <th scope="col" class="data-table-num">金額</th>
+ *             <th scope="col" class="data-table-fit">状態</th>
+ *           </tr>
+ *         </thead>
+ *         <tbody>
+ *           <tr>
+ *             <td>本社ビル賃貸借契約</td>
+ *             <td class="data-table-text">本社ビル 3〜5 階の賃貸借。…</td>
+ *             <td class="data-table-num">1,200,000円</td>
+ *             <td class="data-table-fit"><span class="badge badge-soft-success">有効</span></td>
+ *           </tr>
+ *         </tbody>
+ *       </table>
+ *     </div>
+ *
+ *   列幅（column sizing）— 既定は auto layout（内容で幅が決まる）。指定するのは「締める列」だけ:
+ *     .data-table-fit   固定書式の列（日付・ID・状態バッジ・操作リンク）。th と同列の td 全てに付け、
+ *                       内容幅まで締める（width:1% + nowrap）。付けないと自由文に押されて 2 行に折れる
+ *     .data-table-num   数値列（金額・件数）。fit ＋ 右寄せ ＋ 等幅数字で桁を揃える
+ *     .data-table-text  自由文の列（説明・備考）。折り返しつつ最小幅 256px を確保し、数文字幅に潰れない
+ *     .data-table-wrap  横スクロールの受け皿。列が多く親幅に収まらないときは
+ *                       <div class="data-table-wrap" tabindex="0"> で包む（列幅を詰めて無理に収めない）。
+ *                       wrap 内では自由文（data-table-text）以外のセルを 1 文字ずつ折らない（keep-all）ので、
+ *                       表の最小幅が中身で決まり、親幅に収まらない分が横スクロールに回る
+ *     幅指定なしの列（契約名など短いテキスト）が余白を吸う。全列に w-* を配ると合計が崩れて
+ *     折り返し・溢れの原因になる（利用側で頻発した崩れの典型）。
+ *     見出し（thead th）は常に keep-all — 「契/約/名」のような縦割れを防ぐ。
  *
  *   サイズ / 色:
  *     header row   bg neutral/50 / text 14-bold fg/high
@@ -32,14 +57,23 @@
  *
  * 使用法:
  *   OK: thead に列見出し、tbody に行データを置く。
+ *   OK: 固定書式の列（日付・ID・状態バッジ・金額・操作）は th と同列の td 全てに data-table-fit
+ *       （数値は data-table-num）を付けて内容幅に締める。自由文の列は data-table-text で 1 列だけ。
+ *   OK: 列が多く親幅に収まらない表は <div class="data-table-wrap" tabindex="0"> で包んで横スクロール。
+ *       列幅を詰めたり文字を小さくして 1 画面に収めない（本体サイトも「自然な列幅のまま横スクロール」が方針）。
  *   NG: 1 件の項目一覧（キー/値）に使わない → simple-table。
  *   NG: 罫線・余白を直書きしない → .data-table の既定を使う。
+ *   NG: 全列に w-1/4 等の幅を配らない → 合計が崩れて折り返し・溢れの原因。幅は「締める列」だけ
+ *       data-table-fit / data-table-num で指定し、残りは自動幅に任せる。
+ *   NG: 全セルに whitespace-nowrap を付けない → 表が親幅を越えて溢れる。nowrap は fit / num 列だけ。
+ *   NG: 状態バッジ・日付・金額の列を幅指定なしで置かない → 自由文に押されて 2 行に折れる → data-table-fit。
   *
  * アクセシビリティ:
  *   列見出しを <th scope="col">（データセルは td）にする
  *   表に <caption> か aria-label で名前を付ける
  *   空セルは空白にせず — で「値なし」を示す
- *   幅広は overflow-x:auto のコンテナで包み、キーボードでもスクロール可能にする
+ *   幅広は data-table-wrap（overflow-x:auto）で包み、tabindex="0" でキーボードでもスクロール可能にする
+ *   操作列の見出しが空なら <span class="sr-only">操作</span> で名前を付ける
 */
 
 @layer components {
@@ -77,5 +111,55 @@
   /* Last row: clean rounded bottom (drop the cell border-bottom) */
   .data-table tbody tr:last-child > td {
     border-bottom: 0;
+  }
+
+  /* ============================================================
+   * 列幅 — 固定書式の列を内容幅に締め、自由文の列に余白を渡す
+   *   th と同列の td 全てに付ける（CSS は列単位で white-space を当てられないため）
+   * ============================================================ */
+  .data-table .data-table-fit,
+  .data-table .data-table-num {
+    width: 1%;              /* auto layout では「内容幅まで縮める」ヒントになる */
+    white-space: nowrap;
+  }
+  .data-table .data-table-num {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  /* 見出しは CJK でも 1 文字ずつ折らない（「契/約/名」の縦割れ防止） */
+  .data-table thead th {
+    word-break: keep-all;
+  }
+
+  /* 横スクロールの受け皿 — <div class="data-table-wrap" tabindex="0"> で表を包む。
+   * wrap 内では自由文以外のセルも keep-all にし、表の最小幅を中身で決める（親幅に収まらない分は
+   * 潰さず横スクロールへ）。wrap 外の既存テーブルの折り返し挙動は変えない */
+  .data-table-wrap {
+    overflow-x: auto;
+  }
+  .data-table-wrap .data-table td {
+    word-break: keep-all;
+  }
+
+  /* 自由文の列: 通常の折り返し + 最小幅 256px。
+   * 最小幅は ::after の幅 0 高のスペーサーで担保する（td への min-width はブラウザ差があるため） */
+  .data-table th.data-table-text,
+  .data-table td.data-table-text {
+    white-space: normal;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+  .data-table td.data-table-text::after {
+    content: "";
+    display: block;
+    height: 0;
+    width: calc(var(--spacing) * 64);   /* 256 */
+  }
+  .data-table-wrap:focus-visible {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
+  @media (forced-colors: active) {
+    .data-table-wrap:focus-visible { outline-color: CanvasText; }
   }
 }

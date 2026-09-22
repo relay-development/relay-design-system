@@ -124,3 +124,10 @@ icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…i
 - **判断**: ヘッダに任意の `別名:` ブロックを追加し、build-mcp が `aliases` として索引化、`search` / `get_component` / `list_components` で参照する。DESIGN.md・MCP 指示は「置き場所を問わず a 要素のテキストリンクは `.link`」と明文化。hook（`checkAnchors`）と capability お題 `login-form-links` に同じ判定基準の自作検知を置く
 - **原則**: 「HTML 要素そのものに見える UI（a / select / table）もコンポーネント」。利用者の語彙（テキストリンク）と DS の語彙（リンクテキスト）がずれるときは、DS 側が別名で受ける — 利用者に DS の語彙を覚えさせない
 - **検知基準**: relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が無い `<a>` のうち、(a) class に `underline` / `text-色` / `hover:` を直付けしたもの、(b) "link" を含む独自クラス（`.text-link` / `.footer-link` / `.link-primary` 等。DS の link / link-neutral / link-inverse / link-label 以外）を持つもの。hook はさらに (c) その独自リンククラスに `color` / `text-decoration` を書く CSS 規則も検知する。素の `<a>`（ロゴ・画像・カード全体リンク）は対象外
+
+## テーブルの列幅は「締める列だけ指定」— data-table に fit / num / text / wrap を用意（2026-09）
+
+- **背景**: 利用側プロダクトで、テーブルの列幅が適切に設定されずレイアウト崩れが頻発した。典型は (1) 全列に `w-1/4` 等を配って合計が崩れる、(2) 全セルに `whitespace-nowrap` を付けて親幅を突き抜ける、(3) 状態バッジ・日付・金額の列が幅指定なしで自由文に押されて 2 行に折れる、(4) 列幅や文字を詰めて 1 画面に収めようとして読めなくなる。DS 側は `width:100%` の auto layout を返すだけで列幅の指針がなく、`min-w-*` の数値ユーティリティも safelist 外だったため、エージェントは任意値やインライン width に流れていた。get_component("data-table") にはコピペ用スニペットも無かった
+- **判断**: data-table に 4 クラスを追加する。`.data-table-fit`（width:1% + nowrap で内容幅に締める。th と同列の td 全てに付ける）、`.data-table-num`（fit ＋ 右寄せ ＋ tabular-nums）、`.data-table-text`（自由文。::after の幅 0 高スペーサーで最小幅 256px を担保し、数文字幅に潰れない。td の min-width はブラウザ差があるため使わない）、`.data-table-wrap`（overflow-x:auto の受け皿。`tabindex="0"` でキーボード到達。wrap 内では自由文以外のセルを `word-break: keep-all` にして CJK の 1 文字折りを止め、表の最小幅を中身で決める。thead th は常に keep-all）。幅を指定するのは「締める列」だけで、残り 1 列が余白を吸う。収まらない幅は横スクロールで受け、列幅を詰めて収めない（本体サイトのクッキーポリシー表で「列幅を調整して収める → 自然な列幅のまま横スクロール」に方針転換した `1b053fd47` と同じ判断）
+- **原則**: 利用側に数値を選ばせない。min-width や幅の実値は DS 側のクラスに閉じ込め、利用側は「この列は固定書式か自由文か」だけを判断する
+- **同時に**: snippets/data-table.html・simple-table.html を新設（get_component がスニペットを返す）、DESIGN.md に Data Table 行と禁止パターン、カタログに列幅の実例、capability お題 `wide-table` を追加
