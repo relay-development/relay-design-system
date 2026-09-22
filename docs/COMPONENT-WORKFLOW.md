@@ -41,6 +41,9 @@ git checkout -b add-<component-name>
  *
  *   <一文の用途説明>
  *
+ * 別名:
+ *   <利用者が呼びそうな別の言い方を / 区切りで（任意）。例: テキストリンク / text link / anchor>
+ *
  *   props: <props 一覧>
  *
  *   サイズ / 余白 / 色のサマリ（Figma 値）
@@ -82,7 +85,7 @@ git checkout -b add-<component-name>
 **注意**:
 
 - **state は ARIA 属性を優先** (`[aria-pressed="true"]`, `[aria-selected="true"]`, `:disabled`)。クラス名（`.is-selected`）は最終手段
-- **ヘッダコメントは MCP `get_component` の正本**。`機能:` / `使用法:`（`OK:` / `NG:` 行）ブロックの書式を必ず踏襲する（ヘッダが無いと doc が空になる）。ブロックの**どの行にも `*/` を書かない**（CSS ブロックコメントが閉じてしまう）。詳細は [DECISIONS.md](DECISIONS.md) 参照
+- **ヘッダコメントは MCP `get_component` の正本**。`機能:` / `使用法:`（`OK:` / `NG:` 行）ブロックの書式を必ず踏襲する（ヘッダが無いと doc が空になる）。`別名:` は任意だが、英名・和名・機能文に含まれない呼び方（「テキストリンク」等）で探されるコンポーネントには必ず書く — `search` / `get_component` の索引になり、無いと利用者の語彙では到達できず自作に流れる（実例: link）。ブロックの**どの行にも `*/` を書かない**（CSS ブロックコメントが閉じてしまう）。詳細は [DECISIONS.md](DECISIONS.md) 参照
 
 ## Phase 3. index.css に登録
 

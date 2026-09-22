@@ -47,7 +47,7 @@ export const INSTRUCTIONS = [
   "【実装フロー】",
   "0. get_setup を呼び、CSS が導入済みか確認する（未導入なら導入してから UI を書く）。",
   "1. get_design_principles で必須ルールと禁止パターンを、list_components でコンポーネントの全体像を把握する。",
-  "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。",
+  "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。HTML 要素そのものに見える UI もコンポーネント（a 要素のテキストリンク = link、select 要素 = select）なので、素の要素や独自クラスで書かず get_component を引く。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。空状態・ヒーロー・案内・完了画面などイラストが場面に合うときは、独自の SVG イラストを描かず必ず list_assets から選ぶこと。",
   "4b. アイコンは get_icon(\"名前\") で取得する（Lucide 同梱、名前一覧は get_icon を引数なしで）。スプライトを参照できる環境では <use href=\"…/icons.svg#lucide-名前\">、単一 HTML ファイルや file:// 表示など外部スプライトを参照できない場面では get_icon が返す <symbol> を文書内に定義して <use href=\"#lucide-名前\"> で参照する。自分で SVG パスを描いたり dist/icons.svg を grep したりしない。どちらの場合も class は icon + icon-{xs,sm,md,lg,xl}（サイズクラス必須）。",
@@ -63,6 +63,7 @@ export const INSTRUCTIONS = [
   "【ハード制約】",
   "- 色 / 余白 / タイポ / 角丸 / 影をハードコードしない（#hex やピクセル直書き・任意値クラスを避け、トークン／ユーティリティ経由で書く）。",
   "- 既存コンポーネントがある UI は手書きで再実装せず relay コンポーネントを使う。",
+  "- テキストリンク（a 要素）は置き場所を問わず（本文・フッター・表セル・フォーム脇の補助導線）link コンポーネント（class=\"link\" + <span class=\"link-label\">）。素の <a>・独自クラス・underline + text-* の直付けで自作しない。ボタン形状の主導線は a + btn、ナビ項目は menu-item。",
   "- 独自のブランド色（青など）を持ち込まない。基調はブランド緑 primary / 黄 secondary。",
 ].join("\n");
 
@@ -76,6 +77,7 @@ function findComponent(query) {
   return (
     index.components.find((c) => c.name.includes(q) || q.includes(c.name)) ||
     index.components.find((c) => c.nameJa && c.nameJa.toLowerCase() === q) ||
+    index.components.find((c) => (c.aliases || []).some((a) => a.toLowerCase() === q)) ||
     index.components.find((c) => c.classes.includes(q)) ||
     null
   );
@@ -87,6 +89,7 @@ function formatComponentList() {
     "",
     `各コンポーネントの完全仕様は get_component("<name>") を呼んでください（props / 状態 / 色 / usage / クラス / snippet）。`,
     `UI を書く前に get_design_principles で必須ルールと禁止パターンを確認することを推奨します。`,
+    `HTML 要素そのものに見える UI もコンポーネントです（a 要素のテキストリンク = link、select 要素 = select、table = simple-table / data-table）。素の要素や独自クラスで書かず、該当コンポーネントを get_component で引いてください。`,
     "",
   ];
   for (const c of index.components) {
@@ -96,6 +99,7 @@ function formatComponentList() {
     const summary = lead ? ` — ${lead}` : "";
     const cls = c.classes.slice(0, 6).join(", ");
     lines.push(`- **${c.name}**${ja}${summary}`);
+    if (c.aliases && c.aliases.length) lines.push(`  別名: ${c.aliases.join(" / ")}`);
     lines.push(`  classes: ${cls}${c.classes.length > 6 ? ", …" : ""}`);
   }
   return lines.join("\n");
@@ -121,6 +125,7 @@ function stripDocLabels(doc, labels) {
 function formatComponent(c) {
   const ja = c.nameJa ? ` （${c.nameJa}）` : "";
   const out = [`# ${c.name}${ja}`];
+  if (c.aliases && c.aliases.length) out.push("", `別名: ${c.aliases.join(" / ")}`);
   out.push("");
   // 基準バージョンと、ずれていた場合の正の在り処を毎回明示する（利用プロジェクトの
   // 導入バージョンが古い/新しい場合、この知識にあるクラスが実 CSS に無いことがある）。
@@ -144,7 +149,7 @@ function formatComponent(c) {
   }
 
   // 仕様（doc）からは 機能/使用法/アクセシビリティ ブロックを除いて重複表示を避ける（doc 全文は index に保持）。
-  const spec = c.doc ? stripDocLabels(c.doc, ["機能", "使用法", "アクセシビリティ"]) : "";
+  const spec = c.doc ? stripDocLabels(c.doc, ["別名", "機能", "使用法", "アクセシビリティ"]) : "";
   out.push(`## 仕様（src/components/${c.name}.css ヘッダより）`, "", spec || "（ドキュメントコメントなし）", "");
   out.push(`## CSS クラス（${c.classes.length}）`, "", c.classes.map((x) => `.${x}`).join(", "), "");
   out.push("## コピペ用 HTML スニペット", "");
@@ -487,6 +492,9 @@ function runSearch(query) {
       (c) =>
         c.name.includes(q) ||
         (c.nameJa && c.nameJa.toLowerCase().includes(q)) ||
+        // 別名（ヘッダ 別名:）— 「テキストリンク」「text link」等、英名・和名・機能文に無い呼び方。
+        // 「テキストリンクの色」のようにクエリ側が別名を包含する場合も拾う
+        (c.aliases || []).some((a) => a.toLowerCase().includes(q) || q.includes(a.toLowerCase())) ||
         (c.summary && c.summary.toLowerCase().includes(q)) ||
         (c.function && c.function.toLowerCase().includes(q)) ||
         (c.usage && [...(c.usage.ok || []), ...(c.usage.ng || [])].join(" ").toLowerCase().includes(q)) ||

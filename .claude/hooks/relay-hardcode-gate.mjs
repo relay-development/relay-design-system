@@ -14,6 +14,13 @@
  *   - 生 px の border-radius / box-shadow（var() 行を除く）
  *   - 独自状態クラス is-{selected,active,pressed,current}（ARIA 化されているべき）
  *   - 外部スプライト参照 <use href="….svg#…">（file:// でブロックされる）
+ *   - テキストリンクの自作 — (a) class に underline / text-色 / hover: を直付けした a 要素、または
+ *     (b) 独自のリンク系クラス（.text-link / .footer-link / .link-primary 等。DS の link / link-neutral /
+ *     link-inverse / link-label 以外で "link" を含む）を持つ a 要素で、relay のアンカー系クラス
+ *     （link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が無いもの。
+ *     (b) はカード全体リンク等のブロックラッパー（block / flex / grid / absolute 等を併記）を除外。
+ *     (c) その独自リンククラスに color / text-decoration を書く CSS 規則（= link の再実装）
+ *     （実例: 2026-09 利用側で .link を使わず独自クラスのテキストリンクが実装された）
  *
  * 例外（DESIGN.md 準拠）: 第三者ブランド色は同一行のコメントに「ブランド」または
  * "brand" と明記すればスキップされる。構造ジオメトリの実 px（width/height 等）は
@@ -61,6 +68,61 @@ function checkLine(line) {
   return hits;
 }
 
+// テキストリンクの自作検知（タグ単位・複数行の a タグにも対応するため行ではなく全文を走査）。
+// 素の <a>（ロゴ・画像リンク・カード全体リンク等、class 無し／レイアウト用クラスのみ）は対象外。
+// evals/cases.mjs の同名 forbid パターンと同じ判定基準。
+const DS_ANCHOR_CLASS = /(?:^|\s)(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only)(?:\s|$)/;
+const SELF_STYLED_ANCHOR =
+  /(?:^|\s)(?:underline|no-underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\b)/;
+// "link" を含むが DS の link 系（link / link-neutral / link-inverse / link-label）でないクラス名
+// （.text-link / .footer-link / .skip-link / .link-primary / .textLink 等）
+const CUSTOM_LINK_TOKEN = /^(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)$)[A-Za-z0-9_-]+)$/;
+const hasCustomLinkClass = (cls) => cls.split(/\s+/).some((t) => CUSTOM_LINK_TOKEN.test(t));
+// カード全体リンク（.card-link block 等）はテキストリンクでないので独自クラス判定から外す
+const BLOCK_WRAPPER = /(?:^|\s)(?:block|inline-block|flex|inline-flex|grid|absolute|fixed|inset-0)(?:\s|$)/;
+const LINK_FIX =
+  'class="link" + <span class="link-label">（補助は link-neutral、暗い背景は link-inverse。ボタン形状の導線は btn）';
+function checkAnchors(content) {
+  const hits = [];
+  for (const m of content.matchAll(/<a\b[^>]*>/g)) {
+    const cls = (m[0].match(/\bclass="([^"]*)"/) || [])[1];
+    if (!cls || DS_ANCHOR_CLASS.test(cls)) continue;
+    let why = null;
+    if (SELF_STYLED_ANCHOR.test(cls)) why = "a に underline / text-* を直付け";
+    else if (hasCustomLinkClass(cls) && !BLOCK_WRAPPER.test(cls)) why = "a に独自のリンククラス";
+    if (!why) continue;
+    hits.push({
+      line: content.slice(0, m.index).split("\n").length,
+      text: m[0].replace(/\s+/g, " "),
+      hit: `テキストリンクの自作（${why}）→ ${LINK_FIX}`,
+    });
+  }
+  return hits;
+}
+
+// 独自リンククラスに color / text-decoration を書く CSS 規則 = link コンポーネントの再実装。
+// .css と HTML 内 <style> の両方を対象に、規則ブロック単位で走査する。
+const CUSTOM_LINK_SELECTOR =
+  /(?:^|[\s,>+~(])\.(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)(?![A-Za-z0-9_-]))[A-Za-z0-9_-]+)(?![A-Za-z0-9_-])/;
+function checkCustomLinkCss(content) {
+  const hits = [];
+  for (const m of content.matchAll(/([^{};]*)\{([^{}]*)\}/g)) {
+    const [, rawSelector, body] = m;
+    // HTML 内 <style> では直前のタグ末尾 ">" までが巻き込まれるので、最後の ">" 以降をセレクタとみなす
+    const cut = rawSelector.lastIndexOf(">") + 1;
+    const selector = rawSelector.slice(cut);
+    if (!CUSTOM_LINK_SELECTOR.test(selector)) continue;
+    if (!/(?:^|[;\s])(?:color|text-decoration(?:-[a-z]+)?)\s*:/.test(body)) continue;
+    const start = m.index + cut + (selector.length - selector.trimStart().length);
+    hits.push({
+      line: content.slice(0, start).split("\n").length,
+      text: `${selector.trim().replace(/\s+/g, " ")} { … }`,
+      hit: `独自リンククラスの CSS 定義（color / text-decoration）→ link の再実装。a に ${LINK_FIX} を使い、独自定義を消す`,
+    });
+  }
+  return hits;
+}
+
 function main() {
   let input;
   try {
@@ -95,6 +157,9 @@ function main() {
       violations.push(`${filePath}:${i + 1} — ${hit}\n    ${line.trim().slice(0, 120)}`);
     }
   });
+  for (const a of [...checkAnchors(content), ...checkCustomLinkCss(content)]) {
+    violations.push(`${filePath}:${a.line} — ${a.hit}\n    ${a.text.slice(0, 120)}`);
+  }
 
   if (!violations.length) return 0;
 
