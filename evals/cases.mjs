@@ -84,7 +84,7 @@ export const CASES = [
       "一覧に data-table を使っている（table 要素の手書きスタイリングではない）",
       "状態表示に badge を使い、状態ごとに意味の合うステータス色を使い分けている（有効=success / 期限切れ=danger。審査中は warning / info どちらも可。全状態に同じ色を使うのは不可）",
       "状態が色だけでなくテキストでも伝わる",
-      "金額など数値の桁揃えに配慮している",
+      "金額など数値の桁揃えに配慮している（data-table-num で右寄せ・等幅数字・内容幅に締めるのが正本。状態バッジの列が 2 行に折れていない）",
     ],
   },
   {
@@ -192,6 +192,28 @@ export const CASES = [
       "スキップリンクが body 直後（最初のフォーカス可能要素）にあり、リンク先の id が本文側に実在する",
       "ナビが nav、本文が main のランドマーク構造になっている",
       "記事本文が typo-article + text-fg-high で組まれている",
+    ],
+  },
+  {
+    // 出典: 2026-09 利用側プロダクトで、テーブルの列幅が適切に設定されずレイアウト崩れが頻発した事例
+    // （全列に幅を配る／全セル nowrap／自由文に押されて状態バッジや金額が折れる／列幅を詰めて収める）。
+    // data-table に列幅レシピ（fit / num / text / wrap）を追加した効果を、列が多く自由文を含む表で測る。
+    // status-table（regression）は列が少ないので崩れにくく、この崩れ方は検出できない
+    id: "wide-table",
+    kind: "capability",
+    prompt:
+      "譲渡案件の一覧画面を作ってください。列は、案件名、所在地、事業内容の説明（1〜2 文）、譲渡希望額、公開日、状態（公開中 / 交渉中 / 成約）、詳細ページへの導線です。列が多いので、狭い画面でも表が崩れずに読めるようにしてください。",
+    mustClasses: ["data-table", "data-table-wrap", "badge", "link"],
+    mustPatterns: [
+      { pattern: "data-table-(fit|num)", label: "固定書式の列を data-table-fit / data-table-num で内容幅に締めている" },
+      { pattern: "data-table-wrap[^>]*tabindex=\"0\"|tabindex=\"0\"[^>]*data-table-wrap", label: "横スクロールの受け皿がキーボードで到達できる（tabindex=\"0\"）" },
+    ],
+    rubric: [
+      "状態・公開日・導線の列に data-table-fit、譲渡希望額の列に data-table-num（右寄せ）が th と同列の td 全てに付いている",
+      "事業内容の説明列だけが自由文の列（data-table-text または幅指定なし）で、他の列が幅指定なしの自由文に押されて 2 行に折れていない",
+      "全列に w-* 等の幅を配ったり、全セルに whitespace-nowrap を付けたりしていない（幅指定は締める列だけ）",
+      "収まらない幅は data-table-wrap で横スクロールさせ、文字サイズを小さくしたり列を削って無理に収めていない",
+      "詳細への導線が a 要素 + link、状態が badge のステータス色で、リンク文言が行ごとに区別できる（sr-only 等）",
     ],
   },
   {

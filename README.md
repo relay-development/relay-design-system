@@ -83,7 +83,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 9 | Radio          | `.radio`, `.radio-{sm,md}`, `.radio-error`, `.radio-label`, `.radio-group` |
 | 10 | Filter Chip   | `.filter-chip`, `.filter-chip-{main,icon,label,count,check,check-circle}` |
 | 11 | Tab           | `.tabs`, `.tabs-{solid,line}`, `.tab`, `.tab-{solid,line}`, `.tab-count` |
-| 12 | Table         | `.data-table`（thead が項目名行。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
+| 12 | Table         | `.data-table`, `.data-table-fit`, `.data-table-num`, `.data-table-text`, `.data-table-wrap`（thead が項目名行。列幅は「締める列」だけ fit / num、自由文は text、収まらなければ wrap で横スクロール。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
 | 13 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
 | 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
 | 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
