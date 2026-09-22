@@ -18,6 +18,10 @@
  *       </span>
  *     </button>
  *
+ *   横配置: filter-chip-main が余白を吸収（flex-1）し、count はチェックのすぐ左に寄る。
+ *   main / count / check の 3 要素を justify-between だけで並べると、選択時にチェックが
+ *   出た瞬間 count が両端の中央に浮く（2026-09 利用側で実例）。
+ *
  *   チェックマークは filter-chip-check > filter-chip-check-circle > svg の 3 層。
  *   svg のサイズ（10px）と塗りまるは filter-chip-check-circle が決めるので、この
  *   wrapper を省くと svg にサイズ規則が当たらず、ブラウザ既定の 300×150px で描かれて
@@ -128,8 +132,10 @@
   /* ============================================================
    * Left side — icon + label
    * ============================================================ */
+  /* flex-1 で余白を吸収し、count + check を右端に寄せる（count を中央に浮かせない）。
+   * min-w-0 はラベルの truncate を効かせるため */
   .filter-chip-main {
-    @apply inline-flex items-center min-w-0;
+    @apply inline-flex items-center min-w-0 flex-1;
   }
 
   .filter-chip-icon {
