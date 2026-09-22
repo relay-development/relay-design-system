@@ -131,3 +131,10 @@ icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…i
 - **判断**: data-table に 4 クラスを追加する。`.data-table-fit`（width:1% + nowrap で内容幅に締める。th と同列の td 全てに付ける）、`.data-table-num`（fit ＋ 右寄せ ＋ tabular-nums）、`.data-table-text`（自由文。::after の幅 0 高スペーサーで最小幅 256px を担保し、数文字幅に潰れない。td の min-width はブラウザ差があるため使わない）、`.data-table-wrap`（overflow-x:auto の受け皿。`tabindex="0"` でキーボード到達。wrap 内では自由文以外のセルを `word-break: keep-all` にして CJK の 1 文字折りを止め、表の最小幅を中身で決める。thead th は常に keep-all）。幅を指定するのは「締める列」だけで、残り 1 列が余白を吸う。収まらない幅は横スクロールで受け、列幅を詰めて収めない（本体サイトのクッキーポリシー表で「列幅を調整して収める → 自然な列幅のまま横スクロール」に方針転換した `1b053fd47` と同じ判断）
 - **原則**: 利用側に数値を選ばせない。min-width や幅の実値は DS 側のクラスに閉じ込め、利用側は「この列は固定書式か自由文か」だけを判断する
 - **同時に**: snippets/data-table.html・simple-table.html を新設（get_component がスニペットを返す）、DESIGN.md に Data Table 行と禁止パターン、カタログに列幅の実例、capability お題 `wide-table` を追加
+
+## 単一選択の切替に filter-chip を並べない — 「1 つ選ぶと他が外れる」の行き先を tab / radio に明記（2026-09）
+
+- **背景**: 利用側プロダクトの管理画面で、「有望 / 意欲が高い / 直近の問い合わせ / 休眠から再訪 …」から 1 つを選んで会員一覧を切り替える単一選択の絞り込みに `filter-chip` が並べられた。実装は `<a class="filter-chip" href="#…">` に `aria-pressed` と `aria-current="page"` を併記したもので、(1) 複数選べるように見える形で 1 つしか選べない、(2) button 専用のトグルを a 要素に流用、(3) 押下状態と現在地を二重に表す、の 3 点で DS の意図から外れていた。filter-chip ヘッダの NG は「単一選択しか許さない設問 → radio」とフォーム前提で書かれており、「一覧の表示を件数付きで切り替える」場面を受ける行き先が無かった。tab ヘッダも「一覧の表示形式」の切替としか書いておらず、絞り込み軸の切替が tab の領分だと読めなかった
+- **判断**: コンポーネントは増やさない。見分け方を「1 つ選ぶと他が外れるなら filter-chip ではない」に統一し、行き先を用途で分ける — 同じ一覧を 1 つの軸で切り替える（件数付き）= `tab`（tabs-line + tab-count、一覧の領域が tabpanel）/ フォームの入力値としての単一選択 = `radio`（多ければ `select`）/ 複数同時選択の絞り込み = `filter-chip`。filter-chip ヘッダに `<a>` 流用と `aria-current` 併用の NG、tab ヘッダに単一選択の絞り込み切替の OK と複数選択の NG、DESIGN.md に Components 行の注記と禁止パターン行、capability お題 `single-select-filter` を追加
+- **選ばなかった案**: filter-chip に単一選択 variant（radio 風チップ）を足す → 同じ形で「何個選べるか」が分岐し、ヘッダが既に禁じている「チップ形状で選択数の直感が崩れる」問題を DS 自身が作る。tab（line）は既に件数表示を持ち、見た目も横並びの切替として成立している
+- **原則**: 見た目（件数付きの横並びチップ）ではなく選択モデル（排他か独立か）でコンポーネントを選ぶ。利用者が「チップに見えるから filter-chip」と引いたときに、ヘッダの最初の行で排他かどうかを問い直させる
