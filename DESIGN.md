@@ -26,7 +26,7 @@ relay の UI が共通して持つべき 3 つの性格。トークンやコン�
 4. **Typography セマンティック層** — `.typo-{xsmall..3xlarge}` を使う。生の `text-sm` / `text-base` は禁止
 5. **ARIA 属性で状態を表現** — `[aria-pressed="true"]` / `[aria-selected="true"]` / `:disabled` を CSS selector に使う
 6. **デフォルトは medium** — コンポーネントサイズは例外を除き `md` を使う。タイポグラフィも基準は `.typo-medium` (16px)
-7. **テキストリンクは常に下線** — ナビゲーション可能なテキスト（a 要素）にはデフォルトで下線を付ける。下線の省略は、ボタン形状・アイコンボタン・メニュー項目（`.menu-item` のような角丸・背景付きの項目形状）など「テキストリンクに見えない見た目」を意図的に選んだ場合のみ許される。hover 時にのみ下線を出すパターンは禁止
+7. **テキストリンクは `.link` で、常に下線** — ナビゲーション可能なテキスト（a 要素）は、本文中に限らずフッター・表セル・フォーム脇の補助導線でも `.link` + `.link-label` で組む（独自クラスや `underline text-primary-700` の直付けで自作しない）。下線はデフォルトで付ける。下線の省略は、ボタン形状・アイコンボタン・メニュー項目（`.menu-item` のような角丸・背景付きの項目形状）など「テキストリンクに見えない見た目」を意図的に選んだ場合のみ許される。hover 時にのみ下線を出すパターンは禁止
 8. **フォーカスリングは info（青 `#2563eb`）＋ 絶対に見切れさせない** — キーボードフォーカスの可視化は `--shadow-focus-ring`（`0 0 0 3px #2563eb`）または `outline-info-600` のみ。色を変えない（primary 緑などにしない）。リングを祖先の `overflow-hidden` / `overflow: clip` でクリップしない — 角丸コンテナで囲む時は `overflow-hidden` に頼らず first/last の子側で角丸を作り、リングを全周見せる。`outline: none` の付けっぱなし・hover 時のみ表示も禁止
 9. **main 直 push 禁止** — すべて feature branch + PR + squash merge
 
@@ -148,7 +148,7 @@ Simple Table       : <table class="simple-table"><tr><th>ラベル</th><td>値</
 Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
-Link (本文中)      : <a class="link"><span class="link-label">リンクテキスト</span></a>  ← font-size は本文を inherit。緑を抑えたい補助リンクは .link-neutral、暗い背景上は .link-inverse（白）
+Link (テキストリンク): <a class="link"><span class="link-label">リンクテキスト</span></a>  ← a 要素のテキストリンクは置き場所を問わずこれ（本文・フッター・表セル・フォーム脇）。font-size は本文を inherit。緑を抑えたい補助リンクは .link-neutral、暗い背景上は .link-inverse（白）
 Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)。フォームや設定・詳細は <div class="page-shell page-shell-content"> で 900px に絞る
 ```
 
@@ -196,6 +196,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
 | `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
 | テキストリンク（a 要素）の下線省略・hover 時のみ下線 | 常に下線。省略はボタン形状・アイコンボタン・メニュー項目等「テキストリンクに見えない見た目」を意図的に選んだ場合のみ |
+| テキストリンクを素の `<a>`・独自クラス（`.text-link` 等）・`underline text-primary-700` の直付けで自作 | 置き場所を問わず `.link` + `.link-label`（補助は `.link-neutral`、暗い背景は `.link-inverse`）。ボタン形状の主導線は a + `.btn`、ナビ項目は `.menu-item` |
 | フォーカスリングの色変更（primary 緑など）・祖先の `overflow-hidden` での見切れ | info 青（`--shadow-focus-ring` / `outline-info-600`）のまま全周表示。角丸コンテナは `overflow-hidden` に頼らず first/last 子側で角丸を作る |
 | 恒常的な surface の elevation をシャドウで表現（`card-elevated` の常用等） | ボーダー + 背景色で区切る。シャドウは modal / tooltip 等の重なりレイヤーのみ |
 | コンテナ幅をサイズ名で新規指定（`max-w-5xl` 等） | 用途名の `max-w-page` / `max-w-content` / `max-w-article`（または `.page-shell` / `.page-shell-content`） |

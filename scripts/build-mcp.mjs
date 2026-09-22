@@ -183,8 +183,22 @@ async function buildComponents() {
 
     const figmaNode = (doc.match(/component set\s+([\d:]+)/) || [])[1] || null;
     // Japanese name in the parens after the Figma node id, e.g. "... 3120:1917 (インプット)"
+    // "Link (リンクテキスト) — recreated from Figma component 3208:1456" のように、
+    // component set でない単体コンポーネントはタイトル行の括弧に和名を置く（link.css）。
+    // 従来はこの形式を拾えず nameJa が null になり、list_components / search から和名が落ちていた。
     const nameJa =
-      (doc.match(/component set\s+[\d:]+\s*\(([^)]+)\)/) || [])[1] || null;
+      (doc.match(/component set\s+[\d:]+\s*\(([^)]+)\)/) || [])[1] ||
+      (doc.match(/^[^\n(]*\(([^)]+)\)\s*—/) || [])[1] ||
+      null;
+
+    // 別名 — 利用者が呼びそうな別の言い方（"テキストリンク / text link / anchor"）。
+    // search / get_component の索引になる。英名・和名・機能文のどれにも含まれない語で
+    // 探されると到達できない（実例: search("テキストリンク") が link を返さず、利用側で
+    // テキストリンクが独自クラスで自作された）。
+    const aliasBlock = sliceDocLabel(doc, "別名");
+    const aliases = aliasBlock
+      ? aliasBlock.split(/\s*\/\s*|\n/).map((s) => s.trim()).filter(Boolean)
+      : [];
 
     let snippet = null;
     if (snippetFiles.has(`${name}.html`)) {
@@ -213,6 +227,7 @@ async function buildComponents() {
     components.push({
       name,
       nameJa,
+      aliases,
       figmaNode,
       summary: deriveSummary(doc, name),
       function: functionDoc,

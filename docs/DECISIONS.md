@@ -118,3 +118,9 @@ icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…i
   file:// 表示の都合なので維持（評価環境固有のルールであり、利用側プロジェクトには適用されない）
 - **ヘッダ**: icon.css に「サイズクラス必須（省くと 300×150px）」と使い方 B を追記（filter-chip の巨大チェックと同根）
 
+## a 要素のテキストリンクは「コンポーネント」— 別名索引と自作検知で到達させる（2026-09）
+
+- **背景**: 利用側プロダクトで、テキストリンクが `.link` でなく独自クラスで実装された。原因は誘導の穴が 4 つ重なったこと — (1) `search("テキストリンク")` が link を返さない（link.css は「リンクテキスト」「インラインリンク」としか書いておらず、タイトル行の和名も build-mcp が拾えず `nameJa: null`）、(2) DESIGN.md が「Link (本文中)」と場所を限定し、フッター・フォーム脇の脇役リンクが対象外に読めた、(3) MCP のハード制約・実装フローに「a 要素もコンポーネント」の言及がなく、エージェントは `<a>` を素の HTML と見なして get_component を引かなかった、(4) hook・evals に自作リンクの検知がなかった（article-links はリンクが主題の場面のみ）
+- **判断**: ヘッダに任意の `別名:` ブロックを追加し、build-mcp が `aliases` として索引化、`search` / `get_component` / `list_components` で参照する。DESIGN.md・MCP 指示は「置き場所を問わず a 要素のテキストリンクは `.link`」と明文化。hook（`checkAnchors`）と capability お題 `login-form-links` に同じ判定基準の自作検知を置く
+- **原則**: 「HTML 要素そのものに見える UI（a / select / table）もコンポーネント」。利用者の語彙（テキストリンク）と DS の語彙（リンクテキスト）がずれるときは、DS 側が別名で受ける — 利用者に DS の語彙を覚えさせない
+- **検知基準**: relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が無い `<a>` のうち、(a) class に `underline` / `text-色` / `hover:` を直付けしたもの、(b) "link" を含む独自クラス（`.text-link` / `.footer-link` / `.link-primary` 等。DS の link / link-neutral / link-inverse / link-label 以外）を持つもの。hook はさらに (c) その独自リンククラスに `color` / `text-decoration` を書く CSS 規則も検知する。素の `<a>`（ロゴ・画像・カード全体リンク）は対象外

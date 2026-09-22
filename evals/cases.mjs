@@ -195,6 +195,45 @@ export const CASES = [
     ],
   },
   {
+    // 出典: 2026-09 利用側プロダクトで、テキストリンクを .link でなく独自クラスで自作した事例。
+    // article-links（リンクが本文の主題）は守れていたが、主題でない「脇役」のリンク（フォーム脇の
+    // 補助導線・フッターの規約リンク）で a 要素をコンポーネントと認識できず自作に流れた。
+    // 誘導の穴: search("テキストリンク") が link を返さない（和名 null・別名索引なし）、DESIGN.md が
+    // 「Link (本文中)」と場所を限定、MCP ハード制約に a 要素の言及なし — を同時に是正した効果を測る。
+    // forbid パターンは hook（relay-hardcode-gate の checkAnchors）と同じ判定基準
+    id: "login-form-links",
+    kind: "capability",
+    prompt:
+      "ログイン画面を作ってください。メールアドレスとパスワードを入力してログインします。パスワードを忘れた人が再設定へ進める導線と、画面下部に利用規約・プライバシーポリシーへ移動できる導線を置いてください。",
+    mustClasses: ["label-control", "input", "btn-primary", "link"],
+    mustPatterns: [
+      {
+        // (a) relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が
+        //     無い a 要素に underline / text-色 / hover: を直付け
+        pattern:
+          "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\\b))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only)(?:\\s|\"))[^>]*>",
+        forbid: true,
+        label: "テキストリンクの自作（a に underline / text-* を直付けし、relay のアンカークラスが無い）",
+      },
+      {
+        // (b) "link" を含む独自クラス（DS の link / link-neutral / link-inverse / link-label 以外。.text-link /
+        //     .footer-link / .link-primary 等）を持ち、relay のアンカー系クラスが無い a 要素。
+        //     カード全体リンク等のブロックラッパー（block / flex / grid / absolute 等を併記）は除外
+        pattern:
+          "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)(?=[\\s\"]))[A-Za-z0-9_-]+)(?=[\\s\"]))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|block|inline-block|flex|inline-flex|grid|absolute|fixed|inset-0)(?:\\s|\"))[^>]*>",
+        forbid: true,
+        label: "テキストリンクの自作（.text-link 等の独自リンククラス。relay のアンカークラスが無い）",
+      },
+    ],
+    rubric: [
+      "パスワード再設定・利用規約・プライバシーポリシーへの導線がすべて a 要素 + link（独自クラスや underline + text-* の自作でなく、button の流用でもない）",
+      "どのリンクにも下線が常時あり、フォントサイズを固定せず周囲の本文サイズを inherit している",
+      "リンク色は link のデフォルト（緑）/ link-neutral / link-inverse の 3 択から選んでおり、text-* ユーティリティで色を上書きしていない",
+      "ログインボタンは btn-primary が 1 つだけ（primary は 1 画面 1 つの原則）",
+      "各入力項目に label-control を使い、パスワード欄は type=\"password\"",
+    ],
+  },
+  {
     // 出典: #243（ブランドアセットを能動的に使わせる知識）の効果測定。
     // empty-state（regression）は「そっけなくならないように」というヒント付きで守る側。
     // こちらはヒントなしの別場面（完了画面）で、場面に合うイラストを能動的に
