@@ -31,7 +31,8 @@
 
 /*
  * 全お題共通の機械チェック（run.mjs が各お題の mustPatterns に自動で合算する）。
- * 責任境界の ⚠️/🔧 のうち「どの UI でも成立し、正規表現で測れるもの」だけを置く。
+ * 責任境界の ⚠️/🔧 のうち「どの UI でも成立し、正規表現で測れるもの」と、DS 違反のうち同じ条件を
+ * 満たすもの（テキストリンクの自作）を置く。
  * forbid: true は「マッチしたら不合格」（アンチパターン検知）。
  */
 export const COMMON_PATTERNS = [
@@ -41,6 +42,26 @@ export const COMMON_PATTERNS = [
     pattern: "<svg(?![^>]*\\b(aria-hidden|aria-label|aria-labelledby|role)=)",
     forbid: true,
     label: "a11y 属性なしの svg（装飾は aria-hidden=\"true\"、意味があるなら aria-label。WCAG 1.1.1）",
+  },
+  // テキストリンクの自作（DS 違反）— どの UI でも成立するので全お題で検知する。
+  // hook（relay-hardcode-gate の checkAnchors）と同じ判定基準。出典: 2026-09 利用側で .link を使わず
+  // 独自クラスのテキストリンクが実装された事例（到達側の正の検査は login-form-links）
+  {
+    // (a) relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が
+    //     無い a 要素に underline / text-色 / hover: を直付け
+    pattern:
+      "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\\b))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only)(?:\\s|\"))[^>]*>",
+    forbid: true,
+    label: "テキストリンクの自作（a に underline / text-* を直付けし、relay のアンカークラスが無い）",
+  },
+  {
+    // (b) "link" を含む独自クラス（DS の link / link-neutral / link-inverse / link-label 以外。.text-link /
+    //     .footer-link / .link-primary 等）を持ち、relay のアンカー系クラスが無い a 要素。
+    //     カード全体リンク等のブロックラッパー（block / flex / grid / absolute 等を併記）は除外
+    pattern:
+      "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)(?=[\\s\"]))[A-Za-z0-9_-]+)(?=[\\s\"]))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|block|inline-block|flex|inline-flex|grid|absolute|fixed|inset-0)(?:\\s|\"))[^>]*>",
+    forbid: true,
+    label: "テキストリンクの自作（.text-link 等の独自リンククラス。relay のアンカークラスが無い）",
   },
 ];
 
@@ -228,25 +249,8 @@ export const CASES = [
     prompt:
       "ログイン画面を作ってください。メールアドレスとパスワードを入力してログインします。パスワードを忘れた人が再設定へ進める導線と、画面下部に利用規約・プライバシーポリシーへ移動できる導線を置いてください。",
     mustClasses: ["label-control", "input", "btn-primary", "link"],
-    mustPatterns: [
-      {
-        // (a) relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が
-        //     無い a 要素に underline / text-色 / hover: を直付け
-        pattern:
-          "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\\b))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only)(?:\\s|\"))[^>]*>",
-        forbid: true,
-        label: "テキストリンクの自作（a に underline / text-* を直付けし、relay のアンカークラスが無い）",
-      },
-      {
-        // (b) "link" を含む独自クラス（DS の link / link-neutral / link-inverse / link-label 以外。.text-link /
-        //     .footer-link / .link-primary 等）を持ち、relay のアンカー系クラスが無い a 要素。
-        //     カード全体リンク等のブロックラッパー（block / flex / grid / absolute 等を併記）は除外
-        pattern:
-          "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)(?=[\\s\"]))[A-Za-z0-9_-]+)(?=[\\s\"]))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|block|inline-block|flex|inline-flex|grid|absolute|fixed|inset-0)(?:\\s|\"))[^>]*>",
-        forbid: true,
-        label: "テキストリンクの自作（.text-link 等の独自リンククラス。relay のアンカークラスが無い）",
-      },
-    ],
+    // テキストリンクの自作は COMMON_PATTERNS（全お題共通）で検知する
+    mustPatterns: [],
     rubric: [
       "パスワード再設定・利用規約・プライバシーポリシーへの導線がすべて a 要素 + link（独自クラスや underline + text-* の自作でなく、button の流用でもない）",
       "どのリンクにも下線が常時あり、フォントサイズを固定せず周囲の本文サイズを inherit している",
