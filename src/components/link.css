@@ -9,6 +9,9 @@
  *     isOpenInNew : true | false           → 末尾に external-link アイコン (16px)
  *     label       : string
  *
+ *   下線: enable 1px、hover 2px（色によらず共通）
+ *     ※ hover の色変化は 1 段だけで enable との差が分かりにくいため、下線の太さでも示す。
+ *
  *   色: default = enable primary/700、hover primary/800
  *     ※ Figma は enable=primary/500 だが、白背景で約 2.57:1 と不足のため
  *       primary/700 (約 7.0:1) に上げ、WCAG 2.2 AAA を満たす。
@@ -79,7 +82,7 @@
 
   /* 下線はラベルだけに掛け、アイコンには掛けない */
   .link .link-label {
-    @apply underline;
+    @apply underline decoration-1;
     text-underline-position: from-font;
     text-decoration-skip-ink: none;
   }
@@ -95,6 +98,13 @@
   .link:hover:not([aria-disabled="true"]),
   .link.is-hover-preview {
     @apply text-primary-800;
+  }
+
+  /* Hover の下線は 2px に太らせる。色の 1 段変化だけでは enable との差が
+   * 分かりにくいため、太さでも変化を示す（全カラー共通） */
+  .link:hover:not([aria-disabled="true"]) .link-label,
+  .link.is-hover-preview .link-label {
+    @apply decoration-2;
   }
 
   /* Neutral カラー — 緑を目立たせたくない補助的なリンク向け。
