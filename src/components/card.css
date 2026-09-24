@@ -8,7 +8,7 @@
  *     image    : カード上端に端まで広がる画像 → .card の最初の子に img.card-image（alt 必須、任意）
  *     metadata : 本文末尾の補足行（件数・日付等、アイコン 16px ＋テキスト）→ ul.card-metadata（任意）
  *     action   : 右上の操作 1 つ → card-header 内に .card-action（中は icon-btn、任意）
- *     layout   : 標準 / card-compact（密な一覧向け。padding 16、アイコン背景なし）
+ *     layout   : 標準 / card-compact（密な一覧向け。padding 16。card-icon は使わない）
  *     body     : 標準 / card-body-flush（本文 padding 0。見出し付きのリスト・テーブルを端まで敷く）
  *
  *   余白 / 区切り:
@@ -29,7 +29,7 @@
  *   OK: 内容の種類を一目で示したいときは card-icon、写真・サムネイルが主役なら card-image。アイコンと画像は併用しない。
  *   OK: 件数・日付・担当者などの補足は本文末尾の card-metadata にまとめる（アイコン ＋ テキスト）。
  *   OK: カード単位の操作（メニューを開く等）は card-header 内の card-action に 1 つだけ置く（icon-btn-sm の neutral ghost）。
- *   OK: 同種のカードを密に並べる一覧は card-compact。
+ *   OK: 同種のカードを密に並べる一覧は card-compact（見出し＋短い説明だけで組む）。
  *   OK: 見出し付きのリスト・テーブルをカード幅いっぱいに敷くときは card-body-flush（行側で左右 24 を取る）。
  *   OK: カードを並べるときは ul（aria-label 付き）> li で包む。
  *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
@@ -37,6 +37,7 @@
  *   NG: header / body / footer の間に区切り線（border-b / border-t / divide-y）や背景色を足さない → 余白で区切る既定を保つ。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
+ *   NG: card-compact に card-icon を付けない → 密な一覧でアイコンが並ぶと情報より装飾が勝つ。種類を示したいなら標準レイアウトにする。
  *   NG: card-action に操作を 2 つ以上並べない → 複数の操作はメニューにまとめて 1 つのボタンから開くか、card-footer に置く。
  *   NG: card-image の alt を省略しない → 内容を表す画像は説明を、装飾なら alt="" を明示する。
  *
@@ -190,10 +191,6 @@
     @apply mt-4;
   }
 
-  .card-compact .card-header:has(> .card-action) > .card-icon + * {
-    @apply mt-2;
-  }
-
   /* header 1 行目 (card-icon があればアイコン、無ければ見出し) の縦中央に置く。
    * -my-1 で icon-btn-sm (32) の占有高さを 24 にし、見出し 1 行 (24) の行高を押し広げない。
    * -mr-2 は ghost ボタンの透明な余白ぶん右に寄せ、アイコンの右端を本文の右端に揃える */
@@ -205,7 +202,7 @@
   }
 
   /* ============================================================
-   * Layout: compact — 密な一覧向け。padding 16、見出し→本文 8、アイコン背景なし
+   * Layout: compact — 密な一覧向け。padding 16、見出し→本文 8 (card-icon は使わない)
    * ============================================================ */
   .card-compact .card-header {
     @apply px-4 pt-4 pb-2;
@@ -229,10 +226,6 @@
 
   .card-compact .card-footer:first-child {
     @apply pt-4;
-  }
-
-  .card-compact .card-icon {
-    @apply w-6 h-6 mb-2 bg-transparent rounded-none;   /* 背景なし = アイコン 24 そのままの大きさ */
   }
 
   /* ============================================================
