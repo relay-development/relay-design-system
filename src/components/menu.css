@@ -16,7 +16,7 @@
  *     trailing : 末尾装飾アイコン 16px (menu-item-trailing。external-link 等、任意)
  *     label    : string
  *
- *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線。
+ *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線、項目間 gap 0。
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
  *   item     : padding 12 (sm は 8), gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px
  *   colors   : default = fg/middle、hover = bg neutral/100 + fg/high、
@@ -95,7 +95,7 @@
   }
 
   .menu-group {
-    @apply flex flex-col gap-1 m-0 p-0 list-none;
+    @apply flex flex-col gap-0 m-0 p-0 list-none;   /* 項目間は詰める (項目自身の padding で間隔を取る) */
   }
 
   .menu-divider {
