@@ -31,9 +31,9 @@
  *     幅       max 480px (spacing*120)、狭い画面では左右 16px ずつ空ける
  *     角丸     rounded-md (16px) + shadow-lg
  *     backdrop overlay トークン (neutral/900 @ 60%)
- *     header   px-5 py-4 border-b（card は区切り線なしの別仕様。本文がスクロールしうるため modal は線を残す）
+ *     header   px-5 py-4 border-b
  *     body     p-6 / text-base (16/32) fg/high
- *     footer   px-5 py-3 border-t bg-neutral-50 右寄せ（同上、card とは別仕様）
+ *     footer   px-5 py-3 border-t bg-neutral-50 右寄せ（card の footer は線・背景なしの別仕様。本文がスクロールしうるため modal は残す）
  *
  * 別名:
  *   ダイアログ / dialog / 確認ダイアログ

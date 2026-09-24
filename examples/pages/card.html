@@ -116,7 +116,7 @@
       </ul>
 
       <h4 class="typo-large mb-4">compact</h4>
-      <p class="typo-medium text-fg-middle mb-4"><code class="px-1 bg-neutral-100 rounded">.card-compact</code> — 同種のカードを密に並べる一覧向け。padding 16、見出し→本文 8。見出し＋短い説明だけで組み、アイコンは付けない。</p>
+      <p class="typo-medium text-fg-middle mb-4"><code class="px-1 bg-neutral-100 rounded">.card-compact</code> — 同種のカードを密に並べる一覧向け。左右 16・見出し上下 12・本文 16。見出し＋短い説明だけで組み、アイコンは付けない。</p>
       <ul class="grid sm:grid-cols-3 gap-4 mb-10" aria-label="設定メニュー">
         <li class="card card-compact">
           <div class="card-header">
@@ -220,7 +220,7 @@
             <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
           </div>
           <div class="card-body space-y-3">
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">カードの区切りは影でなく外枠のボーダー、カード内のパートは線を引かず余白で区切る。<code class="typo-xsmall">card-title</code> の見た目（サイズ）と、実際の見出しレベルを一致させる。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">カードの区切りは影でなく外枠のボーダー。カード内は見出しの下だけ線を引き、本文と操作は余白で区切る。<code class="typo-xsmall">card-title</code> の見た目（サイズ）と、実際の見出しレベルを一致させる。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">rem / トークンで拡大に追従し、狭幅では縦積みに reflow。高さ固定で内容を切らない。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle">カード自体は非対話。中のボタン/リンクが操作対象。カード全体を押せるようにするなら 1 つのリンクで包む（入れ子リンクを作らない）。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle"><code class="typo-xsmall">card-title</code> を <code class="typo-xsmall">h2〜h4</code> にすると、SR の見出しジャンプでカードを辿れる。装飾の枠は読み上げに影響しない。</p></div>

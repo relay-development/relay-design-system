@@ -13,13 +13,13 @@
  *
  *   余白 / 区切り:
  *     外枠     border stroke-middle + rounded-md（カードと周囲の区切りは外枠で示す）
- *     内側     header / body / footer の間に区切り線・背景色を付けず、余白だけで区切る
- *     padding  各パート左右 24。上下は カード端 24 / パート間 16（見出し→本文）・24（本文→操作）
- *              compact は左右 16・カード端 16・見出し→本文 8
+ *     内側     見出し（header）の下だけ区切り線 stroke-middle を引く。body / footer の間は線・背景色を付けず余白で区切る
+ *     padding  各パート左右 24。header 上下 16、body 24、footer は本文との間 0・下端 24（本文→操作 24）
+ *              compact は左右 16・header 上下 12・body 16
  *     icon     40×40、角丸 sm (8)、bg neutral/100、fg/high、アイコン 24px、下 16
  *     image    幅 100%・object-cover、背景 neutral/50（読み込み前のプレースホルダー）。比率は aspect-* で指定
  *     metadata text-sm fg/low、項目間 16、アイコン 16px（テキストとの間 4）、本文との間 16
- *     ※ Modal は重なりレイヤーで本文がスクロールしうるため、header / footer の区切り線を残す（card とは別仕様）
+ *     ※ Modal は重なりレイヤーで本文がスクロールしうるため、footer の区切り線・背景も残す（card とは別仕様）
  *
  * 機能:
  *   関連情報をグループ化して見せる枠。最前面に重ねて操作を止めるなら modal。
@@ -35,7 +35,7 @@
  *   OK: カードを並べるときは ul（aria-label 付き）> li で包む。
  *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。密にしたいなら card-compact、余白なしは card-body-flush。
- *   NG: header / body / footer の間に区切り線（border-b / border-t / divide-y）や背景色を足さない → 余白で区切る既定を保つ。
+ *   NG: body / footer の間に区切り線（border-t / divide-y）や背景色を足さない → 区切り線は header の下だけ。本文と操作は余白で区切る既定を保つ。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
  *   NG: card-compact に card-icon を付けない → 密な一覧でアイコンが並ぶと情報より装飾が勝つ。種類を示したいなら標準レイアウトにする。
@@ -91,16 +91,14 @@
     @apply border-0 shadow-md;
   }
 
-  /* パート間は区切り線を引かず余白で区切る。各パートはカード端側に 24 を持ち、
-   * 隣り合うパート間は後ろ側の上 padding を 0 にして間隔を決める
-   * (見出し→本文 16 = header の pb、本文→操作 24 = body の pb) */
+  /* 区切り線は見出しの下だけ。body / footer の間は線を引かず余白で区切る */
   .card-header {
-    @apply px-6 pt-6 pb-4;
+    @apply px-6 py-4 border-b border-stroke-middle;
   }
 
-  /* header だけのカードは下端もカード端として 24 */
+  /* header だけのカードは外枠と線が重なるため下線を消す */
   .card-header:last-child {
-    @apply pb-6;
+    @apply border-b-0;
   }
 
   .card-title {
@@ -115,10 +113,7 @@
     @apply p-6 text-sm text-fg-middle;
   }
 
-  .card-header + .card-body {
-    @apply pt-0;
-  }
-
+  /* 本文→操作は body の pb (24) で空け、線・背景は付けない */
   .card-footer {
     @apply px-6 pt-0 pb-6 flex items-center justify-end gap-2;
   }
@@ -204,22 +199,14 @@
   }
 
   /* ============================================================
-   * Layout: compact — 密な一覧向け。padding 16、見出し→本文 8 (card-icon は使わない)
+   * Layout: compact — 密な一覧向け。左右 16、header 上下 12、body 16 (card-icon は使わない)
    * ============================================================ */
   .card-compact .card-header {
-    @apply px-4 pt-4 pb-2;
-  }
-
-  .card-compact .card-header:last-child {
-    @apply pb-4;
+    @apply px-4 py-3;
   }
 
   .card-compact .card-body {
     @apply p-4;
-  }
-
-  .card-compact .card-header + .card-body {
-    @apply pt-0;
   }
 
   .card-compact .card-footer {
