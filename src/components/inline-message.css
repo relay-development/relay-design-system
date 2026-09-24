@@ -18,8 +18,8 @@
  *             → .inline-message-sm を付けると密な場所（テーブル行内・ツールバー）向け
  *
  *   サイズ / 色 (semantic tokens):
- *     md   : text 16/24 medium、icon 20px（24px の行高に垂直中央）、gap 8px
- *     sm   : text 14/20 medium、icon 16px（20px の行高に垂直中央）、gap 4px
+ *     md   : text 16/24 bold、icon 20px（24px の行高に垂直中央）、gap 8px
+ *     sm   : text 14/20 bold、icon 16px（20px の行高に垂直中央）、gap 4px
  *     success  : primary/600（alert-success の文字色と同じ。白背景で 4.9:1）
  *     negative : negative/600（白背景で 4.8:1）
  *     warning  : secondary/800（白背景で 4.5:1 を満たすため。secondary/700 は 4.3:1 で不足）
@@ -67,14 +67,16 @@
 
 @layer components {
   /* ============================================================
-   * Container — md: 16/24 medium, gap 8
+   * Container — md: 16/24 bold, gap 8
+   *   ウェイトは bold。本文（regular）の中に置いても結果の一文が埋もれず、
+   *   色が判別しにくい環境でも「結果」だと分かる（link の bold 引き上げと同じ判断）。
    *   ブロック要素（flex）＋ 中身幅（w-fit）。連続して置けば縦に積まれ、
    *   ボタンの横に並べるときは親の flex row に載せる。長い文言は折り返す。
    *   （inline-flex だと兄弟の inline-message が横に流れて連結して見える）
    * ============================================================ */
   .inline-message {
     @apply flex items-start gap-2 w-fit max-w-full
-           text-base leading-6 font-medium text-left;
+           text-base leading-6 font-bold text-left;
   }
 
   /* ============================================================
@@ -92,7 +94,7 @@
   }
 
   /* ============================================================
-   * Size — sm: 14/20 medium, icon 16px, gap 4
+   * Size — sm: 14/20 bold, icon 16px, gap 4
    * ============================================================ */
   .inline-message-sm {
     @apply gap-1 text-sm leading-5;

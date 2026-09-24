@@ -370,6 +370,7 @@ const PAGES = [
   { file: "accordion.html",    group: "Components", label: "アコーディオン",   title: "アコーディオン",   desc: "見出しの開閉で本文を出し入れする開示" },
   { file: "page-shell.html",   group: "Components", label: "ページシェル",     title: "ページシェル",     desc: "コンテンツ領域を標準幅に整えるラッパー" },
 
+  { file: "feedback.html",     group: "ガイドライン", label: "システムフィードバック", title: "システムフィードバックのアクセシビリティ", desc: "操作結果の伝え方 — 出さない / inline-message / alert / modal と、トーストを置かない理由" },
   // hidden: サイドバーに出さない（checkbox / radio ページ下部のカードリンクからのみ遷移）
   { file: "guidelines.html",   group: "ガイドライン", label: "チェックボックスとラジオボタン", title: "チェックボックスとラジオボタン", desc: "Don't / Good パターン集", hidden: true },
 ];
