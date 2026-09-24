@@ -1,8 +1,13 @@
 /*
  * Card (カード) — 関連する情報をひとまとめに見せるコンテナ。
  *
- *   header / body / footer を組み合わせる。寸法・配色は Modal と共有。
- *   variant: 標準 / card-elevated（影付き）
+ *   header / body / footer を組み合わせる。variant: 標準 / card-elevated（影付き）
+ *
+ *   余白 / 区切り:
+ *     外枠     border stroke-middle + rounded-md（カードと周囲の区切りは外枠で示す）
+ *     内側     header / body / footer の間に区切り線・背景色を付けず、余白だけで区切る
+ *     padding  各パート左右 24。上下は カード端 24 / パート間 16（見出し→本文）・24（本文→操作）
+ *     ※ Modal は重なりレイヤーで本文がスクロールしうるため、header / footer の区切り線を残す（card とは別仕様）
  *
  * 機能:
  *   関連情報をグループ化して見せる枠。最前面に重ねて操作を止めるなら modal。
@@ -11,6 +16,7 @@
  *   OK: 見出しは card-header > card-title、本文は card-body、操作は card-footer。
  *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。
+ *   NG: header / body / footer の間に区切り線（border-b / border-t / divide-y）や背景色を足さない → 余白で区切る既定を保つ。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
   *
@@ -29,8 +35,16 @@
     @apply border-0 shadow-md;
   }
 
+  /* パート間は区切り線を引かず余白で区切る。各パートはカード端側に 24 を持ち、
+   * 隣り合うパート間は後ろ側の上 padding を 0 にして間隔を決める
+   * (見出し→本文 16 = header の pb、本文→操作 24 = body の pb) */
   .card-header {
-    @apply px-5 py-4 border-b border-stroke-middle;
+    @apply px-6 pt-6 pb-4;
+  }
+
+  /* header だけのカードは下端もカード端として 24 */
+  .card-header:last-child {
+    @apply pb-6;
   }
 
   .card-title {
@@ -45,8 +59,16 @@
     @apply p-6 text-sm text-fg-middle;
   }
 
+  .card-header + .card-body {
+    @apply pt-0;
+  }
+
   .card-footer {
-    @apply px-5 py-3 border-t border-stroke-middle bg-neutral-50
-           flex items-center justify-end gap-2;
+    @apply px-6 pt-0 pb-6 flex items-center justify-end gap-2;
+  }
+
+  /* footer だけのカードは上端もカード端として 24 */
+  .card-footer:first-child {
+    @apply pt-6;
   }
 }
