@@ -34,6 +34,7 @@
 @import "./components/link.css";
 @import "./components/breadcrumb.css";
 @import "./components/menu.css";
+@import "./components/action-menu.css";
 @import "./components/pagination.css";
 @import "./components/stepper.css";
 @import "./components/modal.css";

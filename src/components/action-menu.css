@@ -1,0 +1,175 @@
+/*
+ * Action Menu (アクションメニュー) — Figma に仕様が無いため Primer ActionMenu を参考に DS 規約から新規設計
+ *
+ *   ボタンを押すと開くポップアップに、そのボタンに関係する操作を縦に並べる。
+ *   ネイティブ Popover API (popover 属性 + popovertarget) ベース。最前面 (top layer) に出るため、
+ *   overflow: hidden の card の中から開いても切れない。項目は menu コンポーネントの menu-item を再利用する。
+ *
+ * 別名:
+ *   ドロップダウンメニュー / dropdown menu / ポップアップメニュー / コンテキストメニュー / 三点メニュー / ケバブメニュー / ミートボールメニュー / その他メニュー
+ *
+ *   構造:
+ *     trigger : btn / icon-btn に aria-haspopup="menu" aria-expanded="false" popovertarget="<menu id>"
+ *     menu    : <div class="action-menu" id="…" popover role="menu" aria-labelledby="<trigger id>">
+ *     item    : <button type="button" class="menu-item" role="menuitem" tabindex="-1">（menu-item を再利用）
+ *
+ *   props:
+ *     align    : start（既定。トリガーの左端に揃える）/ end → .action-menu-end（右端に揃える。画面右寄りのトリガー・card-action 用）
+ *     item     : menu-item（md、既定）/ menu-item-sm（項目が多いとき）。左アイコン 24px は任意
+ *     danger   : 削除など取り消せない操作 → menu-item に .action-menu-item-danger
+ *     disabled : 今は実行できない項目 → aria-disabled="true"（フォーカスは残す）
+ *     divider  : 操作のまとまりを区切る → <hr class="menu-divider" />（role="separator" は hr が持つ）
+ *     group    : 見出し付きのまとまり → <div class="menu-section" role="group" aria-labelledby="…"> ＋ <p class="menu-group-title" id="…">（menu の中では見出し要素 h2〜h6 にしない。menu は子に menuitem / group / separator しか持てないため）
+ *
+ *   サイズ / 色:
+ *     menu    : 幅 最小 192 / 最大 320、padding 8、角丸 md (16)、bg surface、border stroke-low、shadow-lg
+ *     gap     : トリガーとの距離 4（下に空きが無ければ上に開く。位置は JS で計算）
+ *     divider : 上下 8
+ *     danger  : fg negative/700、hover bg negative/50
+ *     disabled: fg disabled、hover しない
+ *
+ *   states:
+ *     開閉: [popover] の :popover-open。トリガーの aria-expanded を JS で同期する
+ *     カタログ用: .is-static-preview で開いた状態をページ内に静的表示
+ *
+ * 機能:
+ *   ボタンから開くポップアップで、その対象に対する操作（編集 / 複製 / 削除 等）を選ばせる。
+ *   画面に常に出しておく操作の一覧は menu、値を選んで送信するフォーム項目は select / selector、
+ *   ページやサイト内の移動はリンク（menu のナビ用途）、入力や確認を伴う操作は modal。
+ *
+ * 使用法:
+ *   OK: トリガーは btn か icon-btn（三点アイコン等）。icon-btn なら aria-label に対象を含める（例: 『プロジェクト A』のメニュー）。
+ *   OK: 項目は button + role="menuitem"。選ぶと操作を実行してメニューを閉じ、フォーカスをトリガーに戻す。
+ *   OK: 削除など取り消せない操作は .action-menu-item-danger にし、divider で他の操作と分けて末尾に置く。
+ *   OK: トリガーが画面の右寄り（card-action・表の行末など）なら .action-menu-end で右端に揃える。
+ *   OK: 今は実行できない操作は消さずに aria-disabled="true" で残す（何ができるかを伝えるため）。全項目が無効ならトリガー自体を disabled にする。
+ *   NG: ページ遷移のリンクを並べない → 移動は menu（nav）やリンク。action-menu は「その場の操作」専用。
+ *   NG: 値の選択（並び替え・絞り込みの選択肢）に使わない → select / selector / tab / filter-chip。
+ *   NG: 項目に入力欄やチェックボックスを入れない → 入力を伴うなら modal やフォームにする。
+ *   NG: 操作が 1〜2 個しかないのにメニューに畳まない → btn を直接並べる方が速い。
+ *   NG: hover で開かない → クリック（タップ）・キーボードで開く。
+ *
+ * アクセシビリティ:
+ *   （WAI-ARIA APG Menu Button パターン）
+ *   トリガーに aria-haspopup="menu" と aria-expanded（開閉で true / false を切り替える）
+ *   メニューに role="menu" と aria-labelledby="<トリガーの id>"、項目に role="menuitem" と tabindex="-1"
+ *   開いたら最初の項目へフォーカス。↑/↓ で項目間を移動（端でループ）、Home / End で先頭 / 末尾
+ *   トリガー上の ↓ / ↑ でも開き、それぞれ先頭 / 末尾の項目へフォーカス
+ *   Esc・メニュー外のクリックで閉じる（Popover API が担保）。閉じたらフォーカスをトリガーに戻す
+ *   Tab でメニューを閉じて次の要素へ進む
+ *   開閉・フォーカス移動・位置計算は利用側で JS を付与する（実装例はカタログ examples/catalog.js の Action Menu ハンドラ）
+ *   装飾アイコンは aria-hidden="true"。danger は色だけに頼らず、ラベルで操作内容（「削除」等）を明示する
+ *   強制カラーモードでは影が無視されるため、輪郭線（CanvasText）でメニューの境界を確保する
+ *
+ * Usage:
+ *   <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" id="project-a-menu-trigger"
+ *           aria-label="『プロジェクト A』のメニュー" aria-haspopup="menu" aria-expanded="false" popovertarget="project-a-menu">
+ *     <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+ *   </button>
+ *   <div class="action-menu action-menu-end" id="project-a-menu" popover role="menu" aria-labelledby="project-a-menu-trigger">
+ *     <button type="button" class="menu-item" role="menuitem" tabindex="-1">
+ *       <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-pencil"></use></svg>
+ *       編集
+ *     </button>
+ *     <button type="button" class="menu-item" role="menuitem" tabindex="-1">
+ *       <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+ *       複製
+ *     </button>
+ *     <hr class="menu-divider" />
+ *     <button type="button" class="menu-item action-menu-item-danger" role="menuitem" tabindex="-1">
+ *       <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+ *       削除
+ *     </button>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container — [popover] の UA スタイル (inset:0 / margin:auto / border / padding) を打ち消し、
+   * JS が top / left を設定する。閉じている間は UA が display:none にする
+   * ============================================================ */
+  .action-menu {
+    @apply m-0 p-2 min-w-48 max-w-80 bg-surface text-fg-high
+           border border-solid border-stroke-low rounded-md;
+    position: fixed;
+    inset: auto;
+    box-shadow: var(--shadow-lg);
+    overflow-y: auto;
+    max-height: calc(100vh - var(--spacing) * 8);   /* 画面の上下 16 ずつは空ける */
+  }
+
+  .action-menu:popover-open,
+  .action-menu.is-static-preview {
+    @apply flex flex-col;
+  }
+
+  /* カタログ用: 開いた状態をページ内に静的表示 (top layer に出さない) */
+  .action-menu.is-static-preview {
+    position: static;
+  }
+
+  .action-menu .menu-divider {
+    @apply my-2;
+  }
+
+  .action-menu .menu-section + .menu-section,
+  .action-menu .menu-divider + .menu-section {
+    @apply mt-1;
+  }
+
+  /* グループ見出しは項目の直前に 8 の上余白を取り、1 つ目のグループでは詰める */
+  .action-menu .menu-group-title {
+    @apply pt-2;
+  }
+
+  .action-menu > .menu-section:first-child .menu-group-title {
+    @apply pt-1;
+  }
+
+  /* ============================================================
+   * Item states — menu-item の見た目を土台に、メニュー固有の状態を足す
+   * ============================================================ */
+  /* フォーカス中の項目は hover と同じハイライトも出す (矢印キー移動で現在位置を追いやすく) */
+  .action-menu .menu-item:focus-visible {
+    @apply bg-neutral-100 text-fg-high;
+  }
+
+  /* Danger — 削除など取り消せない操作 */
+  .action-menu .action-menu-item-danger {
+    color: var(--color-negative-700);
+  }
+
+  .action-menu .action-menu-item-danger:hover,
+  .action-menu .action-menu-item-danger:focus-visible,
+  .action-menu .action-menu-item-danger.is-hover-preview {
+    @apply bg-negative-50;
+    color: var(--color-negative-700);
+  }
+
+  /* Disabled — フォーカスは残し (何ができるかを伝える)、見た目と hover だけ止める */
+  .action-menu .menu-item[aria-disabled="true"] {
+    @apply cursor-not-allowed;
+    color: var(--color-fg-disabled);
+  }
+
+  .action-menu .menu-item[aria-disabled="true"]:hover {
+    @apply bg-transparent;
+    color: var(--color-fg-disabled);
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   浮き上がりは shadow-lg で表現しているが、強制カラー時は影が無視されるため
+   *   輪郭線を CanvasText にしてメニューと背景の境界を確保する。
+   *   (項目のフォーカス outline は menu.css の強制カラー対応が menu-item 全体に効く)
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .action-menu {
+      border-color: CanvasText;
+    }
+    .action-menu .menu-item[aria-disabled="true"] {
+      color: GrayText;
+    }
+  }
+}
