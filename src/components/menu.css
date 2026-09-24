@@ -24,7 +24,7 @@
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
  *   section  : 見出しと項目の間 gap 4。見出しは text-xs (12/16) bold tracking 5% fg/low、
  *              左右 padding は項目に揃える（12。sm 項目を含む section では 8）
- *   item     : padding 12 (sm は 8), gap 8, 角丸 sm (8), text-sm (14/24) bold tracking 5%, アイコン 24px
+ *   item     : padding 12 (sm は 8), アイコンとテキストの gap 16, 角丸 sm (8), text-sm (14/24) bold tracking 5%, アイコン 24px
  *   colors   : default = fg/middle、hover = bg neutral/100 + fg/high、
  *              current = bg primary/50 + primary/600（太さは全状態 bold 共通）
  *              （primary は「現在地」の意味に予約し、hover はニュートラルで示す）
@@ -159,7 +159,7 @@
   /* menu-item は角丸・背景付きの「項目形状」でありテキストリンクではないため、
    * 「テキストリンクは常に下線」原則 (DESIGN.md) の例外として a も下線なし */
   .menu-item {
-    @apply flex items-center gap-2 w-full p-3 rounded-sm
+    @apply flex items-center gap-4 w-full p-3 rounded-sm
            text-sm leading-6 tracking-wider font-bold
            text-fg-middle no-underline cursor-pointer
            bg-transparent border-0 text-left
