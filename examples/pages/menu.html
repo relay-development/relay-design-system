@@ -156,6 +156,51 @@
         </div>
       </div>
 
+      <!-- ===== 使用例: 見出し付きグループ ===== -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">使用例: 見出し付きグループ</h3>
+          <p class="card-subtitle">項目が多く分類名があると探しやすいときは <code class="px-1 bg-neutral-100 rounded">.menu-section</code> で見出し <code class="px-1 bg-neutral-100 rounded">.menu-group-title</code>（h2〜h6）と <code class="px-1 bg-neutral-100 rounded">.menu-group</code> をまとめ、ul に <code class="px-1 bg-neutral-100 rounded">aria-labelledby</code>。見出しを付けるなら全グループに付ける。区切り線は任意</p>
+        </div>
+        <div class="card-body flex flex-wrap gap-6 items-start">
+          <nav class="menu w-70" aria-label="設定">
+            <div class="menu-section">
+              <h4 class="menu-group-title" id="menu-demo-group-account">アカウント</h4>
+              <ul class="menu-group" aria-labelledby="menu-demo-group-account">
+                <li><a class="menu-item" href="#menu" aria-current="page">プロフィール</a></li>
+                <li><a class="menu-item" href="#menu">通知</a></li>
+                <li><a class="menu-item" href="#menu">セキュリティ</a></li>
+              </ul>
+            </div>
+            <div class="menu-section">
+              <h4 class="menu-group-title" id="menu-demo-group-support">サポート</h4>
+              <ul class="menu-group" aria-labelledby="menu-demo-group-support">
+                <li><a class="menu-item" href="#menu">ヘルプセンター</a></li>
+                <li><a class="menu-item" href="#menu">お問い合わせ</a></li>
+              </ul>
+            </div>
+          </nav>
+          <nav class="menu w-70" aria-label="設定（区切り線あり）">
+            <div class="menu-section">
+              <h4 class="menu-group-title" id="menu-demo-group-account-2">アカウント</h4>
+              <ul class="menu-group" aria-labelledby="menu-demo-group-account-2">
+                <li><a class="menu-item" href="#menu" aria-current="page">プロフィール</a></li>
+                <li><a class="menu-item" href="#menu">通知</a></li>
+                <li><a class="menu-item" href="#menu">セキュリティ</a></li>
+              </ul>
+            </div>
+            <hr class="menu-divider" />
+            <div class="menu-section">
+              <h4 class="menu-group-title" id="menu-demo-group-support-2">サポート</h4>
+              <ul class="menu-group" aria-labelledby="menu-demo-group-support-2">
+                <li><a class="menu-item" href="#menu">ヘルプセンター</a></li>
+                <li><a class="menu-item" href="#menu">お問い合わせ</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </div>
+
       <!-- ===== 使用例: アクションメニュー ===== -->
       <div class="card mb-8">
         <div class="card-header">
@@ -348,6 +393,7 @@
             <ul class="typo-small text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>ナビは <code class="typo-xsmall">&lt;nav aria-label="…"&gt;</code> で包む。複数ある場合は固有のラベルを付ける</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>現在地に <code class="typo-xsmall">aria-current="page"</code>（色だけに頼らない）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>グループ見出しは <code class="typo-xsmall">.menu-group-title</code> を h2〜h6 の見出し要素に付け、ul に <code class="typo-xsmall">aria-labelledby</code> で結ぶ</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>遷移は <code class="typo-xsmall">&lt;a&gt;</code>、操作は <code class="typo-xsmall">&lt;button&gt;</code> と要素で役割を分ける</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>装飾アイコンは <code class="typo-xsmall">aria-hidden="true"</code>、別タブで開くリンクは手がかりと説明を添える</span></li>
             </ul>
