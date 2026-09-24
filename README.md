@@ -91,7 +91,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 17 | Inline Message | `.inline-message`, `.inline-message-{success,negative,warning,neutral}`, `.inline-message-sm`, `.inline-message-{icon,text}`（操作した場所の直近に置く結果表示。トースト／スナックバーは用意しない） |
 | 18 | Link          | `.link`, `.link-label`, `.link-neutral`, `.link-inverse`（下線 + external-link アイコン。色は緑 primary-700/800 / neutral fg-middle/high / inverse 白＝暗い背景用の 3 種） |
 | 19 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
-| 20 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-item`, `.menu-item-sm`（項目は a / button、現在地は `aria-current="page"`、密なナビは sm） |
+| 20 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-section`, `.menu-group-title`, `.menu-item`, `.menu-item-sm`（項目は a / button、現在地は `aria-current="page"`、見出し付きグループは section + title、密なナビは sm） |
 | 21 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
 | 22 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
 | 23 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
