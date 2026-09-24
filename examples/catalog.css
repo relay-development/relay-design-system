@@ -219,7 +219,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 12px 16px;   /* 左右 12 = menu-item (md) の padding に揃え、文字頭を一直線にする */
+  padding: 0 8px 16px;    /* 左右 8 = menu-item-sm の padding に揃え、文字頭を一直線にする */
   border-bottom: 1px solid var(--color-stroke-low);
   margin-bottom: 16px;
   /* ロゴのロックアップ（リンクに見えない見た目）のため「常に下線」原則の例外 */
@@ -257,7 +257,7 @@ summary.docs-sidebar-group-title:focus-visible,
   gap: 2px;
 }
 .docs-sidebar-group-title {
-  padding: 0 12px;        /* menu-item (md) の padding 12 に揃える */
+  padding: 0 8px;         /* menu-item-sm の padding 8 に揃える */
   margin-bottom: 4px;
   font-size: var(--text-base);
   line-height: var(--text-base--line-height);
@@ -528,7 +528,7 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
     justify-content: space-between;
   }
   .docs-sidebar-brand {
-    padding: 0 12px;
+    padding: 0 8px;
     border-bottom: 0;
     margin-bottom: 0;
   }
