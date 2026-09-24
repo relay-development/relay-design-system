@@ -9,6 +9,7 @@
  * 機能:
  *   フォーム項目のラベル＋バッジ（必須/任意等）＋サポートテキストのまとまり。
  *   入力欄（input / selector / textarea 等）の直上に置く。
+ *   項目 1 つの検証エラーは field-error-text（入力欄の真下）。送信結果やボタン操作の結果は inline-message。
  *
  * 使用法:
  *   OK: 必須/任意は label-badge-required / label-badge-optional で示す。

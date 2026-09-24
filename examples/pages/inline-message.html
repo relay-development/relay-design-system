@@ -1,0 +1,440 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="inline-message">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">インラインメッセージ</h2>
+        <span class="badge badge-soft-primary">component</span>
+      </div>
+      <p class="typo-article text-fg-high mb-6">操作の結果を、操作した場所のすぐ近く（ボタンの横・フォームの直下・テーブルの行内）で短く伝えるメッセージです。アイコンと 1 行の文言だけで枠を持たず、時間で消えるトーストやスナックバーの代わりに「その場に残す」ための部品です。</p>
+
+      <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
+      <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="インラインメッセージのドキュメント" class="tabs tabs-line mb-8">
+        <button type="button" role="tab" id="im-tab-overview" class="tab tab-line" aria-selected="true" aria-controls="im-panel-overview">概要</button>
+        <button type="button" role="tab" id="im-tab-guideline" class="tab tab-line" aria-selected="false" aria-controls="im-panel-guideline">ガイドライン</button>
+        <button type="button" role="tab" id="im-tab-a11y" class="tab tab-line" aria-selected="false" aria-controls="im-panel-a11y">アクセシビリティ</button>
+      </div>
+
+      <div id="im-panel-overview" role="tabpanel" aria-labelledby="im-tab-overview">
+
+      <!-- 4 themes -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">4 つのテーマ</h3>
+          <p class="card-subtitle">success / negative / warning / neutral。文字とアイコンが同色で、背景・枠は持たない</p>
+        </div>
+        <div class="card-body space-y-4">
+          <p class="inline-message inline-message-success">
+            <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+            <span class="inline-message-text">保存しました</span>
+          </p>
+          <p class="inline-message inline-message-negative">
+            <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+            <span class="inline-message-text">送信に失敗しました。時間をおいて再度お試しください。</span>
+          </p>
+          <p class="inline-message inline-message-warning">
+            <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-alert-triangle"></use></svg>
+            <span class="inline-message-text">未保存の変更があります</span>
+          </p>
+          <p class="inline-message inline-message-neutral">
+            <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-info"></use></svg>
+            <span class="inline-message-text">データを取得できませんでした</span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Sizes -->
+      <div class="card mb-6">
+        <div class="card-header">
+          <h3 class="card-title">サイズ</h3>
+          <p class="card-subtitle">md（16/24 bold・アイコン 20px）が既定。テーブル行内などの密な場所だけ sm（14/20 bold・アイコン 16px）</p>
+        </div>
+        <div class="card-body space-y-4">
+          <div class="flex items-center gap-4">
+            <span class="w-12 shrink-0 typo-small text-fg-low">md</span>
+            <p class="inline-message inline-message-success">
+              <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+              <span class="inline-message-text">保存しました</span>
+            </p>
+          </div>
+          <div class="flex items-center gap-4">
+            <span class="w-12 shrink-0 typo-small text-fg-low">sm</span>
+            <p class="inline-message inline-message-success inline-message-sm">
+              <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+              <span class="inline-message-text">保存しました</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Placement examples -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">置き場所の例</h3>
+          <p class="card-subtitle">操作した場所と同じ視野に入れる。ボタンの横 / フォームの直下 / テーブルの行内</p>
+        </div>
+        <div class="card-body space-y-8">
+
+          <!-- 1. ボタンの横 -->
+          <div>
+            <p class="typo-small text-fg-low mb-3">ボタンの横 — 押した結果をその場で伝える</p>
+            <div class="flex flex-wrap items-center gap-4">
+              <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              <p class="inline-message inline-message-success" role="status">
+                <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+                <span class="inline-message-text">保存しました</span>
+              </p>
+            </div>
+          </div>
+
+          <!-- 2. フォームの直下 -->
+          <div>
+            <p class="typo-small text-fg-low mb-3">フォームの直下 — 送信全体の結果。項目 1 つの検証は field-error-text</p>
+            <form class="max-w-md space-y-4" onsubmit="return false">
+              <div>
+                <div class="label-control mb-1">
+                  <div class="label-control-row">
+                    <label class="label-control-text" for="im-demo-mail">メールアドレス</label>
+                    <span class="label-badge label-badge-required">必須</span>
+                  </div>
+                </div>
+                <input id="im-demo-mail" type="email" class="input input-md" value="taro@example.com" />
+              </div>
+              <div class="flex flex-col gap-3">
+                <button type="submit" class="btn btn-md btn-primary btn-solid self-start">送信する</button>
+                <p class="inline-message inline-message-negative" role="alert">
+                  <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+                  <span class="inline-message-text">送信に失敗しました。時間をおいて再度お試しください。</span>
+                </p>
+              </div>
+            </form>
+          </div>
+
+          <!-- 3. テーブルの行内 -->
+          <div>
+            <p class="typo-small text-fg-low mb-3">テーブルの行内 — 行ごとの状態。密な場所なので sm</p>
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th scope="col">ファイル名</th>
+                  <th scope="col" class="data-table-fit">サイズ</th>
+                  <th scope="col">状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>事業概要.pdf</td>
+                  <td class="data-table-num">1.2 MB</td>
+                  <td>
+                    <p class="inline-message inline-message-success inline-message-sm">
+                      <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+                      <span class="inline-message-text">アップロード完了</span>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>決算書_2025.xlsx</td>
+                  <td class="data-table-num">8.4 MB</td>
+                  <td>
+                    <p class="inline-message inline-message-negative inline-message-sm">
+                      <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+                      <span class="inline-message-text">5 MB を超えています</span>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td>店舗写真.zip</td>
+                  <td class="data-table-num">—</td>
+                  <td>
+                    <p class="inline-message inline-message-neutral inline-message-sm">
+                      <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-info"></use></svg>
+                      <span class="inline-message-text">サイズを取得できません</span>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- func:auto:inline-message -->
+      </div><!-- /#im-panel-overview -->
+
+      <!-- ===== Guideline panel ===== -->
+      <div id="im-panel-guideline" role="tabpanel" aria-labelledby="im-tab-guideline" hidden>
+
+      <!-- 使用法（テキスト・MCP ヘッダ正本と同期） -->
+      <!-- guide:auto:inline-message -->
+
+      <!-- フィードバックの行き先 -->
+      <div class="card mb-4">
+        <div class="card-header">
+          <h3 class="card-title">フィードバックの行き先</h3>
+          <p class="card-subtitle">操作へのフィードバックは「どこに置くか」と「消え方」で 4 つに分ける。時間で勝手に消える通知（トースト / スナックバー）は用意しない</p>
+        </div>
+        <div class="card-body">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col">状況</th>
+              <th scope="col" class="data-table-fit">使うもの</th>
+              <th scope="col">例</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>結果が画面を見れば分かる単純な成功</td>
+              <td class="data-table-fit"><span class="badge badge-soft-neutral">出さない</span></td>
+              <td>チェックを入れた・行が 1 件増えた・並び順が変わった</td>
+            </tr>
+            <tr>
+              <td>操作した場所の直近で結果を短く伝える</td>
+              <td class="data-table-fit"><a class="link" href="#inline-message"><span class="link-label">inline-message</span></a></td>
+              <td>「保存する」の横に「保存しました」、送信ボタンの下に「送信に失敗しました」</td>
+            </tr>
+            <tr>
+              <td>ページ全体に向けた常設のお知らせ・しばらく残す通知</td>
+              <td class="data-table-fit"><a class="link" href="./alert.html"><span class="link-label">alert</span></a></td>
+              <td>メンテナンス予定、審査結果の通知、ページ上部のエラー要約</td>
+            </tr>
+            <tr>
+              <td>操作を止めて判断を求めるエラー・確認</td>
+              <td class="data-table-fit"><a class="link" href="./modal.html"><span class="link-label">modal</span></a></td>
+              <td>削除の確認、セッション切れで再読み込みが必要、保存せずに離れるか</td>
+            </tr>
+            <tr>
+              <td>入力項目 1 つの検証エラー</td>
+              <td class="data-table-fit"><a class="link" href="./label-control.html"><span class="link-label">field-error-text</span></a></td>
+              <td>「メールアドレスの形式が正しくありません」を入力欄の真下に</td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </div>
+
+      <!-- Demo: 操作直近に残す vs 画面隅のトースト -->
+      <div class="card mb-4 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">操作した場所に置いて、残す</h3>
+            <span class="typo-xsmall text-fg-low">置き場所と消え方</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+              <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+              <p class="inline-message inline-message-success">
+                <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+                <span class="inline-message-text">保存しました</span>
+              </p>
+            </div>
+            <p class="typo-small text-fg-middle">押したボタンの横に出し、次の操作まで残す。視線を動かさずに結果が分かり、拡大表示や読み上げでも見逃さない。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;button class="btn …"&gt;保存する&lt;/button&gt;
+&lt;p class="[[inline-message inline-message-success]]" role="status"&gt;…保存しました&lt;/p&gt;</pre>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="relative h-24 mb-4 rounded-sm border border-stroke-low bg-neutral-50">
+              <button type="button" class="btn btn-md btn-primary btn-solid absolute top-4 left-4">保存する</button>
+              <div class="absolute bottom-2 right-2 flex items-center gap-2 px-3 py-2 rounded-sm bg-fg-high text-fg-high-inverse shadow-md typo-small" inert>
+                <span>保存しました</span>
+                <span class="text-fg-low-inverse">3 秒後に消える</span>
+              </div>
+            </div>
+            <p class="typo-small text-fg-middle">画面の隅に固定して数秒で消すトースト。操作した場所から離れていて、拡大表示では視野に入らず、読み終える前に消える。</p>
+            <pre class="code-sample mt-3" data-code>
+&lt;div class="[[fixed bottom-4 right-4]] …"&gt;保存しました&lt;/div&gt;
+[[setTimeout]](() =&gt; toast.remove(), 3000)</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo: 自明な成功には出さない -->
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h3 class="card-title">結果が見て分かる操作には出さない</h3>
+            <span class="typo-xsmall text-fg-low">出す / 出さないの判断</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-success-700">Good</span>
+            </div>
+            <label class="switch-label mb-4">
+              <input type="checkbox" role="switch" class="switch" checked />
+              <span>メール通知を受け取る</span>
+            </label>
+            <p class="typo-small text-fg-middle">スイッチが ON に変わったこと自体が結果。メッセージを足すと画面が騒がしくなるだけで情報は増えない。</p>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-2 mb-4">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+              <span class="typo-medium font-bold text-negative-600">Don't</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-4 mb-4">
+              <label class="switch-label">
+                <input type="checkbox" role="switch" class="switch" checked />
+                <span>メール通知を受け取る</span>
+              </label>
+              <p class="inline-message inline-message-success inline-message-sm">
+                <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+                <span class="inline-message-text">設定を更新しました</span>
+              </p>
+            </div>
+            <p class="typo-small text-fg-middle">切り替えるたびに「更新しました」を添える。すべての操作に添えると、本当に伝えるべき失敗が埋もれる。</p>
+          </div>
+        </div>
+      </div>
+      </div><!-- /#im-panel-guideline -->
+
+      <!-- ===== Accessibility panel ===== -->
+      <div id="im-panel-a11y" role="tabpanel" aria-labelledby="im-tab-a11y" hidden>
+
+        <div class="alert alert-info mb-8">
+          <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
+          <div class="alert-content">
+            <p class="alert-title">インラインメッセージのアクセシビリティ</p>
+            <p class="alert-body">トーストを避ける理由の大半がここにあります。<strong>時間で消さない</strong>（WCAG 2.2.1）、<strong>操作した要素の直後に置く</strong>（WCAG 1.3.2）、<strong>動的に出すなら <code class="typo-xsmall">role="status"</code>／<code class="typo-xsmall">role="alert"</code></strong>（WCAG 4.1.3）の 3 点を守れば、拡大表示・読み上げ・時間がかかる利用者にも同じ情報が届きます。置き場所の決め方とトーストを用意しない理由は <a class="link" href="./feedback.html"><span class="link-label">システムフィードバックのアクセシビリティ</span></a>、WCAG 2.2 全基準は <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティ</span></a> ページを参照。</p>
+          </div>
+        </div>
+
+        <!-- 1. 期待される配慮 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">期待される配慮</h3>
+            <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
+          </div>
+          <div class="card-body space-y-3">
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">意味は色だけでなくアイコン＋文言で伝える。各テーマの文字色は白背景で本文コントラストを確保。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">操作した要素の直近に置くため、拡大表示（ズーム・スクリーン拡大鏡）でも操作対象と一緒に視野へ入る。長文は折り返す。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle">時間で消えない。読むのに時間がかかる利用者も、次の操作を自分のペースで選べる。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle">動的表示は <code class="typo-xsmall">role="status"</code>（成功・neutral）／<code class="typo-xsmall">role="alert"</code>（失敗・注意）でフォーカスを奪わずに読み上げ、DOM 上の位置も操作した要素の直後にする。</p></div>
+          </div>
+        </div>
+
+        <!-- 2. DS が担保する機能 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">DS が担保する機能</h3>
+            <p class="card-subtitle">追加実装なしで満たされる</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>各テーマの文字色は白背景でコントラスト比 4.5:1 以上</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>アイコンスロットが行高と揃い、拡大しても 1 行目とずれない</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>背景・枠を持たないため、強制カラーモードでも追加対応なしで文字とアイコンが見える</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 3. 実装時の必須対応 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">実装時の必須対応</h3>
+            <p class="card-subtitle">プロダクト側で担保する</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>動的に挿入する結果に <code class="typo-xsmall">role="status"</code>（success・neutral）／<code class="typo-xsmall">role="alert"</code>（negative・warning）を付ける</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>DOM 上も操作した要素の直後に挿入する（読み上げ順と視覚上の位置を一致させる）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>時間で自動消去しない。消えるのは利用者の次の操作か明示的な操作のみ</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>アイコンは <code class="typo-xsmall">aria-hidden="true"</code>。テーマと文言を一致させる</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 4. テスト方法 -->
+        <div class="card mb-4">
+          <div class="card-header">
+            <h3 class="card-title">テスト方法</h3>
+            <p class="card-subtitle">スクリーンリーダー / 拡大表示 / 自動チェック</p>
+          </div>
+          <div class="card-body">
+            <ul class="typo-small text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>操作した瞬間、フォーカスを移さずにメッセージが読み上げられる。矢印キーで次に読むのがそのメッセージになっている</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">拡大</span><span>400% ズームやスクリーン拡大鏡で操作した要素を見ている状態のまま、メッセージが視野に入る</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">時間</span><span>1 分放置してもメッセージが残っている</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">自動</span><span>axe / Lighthouse で <code class="typo-xsmall">role</code>・コントラスト・<code class="typo-xsmall">aria-hidden</code> を確認</span></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Demo: DOM 上も操作した要素の直後に置く -->
+        <div class="card mb-4 overflow-hidden">
+          <div class="card-header">
+            <div class="flex items-baseline justify-between">
+              <h3 class="card-title">DOM 上も操作した要素の直後に、<code class="typo-xsmall">role</code> を付けて挿入する</h3>
+              <span class="typo-xsmall text-fg-low">達成基準：WCAG <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#meaningful-sequence" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.2 意味のある順序</span></a> / <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#status-messages" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.3 ステータスメッセージ</span></a></span>
+            </div>
+          </div>
+          <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-success-700">Good</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-4 mb-4">
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+                <p class="inline-message inline-message-negative" role="alert">
+                  <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+                  <span class="inline-message-text">保存できませんでした</span>
+                </p>
+              </div>
+              <p class="typo-small text-fg-middle">ボタンの直後に <code class="typo-xsmall">role="alert"</code> 付きで挿入。フォーカスはボタンに残り、読み上げ順も「ボタン → 結果」になる。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;button class="btn …"&gt;保存する&lt;/button&gt;
+&lt;p class="inline-message inline-message-negative" [[role="alert"]]&gt;…&lt;/p&gt;</pre>
+            </div>
+            <div class="p-6">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span>
+                <span class="typo-medium font-bold text-negative-600">Don't</span>
+              </div>
+              <div class="flex flex-wrap items-center gap-4 mb-4">
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+                <p class="inline-message inline-message-negative">
+                  <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+                  <span class="inline-message-text">保存できませんでした</span>
+                </p>
+              </div>
+              <p class="typo-small text-fg-middle"><code class="typo-xsmall">role</code> が無い、または <code class="typo-xsmall">body</code> 末尾のコンテナに挿入する。見た目は同じでも、読み上げでは気づかれないか、どの操作の結果か分からない。</p>
+              <pre class="code-sample mt-3" data-code>
+&lt;p class="inline-message inline-message-negative"&gt;…&lt;/p&gt;  &lt;!-- [[role なし]] --&gt;
+document.body.append(msg)  &lt;!-- [[操作した要素から離れた場所]] --&gt;</pre>
+            </div>
+          </div>
+        </div>
+
+        <!-- 関連する達成基準 -->
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">関連する達成基準（WCAG 2.2）</h3>
+          </div>
+          <div class="card-body">
+            <p class="typo-small text-fg-low leading-7">
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#status-messages" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.3 ステータスメッセージ</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#meaningful-sequence" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.2 意味のある順序</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#timing-adjustable" target="_blank" rel="noopener noreferrer"><span class="link-label">2.2.1 タイミング調整可能</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#use-of-color" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.1 色の使用</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#contrast-minimum" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.3 コントラスト（最低限）</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#reflow" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.10 リフロー</span></a>
+            </p>
+          </div>
+        </div>
+
+      </div><!-- /#im-panel-a11y -->
+
+    </section>
+  </main>

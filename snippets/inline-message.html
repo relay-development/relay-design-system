@@ -1,0 +1,30 @@
+<!-- 操作の結果は、操作した場所の直近に置く（ボタンの横 / フォームの直下 / 行内）。
+     画面の隅に固定して時間で消すトースト・スナックバーにはしない。
+     アイコンは Lucide（check-circle / x-circle / alert-triangle / info）。get_icon で取得できる -->
+
+<!-- Success — ボタンの横に置く。動的に挿入するなら role="status" -->
+<div class="flex items-center gap-4">
+  <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+  <p class="inline-message inline-message-success" role="status">
+    <svg class="inline-message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+    <span class="inline-message-text">保存しました</span>
+  </p>
+</div>
+
+<!-- Negative — フォーム送信の失敗を送信ボタンの直下で伝える。role="alert" -->
+<p class="inline-message inline-message-negative" role="alert">
+  <svg class="inline-message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+  <span class="inline-message-text">送信に失敗しました。時間をおいて再度お試しください。</span>
+</p>
+
+<!-- Warning -->
+<p class="inline-message inline-message-warning" role="alert">
+  <svg class="inline-message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+  <span class="inline-message-text">未保存の変更があります</span>
+</p>
+
+<!-- Neutral — 取得できない・利用できない状態。sm は密な場所（テーブル行内）向け -->
+<p class="inline-message inline-message-neutral inline-message-sm" role="status">
+  <svg class="inline-message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+  <span class="inline-message-text">データを取得できませんでした</span>
+</p>
