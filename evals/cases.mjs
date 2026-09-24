@@ -282,4 +282,30 @@ export const CASES = [
       "テキスト色は fg-{high,middle,low} ロール、見出し・本文に typo-* 階層を使っている",
     ],
   },
+  {
+    // 出典: 2026-09 利用側プロダクトの管理画面で、「有望 / 意欲が高い / 直近の問い合わせ …」から
+    // 1 つを選んで会員一覧を切り替える単一選択の絞り込みに filter-chip を並べた事例
+    // （<a class="filter-chip"> + aria-pressed と aria-current の併用）。filter-chip ヘッダの NG
+    // 「単一選択 → radio」はフォーム前提で、一覧の表示切替という場面の行き先（tab）が書かれていなかった。
+    // ヘッダ・DESIGN.md に「1 つ選ぶと他が外れるなら filter-chip ではない」と行き先を書いた効果を測る。
+    // forbid は class 属性内の filter-chip のみ（コメントで言及しただけの生成物を落とさない）
+    id: "single-select-filter",
+    kind: "capability",
+    prompt:
+      "管理画面の会員一覧を作ってください。一覧の上に「すべて / 有望 / 意欲が高い / 直近の問い合わせ / 休眠から再訪」の切り替えを置き、1 つを選ぶと一覧がその条件の会員だけに切り替わります（同時に選べるのは 1 つで、別のものを選ぶと前の選択は外れます）。各切り替えには該当人数を添えてください。一覧は氏名・段階・予算の 3 列です。",
+    mustClasses: ["tab", "tab-count", "data-table"],
+    mustPatterns: [
+      {
+        pattern: "class=\"[^\"]*\\bfilter-chip\\b",
+        forbid: true,
+        label: "単一選択の切替に filter-chip を使っていない（複数同時選択のトグル専用）",
+      },
+    ],
+    rubric: [
+      "切り替えが tab（tabs-line）で組まれ、選択中の 1 つだけ aria-selected=\"true\"、人数は tab-count で示されている",
+      "filter-chip や独自チップを単一選択の切替に流用していない",
+      "role=tablist / tab と aria-controls / aria-labelledby で切り替えと一覧の領域が結ばれている",
+      "一覧が data-table で、固定書式の列（段階・予算）は data-table-fit / data-table-num、氏名列が余白を受けている",
+    ],
+  },
 ];

@@ -52,12 +52,24 @@
  * 機能:
  *   タグや単語でコンテンツを絞り込むトグル可能なチップ。選択と同時に結果が
  *   その場で更新される（送信・ページ遷移を伴わない）複数同時選択の絞り込みに使う。
- *   複数選択の絞り込み=filter-chip / 単一選択=radio / ON-OFF 設定=checkbox。
+ *   見分け方: 「1 つ選ぶと他が外れる」なら filter-chip ではない。各チップは独立した
+ *   ON/OFF（aria-pressed）で、排他制御の仕組みを持たない。
+ *   複数同時選択の絞り込み=filter-chip / 一覧を 1 つの軸（すべて・有望・休眠 …）で
+ *   切り替える単一選択=tab（tabs-line + tab-count）/ フォーム入力値の単一選択=radio
+ *   （選択肢が多ければ select）/ ON-OFF 設定=checkbox。
  *
  * 使用法:
  *   OK: 選択状態は aria-pressed="true|false"。
  *   OK: 件数表示は filter-chip-count。
- *   NG: 単一選択しか許さない設問に並べない → radio。
+ *   NG: 単一選択（1 つ選ぶと他が外れる）に並べない → 同じ一覧の表示を切り替えるなら tab
+ *       （tabs-line + tab-count で件数付き）、フォームの入力値なら radio / select。
+ *       件数付きチップの見た目が合っていても、排他にするとユーザーは何個選べるか分からなくなる
+ *       （2026-09 利用側の管理画面で「有望 / 意欲が高い / 休眠から再訪 …」から 1 つ選ぶ絞り込みに
+ *       filter-chip を並べた実例）。
+ *   NG: <a class="filter-chip"> にしない → filter-chip は <button type="button"> のトグル。
+ *       href で URL を切り替える 1 つ選択の絞り込みは tab、別ページへの移動は link / menu。
+ *   NG: aria-current を付けない → 状態は aria-pressed のみ。aria-current="page" は menu の
+ *       現在地用で、併用すると支援技術が「押下」と「現在地」を二重に読み上げる。
  *   NG: 送信やページ遷移（リロード・URL 変更）を伴う検索・絞り込みフォームに使わない →
  *       checkbox / select + 明示的な適用ボタンにする（選択と同時に送信するとユーザーの
  *       予期しないコンテキスト変化になる: WCAG 3.2.2）。

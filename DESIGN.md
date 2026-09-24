@@ -142,8 +142,8 @@ Selector           : <div class="selector selector-md"><select class="select">..
 Textarea           : <div class="textarea-control"><textarea class="textarea textarea-md" maxlength="100"></textarea>...</div>
 Checkbox / Radio   : <label class="checkbox-label"><input type="checkbox" class="checkbox" />ラベル</label>
 Label Control      : <div class="label-control">...label + label-badge-{required,optional} + 入力欄...</div>
-Filter Chip        : <button class="filter-chip" aria-pressed="false">...</button>
-Tab                : <div class="tabs tabs-solid"><button class="tab tab-solid" aria-selected="true">...</button>...</div>
+Filter Chip        : <button class="filter-chip" aria-pressed="false">...</button>  ← 複数同時選択の絞り込みトグル（button 専用）。「1 つ選ぶと他が外れる」切替は Tab、フォームの単一選択は Radio / Select
+Tab                : <div class="tabs tabs-solid"><button class="tab tab-solid" aria-selected="true">...</button>...</div>  ← 同一画面内の表示切替。一覧を 1 つの軸（すべて / 有望 …）で切り替える単一選択の絞り込みもこれ（tabs-line + .tab-count で件数）
 Simple Table       : <table class="simple-table"><tr><th scope="row">ラベル</th><td>値</td></tr>...</table>  ← 1 件の詳細（キー/値）。ラベル列 128px 固定、列幅は触らない
 Data Table         : <table class="data-table"><thead><tr><th scope="col">…</th></tr></thead>…</table>  ← 複数件の比較。列幅は「締める列」だけ指定: 固定書式の列（日付・状態・金額・操作）は th と同列の td に .data-table-fit（数値は .data-table-num）、自由文は .data-table-text の 1 列、残りは自動幅。収まらなければ <div class="data-table-wrap" tabindex="0"> で横スクロール
 Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
@@ -196,6 +196,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 理由なく `sm` / `lg` サイズを選ぶ | 例外を除き `md` をデフォルトに |
 | 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
 | `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
+| 単一選択（1 つ選ぶと他が外れる）の切替に `.filter-chip` を並べる・`<a class="filter-chip">` でリンクにする・`aria-pressed` と `aria-current` の併用 | 同じ一覧の表示切替は `.tab`（`tabs-line` + `.tab-count`）、フォームの単一選択は radio / `.select`。`.filter-chip` は `<button>` の複数同時選択トグル専用 |
 | テキストリンク（a 要素）の下線省略・hover 時のみ下線 | 常に下線。省略はボタン形状・アイコンボタン・メニュー項目等「テキストリンクに見えない見た目」を意図的に選んだ場合のみ |
 | テキストリンクを素の `<a>`・独自クラス（`.text-link` 等）・`underline text-primary-700` の直付けで自作 | 置き場所を問わず `.link` + `.link-label`（補助は `.link-neutral`、暗い背景は `.link-inverse`）。ボタン形状の主導線は a + `.btn`、ナビ項目は `.menu-item` |
 | フォーカスリングの色変更（primary 緑など）・祖先の `overflow-hidden` での見切れ | info 青（`--shadow-focus-ring` / `outline-info-600`）のまま全周表示。角丸コンテナは `overflow-hidden` に頼らず first/last 子側で角丸を作る |
