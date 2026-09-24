@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.30.0",
+      "date": "2026-09-24",
+      "title": "アクションメニューの新設 + カードのバリエーション追加 + メニューの見直し",
+      "summary": "ボタンから開く操作のポップアップ action-menu を新設しました。ネイティブ Popover API で最前面に開くため card の中からも切れず、項目は menu-item を再利用します（danger・右揃え・区切り線・見出し付きグループ・無効項目に対応。キーボード操作の参照実装はカタログの catalog.js）。card にはアイコン・画像・メタデータ・右上アクション・compact・本文 flush のバリエーションを追加し、本文とフッターの間は区切り線と背景をやめて余白で区切るようにしました（見出し下の線は維持）。menu は見出し付きグループ（menu-section / menu-group-title）を追加し、項目間 gap 0・全状態 bold・アイコンとテキストの gap 16 に見直しています。カタログのサイドメニューは md サイズになりました。"
+    },
+    {
       "version": "0.29.0",
       "date": "2026-09-24",
       "title": "inline-message の新設 + バッジ／テーブルの視認性修正 + カタログトップの配色整理",
