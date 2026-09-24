@@ -321,17 +321,17 @@ export const CASES = [
     mustClasses: ["inline-message", "btn", "input", "label-control"],
     mustPatterns: [
       {
-        pattern: "class=\"[^\"]*\b(?:toast|snackbar)\b",
+        pattern: "class=\"[^\"]*\\b(?:toast|snackbar)\\b",
         forbid: true,
         label: "toast / snackbar クラスの自作がない（時間で消える通知は DS に無い）",
       },
       {
-        pattern: "class=\"[^\"]*\bfixed\b[^\"]*\b(?:bottom|top)-",
+        pattern: "class=\"[^\"]*\\bfixed\\b[^\"]*\\b(?:bottom|top)-",
         forbid: true,
         label: "画面隅に固定表示する通知（fixed + bottom/top）を作っていない",
       },
       {
-        pattern: "class=\"[^\"]*\binline-message\b[^\"]*\"[^>]*\brole=\"(?:status|alert)\"|role=\"(?:status|alert)\"[^>]*class=\"[^\"]*\binline-message\b",
+        pattern: "class=\"[^\"]*\\binline-message\\b[^\"]*\"[^>]*\\brole=\"(?:status|alert)\"|role=\"(?:status|alert)\"[^>]*class=\"[^\"]*\\binline-message\\b",
         label: "inline-message に role=\"status\" / role=\"alert\" が付いている（WCAG 4.1.3）",
       },
     ],
@@ -340,6 +340,45 @@ export const CASES = [
       "画面隅に固定して時間で消えるトースト／スナックバーを自作していない。setTimeout 等で自動消去していない",
       "動的に挿入するメッセージに role=\"status\"（成功）/ role=\"alert\"（失敗）が付き、DOM 上も操作した要素の直後にある",
       "入力項目 1 つの検証エラー（未入力等）には field-error-text を使い、inline-message と混同していない",
+    ],
+  },
+  {
+    // 出典: 2026-09 利用側から「スナックバー／トーストを追加したい」と語彙で指名された要望。action-feedback は
+    // 意図レベルの指示で行き先に着地するかを測るが、実運用では「トースト」「右下」「数秒で消す」と
+    // 実装形まで指定される。DS の知識（トーストは無い・inline-message / alert に読み替える・時間で消さない）
+    // が利用者の語彙を上書きできるかを測る。「トースト」は relay のコンポーネント名ではないため、
+    // 「プロンプトにコンポーネント名を含めない」規約には当たらない。
+    id: "toast-request",
+    kind: "capability",
+    prompt:
+      "問い合わせ一覧の管理画面を作ってください。各行に「対応済みにする」ボタンがあり、押すとその行が対応済みになります。押したあとは画面右下に「対応済みにしました」というトーストを出して、3 秒くらいで自動的に消えるようにしてください。一覧は氏名・件名・受信日の 3 列です。",
+    mustClasses: ["data-table", "btn"],
+    mustPatterns: [
+      {
+        pattern: "class=\"[^\"]*\\b(?:toast|snackbar)\\b",
+        forbid: true,
+        label: "toast / snackbar クラスを自作していない（DS に時間で消える通知は無い）",
+      },
+      {
+        pattern: "class=\"[^\"]*\\bfixed\\b[^\"]*\\b(?:bottom|top)-",
+        forbid: true,
+        label: "画面隅に固定表示する通知（fixed + bottom/top）を作っていない",
+      },
+      {
+        pattern: "setTimeout\\s*\\([\\s\\S]{0,200}?(?:remove|hidden|display|opacity|classList)",
+        forbid: true,
+        label: "setTimeout でメッセージを自動消去していない（WCAG 2.2.1）",
+      },
+      {
+        pattern: "class=\"[^\"]*\\b(?:inline-message|alert)\\b",
+        label: "結果を inline-message か alert に読み替えている",
+      },
+    ],
+    rubric: [
+      "「右下にトースト」「3 秒で消す」という指示を、操作した行の直近に残る inline-message（または一覧上部の alert）に読み替え、その理由を一言添えている",
+      "画面隅に固定して時間で消える通知を自作していない。setTimeout 等で自動消去していない",
+      "読み替えたメッセージに role=\"status\" が付き、DOM 上も操作した行（ボタン）の直後にある",
+      "「対応済み」への状態変化が行の表示（badge 等）で分かるなら、メッセージを出さない判断も許容する。ただし出す場合は上記の置き方に従っている",
     ],
   },
 ];
