@@ -233,16 +233,10 @@
   flex-shrink: 0;
 }
 .docs-sidebar-brand .brand-name {
-  font-size: var(--text-sm);
+  font-size: var(--text-base);
   font-weight: 700;
-  line-height: var(--text-sm--line-height);
+  line-height: var(--text-base--line-height);
   color: var(--color-fg-high);
-}
-.docs-sidebar-brand .brand-sub {
-  font-size: var(--text-xs);
-  line-height: var(--text-xs--line-height);
-  color: var(--color-fg-middle);
-  margin-top: 2px;
 }
 /* カタログ独自のフォーカス可能要素（ブランドリンク / グループ開閉 summary / メニュートグル）
  * にも DS の info 青リングを出す。未指定だとブラウザ既定 outline（色が異なる・角丸で見切れる）
