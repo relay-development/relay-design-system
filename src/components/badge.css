@@ -3,6 +3,13 @@
  *
  *   クリックできる操作要素ではない。variant: solid / soft × thema。
  *
+ *   色 (semantic tokens):
+ *     solid : thema/500 の塗り＋白文字。primary だけ primary/700（brand green は 500 だと
+ *             白文字で 2.6:1 と AA 未達のため。700 で 7.0:1 = AAA。inline-message-success と同じ色）
+ *     soft  : thema/50 の淡色背景＋thema/700 の文字＋thema/300 の枠線
+ *             （neutral は neutral/100 背景＋fg/high 文字＋neutral/300 枠線）。
+ *             枠線は alert と同じ組で、白いカードや表の上でも輪郭が残る
+ *
  * 機能:
  *   ステータス・分類・件数などを短いテキストで示す非操作のラベル。
  *   操作するなら button / link、絞り込みのトグルは filter-chip。
@@ -12,11 +19,12 @@
  *   OK: 強調度に応じて solid / soft を使い分ける。
  *   NG: クリック操作に使わない → button / link / filter-chip。
  *   NG: 長文を入れない → 1〜2 語のラベルに留める。
-  *
+ *
  * アクセシビリティ:
  *   状態・分類は色だけでなくラベル文言で示す
  *   件数・ステータスは文脈と結びつける（近接見出し や aria-label で「未読 3 件」）
  *   操作にはバッジを使わない（button/link）。装飾で情報が重複するなら aria-hidden="true"
+ *   soft は枠線を持つため、強制カラーモードで背景色が落ちても輪郭が CanvasText で残る
 */
 
 @layer components {
@@ -29,17 +37,18 @@
 
   /* Solid */
   .badge-solid-neutral { @apply bg-neutral-900   text-fg-high-inverse; }
-  .badge-solid-primary { @apply bg-primary-500   text-fg-high-inverse; }
+  .badge-solid-primary { @apply bg-primary-700   text-fg-high-inverse; }
   .badge-solid-info    { @apply bg-info-500      text-fg-high-inverse; }
   .badge-solid-success { @apply bg-success-500   text-fg-high-inverse; }
   .badge-solid-warning { @apply bg-warning-500   text-fg-high-inverse; }
   .badge-solid-danger  { @apply bg-negative-500  text-fg-high-inverse; }
 
-  /* Soft */
-  .badge-soft-neutral  { @apply bg-neutral-100   text-fg-high; }
-  .badge-soft-primary  { @apply bg-primary-50    text-primary-700; }
-  .badge-soft-info     { @apply bg-info-50       text-info-700; }
-  .badge-soft-success  { @apply bg-success-50    text-success-700; }
-  .badge-soft-warning  { @apply bg-warning-50    text-warning-700; }
-  .badge-soft-danger   { @apply bg-negative-50   text-negative-700; }
+  /* Soft — 淡色背景＋同系の枠線（alert と同じ bg/50 + border/300 の組。
+   *   白いカードや表の上でも輪郭が残り、強制カラーモードでも枠が CanvasText で描かれる） */
+  .badge-soft-neutral  { @apply bg-neutral-100   text-fg-high      border-neutral-300; }
+  .badge-soft-primary  { @apply bg-primary-50    text-primary-700  border-primary-300; }
+  .badge-soft-info     { @apply bg-info-50       text-info-700     border-info-300; }
+  .badge-soft-success  { @apply bg-success-50    text-success-700  border-success-300; }
+  .badge-soft-warning  { @apply bg-warning-50    text-warning-700  border-warning-300; }
+  .badge-soft-danger   { @apply bg-negative-50   text-negative-700 border-negative-300; }
 }
