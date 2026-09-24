@@ -35,6 +35,8 @@
  *   OK: カードを並べるときは ul（aria-label 付き）> li で包む。
  *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。密にしたいなら card-compact、余白なしは card-body-flush。
+ *   NG: カード全体への操作（変更・削除・停止など）を card-body 内のボタン行に置かない → card-footer に置き、既定の右寄せにそろえる。
+ *       左寄せの本文内とカードごとに位置が揺れる。入力欄の横のコピー等、特定の要素に付く操作はその要素のそばに置いてよい。
  *   NG: body / footer の間に区切り線（border-t / divide-y）や背景色を足さない → 区切り線は header の下だけ。本文と操作は余白で区切る既定を保つ。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
