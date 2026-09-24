@@ -85,7 +85,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 11 | Tab           | `.tabs`, `.tabs-{solid,line}`, `.tab`, `.tab-{solid,line}`, `.tab-count` |
 | 12 | Table         | `.data-table`, `.data-table-fit`, `.data-table-num`, `.data-table-text`, `.data-table-wrap`（thead が項目名行。列幅は「締める列」だけ fit / num、自由文は text、収まらなければ wrap で横スクロール。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
 | 13 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
-| 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
+| 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}`, `.card-{icon,image,metadata,action}`, `.card-compact`, `.card-body-flush` |
 | 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
 | 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}`（ページ全体に向けた常設のお知らせ） |
 | 17 | Inline Message | `.inline-message`, `.inline-message-{success,negative,warning,neutral}`, `.inline-message-sm`, `.inline-message-{icon,text}`（操作した場所の直近に置く結果表示。トースト／スナックバーは用意しない） |

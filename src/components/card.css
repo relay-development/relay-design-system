@@ -3,28 +3,84 @@
  *
  *   header / body / footer を組み合わせる。variant: 標準 / card-elevated（影付き）
  *
+ *   props:
+ *     icon     : 見出しの上に背景付きアイコン → card-header 先頭に .card-icon（中に .icon、任意）
+ *     image    : カード上端に端まで広がる画像 → .card の最初の子に img.card-image（alt 必須、任意）
+ *     metadata : 本文末尾の補足行（件数・日付等、アイコン 16px ＋テキスト）→ ul.card-metadata（任意）
+ *     action   : 右上の操作 1 つ → card-header 内に .card-action（中は icon-btn、任意）
+ *     layout   : 標準 / card-compact（密な一覧向け。padding 16。card-icon は使わない）
+ *     body     : 標準 / card-body-flush（本文 padding 0。見出し付きのリスト・テーブルを端まで敷く）
+ *
  *   余白 / 区切り:
  *     外枠     border stroke-middle + rounded-md（カードと周囲の区切りは外枠で示す）
  *     内側     見出し（header）の下だけ区切り線 stroke-middle を引く。body / footer の間は線・背景色を付けず余白で区切る
  *     padding  各パート左右 24。header 上下 16、body 24、footer は本文との間 0・下端 24（本文→操作 24）
+ *              compact は左右 16・header 上下 12・body 16
+ *     icon     40×40、角丸 sm (8)、bg neutral/100、fg/high、アイコン 24px、下 16
+ *     image    幅 100%・object-cover、背景 neutral/50（読み込み前のプレースホルダー）。比率は aspect-* で指定
+ *     metadata text-sm fg/low、項目間 16、アイコン 16px（テキストとの間 4）、本文との間 16
  *     ※ Modal は重なりレイヤーで本文がスクロールしうるため、footer の区切り線・背景も残す（card とは別仕様）
  *
  * 機能:
  *   関連情報をグループ化して見せる枠。最前面に重ねて操作を止めるなら modal。
+ *   同種のカードを並べた一覧（案件・プロジェクト等）にも使う。
  *
  * 使用法:
  *   OK: 見出しは card-header > card-title、本文は card-body、操作は card-footer。
+ *   OK: 内容の種類を一目で示したいときは card-icon、写真・サムネイルが主役なら card-image。アイコンと画像は併用しない。
+ *   OK: 件数・日付・担当者などの補足は本文末尾の card-metadata にまとめる（アイコン ＋ テキスト）。
+ *   OK: カード単位の操作（メニューを開く等）は card-header 内の card-action に 1 つだけ置く（icon-btn-sm の neutral ghost）。
+ *   OK: 同種のカードを密に並べる一覧は card-compact（見出し＋短い説明だけで組む）。
+ *   OK: 見出し付きのリスト・テーブルをカード幅いっぱいに敷くときは card-body-flush（行側で左右 24 を取る）。
+ *   OK: カードを並べるときは ul（aria-label 付き）> li で包む。
  *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
- *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。
+ *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。密にしたいなら card-compact、余白なしは card-body-flush。
  *   NG: body / footer の間に区切り線（border-t / divide-y）や背景色を足さない → 区切り線は header の下だけ。本文と操作は余白で区切る既定を保つ。
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
-  *
+ *   NG: card-compact に card-icon を付けない → 密な一覧でアイコンが並ぶと情報より装飾が勝つ。種類を示したいなら標準レイアウトにする。
+ *   NG: card-action に操作を 2 つ以上並べない → 複数の操作はメニューにまとめて 1 つのボタンから開くか、card-footer に置く。
+ *   NG: card-image の alt を省略しない → 内容を表す画像は説明を、装飾なら alt="" を明示する。
+ *
  * アクセシビリティ:
  *   card-title は文脈に合う見出し要素（h2〜h4）にし、レベルを飛ばさない
- *   カード全体をリンクにするなら 1 つの <a> で包む（リンク/ボタンを入れ子にしない）
+ *   カード全体をリンクにするなら 1 つの <a> で包む（リンク/ボタンを入れ子にしない。card-action とは併用しない）
  *   見出し・補足が無いなら card で囲まない（過剰な入れ子を避ける）
-*/
+ *   card-action の icon-btn は aria-label にカード名を含めて一意化する（例: aria-label="『プロジェクト A』のメニュー"）
+ *   card-icon の中のアイコンは装飾なので aria-hidden="true"（意味は見出しで伝える）
+ *   card-image は alt 必須（内容を表すなら説明、装飾なら alt=""）
+ *   カード一覧は ul aria-label="…" > li で包み、件数とまとまりを支援技術に伝える
+ *
+ * Usage:
+ *   <div class="card">
+ *     <div class="card-header">
+ *       <span class="card-icon"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-folder"></use></svg></span>
+ *       <h3 class="card-title">プロジェクト A</h3>
+ *       <p class="card-subtitle">最終更新: 2026-05-25</p>
+ *       <div class="card-action">
+ *         <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="『プロジェクト A』のメニュー">
+ *           <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+ *         </button>
+ *       </div>
+ *     </div>
+ *     <div class="card-body">
+ *       <p>プロジェクトの説明文。</p>
+ *       <ul class="card-metadata">
+ *         <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-users"></use></svg>12 人</li>
+ *         <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-calendar"></use></svg>2026-05-25</li>
+ *       </ul>
+ *     </div>
+ *     <div class="card-footer">
+ *       <button type="button" class="btn btn-sm btn-primary btn-solid">開く</button>
+ *     </div>
+ *   </div>
+ *
+ *   <!-- 画像付き -->
+ *   <div class="card">
+ *     <img class="card-image aspect-video" src="…" alt="店舗の外観" />
+ *     <div class="card-header"><h3 class="card-title">カフェ事業の承継</h3></div>
+ *   </div>
+ */
 
 @layer components {
   .card {
@@ -65,5 +121,107 @@
   /* footer だけのカードは上端もカード端として 24 */
   .card-footer:first-child {
     @apply pt-6;
+  }
+
+  /* ============================================================
+   * Icon — 見出しの上に置く背景付きアイコン (card-header 先頭)
+   * ============================================================ */
+  .card-icon {
+    @apply flex items-center justify-center w-10 h-10 mb-4
+           rounded-sm bg-neutral-100 text-fg-high;
+  }
+
+  .card-icon .icon {
+    @apply w-6 h-6 shrink-0;   /* 24px */
+  }
+
+  /* ============================================================
+   * Image — カード上端に端まで広がる画像 (.card の最初の子)。
+   * 角丸は .card の overflow-hidden で上端が切り取られる。比率は利用側で aspect-* を指定
+   * ============================================================ */
+  /* 背景 neutral/50 は読み込み前・画像なし時のプレースホルダー (画像エリアの大きさを保つ) */
+  .card-image {
+    @apply block w-full h-auto object-cover bg-neutral-50;
+  }
+
+  /* ============================================================
+   * Metadata — 本文末尾の補足行 (アイコン 16px + テキスト)
+   * ============================================================ */
+  .card-metadata {
+    @apply flex flex-wrap items-center gap-x-4 gap-y-1 m-0 p-0 list-none
+           text-sm text-fg-low;
+  }
+
+  .card-metadata:not(:first-child) {
+    @apply mt-4;
+  }
+
+  .card-metadata > * {
+    @apply inline-flex items-center gap-1;
+  }
+
+  .card-metadata .icon {
+    @apply w-4 h-4 shrink-0;   /* 16px */
+  }
+
+  /* ============================================================
+   * Action — card-header 右上の操作 1 つ。
+   * action を含む header だけ 2 列 grid にし、title / subtitle / icon は左列に縦積み、
+   * action は右列の 1 行目に置く (既存の header の組み方は変えない)
+   * ============================================================ */
+  .card-header:has(> .card-action) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: calc(var(--spacing) * 4);   /* 16 */
+  }
+
+  .card-header:has(> .card-action) > :not(.card-action) {
+    grid-column: 1;
+  }
+
+  /* icon の下余白は 1 行目の高さに含めず次の行へ移す (action をアイコンの縦中央に揃えるため) */
+  .card-header:has(> .card-action) > .card-icon {
+    @apply mb-0;
+  }
+
+  .card-header:has(> .card-action) > .card-icon + * {
+    @apply mt-4;
+  }
+
+  /* header 1 行目 (card-icon があればアイコン、無ければ見出し) の縦中央に置く。
+   * -my-1 で icon-btn-sm (32) の占有高さを 24 にし、見出し 1 行 (24) の行高を押し広げない。
+   * -mr-2 は ghost ボタンの透明な余白ぶん右に寄せ、アイコンの右端を本文の右端に揃える */
+  .card-action {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    @apply -my-1 -mr-2;
+  }
+
+  /* ============================================================
+   * Layout: compact — 密な一覧向け。左右 16、header 上下 12、body 16 (card-icon は使わない)
+   * ============================================================ */
+  .card-compact .card-header {
+    @apply px-4 py-3;
+  }
+
+  .card-compact .card-body {
+    @apply p-4;
+  }
+
+  .card-compact .card-footer {
+    @apply px-4 pb-4;
+  }
+
+  .card-compact .card-footer:first-child {
+    @apply pt-4;
+  }
+
+  /* ============================================================
+   * Body: flush — 本文 padding 0。見出し付きのリスト・テーブルを端まで敷く
+   * (compact より後に置いて優先させる)
+   * ============================================================ */
+  .card .card-body-flush {
+    @apply p-0;
   }
 }

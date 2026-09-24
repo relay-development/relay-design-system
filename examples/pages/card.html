@@ -36,6 +36,124 @@
         </div>
       </div>
 
+      <!-- ===== バリエーション ===== -->
+      <h3 class="typo-xlarge mt-12 mb-2">バリエーション</h3>
+      <p class="typo-medium text-fg-middle mb-6">アイコン・画像・メタデータ・アクションは任意のパーツで、必要なものだけ組み合わせます。</p>
+
+      <h4 class="typo-large mb-4">アイコン ＋ メタデータ ＋ アクション</h4>
+      <ul class="grid sm:grid-cols-2 gap-4 mb-10" aria-label="プロジェクト一覧">
+        <li class="card">
+          <div class="card-header">
+            <span class="card-icon"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-folder"></use></svg></span>
+            <h5 class="card-title">プロジェクト A</h5>
+            <p class="card-subtitle">事業承継の準備を進めるプロジェクト</p>
+            <div class="card-action">
+              <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="『プロジェクト A』のメニュー">
+                <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>譲渡条件の整理と、候補者との面談日程を調整しています。</p>
+            <ul class="card-metadata">
+              <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-users"></use></svg>12 人</li>
+              <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-calendar"></use></svg>2026-05-25</li>
+            </ul>
+          </div>
+        </li>
+        <li class="card">
+          <div class="card-header">
+            <span class="card-icon"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-shield-check"></use></svg></span>
+            <h5 class="card-title">本人確認</h5>
+            <p class="card-subtitle">アカウントの安全性を高める</p>
+            <div class="card-action">
+              <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="『本人確認』のメニュー">
+                <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <p>書類を提出すると、案件への問い合わせができるようになります。</p>
+            <ul class="card-metadata">
+              <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-clock"></use></svg>約 5 分</li>
+              <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-file"></use></svg>書類 2 点</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+      <h4 class="typo-large mb-4">アクションのみ</h4>
+      <div class="card sm:w-1/2 mb-10">
+        <div class="card-header">
+          <h5 class="card-title">月次レポート</h5>
+          <p class="card-subtitle">2026 年 8 月分</p>
+          <div class="card-action">
+            <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="『月次レポート』のメニュー">
+              <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+            </button>
+          </div>
+        </div>
+        <div class="card-body"><p>問い合わせ 24 件、面談 6 件、成約 1 件でした。</p></div>
+      </div>
+
+      <h4 class="typo-large mb-4">画像付き</h4>
+      <ul class="grid sm:grid-cols-2 gap-4 mb-10" aria-label="案件一覧">
+        <li class="card">
+          <!-- カタログでは画像を読み込まず、画像エリアを neutral/50 のプレースホルダーで示す（実装では img.card-image + alt） -->
+          <div class="card-image aspect-video" aria-hidden="true"></div>
+          <div class="card-header">
+            <h5 class="card-title">カフェ事業の承継</h5>
+            <p class="card-subtitle">東京都 / 飲食</p>
+          </div>
+          <div class="card-body">
+            <p>地域で 20 年続くカフェの後継者を募集しています。</p>
+            <ul class="card-metadata">
+              <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-eye"></use></svg>1,240 閲覧</li>
+              <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-calendar"></use></svg>2026-05-25 掲載</li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+
+      <h4 class="typo-large mb-4">compact</h4>
+      <p class="typo-medium text-fg-middle mb-4"><code class="px-1 bg-neutral-100 rounded">.card-compact</code> — 同種のカードを密に並べる一覧向け。左右 16・見出し上下 12・本文 16。見出し＋短い説明だけで組み、アイコンは付けない。</p>
+      <ul class="grid sm:grid-cols-3 gap-4 mb-10" aria-label="設定メニュー">
+        <li class="card card-compact">
+          <div class="card-header">
+            <h5 class="card-title">プロフィール</h5>
+          </div>
+          <div class="card-body"><p>名前・自己紹介を編集</p></div>
+        </li>
+        <li class="card card-compact">
+          <div class="card-header">
+            <h5 class="card-title">通知</h5>
+          </div>
+          <div class="card-body"><p>メール・プッシュ通知の設定</p></div>
+        </li>
+        <li class="card card-compact">
+          <div class="card-header">
+            <h5 class="card-title">セキュリティ</h5>
+          </div>
+          <div class="card-body"><p>パスワード・2 段階認証</p></div>
+        </li>
+      </ul>
+
+      <h4 class="typo-large mb-4">body flush</h4>
+      <p class="typo-medium text-fg-middle mb-4"><code class="px-1 bg-neutral-100 rounded">.card-body-flush</code> — 本文の padding を 0 にし、見出し付きのリストをカード幅いっぱいに敷く（行側で左右 24 を取る）。</p>
+      <div class="card sm:w-1/2">
+        <div class="card-header">
+          <h5 class="card-title">最近の問い合わせ</h5>
+          <p class="card-subtitle">直近 7 日間</p>
+        </div>
+        <div class="card-body card-body-flush">
+          <ul class="divide-y divide-stroke-low">
+            <li class="px-6 py-3 flex justify-between"><span>カフェ事業の承継</span><span class="text-fg-low">3 件</span></li>
+            <li class="px-6 py-3 flex justify-between"><span>製造業の事業譲渡</span><span class="text-fg-low">1 件</span></li>
+            <li class="px-6 py-3 flex justify-between"><span>美容室の後継者募集</span><span class="text-fg-low">5 件</span></li>
+          </ul>
+        </div>
+      </div>
+
       <!-- func:auto:card -->
       </div><!-- /#card-panel-overview -->
 
@@ -117,7 +235,7 @@
           </div>
           <div class="card-body">
             <ul class="typo-small text-fg-middle space-y-2">
-              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>区切りをボーダーで示し、枠自体は読み上げに影響しないニュートラルな見た目</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>カードの区切りは外枠のボーダー、パート間は余白で示し、枠自体は読み上げに影響しないニュートラルな見た目</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span><code class="typo-xsmall">card-title</code>／<code class="typo-xsmall">card-subtitle</code>／<code class="typo-xsmall">card-body</code>／<code class="typo-xsmall">card-footer</code> の役割別スロット</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>reflow・テキスト拡大に耐えるトークンベースの余白</span></li>
             </ul>
@@ -135,6 +253,9 @@
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">card-title</code> は文脈に合う見出し要素（<code class="typo-xsmall">h2〜h4</code>）にし、レベルを飛ばさない</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>カード全体をクリック可能にするなら 1 つの <code class="typo-xsmall">&lt;a&gt;</code> で包むか stretched-link パターン。リンク/ボタンを入れ子にしない</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>見出し・補足が無いなら card で囲まず、素の要素で十分（過剰な入れ子を避ける）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">card-action</code> の icon-btn は <code class="typo-xsmall">aria-label</code> にカード名を含めて一意化する（例: 『プロジェクト A』のメニュー）。操作は 1 つだけ</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">card-image</code> は <code class="typo-xsmall">alt</code> 必須（内容を表すなら説明、装飾なら <code class="typo-xsmall">alt=""</code>）。<code class="typo-xsmall">card-icon</code> / <code class="typo-xsmall">card-metadata</code> のアイコンは <code class="typo-xsmall">aria-hidden="true"</code></span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>カード一覧は <code class="typo-xsmall">&lt;ul aria-label="…"&gt;</code> ＞ <code class="typo-xsmall">li</code> で包み、件数とまとまりを伝える</span></li>
             </ul>
           </div>
         </div>

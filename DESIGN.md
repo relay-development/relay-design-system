@@ -146,7 +146,7 @@ Filter Chip        : <button class="filter-chip" aria-pressed="false">...</butto
 Tab                : <div class="tabs tabs-solid"><button class="tab tab-solid" aria-selected="true">...</button>...</div>  ← 同一画面内の表示切替。一覧を 1 つの軸（すべて / 有望 …）で切り替える単一選択の絞り込みもこれ（tabs-line + .tab-count で件数）
 Simple Table       : <table class="simple-table"><tr><th scope="row">ラベル</th><td>値</td></tr>...</table>  ← 1 件の詳細（キー/値）。ラベル列 128px 固定、列幅は触らない
 Data Table         : <table class="data-table"><thead><tr><th scope="col">…</th></tr></thead>…</table>  ← 複数件の比較。列幅は「締める列」だけ指定: 固定書式の列（日付・状態・金額・操作）は th と同列の td に .data-table-fit（数値は .data-table-num）、自由文は .data-table-text の 1 列、残りは自動幅。収まらなければ <div class="data-table-wrap" tabindex="0"> で横スクロール
-Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
+Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>  ← パート間は区切り線なし（余白で区切る）。任意パーツ: header 先頭に .card-icon、上端に img.card-image（alt 必須）、本文末尾に ul.card-metadata、header 右上に .card-action（操作 1 つ）。密な一覧は .card-compact、本文を端まで敷くなら .card-body-flush
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>  ← ページ全体に向けた常設のお知らせ（Banner）
 Inline Message     : <p class="inline-message inline-message-success" role="status"><svg class="inline-message-icon" aria-hidden="true">…</svg><span class="inline-message-text">保存しました</span></p>  ← 操作した場所の直近（ボタン横・フォーム直下・行内）に置く結果表示。theme は success / negative / warning / neutral、密な場所は .inline-message-sm
