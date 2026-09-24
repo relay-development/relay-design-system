@@ -1,0 +1,45 @@
+<!-- ボタンのトリガー（左揃え・既定）。開閉は Popover API、フォーカス移動・矢印キー・位置計算は JS を付与する -->
+<button type="button" class="btn btn-md btn-neutral btn-outline" id="item-menu-trigger"
+        aria-haspopup="menu" aria-expanded="false" popovertarget="item-menu">
+  操作
+  <svg class="icon icon-md" aria-hidden="true"><use href="./icons.svg#lucide-chevron-down"></use></svg>
+</button>
+<div class="action-menu" id="item-menu" popover role="menu" aria-labelledby="item-menu-trigger">
+  <button type="button" class="menu-item" role="menuitem" tabindex="-1">
+    <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-pencil"></use></svg>
+    編集
+  </button>
+  <button type="button" class="menu-item" role="menuitem" tabindex="-1">
+    <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-copy"></use></svg>
+    複製
+  </button>
+  <hr class="menu-divider" />
+  <button type="button" class="menu-item action-menu-item-danger" role="menuitem" tabindex="-1">
+    <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x-circle"></use></svg>
+    削除
+  </button>
+</div>
+
+<!-- 三点メニュー（icon-btn、右揃え .action-menu-end。card-action / 表の行末など右寄りのトリガー向け） -->
+<button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" id="project-a-menu-trigger"
+        aria-label="『プロジェクト A』のメニュー" aria-haspopup="menu" aria-expanded="false" popovertarget="project-a-menu">
+  <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+</button>
+<div class="action-menu action-menu-end" id="project-a-menu" popover role="menu" aria-labelledby="project-a-menu-trigger">
+  <button type="button" class="menu-item" role="menuitem" tabindex="-1">名前を変更</button>
+  <button type="button" class="menu-item" role="menuitem" tabindex="-1" aria-disabled="true">書き出し（準備中）</button>
+  <hr class="menu-divider" />
+  <button type="button" class="menu-item action-menu-item-danger" role="menuitem" tabindex="-1">削除</button>
+</div>
+
+<!-- 見出し付きグループ（role="group" + aria-labelledby。見出しは p.menu-group-title — menu の中では見出し要素にしない） -->
+<div class="action-menu" id="share-menu" popover role="menu" aria-labelledby="share-menu-trigger">
+  <div class="menu-section" role="group" aria-labelledby="share-menu-link">
+    <p class="menu-group-title" id="share-menu-link">リンク</p>
+    <button type="button" class="menu-item" role="menuitem" tabindex="-1">リンクをコピー</button>
+  </div>
+  <div class="menu-section" role="group" aria-labelledby="share-menu-export">
+    <p class="menu-group-title" id="share-menu-export">書き出し</p>
+    <button type="button" class="menu-item" role="menuitem" tabindex="-1">CSV で書き出す</button>
+  </div>
+</div>

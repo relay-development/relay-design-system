@@ -229,6 +229,108 @@ document.addEventListener("keydown", (e) => {
   target.focus();
 });
 
+// Action Menu — 開閉は Popover API (popover + popovertarget) に任せ、APG Menu Button の操作を足す。
+// トリガーの aria-expanded 同期 / 開いたら先頭項目へフォーカス / ↑↓ Home End で項目移動 /
+// トリガー上の ↓↑ で開く / Tab で閉じて次へ / 項目選択で閉じる / 位置計算（下に空きが無ければ上へ）。
+// Esc・外側クリックでの閉じ（light dismiss）と閉じた後のフォーカス復帰は Popover API が行う。
+// toggle / beforetoggle はバブリングしないため capture で拾う。
+const ACTION_MENU_GAP = 4;       // トリガーとの距離 (spacing 1)
+const ACTION_MENU_VIEWPORT = 16; // 画面端から最低限空ける距離 (spacing 4)
+const actionMenuTrigger = (menu) => document.querySelector(`[popovertarget="${menu.id}"]`);
+const actionMenuItems = (menu) =>
+  [...menu.querySelectorAll('[role="menuitem"]')].filter((el) => el.offsetParent !== null);
+
+function positionActionMenu(menu) {
+  const trigger = actionMenuTrigger(menu);
+  if (!trigger) return;
+  const r = trigger.getBoundingClientRect();
+  const w = menu.offsetWidth;
+  const h = menu.offsetHeight;
+  const vw = document.documentElement.clientWidth;
+  const vh = window.innerHeight;
+  let left = menu.classList.contains("action-menu-end") ? r.right - w : r.left;
+  left = Math.min(Math.max(left, ACTION_MENU_VIEWPORT), vw - w - ACTION_MENU_VIEWPORT);
+  let top = r.bottom + ACTION_MENU_GAP;
+  const above = r.top - ACTION_MENU_GAP - h;
+  if (top + h > vh - ACTION_MENU_VIEWPORT && above >= ACTION_MENU_VIEWPORT) top = above;
+  menu.style.left = `${left}px`;
+  menu.style.top = `${top}px`;
+}
+
+document.addEventListener("beforetoggle", (e) => {
+  const menu = e.target;
+  if (!(menu instanceof HTMLElement) || !menu.classList.contains("action-menu")) return;
+  // 位置を計算するまで隠す (開いた瞬間に仮位置が一瞬見えるのを防ぐ)
+  if (e.newState === "open") menu.style.visibility = "hidden";
+}, true);
+
+document.addEventListener("toggle", (e) => {
+  const menu = e.target;
+  if (!(menu instanceof HTMLElement) || !menu.classList.contains("action-menu")) return;
+  const trigger = actionMenuTrigger(menu);
+  const open = e.newState === "open";
+  trigger?.setAttribute("aria-expanded", open ? "true" : "false");
+  if (open) {
+    positionActionMenu(menu);
+    menu.style.visibility = "";
+    const items = actionMenuItems(menu);
+    const focusLast = menu.dataset.focus === "last";
+    delete menu.dataset.focus;
+    (focusLast ? items[items.length - 1] : items[0])?.focus();
+  } else if (trigger && (document.activeElement === document.body || menu.contains(document.activeElement))) {
+    trigger.focus(); // フォーカス復帰の保険 (通常は Popover API が戻す)
+  }
+}, true);
+
+document.addEventListener("keydown", (e) => {
+  // トリガー上の ↓ / ↑ — 開いて先頭 / 末尾の項目へ
+  const trigger = e.target.closest?.('[aria-haspopup="menu"][popovertarget]');
+  if (trigger && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+    const menu = document.getElementById(trigger.getAttribute("popovertarget"));
+    if (!menu?.classList.contains("action-menu")) return;
+    e.preventDefault();
+    if (menu.matches(":popover-open")) {
+      const items = actionMenuItems(menu);
+      (e.key === "ArrowUp" ? items[items.length - 1] : items[0])?.focus();
+    } else {
+      menu.dataset.focus = e.key === "ArrowUp" ? "last" : "first";
+      menu.showPopover();
+    }
+    return;
+  }
+  // メニュー内 — ↑↓ Home End で移動、Tab で閉じる (Esc は Popover API)
+  const menu = e.target.closest?.(".action-menu:popover-open");
+  if (!menu) return;
+  if (e.key === "Tab") {
+    menu.hidePopover(); // フォーカスはトリガーに戻り、既定の Tab でその次の要素へ進む
+    return;
+  }
+  if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) return;
+  const items = actionMenuItems(menu);
+  const i = items.indexOf(document.activeElement);
+  const target =
+    e.key === "ArrowDown" ? items[(i + 1) % items.length]
+    : e.key === "ArrowUp" ? items[(i - 1 + items.length) % items.length]
+    : e.key === "Home" ? items[0]
+    : items[items.length - 1];
+  e.preventDefault();
+  target?.focus();
+});
+
+document.addEventListener("click", (e) => {
+  const item = e.target.closest('.action-menu [role="menuitem"]');
+  if (!item) return;
+  if (item.getAttribute("aria-disabled") === "true") return; // 無効項目は閉じない
+  item.closest(".action-menu:popover-open")?.hidePopover();
+});
+
+// 開いている間にスクロール / リサイズしてもトリガーに追従させる
+for (const type of ["scroll", "resize"]) {
+  window.addEventListener(type, () => {
+    document.querySelectorAll(".action-menu:popover-open").forEach(positionActionMenu);
+  }, { passive: true, capture: true });
+}
+
 // Mobile hamburger — サイドナビの開閉 (768px 以下で表示されるトグル)
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".docs-sidebar-toggle");

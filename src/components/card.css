@@ -29,7 +29,7 @@
  *   OK: 見出しは card-header > card-title、本文は card-body、操作は card-footer。
  *   OK: 内容の種類を一目で示したいときは card-icon、写真・サムネイルが主役なら card-image。アイコンと画像は併用しない。
  *   OK: 件数・日付・担当者などの補足は本文末尾の card-metadata にまとめる（アイコン ＋ テキスト）。
- *   OK: カード単位の操作（メニューを開く等）は card-header 内の card-action に 1 つだけ置く（icon-btn-sm の neutral ghost）。
+ *   OK: カード単位の操作は card-header 内の card-action に 1 つだけ置く（icon-btn-sm の neutral ghost）。複数の操作は action-menu（.action-menu-end）にまとめて開く。
  *   OK: 同種のカードを密に並べる一覧は card-compact（見出し＋短い説明だけで組む）。
  *   OK: 見出し付きのリスト・テーブルをカード幅いっぱいに敷くときは card-body-flush（行側で左右 24 を取る）。
  *   OK: カードを並べるときは ul（aria-label 付き）> li で包む。
@@ -39,7 +39,7 @@
  *   NG: 角丸・境界を独自指定しない → .card の既定（rounded-md / stroke-middle）を保つ。
  *   NG: テーブルだけを card で包まない → 枠と padding が二重になる。card-header に書く見出しが無いならテーブルを直接置く。
  *   NG: card-compact に card-icon を付けない → 密な一覧でアイコンが並ぶと情報より装飾が勝つ。種類を示したいなら標準レイアウトにする。
- *   NG: card-action に操作を 2 つ以上並べない → 複数の操作はメニューにまとめて 1 つのボタンから開くか、card-footer に置く。
+ *   NG: card-action に操作を 2 つ以上並べない → 複数の操作は action-menu にまとめて 1 つのボタンから開くか、card-footer に置く。
  *   NG: card-image の alt を省略しない → 内容を表す画像は説明を、装飾なら alt="" を明示する。
  *
  * アクセシビリティ:
