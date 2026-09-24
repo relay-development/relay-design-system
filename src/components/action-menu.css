@@ -24,7 +24,8 @@
  *   サイズ / 色:
  *     menu    : 幅 最小 192 / 最大 320、padding 8、角丸 md (16)、bg surface、border stroke-low、shadow-lg
  *     gap     : トリガーとの距離 4（下に空きが無ければ上に開く。位置は JS で計算）
- *     divider : 上下 8
+ *     divider : 上下 8（グループ間では 16）
+ *     group   : 見出しと項目の間 4、項目間 0、グループ間 16（menu の見出し付きグループと同じ）。1 つ目の見出しは上端から 16
  *     danger  : fg negative/700、hover bg negative/50
  *     disabled: fg disabled、hover しない
  *
@@ -112,18 +113,29 @@
     @apply my-2;
   }
 
-  .action-menu .menu-section + .menu-section,
-  .action-menu .menu-divider + .menu-section {
-    @apply mt-1;
+  /* 見出し付きグループ — menu の使用例と同じ間隔にそろえる。
+   * role="menu" の中では ul.menu-group で包めず項目が .menu-section 直下に並ぶため、
+   * section の gap 4 を切って項目間を 0 に戻し、見出しと項目の間 4 は見出しの下余白で取る */
+  .action-menu .menu-section {
+    @apply gap-0;
   }
 
-  /* グループ見出しは項目の直前に 8 の上余白を取り、1 つ目のグループでは詰める */
   .action-menu .menu-group-title {
+    @apply pb-1;
+  }
+
+  /* 1 つ目の見出しは外枠の padding 8 だけだと上端に寄るため 8 足し、menu と同じ上端から 16 にする */
+  .action-menu > .menu-section:first-child .menu-group-title {
     @apply pt-2;
   }
 
-  .action-menu > .menu-section:first-child .menu-group-title {
-    @apply pt-1;
+  /* グループ間は menu の gap と同じ 16。区切り線を挟むときは線の上下 16 */
+  .action-menu .menu-section + .menu-section {
+    @apply mt-4;
+  }
+
+  .action-menu .menu-section + .menu-divider {
+    @apply my-4;
   }
 
   /* ============================================================
