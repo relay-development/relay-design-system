@@ -99,7 +99,8 @@
       <h4 class="typo-large mb-4">画像付き</h4>
       <ul class="grid sm:grid-cols-2 gap-4 mb-10" aria-label="案件一覧">
         <li class="card">
-          <img class="card-image aspect-video" src="./assets/relay_main.png" alt="relay のメインビジュアル" />
+          <!-- カタログでは画像を読み込まず、画像エリアを neutral/50 のプレースホルダーで示す（実装では img.card-image + alt） -->
+          <div class="card-image aspect-video" aria-hidden="true"></div>
           <div class="card-header">
             <h5 class="card-title">カフェ事業の承継</h5>
             <p class="card-subtitle">東京都 / 飲食</p>

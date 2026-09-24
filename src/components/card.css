@@ -17,6 +17,7 @@
  *     padding  各パート左右 24。上下は カード端 24 / パート間 16（見出し→本文）・24（本文→操作）
  *              compact は左右 16・カード端 16・見出し→本文 8
  *     icon     40×40、角丸 sm (8)、bg neutral/100、fg/high、アイコン 24px、下 16
+ *     image    幅 100%・object-cover、背景 neutral/50（読み込み前のプレースホルダー）。比率は aspect-* で指定
  *     metadata text-sm fg/low、項目間 16、アイコン 16px（テキストとの間 4）、本文との間 16
  *     ※ Modal は重なりレイヤーで本文がスクロールしうるため、header / footer の区切り線を残す（card とは別仕様）
  *
@@ -143,8 +144,9 @@
    * Image — カード上端に端まで広がる画像 (.card の最初の子)。
    * 角丸は .card の overflow-hidden で上端が切り取られる。比率は利用側で aspect-* を指定
    * ============================================================ */
+  /* 背景 neutral/50 は読み込み前・画像なし時のプレースホルダー (画像エリアの大きさを保つ) */
   .card-image {
-    @apply block w-full h-auto object-cover;
+    @apply block w-full h-auto object-cover bg-neutral-50;
   }
 
   /* ============================================================
