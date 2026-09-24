@@ -211,7 +211,7 @@
   height: 100vh;
   overflow-y: auto;
   background: var(--color-surface);
-  border-right: 1px solid var(--color-stroke-low);
+  border-right: 1px solid var(--color-stroke-high);
   padding: 24px 16px;
   z-index: 10;
 }
@@ -524,7 +524,7 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
     height: auto;
     overflow: visible;
     border-right: 0;
-    border-bottom: 1px solid var(--color-stroke-low);
+    border-bottom: 1px solid var(--color-stroke-high);
     padding: calc(var(--spacing) * 3) calc(var(--spacing) * 4);   /* 12 16 */
     z-index: 30;
   }
