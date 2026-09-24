@@ -145,7 +145,7 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Sidebar accordion — Foundations / Components の開閉状態を localStorage に
+// Sidebar accordion — 各グループの開閉状態を localStorage に
 // 保存し、ページ遷移後も引き継ぐ (MPA のため DOM 状態は毎回リセットされる)。
 document.querySelectorAll("details[data-nav-group]").forEach((d) => {
   const key = `sidebar-group-open:${d.dataset.navGroup}`;
