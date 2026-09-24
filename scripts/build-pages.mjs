@@ -459,6 +459,12 @@ function breadcrumb(group, title) {
 function render({ title, group, content, activeFile, desc }) {
   // index はサイト名そのものなので「— relay Design System」を重ねない
   const fullTitle = title === "relay Design System" ? title : `${title} — relay Design System`;
+  // トップページ（カタログ一覧）だけ背景を白にし、ページカードのプレビュー面を
+  // neutral-50 に落とす（catalog.css の .docs-home）。個別ページは neutral-50 地のまま
+  const isHome = activeFile === "index.html";
+  const bodyClass = isHome
+    ? "docs-home bg-white text-fg-high font-sans antialiased"
+    : "bg-neutral-50 text-fg-high font-sans antialiased";
   return `<!doctype html>
 <html lang="ja">
 <head>
@@ -477,7 +483,7 @@ function render({ title, group, content, activeFile, desc }) {
   <link rel="stylesheet" href="../src/index.css" />
   <link rel="stylesheet" href="./catalog.css" />
 </head>
-<body class="bg-neutral-50 text-fg-high font-sans antialiased">
+<body class="${bodyClass}">
   <div class="docs-layout">
     <aside class="docs-sidebar">
       <div class="docs-sidebar-top">

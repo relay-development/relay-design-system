@@ -436,6 +436,11 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   border-bottom: 1px solid var(--color-stroke-low);
   overflow: hidden;
 }
+/* トップページ（body.docs-home = 背景 white）では、プレビュー面を neutral-50 に落として
+ * 白地との段差だけでカードの上下を分ける。個別ページ（背景 neutral-50）は primary-50 のまま */
+.docs-home .page-card-preview {
+  background: var(--color-neutral-50);
+}
 .page-card-label { padding: calc(var(--spacing) * 3); }
 /* カード全面をクリック領域にするカード型リンク（リンクに見えない見た目）のため、
  * 「テキストリンクは常に下線」原則の例外として下線なし（カタログ内部専用クラス） */
