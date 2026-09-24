@@ -80,7 +80,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 | ターゲット最小 44px | `.btn-lg` / `.icon-btn-lg` / `.input-lg` のみ ⚠️ | 2.5.5 |
 | `prefers-reduced-motion` | **未対応** 🔧 | 2.3.3 |
 | 見出し階層 | `.typo-*` で提供 ⚠️ | 2.4.6 / 2.4.10 |
-| ステータスメッセージ | `.alert` + `role` 推奨 ⚠️ | 4.1.3 |
+| ステータスメッセージ | `.alert` / `.inline-message` + `role` 推奨 ⚠️ | 4.1.3 |
 
 ---
 
@@ -1327,10 +1327,11 @@ WCAG 2.2 で本基準は **削除** されました (現代のブラウザ・支
 **達成基準**: ステータスメッセージ (成功・エラー・進捗等) を、フォーカス変更なしで支援技術に通知できるように、`role` または `aria-live` で識別する。
 
 **DS 側の担保**:
-- `.alert` コンポーネントは `role="status"` / `role="alert"` の付与を推奨 (ドキュメント済み)
+- `.alert` / `.inline-message` コンポーネントは `role="status"` / `role="alert"` の付与を推奨 (ドキュメント済み)
+- 時間で消えるトースト／スナックバーは DS に用意しない（操作直近に `.inline-message` で残す。WCAG 2.2.1 の時間制限を作らない）
 
 **プロダクト側の責務**:
-- フォーム送信成功時の Toast に `role="status"`
+- フォーム送信の結果を送信ボタンの直近に置く `.inline-message` に `role="status"`（成功）/ `role="alert"`（失敗）
 - エラーアラートに `role="alert"`
 - 動的に追加されるメッセージに `aria-live="polite"` または `"assertive"`
 

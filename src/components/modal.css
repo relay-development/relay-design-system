@@ -35,9 +35,13 @@
  *     body     p-6 / text-base (16/32) fg/high
  *     footer   px-5 py-3 border-t bg-neutral-50 右寄せ (card-footer と同一)
  *
+ * 別名:
+ *   ダイアログ / dialog / 確認ダイアログ
+ *
  * 機能:
  *   確認や入力を求めるとき最前面に重ねるダイアログ。ネイティブ <dialog> ベース。
- *   ページ内に常設で知らせるだけなら modal ではなく alert。
+ *   操作を止めて判断を求めるエラー（不可逆・データ消失・再読み込みが必要）もここ。
+ *   ページ内に常設で知らせるだけなら alert、操作直近で結果を短く伝えるだけなら inline-message。
  *
  * 使用法:
  *   OK: showModal() で開き、フォーカス管理と Esc 閉じはブラウザ標準に任せる。

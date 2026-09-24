@@ -308,4 +308,38 @@ export const CASES = [
       "一覧が data-table で、固定書式の列（段階・予算）は data-table-fit / data-table-num、氏名列が余白を受けている",
     ],
   },
+  {
+    // 出典: 2026-09 利用側から「操作へのフィードバックにスナックバー／トーストを追加したい」と要望。
+    // DS は Primer 準拠で時間で消える通知を作らず、行き先を 4 つ（自明なら出さない / 操作直近 =
+    // inline-message / ページ級 = alert / 操作を止める = modal）に固定した。「保存結果を伝える」という
+    // 意図レベルの指示で、エージェントが fixed + setTimeout のトーストを自作せず inline-message を
+    // 操作直近に置き、時間で消さないかを測る。
+    id: "action-feedback",
+    kind: "capability",
+    prompt:
+      "会員のプロフィール編集画面を作ってください。氏名・メールアドレス・自己紹介の 3 項目と「保存する」ボタンがあります。保存を押したあと、保存できたこと（または通信エラーで保存できなかったこと）を利用者にはっきり伝えてください。画面遷移はしません。",
+    mustClasses: ["inline-message", "btn", "input", "label-control"],
+    mustPatterns: [
+      {
+        pattern: "class=\"[^\"]*\b(?:toast|snackbar)\b",
+        forbid: true,
+        label: "toast / snackbar クラスの自作がない（時間で消える通知は DS に無い）",
+      },
+      {
+        pattern: "class=\"[^\"]*\bfixed\b[^\"]*\b(?:bottom|top)-",
+        forbid: true,
+        label: "画面隅に固定表示する通知（fixed + bottom/top）を作っていない",
+      },
+      {
+        pattern: "class=\"[^\"]*\binline-message\b[^\"]*\"[^>]*\brole=\"(?:status|alert)\"|role=\"(?:status|alert)\"[^>]*class=\"[^\"]*\binline-message\b",
+        label: "inline-message に role=\"status\" / role=\"alert\" が付いている（WCAG 4.1.3）",
+      },
+    ],
+    rubric: [
+      "保存結果が inline-message で保存ボタンの横または直下（操作した場所の直近）に置かれ、success / negative のテーマが結果と一致している",
+      "画面隅に固定して時間で消えるトースト／スナックバーを自作していない。setTimeout 等で自動消去していない",
+      "動的に挿入するメッセージに role=\"status\"（成功）/ role=\"alert\"（失敗）が付き、DOM 上も操作した要素の直後にある",
+      "入力項目 1 つの検証エラー（未入力等）には field-error-text を使い、inline-message と混同していない",
+    ],
+  },
 ];

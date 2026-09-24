@@ -30,6 +30,7 @@
 @import "./components/card.css";
 @import "./components/badge.css";
 @import "./components/alert.css";
+@import "./components/inline-message.css";
 @import "./components/link.css";
 @import "./components/breadcrumb.css";
 @import "./components/menu.css";

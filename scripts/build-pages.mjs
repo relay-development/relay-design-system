@@ -358,6 +358,7 @@ const PAGES = [
   { file: "card.html",         group: "Components", label: "カード",         title: "カード",         desc: "コンテナ (header / body / footer)" },
   { file: "badge.html",        group: "Components", label: "バッジ",        title: "バッジ",        desc: "ステータス / ラベルバッジ" },
   { file: "alert.html",        group: "Components", label: "アラート",        title: "アラート",        desc: "アラート (info / success / warning / negative)" },
+  { file: "inline-message.html", group: "Components", label: "インラインメッセージ", title: "インラインメッセージ", desc: "操作した場所の直近に置く結果メッセージ" },
   { file: "link-text.html",    group: "Components", label: "リンクテキスト",   title: "リンクテキスト",   desc: "緑下線 + 外部リンクアイコン" },
   { file: "breadcrumb.html",   group: "Components", label: "パンくずリスト",   title: "パンくずリスト",   desc: "chevron 区切りの階層ナビ" },
   { file: "menu.html",         group: "Components", label: "メニュー",         title: "メニュー",         desc: "縦型のナビ / アクションメニュー" },

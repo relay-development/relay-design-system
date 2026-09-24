@@ -148,7 +148,8 @@ Simple Table       : <table class="simple-table"><tr><th scope="row">ラベル</
 Data Table         : <table class="data-table"><thead><tr><th scope="col">…</th></tr></thead>…</table>  ← 複数件の比較。列幅は「締める列」だけ指定: 固定書式の列（日付・状態・金額・操作）は th と同列の td に .data-table-fit（数値は .data-table-num）、自由文は .data-table-text の 1 列、残りは自動幅。収まらなければ <div class="data-table-wrap" tabindex="0"> で横スクロール
 Card               : <div class="card"><div class="card-header">...</div><div class="card-body">...</div></div>
 Badge              : <span class="badge badge-soft-primary">ラベル</span>
-Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>
+Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>  ← ページ全体に向けた常設のお知らせ（Banner）
+Inline Message     : <p class="inline-message inline-message-success" role="status"><svg class="inline-message-icon" aria-hidden="true">…</svg><span class="inline-message-text">保存しました</span></p>  ← 操作した場所の直近（ボタン横・フォーム直下・行内）に置く結果表示。theme は success / negative / warning / neutral、密な場所は .inline-message-sm
 Link (テキストリンク): <a class="link"><span class="link-label">リンクテキスト</span></a>  ← a 要素のテキストリンクは置き場所を問わずこれ（本文・フッター・表セル・フォーム脇）。font-size は本文を inherit。緑を抑えたい補助リンクは .link-neutral、暗い背景上は .link-inverse（白）
 Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)。フォームや設定・詳細は <div class="page-shell page-shell-content"> で 900px に絞る
 ```
@@ -180,7 +181,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 選択状態     : <button aria-selected="true"> ← .tab
 無効状態     : disabled 属性 or class="..." disabled  ← :disabled が CSS で拾う
 現在ページ   : <a aria-current="page">       ← navigation links
-エラー       : .input-error / .alert-negative
+エラー       : .input-error / .inline-message-negative（操作直近） / .alert-negative（ページ級）
 ```
 
 ### 禁止パターン要約
@@ -188,6 +189,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 禁止 | 代替 |
 |---|---|
 | `padding: 16px` `color: #334155` `font-size: 14px` 等の生値直書き | トークン / ユーティリティ経由（`p-4` / `text-fg-middle` / `.typo-small`） |
+| 画面の隅に固定して時間で消えるトースト／スナックバーの自作（`fixed bottom-4 right-4` + `setTimeout` 等）・`.alert` をその代用にする | 結果が画面で自明なら出さない。操作直近の結果は `.inline-message`、ページ全体への常設のお知らせは `.alert`、操作を止めて判断を求めるエラーは `.modal`。時間で消える通知は作らない |
 | `p-5` / `p-7` / `p-10`（祝福外 spacing） | 近傍の祝福値（`p-4` or `p-6` / `p-6` or `p-8`） |
 | 新しい spacing トークンの追加（`--spacing-40` 等） | 祝福 9 段階に丸める |
 | `text-sm` / `text-base` 直書き | `.typo-small` / `.typo-medium` |

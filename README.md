@@ -68,7 +68,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 
 ---
 
-## コンポーネント一覧（26 個）
+## コンポーネント一覧（27 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -87,17 +87,18 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 13 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
 | 14 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}` |
 | 15 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
-| 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}` |
-| 17 | Link          | `.link`, `.link-label`, `.link-neutral`, `.link-inverse`（下線 + external-link アイコン。色は緑 primary-700/800 / neutral fg-middle/high / inverse 白＝暗い背景用の 3 種） |
-| 18 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
-| 19 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-item`, `.menu-item-sm`（項目は a / button、現在地は `aria-current="page"`、密なナビは sm） |
-| 20 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
-| 21 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
-| 22 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
-| 23 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
-| 24 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
-| 25 | Accordion     | `.accordion`, `.accordion-item`, `.accordion-trigger`, `.accordion-icon`, `.accordion-label`, `.accordion-panel`（ネイティブ `<details>`/`<summary>` ベース。開閉アイコンは見出しの左） |
-| 26 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ）/ `.page-shell-content`（900px に絞る。フォーム / 設定 / 詳細）。長文本文は `max-w-article` |
+| 16 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}`（ページ全体に向けた常設のお知らせ） |
+| 17 | Inline Message | `.inline-message`, `.inline-message-{success,negative,warning,neutral}`, `.inline-message-sm`, `.inline-message-{icon,text}`（操作した場所の直近に置く結果表示。トースト／スナックバーは用意しない） |
+| 18 | Link          | `.link`, `.link-label`, `.link-neutral`, `.link-inverse`（下線 + external-link アイコン。色は緑 primary-700/800 / neutral fg-middle/high / inverse 白＝暗い背景用の 3 種） |
+| 19 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
+| 20 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-item`, `.menu-item-sm`（項目は a / button、現在地は `aria-current="page"`、密なナビは sm） |
+| 21 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
+| 22 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
+| 23 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
+| 24 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
+| 25 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
+| 26 | Accordion     | `.accordion`, `.accordion-item`, `.accordion-trigger`, `.accordion-icon`, `.accordion-label`, `.accordion-panel`（ネイティブ `<details>`/`<summary>` ベース。開閉アイコンは見出しの左） |
+| 27 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ）/ `.page-shell-content`（900px に絞る。フォーム / 設定 / 詳細）。長文本文は `max-w-article` |
 
 主要コンポーネントの完成形 HTML は `snippets/*.html` を（全コンポーネントのスニペットは MCP `get_component` またはプレビューサイト）、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
 

@@ -17,14 +17,18 @@
  *     warning:  bg warning/50,  border warning/300,  title + body secondary/700
  *     info:     bg info/50,     border info/300,     title + body info/600
  *
+ * 別名:
+ *   バナー / banner / お知らせ
+ *
  * 機能:
  *   操作の結果やお知らせをページ内に埋め込んで伝えるメッセージ。テーマで意味を表す。
- *   画面を覆って操作を止めたいなら alert ではなく modal。
+ *   ページ全体に向けた常設のお知らせ・しばらく残す通知の置き場所（Primer の Banner に相当）。
+ *   操作した場所の直近で結果だけを短く伝えるなら inline-message、画面を覆って操作を止めたいなら modal。
  *
  * 使用法:
  *   OK: 内容に応じてテーマを選ぶ（成功=success / エラー=negative / 注意=warning / 情報=info）。
  *   OK: 閉じられるようにするなら alert-close を付ける。
- *   NG: 一時表示のトースト代わりに使わない → alert はページ内常設メッセージ。
+ *   NG: 一時表示のトースト代わりに使わない → alert はページ内常設メッセージ。時間で消える通知は DS に無く、操作直近の結果は inline-message で残す。
  *   NG: テーマを色の好みで選ばない → 意味（成功/エラー等）に合わせる。
  *
  *
@@ -32,7 +36,7 @@
  *   動的に挿入する通知に role="status"（成功/情報）・role="alert"（エラー/警告）を付ける
  *   内容に合うテーマを選び、色と文言を一致させる
  *   閉じられる場合は alert-close に aria-label="閉じる"
- *   一時表示のトースト代わりに使わない（alert はページ内常設）
+ *   一時表示のトースト代わりに使わない（alert はページ内常設。操作直近の結果は inline-message）
  *   強制カラーモードでは閉じる(×)ボタンの opacity を戻し、円と × に内部コントラストを付けて可視化する
  * Usage:
  *   <div class="alert alert-info">
