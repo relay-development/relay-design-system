@@ -38,13 +38,14 @@
           <h4 class="card-title">状況別の行き先</h4>
           <p class="card-subtitle">上から順に当てはめる。迷ったら「出さない」に寄せる</p>
         </div>
+        <div class="card-body">
         <table class="data-table">
           <thead>
             <tr>
               <th scope="col">状況</th>
               <th scope="col" class="data-table-fit">使うもの</th>
               <th scope="col">置き場所と消え方</th>
-              <th scope="col" class="data-table-fit">読み上げ</th>
+              <th scope="col">読み上げ</th>
             </tr>
           </thead>
           <tbody>
@@ -52,34 +53,35 @@
               <td>結果が画面を見れば分かる単純な成功<br><span class="typo-xsmall text-fg-low">チェックが入った・行が増えた・並び順が変わった</span></td>
               <td class="data-table-fit"><span class="badge badge-soft-neutral">出さない</span></td>
               <td>画面の変化そのものが返答。メッセージを足すと騒がしくなるだけで情報は増えない</td>
-              <td class="data-table-fit typo-small text-fg-middle">状態変化を <code class="typo-xsmall">aria-*</code> で</td>
+              <td class="typo-small text-fg-middle">状態変化を <code class="typo-xsmall">aria-*</code> で</td>
             </tr>
             <tr>
               <td>操作した場所の直近で結果を短く伝える<br><span class="typo-xsmall text-fg-low">保存しました / 送信に失敗しました / 5 MB を超えています</span></td>
               <td class="data-table-fit"><a class="link" href="./inline-message.html"><span class="link-label">inline-message</span></a></td>
               <td>ボタンの横・フォームの直下・行内。次の操作まで残る</td>
-              <td class="data-table-fit typo-small text-fg-middle"><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
+              <td class="typo-small text-fg-middle"><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
             </tr>
             <tr>
               <td>ページ全体に向けた常設のお知らせ・しばらく残す通知<br><span class="typo-xsmall text-fg-low">メンテナンス予定 / 審査結果 / ページ上部のエラー要約</span></td>
               <td class="data-table-fit"><a class="link" href="./alert.html"><span class="link-label">alert</span></a></td>
               <td>コンテンツ領域の上部。利用者が閉じるまで残る（閉じるボタンは任意）</td>
-              <td class="data-table-fit typo-small text-fg-middle"><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
+              <td class="typo-small text-fg-middle"><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
             </tr>
             <tr>
               <td>操作を止めて判断を求める確認・エラー<br><span class="typo-xsmall text-fg-low">削除してよいか / セッション切れで再読み込み / 保存せずに離れるか</span></td>
               <td class="data-table-fit"><a class="link" href="./modal.html"><span class="link-label">modal</span></a></td>
               <td>最前面。利用者が選択するまで閉じない。閉じたらフォーカスを呼び出し元へ戻す</td>
-              <td class="data-table-fit typo-small text-fg-middle"><code class="typo-xsmall">&lt;dialog&gt;</code> + <code class="typo-xsmall">aria-labelledby</code></td>
+              <td class="typo-small text-fg-middle"><code class="typo-xsmall">&lt;dialog&gt;</code> + <code class="typo-xsmall">aria-labelledby</code></td>
             </tr>
             <tr>
               <td>入力項目 1 つの検証エラー<br><span class="typo-xsmall text-fg-low">メールアドレスの形式が正しくありません</span></td>
               <td class="data-table-fit"><a class="link" href="./label-control.html"><span class="link-label">field-error-text</span></a></td>
               <td>入力欄の真下。修正されるまで残る</td>
-              <td class="data-table-fit typo-small text-fg-middle"><code class="typo-xsmall">aria-describedby</code> + <code class="typo-xsmall">aria-invalid</code></td>
+              <td class="typo-small text-fg-middle"><code class="typo-xsmall">aria-describedby</code> + <code class="typo-xsmall">aria-invalid</code></td>
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
 
       <!-- ===== 3. トーストを置かない理由 ===== -->
@@ -90,6 +92,7 @@
         <div class="card-header">
           <h4 class="card-title">衝突する達成基準（WCAG 2.2）</h4>
         </div>
+        <div class="card-body">
         <table class="data-table">
           <thead>
             <tr>
@@ -126,6 +129,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
 
       <div class="card mb-12">
@@ -147,7 +151,7 @@
       <!-- ===== 4. トーストが要ると思ったとき ===== -->
       <h3 class="typo-xlarge mb-4">「それでもトーストが要る」と思ったときの読み替え</h3>
       <p class="typo-article text-fg-high mb-6">トーストを使いたくなる場面は、たいてい次のどれかに置き換えられます。</p>
-      <div class="card mb-12">
+      <div class="mb-12">
         <table class="data-table">
           <thead>
             <tr>
