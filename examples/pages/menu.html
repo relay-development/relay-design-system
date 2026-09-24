@@ -18,7 +18,7 @@
       <div class="card mb-6 overflow-hidden">
         <div class="card-header">
           <h3 class="card-title">項目の状態</h3>
-          <p class="card-subtitle">default / hover / focus / current。hover はニュートラル（背景 neutral/100）、current は primary（背景 primary/50 + 太字）— primary は「現在地」の意味に予約</p>
+          <p class="card-subtitle">default / hover / focus / current。hover はニュートラル（背景 neutral/100）、current は primary（背景 primary/50 + 文字 primary/600）。太さは全状態 bold 共通— primary は「現在地」の意味に予約</p>
         </div>
         <div class="card-body grid grid-cols-[100px_1fr] gap-4 items-center">
           <span class="typo-xsmall text-fg-low">default</span>
@@ -314,7 +314,7 @@
             <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
           </div>
           <div class="card-body space-y-3">
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">現在地は <code class="typo-xsmall">aria-current="page"</code> による背景＋太字で示し、色だけに頼らない。左アイコンは装飾、区切りは <code class="typo-xsmall">menu-divider</code> でグループ化。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">現在地は <code class="typo-xsmall">aria-current="page"</code> による背景色＋文字色で示す（太さは全項目 bold で共通）。左アイコンは装飾、区切りは <code class="typo-xsmall">menu-divider</code> でグループ化。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">幅は親要素で決まり、リフローで縦積みに崩れても機能を失わない。文字は rem / トークンで拡大に追従。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> で各項目へ、<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter</kbd> で遷移／実行。加えて <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">↑</kbd> <kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">↓</kbd> でも項目間を移動できる（JS 付与時。Tab 順は保つ）。フォーカスリングで位置が分かる。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle"><code class="typo-xsmall">nav</code> は <code class="typo-xsmall">aria-label</code> でランドマーク名を持ち、各項目は role=link / button として、現在地は「現在のページ」として読まれる。</p></div>
@@ -330,7 +330,7 @@
           <div class="card-body">
             <ul class="typo-small text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>ネイティブ <code class="typo-xsmall">nav</code> ＋ <code class="typo-xsmall">a</code> / <code class="typo-xsmall">button</code> ベース — 役割・名前・状態が標準で確立</span></li>
-              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span><code class="typo-xsmall">aria-current="page"</code> のスタイル（背景＋太字）で現在地を色以外でも表現</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span><code class="typo-xsmall">aria-current="page"</code> で現在地を支援技術に伝える（見た目は背景色＋文字色）</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>フォーカスリング <code class="typo-xsmall">--shadow-focus-ring</code>（<code class="typo-xsmall">:focus-visible</code>）</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>末尾装飾アイコン <code class="typo-xsmall">menu-item-trailing</code> は <code class="typo-xsmall">aria-hidden</code> 前提の設計</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>テキスト色は <code class="typo-xsmall">fg-*</code> ロールでコントラストを確保</span></li>
@@ -347,7 +347,7 @@
           <div class="card-body">
             <ul class="typo-small text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>ナビは <code class="typo-xsmall">&lt;nav aria-label="…"&gt;</code> で包む。複数ある場合は固有のラベルを付ける</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>現在地に <code class="typo-xsmall">aria-current="page"</code>（色・太字だけに頼らない）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>現在地に <code class="typo-xsmall">aria-current="page"</code>（色だけに頼らない）</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>遷移は <code class="typo-xsmall">&lt;a&gt;</code>、操作は <code class="typo-xsmall">&lt;button&gt;</code> と要素で役割を分ける</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>装飾アイコンは <code class="typo-xsmall">aria-hidden="true"</code>、別タブで開くリンクは手がかりと説明を添える</span></li>
             </ul>
@@ -401,7 +401,7 @@
                 <li><a class="menu-item" href="#menu" aria-current="page">マイページ</a></li>
                 <li><a class="menu-item" href="#menu">アカウント設定</a></li>
               </ul></nav>
-              <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-current="page"</code> を付けると、背景＋太字に加え SR が「現在のページ」と読む。</p>
+              <p class="typo-small text-fg-middle"><code class="typo-xsmall">aria-current="page"</code> を付けると、背景色＋文字色に加え SR が「現在のページ」と読む。</p>
               <pre class="code-sample mt-3" data-code>
 &lt;a class="menu-item" [[aria-current="page"]]&gt;マイページ&lt;/a&gt;</pre>
             </div>

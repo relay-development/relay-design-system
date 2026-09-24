@@ -18,9 +18,9 @@
  *
  *   container: bg surface, padding 16, 角丸 md (16), グループ間 gap 16 + 区切り線。
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
- *   item     : padding 12 (sm は 8), gap 8, 角丸 sm (8), text-sm (14/24) tracking 5%, アイコン 24px
+ *   item     : padding 12 (sm は 8), gap 8, 角丸 sm (8), text-sm (14/24) bold tracking 5%, アイコン 24px
  *   colors   : default = fg/middle、hover = bg neutral/100 + fg/high、
- *              current = bg primary/50 + bold primary/600
+ *              current = bg primary/50 + primary/600（太さは全状態 bold 共通）
  *              （primary は「現在地」の意味に予約し、hover はニュートラルで示す）
  *     ※ Figma は current 文字色 primary/500 だが、primary/50 背景で約 2.4:1 と
  *       AA 不足のため、リンクテキストと同様 primary/600 に上げている。
@@ -48,7 +48,7 @@
  *
  * アクセシビリティ:
  *   ナビは <nav aria-label="…"> で包む（複数あれば固有ラベル）
- *   現在地に aria-current="page"（色・太字だけに頼らない）
+ *   現在地に aria-current="page"（色だけに頼らない）
  *   遷移は <a>、操作は <button> と要素で役割を分ける
  *   装飾アイコンは aria-hidden。Tab/Enter で操作でき、加えて上下矢印キーでも項目間を移動できる
  *     （↑/↓ で前後の項目、Home/End で先頭/末尾へ・端でループ。roving tabindex は使わず全項目を
@@ -109,7 +109,7 @@
    * 「テキストリンクは常に下線」原則 (DESIGN.md) の例外として a も下線なし */
   .menu-item {
     @apply flex items-center gap-2 w-full p-3 rounded-sm
-           text-sm leading-6 tracking-wider font-normal
+           text-sm leading-6 tracking-wider font-bold
            text-fg-middle no-underline cursor-pointer
            bg-transparent border-0 text-left
            transition-colors duration-150;
@@ -134,7 +134,7 @@
 
   /* Hover — ニュートラルなハイライト (カタログ用 .is-hover-preview も同条件)。
    * primary は「現在地」の意味に予約するため hover では使わない。
-   * 太字化は文字幅が変わりガタつくため行わない */
+   * 太さは全状態 bold 共通 (状態で太さを変えると文字幅が変わりガタつくため) */
   .menu-item:hover,
   .menu-item.is-hover-preview {
     @apply bg-neutral-100 text-fg-high;
@@ -143,7 +143,7 @@
   /* Current (現在地) — ARIA 属性で指定。hover より後に置き優先させる */
   .menu-item[aria-current="page"],
   .menu-item[aria-current="page"]:hover {
-    @apply bg-primary-50 font-bold;
+    @apply bg-primary-50;
     color: var(--color-primary-600);
   }
 
@@ -156,8 +156,8 @@
 
   /* ============================================================
    * 強制カラーモード (Windows ハイコントラスト等) 対応
-   *   現在地を bg(primary/50)＋太字で示すが、強制カラーでは背景が Canvas 化して
-   *   ハイライトが消え、太字だけになり弱い。Highlight で塗って明確に示す
+   *   現在地を bg(primary/50)＋文字色で示すが、強制カラーでは背景・文字色が
+   *   system color 化してハイライトが消え、見分けがつかなくなる。Highlight で塗って明確に示す
    *   （backplate 対策で forced-color-adjust:none）。
    *   focus は box-shadow リングで影が無視され見えないため outline を出す。
    *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
