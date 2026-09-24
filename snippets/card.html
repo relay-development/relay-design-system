@@ -8,15 +8,72 @@
     <p>このプロジェクトの説明文がここに入ります。</p>
   </div>
   <div class="card-footer">
-    <button type="button" class="btn btn-sm btn-secondary">キャンセル</button>
-    <button type="button" class="btn btn-sm btn-primary">開く</button>
+    <button type="button" class="btn btn-sm btn-neutral btn-outline">キャンセル</button>
+    <button type="button" class="btn btn-sm btn-primary btn-solid">開く</button>
   </div>
 </div>
 
-<!-- Simple, no header（elevation 表現のシャドウは使わない → 区切りは .card 既定のボーダー） -->
+<!-- Simple, no header（elevation 表現のシャドウは使わない → 区切りは .card 既定の外枠ボーダー） -->
 <div class="card">
   <div class="card-body">
     <h3 class="card-title mb-1">シンプルカード</h3>
-    <p class="text-fg-muted">ヘッダー/フッターを省略した最小構成です。</p>
+    <p class="text-fg-low">ヘッダー/フッターを省略した最小構成です。</p>
+  </div>
+</div>
+
+<!-- アイコン + メタデータ + アクション（一覧は ul aria-label > li で包む） -->
+<ul class="grid sm:grid-cols-2 gap-4" aria-label="プロジェクト一覧">
+  <li class="card">
+    <div class="card-header">
+      <span class="card-icon"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-folder"></use></svg></span>
+      <h3 class="card-title">プロジェクト A</h3>
+      <p class="card-subtitle">事業承継の準備を進めるプロジェクト</p>
+      <div class="card-action">
+        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="『プロジェクト A』のメニュー">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>譲渡条件の整理と、候補者との面談日程を調整しています。</p>
+      <ul class="card-metadata">
+        <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-users"></use></svg>12 人</li>
+        <li><svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-calendar"></use></svg>2026-05-25</li>
+      </ul>
+    </div>
+  </li>
+</ul>
+
+<!-- 画像付き（alt 必須。比率は aspect-* で指定） -->
+<div class="card">
+  <img class="card-image aspect-video" src="…" alt="店舗の外観" />
+  <div class="card-header">
+    <h3 class="card-title">カフェ事業の承継</h3>
+    <p class="card-subtitle">東京都 / 飲食</p>
+  </div>
+  <div class="card-body">
+    <p>地域で 20 年続くカフェの後継者を募集しています。</p>
+  </div>
+</div>
+
+<!-- compact（密な一覧向け） -->
+<div class="card card-compact">
+  <div class="card-header">
+    <span class="card-icon"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-bell"></use></svg></span>
+    <h3 class="card-title">通知</h3>
+  </div>
+  <div class="card-body"><p>メール・プッシュ通知の設定</p></div>
+</div>
+
+<!-- body flush（見出し付きのリストを端まで敷く。行側で左右 24） -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">最近の問い合わせ</h3>
+  </div>
+  <div class="card-body card-body-flush">
+    <ul class="divide-y divide-stroke-low">
+      <li class="px-6 py-3">カフェ事業の承継</li>
+      <li class="px-6 py-3">製造業の事業譲渡</li>
+    </ul>
   </div>
 </div>
