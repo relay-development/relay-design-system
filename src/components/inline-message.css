@@ -20,7 +20,7 @@
  *   サイズ / 色 (semantic tokens):
  *     md   : text 16/24 bold、icon 20px（24px の行高に垂直中央）、gap 8px
  *     sm   : text 14/20 bold、icon 16px（20px の行高に垂直中央）、gap 4px
- *     success  : primary/600（alert-success の文字色と同じ。白背景で 4.9:1）
+ *     success  : primary/700（白背景で 7.0:1 = AAA。alert-success の文字色 primary/600 は色付き背景前提で、白上では 4.9:1 と AAA に届かないため 1 段上げる。link の default と同じ色）
  *     negative : negative/600（白背景で 4.8:1）
  *     warning  : secondary/800（白背景で 4.5:1 を満たすため。secondary/700 は 4.3:1 で不足）
  *     neutral  : fg/middle（取得できない・利用できない状態。白背景で 10:1）
@@ -105,10 +105,10 @@
 
   /* ============================================================
    * Theme — success / negative / warning / neutral
-   *   文字とアイコンを同色にする。背景が白なので alert（色付き背景）より
-   *   1 段濃い色が要る warning だけ secondary/800（白上 6.2:1）
+   *   文字とアイコンを同色にする。背景が白なので alert（色付き背景）と同じ色では
+   *   足りず、success は primary/700（7.0:1 AAA）、warning は secondary/800（6.2:1）に上げる
    * ============================================================ */
-  .inline-message-success  { color: var(--color-primary-600); }
+  .inline-message-success  { color: var(--color-primary-700); }
   .inline-message-negative { color: var(--color-negative-600); }
   .inline-message-warning  { color: var(--color-secondary-800); }
   .inline-message-neutral  { color: var(--color-fg-middle); }
