@@ -119,6 +119,7 @@ function generationPrompt(c) {
     "- CSS は同じディレクトリに relay.css として配置済み。<head> で <link rel=\"stylesheet\" href=\"./relay.css\"> を読み込むこと（npm セットアップは不要）。",
     "- アイコンが必要な場合は MCP の get_icon(\"名前\") で <symbol> を取得し、文書内に定義して <use href=\"#lucide-名前\"> で参照する（外部 .svg#id 参照は file:// 表示で描かれないので書かない。SVG パスの自作や icons.svg の grep もしない）。",
     "- ロゴ・イラストが必要な場合は list_assets の直リンク URL を <img> でそのまま使う（独自に描かない）。",
+    "- 要件の指示と違う実装にした箇所があれば、その理由を HTML の先頭のコメント（<!-- … -->）に書くこと（採点は保存した HTML だけを見る）。",
     "- 完成したら保存したファイルパスを 1 行報告して終了。",
   ].join("\n");
 }
@@ -169,6 +170,14 @@ function extractClassTokens(html) {
   const tokens = new Set();
   for (const m of html.matchAll(/class\s*=\s*["']([^"']*)["']/g)) {
     for (const t of m[1].split(/\s+/)) if (t) tokens.add(t);
+  }
+  // JS で組み立てたクラスも拾う（動的に挿入するメッセージ等。実例: action-feedback で
+  // p.className = "inline-message " + (ok ? "inline-message-success" : …) と書かれ、使っているのに不足と判定された）。
+  // className = / classList.add|toggle|replace( / setAttribute("class", の文の中の文字列リテラルをクラス列として読む
+  for (const m of html.matchAll(/(?:\.className\s*=|\.classList\.(?:add|toggle|replace)\s*\(|setAttribute\s*\(\s*["']class["']\s*,)([^;\n]*)/g)) {
+    for (const lit of m[1].matchAll(/["'`]([^"'`]*)["'`]/g)) {
+      for (const t of lit[1].split(/\s+/)) if (/^[A-Za-z][\w:-]*$/.test(t)) tokens.add(t);
+    }
   }
   return [...tokens];
 }

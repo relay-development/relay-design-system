@@ -210,7 +210,7 @@ export const CASES = [
       { pattern: "href=\"#", label: "本文へのページ内リンク" },
     ],
     rubric: [
-      "スキップリンクが body 直後（最初のフォーカス可能要素）にあり、リンク先の id が本文側に実在する",
+      "スキップリンクがページで最初のフォーカス可能要素（body の直後、またはヘッダの先頭）にあり、リンク先の id が本文側に実在する",
       "ナビが nav、本文が main のランドマーク構造になっている",
       "記事本文が typo-article + text-fg-high で組まれている",
     ],
@@ -231,7 +231,7 @@ export const CASES = [
     ],
     rubric: [
       "状態・公開日・導線の列に data-table-fit、譲渡希望額の列に data-table-num（右寄せ）が th と同列の td 全てに付いている",
-      "事業内容の説明列だけが自由文の列（data-table-text または幅指定なし）で、他の列が幅指定なしの自由文に押されて 2 行に折れていない",
+      "自由文の列（data-table-text）は事業内容の説明列の 1 列だけで、状態・公開日・金額などの固定書式の列が自由文に押されて 2 行に折れていない（案件名のような短いテキストの列は、DS のレシピどおり幅指定なしで余白を受けてよい）",
       "全列に w-* 等の幅を配ったり、全セルに whitespace-nowrap を付けたりしていない（幅指定は締める列だけ）",
       "収まらない幅は data-table-wrap で横スクロールさせ、文字サイズを小さくしたり列を削って無理に収めていない",
       "詳細への導線が a 要素 + link、状態が badge のステータス色で、リンク文言が行ごとに区別できる（sr-only 等）",
@@ -331,7 +331,8 @@ export const CASES = [
         label: "画面隅に固定表示する通知（fixed + bottom/top）を作っていない",
       },
       {
-        pattern: "class=\"[^\"]*\\binline-message\\b[^\"]*\"[^>]*\\brole=\"(?:status|alert)\"|role=\"(?:status|alert)\"[^>]*class=\"[^\"]*\\binline-message\\b",
+        // 静的な属性に加え、JS で生成する場合（className = "inline-message …" の近くで setAttribute("role", …)）も拾う
+        pattern: "class=\"[^\"]*\\binline-message\\b[^\"]*\"[^>]*\\brole=\"(?:status|alert)\"|role=\"(?:status|alert)\"[^>]*class=\"[^\"]*\\binline-message\\b|inline-message[\\s\\S]{0,300}?setAttribute\\(\\s*[\"']role[\"']\\s*,[^;]*[\"'](?:status|alert)[\"']|setAttribute\\(\\s*[\"']role[\"']\\s*,[^;]*[\"'](?:status|alert)[\"'][\\s\\S]{0,300}?inline-message",
         label: "inline-message に role=\"status\" / role=\"alert\" が付いている（WCAG 4.1.3）",
       },
     ],
@@ -375,7 +376,7 @@ export const CASES = [
       },
     ],
     rubric: [
-      "「右下にトースト」「3 秒で消す」という指示を、操作した行の直近に残る inline-message（または一覧上部の alert）に読み替え、その理由を一言添えている",
+      "「右下にトースト」「3 秒で消す」という指示を、操作した行の直近に残る inline-message（または一覧上部の alert）に読み替え、その理由を HTML の中（先頭のコメント等）に一言添えている",
       "画面隅に固定して時間で消える通知を自作していない。setTimeout 等で自動消去していない",
       "読み替えたメッセージに role=\"status\" が付き、DOM 上も操作した行（ボタン）の直後にある",
       "「対応済み」への状態変化が行の表示（badge 等）で分かるなら、メッセージを出さない判断も許容する。ただし出す場合は上記の置き方に従っている",
