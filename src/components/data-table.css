@@ -40,6 +40,42 @@
  *                       <div class="data-table-wrap" tabindex="0"> で包む（列幅を詰めて無理に収めない）。
  *                       wrap 内では自由文（data-table-text）以外のセルを 1 文字ずつ折らない（keep-all）ので、
  *                       表の最小幅が中身で決まり、親幅に収まらない分が横スクロールに回る
+ *   列フィルター（column filter）— 列の値で行を絞り込む。見出しの横の icon-btn から Popover を開く:
+ *
+ *     <th scope="col">
+ *       <span class="data-table-filter">
+ *         <span id="col-role">役割</span>
+ *         <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
+ *                 aria-label="役割で絞り込む" aria-haspopup="dialog" aria-expanded="false" popovertarget="filter-role">
+ *           <svg class="icon icon-sm" aria-hidden="true"><use href="./icons.svg#lucide-filter"></use></svg>
+ *         </button>
+ *       </span>
+ *     </th>
+ *     …（パネルは表の直後に置く）
+ *     <div class="data-table-filter-panel" id="filter-role" popover role="dialog" aria-label="役割で絞り込む">
+ *       <div class="selector selector-sm">
+ *         <select class="select" aria-labelledby="col-role">
+ *           <option value="">すべて</option><option>管理者</option><option>編集者</option>
+ *         </select>
+ *       </div>
+ *       <div class="data-table-filter-actions">
+ *         <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset>リセット</button>
+ *         <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
+ *       </div>
+ *     </div>
+ *
+ *     .data-table-filter          見出しの文字とトリガーを横に並べる。トリガー (32) が見出し行を押し広げないよう上下を相殺
+ *     .data-table-filter-trigger  icon-btn-sm に付ける。アイコンは見出しの文字 (14) に合わせて 16（icon-sm）に縮める。
+ *                                 見出し地 (neutral/50) の上でも hover が見えるよう hover を neutral/100 にする。
+ *                                 絞り込み中は data-filtered を付ける → アイコン primary/700 ＋ 右上のドット（色だけに頼らない）
+ *     .data-table-filter-panel    幅 288、padding 16、角丸 md、bg surface、border stroke-low、shadow-lg。
+ *                                 トリガーの左端に揃えて下に 4 空けて開く（空きが無ければ上。位置は JS）
+ *     select                      selector-sm（h32 / 14px）で包む。パネルは表の上に重なる小さな部品で、ボタンも btn-sm のため
+ *                                 高さを揃える。md（16px）だと OS の選択肢一覧も大きく開き、パネルに対して過大になる
+ *     .data-table-filter-actions  リセット（左・ghost）と適用（右・solid）を両端に置く
+ *     .is-static-preview          カタログ用: 開いた状態のパネルをページ内に静的表示
+ *     絞り込みの実行（行の表示切替・件数の告知・0 件表示）は利用側の JS（実装例は examples/catalog.js の Table filter）
+ *
  *     幅指定なしの列（契約名など短いテキスト）が余白を吸う。全列に w-* を配ると合計が崩れて
  *     折り返し・溢れの原因になる（利用側で頻発した崩れの典型）。
  *     見出し（thead th）は常に keep-all — 「契/約/名」のような縦割れを防ぐ。
@@ -51,9 +87,14 @@
  *     外枠          1px stroke/middle + rounded-md (16px) + overflow:hidden
  *     padding      16px (calc(var(--spacing) * 4))
  *
+ * 別名:
+ *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター
+ *
  * 機能:
  *   列見出しを上に置き、複数データを行で比較する表。
  *   1 件の詳細を縦に並べるなら data-table ではなく simple-table。
+ *   列の値で行を絞り込むときは見出しに列フィルター（data-table-filter）を付ける。
+ *   表の上に並べて一覧全体を 1 つの軸で切り替えるなら tab、複数条件を同時に掛け合わせるトグルなら filter-chip。
  *
  * 使用法:
  *   OK: thead に列見出し、tbody に行データを置く。
@@ -67,13 +108,28 @@
  *       data-table-fit / data-table-num で指定し、残りは自動幅に任せる。
  *   NG: 全セルに whitespace-nowrap を付けない → 表が親幅を越えて溢れる。nowrap は fit / num 列だけ。
  *   NG: 状態バッジ・日付・金額の列を幅指定なしで置かない → 自由文に押されて 2 行に折れる → data-table-fit。
-  *
+ *   OK: 列フィルターはその列の値（役割・部署・状態など選択肢が決まっている列）で絞り込む。選択肢の先頭は「すべて」。
+ *   OK: 列フィルターの select は selector-sm で包み、ボタン（btn-sm）と高さを揃える。
+ *   OK: 列フィルターは選んだだけでは絞り込まず、「適用」で確定する。「リセット」はその列の絞り込みを解除して閉じる。
+ *   OK: 絞り込み中の列はトリガーに data-filtered を付け、aria-label に適用中の値を含める（例: 役割で絞り込む（適用中: 管理者））。
+ *   OK: 表の近くに「全 8 件中 3 件を表示」のような件数を置き、aria-live="polite" で絞り込みの結果を伝える。
+ *       0 件になったら表を消さず、tbody に「条件に合うデータがありません」の行を出す。
+ *   NG: 列フィルターのパネルに action-menu を使わない → action-menu は操作の実行用。値を選ぶのは data-table-filter-panel ＋ select。
+ *   NG: フィルターのトリガーを見出しから離して表の外に置かない → どの列の絞り込みか分からなくなる。
+ *   NG: 絞り込み中を色だけで示さない → data-filtered のドットと aria-label の「適用中」を併せて使う。
+ *
  * アクセシビリティ:
  *   列見出しを <th scope="col">（データセルは td）にする
  *   表に <caption> か aria-label で名前を付ける
  *   空セルは空白にせず — で「値なし」を示す
  *   幅広は data-table-wrap（overflow-x:auto）で包み、tabindex="0" でキーボードでもスクロール可能にする
  *   操作列の見出しが空なら <span class="sr-only">操作</span> で名前を付ける
+ *   列フィルター: トリガーに aria-label（「役割で絞り込む」）、aria-haspopup="dialog"、aria-expanded（開閉で true / false）
+ *   列フィルター: パネルは role="dialog" と aria-label。select は aria-labelledby で列見出しの文字を名前にする
+ *   列フィルター: 開いたら select へフォーカス。Esc・パネル外のクリックで閉じ（Popover API）、閉じたらトリガーへフォーカスを戻す
+ *   列フィルター: Tab でパネルの外へ出たら閉じる。パネルは表の直後に置き、Tab 順をトリガーの直後にする（popovertarget が担保）
+ *   列フィルター: 絞り込み結果の件数を aria-live="polite" の領域で告知する（行が消えたことは画面を見ないと分からないため）
+ *   列フィルター: 強制カラーモードでは影とドットの塗りが消えるため、パネルの輪郭線とドットを CanvasText で描く
 */
 
 @layer components {
@@ -110,6 +166,10 @@
 
   /* Last row: clean rounded bottom (drop the cell border-bottom) */
   .data-table tbody tr:last-child > td {
+    border-bottom: 0;
+  }
+  /* 列フィルターで末尾の行が hidden になったときも、見えている最後の行の線を落とす */
+  .data-table tbody tr:not([hidden]):not(:has(~ tr:not([hidden]))) > td {
     border-bottom: 0;
   }
 
@@ -155,11 +215,90 @@
     height: 0;
     width: calc(var(--spacing) * 64);   /* 256 */
   }
+
+  /* ============================================================
+   * 列フィルター — 見出しの横の icon-btn から Popover を開き、その列の値で行を絞り込む
+   * ============================================================ */
+  .data-table .data-table-filter {
+    @apply inline-flex items-center gap-1 align-middle;
+    /* icon-btn-sm (32) が見出しの文字の行 (20) を押し広げないよう、上下 6 ずつ相殺する */
+    margin-block: calc(var(--spacing) * -1.5);
+  }
+
+  /* icon-btn は常に 24 のアイコンを持つが、見出しの文字 (14) の横では大きすぎるため 16 にする（押せる範囲は 32 のまま） */
+  .data-table .data-table-filter-trigger > svg {
+    @apply w-4 h-4;
+  }
+
+  /* 見出し地 (neutral/50) と icon-btn ghost の hover 地 (neutral/50) が同色で hover が見えないため 1 段濃くする */
+  .data-table thead .data-table-filter-trigger:hover:not(:disabled),
+  .data-table thead .data-table-filter-trigger[aria-expanded="true"] {
+    background-color: var(--color-neutral-100);
+  }
+
+  /* 絞り込み中 — アイコンを primary にし、右上のドットで「適用中」を形でも示す */
+  .data-table-filter-trigger[data-filtered] {
+    position: relative;
+    color: var(--color-primary-700);
+  }
+  .data-table-filter-trigger[data-filtered]::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--spacing) * 0.5);
+    right: calc(var(--spacing) * 0.5);
+    width: calc(var(--spacing) * 2);    /* 8 */
+    height: calc(var(--spacing) * 2);
+    border-radius: var(--radius-full);
+    background: var(--color-primary-700);
+    outline: 2px solid var(--color-neutral-50);   /* アイコンの線と重なっても形が分かるよう見出し地で縁取る */
+  }
+
+  /* Panel — [popover] の UA スタイル (inset:0 / margin:auto / border / padding) を打ち消し、
+   * JS が top / left を設定する。閉じている間は UA が display:none にする */
+  .data-table-filter-panel {
+    @apply m-0 p-4 w-72 bg-surface text-fg-high
+           border border-solid border-stroke-low rounded-md;
+    position: fixed;
+    inset: auto;
+    max-width: calc(100vw - var(--spacing) * 8);   /* 画面の左右 16 ずつは空ける */
+    box-shadow: var(--shadow-lg);
+  }
+
+  .data-table-filter-panel:popover-open,
+  .data-table-filter-panel.is-static-preview {
+    @apply flex flex-col gap-4;
+  }
+
+  /* カタログ用: 開いた状態をページ内に静的表示 (top layer に出さない) */
+  .data-table-filter-panel.is-static-preview {
+    position: static;
+  }
+
+  /* 先頭の「すべて」(value="") は select では placeholder 色になるが、ここでは「絞り込みなし」を選んだ
+   * 状態＝有効な選択肢なので通常の文字色で出す */
+  .data-table-filter-panel .select:has(option[value=""]:checked),
+  .data-table-filter-panel .selector:has(.select option[value=""]:checked) .select {
+    color: var(--color-fg-high);
+  }
+
+  .data-table-filter-actions {
+    @apply flex items-center justify-between gap-2;
+  }
+
   .data-table-wrap:focus-visible {
     outline: 2px solid var(--color-info-600);
     outline-offset: 2px;
   }
+  /* 強制カラーモード: 影は無視されるためパネルの輪郭線を、塗りは置き換わるためドットを
+   * CanvasText で描く（ドットは forced-color-adjust:none で塗りを保つ）。
+   * ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。 */
   @media (forced-colors: active) {
     .data-table-wrap:focus-visible { outline-color: CanvasText; }
+    .data-table-filter-panel { border-color: CanvasText; }
+    .data-table-filter-trigger[data-filtered]::after {
+      forced-color-adjust: none;
+      background: CanvasText;
+      outline-color: Canvas;
+    }
   }
 }
