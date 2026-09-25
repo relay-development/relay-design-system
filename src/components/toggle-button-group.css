@@ -24,8 +24,8 @@
  *     orientation : 横（既定）/ .toggle-btn-group-vertical（縦積み・ボタン幅をそろえる）
  *
  *   サイズ / 色:
- *     帯         : 背景 neutral/50、枠 1px stroke-middle、内側の余白 p-1 (4)、角丸 rounded-sm (8)
- *     セグメント : 間隔 gap-1 (4)、角丸 rounded-xs (4)（帯の 8 − 余白 4 で角丸を同心円にそろえる）
+ *     帯         : 背景 neutral/50、枠 1px stroke-middle、内側の余白 p-1 (4)、角丸 rounded-md (16)
+ *     セグメント : 間隔 gap-1 (4)、角丸 12（帯の 16 − 余白 4 をトークンから計算し、角丸を同心円にそろえる）
  *     非選択     : 背景なし、文字 fg/low（帯の上で 4.55:1）、hover は背景 surface（白。4.76:1）
  *     選択       : 背景 surface（白）、枠 stroke-high、文字 fg/high（17.9:1）、hover は枠 neutral/400
  *     選択の区別 : 白いセグメントに加えて文字の濃さ（fg/low → fg/high、差 3.75:1）で示す。
@@ -97,7 +97,7 @@
    * ============================================================ */
   .toggle-btn-group {
     @apply inline-flex items-center gap-1 p-1
-           bg-neutral-50 border border-stroke-middle rounded-sm;
+           bg-neutral-50 border border-stroke-middle rounded-md;
   }
 
   /* 中のボタンは直下に置くか tooltip で包む（子孫セレクタで両方に当てる。グループは入れ子にしない） */
@@ -108,11 +108,11 @@
   }
 
   /* ============================================================
-   * Segment — 角丸は帯（8）から余白（4）を引いた 4。
+   * Segment — 角丸は帯（radius-md = 16）から余白（p-1 = 4）を引いた 12（同心円）。
    * 非選択は文字を fg/low に下げ、選択中（fg/high）との差を作る
    * ============================================================ */
   .toggle-btn-group :is(.btn, .icon-btn) {
-    @apply rounded-xs;
+    border-radius: calc(var(--radius-md) - var(--spacing) * 1);
     color: var(--color-fg-low);
   }
 
