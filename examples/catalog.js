@@ -351,6 +351,9 @@ for (const type of ["scroll", "resize"]) {
 // 開くたびに適用中の値へ戻す (未適用の選択は捨てる) / 適用・リセットで行を絞り込み件数を告知 /
 // Tab でパネルの外へ出たら閉じる、を足す。適用中の値はパネルの data-value に持ち、
 // 同じ表の列フィルターは AND で掛け合わせる。セルの文字と option の値が一致した行を残す。
+// 見出し行（data-table-header）の絞り込みパネルは data-filter-table で表を指し、条件ごとの select に
+// data-filter-col（列番号）を持つ（data-filter-match="prefix" なら前方一致。適用中の値は select の data-applied）。
+// 見出し行の検索（data-table-search）は、行の文字にキーワードを含む行を残す。いずれも列フィルターと AND。
 const filterTrigger = (panel) => document.querySelector(`[popovertarget="${panel.id}"]`);
 
 function applyTableFilters(table) {
@@ -360,10 +363,22 @@ function applyTableFilters(table) {
       value: document.getElementById(trigger.getAttribute("popovertarget"))?.dataset.value || "",
     }))
     .filter((f) => f.value);
+  const panelFilters = [...document.querySelectorAll(`.data-table-filter-panel[data-filter-table="${table.id}"] select[data-filter-col]`)]
+    .map((select) => ({
+      col: Number(select.dataset.filterCol),
+      value: select.dataset.applied || "",
+      prefix: select.dataset.filterMatch === "prefix",
+    }))
+    .filter((f) => f.value);
+  const query = document.querySelector(`[data-table-search="${table.id}"]`)?.value.trim() || "";
   const rows = [...table.tBodies[0].rows].filter((row) => !row.hasAttribute("data-filter-empty"));
   let shown = 0;
   for (const row of rows) {
-    const match = filters.every((f) => row.cells[f.col]?.textContent.trim() === f.value);
+    const cellText = (col) => row.cells[col]?.textContent.trim() || "";
+    const match =
+      filters.every((f) => cellText(f.col) === f.value) &&
+      panelFilters.every((f) => (f.prefix ? cellText(f.col).startsWith(f.value) : cellText(f.col) === f.value)) &&
+      (!query || row.textContent.includes(query));
     row.hidden = !match;
     if (match) shown++;
   }
@@ -371,14 +386,19 @@ function applyTableFilters(table) {
   table.querySelector("[data-filter-empty]")?.toggleAttribute("hidden", shown > 0);
   const status = document.querySelector(`[data-filter-status="${table.id}"]`);
   if (status) {
-    status.textContent = filters.length ? `全 ${rows.length} 件中 ${shown} 件を表示` : `全 ${rows.length} 件`;
+    const active = filters.length || panelFilters.length || query;
+    status.textContent = active ? `全 ${rows.length} 件中 ${shown} 件を表示` : `全 ${rows.length} 件`;
   }
 }
 
+// 名前は aria-label、または aria-labelledby が指す要素（見出し行ではツールチップの吹き出し）の文字
 function syncFilterTrigger(trigger, value) {
-  trigger.dataset.label ||= trigger.getAttribute("aria-label");
+  const labelEl = document.getElementById(trigger.getAttribute("aria-labelledby") || "");
+  trigger.dataset.label ||= labelEl ? labelEl.textContent : trigger.getAttribute("aria-label");
   trigger.toggleAttribute("data-filtered", Boolean(value));
-  trigger.setAttribute("aria-label", value ? `${trigger.dataset.label}（適用中: ${value}）` : trigger.dataset.label);
+  const label = value ? `${trigger.dataset.label}（適用中: ${value}）` : trigger.dataset.label;
+  if (labelEl) labelEl.textContent = label;
+  else trigger.setAttribute("aria-label", label);
 }
 
 document.addEventListener("beforetoggle", (e) => {
@@ -386,6 +406,10 @@ document.addEventListener("beforetoggle", (e) => {
   if (!(panel instanceof HTMLElement) || !panel.classList.contains("data-table-filter-panel")) return;
   if (e.newState !== "open") return;
   panel.style.visibility = "hidden"; // 位置を計算するまで隠す
+  if (panel.dataset.filterTable) {
+    panel.querySelectorAll("select[data-filter-col]").forEach((s) => { s.value = s.dataset.applied || ""; });
+    return;
+  }
   const select = panel.querySelector("select");
   if (select) select.value = panel.dataset.value || "";
 }, true);
@@ -410,6 +434,22 @@ document.addEventListener("click", (e) => {
   const btn = e.target.closest(".data-table-filter-panel[popover] :is([data-filter-apply], [data-filter-reset])");
   if (!btn) return;
   const panel = btn.closest(".data-table-filter-panel");
+  if (panel.dataset.filterTable) {
+    // 見出し行のパネル: 条件ごとに確定し、適用中の条件の数をトリガーの名前に出す
+    const selects = [...panel.querySelectorAll("select[data-filter-col]")];
+    for (const s of selects) {
+      if (btn.hasAttribute("data-filter-reset")) s.value = "";
+      s.dataset.applied = s.value;
+    }
+    const count = selects.filter((s) => s.dataset.applied).length;
+    const trigger = filterTrigger(panel);
+    if (trigger) syncFilterTrigger(trigger, count ? `${count} 件` : "");
+    const table = document.getElementById(panel.dataset.filterTable);
+    if (table) applyTableFilters(table);
+    panel.hidePopover();
+    trigger?.focus();
+    return;
+  }
   const select = panel.querySelector("select");
   if (select && btn.hasAttribute("data-filter-reset")) select.value = "";
   panel.dataset.value = select?.value || "";
@@ -421,6 +461,14 @@ document.addEventListener("click", (e) => {
   }
   panel.hidePopover();
   trigger?.focus();
+});
+
+// 見出し行の検索 — 入力のたびに行を絞り込む（クリアボタンも input を発火する）
+document.addEventListener("input", (e) => {
+  const field = e.target.closest?.("[data-table-search]");
+  if (!field) return;
+  const table = document.getElementById(field.dataset.tableSearch);
+  if (table) applyTableFilters(table);
 });
 
 // Tab でパネルの外へ出たら閉じる（トリガーへ戻るのは除く）。移動先の要素が決まってから判定する

@@ -167,6 +167,179 @@
       </div>
 
       <!-- ===== 列フィルター ===== -->
+      <!-- ===== 見出し行 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">見出し行 — タイトルと表全体への操作を 1 行に</h3>
+          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">data-table-header</code> の左にタイトル、右に「検索 → アイコンの操作（3 個まで）→ 主操作」を sm でそろえて並べる。検索は入力に応じてその場で絞り込み、絞り込みのパネルには複数の列や列に無い条件（振込月）をまとめる。1 列の値だけで絞るなら列フィルター、並べ替えは列見出し</p>
+        </div>
+        <div class="card-body">
+          <div class="data-table-header">
+            <div class="data-table-heading">
+              <h4 class="data-table-title" id="tx-title">振込一覧</h4>
+              <p class="data-table-subtitle">振込予約と実績</p>
+            </div>
+            <div class="data-table-actions" role="group" aria-label="振込一覧の操作">
+              <div class="search-input search-input-sm">
+                <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="振込一覧を検索" data-table-search="tx-table" />
+                <span class="search-input-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
+                <button type="button" class="search-input-clear" aria-label="クリア">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+                </button>
+              </div>
+              <span class="tooltip">
+                <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger" aria-labelledby="tx-tip-filter" aria-haspopup="dialog" aria-expanded="false" popovertarget="tx-filter">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-filter"></use></svg>
+                </button>
+                <span class="tooltip-content" id="tx-tip-filter" role="tooltip">絞り込む</span>
+              </span>
+              <span class="tooltip">
+                <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-labelledby="tx-tip-download">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-download"></use></svg>
+                </button>
+                <span class="tooltip-content" id="tx-tip-download" role="tooltip">CSV でダウンロード</span>
+              </span>
+              <span class="tooltip">
+                <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" id="tx-more-trigger" aria-labelledby="tx-tip-more" aria-haspopup="menu" aria-expanded="false" popovertarget="tx-more-menu">
+                  <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+                </button>
+                <span class="tooltip-content" id="tx-tip-more" role="tooltip">その他の操作</span>
+              </span>
+              <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
+            </div>
+          </div>
+          <div class="action-menu action-menu-end" id="tx-more-menu" popover role="menu" aria-labelledby="tx-more-trigger">
+            <button type="button" class="menu-item" role="menuitem" tabindex="-1">印刷する</button>
+            <button type="button" class="menu-item" role="menuitem" tabindex="-1">表示する列を選ぶ</button>
+          </div>
+          <div class="data-table-filter-panel" id="tx-filter" popover role="dialog" aria-label="振込一覧を絞り込む" data-filter-table="tx-table">
+            <div class="data-table-filter-field">
+              <label for="tx-f-month">振込月</label>
+              <div class="selector selector-sm">
+                <select class="select" id="tx-f-month" data-filter-col="0" data-filter-match="prefix">
+                  <option value="">すべて</option>
+                  <option value="2026/09">2026 年 9 月</option>
+                  <option value="2026/08">2026 年 8 月</option>
+                </select>
+              </div>
+            </div>
+            <div class="data-table-filter-field">
+              <label for="tx-f-status">状態</label>
+              <div class="selector selector-sm">
+                <select class="select" id="tx-f-status" data-filter-col="3">
+                  <option value="">すべて</option>
+                  <option>完了</option>
+                  <option>予約</option>
+                  <option>失敗</option>
+                </select>
+              </div>
+            </div>
+            <div class="data-table-filter-actions">
+              <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset>リセット</button>
+              <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
+            </div>
+          </div>
+          <p class="typo-medium text-fg-middle mb-3" data-filter-status="tx-table" aria-live="polite">全 8 件</p>
+          <div class="data-table-wrap" tabindex="0">
+            <table class="data-table" id="tx-table" aria-labelledby="tx-title">
+              <thead>
+                <tr>
+                  <th scope="col" class="data-table-fit">振込日</th>
+                  <th scope="col">振込先</th>
+                  <th scope="col" class="data-table-num">金額</th>
+                  <th scope="col" class="data-table-fit">状態</th>
+                  <th scope="col" class="data-table-fit">担当</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="data-table-fit">2026/09/30</td>
+                  <td>株式会社みどり商事</td>
+                  <td class="data-table-num">1,200,000円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-info">予約</span></td>
+                  <td class="data-table-fit">田口</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/09/30</td>
+                  <td>さくら会計事務所</td>
+                  <td class="data-table-num">110,000円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-info">予約</span></td>
+                  <td class="data-table-fit">佐藤</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/09/25</td>
+                  <td>株式会社みどり商事</td>
+                  <td class="data-table-num">1,200,000円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
+                  <td class="data-table-fit">田口</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/09/24</td>
+                  <td>山田工務店</td>
+                  <td class="data-table-num">385,000円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
+                  <td class="data-table-fit">佐藤</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/09/22</td>
+                  <td>ひかり印刷</td>
+                  <td class="data-table-num">52,800円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-danger">失敗</span></td>
+                  <td class="data-table-fit">田口</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/08/29</td>
+                  <td>山田工務店</td>
+                  <td class="data-table-num">420,000円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
+                  <td class="data-table-fit">鈴木</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/08/25</td>
+                  <td>ひかり印刷</td>
+                  <td class="data-table-num">48,400円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
+                  <td class="data-table-fit">佐藤</td>
+                </tr>
+                <tr>
+                  <td class="data-table-fit">2026/08/20</td>
+                  <td>株式会社あおば</td>
+                  <td class="data-table-num">2,750,000円</td>
+                  <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
+                  <td class="data-table-fit">鈴木</td>
+                </tr>
+                <tr data-filter-empty hidden>
+                  <td colspan="5" class="text-center text-fg-low">条件に合うデータがありません</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <pre class="code-sample mt-4" data-code>
+&lt;div class="[[data-table-header]]"&gt;
+  &lt;div class="data-table-heading"&gt;
+    &lt;h2 class="[[data-table-title]]" id="transfers-title"&gt;振込一覧&lt;/h2&gt;
+    &lt;p class="data-table-subtitle"&gt;振込予約と実績&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;div class="[[data-table-actions]]" [[role="group" aria-label="振込一覧の操作"]]&gt;
+    &lt;div class="search-input [[search-input-sm]]"&gt;&lt;input type="search" class="search-input-field" [[aria-label="振込一覧を検索"]]&gt;…&lt;/div&gt;
+    &lt;span class="tooltip"&gt;
+      &lt;button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
+              [[aria-labelledby="tip-filter"]] aria-haspopup="dialog" aria-expanded="false" popovertarget="transfers-filter"&gt;…&lt;/button&gt;
+      &lt;span class="tooltip-content" id="tip-filter" role="tooltip"&gt;絞り込む&lt;/span&gt;
+    &lt;/span&gt;
+    …（アイコンの操作は 3 個まで。4 個目からは more-horizontal の action-menu）
+    &lt;button type="button" class="btn [[btn-sm]] btn-primary btn-solid"&gt;新規登録&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;p aria-live="polite"&gt;全 8 件&lt;/p&gt;
+&lt;table class="data-table" [[aria-labelledby="transfers-title"]]&gt;…&lt;/table&gt;
+&lt;div class="data-table-filter-panel" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む"&gt;
+  &lt;div class="[[data-table-filter-field]]"&gt;&lt;label for="f-month"&gt;振込月&lt;/label&gt;&lt;div class="selector selector-sm"&gt;…&lt;/div&gt;&lt;/div&gt;
+  …
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+
       <div class="card mb-8">
         <div class="card-header">
           <h3 class="card-title">列フィルター — 列の値で行を絞り込む</h3>

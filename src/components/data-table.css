@@ -92,6 +92,47 @@
  *     .is-static-preview          カタログ用: 開いた状態のパネルをページ内に静的表示
  *     絞り込みの実行（行の表示切替・件数の告知・0 件表示）は利用側の JS（実装例は examples/catalog.js の Table filter）
  *
+ *   見出し行（table header）— 表の上に 1 行で、左にタイトル、右に表全体への操作（検索・複数条件の絞り込み・
+ *   書き出し・新規作成）を置く。Primer DataTable の Table.Title / Table.Actions にあたる:
+ *
+ *     <div class="data-table-header">
+ *       <div class="data-table-heading">
+ *         <h2 class="data-table-title" id="transfers-title">振込一覧</h2>
+ *         <p class="data-table-subtitle">2026 年 9 月の振込予約と実績</p>              (任意)
+ *       </div>
+ *       <div class="data-table-actions" role="group" aria-label="振込一覧の操作">
+ *         <div class="search-input search-input-sm">…<input type="search" class="search-input-field" aria-label="振込一覧を検索">…</div>
+ *         <span class="tooltip">
+ *           <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
+ *                   aria-labelledby="tip-filter" aria-haspopup="dialog" aria-expanded="false" popovertarget="transfers-filter">
+ *             <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-filter"></use></svg>
+ *           </button>
+ *           <span class="tooltip-content" id="tip-filter" role="tooltip">絞り込む</span>
+ *         </span>
+ *         …（書き出し等のアイコン操作は 3 個まで。4 個目からは more-horizontal の action-menu に畳む）
+ *         <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
+ *       </div>
+ *     </div>
+ *     <p class="typo-medium text-fg-middle" aria-live="polite">全 8 件</p>          (絞り込み・検索の結果の件数)
+ *     <div class="data-table-wrap" tabindex="0"><table class="data-table" aria-labelledby="transfers-title">…</table></div>
+ *     <div class="data-table-filter-panel" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む">
+ *       <div class="data-table-filter-field">
+ *         <label for="f-month">振込月</label>
+ *         <div class="selector selector-sm"><select class="select" id="f-month">…</select></div>
+ *       </div>
+ *       …（条件を縦に並べる）
+ *       <div class="data-table-filter-actions">…リセット / 適用…</div>
+ *     </div>
+ *
+ *     .data-table-header    タイトルの塊と操作の段を両端に置く（items-center）。幅が足りなければ操作の段が下へ折り返す。表との間 16
+ *     .data-table-heading   タイトルと補足の塊
+ *     .data-table-title     typo-large と同じ 20/32 bold・fg/high
+ *     .data-table-subtitle  text-sm・fg/low
+ *     .data-table-actions   操作を gap 8 で並べる。操作はすべて sm（32）でそろえる。狭い画面では検索が 1 段目いっぱい、操作が 2 段目
+ *     検索                  search-input-sm（幅 240。送信ボタンを持たず、入力に応じてその場で絞り込む）
+ *     絞り込みのトリガー    icon-btn-sm に data-table-filter-trigger（絞り込み中の data-filtered のドットは列フィルターと共通）
+ *     .data-table-filter-field  見出し行の絞り込みパネルで、条件ごとに label ＋ selector-sm を縦に並べる
+ *
  *     幅指定なしの列（契約名など短いテキスト）が余白を吸う。全列に w-* を配ると合計が崩れて
  *     折り返し・溢れの原因になる（利用側で頻発した崩れの典型）。
  *     見出し（thead th）は常に keep-all — 「契/約/名」のような縦割れを防ぐ。
@@ -105,13 +146,16 @@
  *
  * 別名:
  *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター /
- *   ソート / 並べ替え / 並び替え / sort / sortable table / 列ソート
+ *   ソート / 並べ替え / 並び替え / sort / sortable table / 列ソート /
+ *   見出し行 / テーブルヘッダー / table header / 表のタイトル / テーブルツールバー / 表の操作 / 表の検索 / table actions
  *
  * 機能:
  *   列見出しを上に置き、複数データを行で比較する表。
  *   1 件の詳細を縦に並べるなら data-table ではなく simple-table。
  *   列の値で行を絞り込むときは見出しに列フィルター（data-table-filter）、行を並べ替えるときは見出しをボタン（data-table-sort）にする。
  *   表の上に並べて一覧全体を 1 つの軸で切り替えるなら tab、複数条件を同時に掛け合わせるトグルなら filter-chip。
+ *   表のタイトルと、表全体に効く操作（検索・複数条件の絞り込み・書き出し・新規作成）は、表の上の見出し行
+ *   （data-table-header）に 1 行でまとめる。1 列の値で絞るなら列フィルター、行を並べ替えるなら列見出し。
  *
  * 使用法:
  *   OK: thead に列見出し、tbody に行データを置く。
@@ -140,6 +184,21 @@
  *   NG: 列フィルターのパネルに action-menu を使わない → action-menu は操作の実行用。値を選ぶのは data-table-filter-panel ＋ select。
  *   NG: フィルターのトリガーを見出しから離して表の外に置かない → どの列の絞り込みか分からなくなる。
  *   NG: 絞り込み中を色だけで示さない → data-filtered のドットと aria-label の「適用中」を併せて使う。
+ *   OK: 表のタイトルと表全体への操作は data-table-header に 1 行でまとめる（左にタイトル、右に操作）。
+ *   OK: 見出し行の操作は左から「検索 → アイコンの操作 → 主操作（btn-primary 1 つ）」の順に並べ、すべて sm（32）でそろえる。
+ *   OK: アイコンだけの操作は tooltip で包み、吹き出しを aria-labelledby で名前にする（見える名前と読み上げを一致させる）。
+ *   OK: アイコンの操作は 3 個まで。4 個目からは more-horizontal の icon-btn ＋ action-menu（.action-menu-end）に畳む。
+ *   OK: 検索は search-input-sm を入力欄のまま置き、入力に応じてその場で行を絞り込む（件数を aria-live で告知）。
+ *   OK: 見出し行の絞り込みは、複数の列を掛け合わせる条件や、列に無い条件（振込月など）をパネルにまとめるときに使う。
+ *       パネルは data-table-filter-panel、条件ごとに data-table-filter-field（label ＋ selector-sm）。
+ *   OK: ページの見出しがそのまま表の名前なら、data-table-title をページの h1 にしてよい（同じ名前の見出しを 2 つ重ねない）。
+ *   NG: 1 列の値だけで絞るフィルターを見出し行に置かない → 列フィルター（どの列の絞り込みか分かる）。
+ *   NG: 並べ替えを見出し行のボタンや select で作らない → 列見出しの data-table-sort。
+ *   NG: 行ごとの操作（編集・削除）を見出し行に置かない → 行の操作列。
+ *   NG: 検索をアイコンだけにして、押すと入力欄が広がる形にしない → 入力できることが見えず、開閉のフォーカス管理も要る。
+ *   NG: 主操作（btn-primary solid）を 2 つ以上置かない → 1 つに絞り、他は outline / ghost か action-menu へ。
+ *       分割ボタン（btn-group）にするなら btn-group の規則どおり outline でつなげる。
+ *   NG: 見出し行と表を card で包まない → 枠と余白が二重になる（テーブルだけのものは card にしない）。
  *
  * アクセシビリティ:
  *   列見出しを <th scope="col">（データセルは td）にする
@@ -157,6 +216,11 @@
  *   列フィルター: Tab でパネルの外へ出たら閉じる。パネルは表の直後に置き、Tab 順をトリガーの直後にする（popovertarget が担保）
  *   列フィルター: 絞り込み結果の件数を aria-live="polite" の領域で告知する（行が消えたことは画面を見ないと分からないため）
  *   列フィルター: 強制カラーモードでは影とドットの塗りが消えるため、パネルの輪郭線とドットを CanvasText で描く
+ *   見出し行: data-table-title を見出し要素（h2〜h3）にして id を付け、表は aria-labelledby でその見出しを名前にする（caption と二重にしない）
+ *   見出し行: 操作の段に role="group" と aria-label（「振込一覧の操作」）を付ける
+ *   見出し行: 検索の入力欄に aria-label（「振込一覧を検索」）。placeholder を名前にしない
+ *   見出し行: アイコンだけの操作は tooltip の吹き出しを aria-labelledby で名前にする（aria-label と吹き出しで二重に読ませない）
+ *   見出し行: 検索・絞り込みの結果の件数を aria-live="polite" の領域で告知する（列フィルターと同じ領域を使う）
 */
 
 @layer components {
@@ -344,6 +408,53 @@
 
   .data-table-filter-actions {
     @apply flex items-center justify-between gap-2;
+  }
+
+  /* ============================================================
+   * 見出し行（table header）— 表の上に 1 行で、左にタイトル、右に表全体への操作を置く
+   *   [タイトル・補足]                [検索] [アイコン操作 ≤3] [主操作 1 つ]
+   *   幅が足りなければ操作の段が下に折り返し、狭い画面では検索が横いっぱいに広がる
+   * ============================================================ */
+  .data-table-header {
+    @apply flex flex-wrap items-center justify-between gap-x-6 gap-y-3 mb-4;
+  }
+
+  .data-table-heading {
+    @apply min-w-0;
+  }
+
+  /* typo-large と同じ 20/32 bold。見出し要素（h2〜h3。ページの見出しを兼ねるなら h1）に付ける */
+  .data-table-title {
+    @apply text-lg leading-8 font-bold text-fg-high;
+  }
+
+  .data-table-subtitle {
+    @apply text-sm text-fg-low;
+  }
+
+  /* 操作は sm（32）でそろえる。検索は送信ボタンの無い search-input-sm（入力に応じてその場で絞り込む） */
+  .data-table-actions {
+    @apply flex flex-wrap items-center gap-2 w-full sm:w-auto;
+  }
+
+  /* 検索は幅 240。狭い画面では 1 段目いっぱいに置き、アイコンの操作と主操作を 2 段目にまとめる */
+  .data-table-actions > .search-input {
+    @apply w-full sm:w-60;
+  }
+
+  /* 見出し行の絞り込みのトリガーは表の外にあり見出し地 (neutral/50) の上ではないため、
+   * 絞り込み中のドットの縁取りをカードの地（surface）にする */
+  .data-table-actions .data-table-filter-trigger[data-filtered]::after {
+    outline-color: var(--color-surface);
+  }
+
+  /* 見出し行の絞り込みパネルは複数の条件を縦に並べる（各条件に label を付ける） */
+  .data-table-filter-panel .data-table-filter-field {
+    @apply flex flex-col gap-1;
+  }
+
+  .data-table-filter-panel .data-table-filter-field > label {
+    @apply text-sm font-bold text-fg-high;
   }
 
   .data-table-wrap:focus-visible {
