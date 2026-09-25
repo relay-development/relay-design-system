@@ -36,7 +36,8 @@
  * 実行（サブスク枠で LLM が走る。1 回 = 生成 お題数 + 審査 お題数×votes）:
  *   npm run eval                     # 全お題（生成 + 機械チェック + LLM 審査）
  *   npm run eval -- --case <id>      # 1 お題のみ
- *   npm run eval -- --skip-generate  # 生成を飛ばし既存 output を再採点（審査のみ消費）
+ *   npm run eval -- --skip-generate  # 生成を飛ばし既存 output を再採点（審査のみ消費）。
+ *                                    #   同じ HTML を生成した過去の実行があれば、その計測値と行動ログを引き継ぐ
  *   npm run eval -- --skip-judge     # LLM 審査を飛ばし機械チェックのみ（無料）
  *   npm run eval -- --votes 3        # 審査を 3 回実行し多数決（審査側のブレ対策。既定 1）
  *   npm run eval -- --trials 2       # 各お題を 2 回生成し全勝のみ PASS（pass^k。生成側のブレ対策。
@@ -380,6 +381,29 @@ const stamp = new Date().toISOString().replace(/[:.]/g, "-");
 // これが無いと「過去の判定が妥当だったか」を後から監査できない（運用: evals/review-log.md）
 const archiveDir = path.join(resultsDir, "outputs", stamp);
 
+/**
+ * --skip-generate の再採点で、採点する HTML を生成した実行を過去の結果から探す。
+ * 生成時にアーカイブした HTML（results/outputs/<stamp>/<id>.html）と中身が完全に一致する、
+ * 行動ログ付きの最新の結果を返す。見つかればその計測値（agentMetrics）と行動ログを引き継ぎ、
+ * レポートの計測サマリー・呼び出しシーケンスが「?」「ログなし」にならないようにする。
+ */
+function findGenerationOrigin(id, html) {
+  const files = fs.readdirSync(resultsDir).filter((f) => f.endsWith(".json")).sort().reverse();
+  for (const f of files) {
+    let run;
+    try { run = JSON.parse(fs.readFileSync(path.join(resultsDir, f), "utf8")); } catch { continue; }
+    if (run.skipGenerate) continue;
+    for (const r of run.results ?? []) {
+      if (r.id !== id || !r.transcript || !r.agentMetrics || !r.output) continue;
+      const archived = path.join(resultsDir, r.output);
+      if (fs.existsSync(archived) && fs.readFileSync(archived, "utf8") === html) {
+        return { generatedIn: f.replace(/\.json$/, ""), transcript: r.transcript, agentMetrics: r.agentMetrics };
+      }
+    }
+  }
+  return null;
+}
+
 /** 1 トライアル = 生成 1 回 + 採点一式。suffix はアーカイブのファイル名用（trial 1 は ""） */
 function runTrial(c, suffix) {
   const outPath = path.join(outputDir, `${c.id}.html`);
@@ -434,6 +458,15 @@ function runTrial(c, suffix) {
   }
 
   const html = fs.readFileSync(outPath, "utf8");
+  // 再採点では、同じ HTML を生成した実行の計測値と行動ログを引き継ぐ
+  let generatedIn = null;
+  if (skipGenerate) {
+    const origin = findGenerationOrigin(c.id, html);
+    if (origin) {
+      ({ generatedIn, transcript: transcriptRef, agentMetrics } = origin);
+      console.log(`  ⚙ 生成元 ${generatedIn} の計測値と行動ログを引き継ぎ`);
+    }
+  }
   fs.mkdirSync(archiveDir, { recursive: true });
   fs.copyFileSync(outPath, path.join(archiveDir, `${c.id}${suffix}.html`));
   const hardcode = checkHardcode(outPath);
@@ -469,6 +502,7 @@ function runTrial(c, suffix) {
     pass,
     output: `outputs/${stamp}/${c.id}${suffix}.html`, // 採点した HTML のアーカイブ（resultsDir 相対）
     ...(transcriptRef ? { transcript: transcriptRef, agentMetrics } : {}), // 生成時の行動ログ（同上）
+    ...(generatedIn ? { generatedIn } : {}), // 再採点で計測値・行動ログを引き継いだ生成元の実行
     hardcode,
     classes,
     patterns,

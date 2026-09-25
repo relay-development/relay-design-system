@@ -302,8 +302,8 @@ function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
     <summary><span class="sym s-${status.replace(":", "-")}">${STATUS_SYMBOL[status]}</span> ${esc(label)}
       <span class="meta">${m.numTurns ?? "?"} turns / ${dur != null ? dur + "s" : "?"}</span></summary>
     ${failParts.length ? `<h4>不合格の内訳</h4><ul class="fails">${failParts.map((f) => `<li>${f}</li>`).join("")}</ul>` : ""}
-    <h4>計測サマリー</h4>${tiles}
-    ${cmpResult ? cmpBlock(caseMetrics(r), caseMetrics(cmpResult), cmpLabel) : ""}
+    <h4>計測サマリー</h4>${r.generatedIn ? `<p class="muted">この実行は再採点（--skip-generate）。計測値と行動ログは、同じ HTML を生成した ${esc(jst(runs.find((x) => x.stamp === r.generatedIn)?.ranAt ?? r.generatedIn))} の実行から引き継いでいます（生成していないため前回比は出しません）。</p>` : ""}${tiles}
+    ${cmpResult && !r.generatedIn ? cmpBlock(caseMetrics(r), caseMetrics(cmpResult), cmpLabel) : ""}
     ${timeline ? `<h4>タイムライン</h4>${timeline}` : ""}
     ${seqRows ? `<h4>呼び出しシーケンス</h4>${seq.some((c) => c.at == null) ? `<p class="muted">個別の呼び出し時刻はログに未記録です。全体の所要時間は上部に表示しています。</p>` : ""}<p class="muted">薄く敷いた行はローカルファイル参照（Bash / Read / Grep / Glob）＝ MCP の知識でなく実物を覗きにいった手つき。試験環境の実ファイルに依存している疑いのシグナル。</p><div class="log"><table><thead><tr><th class="t">経過</th><th>ツール</th><th>入力</th><th>応答サイズ</th></tr></thead><tbody>${seqRows}</tbody></table></div>` : "<p class='muted'>行動ログなし（--skip-generate の再採点、または導入前の実行）</p>"}
     ${matchCards ? `<h4>引いた仕様は使われたか</h4>${matchCards}` : ""}
