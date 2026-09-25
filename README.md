@@ -78,7 +78,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 4 | Toggle Button Group | `.toggle-btn-group`, `.toggle-btn-group-vertical`（中は `.btn` / `.icon-btn` の neutral ghost。選択は各ボタンの `aria-pressed`、`data-selection="single\|multiple"` で単一 / 複数選択。`role="group"` + `aria-label`） |
 | 5 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}`, `.field-error-text`, `.field-support-text` |
 | 6 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
-| 7 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,icon}`, `.search-input-{sm,md,lg}` |
+| 7 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,submit-icon}`, `.search-input-{sm,md,lg}`（`<form role="search">` で包み、送信ボタン（sm は `.search-input-submit-icon`）か Enter で確定してから検索する。`.search-input-icon` は非推奨） |
 | 8 | Selector       | `.selector`, `.selector-{icon,error}`, `.selector-{sm,md,lg}`（中の select は `.select`。`.selector-field` は非推奨エイリアス） |
 | 9 | Textarea       | `.textarea`, `.textarea-{sm,md}`, `.textarea-control`, `.textarea-footer`, `.textarea-counter` |
 | 10 | Checkbox       | `.checkbox`, `.checkbox-{sm,md}`, `.checkbox-error`, `.checkbox-label` |

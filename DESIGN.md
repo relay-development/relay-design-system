@@ -138,7 +138,7 @@ Icon Button        : <button class="icon-btn icon-btn-md icon-btn-primary icon-b
 Button Group       : <div class="btn-group" role="group" aria-label="テキストの編集"><button class="btn btn-md btn-neutral btn-outline">コピー</button>…</div>  ← 同じ対象への関連した操作を 2〜4 個つなげる。中は同じ variant（outline）・サイズで揃える。選択状態を持つ切替には使わない（→ toggle-btn-group / tab / radio）
 Toggle Button Group: <div class="toggle-btn-group" role="group" aria-label="表示形式" data-selection="single"><button class="btn btn-md btn-neutral btn-ghost" aria-pressed="true">一覧</button>…</div>  ← 選択状態を持つボタンの並び。単一選択（data-selection="single"・常に 1 つ pressed）= 同じ内容の見え方の切替（一覧 / グリッド、並び順）、複数選択（"multiple"）= 書式・表示オプションの ON/OFF。中は btn / icon-btn の neutral ghost。中身（パネル）の切替は tab、絞り込みは filter-chip / tab
 Input              : <input class="input input-md" />  /  エラー時: + .input-error
-Search Input       : <div class="search-input search-input-md">...field + clear + submit...</div>
+Search Input       : <form role="search"><div class="search-input search-input-md">...field + clear + submit...</div></form>  ← 送信ボタンは全サイズ必須（md / lg は .search-input-submit、sm は虫眼鏡の .search-input-submit-icon）。検索は送信ボタンか Enter で確定してから実行し、入力のたびに結果を変えない（.search-input-icon は非推奨）
 Select             : <select class="select">...</select>  ← ネイティブ select は常に .select（見た目は Input と同一）
 Selector           : <div class="selector selector-md"><select class="select">...</select></div>  ← アイコン枠・サイズ・エラー枠が要るとき（selector-field は非推奨エイリアス）
 Textarea           : <div class="textarea-control"><textarea class="textarea textarea-md" maxlength="100"></textarea>...</div>

@@ -479,6 +479,11 @@ document.addEventListener("submit", (e) => {
   applyTableSearch(field);
 });
 
+// カタログの検索欄の見本 — 送信してもページを移動しない（送信先が無いため）
+document.addEventListener("submit", (e) => {
+  if (e.target.querySelector?.(".search-input") && !e.target.querySelector("[data-table-search]")) e.preventDefault();
+});
+
 // クリア（×）は明示的な操作なので、押したら全件に戻す（入力欄を空にするのは先頭の Search Input のハンドラ）
 document.addEventListener("click", (e) => {
   const field = e.target.closest(".search-input-clear")?.closest(".search-input")?.querySelector("[data-table-search]");
