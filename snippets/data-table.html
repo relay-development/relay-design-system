@@ -131,8 +131,8 @@
   </tbody>
 </table>
 
-<!-- 見出し行: 表のタイトルと、表全体への操作（検索・複数条件の絞り込み・書き出し・新規作成）を表の上に 1 行でまとめる。
-     操作は「search-input-sm → アイコンの操作（3 個まで。tooltip の吹き出しを aria-labelledby で名前に）→ btn-primary 1 つ」を sm でそろえる。
+<!-- 見出し行: 表の上に、1 段目にタイトル、2 段目（data-table-toolbar）の左に表示件数・右に表全体への操作（検索・複数条件の絞り込み・書き出し・新規作成）を置く。
+     操作は「検索（form role="search" ＋ search-input-sm ＋ 虫眼鏡の送信ボタン。押す・Enter で確定してから絞り込む）→ アイコンの操作（3 個まで。tooltip の吹き出しを aria-labelledby で名前に）→ btn-primary 1 つ」を sm でそろえる。
      1 列の値だけで絞るなら列フィルター、並べ替えは列見出し（data-table-sort）。検索・絞り込みの実行と件数の告知は利用側の JS
      （実装例はカタログ examples/catalog.js の Table filter） -->
 <div class="data-table-header">
@@ -140,31 +140,37 @@
     <h2 class="data-table-title" id="transfers-title">振込一覧</h2>
     <p class="data-table-subtitle">振込予約と実績</p>
   </div>
-  <div class="data-table-actions" role="group" aria-label="振込一覧の操作">
-    <div class="search-input search-input-sm">
-      <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="振込一覧を検索" />
-      <span class="search-input-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
-      <button type="button" class="search-input-clear" aria-label="クリア">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-      </button>
+  <div class="data-table-toolbar">
+    <p class="data-table-count" aria-live="polite">全 8 件</p>
+    <div class="data-table-actions" role="group" aria-label="振込一覧の操作">
+      <form role="search" aria-label="振込一覧の検索">
+        <div class="search-input search-input-sm">
+          <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" />
+          <button type="button" class="search-input-clear" aria-label="クリア">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          </button>
+          <button type="submit" class="search-input-submit-icon" aria-label="検索">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+          </button>
+        </div>
+      </form>
+      <span class="tooltip">
+        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
+                aria-labelledby="transfers-tip-filter" aria-haspopup="dialog" aria-expanded="false" popovertarget="transfers-filter">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-filter"></use></svg>
+        </button>
+        <span class="tooltip-content" id="transfers-tip-filter" role="tooltip">絞り込む</span>
+      </span>
+      <span class="tooltip">
+        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-labelledby="transfers-tip-download">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-download"></use></svg>
+        </button>
+        <span class="tooltip-content" id="transfers-tip-download" role="tooltip">CSV でダウンロード</span>
+      </span>
+      <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
     </div>
-    <span class="tooltip">
-      <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
-              aria-labelledby="transfers-tip-filter" aria-haspopup="dialog" aria-expanded="false" popovertarget="transfers-filter">
-        <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-filter"></use></svg>
-      </button>
-      <span class="tooltip-content" id="transfers-tip-filter" role="tooltip">絞り込む</span>
-    </span>
-    <span class="tooltip">
-      <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-labelledby="transfers-tip-download">
-        <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-download"></use></svg>
-      </button>
-      <span class="tooltip-content" id="transfers-tip-download" role="tooltip">CSV でダウンロード</span>
-    </span>
-    <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
   </div>
 </div>
-<p class="typo-medium text-fg-middle" aria-live="polite">全 8 件</p>
 <div class="data-table-wrap" tabindex="0">
   <table class="data-table" aria-labelledby="transfers-title">…</table>
 </div>

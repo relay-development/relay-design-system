@@ -2,43 +2,70 @@
  * Search Input — recreated from Figma component set 3120:3582 (インプット（検索）)
  *
  *   構造:
- *     [container]
- *       [text input field]
- *       [optional clear icon button (×) — only when filled]
- *       [optional submit button (検索) — only on md / lg sizes]
+ *     <form role="search">
+ *       [container]
+ *         [text input field]
+ *         [clear icon button (×) — only when filled]
+ *         [submit — 全サイズ必須。sm: 虫眼鏡のアイコンボタン / md・lg: 「検索」ボタン]
  *
  *   container: padding 4px / radius 8 / same border colors as .input
  *   submit ボタン:
- *     md: h32 px12/py4 font14   (primary/solid 縮小版)
- *     lg: h40 px24/py8 font14
+ *     sm: search-input-submit-icon — 虫眼鏡を押せる送信ボタンにする。24×24・アイコン 20、入力済みでもクリアの右に残る
+ *         （sm は文字の「検索」ボタンが入らないため）
+ *     md: search-input-submit — h32 px12/py4 font14   (primary/solid 縮小版)
+ *     lg: search-input-submit — h40 px24/py8 font14
  *   clear icon: 16-20px の filled gray circle with white ×
- *   search icon (small empty): lucide search 16-20px
+ *   search-input-icon（sm の装飾の虫眼鏡・押せない）は非推奨。search-input-submit-icon を使う（次の major で削除予定）
  *
  *   isInvalid=true で container bg=negative/50, border 2px negative/500
  *
  * 機能:
  *   フリーワード検索の入力。クリア（×）と送信（検索）を内蔵。
+ *   検索は送信ボタンか Enter で確定してから実行し、入力のたびには実行しない（全サイズ共通）。
  *   通常の 1 行入力は search-input ではなく input。
  *
  * 使用法:
- *   OK: type="search"。md/lg では送信ボタン、入力済みのときクリアを出す。
+ *   OK: type="search" の入力欄を <form role="search"> で包み、送信ボタンを必ず置く
+ *       （sm: search-input-submit-icon / md・lg: search-input-submit）。入力済みのときはクリア（×）を出す。
+ *   OK: 検索は送信ボタンか Enter（form の送信）で確定してから実行する。画面内の結果を絞り込む検索（表の見出し行など）も、
+ *       ページを移動する検索も同じ。
+ *   OK: クリア（×）は明示的な操作なので、押したら検索前の結果に戻してよい。
+ *   NG: 入力のたびに検索・結果の更新をしない → 1 文字ごとに結果と件数の告知が変わり、スクリーンリーダーでは入力中の文字と
+ *       告知が重なって聞き取れない。入力の途中で内容が動くのは予期しない変化にもなる（WCAG 3.2.2）。
+ *   NG: 送信ボタンを省かない（sm に装飾の search-input-icon だけを置く等）→ Enter で送信できることを知らない利用者は
+ *       検索を実行できない。sm は search-input-submit-icon を置く。
  *   NG: 一般のテキスト入力に流用しない → input。
  *   NG: エラー色を直書きしない → isInvalid 用のクラスを使う。
  *
  *
  * アクセシビリティ:
- *   検索フォームを <form role="search"> で包む
+ *   検索フォームを <form role="search"> で包む（Enter で送信できる。ページ内に複数あるなら form に aria-label で名前を付ける）
  *   アクセシブルネームは DS 非担保。実装で必ず付与する — 入力欄に可視ラベル か aria-label で名前を付ける（placeholder はラベルにしない）
- *   クリアボタンに aria-label="クリア"、検索アイコンは aria-hidden="true"
+ *   クリアボタンに aria-label="クリア"
+ *   送信ボタンは type="submit"。sm のアイコンボタン（search-input-submit-icon）は aria-label="検索"、中の svg は aria-hidden="true"。
+ *     押せる範囲は 24×24（WCAG 2.5.8 の最低限を満たす）
+ *   検索の結果（件数など）は、送信したときに aria-live="polite" の領域で告知する（入力のたびには告知しない）
  *   強制カラーモードでは入力枠の border だけではフォーカスが判別できないため outline で可視化する。クリア(×)アイコンは円と × が同化しないよう内部コントラストを付ける
  * Usage:
- *   <div class="search-input search-input-md">
- *     <input type="search" class="search-input-field" placeholder="フリーワードで検索" />
- *     <button type="button" class="search-input-clear" aria-label="クリア">
- *       <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="currentColor"/>…</svg>
- *     </button>
- *     <button type="submit" class="search-input-submit">検索</button>
- *   </div>
+ *   <form role="search" aria-label="振込一覧の検索">
+ *     <div class="search-input search-input-sm">
+ *       <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" />
+ *       <button type="button" class="search-input-clear" aria-label="クリア">…</button>
+ *       <button type="submit" class="search-input-submit-icon" aria-label="検索">
+ *         <svg viewBox="0 0 24 24" aria-hidden="true">…虫眼鏡…</svg>
+ *       </button>
+ *     </div>
+ *   </form>
+ *
+ *   <form role="search">
+ *     <div class="search-input search-input-md">
+ *       <input type="search" class="search-input-field" placeholder="フリーワードで検索" aria-label="フリーワード" />
+ *       <button type="button" class="search-input-clear" aria-label="クリア">
+ *         <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="currentColor"/>…</svg>
+ *       </button>
+ *       <button type="submit" class="search-input-submit">検索</button>
+ *     </div>
+ *   </form>
  */
 
 @layer components {
@@ -174,6 +201,8 @@
 
   /* ============================================================
    * Search icon (small size, empty state) — pure decoration
+   * 非推奨: 押せないため送信ボタンの代わりにならない。sm は search-input-submit-icon を使う
+   * （既存の利用を壊さないよう残す。次の major で削除予定）
    * ============================================================ */
   .search-input-icon {
     @apply shrink-0 inline-flex items-center justify-center
@@ -181,6 +210,24 @@
   }
   .search-input-sm .search-input-icon { @apply h-6 w-6; }
   .search-input-icon > svg { @apply w-5 h-5; }
+
+  /* ============================================================
+   * Submit icon button (sm) — 虫眼鏡を押せる送信ボタンにする（sm の送信ボタン。必須）。
+   * sm は文字の「検索」ボタンが入らないため、アイコンで送信する。
+   * 装飾の search-input-icon と違い、入力済みでも消えずにクリアの右に残る
+   * ============================================================ */
+  .search-input-submit-icon {
+    @apply shrink-0 inline-flex items-center justify-center
+           bg-transparent border-0 rounded-xs cursor-pointer
+           text-neutral-600 hover:text-fg-high hover:bg-neutral-100
+           transition-colors duration-150
+           focus:outline-none;
+  }
+  .search-input-sm .search-input-submit-icon { @apply h-6 w-6; }   /* 24（押せる範囲の最低限） */
+  .search-input-submit-icon > svg { @apply w-5 h-5; }
+  .search-input.is-disabled .search-input-submit-icon {
+    @apply text-neutral-400 pointer-events-none;
+  }
 
   /* ============================================================
    * Submit button (検索) — primary solid, shown on md / lg
@@ -199,7 +246,8 @@
   /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
    * 描画されない問題への対処。生 CSS で outline-style を solid に固定） */
   .search-input-clear:focus-visible,
-  .search-input-submit:focus-visible {
+  .search-input-submit:focus-visible,
+  .search-input-submit-icon:focus-visible {
     outline-width: 2px;
     outline-style: solid;
     outline-color: var(--color-info-600);
@@ -210,7 +258,8 @@
      判別できず、focus-within で outline を出す。 */
   @media (forced-colors: active) {
     .search-input-clear:focus-visible,
-    .search-input-submit:focus-visible { outline-color: CanvasText; }
+    .search-input-submit:focus-visible,
+    .search-input-submit-icon:focus-visible { outline-color: CanvasText; }
     .search-input:focus-within:not(.is-disabled) {
       outline: 2px solid CanvasText;
       outline-offset: 2px;

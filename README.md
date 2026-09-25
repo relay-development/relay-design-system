@@ -78,14 +78,14 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 4 | Toggle Button Group | `.toggle-btn-group`, `.toggle-btn-group-vertical`（中は `.btn` / `.icon-btn` の neutral ghost。選択は各ボタンの `aria-pressed`、`data-selection="single\|multiple"` で単一 / 複数選択。`role="group"` + `aria-label`） |
 | 5 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}`, `.field-error-text`, `.field-support-text` |
 | 6 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
-| 7 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,icon}`, `.search-input-{sm,md,lg}` |
+| 7 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,submit-icon}`, `.search-input-{sm,md,lg}`（`<form role="search">` で包み、送信ボタン（sm は `.search-input-submit-icon`）か Enter で確定してから検索する。`.search-input-icon` は非推奨） |
 | 8 | Selector       | `.selector`, `.selector-{icon,error}`, `.selector-{sm,md,lg}`（中の select は `.select`。`.selector-field` は非推奨エイリアス） |
 | 9 | Textarea       | `.textarea`, `.textarea-{sm,md}`, `.textarea-control`, `.textarea-footer`, `.textarea-counter` |
 | 10 | Checkbox       | `.checkbox`, `.checkbox-{sm,md}`, `.checkbox-error`, `.checkbox-label` |
 | 11 | Radio          | `.radio`, `.radio-{sm,md}`, `.radio-error`, `.radio-label`, `.radio-group` |
 | 12 | Filter Chip   | `.filter-chip`, `.filter-chip-{main,icon,label,count,check,check-circle}` |
 | 13 | Tab           | `.tabs`, `.tabs-{solid,line}`, `.tab`, `.tab-{solid,line}`, `.tab-count` |
-| 14 | Table         | `.data-table`, `.data-table-fit`, `.data-table-num`, `.data-table-text`, `.data-table-wrap`, `.data-table-filter`, `.data-table-filter-trigger`, `.data-table-filter-panel`, `.data-table-filter-actions`, `.data-table-sort`, `.data-table-sort-icon`, `.data-table-header`, `.data-table-heading`, `.data-table-title`, `.data-table-subtitle`, `.data-table-actions`, `.data-table-filter-field`（表の上の見出し行に、タイトルと表全体への操作（検索・複数条件の絞り込み・書き出し・新規作成）を 1 行でまとめる。thead が項目名行。列幅は「締める列」だけ fit / num、自由文は text、収まらなければ wrap で横スクロール。列の値での絞り込みは見出しに列フィルター、並べ替えは見出しの文字をボタンにして th に aria-sort。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
+| 14 | Table         | `.data-table`, `.data-table-fit`, `.data-table-num`, `.data-table-text`, `.data-table-wrap`, `.data-table-filter`, `.data-table-filter-trigger`, `.data-table-filter-panel`, `.data-table-filter-actions`, `.data-table-sort`, `.data-table-sort-icon`, `.data-table-header`, `.data-table-heading`, `.data-table-title`, `.data-table-subtitle`, `.data-table-toolbar`, `.data-table-count`, `.data-table-actions`, `.data-table-filter-field`（表の上の見出し行に、タイトルと、表示件数・表全体への操作（検索・複数条件の絞り込み・書き出し・新規作成）をまとめる。thead が項目名行。列幅は「締める列」だけ fit / num、自由文は text、収まらなければ wrap で横スクロール。列の値での絞り込みは見出しに列フィルター、並べ替えは見出しの文字をボタンにして th に aria-sort。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
 | 15 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
 | 16 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}`, `.card-{icon,image,metadata,action}`, `.card-compact`, `.card-body-flush`, `.card-clickable` + `.card-link`（カード全体を 1 つのリンクに。見出しの a の当たり判定を全面に広げる） |
 | 17 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |

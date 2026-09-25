@@ -4,7 +4,7 @@
         <h2 class="typo-2xlarge">インプット（検索）</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-            <p class="typo-article text-fg-high mb-6">キーワードを入力して検索するための入力欄です。入力した文字は × ボタンでまとめて消せます。</p>
+            <p class="typo-article text-fg-high mb-6">キーワードを入力して検索するための入力欄です。入力した文字は × ボタンでまとめて消せます。検索は「検索」ボタン（sm は虫眼鏡のボタン）か Enter で確定してから実行し、入力のたびには実行しません。</p>
 
       <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
       <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="インプット（検索）のドキュメント" class="tabs tabs-line mb-8">
@@ -27,13 +27,13 @@
           <span class="typo-xsmall text-fg-low text-center">large</span>
 
           <span class="typo-xsmall text-fg-low">enable / empty</span>
-          <!-- sm: search icon only -->
+          <!-- sm: 送信は虫眼鏡のアイコンボタン -->
           <div class="search-input search-input-sm">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" />
-            <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
             <button type="button" class="search-input-clear" aria-label="クリア">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
+            <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
           </div>
           <!-- md: with submit button -->
           <div class="search-input search-input-md">
@@ -53,13 +53,13 @@
           </div>
 
           <span class="typo-xsmall text-fg-low">enable / filled</span>
-          <!-- sm: clear button -->
+          <!-- sm: clear + 送信のアイコンボタン -->
           <div class="search-input search-input-sm">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" value="フリーワードで検索" />
-            <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
             <button type="button" class="search-input-clear" aria-label="クリア">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
+            <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
           </div>
           <!-- md: clear + submit -->
           <div class="search-input search-input-md">
@@ -81,10 +81,10 @@
           <span class="typo-xsmall text-fg-low">disabled</span>
           <div class="search-input search-input-sm is-disabled">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" disabled />
-            <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
             <button type="button" class="search-input-clear" aria-label="クリア">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
+            <button type="submit" class="search-input-submit-icon" aria-label="検索" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
           </div>
           <div class="search-input search-input-md is-disabled">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" disabled />
@@ -118,10 +118,10 @@
           <span class="typo-xsmall text-fg-low">enable / empty</span>
           <div class="search-input search-input-sm search-input-error">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" />
-            <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
             <button type="button" class="search-input-clear" aria-label="クリア">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
+            <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
           </div>
           <div class="search-input search-input-md search-input-error">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" />
@@ -141,10 +141,10 @@
           <span class="typo-xsmall text-fg-low">enable / filled</span>
           <div class="search-input search-input-sm search-input-error">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" value="フリーワードで検索" />
-            <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
             <button type="button" class="search-input-clear" aria-label="クリア">
               <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
             </button>
+            <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
           </div>
           <div class="search-input search-input-md search-input-error">
             <input type="search" class="search-input-field" placeholder="フリーワードで検索" value="フリーワードで検索" />
@@ -160,6 +160,29 @@
             </button>
             <button type="submit" class="search-input-submit">検索</button>
           </div>
+        </div>
+      </div>
+
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">検索は送信ボタンか Enter で確定してから</h3>
+          <p class="card-subtitle">全サイズで <code class="px-1 bg-neutral-100 rounded">&lt;form role="search"&gt;</code> で包み、送信ボタン（sm は虫眼鏡のアイコンボタン <code class="px-1 bg-neutral-100 rounded">search-input-submit-icon</code>、md / lg は「検索」ボタン）か Enter で確定してから検索する。入力のたびには検索しない（1 文字ごとに結果と件数の告知が変わり、入力中の文字と重なって聞き取れないため）。クリア（×）は押したら検索前に戻してよい</p>
+        </div>
+        <div class="card-body flex flex-wrap items-center gap-6">
+          <form role="search" aria-label="検索の見本（空）">
+            <div class="search-input search-input-sm w-60">
+              <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" />
+              <button type="button" class="search-input-clear" aria-label="クリア"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+              <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
+            </div>
+          </form>
+          <form role="search" aria-label="検索の見本（入力済み）">
+            <div class="search-input search-input-sm w-60">
+              <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" value="みどり商事" />
+              <button type="button" class="search-input-clear" aria-label="クリア"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+              <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -198,6 +221,7 @@
 &lt;form [[role="search"]]&gt;
   &lt;div class="search-input search-input-md"&gt;
     &lt;input type="search" [[aria-label="サイト内検索"]] … /&gt;
+    &lt;button [[type="submit"]] class="search-input-submit"&gt;検索&lt;/button&gt;
   &lt;/div&gt;
 &lt;/form&gt;</pre>
           </div>
@@ -239,10 +263,10 @@
             <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
           </div>
           <div class="card-body space-y-3">
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">検索アイコンは装飾。クリアボタンはアイコンのみのため名前が要る。エラーは色だけでなく境界色＋テキストで伝える。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">送信は押せるボタン（sm は虫眼鏡のアイコンボタン、md / lg は「検索」ボタン）。クリアと sm の送信はアイコンのみのため名前が要る。エラーは色だけでなく境界色＋テキストで伝える。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">サイズは rem / トークンで拡大に追従。狭幅では送信ボタンごと折り返しても操作を失わない。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle"><kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Tab</kbd> で 入力欄 → クリア → 検索 の順に移動。<kbd class="typo-xsmall px-1 bg-neutral-100 rounded border border-stroke-low">Enter</kbd> で送信。フォーカスリングで位置が分かる。</p></div>
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle"><code class="typo-xsmall">role="search"</code> でランドマーク化し、入力欄はラベル／<code class="typo-xsmall">aria-label</code> で名前を持つ。クリアボタンは <code class="typo-xsmall">aria-label="クリア"</code>。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle"><code class="typo-xsmall">role="search"</code> でランドマーク化し、入力欄はラベル／<code class="typo-xsmall">aria-label</code> で名前を持つ。クリアボタンは <code class="typo-xsmall">aria-label="クリア"</code>、sm の送信ボタンは <code class="typo-xsmall">aria-label="検索"</code>。検索の結果は送信したときに告知する。</p></div>
           </div>
         </div>
 
@@ -255,7 +279,7 @@
           <div class="card-body">
             <ul class="typo-small text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>ネイティブ <code class="typo-xsmall">&lt;input type="search"&gt;</code>・<code class="typo-xsmall">&lt;button&gt;</code> ベースで役割が確立</span></li>
-              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>クリアボタンは <code class="typo-xsmall">aria-label</code> 前提、検索アイコンは <code class="typo-xsmall">aria-hidden</code> 前提の設計</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>クリアボタンと sm の送信ボタン（<code class="typo-xsmall">search-input-submit-icon</code>）は <code class="typo-xsmall">aria-label</code> 前提、中の svg は <code class="typo-xsmall">aria-hidden</code> 前提の設計。送信ボタンの押せる範囲は 24×24 以上</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>フォーカス時に境界色を強調（フォーカスの可視化）</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>エラーは <code class="typo-xsmall">search-input-error</code> の境界色で表現（色＋テキスト併用を前提）</span></li>
             </ul>
@@ -272,7 +296,8 @@
             <ul class="typo-small text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>検索フォームを <code class="typo-xsmall">&lt;form role="search"&gt;</code> で包む</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>入力欄に名前（可視ラベル か <code class="typo-xsmall">aria-label</code>）。placeholder をラベルにしない</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>クリアボタンに <code class="typo-xsmall">aria-label="クリア"</code>、検索アイコンに <code class="typo-xsmall">aria-hidden="true"</code></span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>クリアボタンに <code class="typo-xsmall">aria-label="クリア"</code>、sm の送信ボタンに <code class="typo-xsmall">aria-label="検索"</code>（中の svg は <code class="typo-xsmall">aria-hidden="true"</code>）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>検索は送信（ボタン / Enter）で確定してから実行し、入力のたびに結果を変えない。結果の件数は送信したときに <code class="typo-xsmall">aria-live="polite"</code> で告知する</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>送信ボタンは可視テキスト「検索」で名前を持たせる（アイコンのみなら <code class="typo-xsmall">aria-label</code>）</span></li>
             </ul>
           </div>
@@ -308,7 +333,7 @@
         <div class="card mb-4 overflow-hidden">
           <div class="card-header">
             <div class="flex items-baseline justify-between">
-              <h3 class="card-title">アイコンボタンに名前・装飾アイコンは隠す</h3>
+              <h3 class="card-title">アイコンボタンに名前を付け、中のアイコンは隠す</h3>
               <span class="typo-xsmall text-fg-low">達成基準：WCAG <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#name-role-value" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.2 名前・役割・値</span></a> / <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#non-text-content" target="_blank" rel="noopener noreferrer"><span class="link-label">1.1.1 非テキストコンテンツ</span></a></span>
             </div>
           </div>
@@ -320,13 +345,13 @@
               </div>
               <div class="search-input search-input-sm mb-4">
                 <input type="search" class="search-input-field" value="デザイン" aria-label="サイト内検索" />
-                <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
                 <button type="button" class="search-input-clear" aria-label="クリア"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+                <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
               </div>
-              <p class="typo-small text-fg-middle">クリアボタンに <code class="typo-xsmall">aria-label="クリア"</code>、検索アイコンは <code class="typo-xsmall">aria-hidden</code>。</p>
+              <p class="typo-small text-fg-middle">クリアボタンに <code class="typo-xsmall">aria-label="クリア"</code>、送信のアイコンボタンに <code class="typo-xsmall">aria-label="検索"</code>。中の svg は <code class="typo-xsmall">aria-hidden</code>。</p>
               <pre class="code-sample mt-3" data-code>
 &lt;button class="search-input-clear" [[aria-label="クリア"]]&gt;…&lt;/button&gt;
-&lt;span class="search-input-icon"&gt;&lt;svg [[aria-hidden="true"]]&gt;…&lt;/svg&gt;&lt;/span&gt;</pre>
+&lt;button type="submit" class="search-input-submit-icon" [[aria-label="検索"]]&gt;&lt;svg [[aria-hidden="true"]]&gt;…&lt;/svg&gt;&lt;/button&gt;</pre>
             </div>
             <div class="p-6">
               <div class="flex items-center gap-2 mb-4">
@@ -335,10 +360,10 @@
               </div>
               <div class="search-input search-input-sm mb-4">
                 <input type="search" class="search-input-field" value="デザイン" />
-                <span class="search-input-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></span>
                 <button type="button" class="search-input-clear"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+                <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
               </div>
-              <p class="typo-small text-fg-middle">名前の無いクリアボタンは「ボタン」としか読まれず、装飾アイコンも読み上げノイズになる。</p>
+              <p class="typo-small text-fg-middle">名前の無いクリアボタン・送信ボタンは「ボタン」としか読まれず、何のボタンか分からない。</p>
               <pre class="code-sample mt-3" data-code>
 &lt;button class="search-input-clear"&gt;…&lt;/button&gt;  &lt;!-- [[aria-label なし]] --&gt;
 &lt;svg&gt;…&lt;/svg&gt;  &lt;!-- [[aria-hidden なし]] --&gt;</pre>
