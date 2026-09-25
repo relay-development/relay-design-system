@@ -10,6 +10,8 @@
  *     action   : 右上の操作 1 つ → card-header 内に .card-action（中は icon-btn、任意）
  *     layout   : 標準 / card-compact（密な一覧向け。padding 16。card-icon は使わない）
  *     body     : 標準 / card-body-flush（本文 padding 0。見出し付きのリスト・テーブルを端まで敷く）
+ *     clickable: カード全体を 1 つのリンク（または操作）にする → .card に .card-clickable、
+ *                card-title の中の <a>（操作なら <button type="button">）に .card-link（任意）
  *
  *   余白 / 区切り:
  *     外枠     border stroke-middle + rounded-md（カードと周囲の区切りは外枠で示す）
@@ -19,11 +21,20 @@
  *     icon     40×40、角丸 sm (8)、bg neutral/100、fg/high、アイコン 24px、下 16
  *     image    幅 100%・object-cover、背景 neutral/50（読み込み前のプレースホルダー）。比率は aspect-* で指定
  *     metadata text-sm fg/low、項目間 16、アイコン 16px（テキストとの間 4）、本文との間 16
+ *     clickable hover  1px ボーダー + 外側 1px リングで 2px の primary/600 に見せる（中身をずらさない）
+ *     clickable focus  カード全体に info 青のフォーカスリング（--shadow-focus-ring）
  *     ※ Modal は重なりレイヤーで本文がスクロールしうるため、footer の区切り線・背景も残す（card とは別仕様）
+ *
+ * 別名:
+ *   カード / card / クリッカブルカード / clickable card / リンクカード / カード型リンク / 押せるカード /
+ *   タップできるカード / 全面リンク / stretched link
  *
  * 機能:
  *   関連情報をグループ化して見せる枠。最前面に重ねて操作を止めるなら modal。
  *   同種のカードを並べた一覧（案件・プロジェクト等）にも使う。
+ *   card-clickable は、カードのどこを押しても詳細ページへ移動する（または 1 つの操作をする）カード。
+ *   中に置いた別のボタン・リンク（card-action のメニュー等）はそれぞれ単独で押せる。
+ *   カードを選ぶ（選択状態を持つ）なら card-clickable ではなく checkbox / radio。
  *
  * 使用法:
  *   OK: 見出しは card-header > card-title、本文は card-body、操作は card-footer。
@@ -33,6 +44,16 @@
  *   OK: 同種のカードを密に並べる一覧は card-compact（見出し＋短い説明だけで組む）。
  *   OK: 見出し付きのリスト・テーブルをカード幅いっぱいに敷くときは card-body-flush（行側で左右 24 を取る）。
  *   OK: カードを並べるときは ul（aria-label 付き）> li で包む。
+ *   OK: 一覧の各カードが詳細ページへの入口なら card-clickable にし、card-title の中の <a class="card-link"> に
+ *       見出しの文字を入れる（リンク先は 1 つ）。1 つの操作（モーダルを開く等）なら <button type="button" class="card-link">。
+ *   OK: card-clickable の中にも card-action や card-footer のボタンを置ける（前面に出て単独で押せる）。
+ *   NG: カード全体を <a> で包まない → 中にボタン・リンクを置けず（入れ子になる）、カードの全文がリンク名として
+ *       読まれる。card-clickable + card-link を使う。
+ *   NG: div に onclick を付けてカードを押せるようにしない → キーボードで操作できず、リンクとして読まれない。
+ *   NG: card-clickable に card-link を 2 つ以上置かない → 当たり判定が重なり、押した先が分からない。
+ *       リンク先が複数あるなら card-clickable にせず、それぞれを link / btn として置く。
+ *   NG: カードの選択（複数から選ぶ・ON/OFF）に使わない → checkbox / radio（選択状態を持つ）。
+ *   NG: 本文の文字をコピーさせたいカードを card-clickable にしない → 全面の当たり判定で文字を選択できなくなる。
  *   NG: elevation（浮き上がり）表現でシャドウ（card-elevated）を使わない → 標準の border 付き .card で区切る。シャドウは modal / tooltip 等の重なりレイヤー専用。
  *   NG: 余白を直書きしない → card-header/body/footer の規定パディングを使う。密にしたいなら card-compact、余白なしは card-body-flush。
  *   NG: カード全体への操作（変更・削除・停止など）を card-body 内のボタン行に置かない → card-footer に置き、既定の右寄せにそろえる。
@@ -46,7 +67,11 @@
  *
  * アクセシビリティ:
  *   card-title は文脈に合う見出し要素（h2〜h4）にし、レベルを飛ばさない
- *   カード全体をリンクにするなら 1 つの <a> で包む（リンク/ボタンを入れ子にしない。card-action とは併用しない）
+ *   カード全体をリンクにするなら card-clickable + card-title 内の <a class="card-link">。読み上げ・Tab の対象はこのリンク 1 つで、
+ *     名前は見出しの文字になる（カードを <a> で包むと全文がリンク名になり、中にボタンも置けない）
+ *   card-link の当たり判定はカード全面、中の他のボタン・リンクは前面に出て単独で押せる（DS 担保）
+ *   card-link にフォーカスするとカード全体にフォーカスリングが出る。強制カラーモードでは outline で示す（DS 担保）
+ *   card-link の文字だけで行き先が分かる見出しにする（「詳細」「こちら」にしない）
  *   見出し・補足が無いなら card で囲まない（過剰な入れ子を避ける）
  *   card-action の icon-btn は aria-label にカード名を含めて一意化する（例: aria-label="『プロジェクト A』のメニュー"）
  *   card-icon の中のアイコンは装飾なので aria-hidden="true"（意味は見出しで伝える）
@@ -76,6 +101,15 @@
  *       <button type="button" class="btn btn-sm btn-primary btn-solid">開く</button>
  *     </div>
  *   </div>
+ *
+ *   <!-- クリッカブル（カード全体が詳細ページへのリンク） -->
+ *   <li class="card card-clickable">
+ *     <div class="card-header">
+ *       <h3 class="card-title"><a class="card-link" href="/projects/a">プロジェクト A</a></h3>
+ *       <p class="card-subtitle">最終更新: 2026-05-25</p>
+ *     </div>
+ *     <div class="card-body"><p>プロジェクトの説明文。</p></div>
+ *   </li>
  *
  *   <!-- 画像付き -->
  *   <div class="card">
@@ -225,5 +259,72 @@
    * ============================================================ */
   .card .card-body-flush {
     @apply p-0;
+  }
+
+  /* ============================================================
+   * Clickable — カード全体を 1 つのリンク（または 1 つの操作）にする。
+   * card-title の中の .card-link の当たり判定を ::after でカード全面に広げる（stretched link）。
+   * 読み上げ・Tab 移動の対象は .card-link の 1 つだけで、名前は見出しの文字になる
+   * ============================================================ */
+  .card-clickable {
+    @apply relative transition duration-150;
+  }
+
+  /* ホバーは 2px の primary/600 ボーダー（elevation のシャドウは使わない）。
+   * border-width を変えると中身が 1px ずれるため、1px ボーダー + 外側 1px のリングで 2px に見せる。
+   * 中のボタン・リンクに乗っている間はカードのホバーを出さない（押されるのはそのボタンのため） */
+  .card-clickable:hover:not(:has(:is(a, button, input, select, textarea, summary, label, [tabindex]):not(.card-link):hover)),
+  .card-clickable.is-hover-preview {
+    border-color: var(--color-primary-600);
+    box-shadow: 0 0 0 1px var(--color-primary-600);
+  }
+
+  /* キーボードフォーカスは .card-link でなくカード全体を info 青のリングで囲む。
+   * リングはカード自身に出すので .card の overflow-hidden では見切れない */
+  .card-clickable:has(.card-link:focus-visible),
+  .card-clickable.is-focus-preview {
+    box-shadow: var(--shadow-focus-ring);
+  }
+
+  /* 見出しの文字の見た目は変えない。カード型リンク（リンクに見えない見た目）のため、
+   * 「テキストリンクは常に下線」原則の例外として下線なし。button でも同じ見た目にする */
+  .card-link {
+    @apply appearance-none bg-transparent border-0 p-0 cursor-pointer
+           no-underline text-inherit text-left;
+    font: inherit;
+  }
+  .card-link:focus-visible {
+    outline: none;
+  }
+
+  /* 当たり判定をカード全面（.card-clickable の padding box）に広げる */
+  .card-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+
+  /* 中に置いた他のボタン・リンク・入力は ::after より前面に出し、それぞれ単独で押せるようにする */
+  .card-clickable :is(a, button, input, select, textarea, summary, label, [tabindex]):not(.card-link) {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   box-shadow は描画されないため、ホバーは枠を Highlight に、
+   *   フォーカスは outline（全 focusable 共通の 2px solid CanvasText / offset 2px）で示す。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .card-clickable:hover:not(:has(:is(a, button, input, select, textarea, summary, label, [tabindex]):not(.card-link):hover)),
+    .card-clickable.is-hover-preview {
+      border-color: Highlight;
+    }
+    .card-clickable:has(.card-link:focus-visible),
+    .card-clickable.is-focus-preview {
+      outline: 2px solid CanvasText;
+      outline-offset: 2px;
+    }
   }
 }
