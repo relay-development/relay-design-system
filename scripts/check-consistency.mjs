@@ -8,7 +8,7 @@
  * チェック内容:
  *   1. アイコン数     — 正本: scripts/build-icons.mjs の ICONS 配列
  *                        照合先: README / DESIGN.md ×2 / docs/ICONS.md /
- *                                examples/pages/index.html / scripts/build-pages.mjs
+ *                                scripts/build-pages.mjs
  *   2. コンポーネント数 — 正本: scripts/build-pages.mjs の Components グループ
  *                        照合先: README の見出しと表の行数 / docs/INTRODUCTION.md
  *   3. ヘッダ規約     — src/components/*.css 先頭コメントに 機能: / 使用法: が
@@ -53,7 +53,6 @@ const ICON_CLAIMS = [
   { file: "DESIGN.md", pattern: /Lucide SVG sprite, (\d+) icons/ },
   { file: "DESIGN.md", pattern: /Lucide subset (\d+) icons/ },
   { file: "docs/ICONS.md", pattern: /(\d+) アイコンを SVG sprite として同梱/ },
-  { file: "examples/pages/index.html", pattern: /Lucide スプライト (\d+) アイコン/ },
   { file: "scripts/build-pages.mjs", pattern: /Lucide スプライト (\d+) アイコン/ },
 ];
 
