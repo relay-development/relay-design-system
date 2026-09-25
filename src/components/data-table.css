@@ -40,6 +40,22 @@
  *                       <div class="data-table-wrap" tabindex="0"> で包む（列幅を詰めて無理に収めない）。
  *                       wrap 内では自由文（data-table-text）以外のセルを 1 文字ずつ折らない（keep-all）ので、
  *                       表の最小幅が中身で決まり、親幅に収まらない分が横スクロールに回る
+ *   並べ替え（sort）— 列見出しを押して、その列の値で行を並べ替える。見出しの文字をボタンにする:
+ *
+ *     <th scope="col" aria-sort="ascending">                 (並べ替え中の列にだけ aria-sort。他の列には付けない)
+ *       <button type="button" class="data-table-sort">
+ *         更新日
+ *         <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-up"></use></svg>
+ *       </button>
+ *     </th>
+ *     <td data-sort-value="1200000">1,200,000円</td>           (表示と並び順が違う値は data-sort-value に持たせる)
+ *
+ *     .data-table-sort       見出しの文字とアイコンをまとめたボタン。hover で neutral/100 の地。左右 8・上下 4 の余白を
+ *                            負のマージンで相殺し、見出しの文字位置と行の高さは変えない（押せる範囲は高さ 28）
+ *     .data-table-sort-icon  並べ替えていない列は chevrons-up-down（fg/low）、昇順 chevron-up・降順 chevron-down（primary/700）。
+ *                            形で状態を示す（色だけに頼らない）。アイコンの差し替えは JS
+ *     並べ替えの実行（行の並び替え・aria-sort とアイコンの更新・告知）は利用側の JS（実装例は examples/catalog.js の Table sort）
+ *
  *   列フィルター（column filter）— 列の値で行を絞り込む。見出しの横の icon-btn から Popover を開く:
  *
  *     <th scope="col">
@@ -88,12 +104,13 @@
  *     padding      16px (calc(var(--spacing) * 4))
  *
  * 別名:
- *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター
+ *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター /
+ *   ソート / 並べ替え / 並び替え / sort / sortable table / 列ソート
  *
  * 機能:
  *   列見出しを上に置き、複数データを行で比較する表。
  *   1 件の詳細を縦に並べるなら data-table ではなく simple-table。
- *   列の値で行を絞り込むときは見出しに列フィルター（data-table-filter）を付ける。
+ *   列の値で行を絞り込むときは見出しに列フィルター（data-table-filter）、行を並べ替えるときは見出しをボタン（data-table-sort）にする。
  *   表の上に並べて一覧全体を 1 つの軸で切り替えるなら tab、複数条件を同時に掛け合わせるトグルなら filter-chip。
  *
  * 使用法:
@@ -108,6 +125,12 @@
  *       data-table-fit / data-table-num で指定し、残りは自動幅に任せる。
  *   NG: 全セルに whitespace-nowrap を付けない → 表が親幅を越えて溢れる。nowrap は fit / num 列だけ。
  *   NG: 状態バッジ・日付・金額の列を幅指定なしで置かない → 自由文に押されて 2 行に折れる → data-table-fit。
+ *   OK: 並べ替えられる列は見出しの文字ごと data-table-sort のボタンにし、並べ替え中の th にだけ aria-sort（ascending / descending）を付ける。
+ *   OK: 1 回押すと昇順、もう一度押すと降順。別の列を押したらその列の昇順に切り替え、前の列の aria-sort は外す。
+ *   OK: 金額・日付・よみがなど、表示の文字と並び順が違う列は td に data-sort-value を持たせる。
+ *   NG: 並べ替えの切り替えを表の外の select や tab で作らない → 見出しを押す方がどの列で並んでいるか分かる。
+ *   NG: 並べ替えのボタンをアイコンだけにしない → 見出しの文字ごとボタンにし、押せる範囲を広く取る（名前も見出しの文字になる）。
+ *   NG: 並べ替えていない列に aria-sort="none" を付けて回らない → 並べ替え中の列だけに付ける。
  *   OK: 列フィルターはその列の値（役割・部署・状態など選択肢が決まっている列）で絞り込む。選択肢の先頭は「すべて」。
  *   OK: 列フィルターの select は selector-sm で包み、ボタン（btn-sm）と高さを揃える。
  *   OK: 列フィルターは選んだだけでは絞り込まず、「適用」で確定する。「リセット」はその列の絞り込みを解除して閉じる。
@@ -124,6 +147,10 @@
  *   空セルは空白にせず — で「値なし」を示す
  *   幅広は data-table-wrap（overflow-x:auto）で包み、tabindex="0" でキーボードでもスクロール可能にする
  *   操作列の見出しが空なら <span class="sr-only">操作</span> で名前を付ける
+ *   並べ替え: 見出しの中の <button> にし（Enter / Space で切り替え）、並べ替え中の th に aria-sort を付ける
+ *   並べ替え: 状態はアイコンの形でも示し、アイコンは aria-hidden="true"（状態は aria-sort で伝わる）
+ *   並べ替え: 切り替えた結果（「更新日の昇順で並べ替えました」）を aria-live="polite" の領域で告知する
+ *            （aria-sort の変化はスクリーンリーダーによって読まれないことがあるため）
  *   列フィルター: トリガーに aria-label（「役割で絞り込む」）、aria-haspopup="dialog"、aria-expanded（開閉で true / false）
  *   列フィルター: パネルは role="dialog" と aria-label。select は aria-labelledby で列見出しの文字を名前にする
  *   列フィルター: 開いたら select へフォーカス。Esc・パネル外のクリックで閉じ（Popover API）、閉じたらトリガーへフォーカスを戻す
@@ -217,6 +244,40 @@
   }
 
   /* ============================================================
+   * 並べ替え — 見出しの文字とアイコンをボタンにする。状態は th の aria-sort
+   * ============================================================ */
+  .data-table .data-table-sort {
+    @apply inline-flex items-center gap-1 px-2 py-1 rounded-sm cursor-pointer
+           bg-transparent border-0 transition-colors duration-150;
+    /* 余白の分だけ外へ広げ、見出しの文字位置と行の高さ（文字 20）を変えない */
+    margin: calc(var(--spacing) * -1) calc(var(--spacing) * -2);
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+  }
+  .data-table .data-table-sort:hover {
+    background-color: var(--color-neutral-100);
+  }
+  .data-table .data-table-sort:focus-visible {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
+
+  .data-table .data-table-sort-icon {
+    @apply shrink-0;
+    color: var(--color-fg-low);
+  }
+  .data-table th[aria-sort="ascending"] .data-table-sort-icon,
+  .data-table th[aria-sort="descending"] .data-table-sort-icon {
+    color: var(--color-primary-700);
+  }
+
+  /* 並べ替えと列フィルターを同じ見出しに置くときは、ボタンの外へ広げた分だけトリガーとの間を空ける */
+  .data-table .data-table-filter > .data-table-sort {
+    @apply me-0;
+  }
+
+  /* ============================================================
    * 列フィルター — 見出しの横の icon-btn から Popover を開き、その列の値で行を絞り込む
    * ============================================================ */
   .data-table .data-table-filter {
@@ -295,6 +356,7 @@
   @media (forced-colors: active) {
     .data-table-wrap:focus-visible { outline-color: CanvasText; }
     .data-table-filter-panel { border-color: CanvasText; }
+    .data-table .data-table-sort:focus-visible { outline-color: CanvasText; }
     .data-table-filter-trigger[data-filtered]::after {
       forced-color-adjust: none;
       background: CanvasText;

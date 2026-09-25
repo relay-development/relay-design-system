@@ -101,3 +101,32 @@
     <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
   </div>
 </div>
+
+<!-- 並べ替え: 見出しの文字ごと data-table-sort のボタンにし、並べ替え中の th にだけ aria-sort を付ける。
+     1 回で昇順、もう一度で降順。表示と並び順が違う値（金額・日付・よみがな）は td の data-sort-value に持たせる。
+     アイコン（chevrons-up-down / chevron-up / chevron-down）と aria-sort の更新・行の並べ替え・告知は利用側の JS
+     （実装例はカタログ examples/catalog.js の Table sort） -->
+<p class="sr-only" data-sort-status="contract-sort-table" aria-live="polite"></p>
+<table class="data-table" id="contract-sort-table">
+  <caption class="sr-only">契約一覧</caption>
+  <thead>
+    <tr>
+      <th scope="col">
+        <button type="button" class="data-table-sort">
+          契約名
+          <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
+        </button>
+      </th>
+      <th scope="col" class="data-table-num" aria-sort="descending">
+        <button type="button" class="data-table-sort">
+          金額
+          <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-down"></use></svg>
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td data-sort-value="ほんしゃびるちんたいしゃくけいやく">本社ビル賃貸借契約</td><td class="data-table-num" data-sort-value="1200000">1,200,000円</td></tr>
+    <tr><td data-sort-value="せいそうぎょうむいたくけいやく">清掃業務委託契約</td><td class="data-table-num" data-sort-value="85000">85,000円</td></tr>
+  </tbody>
+</table>

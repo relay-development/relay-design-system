@@ -352,6 +352,146 @@
         </div>
       </div>
 
+      <!-- ===== 並べ替え ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">並べ替え — 列見出しを押して行を並べ替える</h3>
+          <p class="card-subtitle">見出しの文字ごと <code class="px-1 bg-neutral-100 rounded">data-table-sort</code> のボタンにし、並べ替え中の th にだけ <code class="px-1 bg-neutral-100 rounded">aria-sort</code> を付ける。1 回で昇順、もう一度で降順。金額・日付・よみがなど表示と並び順が違う列は td に <code class="px-1 bg-neutral-100 rounded">data-sort-value</code>（契約名はよみがなで並ぶ）。結果は <code class="px-1 bg-neutral-100 rounded">aria-live="polite"</code> で告知する</p>
+        </div>
+        <div class="card-body">
+          <p class="sr-only" data-sort-status="contract-sort-table" aria-live="polite"></p>
+          <div class="data-table-wrap" tabindex="0">
+            <table class="data-table" id="contract-sort-table">
+              <caption class="sr-only">契約一覧（並べ替えできる列: 契約名・金額・更新日）</caption>
+              <thead>
+                <tr>
+                  <th scope="col">
+                    <button type="button" class="data-table-sort">
+                      契約名
+                      <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="data-table-num">
+                    <button type="button" class="data-table-sort">
+                      金額
+                      <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="data-table-fit">
+                    <button type="button" class="data-table-sort">
+                      更新日
+                      <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
+                    </button>
+                  </th>
+                  <th scope="col" class="data-table-fit">状態</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td data-sort-value="ほんしゃびるちんたいしゃくけいやく">本社ビル賃貸借契約</td>
+                    <td class="data-table-num" data-sort-value="1200000">1,200,000円</td>
+                    <td class="data-table-fit">2026/09/01</td>
+                    <td class="data-table-fit"><span class="badge badge-soft-success">有効</span></td>
+                  </tr>
+                  <tr>
+                    <td data-sort-value="せいそうぎょうむいたくけいやく">清掃業務委託契約</td>
+                    <td class="data-table-num" data-sort-value="85000">85,000円</td>
+                    <td class="data-table-fit">2026/03/31</td>
+                    <td class="data-table-fit"><span class="badge badge-soft-danger">期限切れ</span></td>
+                  </tr>
+                  <tr>
+                    <td data-sort-value="かいけいそふとりようけいやく">会計ソフト利用契約</td>
+                    <td class="data-table-num" data-sort-value="96000">96,000円</td>
+                    <td class="data-table-fit">2026/12/15</td>
+                    <td class="data-table-fit"><span class="badge badge-soft-warning">審査中</span></td>
+                  </tr>
+                  <tr>
+                    <td data-sort-value="ふくごうきりーすけいやく">複合機リース契約</td>
+                    <td class="data-table-num" data-sort-value="420000">420,000円</td>
+                    <td class="data-table-fit">2027/01/10</td>
+                    <td class="data-table-fit"><span class="badge badge-soft-success">有効</span></td>
+                  </tr>
+                  <tr>
+                    <td data-sort-value="けいびぎょうむいたくけいやく">警備業務委託契約</td>
+                    <td class="data-table-num" data-sort-value="310000">310,000円</td>
+                    <td class="data-table-fit">2026/06/30</td>
+                    <td class="data-table-fit"><span class="badge badge-soft-success">有効</span></td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+          <pre class="code-sample mt-4" data-code>
+&lt;th scope="col" class="data-table-fit" [[aria-sort="ascending"]]&gt;   &lt;!-- 並べ替え中の列にだけ付ける --&gt;
+  &lt;button type="button" class="[[data-table-sort]]"&gt;
+    更新日
+    &lt;svg class="icon icon-sm [[data-table-sort-icon]]" aria-hidden="true"&gt;&lt;use href="./icons.svg#lucide-chevron-up"&gt;&lt;/use&gt;&lt;/svg&gt;
+  &lt;/button&gt;
+&lt;/th&gt;
+…
+&lt;td class="data-table-num" [[data-sort-value="1200000"]]&gt;1,200,000円&lt;/td&gt;   &lt;!-- 表示と並び順が違う値 --&gt;
+…
+&lt;p class="sr-only" aria-live="polite"&gt;&lt;/p&gt;   &lt;!-- 「更新日の昇順で並べ替えました」を告知 --&gt;</pre>
+        </div>
+      </div>
+
+      <!-- ===== 並べ替えの状態 ===== -->
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">並べ替えの状態</h3>
+          <p class="card-subtitle">並べ替えていない列は <code class="px-1 bg-neutral-100 rounded">chevrons-up-down</code>（fg/low）、昇順は <code class="px-1 bg-neutral-100 rounded">chevron-up</code>、降順は <code class="px-1 bg-neutral-100 rounded">chevron-down</code>（primary/700）。色だけでなく形で状態を示す</p>
+        </div>
+        <div class="card-body grid gap-6 sm:grid-cols-3 items-start">
+          <table class="data-table">
+            <caption class="sr-only">並べ替えていない列の見本</caption>
+            <thead>
+              <tr>
+                  <th scope="col">
+                    <button type="button" class="data-table-sort" tabindex="-1">
+                      更新日
+                      <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
+                    </button>
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="text-fg-middle">並べ替えていない</td></tr>
+            </tbody>
+          </table>
+          <table class="data-table">
+            <caption class="sr-only">昇順の列の見本</caption>
+            <thead>
+              <tr>
+                  <th scope="col" aria-sort="ascending">
+                    <button type="button" class="data-table-sort" tabindex="-1">
+                      更新日
+                      <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-up"></use></svg>
+                    </button>
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="text-fg-middle">昇順</td></tr>
+            </tbody>
+          </table>
+          <table class="data-table">
+            <caption class="sr-only">降順の列の見本</caption>
+            <thead>
+              <tr>
+                  <th scope="col" aria-sort="descending">
+                    <button type="button" class="data-table-sort" tabindex="-1">
+                      更新日
+                      <svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevron-down"></use></svg>
+                    </button>
+                  </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="text-fg-middle">降順</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- func:auto:data-table -->
       </div><!-- /#table-panel-overview -->
 
@@ -484,6 +624,7 @@
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>表に <code class="typo-xsmall">&lt;caption&gt;</code> か <code class="typo-xsmall">aria-label</code> で名前を付ける</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>空セルは空白にせず <code class="typo-xsmall">—</code>（またはテキスト）で「値なし」を示す</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>幅広なテーブルは <code class="typo-xsmall">overflow-x: auto</code> のコンテナで包み、キーボードでもスクロールできるようにする</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>並べ替えは見出しの文字ごと <code class="typo-xsmall">&lt;button&gt;</code> にし、並べ替え中の th にだけ <code class="typo-xsmall">aria-sort</code>（ascending / descending）を付ける。結果は <code class="typo-xsmall">aria-live="polite"</code> で告知する</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>列フィルターのトリガーに <code class="typo-xsmall">aria-label</code>（「役割で絞り込む」）・<code class="typo-xsmall">aria-haspopup="dialog"</code>・<code class="typo-xsmall">aria-expanded</code> を付け、絞り込み中は aria-label に適用中の値を含める</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>列フィルターのパネルは <code class="typo-xsmall">role="dialog"</code> と aria-label。開いたら select へフォーカスし、閉じたらトリガーへ戻す</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>絞り込み結果の件数を <code class="typo-xsmall">aria-live="polite"</code> の領域で告知する（行が消えたことは画面を見ないと分からない）</span></li>
@@ -501,6 +642,7 @@
             <ul class="typo-small text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>各セルで対応する列見出しが読まれる（「状態、公開中」等）。表の名前が読まれる</span></li>
               <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>列フィルターを適用すると「全 8 件中 3 件を表示」が読まれる。トリガーは「役割で絞り込む（適用中: 管理者）」と読まれる</span></li>
+              <li class="flex gap-2"><span class="text-fg-low shrink-0">SR</span><span>並べ替えの見出しは「更新日、ボタン、昇順で並べ替え済み」のように読まれ、押すと「更新日の降順で並べ替えました」と告知される</span></li>
               <li class="flex gap-2"><span class="text-fg-low shrink-0">キー</span><span>トリガーで Enter / Space → select にフォーカス、Tab で「リセット」「適用」、Esc で閉じてトリガーに戻る</span></li>
               <li class="flex gap-2"><span class="text-fg-low shrink-0">拡大</span><span>320px 幅・200% 拡大で、横スクロールを許容しつつ情報が欠けない</span></li>
               <li class="flex gap-2"><span class="text-fg-low shrink-0">自動</span><span>axe / Lighthouse で <code class="typo-xsmall">th</code>／<code class="typo-xsmall">scope</code>・caption・コントラストを確認</span></li>

@@ -420,6 +420,60 @@ document.addEventListener("focusout", (e) => {
   });
 });
 
+// Table sort — 並べ替え (data-table-sort)。見出しのボタンを押すと昇順、もう一度で降順。別の列に移ったら
+// その列の昇順から始め、前の列の aria-sort を外す。td の data-sort-value（無ければ表示文字）で比べ、
+// 両方が数値として読めれば数値、それ以外は日本語の文字列として比べる。値が同じ行は元の順を保つ（安定ソート）。
+// 列フィルターで隠れている行も並べ替え、「条件に合うデータがありません」の行は常に末尾に置く。
+const SORT_ICON = { none: "chevrons-up-down", ascending: "chevron-up", descending: "chevron-down" };
+const sortKey = (cell) => (cell?.dataset.sortValue ?? cell?.textContent ?? "").trim();
+const sortCollator = new Intl.Collator("ja", { numeric: true });
+
+function setSortIcon(th, state) {
+  const use = th.querySelector(".data-table-sort-icon use");
+  if (!use) return;
+  const href = use.getAttribute("href");
+  use.setAttribute("href", href.replace(/#lucide-[\w-]+$/, `#lucide-${SORT_ICON[state]}`));
+}
+
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".data-table-sort");
+  const th = btn?.closest("th");
+  const table = th?.closest("table.data-table");
+  if (!table) return;
+  const next = th.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending";
+  for (const other of table.querySelectorAll("thead th[aria-sort]")) {
+    if (other === th) continue;
+    other.removeAttribute("aria-sort");
+    setSortIcon(other, "none");
+  }
+  th.setAttribute("aria-sort", next);
+  setSortIcon(th, next);
+
+  const col = th.cellIndex;
+  const tbody = table.tBodies[0];
+  const empty = tbody.querySelector("[data-filter-empty]");
+  const rows = [...tbody.rows].filter((row) => row !== empty);
+  const dir = next === "ascending" ? 1 : -1;
+  rows
+    .map((row, i) => ({ row, i, key: sortKey(row.cells[col]) }))
+    .sort((a, b) => {
+      const na = Number(a.key.replace(/,/g, ""));
+      const nb = Number(b.key.replace(/,/g, ""));
+      const byValue = a.key !== "" && b.key !== "" && !Number.isNaN(na) && !Number.isNaN(nb)
+        ? na - nb
+        : sortCollator.compare(a.key, b.key);
+      return byValue * dir || a.i - b.i;
+    })
+    .forEach(({ row }) => tbody.appendChild(row));
+  if (empty) tbody.appendChild(empty);
+
+  const status = document.querySelector(`[data-sort-status="${table.id}"]`);
+  if (status) {
+    const label = btn.textContent.trim();
+    status.textContent = `${label}の${next === "ascending" ? "昇順" : "降順"}で並べ替えました`;
+  }
+});
+
 // Mobile hamburger — サイドナビの開閉 (768px 以下で表示されるトグル)
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".docs-sidebar-toggle");
