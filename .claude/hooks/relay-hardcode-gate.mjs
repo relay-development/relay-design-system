@@ -17,7 +17,7 @@
  *   - テキストリンクの自作 — (a) class に underline / text-色 / hover: を直付けした a 要素、または
  *     (b) 独自のリンク系クラス（.text-link / .footer-link / .link-primary 等。DS の link / link-neutral /
  *     link-inverse / link-label 以外で "link" を含む）を持つ a 要素で、relay のアンカー系クラス
- *     （link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が無いもの。
+ *     （link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only / card-link）が無いもの。
  *     (b) はカード全体リンク等のブロックラッパー（block / flex / grid / absolute 等を併記）を除外。
  *     (c) その独自リンククラスに color / text-decoration を書く CSS 規則（= link の再実装）
  *     （実例: 2026-09 利用側で .link を使わず独自クラスのテキストリンクが実装された）
@@ -71,7 +71,8 @@ function checkLine(line) {
 // テキストリンクの自作検知（タグ単位・複数行の a タグにも対応するため行ではなく全文を走査）。
 // 素の <a>（ロゴ・画像リンク・カード全体リンク等、class 無し／レイアウト用クラスのみ）は対象外。
 // evals/cases.mjs の同名 forbid パターンと同じ判定基準。
-const DS_ANCHOR_CLASS = /(?:^|\s)(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only)(?:\s|$)/;
+// card-link は card-clickable の見出しリンク（DS のクラス。当たり判定をカード全面に広げる）
+const DS_ANCHOR_CLASS = /(?:^|\s)(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|card-link)(?:\s|$)/;
 const SELF_STYLED_ANCHOR =
   /(?:^|\s)(?:underline|no-underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\b)/;
 // "link" を含むが DS の link 系（link / link-neutral / link-inverse / link-label）でないクラス名

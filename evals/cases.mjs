@@ -47,10 +47,10 @@ export const COMMON_PATTERNS = [
   // hook（relay-hardcode-gate の checkAnchors）と同じ判定基準。出典: 2026-09 利用側で .link を使わず
   // 独自クラスのテキストリンクが実装された事例（到達側の正の検査は login-form-links）
   {
-    // (a) relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only）が
+    // (a) relay のアンカー系クラス（link / btn / menu-item / pagination-item / breadcrumb / tab / sr-only / card-link）が
     //     無い a 要素に underline / text-色 / hover: を直付け
     pattern:
-      "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\\b))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only)(?:\\s|\"))[^>]*>",
+      "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:underline|decoration-|hover:|text-(?:primary|secondary|fg|neutral|slate|info|success|warning|negative)\\b))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|card-link)(?:\\s|\"))[^>]*>",
     forbid: true,
     label: "テキストリンクの自作（a に underline / text-* を直付けし、relay のアンカークラスが無い）",
   },
@@ -59,7 +59,7 @@ export const COMMON_PATTERNS = [
     //     .footer-link / .link-primary 等）を持ち、relay のアンカー系クラスが無い a 要素。
     //     カード全体リンク等のブロックラッパー（block / flex / grid / absolute 等を併記）は除外
     pattern:
-      "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)(?=[\\s\"]))[A-Za-z0-9_-]+)(?=[\\s\"]))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|block|inline-block|flex|inline-flex|grid|absolute|fixed|inset-0)(?:\\s|\"))[^>]*>",
+      "<a\\b(?=[^>]*\\bclass=\"[^\"]*(?<=[\\s\"])(?:[A-Za-z0-9_-]+[Ll]ink[A-Za-z0-9_-]*|link-(?!(?:neutral|inverse|label)(?=[\\s\"]))[A-Za-z0-9_-]+)(?=[\\s\"]))(?![^>]*\\bclass=\"(?:[^\"]*\\s)?(?:link|btn|menu-item|pagination-item|breadcrumb|tab|sr-only|card-link|block|inline-block|flex|inline-flex|grid|absolute|fixed|inset-0)(?:\\s|\"))[^>]*>",
     forbid: true,
     label: "テキストリンクの自作（.text-link 等の独自リンククラス。relay のアンカークラスが無い）",
   },
