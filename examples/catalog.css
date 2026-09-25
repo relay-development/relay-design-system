@@ -266,7 +266,7 @@ summary.docs-sidebar-group-title:focus-visible,
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
-/* アコーディオン化したグループ (Foundations / Components) */
+/* アコーディオン化したグループ（全グループ） */
 summary.docs-sidebar-group-title {
   display: flex;
   align-items: center;
@@ -282,6 +282,11 @@ summary.docs-sidebar-group-title::-webkit-details-marker { display: none; }
   transition: transform 0.15s ease;
 }
 details[open] > summary .docs-sidebar-group-chevron { transform: rotate(180deg); }
+
+/* グループの項目を見出しより 16 字下げし、どのグループの項目かを分かりやすくする */
+.docs-sidebar-group > .menu-group {
+  padding-left: calc(var(--spacing) * 4);   /* 16 */
+}
 
 /* ナビ項目のスタイルは DS の menu コンポーネント (menu-group / menu-item) に
  * 委ねる (下線・hover・aria-current="page" の現在地表示もそちらの仕様)。
