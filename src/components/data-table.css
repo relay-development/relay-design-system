@@ -8,9 +8,6 @@
  *   ※ クラス名は Tailwind の display ユーティリティ `table` と衝突するため
  *     `.data-table` とする。
  *
- * 別名:
- *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター
- *
  *   構造（native <table> ベース）:
  *
  *     <div class="data-table-wrap" tabindex="0">                       (列が多いときだけ)
@@ -89,6 +86,9 @@
  *     row 区切り    border-bottom 1px stroke/middle
  *     外枠          1px stroke/middle + rounded-md (16px) + overflow:hidden
  *     padding      16px (calc(var(--spacing) * 4))
+ *
+ * 別名:
+ *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター
  *
  * 機能:
  *   列見出しを上に置き、複数データを行で比較する表。
