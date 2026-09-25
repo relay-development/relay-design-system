@@ -37,6 +37,8 @@ export const ICONS = [
   "log-in", "log-out",
   // Search / Filter
   "search", "filter", "hash",
+  // View / Format
+  "list", "layout-grid", "bold", "italic", "underline",
   // Visibility
   "eye", "eye-off", "lock",
   // Time / Date

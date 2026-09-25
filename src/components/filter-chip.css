@@ -56,7 +56,8 @@
  *   ON/OFF（aria-pressed）で、排他制御の仕組みを持たない。
  *   複数同時選択の絞り込み=filter-chip / 一覧を 1 つの軸（すべて・有望・休眠 …）で
  *   切り替える単一選択=tab（tabs-line + tab-count）/ フォーム入力値の単一選択=radio
- *   （選択肢が多ければ select）/ ON-OFF 設定=checkbox。
+ *   （選択肢が多ければ select）/ ON-OFF 設定=checkbox / 絞り込みでない書式・表示形式の
+ *   切り替え（太字 / 斜体、一覧 / グリッド）=toggle-btn-group。
  *
  * 使用法:
  *   OK: 選択状態は aria-pressed="true|false"。
