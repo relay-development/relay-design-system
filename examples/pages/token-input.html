@@ -4,7 +4,7 @@
         <h2 class="typo-2xlarge">トークンインプット</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="typo-article text-fg-high mb-6">担当者・タグ・メールアドレスのように、複数の値を 1 つずつ追加・削除して集める入力欄です。追加した値は入力欄の<strong>下</strong>に、削除ボタン付きのトークンとして並べます。Primer の TextInputWithTokens のように入力欄の中へトークンを入れる形は、支援技術で扱いにくい（Primer 自身も非推奨）ため採らず、入力欄は普通の <a class="link" href="./input.html"><span class="link-label">インプット</span></a>、削除ボタンはそれぞれ Tab で止まる普通のボタンにしています。</p>
+      <p class="typo-article text-fg-high mb-6">担当者・タグ・メールアドレスのように、複数の値を 1 つずつ追加・削除して集める入力欄です。追加した値は入力欄の<strong>下</strong>に、削除ボタン付きのトークンとして並べます。入力欄の中へトークンを入れる形は支援技術で扱いにくいため採らず、入力欄は普通の <a class="link" href="./input.html"><span class="link-label">インプット</span></a>、削除ボタンはそれぞれ Tab で止まる普通のボタンにしています。</p>
 
       <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
       <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="トークンインプットのドキュメント" class="tabs tabs-line mb-8">
@@ -147,7 +147,7 @@
               <span class="token-input-item"><span class="token-input-label">佐藤</span></span>
               <span class="text-fg-placeholder">名前を入力</span>
             </div>
-            <p class="typo-medium text-fg-middle">入力欄の枠の中にトークンを入れると、トークンへは矢印キーでしか移れず、スクリーンリーダーの操作モードも切り替わる（Primer も非推奨）。</p>
+            <p class="typo-medium text-fg-middle">入力欄の枠の中にトークンを入れると、トークンへは矢印キーでしか移れず、スクリーンリーダーの操作モードも切り替わる。</p>
           </div>
         </div>
       </div>
@@ -186,7 +186,7 @@
           <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg></span>
           <div class="alert-content">
             <p class="alert-title">トークンインプットのアクセシビリティ</p>
-            <p class="alert-body">入力欄の中にトークンを入れる複合部品（Primer TextInputWithTokens）は、キーボード・音声操作・スクリーンリーダーの利用者に問題が多く、Primer 自身が非推奨にしています。relay では<strong>入力欄・「追加」ボタン・トークンの削除ボタンをすべて普通のフォーム部品</strong>にし、特別なキー操作を覚えなくても使えるようにしています。WCAG 2.2 全基準は <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティ</span></a> ページを参照。</p>
+            <p class="alert-body">入力欄の中にトークンを入れる複合部品は、キーボード・音声操作・スクリーンリーダーの利用者に問題が多い作りです。relay では<strong>入力欄・「追加」ボタン・トークンの削除ボタンをすべて普通のフォーム部品</strong>にし、特別なキー操作を覚えなくても使えるようにしています。WCAG 2.2 全基準は <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティ</span></a> ページを参照。</p>
           </div>
         </div>
 
