@@ -17,13 +17,13 @@
  *       <p class="field-support-text" id="assignee-help">Enter か「追加」で 1 人ずつ追加（最大 5 人）</p>
  *       <ul class="token-input-list" aria-label="追加した担当者">
  *         <li class="token-input-item">
- *           <span class="token-input-label">田口</span>
- *           <button type="button" class="token-input-remove" aria-label="『田口』を削除">
+ *           <span class="token-input-label">山田</span>
+ *           <button type="button" class="token-input-remove" aria-label="『山田』を削除">
  *             <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
  *           </button>
  *         </li>
  *       </ul>
- *       <p class="sr-only" aria-live="polite"></p>       (「『田口』を追加しました」「『田口』を削除しました」を告知)
+ *       <p class="sr-only" aria-live="polite"></p>       (「『山田』を追加しました」「『山田』を削除しました」を告知)
  *     </div>
  *
  *   props:
@@ -49,8 +49,8 @@
  * 使用法:
  *   OK: 入力欄は input-md ＋「追加」ボタン（btn-md neutral outline）。Enter でも追加できるようにする。
  *   OK: 追加した値は入力欄の下の ul.token-input-list に、追加した順に token で並べる。
- *   OK: 削除ボタンの aria-label に値を含める（例: 『田口』を削除）。「×」だけだと何を消すか分からない。
- *   OK: 追加・削除の結果は aria-live="polite" の領域で告知する（「『田口』を追加しました」）。
+ *   OK: 削除ボタンの aria-label に値を含める（例: 『山田』を削除）。「×」だけだと何を消すか分からない。
+ *   OK: 追加・削除の結果は aria-live="polite" の領域で告知する（「『山田』を追加しました」）。
  *   OK: 削除したら、フォーカスを次のトークンの削除ボタンへ（無ければ前、1 つも無ければ入力欄へ）移す。
  *   OK: 空・重複・上限を超える追加は受け付けず、入力欄の真下に field-error-text で理由を出す（input-error ＋ aria-invalid）。
  *   OK: 上限があるなら補足（field-support-text）に書き、aria-describedby で入力欄と結ぶ（例: 最大 5 人）。
@@ -64,7 +64,7 @@
  *
  * アクセシビリティ:
  *   入力欄に label（label-control の文字を <label for> にする）を付ける。トークンの一覧は ul に aria-label（「追加した担当者」）
- *   削除ボタンは <button type="button"> で aria-label に値を含め（『田口』を削除）、アイコンは aria-hidden="true"。
+ *   削除ボタンは <button type="button"> で aria-label に値を含め（『山田』を削除）、アイコンは aria-hidden="true"。
  *     押せる範囲は 24×24（WCAG 2.5.8 の最低限。DS 担保）
  *   追加・削除は aria-live="polite" の領域で告知する（トークンが増えた・消えたことは画面を見ないと分からないため）
  *   削除したら次（無ければ前）の削除ボタンへ、最後の 1 つを消したら入力欄へフォーカスを戻す（フォーカスを見失わない）
@@ -86,8 +86,8 @@
  *     <p class="field-support-text" id="assignee-help">Enter か「追加」で 1 人ずつ追加（最大 5 人）</p>
  *     <ul class="token-input-list" aria-label="追加した担当者">
  *       <li class="token-input-item">
- *         <span class="token-input-label">田口</span>
- *         <button type="button" class="token-input-remove" aria-label="『田口』を削除">
+ *         <span class="token-input-label">山田</span>
+ *         <button type="button" class="token-input-remove" aria-label="『山田』を削除">
  *           <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
  *         </button>
  *       </li>

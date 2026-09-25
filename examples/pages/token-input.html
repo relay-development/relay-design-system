@@ -38,8 +38,8 @@
               <p class="field-support-text" id="ti-assignee-help">Enter か「追加」で 1 人ずつ追加（最大 5 人）</p>
               <ul class="token-input-list" aria-label="追加した担当者">
                 <li class="token-input-item">
-                  <span class="token-input-label">田口</span>
-                  <button type="button" class="token-input-remove" aria-label="『田口』を削除"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button>
+                  <span class="token-input-label">山田</span>
+                  <button type="button" class="token-input-remove" aria-label="『山田』を削除"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button>
                 </li>
                 <li class="token-input-item">
                   <span class="token-input-label">佐藤</span>
@@ -59,13 +59,13 @@
   &lt;p class="field-support-text" id="assignee-help"&gt;Enter か「追加」で 1 人ずつ追加（最大 5 人）&lt;/p&gt;
   &lt;ul class="[[token-input-list]]" [[aria-label="追加した担当者"]]&gt;
     &lt;li class="[[token]]"&gt;
-      &lt;span class="token-input-label"&gt;田口&lt;/span&gt;
-      &lt;button type="button" class="[[token-input-remove]]" [[aria-label="『田口』を削除"]]&gt;
+      &lt;span class="token-input-label"&gt;山田&lt;/span&gt;
+      &lt;button type="button" class="[[token-input-remove]]" [[aria-label="『山田』を削除"]]&gt;
         &lt;svg class="icon" aria-hidden="true"&gt;&lt;use href="./icons.svg#lucide-x"&gt;&lt;/use&gt;&lt;/svg&gt;
       &lt;/button&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
-  &lt;p class="sr-only" [[aria-live="polite"]]&gt;&lt;/p&gt;   &lt;!-- 「『田口』を追加しました」を告知 --&gt;
+  &lt;p class="sr-only" [[aria-live="polite"]]&gt;&lt;/p&gt;   &lt;!-- 「『山田』を追加しました」を告知 --&gt;
 &lt;/div&gt;</pre>
         </div>
       </div>
@@ -81,12 +81,12 @@
             <p class="typo-small text-fg-low mb-2">エラー（重複）</p>
             <div class="token-input">
               <div class="token-input-field">
-                <input type="text" class="input input-md input-error" value="田口" aria-label="担当者（エラーの見本）" aria-invalid="true" aria-describedby="ti-err-sample" tabindex="-1" />
+                <input type="text" class="input input-md input-error" value="山田" aria-label="担当者（エラーの見本）" aria-invalid="true" aria-describedby="ti-err-sample" tabindex="-1" />
                 <button type="button" class="btn btn-md btn-neutral btn-outline" tabindex="-1">追加</button>
               </div>
-              <p class="field-error-text" id="ti-err-sample">＊『田口』はすでに追加されています</p>
+              <p class="field-error-text" id="ti-err-sample">＊『山田』はすでに追加されています</p>
               <ul class="token-input-list" aria-label="追加した担当者（エラーの見本）">
-                <li class="token-input-item"><span class="token-input-label">田口</span><button type="button" class="token-input-remove" aria-label="『田口』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+                <li class="token-input-item"><span class="token-input-label">山田</span><button type="button" class="token-input-remove" aria-label="『山田』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
               </ul>
             </div>
           </div>
@@ -131,11 +131,11 @@
                 <button type="button" class="btn btn-md btn-neutral btn-outline" tabindex="-1">追加</button>
               </div>
               <ul class="token-input-list" aria-label="デモ: 追加した担当者">
-                <li class="token-input-item"><span class="token-input-label">田口</span><button type="button" class="token-input-remove" aria-label="デモ:『田口』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+                <li class="token-input-item"><span class="token-input-label">山田</span><button type="button" class="token-input-remove" aria-label="デモ:『山田』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
                 <li class="token-input-item"><span class="token-input-label">佐藤</span><button type="button" class="token-input-remove" aria-label="デモ:『佐藤』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
               </ul>
             </div>
-            <p class="typo-medium text-fg-middle">入力欄は普通の入力欄のまま。削除ボタンはそれぞれ Tab で止まり、「『田口』を削除」と読まれる。</p>
+            <p class="typo-medium text-fg-middle">入力欄は普通の入力欄のまま。削除ボタンはそれぞれ Tab で止まり、「『山田』を削除」と読まれる。</p>
           </div>
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4">
@@ -143,7 +143,7 @@
               <span class="typo-medium font-bold text-negative-600">Don't</span>
             </div>
             <div class="input input-md flex items-center gap-2 mb-4 py-0">
-              <span class="token-input-item"><span class="token-input-label">田口</span></span>
+              <span class="token-input-item"><span class="token-input-label">山田</span></span>
               <span class="token-input-item"><span class="token-input-label">佐藤</span></span>
               <span class="text-fg-placeholder">名前を入力</span>
             </div>
@@ -166,7 +166,7 @@
               <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
               <span class="typo-medium font-bold text-success-700">Good</span>
             </div>
-            <p class="typo-medium text-fg-middle">「田口 佐藤」と打っても、Enter か「追加」を押すまでは入力欄の文字のまま。押したときに 1 つのトークンになる。</p>
+            <p class="typo-medium text-fg-middle">「山田 佐藤」と打っても、Enter か「追加」を押すまでは入力欄の文字のまま。押したときに 1 つのトークンになる。</p>
           </div>
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4">
@@ -200,7 +200,7 @@
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-medium text-fg-middle">トークンは入力欄の下に並べ、入力欄と混ざらない。長い値は省略し、全文は削除ボタンの名前で伝える。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-medium text-fg-middle">トークンは折り返して並べ、狭い画面でも横にはみ出さない。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-medium text-fg-middle">入力欄 →「追加」→ 各トークンの削除ボタンの順に Tab で止まる。Enter でも追加できる。削除したらフォーカスが次のトークン（無ければ前・入力欄）へ移る。</p></div>
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-medium text-fg-middle">一覧は「追加した担当者、リスト、2 項目」と読まれ、削除ボタンは「『田口』を削除、ボタン」。追加・削除すると「『田口』を追加しました」と告知される。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-medium text-fg-middle">一覧は「追加した担当者、リスト、2 項目」と読まれ、削除ボタンは「『山田』を削除、ボタン」。追加・削除すると「『山田』を追加しました」と告知される。</p></div>
           </div>
         </div>
 
@@ -228,7 +228,7 @@
           <div class="card-body">
             <ul class="typo-medium text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>入力欄に label（<code class="typo-xsmall">&lt;label for&gt;</code>）、トークンの一覧（<code class="typo-xsmall">ul</code>）に <code class="typo-xsmall">aria-label</code> を付ける</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>削除ボタンの <code class="typo-xsmall">aria-label</code> に値を含める（『田口』を削除）。アイコンは <code class="typo-xsmall">aria-hidden="true"</code></span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>削除ボタンの <code class="typo-xsmall">aria-label</code> に値を含める（『山田』を削除）。アイコンは <code class="typo-xsmall">aria-hidden="true"</code></span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>追加・削除を <code class="typo-xsmall">aria-live="polite"</code> の領域で告知し、削除後のフォーカスを次（無ければ前・入力欄）へ移す</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>空・重複・上限超えは受け付けず、<code class="typo-xsmall">input-error</code> ＋ <code class="typo-xsmall">aria-invalid</code> と、入力欄の真下の <code class="typo-xsmall">field-error-text</code>（<code class="typo-xsmall">aria-describedby</code> で結ぶ）で理由を伝える</span></li>
             </ul>
