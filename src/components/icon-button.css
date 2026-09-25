@@ -4,8 +4,8 @@
  *   thema:   primary / neutral / negative   (no secondary)
  *   size:    sm (32) / md (40) / lg (48)
  *   variant: solid / outline / ghost        (no subtle, no loading state)
- *   icon:    md / lg = 24×24、sm = 20×20（押せる範囲 32 はそのまま。24 だと枠の 3/4 を占め、
- *            並べる search-input-sm・btn-sm に対して大きく見えるため）
+ *   icon:    sm / md = 20×20、lg = 24×24（押せる範囲 32 / 40 / 48 はそのまま。24 だと sm・md では枠に対して大きく、
+ *            並べる search-input・btn（アイコン 16）に対して大きく見えるため）
  *   radius:  8px (rounded-sm in our scale)
  *
  * 機能:
@@ -56,15 +56,17 @@
     .icon-btn:focus-visible { outline-color: CanvasText; }
   }
 
-  /* icon は 24×24。sm だけ 20×20（下の Size で上書き）。svg の icon-lg (24) より優先させる */
-  .icon-btn > svg { @apply w-6 h-6; }
+  /* icon は 24×24（lg）。sm・md は 20×20（下の Size で上書き）。svg の icon-lg (24) より優先させる。
+   * shrink-0: 中身の幅（枠 − padding − 透明な border 1px×2）が 24 に足りない lg でも、アイコンを横に潰さない */
+  .icon-btn > svg { @apply w-6 h-6 shrink-0; }
 
   /* ============================================================
-   * Size — square box, icon 24 (sm は 20), padding varies
+   * Size — square box, icon 20 (lg は 24), padding varies
    * ============================================================ */
   .icon-btn-sm { @apply h-8  w-8  p-1; }   /* 32×32 + p4  */
   .icon-btn-sm > svg { @apply w-5 h-5; }   /* 20（押せる範囲 32 は変えない） */
   .icon-btn-md { @apply h-10 w-10 p-2; }   /* 40×40 + p8  */
+  .icon-btn-md > svg { @apply w-5 h-5; }   /* 20（押せる範囲 40 は変えない） */
   .icon-btn-lg { @apply h-12 w-12 p-3; }   /* 48×48 + p12 */
 
   /* ============================================================
