@@ -401,13 +401,20 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 
 /* Landing page — component index cards.
  * Figma node 3481:1226: each card = a tinted preview panel showing a live
- * component instance, with a name/desc label below. The whole card is a link
+ * component instance, with a name label below. The whole card is a link
  * via a stretched ::after; the preview is `inert` so its controls never steal
  * the click or keyboard focus. */
+/* 3 列固定。狭い画面では 2 列 → 1 列に落とす */
 .page-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: calc(var(--spacing) * 4);
+}
+@media (max-width: 1024px) {
+  .page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .page-grid { grid-template-columns: minmax(0, 1fr); }
 }
 .page-card {
   position: relative;
@@ -417,11 +424,13 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   border-radius: var(--radius-md);
   background: var(--color-surface);
   overflow: hidden;
-  transition: border-color 0.12s ease;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
 }
-/* ホバーはボーダー色のみで示す（elevation のシャドウは使わない — DESIGN.md） */
+/* ホバーは 2px の primary-600 ボーダーで示す（elevation のシャドウは使わない — DESIGN.md）。
+ * border-width を変えると中身が 1px ずれるため、1px ボーダー + 外側 1px のリングで 2px に見せる */
 .page-card:hover {
-  border-color: var(--color-primary-300);
+  border-color: var(--color-primary-600);
+  box-shadow: 0 0 0 1px var(--color-primary-600);
 }
 .page-card-preview {
   display: flex;
@@ -429,8 +438,8 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   justify-content: center;
   flex-wrap: wrap;
   gap: calc(var(--spacing) * 2);
-  min-height: calc(var(--spacing) * 28);   /* 112 */
-  padding: calc(var(--spacing) * 4);
+  min-height: calc(var(--spacing) * 48);   /* 192 */
+  padding: calc(var(--spacing) * 12);      /* 48 */
   background: var(--color-primary-50);
   border-bottom: 1px solid var(--color-stroke-low);
   overflow: hidden;
