@@ -464,6 +464,8 @@ function render({ title, group, content, activeFile, desc }) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>${fullTitle}</title>
   <meta name="description" content="${desc}" />
+  <!-- favicon は relay 本体サイト (relay.town) と同じもの -->
+  <link rel="icon" type="image/png" href="./assets/favicon.png" />
   <!-- OGP / X カード（画像はブランドアセット examples/assets/ogp.png・1800x945） -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="relay Design System" />
