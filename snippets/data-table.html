@@ -132,7 +132,7 @@
 </table>
 
 <!-- 見出し行: 表の上に、1 段目にタイトル、2 段目（data-table-toolbar）の左に表示件数・右に表全体への操作（検索・複数条件の絞り込み・書き出し・新規作成）を置く。
-     操作は「検索（form role="search" ＋ search-input-sm ＋ 虫眼鏡の送信ボタン。押す・Enter で確定してから絞り込む）→ アイコンの操作（3 個まで。tooltip の吹き出しを aria-labelledby で名前に）→ btn-primary 1 つ」を sm でそろえる。
+     操作は「検索（form role="search" ＋ search-input-sm ＋ 虫眼鏡の送信ボタン。押す・Enter で確定してから絞り込む）→ アイコンの操作（絞り込み・並べ替えなど 3 個まで。tooltip の吹き出しを aria-labelledby で名前に）→ btn-primary 1 つ」を sm でそろえる。
      1 列の値だけで絞るなら列フィルター、並べ替えは列見出し（data-table-sort）。検索・絞り込みの実行と件数の告知は利用側の JS
      （実装例はカタログ examples/catalog.js の Table filter） -->
 <div class="data-table-header">
@@ -162,10 +162,11 @@
         <span class="tooltip-content" id="transfers-tip-filter" role="tooltip">絞り込む</span>
       </span>
       <span class="tooltip">
-        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-labelledby="transfers-tip-download">
-          <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-download"></use></svg>
+        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
+                aria-labelledby="transfers-tip-sort" aria-haspopup="dialog" aria-expanded="false" popovertarget="transfers-sort">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
         </button>
-        <span class="tooltip-content" id="transfers-tip-download" role="tooltip">CSV でダウンロード</span>
+        <span class="tooltip-content" id="transfers-tip-sort" role="tooltip">並べ替える</span>
       </span>
       <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
     </div>
@@ -209,5 +210,31 @@
   <div class="data-table-filter-actions">
     <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset>リセット</button>
     <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
+  </div>
+</div>
+<!-- 見出し行の並べ替え: 列と順序を選んで「適用」。「リセット」は登録順に戻す。列見出しの data-table-sort と状態を連動させる -->
+<div class="data-table-filter-panel" id="transfers-sort" popover role="dialog" aria-label="振込一覧を並べ替える">
+  <div class="data-table-filter-field">
+    <label for="transfers-s-col">並べ替える列</label>
+    <div class="selector selector-sm">
+      <select class="select" id="transfers-s-col">
+        <option value="">指定なし（登録順）</option>
+        <option value="0">振込日</option>
+        <option value="2">金額</option>
+      </select>
+    </div>
+  </div>
+  <div class="data-table-filter-field">
+    <label for="transfers-s-dir">順序</label>
+    <div class="selector selector-sm">
+      <select class="select" id="transfers-s-dir">
+        <option value="ascending">昇順（小さい順・古い順）</option>
+        <option value="descending">降順（大きい順・新しい順）</option>
+      </select>
+    </div>
+  </div>
+  <div class="data-table-filter-actions">
+    <button type="button" class="btn btn-sm btn-neutral btn-ghost">リセット</button>
+    <button type="button" class="btn btn-sm btn-primary btn-solid">適用</button>
   </div>
 </div>
