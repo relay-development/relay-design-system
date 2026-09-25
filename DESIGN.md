@@ -135,6 +135,7 @@ Button (Outline)   : <button class="btn btn-md btn-primary btn-outline">編集</
 Button (Negative)  : <button class="btn btn-md btn-negative btn-solid">削除</button>
 Button サイズ      : btn-{sm,md,lg,xl} = h-{8,10,12,18} = 32 / 40 / 48 / 72 px
 Icon Button        : <button class="icon-btn icon-btn-md icon-btn-primary icon-btn-solid" aria-label="次へ">...</button>
+Button Group       : <div class="btn-group" role="group" aria-label="テキストの編集"><button class="btn btn-md btn-neutral btn-outline">コピー</button>…</div>  ← 同じ対象への関連した操作を 2〜4 個つなげる。中は同じ variant（outline）・サイズで揃える。1 つを選ぶ切替には使わない（→ tab / radio）
 Input              : <input class="input input-md" />  /  エラー時: + .input-error
 Search Input       : <div class="search-input search-input-md">...field + clear + submit...</div>
 Select             : <select class="select">...</select>  ← ネイティブ select は常に .select（見た目は Input と同一）

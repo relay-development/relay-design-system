@@ -1,0 +1,31 @@
+<!-- ボタングループ: 同じ対象に対する関連した操作を 2〜4 個つなげる。
+     中は同じ variant（outline）・theme・サイズで揃え、role="group" + aria-label でグループに名前を付ける -->
+<div class="btn-group" role="group" aria-label="テキストの編集">
+  <button type="button" class="btn btn-md btn-neutral btn-outline">コピー</button>
+  <button type="button" class="btn btn-md btn-neutral btn-outline">切り取り</button>
+  <button type="button" class="btn btn-md btn-neutral btn-outline">貼り付け</button>
+</div>
+
+<!-- アイコンだけのボタン: icon-btn（outline）をつなげ、それぞれに操作名の aria-label -->
+<div class="btn-group" role="group" aria-label="表示の拡大・縮小">
+  <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-outline" aria-label="縮小">
+    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-minus"></use></svg>
+  </button>
+  <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-outline" aria-label="拡大">
+    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-plus"></use></svg>
+  </button>
+</div>
+
+<!-- 分割ボタン: 主操作の btn ＋ その他の操作を開く icon-btn（chevron-down）。メニューは action-menu（.action-menu-end）。
+     開閉・フォーカス・位置は action-menu と同じ JS（実装例はカタログ examples/catalog.js の Action Menu） -->
+<div class="btn-group" role="group" aria-label="下書きの保存">
+  <button type="button" class="btn btn-md btn-neutral btn-outline">下書き保存</button>
+  <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-outline" id="split-trigger"
+          aria-label="下書き保存のその他の操作" aria-haspopup="menu" aria-expanded="false" popovertarget="split-menu">
+    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-chevron-down"></use></svg>
+  </button>
+</div>
+<div class="action-menu action-menu-end" id="split-menu" popover role="menu" aria-labelledby="split-trigger">
+  <button type="button" class="menu-item" role="menuitem" tabindex="-1">テンプレートとして保存</button>
+  <button type="button" class="menu-item" role="menuitem" tabindex="-1">複製して保存</button>
+</div>
