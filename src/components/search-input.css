@@ -13,6 +13,8 @@
  *     lg: h40 px24/py8 font14
  *   clear icon: 16-20px の filled gray circle with white ×
  *   search icon (small empty): lucide search 16-20px
+ *   submit icon button (sm): 虫眼鏡を押せる送信ボタンにする（search-input-submit-icon）。押す・Enter まで検索しない
+ *     ときに sm で使う（sm は文字の「検索」ボタンを持たないため）。24×24・アイコン 20、入力済みでもクリアの右に残る
  *
  *   isInvalid=true で container bg=negative/50, border 2px negative/500
  *
@@ -22,6 +24,11 @@
  *
  * 使用法:
  *   OK: type="search"。md/lg では送信ボタン、入力済みのときクリアを出す。
+ *   OK: 結果を画面内で絞り込む検索（表の見出し行など）は <form role="search"> で包み、検索ボタンか Enter で確定してから
+ *       結果を変える。sm は装飾の search-input-icon の代わりに送信のアイコンボタン search-input-submit-icon を置く。
+ *   NG: 入力のたびに結果を変えない → 1 文字ごとに結果と件数の告知が変わり、スクリーンリーダーでは入力中の文字と
+ *       告知が重なって聞き取れない。入力の途中で内容が動くのは予期しない変化にもなる（WCAG 3.2.2）。
+ *       クリア（×）は明示的な操作なので、押したら結果を元に戻してよい。
  *   NG: 一般のテキスト入力に流用しない → input。
  *   NG: エラー色を直書きしない → isInvalid 用のクラスを使う。
  *
@@ -30,8 +37,21 @@
  *   検索フォームを <form role="search"> で包む
  *   アクセシブルネームは DS 非担保。実装で必ず付与する — 入力欄に可視ラベル か aria-label で名前を付ける（placeholder はラベルにしない）
  *   クリアボタンに aria-label="クリア"、検索アイコンは aria-hidden="true"
+ *   送信のアイコンボタン（search-input-submit-icon）は type="submit" と aria-label="検索"、中の svg は aria-hidden="true"。
+ *     押せる範囲は 24×24（WCAG 2.5.8 の最低限を満たす）
  *   強制カラーモードでは入力枠の border だけではフォーカスが判別できないため outline で可視化する。クリア(×)アイコンは円と × が同化しないよう内部コントラストを付ける
  * Usage:
+ *   <!-- sm で、押す・Enter まで検索しない（表の見出し行など） -->
+ *   <form role="search" aria-label="振込一覧の検索">
+ *     <div class="search-input search-input-sm">
+ *       <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" />
+ *       <button type="button" class="search-input-clear" aria-label="クリア">…</button>
+ *       <button type="submit" class="search-input-submit-icon" aria-label="検索">
+ *         <svg viewBox="0 0 24 24" aria-hidden="true">…虫眼鏡…</svg>
+ *       </button>
+ *     </div>
+ *   </form>
+ *
  *   <div class="search-input search-input-md">
  *     <input type="search" class="search-input-field" placeholder="フリーワードで検索" />
  *     <button type="button" class="search-input-clear" aria-label="クリア">
@@ -183,6 +203,24 @@
   .search-input-icon > svg { @apply w-5 h-5; }
 
   /* ============================================================
+   * Submit icon button (sm) — 虫眼鏡を押せる送信ボタンにする。
+   * sm は文字の「検索」ボタンを持たないため、押す・Enter まで検索しないときはこれを置く。
+   * 装飾の search-input-icon と違い、入力済みでも消えずにクリアの右に残る
+   * ============================================================ */
+  .search-input-submit-icon {
+    @apply shrink-0 inline-flex items-center justify-center
+           bg-transparent border-0 rounded-xs cursor-pointer
+           text-neutral-600 hover:text-fg-high hover:bg-neutral-100
+           transition-colors duration-150
+           focus:outline-none;
+  }
+  .search-input-sm .search-input-submit-icon { @apply h-6 w-6; }   /* 24（押せる範囲の最低限） */
+  .search-input-submit-icon > svg { @apply w-5 h-5; }
+  .search-input.is-disabled .search-input-submit-icon {
+    @apply text-neutral-400 pointer-events-none;
+  }
+
+  /* ============================================================
    * Submit button (検索) — primary solid, shown on md / lg
    * ============================================================ */
   .search-input-submit {
@@ -199,7 +237,8 @@
   /* キーボードフォーカスリング（Tailwind v4 で focus-visible:outline-* が
    * 描画されない問題への対処。生 CSS で outline-style を solid に固定） */
   .search-input-clear:focus-visible,
-  .search-input-submit:focus-visible {
+  .search-input-submit:focus-visible,
+  .search-input-submit-icon:focus-visible {
     outline-width: 2px;
     outline-style: solid;
     outline-color: var(--color-info-600);
@@ -210,7 +249,8 @@
      判別できず、focus-within で outline を出す。 */
   @media (forced-colors: active) {
     .search-input-clear:focus-visible,
-    .search-input-submit:focus-visible { outline-color: CanvasText; }
+    .search-input-submit:focus-visible,
+    .search-input-submit-icon:focus-visible { outline-color: CanvasText; }
     .search-input:focus-within:not(.is-disabled) {
       outline: 2px solid CanvasText;
       outline-offset: 2px;

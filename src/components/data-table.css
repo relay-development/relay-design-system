@@ -101,7 +101,12 @@
  *         <p class="data-table-subtitle">2026 年 9 月の振込予約と実績</p>              (任意)
  *       </div>
  *       <div class="data-table-actions" role="group" aria-label="振込一覧の操作">
- *         <div class="search-input search-input-sm">…<input type="search" class="search-input-field" aria-label="振込一覧を検索">…</div>
+ *         <form role="search" aria-label="振込一覧の検索">
+ *           <div class="search-input search-input-sm">
+ *             <input type="search" class="search-input-field" aria-label="検索キーワード">…クリア…
+ *             <button type="submit" class="search-input-submit-icon" aria-label="検索">…虫眼鏡…</button>
+ *           </div>
+ *         </form>
  *         <span class="tooltip">
  *           <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger"
  *                   aria-labelledby="tip-filter" aria-haspopup="dialog" aria-expanded="false" popovertarget="transfers-filter">
@@ -129,7 +134,8 @@
  *     .data-table-title     typo-large と同じ 20/32 bold・fg/high
  *     .data-table-subtitle  text-sm・fg/low
  *     .data-table-actions   操作を gap 8 で並べる。操作はすべて sm（32）でそろえる。狭い画面では検索が 1 段目いっぱい、操作が 2 段目
- *     検索                  search-input-sm（幅 240。送信ボタンを持たず、入力に応じてその場で絞り込む）
+ *     検索                  <form role="search"> ＋ search-input-sm（幅 240）。送信は虫眼鏡のアイコンボタン（search-input-submit-icon）。
+ *                           検索ボタンか Enter で確定してから絞り込み、入力のたびには絞り込まない
  *     絞り込みのトリガー    icon-btn-sm に data-table-filter-trigger（絞り込み中の data-filtered のドットは列フィルターと共通）
  *     .data-table-filter-field  見出し行の絞り込みパネルで、条件ごとに label ＋ selector-sm を縦に並べる
  *
@@ -188,7 +194,10 @@
  *   OK: 見出し行の操作は左から「検索 → アイコンの操作 → 主操作（btn-primary 1 つ）」の順に並べ、すべて sm（32）でそろえる。
  *   OK: アイコンだけの操作は tooltip で包み、吹き出しを aria-labelledby で名前にする（見える名前と読み上げを一致させる）。
  *   OK: アイコンの操作は 3 個まで。4 個目からは more-horizontal の icon-btn ＋ action-menu（.action-menu-end）に畳む。
- *   OK: 検索は search-input-sm を入力欄のまま置き、入力に応じてその場で行を絞り込む（件数を aria-live で告知）。
+ *   OK: 検索は <form role="search"> で包んだ search-input-sm を入力欄のまま置き、虫眼鏡の送信ボタン（search-input-submit-icon）か
+ *       Enter で確定してから行を絞り込む（件数を aria-live で告知）。クリア（×）を押したら全件に戻す。
+ *   NG: 検索を入力のたびに絞り込まない → 1 文字ごとに行と件数の告知が変わり、スクリーンリーダーでは入力中の文字と告知が重なる
+ *       （入力の途中で表が動くのは予期しない変化でもある。WCAG 3.2.2）。
  *   OK: 見出し行の絞り込みは、複数の列を掛け合わせる条件や、列に無い条件（振込月など）をパネルにまとめるときに使う。
  *       パネルは data-table-filter-panel、条件ごとに data-table-filter-field（label ＋ selector-sm）。
  *   OK: ページの見出しがそのまま表の名前なら、data-table-title をページの h1 にしてよい（同じ名前の見出しを 2 つ重ねない）。
@@ -218,7 +227,8 @@
  *   列フィルター: 強制カラーモードでは影とドットの塗りが消えるため、パネルの輪郭線とドットを CanvasText で描く
  *   見出し行: data-table-title を見出し要素（h2〜h3）にして id を付け、表は aria-labelledby でその見出しを名前にする（caption と二重にしない）
  *   見出し行: 操作の段に role="group" と aria-label（「振込一覧の操作」）を付ける
- *   見出し行: 検索の入力欄に aria-label（「振込一覧を検索」）。placeholder を名前にしない
+ *   見出し行: 検索は <form role="search" aria-label="振込一覧の検索">、入力欄に aria-label（「検索キーワード」）、
+ *            送信のアイコンボタンに aria-label="検索"。placeholder を名前にしない。確定（送信）したときだけ結果を変える
  *   見出し行: アイコンだけの操作は tooltip の吹き出しを aria-labelledby で名前にする（aria-label と吹き出しで二重に読ませない）
  *   見出し行: 検索・絞り込みの結果の件数を aria-live="polite" の領域で告知する（列フィルターと同じ領域を使う）
 */
@@ -432,13 +442,13 @@
     @apply text-sm text-fg-low;
   }
 
-  /* 操作は sm（32）でそろえる。検索は送信ボタンの無い search-input-sm（入力に応じてその場で絞り込む） */
+  /* 操作は sm（32）でそろえる。検索は form[role="search"] ＋ search-input-sm（虫眼鏡の送信ボタンか Enter で確定） */
   .data-table-actions {
     @apply flex flex-wrap items-center gap-2 w-full sm:w-auto;
   }
 
   /* 検索は幅 240。狭い画面では 1 段目いっぱいに置き、アイコンの操作と主操作を 2 段目にまとめる */
-  .data-table-actions > .search-input {
+  .data-table-actions > :is(.search-input, [role="search"]) {
     @apply w-full sm:w-60;
   }
 

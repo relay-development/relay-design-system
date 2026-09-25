@@ -163,6 +163,29 @@
         </div>
       </div>
 
+      <div class="card mb-8">
+        <div class="card-header">
+          <h3 class="card-title">sm の送信ボタン — 押す・Enter まで検索しない</h3>
+          <p class="card-subtitle">表の見出し行のように結果を画面内で絞り込む検索は、入力のたびに結果を変えず、確定してから変える。sm は文字の「検索」ボタンを持たないため、装飾の虫眼鏡の代わりに送信のアイコンボタン <code class="px-1 bg-neutral-100 rounded">search-input-submit-icon</code> を置き、<code class="px-1 bg-neutral-100 rounded">&lt;form role="search"&gt;</code> で包む（Enter でも送信できる）</p>
+        </div>
+        <div class="card-body flex flex-wrap items-center gap-6">
+          <form role="search" aria-label="検索の見本（空）" onsubmit="return false">
+            <div class="search-input search-input-sm w-60">
+              <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" />
+              <button type="button" class="search-input-clear" aria-label="クリア"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+              <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
+            </div>
+          </form>
+          <form role="search" aria-label="検索の見本（入力済み）" onsubmit="return false">
+            <div class="search-input search-input-sm w-60">
+              <input type="search" class="search-input-field" placeholder="振込先・担当で検索" aria-label="検索キーワード" value="みどり商事" />
+              <button type="button" class="search-input-clear" aria-label="クリア"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="currentColor"/><path d="M9 9l6 6M15 9l-6 6" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></button>
+              <button type="submit" class="search-input-submit-icon" aria-label="検索"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg></button>
+            </div>
+          </form>
+        </div>
+      </div>
+
       <!-- func:auto:search-input -->
       </div><!-- /#search-input-panel-overview -->
 

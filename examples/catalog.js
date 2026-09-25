@@ -354,6 +354,7 @@ for (const type of ["scroll", "resize"]) {
 // 見出し行（data-table-header）の絞り込みパネルは data-filter-table で表を指し、条件ごとの select に
 // data-filter-col（列番号）を持つ（data-filter-match="prefix" なら前方一致。適用中の値は select の data-applied）。
 // 見出し行の検索（data-table-search）は、行の文字にキーワードを含む行を残す。いずれも列フィルターと AND。
+// 検索は送信（虫眼鏡 / Enter）で確定したキーワード（入力欄の data-applied）で絞り込み、入力中の文字は使わない。
 const filterTrigger = (panel) => document.querySelector(`[popovertarget="${panel.id}"]`);
 
 function applyTableFilters(table) {
@@ -370,7 +371,7 @@ function applyTableFilters(table) {
       prefix: select.dataset.filterMatch === "prefix",
     }))
     .filter((f) => f.value);
-  const query = document.querySelector(`[data-table-search="${table.id}"]`)?.value.trim() || "";
+  const query = document.querySelector(`[data-table-search="${table.id}"]`)?.dataset.applied || "";
   const rows = [...table.tBodies[0].rows].filter((row) => !row.hasAttribute("data-filter-empty"));
   let shown = 0;
   for (const row of rows) {
@@ -463,12 +464,25 @@ document.addEventListener("click", (e) => {
   trigger?.focus();
 });
 
-// 見出し行の検索 — 入力のたびに行を絞り込む（クリアボタンも input を発火する）
-document.addEventListener("input", (e) => {
-  const field = e.target.closest?.("[data-table-search]");
-  if (!field) return;
+// 見出し行の検索 — 送信（虫眼鏡のボタン / Enter）で確定してから行を絞り込む。入力のたびには絞り込まない
+// （1 文字ごとに行と件数の告知が変わると、スクリーンリーダーでは入力中の文字と告知が重なるため）
+function applyTableSearch(field) {
+  field.dataset.applied = field.value.trim();
   const table = document.getElementById(field.dataset.tableSearch);
   if (table) applyTableFilters(table);
+}
+
+document.addEventListener("submit", (e) => {
+  const field = e.target.querySelector?.("[data-table-search]");
+  if (!field) return;
+  e.preventDefault();
+  applyTableSearch(field);
+});
+
+// クリア（×）は明示的な操作なので、押したら全件に戻す（入力欄を空にするのは先頭の Search Input のハンドラ）
+document.addEventListener("click", (e) => {
+  const field = e.target.closest(".search-input-clear")?.closest(".search-input")?.querySelector("[data-table-search]");
+  if (field) applyTableSearch(field);
 });
 
 // Tab でパネルの外へ出たら閉じる（トリガーへ戻るのは除く）。移動先の要素が決まってから判定する
