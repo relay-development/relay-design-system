@@ -1,0 +1,100 @@
+/*
+ * Button Group (ボタングループ) — Figma に仕様が無いため Primer ButtonGroup / Astryx ButtonGroup を参考に DS 規約から新規設計
+ *
+ *   関連する操作のボタンを横につなげ、1 つのまとまった操作部品に見せる。
+ *   隣り合うボタンの境界線を 1 本に重ね、角丸はグループの両端だけに残す。
+ *   中身は既存の btn / icon-btn（outline）をそのまま使い、グループは並べ方だけを担う（CSS のみ・JS 不要）。
+ *
+ *   構造:
+ *     <div class="btn-group" role="group" aria-label="テキストの編集">
+ *       <button type="button" class="btn btn-md btn-neutral btn-outline">コピー</button>
+ *       <button type="button" class="btn btn-md btn-neutral btn-outline">切り取り</button>
+ *       <button type="button" class="btn btn-md btn-neutral btn-outline">貼り付け</button>
+ *     </div>
+ *
+ *   props:
+ *     item    : btn（文字）/ icon-btn（アイコンのみ）。同じグループの中は同じ variant（outline）・theme・サイズで揃える
+ *     variant : outline のみ（境界線でボタンの区切りを見せるため。solid / subtle / ghost は区切りが見えず 1 つのボタンに見える）
+ *     size    : btn-{sm,md,lg} / icon-btn-{sm,md,lg}（中のボタンのサイズがそのままグループの高さ）
+ *     split   : 主操作の btn ＋ その他の操作を開く icon-btn（chevron-down）→ 分割ボタン。
+ *               icon-btn に aria-haspopup="menu" と popovertarget を付け、action-menu（.action-menu-end）を開く
+ *
+ *   サイズ / 色:
+ *     境界線   : 隣のボタンに 1px 重ねて 1 本にする（色は各ボタンの outline の border のまま）
+ *     角丸     : 先頭の左側・末尾の右側だけ rounded-sm (8)。間のボタンは角丸なし
+ *     重なり順 : hover / フォーカス中のボタンを前面に出し、枠とフォーカスリングが隣に隠れないようにする
+ *
+ * 別名:
+ *   ボタングループ / button group / 連結ボタン / 分割ボタン / スプリットボタン / split button / ボタンの並び
+ *
+ * 機能:
+ *   同じ対象に対する関連した操作（コピー / 切り取り / 貼り付け、拡大 / 縮小 等）を 1 つのまとまりとして並べる。
+ *   複数の中から 1 つを選んで表示を切り替えるなら tab、フォームの選択肢は radio、絞り込みのトグルは filter-chip、
+ *   操作が多くて並べきれないなら action-menu に畳む。主操作と副操作を並べるだけ（保存＋キャンセル等）なら
+ *   グループにせず btn を間隔を空けて並べる。
+ *
+ * 使用法:
+ *   OK: 同じ対象に対する関連した操作を 2〜4 個つなげる（例: コピー / 切り取り / 貼り付け）。
+ *   OK: グループの中は同じ variant（outline）・theme・サイズで揃え、1 つの部品に見せる。
+ *   OK: role="group" と aria-label でグループに名前を付ける（何に対する操作か。例: 「テキストの編集」）。
+ *   OK: アイコンだけのボタンは icon-btn にし、それぞれ aria-label で操作名を付ける。
+ *   OK: 分割ボタンは主操作の btn の右に icon-btn（chevron-down）をつなげ、action-menu でその他の操作を開く。
+ *   NG: solid / subtle / ghost のボタンをつなげない → 区切りが見えず 1 つのボタンに見える。グループは outline。
+ *   NG: variant・theme・サイズの違うボタンを混ぜない → まとまりに見えない。
+ *   NG: 1 つを選ぶと他が外れる切り替え（表示形式・期間など）に使わない → tab（一覧の表示切替）/ radio（フォームの選択）。
+ *       aria-pressed のトグルを並べて単一選択を作らない。
+ *   NG: 関係の薄い操作（保存と削除など）をつなげない → 削除は離して置き、btn-negative にする。
+ *   NG: 5 個以上つなげない → action-menu に畳むか、よく使う操作だけを残す。
+ *   NG: 主操作（btn-primary solid）とキャンセルをグループにしない → 主従のある操作は btn を間隔を空けて並べる。
+ *   NG: ページ遷移のリンクを並べない → 移動は link や tab / menu。
+ *   NG: グループを入れ子にしない → 複数のまとまりはグループを間隔を空けて横に並べる。
+ *
+ * アクセシビリティ:
+ *   グループの要素に role="group" と aria-label（何に対する操作か）を付ける。スクリーンリーダーはボタンの前にグループ名を読む
+ *   ボタンはそれぞれ Tab で止まり、Enter / Space で実行する（ネイティブ button のまま。DS 担保）
+ *   アイコンだけのボタン（icon-btn）には操作名の aria-label を付け、アイコン SVG は aria-hidden="true"
+ *   矢印キーで移動する 1 つの Tab 位置にしたい（ツールバー）場合は、role="toolbar" と roving tabindex を利用側の JS で付与する
+ *   処理中にグループごと disabled にしない（フォーカスが外れて位置を見失う）。処理中は押したボタンに data-loading を付ける
+ *   フォーカスリングは前面に出して隣のボタンに隠れないようにする（DS 担保）。強制カラーモードでも btn の輪郭線（ButtonText）で区切りが見える
+ *
+ * Usage:
+ *   <div class="btn-group" role="group" aria-label="テキストの編集">
+ *     <button type="button" class="btn btn-md btn-neutral btn-outline">コピー</button>
+ *     <button type="button" class="btn btn-md btn-neutral btn-outline">切り取り</button>
+ *     <button type="button" class="btn btn-md btn-neutral btn-outline">貼り付け</button>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container — 中のボタンを横につなげる。isolation で z-index をグループ内に閉じる
+   * ============================================================ */
+  .btn-group {
+    @apply inline-flex items-stretch;
+    isolation: isolate;
+  }
+
+  .btn-group > :is(.btn, .icon-btn) {
+    position: relative;
+  }
+
+  /* 2 つ目以降は左の境界線を前のボタンの右の境界線に 1px 重ねて 1 本にし、左の角丸を外す */
+  .btn-group > :is(.btn, .icon-btn):not(:first-child) {
+    margin-inline-start: -1px;   /* border 幅（1px）ぶん重ねる */
+    border-start-start-radius: 0;
+    border-end-start-radius: 0;
+  }
+
+  /* 末尾以外は右の角丸を外す */
+  .btn-group > :is(.btn, .icon-btn):not(:last-child) {
+    border-start-end-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  /* hover / フォーカス中は前面へ（重ねた境界線とフォーカスリングが隣のボタンに隠れないように） */
+  .btn-group > :is(.btn, .icon-btn):hover,
+  .btn-group > :is(.btn, .icon-btn):focus-visible,
+  .btn-group > :is(.btn, .icon-btn).is-focus-preview {
+    z-index: 1;
+  }
+}
