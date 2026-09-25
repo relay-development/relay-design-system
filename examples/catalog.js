@@ -791,3 +791,69 @@ document.addEventListener("keydown", (e) => {
   e.preventDefault(); // フォームの送信ではなく、トークンの追加にする
   addToken(input.closest("[data-token-input]"));
 });
+
+// Multi Selector — ボタン（multi-selector-trigger）から popover のパネルを開き、中の checkbox で複数を選ぶ。
+// 開いたらボタンと同じ幅で下に置き、最初の checkbox へフォーカス。閉じたらボタンへ戻す（Popover API の light dismiss に加えて）。
+// 選ぶたびにボタンの要約（名前を「、」でつなぐ / data-summary="count" なら「3 件選択」）と「すべて」（data-select-all）の状態を更新する。
+function multiSelectorParts(panel) {
+  const trigger = document.querySelector(`[popovertarget="${panel.id}"]`);
+  const options = [...panel.querySelectorAll('input[type="checkbox"]:not([data-select-all])')];
+  return { trigger, options, all: panel.querySelector("[data-select-all]"), value: trigger?.querySelector(".multi-selector-value") };
+}
+
+function syncMultiSelector(panel) {
+  const { trigger, options, all, value } = multiSelectorParts(panel);
+  const checked = options.filter((o) => o.checked);
+  if (all) {
+    all.checked = checked.length > 0 && checked.length === options.length;
+    all.indeterminate = checked.length > 0 && checked.length < options.length;
+  }
+  if (!value) return;
+  const names = checked.map((o) => o.closest("label").textContent.trim());
+  value.textContent = !names.length ? "" : trigger.closest(".multi-selector")?.dataset.summary === "count" ? `${names.length} 件選択` : names.join("、");
+}
+
+document.querySelectorAll(".multi-selector-panel").forEach(syncMultiSelector);
+
+document.addEventListener("change", (e) => {
+  const panel = e.target.closest?.(".multi-selector-panel");
+  if (!panel) return;
+  if (e.target.matches("[data-select-all]")) {
+    multiSelectorParts(panel).options.filter((o) => !o.disabled).forEach((o) => { o.checked = e.target.checked; });
+  }
+  syncMultiSelector(panel);
+});
+
+document.addEventListener("beforetoggle", (e) => {
+  const panel = e.target;
+  if (!(panel instanceof HTMLElement) || !panel.classList.contains("multi-selector-panel") || e.newState !== "open") return;
+  panel.style.visibility = "hidden"; // 位置を計算するまで隠す
+}, true);
+
+document.addEventListener("toggle", (e) => {
+  const panel = e.target;
+  if (!(panel instanceof HTMLElement) || !panel.classList.contains("multi-selector-panel")) return;
+  const { trigger } = multiSelectorParts(panel);
+  const open = e.newState === "open";
+  trigger?.setAttribute("aria-expanded", open ? "true" : "false");
+  if (open) {
+    if (trigger) panel.style.width = `${trigger.getBoundingClientRect().width}px`;
+    positionActionMenu(panel);
+    panel.style.visibility = "";
+    panel.querySelector('input[type="checkbox"]:not(:disabled)')?.focus();
+  } else if (trigger && (document.activeElement === document.body || panel.contains(document.activeElement))) {
+    trigger.focus();
+  }
+}, true);
+
+// Tab でパネルの外へ出たら閉じる（ボタンへ戻るのは除く）
+document.addEventListener("focusout", (e) => {
+  const panel = e.target.closest?.(".multi-selector-panel:popover-open");
+  if (!panel) return;
+  setTimeout(() => {
+    const active = document.activeElement;
+    if (!panel.matches(":popover-open") || panel.contains(active) || active === multiSelectorParts(panel).trigger) return;
+    if (active === document.body) return; // 外側クリックは Popover API に任せる
+    panel.hidePopover();
+  });
+});

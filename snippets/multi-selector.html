@@ -1,0 +1,33 @@
+<!-- マルチセレクター: 決まった選択肢（〜15 個）から複数を選ぶ折りたたみの入力欄。ボタンは selector と同じ見た目。
+     パネルの中は普通の checkbox（Tab / Space で操作。フォームの送信にそのまま乗る）。
+     開閉・位置・フォーカス・ボタンの要約の更新・「すべて」の一部選択は利用側の JS（実装例はカタログ examples/catalog.js の Multi Selector） -->
+<div class="label-control">
+  <div class="label-control-row"><span class="label-control-text" id="cols-label">表示する列</span></div>
+</div>
+<div class="multi-selector multi-selector-md">
+  <button type="button" class="multi-selector-trigger" aria-labelledby="cols-label cols-value"
+          aria-haspopup="dialog" aria-expanded="false" popovertarget="cols-panel">
+    <span class="multi-selector-value" id="cols-value" data-placeholder="選択してください">振込日、振込先</span>
+  </button>
+  <div class="multi-selector-panel" id="cols-panel" popover role="dialog" aria-labelledby="cols-label">
+    <label class="checkbox-label multi-selector-option multi-selector-all"><input type="checkbox" class="checkbox" data-select-all />すべて</label>
+    <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="date" checked />振込日</label>
+    <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="payee" checked />振込先</label>
+    <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="amount" />金額</label>
+  </div>
+</div>
+
+<!-- グループ分け ＋ 件数の表示（幅が狭い場所）: fieldset ＋ legend、data-summary="count" で「3 件選択」 -->
+<div class="multi-selector multi-selector-md" data-summary="count">
+  <button type="button" class="multi-selector-trigger" aria-labelledby="dept-label dept-value"
+          aria-haspopup="dialog" aria-expanded="false" popovertarget="dept-panel">
+    <span class="multi-selector-value" id="dept-value" data-placeholder="選択してください">2 件選択</span>
+  </button>
+  <div class="multi-selector-panel" id="dept-panel" popover role="dialog" aria-labelledby="dept-label">
+    <fieldset class="multi-selector-group">
+      <legend class="multi-selector-group-title">営業</legend>
+      <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="dept" value="sales1" checked />第一営業部</label>
+      <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="dept" value="sales2" checked />第二営業部</label>
+    </fieldset>
+  </div>
+</div>

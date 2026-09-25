@@ -1,0 +1,224 @@
+/*
+ * Multi Selector (マルチセレクター) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   決まった選択肢から複数を選ぶ、折りたたみ式の入力欄。見た目は selector と同じ枠のボタンで、
+ *   押すとポップオーバーのパネルが開き、中の checkbox で選ぶ。選んだ値はボタンに要約して表示する。
+ *   パネルの中は普通の checkbox（Tab で移動・Space で切り替え）。矢印キーで動かす listbox にはしない。
+ *   checkbox は name / value を持つので、フォームの送信にそのまま乗る。
+ *
+ *   構造:
+ *     <div class="label-control">…<span class="label-control-text" id="cols-label">表示する列</span>…</div>
+ *     <div class="multi-selector multi-selector-md">
+ *       <button type="button" class="multi-selector-trigger" id="cols-trigger"
+ *               aria-labelledby="cols-label cols-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="cols-panel">
+ *         <span class="multi-selector-value" id="cols-value" data-placeholder="選択してください">名前、メール</span>
+ *       </button>
+ *       <div class="multi-selector-panel" id="cols-panel" popover role="dialog" aria-labelledby="cols-label">
+ *         <label class="checkbox-label multi-selector-option multi-selector-all">
+ *           <input type="checkbox" class="checkbox" data-select-all />すべて
+ *         </label>
+ *         <fieldset class="multi-selector-group">
+ *           <legend class="multi-selector-group-title">基本情報</legend>              (グループ見出しは任意)
+ *           <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="name" checked />名前</label>
+ *           …
+ *         </fieldset>
+ *       </div>
+ *     </div>
+ *
+ *   props:
+ *     size    : multi-selector-{sm,md,lg}（高さ 32 / 40 / 48。selector と同じ）
+ *     summary : 選んだ値の名前を「、」でつなぐ（既定。入り切らなければ 1 行で省略）/
+ *               data-summary="count" で「3 件選択」（ツールバーなど幅が狭い場所）
+ *     all     : 先頭に「すべて」の checkbox（data-select-all。任意）。一部だけ選ぶと indeterminate
+ *     group   : fieldset.multi-selector-group ＋ legend.multi-selector-group-title で選択肢を分ける（任意）
+ *     error   : ボタンに multi-selector-error、真下に field-error-text（aria-describedby で結ぶ）
+ *
+ *   サイズ / 色（ボタンは selector と同じ）:
+ *     ボタン   : 背景 white、枠 neutral/400（hover neutral/500）、角丸 sm、右端に chevrons-up-down（neutral/600）
+ *                文字 fg/high（未選択は data-placeholder の文字を fg/placeholder で）、sm 14 / md・lg 16
+ *     パネル   : 幅はボタンと同じ（最小 240）、最大高さ 320 で縦スクロール、padding 8、角丸 md、
+ *                bg surface、枠 stroke-low、shadow-lg（重なりレイヤー）。ボタンの下に 4 空けて開く
+ *     選択肢   : 1 行ごとに左右 8・上下 6、hover で neutral/50。「すべて」の下に区切り線 stroke-low
+ *     グループ見出し : 12 bold・fg/low、上 8
+ *
+ * 別名:
+ *   マルチセレクター / multi selector / 複数選択 / multi select / マルチセレクト / 複数選択のプルダウン /
+ *   チェックボックスのドロップダウン / checkbox dropdown / 表示する列の選択 / column visibility
+ *
+ * 機能:
+ *   決まった選択肢（数個〜15 個ほど）から複数を選ぶフォームの入力欄。選択肢を常に並べる場所が無いときに折りたたむ。
+ *   場所があるなら checkbox を並べる（一覧性が高い）。1 つだけ選ぶなら selector / select、自由に入力した値を集めるなら token-input。
+ *   一覧を今すぐ絞り込むトグルは filter-chip、表の見出し行の絞り込みは data-table-filter-panel。
+ *
+ * 使用法:
+ *   OK: 選択肢が数個〜15 個ほどで、画面に checkbox を並べる場所が無いときに使う（表の「表示する列」、フォームの「対象部署」等）。
+ *   OK: ボタンには選んだ値の名前を「、」でつないで出す（幅が狭い場所は data-summary="count" で「3 件選択」）。未選択なら placeholder。
+ *   OK: 選択肢は選んだその場でボタンの表示に反映する（パネルを閉じる操作や「適用」を要求しない）。
+ *   OK: ほぼ全部を選ぶことが多いなら先頭に「すべて」（data-select-all）を置く。一部だけ選んでいると indeterminate にする。
+ *   OK: 選択肢に種類があるなら fieldset ＋ legend（multi-selector-group-title）でグループに分ける。
+ *   NG: 1 つだけ選ぶ入力に使わない → selector / select。
+ *   NG: 選択肢が 15 個を超えるなら使わない → 一覧から探しにくい。パネルに入力のたびに絞る検索も置かない
+ *       （入力のたびに内容を変えない。search-input の規則）。自由入力で集めるなら token-input。
+ *   NG: 場所があるのに折りたたまない → checkbox を並べる方が、何を選べるか・何を選んだかが一目で分かる。
+ *   NG: パネルの中を矢印キーで動く独自の一覧（listbox）にしない → 普通の checkbox のまま（Tab / Space）。
+ *   NG: ボタンに独自の枠・色を付けない → selector と同じ見た目（multi-selector-{sm,md,lg}）。
+ *   NG: 一覧を今すぐ絞り込むトグルに使わない → filter-chip / 表の見出し行の絞り込み。
+ *
+ * アクセシビリティ:
+ *   ボタンは aria-labelledby で「項目名 ＋ 選んだ値」を名前にする（例: 「表示する列、名前、メール」）。
+ *     aria-haspopup="dialog" と aria-expanded（開閉で true / false）を付ける
+ *   パネルは role="dialog" と aria-labelledby（項目名）。中は普通の checkbox（label で包む）で、グループは fieldset ＋ legend
+ *   開いたら最初の checkbox へフォーカス。Esc・パネルの外のクリックで閉じ（Popover API）、閉じたらボタンへフォーカスを戻す
+ *   Tab でパネルの外へ出たら閉じる（パネルはボタンの直後に置き、Tab 順をボタンの直後にする）
+ *   「すべて」は一部だけ選んでいると indeterminate（checkbox の「一部選択」として読まれる）
+ *   エラーは field-error-text をボタンの真下に置き、aria-describedby で結ぶ
+ *   強制カラーモードでは矢印の塗りを system color で描き直し、パネルの輪郭線を CanvasText で出す（DS 担保）
+ *
+ * Usage:
+ *   <div class="label-control">
+ *     <div class="label-control-row"><span class="label-control-text" id="cols-label">表示する列</span></div>
+ *   </div>
+ *   <div class="multi-selector multi-selector-md">
+ *     <button type="button" class="multi-selector-trigger" aria-labelledby="cols-label cols-value"
+ *             aria-haspopup="dialog" aria-expanded="false" popovertarget="cols-panel">
+ *       <span class="multi-selector-value" id="cols-value" data-placeholder="選択してください">名前、メール</span>
+ *     </button>
+ *     <div class="multi-selector-panel" id="cols-panel" popover role="dialog" aria-labelledby="cols-label">
+ *       <label class="checkbox-label multi-selector-option multi-selector-all"><input type="checkbox" class="checkbox" data-select-all />すべて</label>
+ *       <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="name" checked />名前</label>
+ *       <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="email" checked />メール</label>
+ *       <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="cols" value="role" />役割</label>
+ *     </div>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container
+   * ============================================================ */
+  .multi-selector {
+    @apply relative w-full;
+  }
+
+  /* ============================================================
+   * Trigger — selector と同じ枠のボタン。右端に chevrons-up-down
+   * ============================================================ */
+  .multi-selector-trigger {
+    @apply relative flex items-center w-full h-full text-left
+           bg-white border border-solid border-neutral-400 rounded-sm text-fg-high
+           cursor-pointer transition-colors duration-150;
+    font: inherit;
+  }
+  .multi-selector-trigger:hover:not(:disabled),
+  .multi-selector-trigger[aria-expanded="true"] {
+    @apply border-neutral-500;
+  }
+  .multi-selector-trigger:focus-visible {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
+  .multi-selector-trigger:disabled {
+    @apply bg-neutral-50 border-neutral-200 text-fg-disabled cursor-not-allowed;
+  }
+
+  .multi-selector-sm { @apply h-8; }
+  .multi-selector-md { @apply h-10; }
+  .multi-selector-lg { @apply h-12; }
+  .multi-selector-sm .multi-selector-trigger { @apply text-sm leading-6 ps-2 pe-8; }
+  .multi-selector-md .multi-selector-trigger { @apply text-base leading-6 ps-3 pe-9; }
+  .multi-selector-lg .multi-selector-trigger { @apply text-base leading-6 ps-5 pe-11; }
+
+  /* 選んだ値の要約 — 1 行で省略。未選択（空）は data-placeholder の文字を placeholder 色で出す */
+  .multi-selector-value {
+    @apply block min-w-0 truncate;
+  }
+  .multi-selector-value:empty::before {
+    content: attr(data-placeholder);
+    @apply text-fg-placeholder;
+  }
+
+  /* chevrons-up-down（selector と同じ lucide アイコンを mask で描く） */
+  .multi-selector-trigger::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-neutral-600);
+    -webkit-mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg>");
+            mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='m7 15 5 5 5-5'/><path d='m7 9 5-5 5 5'/></svg>");
+    -webkit-mask-repeat: no-repeat;
+            mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+            mask-position: center;
+    -webkit-mask-size: contain;
+            mask-size: contain;
+  }
+  .multi-selector-sm .multi-selector-trigger::after { right: 4px; }
+  .multi-selector-md .multi-selector-trigger::after { right: 8px; }
+  .multi-selector-lg .multi-selector-trigger::after { right: 12px; }
+  .multi-selector-trigger:disabled::after { background-color: var(--color-neutral-400); }
+
+  /* Error — selector-error と同じ（背景 negative/50・枠 2px negative/500）。枠が 1px 太る分は box-shadow で内側に足す */
+  .multi-selector-trigger.multi-selector-error {
+    @apply bg-negative-50 border-negative-500;
+    box-shadow: inset 0 0 0 1px var(--color-negative-500);
+  }
+  .multi-selector-trigger.multi-selector-error:hover:not(:disabled) {
+    @apply border-negative-600;
+    box-shadow: inset 0 0 0 1px var(--color-negative-600);
+  }
+
+  /* ============================================================
+   * Panel — [popover] の UA スタイル (inset:0 / margin:auto / border / padding) を打ち消し、
+   * JS が top / left / width を設定する（ボタンの下に 4 空けて、ボタンと同じ幅で開く）
+   * ============================================================ */
+  .multi-selector-panel {
+    @apply m-0 p-2 min-w-60 bg-surface text-fg-high
+           border border-solid border-stroke-low rounded-md;
+    position: fixed;
+    inset: auto;
+    max-height: calc(var(--spacing) * 80);          /* 320 */
+    max-width: calc(100vw - var(--spacing) * 8);    /* 画面の左右 16 ずつは空ける */
+    overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+  }
+  .multi-selector-panel:popover-open {
+    @apply flex flex-col;
+  }
+
+  /* 選択肢 1 行 — 行全体を押せるようにし、hover で地を付ける */
+  .multi-selector-option {
+    @apply flex w-full px-2 py-1.5 rounded-sm;
+  }
+  .multi-selector-option:hover {
+    @apply bg-neutral-50;
+  }
+
+  /* 「すべて」— 下に区切り線 */
+  .multi-selector-all {
+    @apply mb-1 pb-2 rounded-none border-b border-stroke-low;
+  }
+
+  /* グループ — fieldset の既定の枠・余白を消す */
+  .multi-selector-group {
+    @apply m-0 p-0 border-0 min-w-0;
+  }
+  .multi-selector-group-title {
+    @apply px-2 pt-2 pb-1 text-xs font-bold leading-4 text-fg-low;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   矢印は mask ＋ background-color(塗り) で描いており Canvas 化して消えるため、塗りを system color で描き直す。
+   *   パネルは影が無視されるため輪郭線を CanvasText にする。フォーカスは全 focusable 共通の outline（CanvasText）。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .multi-selector-trigger::after          { background-color: CanvasText; }
+    .multi-selector-trigger:disabled::after { background-color: GrayText; }
+    .multi-selector-trigger:focus-visible   { outline-color: CanvasText; }
+    .multi-selector-panel                   { border-color: CanvasText; }
+  }
+}

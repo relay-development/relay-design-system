@@ -352,6 +352,7 @@ const PAGES = [
   { file: "search-input.html", group: "Components", label: "サーチインプット", title: "サーチインプット", desc: "検索フィールド + クリア / 送信" },
   { file: "token-input.html",  group: "Components", label: "トークンインプット", title: "トークンインプット", desc: "複数の値を 1 つずつ追加・削除する入力欄" },
   { file: "selector.html",     group: "Components", label: "セレクター",     title: "セレクター",     desc: "セレクト / ドロップダウン" },
+  { file: "multi-selector.html", group: "Components", label: "マルチセレクター", title: "マルチセレクター", desc: "決まった選択肢から複数を選ぶ折りたたみの入力欄" },
   { file: "textarea.html",     group: "Components", label: "テキストエリア",     title: "テキストエリア",     desc: "複数行入力 + 文字カウンター" },
   { file: "checkbox.html",     group: "Components", label: "チェックボックス",     title: "チェックボックス",     desc: "チェックボックス + nested" },
   { file: "radio.html",        group: "Components", label: "ラジオ",        title: "ラジオ",        desc: "ラジオボタン + group" },
