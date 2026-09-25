@@ -121,8 +121,7 @@
  *         </div>
  *       </div>
  *       <div class="data-table-conditions" hidden>                              (適用中の条件。条件が無いときは hidden)
- *         <span class="data-table-conditions-label" id="transfers-conditions">絞り込み中</span>
- *         <ul class="token-input-list" aria-labelledby="transfers-conditions">
+ *         <ul class="token-input-list" aria-label="適用中の絞り込み条件">
  *           <li class="token-input-item">
  *             <span class="token-input-label">キーワード: 山田</span>
  *             <button type="button" class="token-input-remove" aria-label="『キーワード: 山田』の絞り込みを解除">…x…</button>
@@ -145,9 +144,8 @@
  *     .data-table-toolbar   左に表示件数、右に操作を両端に置く（items-center）。幅が足りなければ操作が件数の下へ折り返す
  *     .data-table-count     表示件数（全 8 件 / 全 8 件中 3 件を表示）。16/24・fg/middle。aria-live="polite" で告知
  *     .data-table-conditions  操作の行の下に、適用中の条件（検索のキーワード・見出し行の絞り込み・列フィルター）を
- *                           「絞り込み中」＋ トークン（token-input-list / token-input-item）＋「すべて解除」（btn-sm neutral ghost）で並べる。
+ *                           トークン（token-input-list / token-input-item）＋「すべて解除」（btn-sm neutral ghost）で並べる（見出しの文字は置かない）。
  *                           トークンの × でその条件だけ解除。条件が無いときは hidden で行ごと隠す
- *     .data-table-conditions-label  「絞り込み中」の見出し。14 bold・fg/middle。トークンの一覧を aria-labelledby で名付ける
  *     .data-table-heading   タイトルと補足の塊
  *     .data-table-title     typo-large と同じ 20/32 bold・fg/high
  *     .data-table-subtitle  text-sm・fg/low
@@ -255,7 +253,7 @@
  *            送信のアイコンボタンに aria-label="検索"。placeholder を名前にしない。確定（送信）したときだけ結果を変える
  *   見出し行: アイコンだけの操作は tooltip の吹き出しを aria-labelledby で名前にする（aria-label と吹き出しで二重に読ませない）
  *   見出し行: 検索・絞り込みの結果の件数は data-table-count（aria-live="polite"）で告知する（列フィルターと同じ領域を使う）
- *   見出し行: 適用中の条件のトークンの一覧は「絞り込み中」の見出しを aria-labelledby で名前にする。
+ *   見出し行: 適用中の条件のトークンの一覧（ul）に aria-label="適用中の絞り込み条件" を付ける（見える見出しは置かない）。
  *            条件を解除したら次のトークン（無ければ前、1 つも無ければ検索の入力欄）へフォーカスを移す
 */
 
@@ -466,14 +464,10 @@
     @apply text-base leading-6 text-fg-middle;
   }
 
-  /* 適用中の条件 — 操作の行の下に「絞り込み中」＋ 条件のトークン ＋「すべて解除」を折り返して並べる。
+  /* 適用中の条件 — 操作の行の下に、条件のトークン ＋「すべて解除」を折り返して並べる。
    * トークンは token-input と共通の見た目（token-input-list / token-input-item）。条件が無いときは hidden で行ごと隠す */
   .data-table-conditions {
     @apply flex flex-wrap items-center gap-x-3 gap-y-2;
-  }
-
-  .data-table-conditions-label {
-    @apply text-sm font-bold text-fg-middle;
   }
 
   .data-table-conditions > .token-input-list {
