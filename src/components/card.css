@@ -16,7 +16,7 @@
  *   余白 / 区切り:
  *     外枠     border stroke-middle + rounded-md（カードと周囲の区切りは外枠で示す）
  *     内側     見出し（header）の下だけ区切り線 stroke-middle を引く。body / footer の間は線・背景色を付けず余白で区切る
- *     padding  各パート左右 24。header 上下 16、body 24、footer は本文との間 0・下端 24（本文→操作 24）
+ *     padding  各パート左右 24。header 上下 24、body 24、footer は本文との間 0・下端 24（本文→操作 24）
  *              compact は左右 16・header 上下 12・body 16
  *     icon     40×40、角丸 sm (8)、bg neutral/100、fg/high、アイコン 24px、下 16
  *     image    幅 100%・object-cover、背景 neutral/50（読み込み前のプレースホルダー）。比率は aspect-* で指定
@@ -130,7 +130,7 @@
 
   /* 区切り線は見出しの下だけ。body / footer の間は線を引かず余白で区切る */
   .card-header {
-    @apply px-6 py-4 border-b border-stroke-middle;
+    @apply p-6 border-b border-stroke-middle;   /* 上下左右 24 */
   }
 
   /* header だけのカードは外枠と線が重なるため下線を消す */
