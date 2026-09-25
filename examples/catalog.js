@@ -85,6 +85,21 @@ document.addEventListener("click", (e) => {
   chip.setAttribute("aria-pressed", next);
 });
 
+// Toggle Button Group — data-selection="single" は押したボタンだけを pressed にする
+// （選択中を押し直しても外さない）。"multiple" は押したボタンの aria-pressed を反転する。
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".toggle-btn-group [aria-pressed]");
+  if (!btn || btn.disabled) return;
+  const group = btn.closest(".toggle-btn-group");
+  if (group.dataset.selection === "single") {
+    group.querySelectorAll("[aria-pressed]").forEach((b) => {
+      b.setAttribute("aria-pressed", b === btn ? "true" : "false");
+    });
+  } else {
+    btn.setAttribute("aria-pressed", btn.getAttribute("aria-pressed") === "true" ? "false" : "true");
+  }
+});
+
 // Tabs — mutually exclusive selection within [data-tabgroup].
 // aria-controls が指すパネルがあれば、選択タブのパネルだけ表示する（無ければ選択状態の切替のみ）。
 // data-tab-param を持つグループは、選択タブを URL クエリ (?<param>=<key>) に反映し、

@@ -1,0 +1,28 @@
+<!-- トグルボタングループ（単一選択）: 同じ内容の見え方を 1 つ選んで切り替える。
+     中は btn-neutral btn-ghost で揃え、選択状態は aria-pressed。常にちょうど 1 つを true にする。
+     切り替えは利用側の JS（押したボタンを true、他を false。実装例はカタログ examples/catalog.js の Toggle Button Group） -->
+<div class="toggle-btn-group" role="group" aria-label="表示形式" data-selection="single">
+  <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true">一覧</button>
+  <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false">グリッド</button>
+  <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false">ボード</button>
+</div>
+
+<!-- トグルボタングループ（複数選択）: 書式や表示オプションをそれぞれ独立に ON/OFF する。
+     アイコンだけのボタンは icon-btn-neutral icon-btn-ghost に選択肢名の aria-label -->
+<div class="toggle-btn-group" role="group" aria-label="文字の書式" data-selection="multiple">
+  <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-pressed="true" aria-label="太字">
+    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-bold"></use></svg>
+  </button>
+  <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-pressed="false" aria-label="斜体">
+    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-italic"></use></svg>
+  </button>
+  <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-pressed="false" aria-label="下線">
+    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-underline"></use></svg>
+  </button>
+</div>
+
+<!-- 縦並び: toggle-btn-group-vertical を足す（ボタン幅は最も長いものにそろう） -->
+<div class="toggle-btn-group toggle-btn-group-vertical" role="group" aria-label="表示形式" data-selection="single">
+  <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true">一覧</button>
+  <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false">グリッド</button>
+</div>

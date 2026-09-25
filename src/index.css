@@ -16,6 +16,7 @@
 @import "./components/button.css";
 @import "./components/icon-button.css";
 @import "./components/button-group.css";
+@import "./components/toggle-button-group.css";
 @import "./components/label-control.css";
 @import "./components/input.css";
 @import "./components/search-input.css";

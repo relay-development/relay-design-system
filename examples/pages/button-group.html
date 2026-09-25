@@ -209,11 +209,11 @@
         </div>
       </div>
 
-      <!-- Demo: 単一選択の切り替えに使わない -->
+      <!-- Demo: 選択状態を持つ切り替えに使わない -->
       <div class="card mb-8 overflow-hidden">
         <div class="card-header">
           <div class="flex items-baseline justify-between">
-            <h3 class="card-title">1 つを選ぶ切り替えには使わない</h3>
+            <h3 class="card-title">選択状態を持つ切り替えには使わない</h3>
             <span class="typo-xsmall text-fg-low">用途の使い分け</span>
           </div>
         </div>
@@ -223,15 +223,15 @@
               <span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span>
               <span class="typo-medium font-bold text-success-700">Good</span>
             </div>
-            <div role="tablist" aria-label="デモ: 表示形式" class="tabs tabs-line mb-4">
-              <button type="button" role="tab" class="tab tab-line" aria-selected="true" tabindex="-1">一覧</button>
-              <button type="button" role="tab" class="tab tab-line" aria-selected="false" tabindex="-1">カレンダー</button>
-              <button type="button" role="tab" class="tab tab-line" aria-selected="false" tabindex="-1">地図</button>
+            <div class="toggle-btn-group mb-4" role="group" aria-label="デモ: 表示形式" data-selection="single">
+              <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true" tabindex="-1">一覧</button>
+              <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false" tabindex="-1">カレンダー</button>
+              <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false" tabindex="-1">地図</button>
             </div>
-            <p class="typo-small text-fg-middle">同じ内容の表示を 1 つ選んで切り替えるなら <a class="link" href="./tab.html"><span class="link-label">タブ</span></a>。フォームの選択肢なら <a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>。</p>
+            <p class="typo-small text-fg-middle">同じ内容の見え方を 1 つ選んで切り替えるなら <a class="link" href="./toggle-button-group.html"><span class="link-label">トグルボタングループ</span></a>。中身を切り替えるなら <a class="link" href="./tab.html"><span class="link-label">タブ</span></a>、フォームの選択肢なら <a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>。</p>
             <pre class="code-sample mt-3" data-code>
-&lt;div [[role="tablist"]] class="tabs tabs-line"&gt;
-  &lt;button role="tab" class="tab tab-line" aria-selected="true"&gt;一覧&lt;/button&gt;…
+&lt;div class="[[toggle-btn-group]]" role="group" aria-label="表示形式" data-selection="single"&gt;
+  &lt;button class="btn btn-md btn-neutral btn-ghost" [[aria-pressed="true"]]&gt;一覧&lt;/button&gt;…
 &lt;/div&gt;</pre>
           </div>
           <div class="p-6 min-w-0">
@@ -244,9 +244,9 @@
               <button type="button" class="btn btn-md btn-neutral btn-outline" aria-pressed="false" tabindex="-1">カレンダー</button>
               <button type="button" class="btn btn-md btn-neutral btn-outline" aria-pressed="false" tabindex="-1">地図</button>
             </div>
-            <p class="typo-small text-fg-middle">ボタングループは「操作を実行する」ボタンの並び。どれが選ばれているかを表せず、aria-pressed のトグルを並べても「1 つだけ」が伝わらない。</p>
+            <p class="typo-small text-fg-middle">ボタングループは「操作を実行する」ボタンの並び。aria-pressed を付けても選択中の見た目が付かず、どれが選ばれているか分からない。</p>
             <pre class="code-sample mt-3" data-code>
-&lt;!-- 単一選択の切り替えに btn-group ＋ aria-pressed を使わない --&gt;
+&lt;!-- 選択状態を持つ切り替えに btn-group ＋ aria-pressed を使わない → toggle-btn-group --&gt;
 &lt;div class="[[btn-group]]"&gt;&lt;button [[aria-pressed="true"]]&gt;一覧&lt;/button&gt;…&lt;/div&gt;</pre>
           </div>
         </div>

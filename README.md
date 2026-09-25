@@ -56,7 +56,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 トークンの値一覧（色 / タイポ / 余白 / 角丸 / 影）と使用ルールは [DESIGN.md](DESIGN.md) を参照してください。
 すべて CSS 変数なので `:root { --color-primary-500: #ff5a36; }` のように上書き可能です。
 
-### 4. アイコン（Lucide SVG sprite・53 種）
+### 4. アイコン（Lucide SVG sprite・58 種）
 
 ```html
 <svg class="icon icon-md">
@@ -68,39 +68,40 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 
 ---
 
-## コンポーネント一覧（29 個）
+## コンポーネント一覧（30 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
 | 1 | Button         | `.btn` + `.btn-{primary,secondary,neutral,negative}` + `.btn-{solid,outline,subtle,ghost}` + `.btn-{sm,md,lg,xl}` |
 | 2 | Icon Button    | `.icon-btn` + `.icon-btn-{primary,neutral,negative}` + `.icon-btn-{sm,md,lg}` + `.icon-btn-{solid,outline,ghost}` |
 | 3 | Button Group  | `.btn-group`（中は `.btn` / `.icon-btn` の outline を同じ theme・サイズで。`role="group"` + `aria-label`。分割ボタンは icon-btn ＋ action-menu） |
-| 4 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}`, `.field-error-text`, `.field-support-text` |
-| 5 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
-| 6 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,icon}`, `.search-input-{sm,md,lg}` |
-| 7 | Selector       | `.selector`, `.selector-{icon,error}`, `.selector-{sm,md,lg}`（中の select は `.select`。`.selector-field` は非推奨エイリアス） |
-| 8 | Textarea       | `.textarea`, `.textarea-{sm,md}`, `.textarea-control`, `.textarea-footer`, `.textarea-counter` |
-| 9 | Checkbox       | `.checkbox`, `.checkbox-{sm,md}`, `.checkbox-error`, `.checkbox-label` |
-| 10 | Radio          | `.radio`, `.radio-{sm,md}`, `.radio-error`, `.radio-label`, `.radio-group` |
-| 11 | Filter Chip   | `.filter-chip`, `.filter-chip-{main,icon,label,count,check,check-circle}` |
-| 12 | Tab           | `.tabs`, `.tabs-{solid,line}`, `.tab`, `.tab-{solid,line}`, `.tab-count` |
-| 13 | Table         | `.data-table`, `.data-table-fit`, `.data-table-num`, `.data-table-text`, `.data-table-wrap`, `.data-table-filter`, `.data-table-filter-trigger`, `.data-table-filter-panel`, `.data-table-filter-actions`, `.data-table-sort`, `.data-table-sort-icon`（thead が項目名行。列幅は「締める列」だけ fit / num、自由文は text、収まらなければ wrap で横スクロール。列の値での絞り込みは見出しに列フィルター、並べ替えは見出しの文字をボタンにして th に aria-sort。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
-| 14 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
-| 15 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}`, `.card-{icon,image,metadata,action}`, `.card-compact`, `.card-body-flush` |
-| 16 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
-| 17 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}`（ページ全体に向けた常設のお知らせ） |
-| 18 | Inline Message | `.inline-message`, `.inline-message-{success,negative,warning,neutral}`, `.inline-message-sm`, `.inline-message-{icon,text}`（操作した場所の直近に置く結果表示。トースト／スナックバーは用意しない） |
-| 19 | Link          | `.link`, `.link-label`, `.link-neutral`, `.link-inverse`（下線 + external-link アイコン。色は緑 primary-700/800 / neutral fg-middle/high / inverse 白＝暗い背景用の 3 種） |
-| 20 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
-| 21 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-section`, `.menu-group-title`, `.menu-item`, `.menu-item-sm`（項目は a / button、現在地は `aria-current="page"`、見出し付きグループは section + title、密なナビは sm） |
-| 22 | Action Menu   | `.action-menu`, `.action-menu-end`, `.action-menu-item-danger`（Popover API ベース。トリガーに `aria-haspopup="menu"` + `popovertarget`、項目は `.menu-item` + `role="menuitem"`） |
-| 23 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
-| 24 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
-| 25 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
-| 26 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
-| 27 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
-| 28 | Accordion     | `.accordion`, `.accordion-item`, `.accordion-trigger`, `.accordion-icon`, `.accordion-label`, `.accordion-panel`（ネイティブ `<details>`/`<summary>` ベース。開閉アイコンは見出しの左） |
-| 29 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ）/ `.page-shell-content`（900px に絞る。フォーム / 設定 / 詳細）。長文本文は `max-w-article` |
+| 4 | Toggle Button Group | `.toggle-btn-group`, `.toggle-btn-group-vertical`（中は `.btn` / `.icon-btn` の neutral ghost。選択は各ボタンの `aria-pressed`、`data-selection="single\|multiple"` で単一 / 複数選択。`role="group"` + `aria-label`） |
+| 5 | Label Control  | `.label-control`, `.label-control-row`, `.label-control-support`, `.label-badge-{required,optional,disabled,private,support}`, `.field-error-text`, `.field-support-text` |
+| 6 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
+| 7 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,icon}`, `.search-input-{sm,md,lg}` |
+| 8 | Selector       | `.selector`, `.selector-{icon,error}`, `.selector-{sm,md,lg}`（中の select は `.select`。`.selector-field` は非推奨エイリアス） |
+| 9 | Textarea       | `.textarea`, `.textarea-{sm,md}`, `.textarea-control`, `.textarea-footer`, `.textarea-counter` |
+| 10 | Checkbox       | `.checkbox`, `.checkbox-{sm,md}`, `.checkbox-error`, `.checkbox-label` |
+| 11 | Radio          | `.radio`, `.radio-{sm,md}`, `.radio-error`, `.radio-label`, `.radio-group` |
+| 12 | Filter Chip   | `.filter-chip`, `.filter-chip-{main,icon,label,count,check,check-circle}` |
+| 13 | Tab           | `.tabs`, `.tabs-{solid,line}`, `.tab`, `.tab-{solid,line}`, `.tab-count` |
+| 14 | Table         | `.data-table`, `.data-table-fit`, `.data-table-num`, `.data-table-text`, `.data-table-wrap`, `.data-table-filter`, `.data-table-filter-trigger`, `.data-table-filter-panel`, `.data-table-filter-actions`, `.data-table-sort`, `.data-table-sort-icon`（thead が項目名行。列幅は「締める列」だけ fit / num、自由文は text、収まらなければ wrap で横スクロール。列の値での絞り込みは見出しに列フィルター、並べ替えは見出しの文字をボタンにして th に aria-sort。Tailwind の `table` ユーティリティと衝突するため `data-` 接頭辞） |
+| 15 | Simple Table  | `.simple-table` (`<th>` / `<td>` を子要素として使用、`rowspan` で merge 可) |
+| 16 | Card          | `.card`, `.card-elevated`, `.card-{header,title,subtitle,body,footer}`, `.card-{icon,image,metadata,action}`, `.card-compact`, `.card-body-flush` |
+| 17 | Badge         | `.badge` + `.badge-{solid,soft}-{neutral,primary,info,success,warning,danger}` |
+| 18 | Alert         | `.alert`, `.alert-{neutral,success,negative,warning,info}`, `.alert-{icon,body,title,close}`（ページ全体に向けた常設のお知らせ） |
+| 19 | Inline Message | `.inline-message`, `.inline-message-{success,negative,warning,neutral}`, `.inline-message-sm`, `.inline-message-{icon,text}`（操作した場所の直近に置く結果表示。トースト／スナックバーは用意しない） |
+| 20 | Link          | `.link`, `.link-label`, `.link-neutral`, `.link-inverse`（下線 + external-link アイコン。色は緑 primary-700/800 / neutral fg-middle/high / inverse 白＝暗い背景用の 3 種） |
+| 21 | Breadcrumb    | `.breadcrumb`, `.breadcrumb-sep`, `.breadcrumb-current`（`.link` + `chevron-right` 区切り） |
+| 22 | Menu          | `.menu`, `.menu-group`, `.menu-divider`, `.menu-section`, `.menu-group-title`, `.menu-item`, `.menu-item-sm`（項目は a / button、現在地は `aria-current="page"`、見出し付きグループは section + title、密なナビは sm） |
+| 23 | Action Menu   | `.action-menu`, `.action-menu-end`, `.action-menu-item-danger`（Popover API ベース。トリガーに `aria-haspopup="menu"` + `popovertarget`、項目は `.menu-item` + `role="menuitem"`） |
+| 24 | Pagination    | `.pagination`, `.pagination-item`, `.pagination-ellipsis`（現在ページは `aria-current="page"`、端の矢印は `aria-disabled="true"`） |
+| 25 | Stepper       | `.stepper`, `.stepper-step`, `.stepper-marker`, `.stepper-label`（現在地は `aria-current="step"`、完了は `.is-completed`） |
+| 26 | Modal         | `.modal`, `.modal-{header,title,body,footer}`（ネイティブ `<dialog>` ベース。開閉は `showModal()` / `close()`） |
+| 27 | Tooltip       | `.tooltip`, `.tooltip-content`, `.tooltip-{top,bottom,left,right}`（CSS のみで動作。関連付けは `aria-describedby`） |
+| 28 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
+| 29 | Accordion     | `.accordion`, `.accordion-item`, `.accordion-trigger`, `.accordion-icon`, `.accordion-label`, `.accordion-panel`（ネイティブ `<details>`/`<summary>` ベース。開閉アイコンは見出しの左） |
+| 30 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ）/ `.page-shell-content`（900px に絞る。フォーム / 設定 / 詳細）。長文本文は `max-w-article` |
 
 主要コンポーネントの完成形 HTML は `snippets/*.html` を（全コンポーネントのスニペットは MCP `get_component` またはプレビューサイト）、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
 

@@ -54,9 +54,13 @@
  *   その場で更新される（送信・ページ遷移を伴わない）複数同時選択の絞り込みに使う。
  *   見分け方: 「1 つ選ぶと他が外れる」なら filter-chip ではない。各チップは独立した
  *   ON/OFF（aria-pressed）で、排他制御の仕組みを持たない。
+ *   toggle-btn-group の複数選択と仕組み（aria-pressed の独立トグル）は同じ。見分け方は
+ *   「押して一覧の件数（絞り込みの結果）が変わるか」: 変わるなら filter-chip、変わらず見た目・書式・
+ *   重ねて表示する情報（地図の駅表示など）だけが変わるなら toggle-btn-group。
  *   複数同時選択の絞り込み=filter-chip / 一覧を 1 つの軸（すべて・有望・休眠 …）で
  *   切り替える単一選択=tab（tabs-line + tab-count）/ フォーム入力値の単一選択=radio
- *   （選択肢が多ければ select）/ ON-OFF 設定=checkbox。
+ *   （選択肢が多ければ select）/ ON-OFF 設定=checkbox / 絞り込みでない書式・表示形式の
+ *   切り替え（太字 / 斜体、一覧 / グリッド）=toggle-btn-group。
  *
  * 使用法:
  *   OK: 選択状態は aria-pressed="true|false"。

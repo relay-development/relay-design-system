@@ -1,0 +1,166 @@
+/*
+ * Toggle Button Group (トグルボタングループ) — Figma に仕様が無いため Astryx ToggleButtonGroup を参考に DS 規約から新規設計
+ *
+ *   押すと「選ばれた状態」が残るボタン（トグルボタン）を並べたまとまり。
+ *   単一選択（1 つ選ぶと他が外れる: 表示形式の一覧 / グリッド 等）と、
+ *   複数選択（それぞれ独立に ON/OFF: 太字 / 斜体 等）の 2 つのモードがある。
+ *   中身は既存の btn / icon-btn（neutral ghost）をそのまま使い、グループが並べ方と選択中の見た目を担う。
+ *   選択状態は各ボタンの aria-pressed。切り替え（単一選択なら他を外す）は利用側の JS で行う。
+ *
+ *   構造:
+ *     <div class="toggle-btn-group" role="group" aria-label="表示形式" data-selection="single">
+ *       <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true">一覧</button>
+ *       <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false">グリッド</button>
+ *       <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false">ボード</button>
+ *     </div>
+ *
+ *   props:
+ *     selection   : data-selection="single"（常に 1 つだけ pressed）/ "multiple"（0 個以上 pressed）
+ *                   CSS は見た目を変えない。利用側の JS がこの値で切り替え方を決める目印
+ *     item        : btn（文字）/ icon-btn（アイコンのみ）。同じグループの中は同じ種類・サイズで揃える
+ *     variant     : neutral ghost のみ（枠の無いボタンを並べ、選ばれたものだけ塗る）
+ *     size        : btn-{sm,md,lg} / icon-btn-{sm,md,lg}（中のボタンのサイズがそのままグループの高さ）
+ *     orientation : 横（既定）/ .toggle-btn-group-vertical（縦積み・ボタン幅をそろえる）
+ *
+ *   サイズ / 色:
+ *     間隔       : gap-1 (4)
+ *     非選択     : 背景なし、文字 fg/low（白地 4.76:1）、hover は neutral/50（btn-ghost のまま）
+ *     選択       : 背景 neutral/200、文字 fg/high（14.5:1）、hover は neutral/300
+ *     選択の区別 : 塗りに加えて文字の濃さ（fg/low → fg/high、差 3.75:1）でも示す。
+ *                  塗り（neutral/200）は白地と 1.23:1 しかなく、塗りだけでは WCAG 1.4.11 を満たさないため
+ *     無効       : 文字 fg/disabled。選択中の無効は背景 neutral/100
+ *
+ * 別名:
+ *   トグルボタングループ / toggle button group / トグルボタン / toggle button / セグメントボタン /
+ *   セグメンテッドコントロール / segmented control / 表示切替ボタン / 表示形式の切り替え / ビュー切替 /
+ *   書式ボタン / 書式ツールバー
+ *
+ * 機能:
+ *   選ばれた状態を持つボタンを並べ、その場で表示や設定を切り替える。
+ *   単一選択 = 同じ内容の見え方の切替（一覧 / グリッド / ボード、並び順 等）。
+ *   複数選択 = 独立した書式・表示オプションの ON/OFF（太字 / 斜体、補助線の表示 等）。
+ *   複数選択は filter-chip と仕組み（aria-pressed の独立トグル）が同じ。見分け方は
+ *   「押して一覧の件数（絞り込みの結果）が変わるか」: 変わるなら filter-chip、変わらず見た目・書式・
+ *   重ねて表示する情報（地図の駅表示など）だけが変わるなら toggle-btn-group。
+ *   表示する中身（パネル）そのものを切り替えるなら tab、一覧の絞り込みは filter-chip（複数）/ tab（件数付きの単一）、
+ *   フォームの入力値は radio / checkbox、単独の設定の ON/OFF は switch、選択状態を持たない操作の並びは btn-group。
+ *
+ * 使用法:
+ *   OK: 同じ内容の見え方を 2〜5 個から 1 つ選んで切り替える（data-selection="single"。例: 一覧 / グリッド / ボード）。
+ *   OK: 書式や表示オプションを独立に ON/OFF する（data-selection="multiple"。例: 太字 / 斜体 / 下線）。
+ *   OK: 中は btn-neutral btn-ghost（アイコンだけなら icon-btn-neutral icon-btn-ghost）で、同じ種類・サイズに揃える。
+ *   OK: role="group" と aria-label でグループに名前を付ける（何を切り替えるか。例: 「表示形式」）。
+ *   OK: 選択状態は各ボタンの aria-pressed="true|false"。単一選択は常にちょうど 1 つを true にし、
+ *       選択中のボタンをもう一度押しても外さない。
+ *   OK: アイコンだけのボタンはそれぞれ aria-label で選択肢の名前を付ける。見える名前も要るなら
+ *       ボタンを tooltip で包む（包んだボタンにもグループの見た目が当たる）。
+ *   NG: 表示する中身（別の情報）を切り替えるのに使わない → tab（tabpanel で中身を出し分ける）。
+ *   NG: 一覧の絞り込みに使わない → 複数同時の絞り込みは filter-chip、件数付きの 1 つ選択は tab。
+ *   NG: フォームで送信する値の選択に使わない → radio（単一）/ checkbox（複数）。
+ *   NG: 実行するだけの操作（コピー / 貼り付け 等）を並べない → 選択状態が無いなら btn-group。
+ *   NG: 選択を背景色やクラスだけで示さない → aria-pressed を付ける（見た目も aria-pressed から決まる）。
+ *   NG: 単一選択で 0 個選択の状態を作らない → 何が表示されているか分からなくなる。
+ *   NG: solid / outline のボタンや theme・サイズの違うボタンを混ぜない → 選択中の塗りと区別できない。
+ *   NG: 6 個以上並べない → 選択肢が多いなら select。
+ *   NG: 選んだ瞬間にページ遷移・送信しない → その場で表示を切り替える部品（遷移は link / tab / menu）。
+ *
+ * アクセシビリティ:
+ *   グループに role="group" と aria-label（何を切り替えるか）を付ける。単一選択はグループ名で「1 つ選ぶ」ことが伝わる名前にする
+ *   各ボタンに aria-pressed="true|false" を付ける。スクリーンリーダーは「一覧、切り替えボタン、押されています」と読む
+ *   状態を切り替えたら aria-pressed を書き換える（単一選択は押したボタンを true、他を false）。表示は aria-pressed から決まる（DS 担保）
+ *   ボタンはそれぞれ Tab で止まり、Enter / Space で切り替える（ネイティブ button のまま。DS 担保）
+ *   アイコンだけのボタン（icon-btn）には選択肢名の aria-label を付け、アイコン SVG は aria-hidden="true"。
+ *     押下状態を aria-label の文言で表さない（「一覧（選択中）」は不可。状態は aria-pressed が読む）
+ *   選択は塗りと文字の濃さの 2 つで示し、色だけに依存しない（DS 担保）
+ *   強制カラーモードでは選択中のボタンを Highlight で塗り、非選択との区別を保つ（DS 担保）
+ *
+ * Usage:
+ *   <div class="toggle-btn-group" role="group" aria-label="表示形式" data-selection="single">
+ *     <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true">一覧</button>
+ *     <button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false">グリッド</button>
+ *   </div>
+ *
+ *   <div class="toggle-btn-group" role="group" aria-label="文字の書式" data-selection="multiple">
+ *     <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-pressed="true" aria-label="太字">
+ *       <svg class="icon icon-lg" aria-hidden="true"><use href="icons.svg#lucide-bold"></use></svg>
+ *     </button>
+ *     …
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Container — ボタンを 4px 間隔で並べる
+   * ============================================================ */
+  .toggle-btn-group {
+    @apply inline-flex items-center gap-1;
+  }
+
+  /* 中のボタンは直下に置くか tooltip で包む（子孫セレクタで両方に当てる。グループは入れ子にしない） */
+
+  /* 縦積み — ボタン幅を最も長いものにそろえる */
+  .toggle-btn-group-vertical {
+    @apply flex-col items-stretch;
+  }
+
+  /* ============================================================
+   * Not pressed — 文字を fg/low に下げ、選択中（fg/high）との差を作る
+   * ============================================================ */
+  .toggle-btn-group :is(.btn, .icon-btn) {
+    color: var(--color-fg-low);
+  }
+
+  /* ============================================================
+   * Pressed — neutral/200 の塗り + fg/high
+   *   hover の詳細度（.btn-neutral.btn-ghost:hover:not(:disabled) = 0,4,0）に勝つよう、
+   *   hover 版は :hover:not(:disabled) まで重ねて書く
+   * ============================================================ */
+  .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"] {
+    background-color: var(--color-neutral-200);
+    color: var(--color-fg-high);
+  }
+  .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"]:hover:not(:disabled),
+  .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"].is-hover-preview:not(:disabled) {
+    background-color: var(--color-neutral-300);
+  }
+
+  /* hover の見本（カタログで状態を並べるため）— 非選択は btn-ghost の hover と同じ neutral/50 */
+  .toggle-btn-group :is(.btn, .icon-btn).is-hover-preview:not([aria-pressed="true"]):not(:disabled) {
+    background-color: var(--color-neutral-50);
+  }
+
+  /* ============================================================
+   * Disabled — 文字は fg/disabled。選択中の無効は塗りを neutral/100 に薄める
+   * ============================================================ */
+  .toggle-btn-group :is(.btn, .icon-btn):disabled {
+    color: var(--color-fg-disabled);
+  }
+  .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"]:disabled {
+    background-color: var(--color-neutral-100);
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   塗り（neutral/200）は Canvas に置き換わり選択が見えなくなるため、
+   *   選択中は Highlight で塗り直す（tab-solid と同じ方式）。
+   *   文字を HighlightText にするので backplate を止める（forced-color-adjust: none）。
+   *   無効の選択中は GrayText の塗り + Canvas の文字。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"],
+    .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"]:hover:not(:disabled),
+    .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"].is-hover-preview:not(:disabled) {
+      forced-color-adjust: none;
+      background-color: Highlight;
+      color: HighlightText;
+      border-color: Highlight;
+    }
+    .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"]:disabled {
+      forced-color-adjust: none;
+      background-color: GrayText;
+      color: Canvas;
+      border-color: GrayText;
+    }
+  }
+}
