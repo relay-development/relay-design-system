@@ -116,7 +116,8 @@
  *           </button>
  *           <span class="tooltip-content" id="tip-filter" role="tooltip">絞り込む</span>
  *         </span>
- *         …（書き出し等のアイコン操作は 3 個まで。4 個目からは more-horizontal の action-menu に畳む）
+ *         …（並べ替えのトリガー（chevrons-up-down。パネルは下の「見出し行の並べ替え」）。アイコンの操作は 3 個まで。
+ *            4 個目からは more-horizontal の action-menu に畳む。書き出し・印刷など補助的な操作から畳む）
  *         <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
  *         </div>
  *       </div>
@@ -153,6 +154,10 @@
  *     検索                  <form role="search"> ＋ search-input-sm（幅 240）。送信は虫眼鏡のアイコンボタン（search-input-submit-icon）。
  *                           検索ボタンか Enter で確定してから絞り込み、入力のたびには絞り込まない
  *     絞り込みのトリガー    icon-btn-sm に data-table-filter-trigger（絞り込み中の data-filtered のドットは列フィルターと共通）
+ *     並べ替えのトリガー    icon-btn-sm（chevrons-up-down）に data-table-filter-trigger。並べ替え中は data-filtered のドット、
+ *                           名前に「適用中: 金額の降順」。パネルは data-table-filter-panel に「並べ替える列」「順序」の 2 つの
+ *                           data-table-filter-field（selector-sm）と「リセット（登録順に戻す）」「適用」。列見出しの data-table-sort と
+ *                           状態（th の aria-sort・アイコン）を連動させる（どちらで並べ替えても同じ状態になる）
  *     .data-table-filter-field  見出し行の絞り込みパネルで、条件ごとに label ＋ selector-sm を縦に並べる
  *
  *     幅指定なしの列（契約名など短いテキスト）が余白を吸う。全列に w-* を配ると合計が崩れて
@@ -178,7 +183,8 @@
  *   列の値で行を絞り込むときは見出しに列フィルター（data-table-filter）、行を並べ替えるときは見出しをボタン（data-table-sort）にする。
  *   表の上に並べて一覧全体を 1 つの軸で切り替えるなら tab、複数条件を同時に掛け合わせるトグルなら filter-chip。
  *   表のタイトルと、表全体に効く操作（検索・複数条件の絞り込み・書き出し・新規作成）は、表の上の見出し行
- *   （data-table-header）にまとめる（タイトルの下の行に、左に表示件数・右に操作）。1 列の値で絞るなら列フィルター、行を並べ替えるなら列見出し。
+ *   （data-table-header）にまとめる（タイトルの下の行に、左に表示件数・右に操作）。1 列の値で絞るなら列フィルター。
+ *   並べ替えは列見出しのボタンと、見出し行の並べ替えのパネルの両方から行え、状態は連動する。
  *
  * 使用法:
  *   OK: thead に列見出し、tbody に行データを置く。
@@ -195,7 +201,8 @@
  *   OK: 並べ替えられる列は見出しの文字ごと data-table-sort のボタンにし、並べ替え中の th にだけ aria-sort（ascending / descending）を付ける。
  *   OK: 1 回押すと昇順、もう一度押すと降順。別の列を押したらその列の昇順に切り替え、前の列の aria-sort は外す。
  *   OK: 金額・日付・よみがなど、表示の文字と並び順が違う列は td に data-sort-value を持たせる。
- *   NG: 並べ替えの切り替えを表の外の select や tab で作らない → 見出しを押す方がどの列で並んでいるか分かる。
+ *   NG: 並べ替えを表の外（select・tab・見出し行のパネル）だけで作らない → 列見出しでも並べ替えられるようにし（data-table-sort）、
+ *       どの列で並んでいるかを列見出しの aria-sort とアイコンで示す。見出し行のパネルを置くなら状態を連動させる。
  *   NG: 並べ替えのボタンをアイコンだけにしない → 見出しの文字ごとボタンにし、押せる範囲を広く取る（名前も見出しの文字になる）。
  *   NG: 並べ替えていない列に aria-sort="none" を付けて回らない → 並べ替え中の列だけに付ける。
  *   OK: 列フィルターはその列の値（役割・部署・状態など選択肢が決まっている列）で絞り込む。選択肢の先頭は「すべて」。
@@ -224,7 +231,9 @@
  *   OK: 条件のトークンの削除ボタンの aria-label は「『振込月: 2026 年 9 月』の絞り込みを解除」のように条件を含める。
  *   NG: 適用中の条件をパネルの中だけに閉じ込めない → パネルを開かないと何で絞っているか分からない。
  *   NG: 1 列の値だけで絞るフィルターを見出し行に置かない → 列フィルター（どの列の絞り込みか分かる）。
- *   NG: 並べ替えを見出し行のボタンや select で作らない → 列見出しの data-table-sort。
+ *   OK: 見出し行に並べ替えを置くときは、chevrons-up-down の icon-btn から data-table-filter-panel を開き、「並べ替える列」と
+ *       「順序（昇順・降順）」を選んで「適用」する。「リセット」は登録順に戻す。action-menu にしない（値を選ぶ操作のため）。
+ *   OK: 見出し行の並べ替えと列見出しの data-table-sort は状態を連動させる（th の aria-sort・アイコン・トリガーの「適用中」）。
  *   NG: 行ごとの操作（編集・削除）を見出し行に置かない → 行の操作列。
  *   NG: 検索をアイコンだけにして、押すと入力欄が広がる形にしない → 入力できることが見えず、開閉のフォーカス管理も要る。
  *   NG: 主操作（btn-primary solid）を 2 つ以上置かない → 1 つに絞り、他は outline / ghost か action-menu へ。
@@ -240,6 +249,7 @@
  *   並べ替え: 見出しの中の <button> にし（Enter / Space で切り替え）、並べ替え中の th に aria-sort を付ける
  *   並べ替え: 状態はアイコンの形でも示し、アイコンは aria-hidden="true"（状態は aria-sort で伝わる）
  *   並べ替え: 切り替えた結果（「更新日の昇順で並べ替えました」）を aria-live="polite" の領域で告知する
+ *   並べ替え: 見出し行のパネルのトリガーは aria-haspopup="dialog" と aria-expanded。名前に適用中の並べ替え（「並べ替える（適用中: 金額の降順）」）
  *            （aria-sort の変化はスクリーンリーダーによって読まれないことがあるため）
  *   列フィルター: トリガーに aria-label（「役割で絞り込む」）、aria-haspopup="dialog"、aria-expanded（開閉で true / false）
  *   列フィルター: パネルは role="dialog" と aria-label。select は aria-labelledby で列見出しの文字を名前にする

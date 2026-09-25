@@ -200,10 +200,10 @@
                   <span class="tooltip-content" id="tx-tip-filter" role="tooltip">絞り込む</span>
                 </span>
                 <span class="tooltip">
-                  <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-labelledby="tx-tip-download">
-                    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-download"></use></svg>
+                  <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost data-table-filter-trigger" aria-labelledby="tx-tip-sort" aria-haspopup="dialog" aria-expanded="false" popovertarget="tx-sort">
+                    <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg>
                   </button>
-                  <span class="tooltip-content" id="tx-tip-download" role="tooltip">CSV でダウンロード</span>
+                  <span class="tooltip-content" id="tx-tip-sort" role="tooltip">並べ替える</span>
                 </span>
                 <span class="tooltip">
                   <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" id="tx-more-trigger" aria-labelledby="tx-tip-more" aria-haspopup="menu" aria-expanded="false" popovertarget="tx-more-menu">
@@ -220,6 +220,7 @@
             </div>
           </div>
           <div class="action-menu action-menu-end" id="tx-more-menu" popover role="menu" aria-labelledby="tx-more-trigger">
+            <button type="button" class="menu-item" role="menuitem" tabindex="-1">CSV でダウンロード</button>
             <button type="button" class="menu-item" role="menuitem" tabindex="-1">印刷する</button>
             <button type="button" class="menu-item" role="menuitem" tabindex="-1">表示する列を選ぶ</button>
           </div>
@@ -250,71 +251,107 @@
               <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
             </div>
           </div>
+          <div class="data-table-filter-panel" id="tx-sort" popover role="dialog" aria-label="振込一覧を並べ替える" data-sort-table="tx-table">
+            <div class="data-table-filter-field">
+              <label for="tx-s-col">並べ替える列</label>
+              <div class="selector selector-sm">
+                <select class="select" id="tx-s-col" data-sort-col>
+                  <option value="">指定なし（登録順）</option>
+                  <option value="0">振込日</option>
+                  <option value="1">振込先</option>
+                  <option value="2">金額</option>
+                  <option value="4">担当</option>
+                </select>
+              </div>
+            </div>
+            <div class="data-table-filter-field">
+              <label for="tx-s-dir">順序</label>
+              <div class="selector selector-sm">
+                <select class="select" id="tx-s-dir" data-sort-dir>
+                  <option value="ascending">昇順（小さい順・古い順）</option>
+                  <option value="descending">降順（大きい順・新しい順）</option>
+                </select>
+              </div>
+            </div>
+            <div class="data-table-filter-actions">
+              <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-sort-reset>リセット</button>
+              <button type="button" class="btn btn-sm btn-primary btn-solid" data-sort-apply>適用</button>
+            </div>
+          </div>
+          <p class="sr-only" data-sort-status="tx-table" aria-live="polite"></p>
           <div class="data-table-wrap" tabindex="0">
             <table class="data-table" id="tx-table" aria-labelledby="tx-title">
               <thead>
                 <tr>
-                  <th scope="col" class="data-table-fit">振込日</th>
-                  <th scope="col">振込先</th>
-                  <th scope="col" class="data-table-num">金額</th>
+                  <th scope="col" class="data-table-fit">
+                    <button type="button" class="data-table-sort">振込日<svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg></button>
+                  </th>
+                  <th scope="col">
+                    <button type="button" class="data-table-sort">振込先<svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg></button>
+                  </th>
+                  <th scope="col" class="data-table-num">
+                    <button type="button" class="data-table-sort">金額<svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg></button>
+                  </th>
                   <th scope="col" class="data-table-fit">状態</th>
-                  <th scope="col" class="data-table-fit">担当</th>
+                  <th scope="col" class="data-table-fit">
+                    <button type="button" class="data-table-sort">担当<svg class="icon icon-sm data-table-sort-icon" aria-hidden="true"><use href="./icons.svg#lucide-chevrons-up-down"></use></svg></button>
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td class="data-table-fit">2026/09/30</td>
                   <td>株式会社みどり商事</td>
-                  <td class="data-table-num">1,200,000円</td>
+                  <td class="data-table-num" data-sort-value="1200000">1,200,000円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-info">予約</span></td>
                   <td class="data-table-fit">山田</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/09/30</td>
                   <td>さくら会計事務所</td>
-                  <td class="data-table-num">110,000円</td>
+                  <td class="data-table-num" data-sort-value="110000">110,000円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-info">予約</span></td>
                   <td class="data-table-fit">佐藤</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/09/25</td>
                   <td>株式会社みどり商事</td>
-                  <td class="data-table-num">1,200,000円</td>
+                  <td class="data-table-num" data-sort-value="1200000">1,200,000円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
                   <td class="data-table-fit">山田</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/09/24</td>
                   <td>山田工務店</td>
-                  <td class="data-table-num">385,000円</td>
+                  <td class="data-table-num" data-sort-value="385000">385,000円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
                   <td class="data-table-fit">佐藤</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/09/22</td>
                   <td>ひかり印刷</td>
-                  <td class="data-table-num">52,800円</td>
+                  <td class="data-table-num" data-sort-value="52800">52,800円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-danger">失敗</span></td>
                   <td class="data-table-fit">山田</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/08/29</td>
                   <td>山田工務店</td>
-                  <td class="data-table-num">420,000円</td>
+                  <td class="data-table-num" data-sort-value="420000">420,000円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
                   <td class="data-table-fit">鈴木</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/08/25</td>
                   <td>ひかり印刷</td>
-                  <td class="data-table-num">48,400円</td>
+                  <td class="data-table-num" data-sort-value="48400">48,400円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
                   <td class="data-table-fit">佐藤</td>
                 </tr>
                 <tr>
                   <td class="data-table-fit">2026/08/20</td>
                   <td>株式会社あおば</td>
-                  <td class="data-table-num">2,750,000円</td>
+                  <td class="data-table-num" data-sort-value="2750000">2,750,000円</td>
                   <td class="data-table-fit"><span class="badge badge-soft-success">完了</span></td>
                   <td class="data-table-fit">鈴木</td>
                 </tr>

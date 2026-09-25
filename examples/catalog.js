@@ -485,6 +485,7 @@ document.addEventListener("beforetoggle", (e) => {
   if (!(panel instanceof HTMLElement) || !panel.classList.contains("data-table-filter-panel")) return;
   if (e.newState !== "open") return;
   panel.style.visibility = "hidden"; // 位置を計算するまで隠す
+  if (panel.dataset.sortTable) return; // 並べ替えパネルは下の Table sort 側で値を戻す
   if (panel.dataset.filterTable) {
     panel.querySelectorAll("select[data-filter-col]").forEach((s) => { s.value = s.dataset.applied || ""; });
     return;
@@ -595,43 +596,89 @@ function setSortIcon(th, state) {
   use.setAttribute("href", href.replace(/#lucide-[\w-]+$/, `#lucide-${SORT_ICON[state]}`));
 }
 
+// 並べ替えの本体。state は ascending / descending / none（none は登録順＝最初に並べ替える前の順に戻す）。
+// 列見出しのボタンと見出し行の並べ替えパネルの両方から呼び、aria-sort・アイコン・パネルの状態を連動させる。
+function sortTableBy(table, th, state) {
+  for (const other of table.querySelectorAll("thead th[aria-sort]")) {
+    if (other === th && state !== "none") continue;
+    other.removeAttribute("aria-sort");
+    setSortIcon(other, "none");
+  }
+  const tbody = table.tBodies[0];
+  const empty = tbody.querySelector("[data-filter-empty]");
+  const rows = [...tbody.rows].filter((row) => row !== empty);
+  rows.forEach((row, i) => { row.dataset.order ??= String(i); }); // 登録順を覚えておく
+  let ordered;
+  if (state === "none" || !th) {
+    ordered = rows.sort((a, b) => Number(a.dataset.order) - Number(b.dataset.order));
+  } else {
+    th.setAttribute("aria-sort", state);
+    setSortIcon(th, state);
+    const col = th.cellIndex;
+    const dir = state === "ascending" ? 1 : -1;
+    ordered = rows
+      .map((row, i) => ({ row, i, key: sortKey(row.cells[col]) }))
+      .sort((a, b) => {
+        const na = Number(a.key.replace(/,/g, ""));
+        const nb = Number(b.key.replace(/,/g, ""));
+        const byValue = a.key !== "" && b.key !== "" && !Number.isNaN(na) && !Number.isNaN(nb)
+          ? na - nb
+          : sortCollator.compare(a.key, b.key);
+        return byValue * dir || a.i - b.i;
+      })
+      .map(({ row }) => row);
+  }
+  ordered.forEach((row) => tbody.appendChild(row));
+  if (empty) tbody.appendChild(empty);
+
+  const label = th ? th.textContent.trim() : "";
+  const status = document.querySelector(`[data-sort-status="${table.id}"]`);
+  if (status) {
+    status.textContent = state === "none" || !th
+      ? "登録順に戻しました"
+      : `${label}の${state === "ascending" ? "昇順" : "降順"}で並べ替えました`;
+  }
+  // 見出し行の並べ替えパネル: 適用中の値とトリガーの名前（適用中: 金額の降順）を合わせる
+  const panel = document.querySelector(`.data-table-filter-panel[data-sort-table="${table.id}"]`);
+  if (panel) {
+    const sorted = state !== "none" && th;
+    panel.querySelector("[data-sort-col]").dataset.applied = sorted ? String(th.cellIndex) : "";
+    panel.querySelector("[data-sort-dir]").dataset.applied = sorted ? state : "ascending";
+    const trigger = filterTrigger(panel);
+    if (trigger) syncFilterTrigger(trigger, sorted ? `${label}の${state === "ascending" ? "昇順" : "降順"}` : "");
+  }
+}
+
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".data-table-sort");
   const th = btn?.closest("th");
   const table = th?.closest("table.data-table");
   if (!table) return;
-  const next = th.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending";
-  for (const other of table.querySelectorAll("thead th[aria-sort]")) {
-    if (other === th) continue;
-    other.removeAttribute("aria-sort");
-    setSortIcon(other, "none");
-  }
-  th.setAttribute("aria-sort", next);
-  setSortIcon(th, next);
+  sortTableBy(table, th, th.getAttribute("aria-sort") === "ascending" ? "descending" : "ascending");
+});
 
-  const col = th.cellIndex;
-  const tbody = table.tBodies[0];
-  const empty = tbody.querySelector("[data-filter-empty]");
-  const rows = [...tbody.rows].filter((row) => row !== empty);
-  const dir = next === "ascending" ? 1 : -1;
-  rows
-    .map((row, i) => ({ row, i, key: sortKey(row.cells[col]) }))
-    .sort((a, b) => {
-      const na = Number(a.key.replace(/,/g, ""));
-      const nb = Number(b.key.replace(/,/g, ""));
-      const byValue = a.key !== "" && b.key !== "" && !Number.isNaN(na) && !Number.isNaN(nb)
-        ? na - nb
-        : sortCollator.compare(a.key, b.key);
-      return byValue * dir || a.i - b.i;
-    })
-    .forEach(({ row }) => tbody.appendChild(row));
-  if (empty) tbody.appendChild(empty);
+// 見出し行の並べ替えパネル — 開くたびに適用中の値へ戻し、「適用」で列と順序を確定、「リセット」で登録順に戻す
+document.addEventListener("beforetoggle", (e) => {
+  const panel = e.target;
+  if (!(panel instanceof HTMLElement) || !panel.dataset.sortTable || e.newState !== "open") return;
+  const col = panel.querySelector("[data-sort-col]");
+  const dir = panel.querySelector("[data-sort-dir]");
+  col.value = col.dataset.applied || "";
+  dir.value = dir.dataset.applied || "ascending";
+}, true);
 
-  const status = document.querySelector(`[data-sort-status="${table.id}"]`);
-  if (status) {
-    const label = btn.textContent.trim();
-    status.textContent = `${label}の${next === "ascending" ? "昇順" : "降順"}で並べ替えました`;
-  }
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".data-table-filter-panel[data-sort-table] :is([data-sort-apply], [data-sort-reset])");
+  if (!btn) return;
+  const panel = btn.closest(".data-table-filter-panel");
+  const table = document.getElementById(panel.dataset.sortTable);
+  if (!table) return;
+  const col = panel.querySelector("[data-sort-col]").value;
+  const th = col === "" ? null : table.tHead.rows[0].cells[Number(col)];
+  if (btn.hasAttribute("data-sort-reset") || !th) sortTableBy(table, null, "none");
+  else sortTableBy(table, th, panel.querySelector("[data-sort-dir]").value);
+  panel.hidePopover();
+  filterTrigger(panel)?.focus();
 });
 
 // Mobile hamburger — サイドナビの開閉 (768px 以下で表示されるトグル)
