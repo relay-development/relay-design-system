@@ -20,6 +20,7 @@
  *              compact は左右 16・header 上下 12・body 16
  *     icon     40×40、角丸 sm (8)、bg neutral/100、fg/high、アイコン 24px、下 16
  *     image    幅 100%・object-cover、背景 neutral/50（読み込み前のプレースホルダー）。比率は aspect-* で指定
+ *     subtitle text-sm fg/low、見出しとの間 8
  *     metadata text-sm fg/low、項目間 16、アイコン 16px（テキストとの間 4）、本文との間 16
  *     clickable hover  1px ボーダー + 外側 1px リングで 2px の primary/600 に見せる（中身をずらさない）
  *     clickable focus  カード全体に info 青のフォーカスリング（--shadow-focus-ring）
@@ -142,7 +143,7 @@
   }
 
   .card-subtitle {
-    @apply text-sm text-fg-low mt-0.5;
+    @apply text-sm text-fg-low mt-2;   /* 見出しとの間 8 */
   }
 
   .card-body {
