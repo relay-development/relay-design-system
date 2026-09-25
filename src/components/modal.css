@@ -33,7 +33,7 @@
  *     backdrop overlay トークン (neutral/900 @ 60%)
  *     header   px-5 py-4 border-b
  *     body     p-6 / text-base (16/32) fg/high
- *     footer   px-5 py-3 border-t bg-neutral-50 右寄せ（card の footer は線・背景なしの別仕様。本文がスクロールしうるため modal は残す）
+ *     footer   px-5 py-3 border-t bg-surface（白・本体と同じ）右寄せ（card の footer は線なしの別仕様。本文がスクロールしうるため modal は区切り線を残す）
  *
  * 別名:
  *   ダイアログ / dialog / 確認ダイアログ
@@ -85,7 +85,7 @@
   }
 
   .modal-footer {
-    @apply px-5 py-3 border-t border-solid border-stroke-middle bg-neutral-50
+    @apply px-5 py-3 border-t border-solid border-stroke-middle bg-surface
            flex items-center justify-end gap-2;
   }
 
