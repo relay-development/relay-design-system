@@ -25,6 +25,7 @@
 @import "./components/selector.css";
 @import "./components/textarea.css";
 @import "./components/checkbox.css";
+@import "./components/multi-selector.css";
 @import "./components/radio.css";
 @import "./components/filter-chip.css";
 @import "./components/tab.css";
