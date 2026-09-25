@@ -409,6 +409,10 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: calc(var(--spacing) * 4);
 }
+/* 全行を最も高い行にそろえる（見出しや補足の折り返しでカードの高さがばらつかないように） */
+.page-grid-equal { grid-auto-rows: 1fr; }
+/* 見出し・補足は文節単位で折り返す（「取り組／み」のような単語の途中での改行を避ける） */
+.page-grid-equal :is(.card-title, .card-subtitle) { word-break: auto-phrase; }
 @media (max-width: 1024px) {
   .page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
