@@ -4,7 +4,8 @@
  *   押すと「選ばれた状態」が残るボタン（トグルボタン）を並べたまとまり。
  *   単一選択（1 つ選ぶと他が外れる: 表示形式の一覧 / グリッド 等）と、
  *   複数選択（それぞれ独立に ON/OFF: 太字 / 斜体 等）の 2 つのモードがある。
- *   中身は既存の btn / icon-btn（neutral ghost）をそのまま使い、グループが並べ方と選択中の見た目を担う。
+ *   見た目はセグメント型: 薄い帯（トラック）の中にボタンを並べ、選ばれたものだけを白いセグメントにする。
+ *   中身は既存の btn / icon-btn（neutral ghost）をそのまま使い、グループが帯と選択中の見た目を担う。
  *   選択状態は各ボタンの aria-pressed。切り替え（単一選択なら他を外す）は利用側の JS で行う。
  *
  *   構造:
@@ -18,17 +19,19 @@
  *     selection   : data-selection="single"（常に 1 つだけ pressed）/ "multiple"（0 個以上 pressed）
  *                   CSS は見た目を変えない。利用側の JS がこの値で切り替え方を決める目印
  *     item        : btn（文字）/ icon-btn（アイコンのみ）。同じグループの中は同じ種類・サイズで揃える
- *     variant     : neutral ghost のみ（枠の無いボタンを並べ、選ばれたものだけ塗る）
+ *     variant     : neutral ghost のみ（帯の中に並べ、選ばれたものだけ白いセグメントにする）
  *     size        : btn-{sm,md,lg} / icon-btn-{sm,md,lg}（中のボタンのサイズがそのままグループの高さ）
  *     orientation : 横（既定）/ .toggle-btn-group-vertical（縦積み・ボタン幅をそろえる）
  *
  *   サイズ / 色:
- *     間隔       : gap-1 (4)
- *     非選択     : 背景なし、文字 fg/low（白地 4.76:1）、hover は neutral/50（btn-ghost のまま）
- *     選択       : 背景 neutral/200、文字 fg/high（14.5:1）、hover は neutral/300
- *     選択の区別 : 塗りに加えて文字の濃さ（fg/low → fg/high、差 3.75:1）でも示す。
- *                  塗り（neutral/200）は白地と 1.23:1 しかなく、塗りだけでは WCAG 1.4.11 を満たさないため
- *     無効       : 文字 fg/disabled。選択中の無効は背景 neutral/100
+ *     帯         : 背景 neutral/50、枠 1px stroke-middle、内側の余白 p-1 (4)、角丸 rounded-md (16)
+ *     セグメント : 間隔 gap-1 (4)、角丸 12（帯の 16 − 余白 4 をトークンから計算し、角丸を同心円にそろえる）
+ *     非選択     : 背景なし、文字 fg/low（帯の上で 4.55:1）、hover は背景 surface（白。4.76:1）
+ *     選択       : 背景 surface（白）、枠 stroke-high、文字 fg/high（17.9:1）、hover は枠 neutral/400
+ *     選択の区別 : 白いセグメントに加えて文字の濃さ（fg/low → fg/high、差 3.75:1）で示す。
+ *                  白と帯（neutral/50）の差はごく小さく、面だけでは WCAG 1.4.11 を満たさないため。
+ *                  浮き上がりの影は使わない（影は modal / tooltip 等の重なりレイヤー専用）
+ *     無効       : 文字 fg/disabled。選択中の無効は枠 stroke-middle
  *
  * 別名:
  *   トグルボタングループ / toggle button group / トグルボタン / toggle button / セグメントボタン /
@@ -60,7 +63,7 @@
  *   NG: 実行するだけの操作（コピー / 貼り付け 等）を並べない → 選択状態が無いなら btn-group。
  *   NG: 選択を背景色やクラスだけで示さない → aria-pressed を付ける（見た目も aria-pressed から決まる）。
  *   NG: 単一選択で 0 個選択の状態を作らない → 何が表示されているか分からなくなる。
- *   NG: solid / outline のボタンや theme・サイズの違うボタンを混ぜない → 選択中の塗りと区別できない。
+ *   NG: solid / outline のボタンや theme・サイズの違うボタンを混ぜない → 選択中のセグメントと区別できない。
  *   NG: 6 個以上並べない → 選択肢が多いなら select。
  *   NG: 選んだ瞬間にページ遷移・送信しない → その場で表示を切り替える部品（遷移は link / tab / menu）。
  *
@@ -71,7 +74,7 @@
  *   ボタンはそれぞれ Tab で止まり、Enter / Space で切り替える（ネイティブ button のまま。DS 担保）
  *   アイコンだけのボタン（icon-btn）には選択肢名の aria-label を付け、アイコン SVG は aria-hidden="true"。
  *     押下状態を aria-label の文言で表さない（「一覧（選択中）」は不可。状態は aria-pressed が読む）
- *   選択は塗りと文字の濃さの 2 つで示し、色だけに依存しない（DS 担保）
+ *   選択は白いセグメント（枠）と文字の濃さの 2 つで示し、色だけに依存しない（DS 担保）
  *   強制カラーモードでは選択中のボタンを Highlight で塗り、非選択との区別を保つ（DS 担保）
  *
  * Usage:
@@ -90,10 +93,11 @@
 
 @layer components {
   /* ============================================================
-   * Container — ボタンを 4px 間隔で並べる
+   * Container — 薄い帯（トラック）の中にボタンを 4px 間隔で並べる
    * ============================================================ */
   .toggle-btn-group {
-    @apply inline-flex items-center gap-1;
+    @apply inline-flex items-center gap-1 p-1
+           bg-neutral-50 border border-stroke-middle rounded-md;
   }
 
   /* 中のボタンは直下に置くか tooltip で包む（子孫セレクタで両方に当てる。グループは入れ子にしない） */
@@ -104,44 +108,47 @@
   }
 
   /* ============================================================
-   * Not pressed — 文字を fg/low に下げ、選択中（fg/high）との差を作る
+   * Segment — 角丸は帯（radius-md = 16）から余白（p-1 = 4）を引いた 12（同心円）。
+   * 非選択は文字を fg/low に下げ、選択中（fg/high）との差を作る
    * ============================================================ */
   .toggle-btn-group :is(.btn, .icon-btn) {
+    border-radius: calc(var(--radius-md) - var(--spacing) * 1);
     color: var(--color-fg-low);
   }
 
+  /* hover は白い面（帯の neutral/50 と区別するため btn-ghost の neutral/50 を上書き）。
+   * .btn-neutral.btn-ghost:hover:not(:disabled)（0,4,0）と同じ詳細度で、後に読み込まれるこちらが勝つ */
+  .toggle-btn-group :is(.btn, .icon-btn):hover:not(:disabled),
+  .toggle-btn-group :is(.btn, .icon-btn).is-hover-preview:not(:disabled) {
+    background-color: var(--color-surface);
+  }
+
   /* ============================================================
-   * Pressed — neutral/200 の塗り + fg/high
-   *   hover の詳細度（.btn-neutral.btn-ghost:hover:not(:disabled) = 0,4,0）に勝つよう、
-   *   hover 版は :hover:not(:disabled) まで重ねて書く
+   * Pressed — 白いセグメント（surface + stroke-high の枠）+ fg/high。影は付けない
    * ============================================================ */
   .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"] {
-    background-color: var(--color-neutral-200);
+    background-color: var(--color-surface);
+    border-color: var(--color-stroke-high);
     color: var(--color-fg-high);
   }
   .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"]:hover:not(:disabled),
   .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"].is-hover-preview:not(:disabled) {
-    background-color: var(--color-neutral-300);
-  }
-
-  /* hover の見本（カタログで状態を並べるため）— 非選択は btn-ghost の hover と同じ neutral/50 */
-  .toggle-btn-group :is(.btn, .icon-btn).is-hover-preview:not([aria-pressed="true"]):not(:disabled) {
-    background-color: var(--color-neutral-50);
+    border-color: var(--color-neutral-400);
   }
 
   /* ============================================================
-   * Disabled — 文字は fg/disabled。選択中の無効は塗りを neutral/100 に薄める
+   * Disabled — 文字は fg/disabled。選択中の無効は枠を stroke-middle に薄める
    * ============================================================ */
   .toggle-btn-group :is(.btn, .icon-btn):disabled {
     color: var(--color-fg-disabled);
   }
   .toggle-btn-group :is(.btn, .icon-btn)[aria-pressed="true"]:disabled {
-    background-color: var(--color-neutral-100);
+    border-color: var(--color-stroke-middle);
   }
 
   /* ============================================================
    * 強制カラーモード (Windows ハイコントラスト等) 対応
-   *   塗り（neutral/200）は Canvas に置き換わり選択が見えなくなるため、
+   *   白いセグメントと帯はどちらも Canvas に置き換わり選択が見えなくなるため、
    *   選択中は Highlight で塗り直す（tab-solid と同じ方式）。
    *   文字を HighlightText にするので backplate を止める（forced-color-adjust: none）。
    *   無効の選択中は GrayText の塗り + Canvas の文字。
