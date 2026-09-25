@@ -586,3 +586,83 @@ document.addEventListener("click", async (e) => {
     label.textContent = label.dataset.original;
   }, 1400);
 });
+
+// Token Input — [data-token-input] の入力欄の値を Enter か「追加」([data-token-add]) でトークンにする。
+// 空・重複・上限 (data-max) は受け付けず、入力欄の真下の field-error-text に理由を出す（input-error ＋ aria-invalid）。
+// 追加・削除は aria-live の領域で告知し、削除したらフォーカスを次の削除ボタン（無ければ前・入力欄）へ移す。
+function tokenInputParts(root) {
+  return {
+    input: root.querySelector(".token-input-field > .input"),
+    list: root.querySelector(".token-input-list"),
+    error: root.querySelector(".field-error-text"),
+    live: root.querySelector("[aria-live]"),
+  };
+}
+
+function setTokenError(root, message) {
+  const { input, error } = tokenInputParts(root);
+  if (!input || !error) return;
+  const ids = (input.getAttribute("aria-describedby") || "").split(/\s+/).filter((id) => id && id !== error.id);
+  if (message) ids.unshift(error.id);
+  input.setAttribute("aria-describedby", ids.join(" "));
+  input.classList.toggle("input-error", Boolean(message));
+  if (message) input.setAttribute("aria-invalid", "true");
+  else input.removeAttribute("aria-invalid");
+  error.textContent = message ? `＊${message}` : "";
+  error.hidden = !message;
+}
+
+function addToken(root) {
+  const { input, list, live } = tokenInputParts(root);
+  const value = input.value.trim();
+  const values = [...list.querySelectorAll(".token-input-label")].map((el) => el.textContent);
+  const max = Number(root.dataset.max) || Infinity;
+  if (!value) return setTokenError(root, "値を入力してください");
+  if (values.includes(value)) return setTokenError(root, `『${value}』はすでに追加されています`);
+  if (values.length >= max) return setTokenError(root, `追加できるのは ${max} 件までです`);
+  setTokenError(root, "");
+  const li = document.createElement("li");
+  li.className = "token-input-item";
+  const label = document.createElement("span");
+  label.className = "token-input-label";
+  label.textContent = value;
+  const remove = document.createElement("button");
+  remove.type = "button";
+  remove.className = "token-input-remove";
+  remove.setAttribute("aria-label", `『${value}』を削除`);
+  remove.innerHTML = '<svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>';
+  li.append(label, remove);
+  list.append(li);
+  input.value = "";
+  if (live) live.textContent = `『${value}』を追加しました`;
+}
+
+document.addEventListener("click", (e) => {
+  const add = e.target.closest("[data-token-input] [data-token-add]");
+  if (add) {
+    const root = add.closest("[data-token-input]");
+    addToken(root);
+    tokenInputParts(root).input.focus();
+    return;
+  }
+  const remove = e.target.closest("[data-token-input] .token-input-remove");
+  if (!remove) return;
+  const root = remove.closest("[data-token-input]");
+  const { input, live } = tokenInputParts(root);
+  const token = remove.closest(".token-input-item");
+  const value = token.querySelector(".token-input-label").textContent;
+  const next = token.nextElementSibling || token.previousElementSibling;
+  token.remove();
+  (next?.querySelector(".token-input-remove") || input).focus();
+  if (live) live.textContent = `『${value}』を削除しました`;
+  // 上限のエラーは 1 つ消せば解消する
+  if (root.querySelector(".field-error-text:not([hidden])")?.textContent.includes("件まで")) setTokenError(root, "");
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Enter" || e.isComposing) return;
+  const input = e.target.closest?.("[data-token-input] .token-input-field > .input");
+  if (!input) return;
+  e.preventDefault(); // フォームの送信ではなく、トークンの追加にする
+  addToken(input.closest("[data-token-input]"));
+});
