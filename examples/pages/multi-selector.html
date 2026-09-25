@@ -15,6 +15,193 @@
 
       <div id="multi-selector-panel-overview" role="tabpanel" aria-labelledby="multi-selector-tab-overview">
 
+      <!-- ===== size × state（セレクターと同じ見せ方） ===== -->
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">size × state</h3>
+          <p class="card-subtitle">valid</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+          <span class="typo-xsmall text-fg-low text-center">large</span>
+
+          <span class="typo-xsmall text-fg-low">enable / empty</span>
+          <div class="multi-selector multi-selector-sm">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（sm）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-empty-sm-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-empty-sm-panel" popover role="dialog" aria-label="業種（sm）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-sm" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-sm" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-sm" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-md">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（md）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-empty-md-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-empty-md-panel" popover role="dialog" aria-label="業種（md）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-md" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-md" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-md" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-lg">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（lg）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-empty-lg-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-empty-lg-panel" popover role="dialog" aria-label="業種（lg）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-lg" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-lg" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-empty-lg" value="c" />業種C</label>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">enable / filled</span>
+          <div class="multi-selector multi-selector-sm">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（sm）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-filled-sm-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-filled-sm-panel" popover role="dialog" aria-label="業種（sm）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-sm" value="a" checked />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-sm" value="b" checked />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-sm" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-md">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（md）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-filled-md-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-filled-md-panel" popover role="dialog" aria-label="業種（md）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-md" value="a" checked />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-md" value="b" checked />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-md" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-lg">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（lg）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-filled-lg-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-filled-lg-panel" popover role="dialog" aria-label="業種（lg）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-lg" value="a" checked />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-lg" value="b" checked />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-filled-lg" value="c" />業種C</label>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">disabled</span>
+          <div class="multi-selector multi-selector-sm">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（sm）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-dis-sm-panel" disabled>
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-dis-sm-panel" popover role="dialog" aria-label="業種（sm）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-sm" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-sm" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-sm" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-md">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（md）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-dis-md-panel" disabled>
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-dis-md-panel" popover role="dialog" aria-label="業種（md）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-md" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-md" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-md" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-lg">
+            <button type="button" class="multi-selector-trigger" aria-label="業種（lg）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-v-dis-lg-panel" disabled>
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-v-dis-lg-panel" popover role="dialog" aria-label="業種（lg）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-lg" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-lg" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-v-dis-lg" value="c" />業種C</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-6 overflow-hidden">
+        <div class="card-header">
+          <h3 class="card-title">isInvalid=true</h3>
+          <p class="card-subtitle">bg negative/50 · border 2px negative/500（ボタンに multi-selector-error、真下に field-error-text）</p>
+        </div>
+        <div class="card-body grid grid-cols-[80px_1fr_1fr_1fr] gap-4 items-center">
+          <span></span>
+          <span class="typo-xsmall text-fg-low text-center">small</span>
+          <span class="typo-xsmall text-fg-low text-center">medium</span>
+          <span class="typo-xsmall text-fg-low text-center">large</span>
+
+          <span class="typo-xsmall text-fg-low">enable / empty</span>
+          <div class="multi-selector multi-selector-sm">
+            <button type="button" class="multi-selector-trigger multi-selector-error" aria-label="業種（sm）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-i-empty-sm-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-i-empty-sm-panel" popover role="dialog" aria-label="業種（sm）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-sm" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-sm" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-sm" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-md">
+            <button type="button" class="multi-selector-trigger multi-selector-error" aria-label="業種（md）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-i-empty-md-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-i-empty-md-panel" popover role="dialog" aria-label="業種（md）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-md" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-md" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-md" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-lg">
+            <button type="button" class="multi-selector-trigger multi-selector-error" aria-label="業種（lg）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-i-empty-lg-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-i-empty-lg-panel" popover role="dialog" aria-label="業種（lg）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-lg" value="a" />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-lg" value="b" />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-empty-lg" value="c" />業種C</label>
+            </div>
+          </div>
+
+          <span class="typo-xsmall text-fg-low">enable / filled</span>
+          <div class="multi-selector multi-selector-sm">
+            <button type="button" class="multi-selector-trigger multi-selector-error" aria-label="業種（sm）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-i-filled-sm-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-i-filled-sm-panel" popover role="dialog" aria-label="業種（sm）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-sm" value="a" checked />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-sm" value="b" checked />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-sm" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-md">
+            <button type="button" class="multi-selector-trigger multi-selector-error" aria-label="業種（md）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-i-filled-md-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-i-filled-md-panel" popover role="dialog" aria-label="業種（md）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-md" value="a" checked />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-md" value="b" checked />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-md" value="c" />業種C</label>
+            </div>
+          </div>
+          <div class="multi-selector multi-selector-lg">
+            <button type="button" class="multi-selector-trigger multi-selector-error" aria-label="業種（lg）" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-i-filled-lg-panel">
+              <span class="multi-selector-value" data-placeholder="選択内容"></span>
+            </button>
+            <div class="multi-selector-panel" id="ms-i-filled-lg-panel" popover role="dialog" aria-label="業種（lg）">
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-lg" value="a" checked />業種A</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-lg" value="b" checked />業種B</label>
+              <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-i-filled-lg" value="c" />業種C</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- ===== 基本 ===== -->
       <div class="card mb-6">
         <div class="card-header">
@@ -86,98 +273,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- ===== サイズ ===== -->
-      <div class="card mb-6">
-        <div class="card-header">
-          <h3 class="card-title">サイズ</h3>
-          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">multi-selector-{sm,md,lg}</code>。高さ・文字はセレクターと同じ（32 / 40 / 48）。既定は md</p>
-        </div>
-        <div class="card-body space-y-4 max-w-sm">
-            <div class="label-control mb-2">
-              <div class="label-control-row"><span class="label-control-text" id="ms-sm-label">sm</span></div>
-            </div>
-            <div class="multi-selector multi-selector-sm">
-              <button type="button" class="multi-selector-trigger" id="ms-sm-trigger" aria-labelledby="ms-sm-label ms-sm-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-sm-panel">
-                <span class="multi-selector-value" id="ms-sm-value" data-placeholder="選択してください"></span>
-              </button>
-              <div class="multi-selector-panel" id="ms-sm-panel" popover role="dialog" aria-labelledby="ms-sm-label">
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-sm" value="date" checked />振込日</label>
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-sm" value="payee" checked />振込先</label>
-              </div>
-            </div>
-            <div class="label-control mb-2">
-              <div class="label-control-row"><span class="label-control-text" id="ms-md-label">md</span></div>
-            </div>
-            <div class="multi-selector multi-selector-md">
-              <button type="button" class="multi-selector-trigger" id="ms-md-trigger" aria-labelledby="ms-md-label ms-md-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-md-panel">
-                <span class="multi-selector-value" id="ms-md-value" data-placeholder="選択してください"></span>
-              </button>
-              <div class="multi-selector-panel" id="ms-md-panel" popover role="dialog" aria-labelledby="ms-md-label">
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-md" value="date" checked />振込日</label>
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-md" value="payee" checked />振込先</label>
-              </div>
-            </div>
-            <div class="label-control mb-2">
-              <div class="label-control-row"><span class="label-control-text" id="ms-lg-label">lg</span></div>
-            </div>
-            <div class="multi-selector multi-selector-lg">
-              <button type="button" class="multi-selector-trigger" id="ms-lg-trigger" aria-labelledby="ms-lg-label ms-lg-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-lg-panel">
-                <span class="multi-selector-value" id="ms-lg-value" data-placeholder="選択してください"></span>
-              </button>
-              <div class="multi-selector-panel" id="ms-lg-panel" popover role="dialog" aria-labelledby="ms-lg-label">
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-lg" value="date" checked />振込日</label>
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-lg" value="payee" checked />振込先</label>
-              </div>
-            </div>
-        </div>
-      </div>
-
-      <!-- ===== 状態 ===== -->
-      <div class="card mb-8">
-        <div class="card-header">
-          <h3 class="card-title">状態</h3>
-          <p class="card-subtitle">未選択は placeholder の文字（<code class="px-1 bg-neutral-100 rounded">data-placeholder</code>）。エラーはボタンに <code class="px-1 bg-neutral-100 rounded">multi-selector-error</code>、真下に <code class="px-1 bg-neutral-100 rounded">field-error-text</code>。無効はボタンに <code class="px-1 bg-neutral-100 rounded">disabled</code></p>
-        </div>
-        <div class="card-body space-y-6 max-w-sm">
-            <div class="label-control mb-2">
-              <div class="label-control-row"><span class="label-control-text" id="ms-empty-label">未選択</span></div>
-            </div>
-            <div class="multi-selector multi-selector-md">
-              <button type="button" class="multi-selector-trigger" id="ms-empty-trigger" aria-labelledby="ms-empty-label ms-empty-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-empty-panel">
-                <span class="multi-selector-value" id="ms-empty-value" data-placeholder="選択してください"></span>
-              </button>
-              <div class="multi-selector-panel" id="ms-empty-panel" popover role="dialog" aria-labelledby="ms-empty-label">
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-empty" value="date" />振込日</label>
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-empty" value="payee" />振込先</label>
-              </div>
-            </div>
-            <div class="label-control mb-2">
-              <div class="label-control-row"><span class="label-control-text" id="ms-err-label">エラー</span></div>
-            </div>
-            <div class="multi-selector multi-selector-md mb-0">
-              <button type="button" class="multi-selector-trigger multi-selector-error" id="ms-err-trigger" aria-labelledby="ms-err-label ms-err-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-err-panel" aria-describedby="ms-err-text">
-                <span class="multi-selector-value" id="ms-err-value" data-placeholder="選択してください"></span>
-              </button>
-              <div class="multi-selector-panel" id="ms-err-panel" popover role="dialog" aria-labelledby="ms-err-label">
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-err" value="date" />振込日</label>
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-err" value="payee" />振込先</label>
-              </div>
-            </div>
-            <p class="field-error-text mt-1" id="ms-err-text">＊1 つ以上選んでください</p>
-            <div class="label-control mb-2">
-              <div class="label-control-row"><span class="label-control-text" id="ms-dis-label">無効</span></div>
-            </div>
-            <div class="multi-selector multi-selector-md">
-              <button type="button" class="multi-selector-trigger" id="ms-dis-trigger" aria-labelledby="ms-dis-label ms-dis-value" aria-haspopup="dialog" aria-expanded="false" popovertarget="ms-dis-panel" disabled>
-                <span class="multi-selector-value" id="ms-dis-value" data-placeholder="選択してください"></span>
-              </button>
-              <div class="multi-selector-panel" id="ms-dis-panel" popover role="dialog" aria-labelledby="ms-dis-label">
-                <label class="checkbox-label multi-selector-option"><input type="checkbox" class="checkbox" name="ms-dis" value="date" checked />振込日</label>
-              </div>
-            </div>
         </div>
       </div>
 
