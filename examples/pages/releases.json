@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.31.0",
+      "date": "2026-09-25",
+      "title": "トグルボタングループ・ボタングループ・クリッカブルカードの新設 + data-table の列フィルター / ソート",
+      "summary": "選択状態を持つボタンの並び toggle-btn-group を新設しました。単一選択（一覧 / グリッドなど表示形式の切り替え）と複数選択（太字 / 斜体などの書式の ON/OFF）に対応し、表示形式の切り替えは tab から toggle-btn-group に移しています（tab は表示する中身の切り替え、絞り込みは filter-chip / tab）。選択は塗りと文字の濃さの 2 つで示します。関連する操作をつなげる btn-group（分割ボタン対応）も新設。card には、見出しのリンクの当たり判定をカード全面に広げる card-clickable + card-link を追加し、「カード全体を a で包む」指針を置き換えました（中のボタンは単独で押せます）。card-subtitle と見出しの間は 8px に広げています。data-table は列見出しからの列フィルターとソートに対応。modal フッターの背景を白に、link の hover 下線を 2px に修正し、Lucide アイコンを 5 個追加しました（計 58 個）。カタログはトップページのカードを card-clickable に置き換え、システムフィードバックのガイドをイントロダクションへ移しました。"
+    },
+    {
       "version": "0.30.0",
       "date": "2026-09-24",
       "title": "アクションメニューの新設 + カードのバリエーション追加 + メニューの見直し",
