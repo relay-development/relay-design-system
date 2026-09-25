@@ -327,9 +327,98 @@ document.addEventListener("click", (e) => {
 // 開いている間にスクロール / リサイズしてもトリガーに追従させる
 for (const type of ["scroll", "resize"]) {
   window.addEventListener(type, () => {
-    document.querySelectorAll(".action-menu:popover-open").forEach(positionActionMenu);
+    document.querySelectorAll(".action-menu:popover-open, .data-table-filter-panel:popover-open").forEach(positionActionMenu);
   }, { passive: true, capture: true });
 }
+
+// Table filter — 列フィルター (data-table-filter)。開閉・Esc・外側クリックでの閉じは Popover API に任せ、
+// aria-expanded 同期 / 位置計算 (action-menu と共通) / 開いたら select へフォーカス /
+// 開くたびに適用中の値へ戻す (未適用の選択は捨てる) / 適用・リセットで行を絞り込み件数を告知 /
+// Tab でパネルの外へ出たら閉じる、を足す。適用中の値はパネルの data-value に持ち、
+// 同じ表の列フィルターは AND で掛け合わせる。セルの文字と option の値が一致した行を残す。
+const filterTrigger = (panel) => document.querySelector(`[popovertarget="${panel.id}"]`);
+
+function applyTableFilters(table) {
+  const filters = [...table.querySelectorAll("thead .data-table-filter-trigger")]
+    .map((trigger) => ({
+      col: trigger.closest("th").cellIndex,
+      value: document.getElementById(trigger.getAttribute("popovertarget"))?.dataset.value || "",
+    }))
+    .filter((f) => f.value);
+  const rows = [...table.tBodies[0].rows].filter((row) => !row.hasAttribute("data-filter-empty"));
+  let shown = 0;
+  for (const row of rows) {
+    const match = filters.every((f) => row.cells[f.col]?.textContent.trim() === f.value);
+    row.hidden = !match;
+    if (match) shown++;
+  }
+  // 0 件でも表は消さず、「条件に合うデータがありません」の行を出す
+  table.querySelector("[data-filter-empty]")?.toggleAttribute("hidden", shown > 0);
+  const status = document.querySelector(`[data-filter-status="${table.id}"]`);
+  if (status) {
+    status.textContent = filters.length ? `全 ${rows.length} 件中 ${shown} 件を表示` : `全 ${rows.length} 件`;
+  }
+}
+
+function syncFilterTrigger(trigger, value) {
+  trigger.dataset.label ||= trigger.getAttribute("aria-label");
+  trigger.toggleAttribute("data-filtered", Boolean(value));
+  trigger.setAttribute("aria-label", value ? `${trigger.dataset.label}（適用中: ${value}）` : trigger.dataset.label);
+}
+
+document.addEventListener("beforetoggle", (e) => {
+  const panel = e.target;
+  if (!(panel instanceof HTMLElement) || !panel.classList.contains("data-table-filter-panel")) return;
+  if (e.newState !== "open") return;
+  panel.style.visibility = "hidden"; // 位置を計算するまで隠す
+  const select = panel.querySelector("select");
+  if (select) select.value = panel.dataset.value || "";
+}, true);
+
+document.addEventListener("toggle", (e) => {
+  const panel = e.target;
+  if (!(panel instanceof HTMLElement) || !panel.classList.contains("data-table-filter-panel")) return;
+  const trigger = filterTrigger(panel);
+  const open = e.newState === "open";
+  trigger?.setAttribute("aria-expanded", open ? "true" : "false");
+  if (open) {
+    positionActionMenu(panel);
+    panel.style.visibility = "";
+    panel.querySelector("select")?.focus();
+  } else if (trigger && (document.activeElement === document.body || panel.contains(document.activeElement))) {
+    trigger.focus(); // フォーカス復帰の保険 (通常は Popover API が戻す)
+  }
+}, true);
+
+// 適用 = 選んだ値で確定して閉じる。リセット = 「すべて」を適用したのと同じ（その列の絞り込みを解除して閉じる）
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".data-table-filter-panel[popover] :is([data-filter-apply], [data-filter-reset])");
+  if (!btn) return;
+  const panel = btn.closest(".data-table-filter-panel");
+  const select = panel.querySelector("select");
+  if (select && btn.hasAttribute("data-filter-reset")) select.value = "";
+  panel.dataset.value = select?.value || "";
+  const trigger = filterTrigger(panel);
+  if (trigger) {
+    syncFilterTrigger(trigger, panel.dataset.value);
+    const table = trigger.closest("table");
+    if (table) applyTableFilters(table);
+  }
+  panel.hidePopover();
+  trigger?.focus();
+});
+
+// Tab でパネルの外へ出たら閉じる（トリガーへ戻るのは除く）。移動先の要素が決まってから判定する
+document.addEventListener("focusout", (e) => {
+  const panel = e.target.closest?.(".data-table-filter-panel:popover-open");
+  if (!panel) return;
+  setTimeout(() => {
+    const active = document.activeElement;
+    if (!panel.matches(":popover-open") || panel.contains(active) || active === filterTrigger(panel)) return;
+    if (active === document.body) return; // 外側クリックは Popover API の light dismiss に任せる
+    panel.hidePopover();
+  });
+});
 
 // Mobile hamburger — サイドナビの開閉 (768px 以下で表示されるトグル)
 document.addEventListener("click", (e) => {
