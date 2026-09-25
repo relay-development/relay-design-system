@@ -4,7 +4,7 @@
         <h2 class="typo-2xlarge">トグルボタングループ</h2>
         <span class="badge badge-soft-primary">component</span>
       </div>
-      <p class="typo-article text-fg-high mb-6">押すと「選ばれた状態」が残るボタンを並べ、その場で表示や設定を切り替えます。1 つ選ぶと他が外れる<strong>単一選択</strong>（一覧 / グリッドなど表示形式の切り替え）と、それぞれ独立に ON / OFF する<strong>複数選択</strong>（太字 / 斜体などの書式）の 2 つのモードがあります。中身は <a class="link" href="./button.html"><span class="link-label">ボタン</span></a> と <a class="link" href="./icon-button.html"><span class="link-label">アイコンボタン</span></a> の neutral ghost をそのまま使い、選択状態は各ボタンの <code class="px-1 bg-neutral-100 rounded">aria-pressed</code> で示します。</p>
+      <p class="typo-article text-fg-high mb-6">押すと「選ばれた状態」が残るボタンを並べ、その場で表示や設定を切り替えます。1 つ選ぶと他が外れる<strong>単一選択</strong>（一覧 / グリッドなど表示形式の切り替え）と、それぞれ独立に ON / OFF する<strong>複数選択</strong>（太字 / 斜体などの書式）の 2 つのモードがあります。中身は <a class="link" href="./button.html"><span class="link-label">ボタン</span></a> と <a class="link" href="./icon-button.html"><span class="link-label">アイコンボタン</span></a> の neutral ghost を薄い帯の中に並べるセグメント型で、選ばれたものだけが白いセグメントになります。選択状態は各ボタンの <code class="px-1 bg-neutral-100 rounded">aria-pressed</code> で示します。</p>
 
       <!-- ===== Tabs: 概要 / ガイドライン / アクセシビリティ ===== -->
       <div role="tablist" data-tabgroup data-tab-param="tab" aria-label="トグルボタングループのドキュメント" class="tabs tabs-line mb-8">
@@ -177,7 +177,7 @@
       <div class="card mb-8">
         <div class="card-header">
           <h3 class="card-title">状態</h3>
-          <p class="card-subtitle">選択は塗り（neutral/200）と文字の濃さ（fg/low → fg/high）の 2 つで示す。hover / focus は <code class="px-1 bg-neutral-100 rounded">is-hover-preview</code> / <code class="px-1 bg-neutral-100 rounded">is-focus-preview</code> の見本</p>
+          <p class="card-subtitle">選択は白いセグメント（枠 stroke-high）と文字の濃さ（fg/low → fg/high）の 2 つで示す。影は付けない。hover / focus は <code class="px-1 bg-neutral-100 rounded">is-hover-preview</code> / <code class="px-1 bg-neutral-100 rounded">is-focus-preview</code> の見本</p>
         </div>
         <div class="card-body grid grid-cols-[120px_1fr_1fr] gap-4 items-center">
           <span></span>
@@ -185,20 +185,20 @@
           <span class="typo-small text-fg-low">選択中</span>
 
           <span class="typo-small text-fg-low">enable</span>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 非選択 enable"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false" tabindex="-1">グリッド</button></div>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 選択中 enable"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true" tabindex="-1">グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 非選択 enable"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false" tabindex="-1">グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 選択中 enable"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true" tabindex="-1">グリッド</button></div>
 
           <span class="typo-small text-fg-low">hover</span>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 非選択 hover"><button type="button" class="btn btn-md btn-neutral btn-ghost is-hover-preview" aria-pressed="false" tabindex="-1">グリッド</button></div>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 選択中 hover"><button type="button" class="btn btn-md btn-neutral btn-ghost is-hover-preview" aria-pressed="true" tabindex="-1">グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 非選択 hover"><button type="button" class="btn btn-md btn-neutral btn-ghost is-hover-preview" aria-pressed="false" tabindex="-1">グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 選択中 hover"><button type="button" class="btn btn-md btn-neutral btn-ghost is-hover-preview" aria-pressed="true" tabindex="-1">グリッド</button></div>
 
           <span class="typo-small text-fg-low">focus</span>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 非選択 focus"><button type="button" class="btn btn-md btn-neutral btn-ghost is-focus-preview" aria-pressed="false" tabindex="-1">グリッド</button></div>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 選択中 focus"><button type="button" class="btn btn-md btn-neutral btn-ghost is-focus-preview" aria-pressed="true" tabindex="-1">グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 非選択 focus"><button type="button" class="btn btn-md btn-neutral btn-ghost is-focus-preview" aria-pressed="false" tabindex="-1">グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 選択中 focus"><button type="button" class="btn btn-md btn-neutral btn-ghost is-focus-preview" aria-pressed="true" tabindex="-1">グリッド</button></div>
 
           <span class="typo-small text-fg-low">disabled</span>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 非選択 disabled"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false" disabled>グリッド</button></div>
-          <div class="toggle-btn-group" role="group" aria-label="状態の見本: 選択中 disabled"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true" disabled>グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 非選択 disabled"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="false" disabled>グリッド</button></div>
+          <div class="toggle-btn-group justify-self-start" role="group" aria-label="状態の見本: 選択中 disabled"><button type="button" class="btn btn-md btn-neutral btn-ghost" aria-pressed="true" disabled>グリッド</button></div>
         </div>
       </div>
 
@@ -361,7 +361,7 @@
             <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
           </div>
           <div class="card-body space-y-3">
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-medium text-fg-middle">選択は塗り（neutral/200）と文字の濃さ（fg/low → fg/high）の 2 つで示す。塗りは白地と 1.23:1 しかないため、文字の濃さの差（3.75:1）で色に頼らず区別できるようにしている。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-medium text-fg-middle">選択は白いセグメントと文字の濃さ（fg/low → fg/high）の 2 つで示す。白と帯（neutral/50）の差はごく小さいため、文字の濃さの差（3.75:1）で色に頼らず区別できるようにしている。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-medium text-fg-middle">並べる数は 2〜5 個に抑え、320px 幅でも 1 行に収める。収まらないならアイコンだけにするか select にする。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-medium text-fg-middle">各ボタンが Tab で止まり、Enter / Space で切り替える。切り替えはその場の表示だけを変え、ページ遷移や送信を起こさない。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-medium text-fg-middle">グループ名（「表示形式、グループ」）に続いて「一覧、切り替えボタン、押されています」のように、各ボタンの名前と押下状態が読まれる。</p></div>
@@ -377,7 +377,7 @@
           <div class="card-body">
             <ul class="typo-medium text-fg-middle space-y-2">
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>選択中の見た目は <code class="typo-xsmall">aria-pressed="true"</code> から決まる（クラスで別に管理しないので、状態と表示がずれない）</span></li>
-              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>非選択の文字 fg/low は白地で 4.76:1、hover（neutral/50）上でも 4.5:1 以上。選択中の文字 fg/high は 14.5:1</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>非選択の文字 fg/low は帯（neutral/50）の上で 4.55:1、hover（白）で 4.76:1。選択中の文字 fg/high は白いセグメントの上で 17.9:1</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>強制カラーモードでは選択中のボタンを Highlight で塗り、非選択との区別を保つ</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>中はネイティブ <code class="typo-xsmall">&lt;button&gt;</code> のまま。フォーカスリング（info/600）とターゲット最小 24px は btn / icon-btn のとおり</span></li>
             </ul>
@@ -445,7 +445,7 @@
                 <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost is-selected" aria-label="太字（選択中）" tabindex="-1"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-bold"></use></svg></button>
                 <button type="button" class="icon-btn icon-btn-md icon-btn-neutral icon-btn-ghost" aria-label="斜体" tabindex="-1"><svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-italic"></use></svg></button>
               </div>
-              <p class="typo-medium text-fg-middle">クラスや名前の文言で状態を表すと、支援技術には「切り替えボタン」だと伝わらず、塗りも付かない。</p>
+              <p class="typo-medium text-fg-middle">クラスや名前の文言で状態を表すと、支援技術には「切り替えボタン」だと伝わらず、白いセグメントにもならない。</p>
               <pre class="code-sample mt-3" data-code>
 &lt;!-- 状態をクラスや aria-label の文言で表さない --&gt;
 &lt;button class="icon-btn … [[is-selected]]" [[aria-label="太字（選択中）"]]&gt;…&lt;/button&gt;</pre>
