@@ -171,7 +171,7 @@
       <div class="card mb-8">
         <div class="card-header">
           <h3 class="card-title">見出し行 — タイトルと、件数・表全体への操作</h3>
-          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">data-table-header</code> の 1 段目にタイトル、2 段目（<code class="px-1 bg-neutral-100 rounded">data-table-toolbar</code>）の左に表示件数、右に「検索 → アイコンの操作（3 個まで）→ 主操作」を sm でそろえて並べる。検索は虫眼鏡か Enter で確定してから絞り込み（入力のたびには変えない）、絞り込みのパネルには複数の列や列に無い条件（振込月）をまとめる。1 列の値だけで絞るなら列フィルター、並べ替えは列見出し</p>
+          <p class="card-subtitle"><code class="px-1 bg-neutral-100 rounded">data-table-header</code> の 1 段目にタイトル、2 段目（<code class="px-1 bg-neutral-100 rounded">data-table-toolbar</code>）の左に表示件数、右に「検索 → アイコンの操作（3 個まで）→ 主操作」を sm でそろえて並べる。検索は虫眼鏡か Enter で確定してから絞り込み（入力のたびには変えない）、絞り込みのパネルには複数の列や列に無い条件（振込月）をまとめる。適用中の条件は操作の行の下にトークンで並べ、× で 1 つずつ、「すべて解除」でまとめて解除できる。1 列の値だけで絞るなら列フィルター、並べ替えは列見出し</p>
         </div>
         <div class="card-body">
           <div class="data-table-header">
@@ -213,6 +213,11 @@
                 </span>
                 <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
               </div>
+            </div>
+            <div class="data-table-conditions" data-filter-conditions="tx-table" hidden>
+              <span class="data-table-conditions-label" id="tx-conditions-label">絞り込み中</span>
+              <ul class="token-input-list" aria-labelledby="tx-conditions-label"></ul>
+              <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-clear-all>すべて解除</button>
             </div>
           </div>
           <div class="action-menu action-menu-end" id="tx-more-menu" popover role="menu" aria-labelledby="tx-more-trigger">
@@ -343,6 +348,16 @@
       …（アイコンの操作は 3 個まで。4 個目からは more-horizontal の action-menu）
       &lt;button type="button" class="btn [[btn-sm]] btn-primary btn-solid"&gt;新規登録&lt;/button&gt;
     &lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div class="[[data-table-conditions]]" [[hidden]]&gt;   &lt;!-- 適用中の条件。条件が無いときは hidden --&gt;
+    &lt;span class="data-table-conditions-label" id="transfers-conditions"&gt;絞り込み中&lt;/span&gt;
+    &lt;ul class="[[token-input-list]]" [[aria-labelledby="transfers-conditions"]]&gt;
+      &lt;li class="[[token-input-item]]"&gt;
+        &lt;span class="token-input-label"&gt;キーワード: 山田&lt;/span&gt;
+        &lt;button type="button" class="token-input-remove" [[aria-label="『キーワード: 山田』の絞り込みを解除"]]&gt;…&lt;/button&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+    &lt;button type="button" class="btn btn-sm btn-neutral btn-ghost"&gt;すべて解除&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;table class="data-table" [[aria-labelledby="transfers-title"]]&gt;…&lt;/table&gt;

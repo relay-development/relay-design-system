@@ -390,7 +390,85 @@ function applyTableFilters(table) {
     const active = filters.length || panelFilters.length || query;
     status.textContent = active ? `全 ${rows.length} 件中 ${shown} 件を表示` : `全 ${rows.length} 件`;
   }
+  renderTableConditions(table);
 }
+
+// 適用中の条件 — data-filter-conditions="<表の id>" の行に、検索のキーワード・見出し行の絞り込み・列フィルターを
+// トークン（token-input-item）で並べる。各条件は解除の関数を持ち、× で 1 つ、「すべて解除」で全部を解除する。
+function syncPanelTrigger(panel) {
+  const count = [...panel.querySelectorAll("select[data-filter-col]")].filter((s) => s.dataset.applied).length;
+  const trigger = filterTrigger(panel);
+  if (trigger) syncFilterTrigger(trigger, count ? `${count} 件` : "");
+}
+
+function tableConditions(table) {
+  const items = [];
+  const search = document.querySelector(`[data-table-search="${table.id}"]`);
+  if (search?.dataset.applied) {
+    items.push({ label: `キーワード: ${search.dataset.applied}`, clear: () => { search.value = ""; search.dataset.applied = ""; } });
+  }
+  for (const select of document.querySelectorAll(`.data-table-filter-panel[data-filter-table="${table.id}"] select[data-filter-col]`)) {
+    if (!select.dataset.applied) continue;
+    const name = document.querySelector(`label[for="${select.id}"]`)?.textContent.trim() || "";
+    const text = [...select.options].find((o) => o.value === select.dataset.applied)?.textContent.trim() || select.dataset.applied;
+    items.push({
+      label: `${name}: ${text}`,
+      clear: () => { select.value = ""; select.dataset.applied = ""; syncPanelTrigger(select.closest(".data-table-filter-panel")); },
+    });
+  }
+  for (const trigger of table.querySelectorAll("thead .data-table-filter-trigger")) {
+    const panel = document.getElementById(trigger.getAttribute("popovertarget"));
+    if (!panel?.dataset.value) continue;
+    const name = trigger.closest(".data-table-filter")?.querySelector("span")?.textContent.trim() || "";
+    items.push({ label: `${name}: ${panel.dataset.value}`, clear: () => { panel.dataset.value = ""; syncFilterTrigger(trigger, ""); } });
+  }
+  return items;
+}
+
+function renderTableConditions(table) {
+  const row = document.querySelector(`[data-filter-conditions="${table.id}"]`);
+  if (!row) return;
+  const items = tableConditions(table);
+  row.conditions = items;
+  row.querySelector(".token-input-list").replaceChildren(...items.map((item) => {
+    const li = document.createElement("li");
+    li.className = "token-input-item";
+    const label = document.createElement("span");
+    label.className = "token-input-label";
+    label.textContent = item.label;
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "token-input-remove";
+    remove.setAttribute("aria-label", `『${item.label}』の絞り込みを解除`);
+    remove.innerHTML = '<svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>';
+    li.append(label, remove);
+    return li;
+  }));
+  row.hidden = items.length === 0;
+}
+
+// × で 1 つ解除 → 次のトークン（無ければ前、1 つも無ければ検索の入力欄）へ。すべて解除 → 検索の入力欄へ
+document.addEventListener("click", (e) => {
+  const remove = e.target.closest("[data-filter-conditions] .token-input-remove");
+  const clearAll = e.target.closest("[data-filter-conditions] [data-filter-clear-all]");
+  if (!remove && !clearAll) return;
+  const row = (remove || clearAll).closest("[data-filter-conditions]");
+  const table = document.getElementById(row.dataset.filterConditions);
+  if (!table) return;
+  const items = row.conditions || [];
+  let index = 0;
+  if (remove) {
+    const li = remove.closest("li");
+    index = [...li.parentElement.children].indexOf(li);
+    items[index]?.clear();
+  } else {
+    items.forEach((item) => item.clear());
+  }
+  applyTableFilters(table);
+  const buttons = row.querySelectorAll(".token-input-remove");
+  const search = document.querySelector(`[data-table-search="${table.id}"]`);
+  (remove && buttons.length ? buttons[Math.min(index, buttons.length - 1)] : search)?.focus();
+});
 
 // 名前は aria-label、または aria-labelledby が指す要素（見出し行ではツールチップの吹き出し）の文字
 function syncFilterTrigger(trigger, value) {

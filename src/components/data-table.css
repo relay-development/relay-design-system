@@ -120,6 +120,16 @@
  *         <button type="button" class="btn btn-sm btn-primary btn-solid">新規登録</button>
  *         </div>
  *       </div>
+ *       <div class="data-table-conditions" hidden>                              (適用中の条件。条件が無いときは hidden)
+ *         <span class="data-table-conditions-label" id="transfers-conditions">絞り込み中</span>
+ *         <ul class="token-input-list" aria-labelledby="transfers-conditions">
+ *           <li class="token-input-item">
+ *             <span class="token-input-label">キーワード: 山田</span>
+ *             <button type="button" class="token-input-remove" aria-label="『キーワード: 山田』の絞り込みを解除">…x…</button>
+ *           </li>
+ *         </ul>
+ *         <button type="button" class="btn btn-sm btn-neutral btn-ghost">すべて解除</button>
+ *       </div>
  *     </div>
  *     <div class="data-table-wrap" tabindex="0"><table class="data-table" aria-labelledby="transfers-title">…</table></div>
  *     <div class="data-table-filter-panel" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む">
@@ -134,6 +144,10 @@
  *     .data-table-header    1 段目にタイトルの塊、2 段目に data-table-toolbar を縦に積む（段の間 12）。表との間 16
  *     .data-table-toolbar   左に表示件数、右に操作を両端に置く（items-center）。幅が足りなければ操作が件数の下へ折り返す
  *     .data-table-count     表示件数（全 8 件 / 全 8 件中 3 件を表示）。16/24・fg/middle。aria-live="polite" で告知
+ *     .data-table-conditions  操作の行の下に、適用中の条件（検索のキーワード・見出し行の絞り込み・列フィルター）を
+ *                           「絞り込み中」＋ トークン（token-input-list / token-input-item）＋「すべて解除」（btn-sm neutral ghost）で並べる。
+ *                           トークンの × でその条件だけ解除。条件が無いときは hidden で行ごと隠す
+ *     .data-table-conditions-label  「絞り込み中」の見出し。14 bold・fg/middle。トークンの一覧を aria-labelledby で名付ける
  *     .data-table-heading   タイトルと補足の塊
  *     .data-table-title     typo-large と同じ 20/32 bold・fg/high
  *     .data-table-subtitle  text-sm・fg/low
@@ -157,7 +171,8 @@
  * 別名:
  *   表 / 一覧表 / データテーブル / table / 列フィルター / column filter / テーブルの絞り込み / 表のフィルター /
  *   ソート / 並べ替え / 並び替え / sort / sortable table / 列ソート /
- *   見出し行 / テーブルヘッダー / table header / 表のタイトル / テーブルツールバー / 表の操作 / 表の検索 / table actions
+ *   見出し行 / テーブルヘッダー / table header / 表のタイトル / テーブルツールバー / 表の操作 / 表の検索 / table actions /
+ *   絞り込み中の条件 / 適用中のフィルター / applied filters / 検索条件のトークン
  *
  * 機能:
  *   列見出しを上に置き、複数データを行で比較する表。
@@ -206,6 +221,10 @@
  *   OK: 見出し行の絞り込みは、複数の列を掛け合わせる条件や、列に無い条件（振込月など）をパネルにまとめるときに使う。
  *       パネルは data-table-filter-panel、条件ごとに data-table-filter-field（label ＋ selector-sm）。
  *   OK: ページの見出しがそのまま表の名前なら、data-table-title をページの h1 にしてよい（同じ名前の見出しを 2 つ重ねない）。
+ *   OK: 検索・絞り込みを適用したら、操作の行の下の data-table-conditions に条件をトークンで並べる（「キーワード: 山田」
+ *       「振込月: 2026 年 9 月」）。トークンの × でその条件だけ、「すべて解除」で全部を解除できるようにする。
+ *   OK: 条件のトークンの削除ボタンの aria-label は「『振込月: 2026 年 9 月』の絞り込みを解除」のように条件を含める。
+ *   NG: 適用中の条件をパネルの中だけに閉じ込めない → パネルを開かないと何で絞っているか分からない。
  *   NG: 1 列の値だけで絞るフィルターを見出し行に置かない → 列フィルター（どの列の絞り込みか分かる）。
  *   NG: 並べ替えを見出し行のボタンや select で作らない → 列見出しの data-table-sort。
  *   NG: 行ごとの操作（編集・削除）を見出し行に置かない → 行の操作列。
@@ -236,6 +255,8 @@
  *            送信のアイコンボタンに aria-label="検索"。placeholder を名前にしない。確定（送信）したときだけ結果を変える
  *   見出し行: アイコンだけの操作は tooltip の吹き出しを aria-labelledby で名前にする（aria-label と吹き出しで二重に読ませない）
  *   見出し行: 検索・絞り込みの結果の件数は data-table-count（aria-live="polite"）で告知する（列フィルターと同じ領域を使う）
+ *   見出し行: 適用中の条件のトークンの一覧は「絞り込み中」の見出しを aria-labelledby で名前にする。
+ *            条件を解除したら次のトークン（無ければ前、1 つも無ければ検索の入力欄）へフォーカスを移す
 */
 
 @layer components {
@@ -443,6 +464,20 @@
   /* 表示件数（検索・絞り込みの結果）。aria-live="polite" で変化を告知する */
   .data-table-count {
     @apply text-base leading-6 text-fg-middle;
+  }
+
+  /* 適用中の条件 — 操作の行の下に「絞り込み中」＋ 条件のトークン ＋「すべて解除」を折り返して並べる。
+   * トークンは token-input と共通の見た目（token-input-list / token-input-item）。条件が無いときは hidden で行ごと隠す */
+  .data-table-conditions {
+    @apply flex flex-wrap items-center gap-x-3 gap-y-2;
+  }
+
+  .data-table-conditions-label {
+    @apply text-sm font-bold text-fg-middle;
+  }
+
+  .data-table-conditions > .token-input-list {
+    @apply mt-0;
   }
 
   .data-table-heading {
