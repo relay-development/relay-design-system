@@ -20,6 +20,7 @@
 @import "./components/label-control.css";
 @import "./components/input.css";
 @import "./components/search-input.css";
+@import "./components/token-input.css";
 @import "./components/select.css";
 @import "./components/selector.css";
 @import "./components/textarea.css";
