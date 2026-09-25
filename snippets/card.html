@@ -76,3 +76,23 @@
     </ul>
   </div>
 </div>
+
+<!-- クリッカブル: カードのどこを押しても詳細ページへ移動する。
+     見出しの中の <a class="card-link"> の当たり判定をカード全面に広げる（カードを a で包まない）。
+     読み上げ・Tab の対象はこのリンク 1 つ。card-action のボタンは前面に出て単独で押せる -->
+<ul class="grid sm:grid-cols-2 gap-4" aria-label="プロジェクト一覧">
+  <li class="card card-clickable">
+    <div class="card-header">
+      <h3 class="card-title"><a class="card-link" href="/projects/a">プロジェクト A</a></h3>
+      <p class="card-subtitle">事業承継の準備を進めるプロジェクト</p>
+      <div class="card-action">
+        <button type="button" class="icon-btn icon-btn-sm icon-btn-neutral icon-btn-ghost" aria-label="『プロジェクト A』のメニュー">
+          <svg class="icon icon-lg" aria-hidden="true"><use href="./icons.svg#lucide-more-horizontal"></use></svg>
+        </button>
+      </div>
+    </div>
+    <div class="card-body">
+      <p>譲渡条件の整理と、候補者との面談日程を調整しています。</p>
+    </div>
+  </li>
+</ul>

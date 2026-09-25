@@ -399,38 +399,25 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
   margin-bottom: calc(var(--spacing) * 8);    /* 32 */
 }
 
-/* Landing page — component index cards.
- * Figma node 3481:1226: each card = a tinted preview panel showing a live
- * component instance, with a name label below. The whole card is a link
- * via a stretched ::after; the preview is `inert` so its controls never steal
- * the click or keyboard focus. */
+/* Landing page — ページ一覧のカード。
+ * カード本体は DS の card card-clickable card-compact（見出しの card-link を全面リンクにする）。
+ * ここではカタログ専用のプレビュー面（page-card-preview）と並べ方（page-grid）だけを持つ。
+ * プレビューは `inert` なので、中のコントロールがクリックやフォーカスを奪わない。 */
 /* 3 列固定。狭い画面では 2 列 → 1 列に落とす */
 .page-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: calc(var(--spacing) * 4);
 }
+/* 全行を最も高い行にそろえる（見出しや補足の折り返しでカードの高さがばらつかないように） */
+.page-grid-equal { grid-auto-rows: 1fr; }
+/* 見出し・補足は文節単位で折り返す（「取り組／み」のような単語の途中での改行を避ける） */
+.page-grid-equal :is(.card-title, .card-subtitle) { word-break: auto-phrase; }
 @media (max-width: 1024px) {
   .page-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
   .page-grid { grid-template-columns: minmax(0, 1fr); }
-}
-.page-card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--color-stroke-middle);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  overflow: hidden;
-  transition: border-color 0.12s ease, box-shadow 0.12s ease;
-}
-/* ホバーは 2px の primary-600 ボーダーで示す（elevation のシャドウは使わない — DESIGN.md）。
- * border-width を変えると中身が 1px ずれるため、1px ボーダー + 外側 1px のリングで 2px に見せる */
-.page-card:hover {
-  border-color: var(--color-primary-600);
-  box-shadow: 0 0 0 1px var(--color-primary-600);
 }
 .page-card-preview {
   display: flex;
@@ -449,23 +436,6 @@ section[id] { scroll-margin-top: calc(var(--spacing) * 4); }
 .docs-home .page-card-preview {
   background: var(--color-neutral-50);
 }
-.page-card-label { padding: calc(var(--spacing) * 3); }
-/* カード全面をクリック領域にするカード型リンク（リンクに見えない見た目）のため、
- * 「テキストリンクは常に下線」原則の例外として下線なし（カタログ内部専用クラス） */
-.page-card-link { text-decoration: none; }
-.page-card-link::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-}
-.page-card:hover .page-card-link { text-decoration: none; }
-/* キーボードフォーカスは info 青の DS リング（--shadow-focus-ring）でカード全体を囲む。
- * ブラウザ既定の細い outline だとラベル文字だけを囲み全面リンクなのに視認性が低い。
- * リングはカード自身に出すので card の overflow:hidden では見切れない（DESIGN.md #8）。 */
-.page-card:has(.page-card-link:focus-visible) {
-  box-shadow: var(--shadow-focus-ring);
-}
-.page-card-link:focus-visible { outline: none; }
 
 /* ============================================================
  * Release log — 縦タイムライン (releases.html)
