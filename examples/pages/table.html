@@ -255,18 +255,22 @@
             </table>
           </div>
           <div class="data-table-filter-panel" id="member-filter-role" popover role="dialog" aria-label="役割で絞り込む">
-            <select class="select" aria-labelledby="member-col-role">
-              <option value="">すべて</option><option>管理者</option><option>編集者</option><option>閲覧者</option>
-            </select>
+            <div class="selector selector-sm">
+              <select class="select" aria-labelledby="member-col-role">
+                <option value="">すべて</option><option>管理者</option><option>編集者</option><option>閲覧者</option>
+              </select>
+            </div>
             <div class="data-table-filter-actions">
               <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset>リセット</button>
               <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
             </div>
           </div>
           <div class="data-table-filter-panel" id="member-filter-dept" popover role="dialog" aria-label="部署で絞り込む">
-            <select class="select" aria-labelledby="member-col-dept">
-              <option value="">すべて</option><option>営業</option><option>開発</option><option>人事</option>
-            </select>
+            <div class="selector selector-sm">
+              <select class="select" aria-labelledby="member-col-dept">
+                <option value="">すべて</option><option>営業</option><option>開発</option><option>人事</option>
+              </select>
+            </div>
             <div class="data-table-filter-actions">
               <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset>リセット</button>
               <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
@@ -285,9 +289,11 @@
 …
 &lt;!-- パネルは表の直後に置く（Tab 順はトリガーの直後になる） --&gt;
 &lt;div class="[[data-table-filter-panel]]" id="filter-role" popover role="dialog" aria-label="役割で絞り込む"&gt;
-  &lt;select class="select" aria-labelledby="col-role"&gt;
-    &lt;option value=""&gt;すべて&lt;/option&gt;&lt;option&gt;管理者&lt;/option&gt;&lt;option&gt;編集者&lt;/option&gt;
-  &lt;/select&gt;
+  &lt;div class="selector [[selector-sm]]"&gt;
+    &lt;select class="select" aria-labelledby="col-role"&gt;
+      &lt;option value=""&gt;すべて&lt;/option&gt;&lt;option&gt;管理者&lt;/option&gt;&lt;option&gt;編集者&lt;/option&gt;
+    &lt;/select&gt;
+  &lt;/div&gt;
   &lt;div class="[[data-table-filter-actions]]"&gt;
     &lt;button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset&gt;リセット&lt;/button&gt;
     &lt;button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply&gt;適用&lt;/button&gt;
@@ -333,9 +339,11 @@
             </tbody>
           </table>
           <div class="data-table-filter-panel is-static-preview" aria-label="部署で絞り込む（開いた状態の見本）" role="group">
-            <select class="select" aria-label="部署" tabindex="-1">
-              <option value="">すべて</option><option selected>営業</option><option>開発</option><option>人事</option>
-            </select>
+            <div class="selector selector-sm">
+              <select class="select" aria-label="部署" tabindex="-1">
+                <option value="">すべて</option><option selected>営業</option><option>開発</option><option>人事</option>
+              </select>
+            </div>
             <div class="data-table-filter-actions">
               <button type="button" class="btn btn-sm btn-neutral btn-ghost" tabindex="-1">リセット</button>
               <button type="button" class="btn btn-sm btn-primary btn-solid" tabindex="-1">適用</button>

@@ -56,9 +56,11 @@
  *     </th>
  *     …（パネルは表の直後に置く）
  *     <div class="data-table-filter-panel" id="filter-role" popover role="dialog" aria-label="役割で絞り込む">
- *       <select class="select" aria-labelledby="col-role">
- *         <option value="">すべて</option><option>管理者</option><option>編集者</option>
- *       </select>
+ *       <div class="selector selector-sm">
+ *         <select class="select" aria-labelledby="col-role">
+ *           <option value="">すべて</option><option>管理者</option><option>編集者</option>
+ *         </select>
+ *       </div>
  *       <div class="data-table-filter-actions">
  *         <button type="button" class="btn btn-sm btn-neutral btn-ghost" data-filter-reset>リセット</button>
  *         <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
@@ -71,6 +73,8 @@
  *                                 絞り込み中は data-filtered を付ける → アイコン primary/700 ＋ 右上のドット（色だけに頼らない）
  *     .data-table-filter-panel    幅 288、padding 16、角丸 md、bg surface、border stroke-low、shadow-lg。
  *                                 トリガーの左端に揃えて下に 4 空けて開く（空きが無ければ上。位置は JS）
+ *     select                      selector-sm（h32 / 14px）で包む。パネルは表の上に重なる小さな部品で、ボタンも btn-sm のため
+ *                                 高さを揃える。md（16px）だと OS の選択肢一覧も大きく開き、パネルに対して過大になる
  *     .data-table-filter-actions  リセット（左・ghost）と適用（右・solid）を両端に置く
  *     .is-static-preview          カタログ用: 開いた状態のパネルをページ内に静的表示
  *     絞り込みの実行（行の表示切替・件数の告知・0 件表示）は利用側の JS（実装例は examples/catalog.js の Table filter）
@@ -105,6 +109,7 @@
  *   NG: 全セルに whitespace-nowrap を付けない → 表が親幅を越えて溢れる。nowrap は fit / num 列だけ。
  *   NG: 状態バッジ・日付・金額の列を幅指定なしで置かない → 自由文に押されて 2 行に折れる → data-table-fit。
  *   OK: 列フィルターはその列の値（役割・部署・状態など選択肢が決まっている列）で絞り込む。選択肢の先頭は「すべて」。
+ *   OK: 列フィルターの select は selector-sm で包み、ボタン（btn-sm）と高さを揃える。
  *   OK: 列フィルターは選んだだけでは絞り込まず、「適用」で確定する。「リセット」はその列の絞り込みを解除して閉じる。
  *   OK: 絞り込み中の列はトリガーに data-filtered を付け、aria-label に適用中の値を含める（例: 役割で絞り込む（適用中: 管理者））。
  *   OK: 表の近くに「全 8 件中 3 件を表示」のような件数を置き、aria-live="polite" で絞り込みの結果を伝える。
@@ -271,7 +276,8 @@
 
   /* 先頭の「すべて」(value="") は select では placeholder 色になるが、ここでは「絞り込みなし」を選んだ
    * 状態＝有効な選択肢なので通常の文字色で出す */
-  .data-table-filter-panel .select:has(option[value=""]:checked) {
+  .data-table-filter-panel .select:has(option[value=""]:checked),
+  .data-table-filter-panel .selector:has(.select option[value=""]:checked) .select {
     color: var(--color-fg-high);
   }
 
