@@ -329,7 +329,10 @@
   /* 横スクロールの受け皿 — <div class="data-table-wrap" tabindex="0"> で表を包む。
    * wrap 内では自由文以外のセルも keep-all にし、表の最小幅を中身で決める（親幅に収まらない分は
    * 潰さず横スクロールへ）。wrap 外の既存テーブルの折り返し挙動は変えない */
+  /* position: relative — 中の絶対配置の要素（sr-only の caption・見出し等）の基準をこの枠にし、
+   * 横スクロールの中に閉じ込める。基準が外側にあると、スクロール領域で切り取られずにページ全体の横幅を広げる */
   .data-table-wrap {
+    position: relative;
     overflow-x: auto;
   }
   .data-table-wrap .data-table td {
