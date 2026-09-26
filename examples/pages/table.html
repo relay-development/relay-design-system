@@ -21,40 +21,42 @@
           <p class="card-subtitle">項目名の行（<code class="px-1 bg-neutral-100 rounded">thead</code>）が上、データ行（<code class="px-1 bg-neutral-100 rounded">tbody</code>）が下。値が無いセルは <code class="px-1 bg-neutral-100 rounded">—</code> を <code class="px-1 bg-neutral-100 rounded">text-fg-middle</code> で表示（10.35:1、WCAG AAA）</p>
         </div>
         <div class="card-body">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>Item</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Component</th>
-                <th>Optional</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Container</td>
-                <td>コンテナ要素</td>
-                <td></td>
-                <td><span class="text-fg-middle">—</span></td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Header</td>
-                <td>ヘッダー要素</td>
-                <td></td>
-                <td><span class="text-fg-middle">—</span></td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Body</td>
-                <td>ボディ要素</td>
-                <td></td>
-                <td><span class="text-fg-middle">—</span></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="data-table-wrap" tabindex="0">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Component</th>
+                  <th>Optional</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1</td>
+                  <td>Container</td>
+                  <td>コンテナ要素</td>
+                  <td></td>
+                  <td><span class="text-fg-middle">—</span></td>
+                </tr>
+                <tr>
+                  <td>2</td>
+                  <td>Header</td>
+                  <td>ヘッダー要素</td>
+                  <td></td>
+                  <td><span class="text-fg-middle">—</span></td>
+                </tr>
+                <tr>
+                  <td>3</td>
+                  <td>Body</td>
+                  <td>ボディ要素</td>
+                  <td></td>
+                  <td><span class="text-fg-middle">—</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
@@ -65,36 +67,38 @@
           <p class="card-subtitle">セルにはバッジやリンク、ボタンも入れられる</p>
         </div>
         <div class="card-body">
-          <table class="data-table">
-            <thead>
-              <tr>
-                <th>案件名</th>
-                <th>ステータス</th>
-                <th>担当者</th>
-                <th>詳細</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Aプロジェクト</td>
-                <td><span class="badge badge-soft-success">公開中</span></td>
-                <td>山田 太郎</td>
-                <td><a class="link" href="#table"><span class="link-label">詳細を見る</span></a></td>
-              </tr>
-              <tr>
-                <td>Bプロジェクト</td>
-                <td><span class="badge badge-soft-warning">審査中</span></td>
-                <td>佐藤 花子</td>
-                <td><a class="link" href="#table"><span class="link-label">詳細を見る</span></a></td>
-              </tr>
-              <tr>
-                <td>Cプロジェクト</td>
-                <td><span class="badge badge-soft-neutral">下書き</span></td>
-                <td><span class="text-fg-middle">—</span></td>
-                <td><a class="link" href="#table"><span class="link-label">詳細を見る</span></a></td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="data-table-wrap" tabindex="0">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>案件名</th>
+                  <th>ステータス</th>
+                  <th>担当者</th>
+                  <th>詳細</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Aプロジェクト</td>
+                  <td><span class="badge badge-soft-success">公開中</span></td>
+                  <td>山田 太郎</td>
+                  <td><a class="link" href="#table"><span class="link-label">詳細を見る</span></a></td>
+                </tr>
+                <tr>
+                  <td>Bプロジェクト</td>
+                  <td><span class="badge badge-soft-warning">審査中</span></td>
+                  <td>佐藤 花子</td>
+                  <td><a class="link" href="#table"><span class="link-label">詳細を見る</span></a></td>
+                </tr>
+                <tr>
+                  <td>Cプロジェクト</td>
+                  <td><span class="badge badge-soft-neutral">下書き</span></td>
+                  <td><span class="text-fg-middle">—</span></td>
+                  <td><a class="link" href="#table"><span class="link-label">詳細を見る</span></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
 
