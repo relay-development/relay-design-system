@@ -871,3 +871,107 @@ document.addEventListener("click", (e) => {
   const live = root.querySelector("[aria-live]");
   if (live) live.textContent = `『${value}』を削除しました`;
 });
+
+// Form pattern — [data-form-demo] の見本。送信したとき・入力を終えたとき（blur）に検証し、入力の途中では検証しない。
+// 一度エラーが出た欄は、直したらその場で消す。送信時のエラーが 1〜2 件なら最初の欄へ、3 件以上ならまとめ（alert）へフォーカス。
+const FORM_MESSAGES = {
+  name: (el) => (el.value.trim() ? "" : "氏名を入力してください"),
+  email: (el) => {
+    const v = el.value.trim();
+    if (!v) return "メールアドレスを入力してください";
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : "メールアドレスの形式で入力してください（例: yamada@example.com）";
+  },
+};
+
+function formFieldError(field) {
+  if (field.matches("fieldset[data-required-group]")) {
+    return field.querySelector("input:checked") ? "" : `${field.dataset.label}を選んでください`;
+  }
+  return FORM_MESSAGES[field.name]?.(field) ?? "";
+}
+
+function showFormFieldError(field, message) {
+  const err = document.getElementById(`${field.id}-err`);
+  if (!err) return;
+  err.textContent = message ? `＊${message}` : "";
+  err.hidden = !message;
+  field.dataset.touched = "true";
+  if (field.matches("fieldset")) {
+    field.toggleAttribute("aria-invalid", Boolean(message));
+    return;
+  }
+  field.classList.toggle("input-error", Boolean(message));
+  if (message) field.setAttribute("aria-invalid", "true");
+  else field.removeAttribute("aria-invalid");
+  // エラー文を aria-describedby の先頭に（補足より先に読ませる）
+  const ids = (field.getAttribute("aria-describedby") || "").split(/\s+/).filter((id) => id && id !== err.id);
+  if (message) ids.unshift(err.id);
+  if (ids.length) field.setAttribute("aria-describedby", ids.join(" "));
+  else field.removeAttribute("aria-describedby");
+}
+
+const formFields = (form) => [...form.querySelectorAll("input[required], fieldset[data-required-group]")];
+
+document.addEventListener("submit", (e) => {
+  const form = e.target.closest?.("[data-form-demo]");
+  if (!form) return;
+  e.preventDefault();
+  const errors = formFields(form)
+    .map((field) => ({ field, message: formFieldError(field) }))
+    .filter(({ field, message }) => (showFormFieldError(field, message), message));
+  const summary = form.querySelector("[data-form-summary]");
+  const done = form.querySelector("[data-form-done]");
+  done.hidden = errors.length > 0;
+  if (errors.length >= 3) {
+    form.querySelector("[data-form-summary-title]").textContent = `入力内容を確認してください（${errors.length} 件）`;
+    form.querySelector("[data-form-summary-list]").replaceChildren(...errors.map(({ field, message }) => {
+      const li = document.createElement("li");
+      const a = document.createElement("a");
+      a.className = "link";
+      a.href = `#${field.matches("fieldset") ? field.querySelector("input").id || field.id : field.id}`;
+      a.dataset.focusField = field.id;
+      a.innerHTML = `<span class="link-label"></span>`;
+      a.firstChild.textContent = `${field.dataset.label}: ${message}`;
+      li.append(a);
+      return li;
+    }));
+    summary.hidden = false;
+    summary.focus();
+  } else {
+    summary.hidden = true;
+    const first = errors[0]?.field;
+    (first?.matches("fieldset") ? first.querySelector("input") : first)?.focus();
+  }
+});
+
+// 入力を終えたとき（フォーカスが外れたとき）に検証する。まだ触っていない欄は、フォーカスを通過しただけでは検証しない
+document.addEventListener("focusout", (e) => {
+  const form = e.target.closest?.("[data-form-demo]");
+  if (!form || !e.target.matches("input[required]")) return;
+  if (!e.target.value && !e.target.dataset.touched) return;
+  showFormFieldError(e.target, formFieldError(e.target));
+});
+
+// 一度エラーが出た欄は、入力のたびに文言を今の状態に合わせ、直したらその場で消す
+// （エラーが出ていない欄に、入力の途中で新しくエラーを出すことはしない）
+document.addEventListener("input", (e) => {
+  const form = e.target.closest?.("[data-form-demo]");
+  if (!form) return;
+  const field = e.target.matches("input[type=radio]") ? e.target.closest("fieldset[data-required-group]") : e.target;
+  const err = field && document.getElementById(`${field.id}-err`);
+  if (!err || err.hidden) return;
+  showFormFieldError(field, formFieldError(field));
+});
+document.addEventListener("change", (e) => {
+  const group = e.target.closest?.("[data-form-demo] fieldset[data-required-group]");
+  if (group?.dataset.touched) showFormFieldError(group, formFieldError(group));
+});
+
+// まとめのリンク — 対象の入力欄へフォーカスを移す（ラジオの組は最初の選択肢）
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("[data-form-demo] [data-focus-field]");
+  if (!a) return;
+  e.preventDefault();
+  const field = document.getElementById(a.dataset.focusField);
+  (field?.matches("fieldset") ? field.querySelector("input") : field)?.focus();
+});
