@@ -177,7 +177,9 @@ function extractClassTokens(html) {
   // className = / classList.add|toggle|replace( / setAttribute("class", の文の中の文字列リテラルをクラス列として読む
   for (const m of html.matchAll(/(?:\.className\s*=|\.classList\.(?:add|toggle|replace)\s*\(|setAttribute\s*\(\s*["']class["']\s*,)([^;\n]*)/g)) {
     for (const lit of m[1].matchAll(/["'`]([^"'`]*)["'`]/g)) {
-      for (const t of lit[1].split(/\s+/)) if (/^[A-Za-z][\w:-]*$/.test(t)) tokens.add(t);
+      // "-" で終わる語は "inline-message-" + theme のようにつなげる途中の文字なので、クラスとして数えない
+      // （実例: 2026-09-28 の action-feedback が「捏造 variant: inline-message-」と誤判定された）
+      for (const t of lit[1].split(/\s+/)) if (/^[A-Za-z][\w:-]*$/.test(t) && !t.endsWith("-")) tokens.add(t);
     }
   }
   return [...tokens];
