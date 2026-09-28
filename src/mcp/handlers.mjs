@@ -13,6 +13,8 @@
  *     get_setup                — CSS 導入手順（UI 着手前に最初に呼ぶ）
  *     list_components          — every component with name / 和名 / summary / classes
  *     get_component(name)      — full spec: props, states, colors, usage, classes, snippet
+ *     list_patterns            — UI patterns（フォーム / フィードバック 等の画面の組み立て方）の一覧
+ *     get_pattern(name)        — パターンの本文（カタログの Patterns ページより）
  *     get_tokens(category?)    — colors / container / typography / spacing / radius / shadow
  *     get_design_principles    — non-negotiable rules + forbidden patterns
  *     get_accessibility        — WCAG 2.2 チェックリスト（DS 担保範囲 + プロダクト必須実装）
@@ -47,6 +49,7 @@ export const INSTRUCTIONS = [
   "【実装フロー】",
   "0. get_setup を呼び、CSS が導入済みか確認する（未導入なら導入してから UI を書く）。",
   "1. get_design_principles で必須ルールと禁止パターンを、list_components でコンポーネントの全体像を把握する。",
+  "1b. フォーム（入力画面）・フィードバック（保存の結果・エラー・お知らせの出し方）のように、複数のコンポーネントを組み合わせる画面は、list_patterns で該当するパターンを探し、get_pattern(\"<name>\") で並べ方・置き場所・決め方を確認してから部品を選ぶ。",
   "2. 使うコンポーネントごとに get_component(\"<name>\") を呼び、返ってくるコピペ用 HTML スニペットとクラスを土台にする（自分で markup をゼロから組まない）。機能（用途）と使用法の NG を必ず確認し、用途が合わないコンポーネントを流用しない（例: 遷移に button を使わない）。HTML 要素そのものに見える UI もコンポーネント（a 要素のテキストリンク = link、select 要素 = select）なので、素の要素や独自クラスで書かず get_component を引く。",
   "3. 色・余白・タイポ・角丸・影の具体値が要るときは get_tokens を呼び、解決済みの実値またはトークン名を使う。",
   "4. ロゴ・イラストは list_assets の直リンク URL を使う（独自に作らない）。空状態・ヒーロー・案内・完了画面などイラストが場面に合うときは、独自の SVG イラストを描かず必ず list_assets から選ぶこと。",
@@ -55,7 +58,7 @@ export const INSTRUCTIONS = [
   "",
   "【事前知識で答えない】",
   "relay のクラス名・トークン値・コンポーネント仕様に関する回答は、UI を実装しない場合（質問への回答・コードレビュー・相談）でも、事前知識のみで答えず必ず get_component / get_tokens / search で確認してから答えること。仕様は更新されるため、記憶に頼ると古い・存在しないクラス（例: .badge-error — 正しくは .badge-solid-danger）を案内する恐れがある。",
-  "「どのコンポーネントを使うべきか」の相談も、記憶で列挙せずまず list_components を呼ぶこと。",
+  "「どのコンポーネントを使うべきか」の相談も、記憶で列挙せずまず list_components を呼ぶこと。画面の組み立て方（フォームの並べ方、結果やエラーをどこに出すか 等）の相談は list_patterns / get_pattern で確認すること。",
   "",
   "【バージョンずれ】",
   `この MCP の知識は @light-right/design-system v${index.version} 基準。利用プロジェクトの導入バージョン（package.json）が異なる場合は node_modules 内の実 CSS（dist/relay.css）を正とし、「クラスを書いたのに効かない」ときはハードコードに逃げる前にバージョン差を疑うこと。`,
@@ -83,6 +86,52 @@ function findComponent(query) {
   );
 }
 
+function findPattern(query) {
+  const patterns = index.patterns || [];
+  const q = String(query || "").trim().toLowerCase();
+  if (!q) return null;
+  return (
+    patterns.find((p) => p.name === q) ||
+    patterns.find((p) => p.title && p.title.toLowerCase() === q) ||
+    patterns.find((p) => p.name.includes(q) || q.includes(p.name)) ||
+    patterns.find((p) => p.title && (p.title.includes(q) || q.includes(p.title))) ||
+    null
+  );
+}
+
+function formatPatternList() {
+  const patterns = index.patterns || [];
+  const lines = [
+    `# relay Design System — ${patterns.length} patterns (v${index.version})`,
+    "",
+    "パターンは、複数のコンポーネントを組み合わせた画面の作り方（並べ方・書き方・置き場所・決め方）。部品そのものの仕様は get_component、組み合わせ方はここで決まる。",
+    `該当するパターンがあれば、部品を選ぶ前に get_pattern("<name>") で本文を読むこと。`,
+    "",
+  ];
+  for (const p of patterns) {
+    lines.push(`- **${p.name}**（${p.title}） — ${p.summary}`);
+    if (p.components && p.components.length) lines.push(`  使う部品: ${p.components.join(", ")}`);
+    if (p.sections && p.sections.length) lines.push(`  節: ${p.sections.join(" / ")}`);
+  }
+  return lines.join("\n");
+}
+
+function formatPattern(p) {
+  const out = [`# ${p.title}（pattern: ${p.name}）`, "", p.summary, ""];
+  out.push(
+    `> このパターンは @light-right/design-system **v${index.version}** 基準（正本: カタログ ${index.catalogUrl}/${p.name}.html）。本文中の「（get_component("…")）」はその部品の仕様の引き方。部品の markup は必ず get_component のスニペットを土台にすること。`,
+    "",
+  );
+  if (p.components && p.components.length) {
+    out.push(`使う部品: ${p.components.map((c) => `get_component("${c}")`).join(" / ")}`);
+  }
+  if (p.related && p.related.length) {
+    out.push(`関連するパターン: ${p.related.map((r) => `get_pattern("${r}")`).join(" / ")}`);
+  }
+  out.push("", p.body);
+  return out.join("\n");
+}
+
 function formatComponentList() {
   const lines = [
     `# relay Design System — ${index.components.length} components (v${index.version})`,
@@ -90,6 +139,7 @@ function formatComponentList() {
     `各コンポーネントの完全仕様は get_component("<name>") を呼んでください（props / 状態 / 色 / usage / クラス / snippet）。`,
     `UI を書く前に get_design_principles で必須ルールと禁止パターンを確認することを推奨します。`,
     `HTML 要素そのものに見える UI もコンポーネントです（a 要素のテキストリンク = link、select 要素 = select、table = simple-table / data-table）。素の要素や独自クラスで書かず、該当コンポーネントを get_component で引いてください。`,
+    `フォームや、保存の結果・エラー・お知らせの出し方のように部品を組み合わせる画面は、list_patterns / get_pattern に組み立て方があります。`,
     "",
   ];
   for (const c of index.components) {
@@ -268,6 +318,7 @@ function formatSetup() {
     "導入できたらまず **get_design_principles**（必須ルール・禁止パターン）と **list_components**（コンポーネント全体像）を読む。",
     "その後、使うコンポーネントごとに **get_component** を呼び、具体値が要るときだけ **get_tokens** を参照して UI を実装する。",
     "アイコンは **get_icon**（Lucide sprite の symbol と参照方法。外部スプライトが使えない環境向けの inline 定義も返す）、ロゴ/イラストは **list_assets** を参照。",
+    "フォームや、保存の結果・エラー・お知らせの出し方のように部品を組み合わせる画面は **list_patterns** / **get_pattern** で組み立て方を確認する。",
   ].join("\n");
 }
 
@@ -503,6 +554,14 @@ function runSearch(query) {
     )
     .slice(0, 10);
 
+  const patternHits = (index.patterns || []).filter(
+    (p) =>
+      p.name.includes(q) ||
+      (p.title && (p.title.toLowerCase().includes(q) || q.includes(p.title.toLowerCase()))) ||
+      (p.summary && p.summary.toLowerCase().includes(q)) ||
+      (p.body && p.body.toLowerCase().includes(q)),
+  );
+
   const tokenHits = [];
   for (const [cat, entries] of Object.entries(index.tokens)) {
     for (const t of entries) {
@@ -543,7 +602,7 @@ function runSearch(query) {
   const classPrefix = !classExact && rawQ.length >= 2 ? all.filter((c) => c.startsWith(rawQ)).slice(0, 15) : [];
   // クラス形（ASCII・記号のみ）で見つからなければ「存在しない」と明言する。
   // 「ヒットなし」だけだと AI は search の否定を信用せず実 CSS を grep しに行く（実例: tabular-nums）。
-  const classMissing = !!rawQ && !classExact && isClassShaped(rawQ) && (/[-:]/.test(rawQ) || !compHits.length && !tokenHits.length && !assetHits.length);
+  const classMissing = !!rawQ && !classExact && isClassShaped(rawQ) && (/[-:]/.test(rawQ) || !compHits.length && !patternHits.length && !tokenHits.length && !assetHits.length);
 
   if (bulkClassMode) {
     const rows = tokens.map((t) => {
@@ -583,6 +642,15 @@ function runSearch(query) {
   if (classPrefix.length) {
     out.push(`## \`${rawQ}…\` で始まる実在クラス（relay.css に含まれる）`, "", ...classPrefix.map((c) => `- \`${c}\``), "");
   }
+  // パターン名・和名そのものの検索（「フォーム」等）は、部品より先に組み立て方を示す
+  const patternFirst = patternHits.some((p) => p.name === q || (p.title && p.title.toLowerCase() === q));
+  const pushPatterns = () => {
+    if (!patternHits.length) return;
+    out.push("## パターン（画面の組み立て方。get_pattern で本文）", "");
+    for (const p of patternHits) out.push(`- **${p.name}**（${p.title}） — ${p.summary} → get_pattern("${p.name}")`);
+    out.push("");
+  };
+  if (patternFirst) pushPatterns();
   if (compHits.length) {
     out.push("## コンポーネント（get_component で詳細）", "");
     for (const c of compHits) {
@@ -590,6 +658,7 @@ function runSearch(query) {
     }
     out.push("");
   }
+  if (!patternFirst) pushPatterns();
   if (tokenHits.length) {
     out.push(`## トークン（get_tokens でカテゴリ全件）`, "");
     for (const t of tokenHits.slice(0, 20)) out.push(`- [${t.cat}] \`${t.name}\`: ${t.value}`);
@@ -608,12 +677,12 @@ function runSearch(query) {
     for (const i of iconHits) out.push(`- \`lucide-${i.name}\` → get_icon("${i.name}")`);
     out.push("");
   }
-  if (!compHits.length && !tokenHits.length && !assetHits.length && !iconHits.length && !classExact && !classPrefix.length && !classMissing) {
+  if (!compHits.length && !patternHits.length && !tokenHits.length && !assetHits.length && !iconHits.length && !classExact && !classPrefix.length && !classMissing) {
     // 誘導先は「どのツールに何があるか」を添える。a11y・ユーティリティは search の索引外なので
     // get_accessibility への誘導が必須（実例: 「スキップリンク sr-only」の検索が空振りし、
     // エージェントが誘導に頼らず自力で get_accessibility に到達して正解を得た）
     out.push(
-      "ヒットなし。探しものに応じて: コンポーネント一覧は list_components、トークン実値は get_tokens、" +
+      "ヒットなし。探しものに応じて: コンポーネント一覧は list_components、画面の組み立て方は list_patterns、トークン実値は get_tokens、" +
         "設計原則・禁止パターンは get_design_principles、アクセシビリティやユーティリティ" +
         "（sr-only / スキップリンク / フォーカスリング等）の実装ガイドは get_accessibility（topic で節指定可）を参照してください。",
     );
@@ -643,6 +712,23 @@ export const TOOLS = [
     inputSchema: {
       type: "object",
       properties: { name: { type: "string", description: "コンポーネント英名（例: button, input, alert, card）" } },
+      required: ["name"],
+      additionalProperties: false,
+    },
+  },
+  {
+    name: "list_patterns",
+    description:
+      "relay の UI パターン一覧（フォーム・フィードバック 等）を、概要・使う部品・節の目次つきで返す。パターンは複数のコンポーネントを組み合わせた画面の作り方（並べ方・置き場所・決め方）。入力画面や、保存の結果・エラー・お知らせの出し方を決めるときに使う。",
+    inputSchema: { type: "object", properties: {}, additionalProperties: false },
+  },
+  {
+    name: "get_pattern",
+    description:
+      "指定パターンの本文を返す（原則・並べ方・Good / Don't・決め方の表・アクセシビリティ）。本文中の部品は get_component(\"<name>\") の形で示すので、markup はそちらのスニペットを土台にする。name は 'form' / 'feedback' など（和名でも可）。",
+    inputSchema: {
+      type: "object",
+      properties: { name: { type: "string", description: "パターン名（例: form, feedback。和名 フォーム / フィードバック でも可）" } },
       required: ["name"],
       additionalProperties: false,
     },
@@ -700,7 +786,7 @@ export const TOOLS = [
   {
     name: "search",
     description:
-      "コンポーネント / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。クラス名を渡すと relay.css に存在するか／しないかを明言して返す（実 CSS の grep 不要）。空白区切りで複数渡せば一括で ○× 表になる（例: 'flex-1 md:grid-cols-3 tabular-nums'）。",
+      "コンポーネント / パターン / トークン / 規約を横断であいまい検索し、次に呼ぶべきツールを示す。例: 'ボタン', 'primary', '余白', 'shadow'。クラス名を渡すと relay.css に存在するか／しないかを明言して返す（実 CSS の grep 不要）。空白区切りで複数渡せば一括で ○× 表になる（例: 'flex-1 md:grid-cols-3 tabular-nums'）。",
     inputSchema: {
       type: "object",
       properties: { query: { type: "string", description: "検索キーワード（日本語可）" } },
@@ -730,6 +816,19 @@ export function callTool(name, args = {}) {
         };
       }
       return { text: formatComponent(c) };
+    }
+    case "list_patterns":
+      return { text: formatPatternList() };
+    case "get_pattern": {
+      const p = findPattern(args.name);
+      if (!p) {
+        return {
+          text: `パターン "${args.name}" が見つかりません。\n利用可能: ${(index.patterns || [])
+            .map((x) => `${x.name}（${x.title}）`)
+            .join(", ")}`,
+        };
+      }
+      return { text: formatPattern(p) };
     }
     case "get_tokens": {
       if (args.category && !TOKEN_CATEGORIES.includes(args.category)) {
@@ -768,6 +867,12 @@ export function listResources() {
       description: c.summary || `relay ${c.name} component spec`,
       mimeType: "text/markdown",
     })),
+    ...(index.patterns || []).map((p) => ({
+      uri: `relay://pattern/${p.name}`,
+      name: `Pattern: ${p.name}（${p.title}）`,
+      description: p.summary,
+      mimeType: "text/markdown",
+    })),
   ];
 }
 
@@ -780,6 +885,11 @@ export function readResource(uri) {
   if (m) {
     const c = index.components.find((x) => x.name === m[1]);
     if (c) return { uri, mimeType: "text/markdown", text: formatComponent(c) };
+  }
+  const pm = uri.match(/^relay:\/\/pattern\/(.+)$/);
+  if (pm) {
+    const p = (index.patterns || []).find((x) => x.name === pm[1]);
+    if (p) return { uri, mimeType: "text/markdown", text: formatPattern(p) };
   }
   throw new Error(`Unknown resource: ${uri}`);
 }

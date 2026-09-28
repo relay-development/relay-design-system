@@ -1,6 +1,6 @@
 # relay Design System MCP — ツールリファレンス
 
-relay Design System の MCP サーバーが提供する **9 つのツール** と、その使い方をまとめる。
+relay Design System の MCP サーバーが提供する **11 のツール** と、その使い方をまとめる。
 
 - **リモート（authless / Streamable HTTP）**: `https://relay-design-system-mcp.relaytown.workers.dev/mcp`
 - **ローカル（stdio / npm 同梱）**: `npx relay-ds-mcp`（`@light-right/design-system` に同梱）
@@ -23,6 +23,8 @@ relay Design System の MCP サーバーが提供する **9 つのツール** �
 | 7 | `list_assets` | なし | ロゴ／イラストの直リンク URL |
 | 8 | `search` | `query` | 横断あいまい検索 |
 | 9 | `get_icon` | `name?` | 同梱 Lucide アイコンの `<symbol>` と参照方法（省略で一覧） |
+| 10 | `list_patterns` | なし | UI パターン（フォーム・フィードバック 等）の一覧 |
+| 11 | `get_pattern` | `name` | 指定パターンの本文（並べ方・置き場所・決め方・Good / Don't） |
 
 ---
 
@@ -135,6 +137,29 @@ relay Design System の MCP サーバーが提供する **9 つのツール** �
 
 ---
 
+## 10. `list_patterns` — UI パターン一覧
+
+**入力**: なし
+
+**何ができる**: カタログの Patterns にあるパターン（複数のコンポーネントを組み合わせた画面の作り方）を、概要・使う部品・節の目次つきで返す。入力画面を作るとき、保存の結果・エラー・お知らせをどこにどう出すかを決めるときに、部品を選ぶ前に呼ぶ。
+
+- 一覧の正本は [scripts/build-pages.mjs](../scripts/build-pages.mjs) の `PAGES` のうち `group: "Patterns"` の行（カタログのサイドバーと同じ）。パターンを足すとカタログと MCP に同時に載る
+
+---
+
+## 11. `get_pattern(name)` — パターンの本文
+
+**入力**: `name`（パターン名。例: `form` / `feedback`。和名 `フォーム` / `フィードバック` でも解決される）
+
+**何ができる**: パターンの本文を Markdown で返す（原則・並べ方・Good / Don't の説明・決め方の表・アクセシビリティ・関連する WCAG 基準）。
+
+- 本文の正本はカタログのページ断片 `examples/pages/<name>.html`。build-mcp が HTML を Markdown に変換して index に入れる（コンポーネントのヘッダ正本と同じく、書く場所を 1 つにするため）
+- 見本の UI（`form` / `inert` / `hidden` の要素、アイコン）は落とす。見た目の見本で文章に意味が無いものは `data-mcp-skip` を付けて除く
+- カタログ内のリンクは `get_component("<name>")` / `get_pattern("<name>")` に言い換えて返す（エージェントはカタログのページを開けないため）。部品の markup はそちらのスニペットを土台にする
+- `search` もパターンを引く（パターン名・和名そのものの検索では、部品より先にパターンを示す）
+
+---
+
 ## セットアップ
 
 ### ローカル版（stdio）
@@ -180,7 +205,7 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 - **接続時の常駐ガイダンス（instructions）**: 旧プロトコル（〜2025-11-25）では `initialize`、新プロトコル（2026-07-28〜）では `server/discover` の結果として配布（リモートサーバーは両対応）。接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
 - **事前知識で答えないルール（instructions 内）**: 実装を伴わない質問・レビュー・相談でも、relay の仕様に関する回答は必ずツールで確認してから行うことを instructions で強制。AI が記憶で答えて古い・存在しないクラスを案内するハルシネーションを防ぐ（SmartHR Design System の SKILL.md 方式）。
 - **バージョンずれ対策**: instructions・get_setup・get_component の 3 箇所で「この知識は v〇〇 基準。利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS を正とする」を明示。MCP の知識と実 CSS のバージョン差で「クラスが効かない → ハードコードに逃げる」事故を防ぐ。
-- **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。DESIGN.md（`relay://design-constitution`）と各コンポーネント仕様（`relay://component/<name>`）。
+- **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。DESIGN.md（`relay://design-constitution`）と各コンポーネント仕様（`relay://component/<name>`）、各パターン（`relay://pattern/<name>`）。
 - **prompts**: 現在は空（スプリント開発キットの解体〈2026-08〉に伴い `sprint` プロンプトを廃止。トランスポートとの API 互換のため機構自体は残す）。
 
 ---
@@ -193,6 +218,8 @@ get_setup            ← CSS 導入確認（未導入なら導入してから書
 get_design_principles ← 必須ルール / 禁止パターンを把握
   ↓
 list_components      ← コンポーネントの全体像を把握
+  ↓
+list_patterns / get_pattern(<name>) ← フォームや結果・エラーの出し方など、部品を組み合わせる画面のとき
   ↓
 get_component(<name>) ← 使うコンポーネントごとに。機能・使用法(NG)・スニペットを土台に
   ↓

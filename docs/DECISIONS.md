@@ -147,3 +147,11 @@ icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…i
 - **到達性**: 利用者は「トースト」「スナックバー」の語で探すため、inline-message の `別名:` に toast / snackbar を入れて get_component("toast") と search("トースト") がこの行き先案内に着地するようにした。alert に `別名: バナー / banner`、modal に `別名: ダイアログ / dialog` を追加し、Primer の語彙でも引ける。DESIGN.md の禁止パターンに「fixed + setTimeout のトースト自作」を追加し、capability お題 `action-feedback` で効果を測る
 - **選ばなかった案**: Material 流のスナックバー（下端固定・アクション 1 つ・自動消去）を追加する → 時間制限と DOM 位置の乖離は仕様上避けられず、DS 側で WCAG 2.2.1 / 1.3.2 の違反を作る。alert に compact variant を足して兼用する → 枠と背景を持つ alert は「ページ級の常設」の見た目であり、ボタン横に置くと重い。役割が違うものは別コンポーネントにして NG で相互に行き先を書く方が AI エージェントの選定が安定する
 - **原則**: フィードバック UI は「どこに置くか（操作直近 / ページ級 / 最前面）」と「消え方（残る / 利用者が閉じる）」で選ぶ。時間で勝手に消える UI は作らない
+
+## パターンを MCP で引けるようにする — 正本はカタログのページ、build-mcp が Markdown に変換（2026-09）
+
+- **背景**: カタログに Patterns（フォーム / フィードバック）を足したが、MCP には部品単位の get_component しか無く、エージェントは「部品をどう組み合わせるか」（項目の並べ方、エラーの出し方、結果を置く場所）を知る手段が無かった。フィードバックの方針は get_accessibility の 8 章と inline-message のヘッダに断片的に書かれているだけだった
+- **判断**: `list_patterns`（概要・使う部品・節の目次）と `get_pattern(name)`（本文）を追加する。一覧の正本は scripts/build-pages.mjs の `group: "Patterns"` の行、本文の正本はカタログのページ断片 examples/pages/<name>.html で、build-mcp が HTML を Markdown に変換して index に入れる。見本の UI（form / inert / hidden、アイコン）は落とし、文章に意味の無い見た目の見本は `data-mcp-skip` で除く。カタログ内のリンクは `get_component("…")` / `get_pattern("…")` に言い換える
+- **選ばなかった案**: パターンごとに Markdown の正本（docs/patterns/*.md）を別に持つ → カタログのページと二重管理になり、片方だけ直される。コンポーネントの「ヘッダが MCP の正本」と同じく、書く場所を 1 つにする
+- **原則**: 部品の仕様は get_component、組み合わせ方は get_pattern。instructions の実装フローに「部品を組み合わせる画面はまず list_patterns / get_pattern」を入れ、search でもパターン名の検索ではパターンを先に示す
+
