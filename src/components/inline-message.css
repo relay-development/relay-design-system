@@ -20,10 +20,11 @@
  *   サイズ / 色 (semantic tokens):
  *     md   : text 16/24 bold、icon 20px（24px の行高に垂直中央）、gap 8px
  *     sm   : text 14/20 bold、icon 16px（20px の行高に垂直中央）、gap 4px
- *     文字とアイコンは同色。白（surface）の上でもページの地（neutral/50）の上でも 7:1 以上（AAA）にする
+ *     文字とアイコンは同色。白（surface）の上でもページの地（neutral/50）の上でも、success / neutral は 7:1 以上（AAA）、
+ *     negative / warning は 4.5:1 以上（AA。AAA まで暗くすると赤・黄の色みが失われ、警告の意味が伝わりにくいため）
  *     success  : primary/800（白 9.2:1 / neutral/50 8.8:1）
- *     negative : negative/800（白 8.3:1 / neutral/50 7.9:1）
- *     warning  : secondary/900（白 8.0:1 / neutral/50 7.6:1）
+ *     negative : negative/600（白 4.8:1 / neutral/50 4.6:1）
+ *     warning  : secondary/800（白 6.2:1 / neutral/50 5.9:1。secondary/700 は 4.3:1 で不足）
  *     neutral  : fg/middle（取得できない・利用できない状態。白 10.4:1 / neutral/50 9.9:1）
  *     背景・枠なし。置いた面の色をそのまま透過する
  *
@@ -106,11 +107,11 @@
 
   /* ============================================================
    * Theme — success / negative / warning / neutral
-   *   文字とアイコンを同色にする。白（surface）の上でもページの地（neutral/50）の上でも
-   *   7:1 以上（AAA）になる濃さにする
+   *   文字とアイコンを同色にする。白（surface）の上でもページの地（neutral/50）の上でも、
+   *   success / neutral は 7:1 以上（AAA）、negative / warning は 4.5:1 以上（AA）の濃さにする
    * ============================================================ */
   .inline-message-success  { color: var(--color-primary-800); }
-  .inline-message-negative { color: var(--color-negative-800); }
-  .inline-message-warning  { color: var(--color-secondary-900); }
+  .inline-message-negative { color: var(--color-negative-600); }
+  .inline-message-warning  { color: var(--color-secondary-800); }
   .inline-message-neutral  { color: var(--color-fg-middle); }
 }
