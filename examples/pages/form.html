@@ -7,9 +7,9 @@
       <p class="typo-article text-fg-high mb-10">会員登録・問い合わせ・設定の変更のように、利用者に情報を入力してもらう画面の組み立て方です。部品は <a class="link" href="./label-control.html"><span class="link-label">ラベルコントロール</span></a>・<a class="link" href="./input.html"><span class="link-label">インプット</span></a>・<a class="link" href="./selector.html"><span class="link-label">セレクター</span></a>・<a class="link" href="./checkbox.html"><span class="link-label">チェックボックス</span></a>・<a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>・<a class="link" href="./textarea.html"><span class="link-label">テキストエリア</span></a>などをそのまま使い、このページでは<strong>並べ方・書き方・エラーの伝え方</strong>を決めます。</p>
 
       <!-- ===== 見本 ===== -->
-      <h3 class="typo-xlarge mb-4">見本</h3>
-      <p class="typo-article text-fg-high mb-6">何も入れずに「招待する」を押すと、エラーの出方を試せます（役割は安全な初期値「閲覧者」を選んであります）。エラーが 3 件以上のときは、フォームの上にまとめを出してそこへフォーカスを移します。</p>
-      <div class="card mb-12">
+      <h3 class="typo-xlarge mb-4" data-mcp-skip>見本</h3>
+      <p class="typo-article text-fg-high mb-6" data-mcp-skip>何も入れずに「招待する」を押すと、エラーの出方を試せます（役割は安全な初期値「閲覧者」を選んであります）。エラーが 3 件以上のときは、フォームの上にまとめを出してそこへフォーカスを移します。</p>
+      <div class="card mb-12" data-mcp-skip>
         <div class="card-header">
           <h4 class="card-title">メンバーを招待する</h4>
         </div>
@@ -77,7 +77,7 @@
       <p class="typo-article text-fg-high mb-6">1 つの項目は、上から「ラベル（＋必須／任意のバッジ）→ 入力欄 → エラー → 補足」の順に縦に積みます。エラーと補足は入力欄の<strong>真下</strong>に置き、<code class="px-1 bg-neutral-100 rounded">aria-describedby</code> で入力欄と結びます（エラーが先）。</p>
       <div class="card mb-12">
         <div class="card-body">
-          <div class="max-w-md">
+          <div class="max-w-md" data-mcp-skip>
             <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fa-email">メールアドレス</label><span class="label-badge label-badge-required">必須</span></div></div>
             <input type="email" class="input input-md input-error" id="fa-email" value="yamada@" aria-invalid="true" aria-describedby="fa-email-err fa-email-help" tabindex="-1" />
             <p class="field-error-text" id="fa-email-err">＊メールアドレスの形式で入力してください（例: yamada@example.com）</p>
@@ -115,12 +115,12 @@
         <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
-            <div class="mb-4"><div class="flex flex-col gap-4"><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">氏名</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: 氏名" /></div><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス" /></div></div></div>
+            <div class="mb-4" data-mcp-skip><div class="flex flex-col gap-4"><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">氏名</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: 氏名" /></div><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス" /></div></div></div>
             <p class="typo-medium text-fg-middle">上から下へ 1 本の流れで読める。拡大表示やスマホでも崩れない。</p>
           </div>
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
-            <div class="mb-4"><div class="grid grid-cols-2 gap-4"><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">氏名</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: 氏名（2 列）" /></div><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス（2 列）" /></div></div></div>
+            <div class="mb-4" data-mcp-skip><div class="grid grid-cols-2 gap-4"><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">氏名</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: 氏名（2 列）" /></div><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス（2 列）" /></div></div></div>
             <p class="typo-medium text-fg-middle">左右に並べると、どの順で入力するか迷い、右側の項目を見落としやすい。狭い画面では 1 列に崩れる前提が必要になる。</p>
           </div>
         </div>
@@ -144,12 +144,12 @@
         <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
-            <div class="mb-4"><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス" /><p class="field-support-text">例: yamada@example.com</p></div>
+            <div class="mb-4" data-mcp-skip><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス" /><p class="field-support-text">例: yamada@example.com</p></div>
             <p class="typo-medium text-fg-middle">入力したあとも何の欄か分かる。入力例は補足に書く。</p>
           </div>
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
-            <div class="mb-4"><input class="input input-md" placeholder="メールアドレス（必須）" tabindex="-1" aria-label="デモ: プレースホルダーだけ" /></div>
+            <div class="mb-4" data-mcp-skip><input class="input input-md" placeholder="メールアドレス（必須）" tabindex="-1" aria-label="デモ: プレースホルダーだけ" /></div>
             <p class="typo-medium text-fg-middle">プレースホルダーは入力すると消え、何の欄だったか分からなくなる。色が薄く、読み上げにも頼れない。</p>
           </div>
         </div>
@@ -200,12 +200,12 @@
         <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
-            <div class="mb-4"><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md input-error" value="yamada@" tabindex="-1" aria-label="デモ: メールアドレス（良いエラー）" /><p class="field-error-text">＊メールアドレスの形式で入力してください（例: yamada@example.com）</p></div>
+            <div class="mb-4" data-mcp-skip><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md input-error" value="yamada@" tabindex="-1" aria-label="デモ: メールアドレス（良いエラー）" /><p class="field-error-text">＊メールアドレスの形式で入力してください（例: yamada@example.com）</p></div>
             <p class="typo-medium text-fg-middle">何が違い、どう直せばよいかが分かる。</p>
           </div>
           <div class="p-6 min-w-0">
             <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
-            <div class="mb-4"><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md input-error" value="yamada@" tabindex="-1" aria-label="デモ: メールアドレス（悪いエラー）" /><p class="field-error-text">＊入力エラー</p></div>
+            <div class="mb-4" data-mcp-skip><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md input-error" value="yamada@" tabindex="-1" aria-label="デモ: メールアドレス（悪いエラー）" /><p class="field-error-text">＊入力エラー</p></div>
             <p class="typo-medium text-fg-middle">何が違うのか分からず、直せない。</p>
           </div>
         </div>

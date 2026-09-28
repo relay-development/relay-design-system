@@ -6,6 +6,8 @@
  *     src/tokens/*.css        — --token: value pairs grouped by category
  *     snippets/*.html         — copy-paste HTML, matched to a component by basename
  *     examples/pages/assets.html — downloadable brand assets (logo / illustrations)
+ *     examples/pages/<Patterns>.html — UI patterns (form / feedback …), listed by
+ *                               the group: "Patterns" entries of scripts/build-pages.mjs
  *     DESIGN.md               — the design constitution (principles + forbidden patterns)
  *     package.json            — name + version stamped onto the index
  *   output:
@@ -323,6 +325,222 @@ async function buildAssets() {
   return assets;
 }
 
+/* ------------------------------------------------------------------ patterns */
+
+// カタログのページ名 → コンポーネント名（ページ名とコンポーネント名が違うものだけ）
+const PAGE_TO_COMPONENT = { "link-text": "link", table: "data-table" };
+
+const VOID_TAGS = new Set(["br", "img", "input", "hr", "meta", "link", "source", "wbr", "col"]);
+// 本文に要らない要素（見本の UI・アイコン）。inert / hidden / data-mcp-skip の付いた要素も飛ばす
+const SKIP_TAGS = new Set(["svg", "script", "style", "form", "input", "select", "textarea", "button", "img"]);
+const BLOCK_TAGS = new Set(["section", "main", "div", "p", "ul", "ol", "li", "table", "pre", "h1", "h2", "h3", "h4", "h5", "fieldset"]);
+
+function decodeEntities(s) {
+  return s
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&");
+}
+
+/** 自前で書いたカタログの断片 HTML を木にする最小のパーサ（閉じ忘れには寛容） */
+function parseHtml(html) {
+  const root = { tag: "#root", attrs: {}, children: [] };
+  const stack = [root];
+  const re = /<!--[\s\S]*?-->|<\/([a-zA-Z][\w-]*)\s*>|<([a-zA-Z][\w-]*)((?:\s+[^\s=>/]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+))?)*)\s*(\/?)>|([^<]+)/g;
+  for (const m of html.matchAll(re)) {
+    const [, close, open, rawAttrs, selfClose, text] = m;
+    const top = stack[stack.length - 1];
+    if (text !== undefined) {
+      top.children.push({ tag: "#text", text });
+    } else if (open) {
+      const attrs = {};
+      for (const a of (rawAttrs || "").matchAll(/([^\s=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?/g)) {
+        attrs[a[1]] = a[2] ?? a[3] ?? a[4] ?? "";
+      }
+      const node = { tag: open.toLowerCase(), attrs, children: [] };
+      top.children.push(node);
+      if (!selfClose && !VOID_TAGS.has(node.tag)) stack.push(node);
+    } else if (close) {
+      const tag = close.toLowerCase();
+      const i = stack.map((n) => n.tag).lastIndexOf(tag);
+      if (i > 0) stack.length = i;
+    }
+  }
+  return root;
+}
+
+const hasClass = (n, c) => (n.attrs?.class || "").split(/\s+/).includes(c);
+const isSkipped = (n) =>
+  SKIP_TAGS.has(n.tag) || "inert" in n.attrs || "hidden" in n.attrs || "data-mcp-skip" in n.attrs;
+const hasBlockChild = (n) => n.children.some((c) => c.tag !== "#text" && !isSkipped(c) && (BLOCK_TAGS.has(c.tag) || hasBlockChild(c)));
+
+function textContent(n) {
+  if (n.tag === "#text") return decodeEntities(n.text);
+  return n.children.map(textContent).join("");
+}
+
+/** リンク先を MCP のツール呼び出しに言い換える（カタログのページはエージェントから開けないため） */
+function linkTarget(href, patternFiles, componentNames) {
+  const m = href.match(/^\.\/([\w-]+)\.html(?:#.*)?$/);
+  if (!m) return /^https?:/.test(href) ? href : null;
+  if (patternFiles.has(m[1])) return `get_pattern("${m[1]}")`;
+  const comp = PAGE_TO_COMPONENT[m[1]] || m[1];
+  if (componentNames.has(comp)) return `get_component("${comp}")`;
+  return null;
+}
+
+function inline(n, ctx) {
+  if (n.tag === "#text") return decodeEntities(n.text).replace(/\s+/g, " ");
+  if (isSkipped(n)) return "";
+  if (n.tag === "br") return " / ";
+  // チェックリストの行頭の「!」印は飾り
+  if (n.tag === "span" && textContent(n).trim() === "!") return "";
+  const inner = n.children.map((c) => inline(c, ctx)).join("");
+  if (n.tag === "code") return "`" + inner.trim() + "`";
+  if (n.tag === "strong" || n.tag === "b") return inner.trim() ? `**${inner.trim()}**` : "";
+  if (n.tag === "a") {
+    const target = linkTarget(n.attrs.href || "", ctx.patternFiles, ctx.componentNames);
+    if (target && /^https?:/.test(target)) return `[${inner.trim()}](${target})`;
+    if (target) {
+      ctx.links.add(target);
+      return `${inner.trim()}（${target}）`;
+    }
+    return inner;
+  }
+  return inner;
+}
+
+const cleanInline = (s) => s.replace(/\s+/g, " ").replace(/\s+([。、）」])/g, "$1").trim();
+
+function toMarkdown(n, ctx, out) {
+  if (n.tag === "#text") {
+    const t = cleanInline(inline(n, ctx));
+    if (t) out.push(t, "");
+    return;
+  }
+  if (isSkipped(n)) return;
+  switch (n.tag) {
+    case "h2":
+      return; // ページの題は get_pattern の見出しで出す
+    case "h3":
+    case "h4": {
+      const t = cleanInline(inline(n, ctx));
+      if (t) out.push(`${n.tag === "h3" ? "##" : "###"} ${t}`, "");
+      return;
+    }
+    case "ul":
+    case "ol": {
+      let i = 0;
+      for (const li of n.children.filter((c) => c.tag === "li" && !isSkipped(c))) {
+        i += 1;
+        const t = cleanInline(inline(li, ctx));
+        if (t) out.push(`${n.tag === "ol" ? `${i}.` : "-"} ${t}`);
+      }
+      out.push("");
+      return;
+    }
+    case "table": {
+      const rows = [];
+      let headerRows = 0;
+      const walk = (node, inHead) => {
+        for (const c of node.children) {
+          if (c.tag === "thead") walk(c, true);
+          else if (c.tag === "tbody" || c.tag === "tfoot") walk(c, false);
+          else if (c.tag === "tr" && !isSkipped(c)) {
+            const cells = c.children
+              .filter((x) => x.tag === "th" || x.tag === "td")
+              .map((x) => cleanInline(inline(x, ctx)).replace(/\|/g, "\\|"));
+            rows.push(cells);
+            if (inHead) headerRows += 1;
+          }
+        }
+      };
+      walk(n, false);
+      if (!rows.length) return;
+      // 見出し行の無い 2 列の表（simple-table の「項目 → 内容」）は箇条書きにする
+      if (!headerRows && rows.every((r) => r.length === 2)) {
+        for (const [k, v] of rows) out.push(`- **${k}**: ${v}`);
+        out.push("");
+        return;
+      }
+      const width = Math.max(...rows.map((r) => r.length));
+      const pad = (r) => [...r, ...Array(width - r.length).fill("")];
+      const head = headerRows ? rows[0] : Array(width).fill("");
+      const body = headerRows ? rows.slice(1) : rows;
+      out.push(`| ${pad(head).join(" | ")} |`, `|${" --- |".repeat(width)}`);
+      for (const r of body) out.push(`| ${pad(r).join(" | ")} |`);
+      out.push("");
+      return;
+    }
+    case "pre": {
+      const code = textContent(n).replace(/\[\[|\]\]/g, "").replace(/^\n+|\s+$/g, "");
+      out.push("```html", code, "```", "");
+      return;
+    }
+    case "p":
+    case "li":
+    case "span": {
+      let t = cleanInline(inline(n, ctx));
+      if (t === "Good" || t === "Don't") t = `**${t}**`;
+      if (t) out.push(t, "");
+      return;
+    }
+    default: {
+      // ページの題の行（h2 ＋ pattern バッジ）は get_pattern の見出しで出す
+      if (n.children.some((c) => c.tag === "h2")) return;
+      if (hasBlockChild(n)) {
+        for (const c of n.children) toMarkdown(c, ctx, out);
+      } else {
+        let t = cleanInline(inline(n, ctx));
+        if (t === "Good" || t === "Don't") t = `**${t}**`;
+        if (t) out.push(t, "");
+      }
+    }
+  }
+}
+
+/**
+ * Patterns（複数のコンポーネントを組み合わせた画面の作り方）をカタログのページから取り込む。
+ * 一覧の正本は scripts/build-pages.mjs の PAGES（group: "Patterns"）、本文の正本は
+ * examples/pages/<name>.html。見本の UI（form・inert・hidden）とアイコンは落とし、
+ * カタログへのリンクは get_component / get_pattern の呼び出しに言い換える。
+ */
+async function buildPatterns(components) {
+  const pagesSrc = await readFile(path.join(projectRoot, "scripts/build-pages.mjs"), "utf8");
+  const entries = [];
+  for (const line of pagesSrc.split("\n")) {
+    if (!/group:\s*"Patterns"/.test(line)) continue;
+    const field = (k) => (line.match(new RegExp(`${k}:\\s*"([^"]*)"`)) || [])[1];
+    const file = field("file");
+    if (file) entries.push({ name: file.replace(/\.html$/, ""), title: field("title"), desc: field("desc") });
+  }
+  const patternFiles = new Set(entries.map((e) => e.name));
+  const componentNames = new Set(components.map((c) => c.name));
+
+  const patterns = [];
+  for (const e of entries) {
+    const html = await readFile(path.join(projectRoot, "examples/pages", `${e.name}.html`), "utf8");
+    const ctx = { patternFiles, componentNames, links: new Set() };
+    const out = [];
+    toMarkdown(parseHtml(html), ctx, out);
+    const body = out.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+    const links = [...ctx.links];
+    patterns.push({
+      name: e.name,
+      title: e.title,
+      summary: e.desc,
+      sections: body.split("\n").filter((l) => l.startsWith("## ")).map((l) => l.slice(3)),
+      components: links.filter((l) => l.startsWith("get_component")).map((l) => l.match(/"(.+)"/)[1]),
+      related: links.filter((l) => l.startsWith("get_pattern")).map((l) => l.match(/"(.+)"/)[1]).filter((n) => n !== e.name),
+      body,
+    });
+  }
+  return patterns;
+}
+
 /** Slice a markdown section that starts at a heading and ends at the next heading of <= depth. */
 function sliceSection(md, startHeading, stopDepths) {
   const lines = md.split("\n");
@@ -378,14 +596,16 @@ async function main() {
 
   const allClasses = await buildAllClasses();
   const icons = await buildIcons();
+  const patterns = await buildPatterns(components);
 
   const index = {
     name: pkg.name,
     version: pkg.version,
     catalogUrl: "https://relay-development.github.io/relay-design-system",
     generatedFrom:
-      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, DESIGN.md, docs/ACCESSIBILITY.md, .claude/agents/*.md, .claude/workflows/*.js, .claude/hooks/*.mjs",
+      "src/components/*.css, src/tokens/*.css, snippets/*.html, examples/pages/assets.html, examples/pages/<Patterns>.html, DESIGN.md, docs/ACCESSIBILITY.md, .claude/agents/*.md, .claude/workflows/*.js, .claude/hooks/*.mjs",
     components,
+    patterns,
     tokens,
     assets,
     allClasses,
@@ -405,7 +625,7 @@ async function main() {
   const tokenCount = Object.values(tokens).reduce((n, t) => n + t.length, 0);
   console.log(
     `[build-mcp] wrote ${path.relative(projectRoot, outFile)} — ` +
-      `${components.length} components, ${tokenCount} tokens, ` +
+      `${components.length} components, ${patterns.length} patterns, ${tokenCount} tokens, ` +
       `${components.filter((c) => c.snippet).length} snippets, ${assets.length} assets, ${icons.length} icons, ` +
       `${allClasses.length} classes, ${components.filter((c) => c.function).length} with 機能`,
   );
