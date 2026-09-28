@@ -8,7 +8,7 @@
 
       <!-- ===== 見本 ===== -->
       <h3 class="typo-xlarge mb-4">見本</h3>
-      <p class="typo-article text-fg-high mb-6">何も入れずに「招待する」を押すと、エラーの出方を試せます。エラーが 3 件以上のときは、フォームの上にまとめを出してそこへフォーカスを移します。</p>
+      <p class="typo-article text-fg-high mb-6">何も入れずに「招待する」を押すと、エラーの出方を試せます（役割は安全な初期値「閲覧者」を選んであります）。エラーが 3 件以上のときは、フォームの上にまとめを出してそこへフォーカスを移します。</p>
       <div class="card mb-12">
         <div class="card-header">
           <h4 class="card-title">メンバーを招待する</h4>
@@ -33,12 +33,24 @@
               <p class="field-error-text" id="fd-email-err" hidden></p>
               <p class="field-support-text" id="fd-email-help">招待メールをこのアドレスに送ります</p>
             </div>
+            <div>
+              <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fd-dept">所属</label><span class="label-badge label-badge-required">必須</span></div></div>
+              <div class="selector selector-md">
+                <select class="select" id="fd-dept" name="dept" required data-label="所属">
+                  <option value="">選択してください</option>
+                  <option>営業部</option>
+                  <option>管理部</option>
+                  <option>開発部</option>
+                </select>
+              </div>
+              <p class="field-error-text" id="fd-dept-err" hidden></p>
+            </div>
             <fieldset class="m-0 p-0 border-0" id="fd-role" aria-describedby="fd-role-err" data-label="役割" data-required-group="role">
               <legend class="label-control mb-2"><span class="label-control-row"><span class="label-control-text">役割</span><span class="label-badge label-badge-required">必須</span></span></legend>
               <div class="radio-group">
                 <label class="radio-label"><input type="radio" name="role" value="admin" class="radio" /> 管理者</label>
                 <label class="radio-label"><input type="radio" name="role" value="editor" class="radio" /> 編集者</label>
-                <label class="radio-label"><input type="radio" name="role" value="viewer" class="radio" /> 閲覧者</label>
+                <label class="radio-label"><input type="radio" name="role" value="viewer" class="radio" checked /> 閲覧者</label>
               </div>
               <p class="field-error-text" id="fd-role-err" hidden></p>
             </fieldset>
@@ -145,13 +157,13 @@
 
       <!-- ===== 4. 部品の選び方 ===== -->
       <h3 class="typo-xlarge mb-4">部品の選び方</h3>
-      <p class="typo-article text-fg-high mb-6">何を入れてもらうかで部品を決めます。見た目の好みで選ばないでください。</p>
+      <p class="typo-article text-fg-high mb-6">何を入れてもらうかで部品を決めます。見た目の好みで選ばないでください。1 つ選ぶ項目は、<strong>安全な初期値を選んでおきます</strong>。迷ったら、取り返しがつき影響の小さい選択肢にします（権限なら最小の「閲覧者」、通知なら控えめな方）。初期値を決められない項目（所属など）だけ「選択してください」から始め、選ばずに送れないようにします。</p>
       <div class="mb-12 overflow-x-auto">
         <table class="simple-table">
           <tbody>
             <tr><th scope="row">1 行の文字</th><td><a class="link" href="./input.html"><span class="link-label">インプット</span></a>（<code class="typo-xsmall">type</code> と <code class="typo-xsmall">autocomplete</code> を値に合わせる: email / tel / postal-code 等）</td></tr>
             <tr><th scope="row">複数行の文章</th><td><a class="link" href="./textarea.html"><span class="link-label">テキストエリア</span></a>（上限があれば文字数を出す）</td></tr>
-            <tr><th scope="row">1 つ選ぶ（数個）</th><td><a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>（選択肢が一目で見える）</td></tr>
+            <tr><th scope="row">1 つ選ぶ（数個）</th><td><a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>（選択肢が一目で見える。初期値を 1 つ選んでおく）</td></tr>
             <tr><th scope="row">1 つ選ぶ（多い）</th><td><a class="link" href="./selector.html"><span class="link-label">セレクター</span></a>（都道府県など 8 個以上）</td></tr>
             <tr><th scope="row">複数選ぶ</th><td><a class="link" href="./checkbox.html"><span class="link-label">チェックボックス</span></a>を並べる。並べる場所が無ければ <a class="link" href="./multi-selector.html"><span class="link-label">マルチセレクター</span></a></td></tr>
             <tr><th scope="row">自由な値を複数</th><td><a class="link" href="./tag-input.html"><span class="link-label">タグインプット</span></a>（担当者・タグ・メールアドレス）</td></tr>

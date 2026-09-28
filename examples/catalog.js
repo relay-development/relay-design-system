@@ -881,6 +881,7 @@ const FORM_MESSAGES = {
     if (!v) return "メールアドレスを入力してください";
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) ? "" : "メールアドレスの形式で入力してください（例: yamada@example.com）";
   },
+  dept: (el) => (el.value ? "" : "所属を選んでください"),
 };
 
 function formFieldError(field) {
@@ -900,7 +901,9 @@ function showFormFieldError(field, message) {
     field.toggleAttribute("aria-invalid", Boolean(message));
     return;
   }
-  field.classList.toggle("input-error", Boolean(message));
+  // select は包んでいる selector に selector-error、input は input-error
+  if (field.matches("select")) field.closest(".selector")?.classList.toggle("selector-error", Boolean(message));
+  else field.classList.toggle("input-error", Boolean(message));
   if (message) field.setAttribute("aria-invalid", "true");
   else field.removeAttribute("aria-invalid");
   // エラー文を aria-describedby の先頭に（補足より先に読ませる）
@@ -910,7 +913,7 @@ function showFormFieldError(field, message) {
   else field.removeAttribute("aria-describedby");
 }
 
-const formFields = (form) => [...form.querySelectorAll("input[required], fieldset[data-required-group]")];
+const formFields = (form) => [...form.querySelectorAll("input[required], select[required], fieldset[data-required-group]")];
 
 document.addEventListener("submit", (e) => {
   const form = e.target.closest?.("[data-form-demo]");
@@ -947,7 +950,7 @@ document.addEventListener("submit", (e) => {
 // 入力を終えたとき（フォーカスが外れたとき）に検証する。まだ触っていない欄は、フォーカスを通過しただけでは検証しない
 document.addEventListener("focusout", (e) => {
   const form = e.target.closest?.("[data-form-demo]");
-  if (!form || !e.target.matches("input[required]")) return;
+  if (!form || !e.target.matches("input[required], select[required]")) return;
   if (!e.target.value && !e.target.dataset.touched) return;
   showFormFieldError(e.target, formFieldError(e.target));
 });
@@ -965,6 +968,9 @@ document.addEventListener("input", (e) => {
 document.addEventListener("change", (e) => {
   const group = e.target.closest?.("[data-form-demo] fieldset[data-required-group]");
   if (group?.dataset.touched) showFormFieldError(group, formFieldError(group));
+  // select は選んだ時点が「入力を終えたとき」。エラーが出ていれば更新する
+  const select = e.target.closest?.("[data-form-demo] select[required]");
+  if (select?.dataset.touched) showFormFieldError(select, formFieldError(select));
 });
 
 // まとめのリンク — 対象の入力欄へフォーカスを移す（ラジオの組は最初の選択肢）
