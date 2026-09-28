@@ -93,7 +93,7 @@ import "@light-right/design-system/css";
 ## ✨ 現状
 
 - **最新バージョン**: [npm のパッケージページ](https://www.npmjs.com/package/@light-right/design-system)を参照（リリースごとにここを書き換えない）
-- **入っているもの**: Button / Icon Button / Button Group / Toggle Button Group / Label Control / Input / Search Input / Tag / Token Input / Selector / Multi Selector / Textarea / Checkbox / Radio / Filter Chip / Tab / Table / Simple Table / Card / Badge / Alert / Inline Message / Link / Breadcrumb / Side Nav / Pagination / Stepper / Modal / Tooltip / Toggle Switch
+- **入っているもの**: Button / Icon Button / Button Group / Toggle Button Group / Label Control / Input / Search Input / Tag / Tag Input / Selector / Multi Selector / Textarea / Checkbox / Radio / Filter Chip / Tab / Table / Simple Table / Card / Badge / Alert / Inline Message / Link / Breadcrumb / Side Nav / Pagination / Stepper / Modal / Tooltip / Toggle Switch
 - **ライセンス**: MIT
 - **更新**: コード側の変更を随時 npm に publish（Figma で探求したデザインは、コードに取り込んだ時点で正式版）
 - **リリース通知**: 新バージョンを publish すると Slack `#dev_information` に自動でアナウンスが流れます 📣
