@@ -9,6 +9,10 @@
  * the full token set as :root variables.
  */
 
+/* Noto Sans JP (first in --font-sans), variable 100..900. Without it, Japanese
+ * falls back to OS fonts that lack 800/900 (e.g. Hiragino W3/W6 on macOS). */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+
 :root {
   /* ===== Primitive: Color ===== */
   --color-white: #ffffff;

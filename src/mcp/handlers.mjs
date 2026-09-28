@@ -267,6 +267,8 @@ function formatSetup() {
     "```",
     "```css",
     "/* または Tailwind v4 のエントリ CSS で（プロジェクト側で Tailwind をビルドする場合） */",
+    "/* 日本語フォント Noto Sans JP は tailwindcss より前に書く（後ろに書くと読み込まれない） */",
+    '@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");',
     '@import "tailwindcss";',
     '@import "@light-right/design-system/tokens";',
     "```",

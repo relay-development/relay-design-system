@@ -100,6 +100,7 @@ page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判�
 .typo-3xlarge   : 32→40px / 40→48px ← ページタイトル
 .typo-article   : 16px / 32px  ← 記事・読み物用 (regular, 広め行間) の独立スケール
 フォントスタック : Noto Sans JP, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, sans-serif
+                   (Noto Sans JP は relay.css / tokens.css が Google Fonts から 100..900 の可変フォントで読み込む)
 ウェイト         : font-{thin,light,normal,medium,bold,black} (100..900)
 
 見出し (large 以上) はモバイルで 1 段小さくなり md 以上で規定サイズに戻る（クラス自体が
@@ -232,7 +233,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 |---|---|
 | カラーモード | ライトのみ (ダークモード対応は将来検討) |
 | Primary | `#30b686` (brand-green-500) / hover `#1b805e` (600) |
-| Font | Noto Sans JP + system fallbacks |
+| Font | Noto Sans JP（Google Fonts・100..900）+ system fallbacks |
 | Icon | Lucide subset 58 icons (SVG sprite) |
 | Locale | ja (日本語) |
 | ベーススペーシング | 4px (`--spacing: 0.25rem`) |

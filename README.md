@@ -28,6 +28,8 @@ import "@light-right/design-system/css";
 
 bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@light-right/design-system/dist/relay.css" />` でも同じです。
 
+日本語フォント Noto Sans JP（100〜900）は CSS が Google Fonts から自動で読み込みます。Google Fonts に接続できない環境では OS のフォントで表示され、`font-extrabold` / `font-black` の太さが出ません。
+
 ### 2. すぐ書ける例
 
 ```html
@@ -47,6 +49,8 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 ### 3. トークンだけ使いたい（自前 Tailwind v4 環境がある場合）
 
 ```css
+/* Noto Sans JP は tailwindcss より前に書く（後ろに書くと読み込まれない） */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
 @import "tailwindcss";
 @import "@light-right/design-system/tokens";
 
