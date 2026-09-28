@@ -93,7 +93,7 @@
  *     絞り込みの実行（行の表示切替・件数の告知・0 件表示）は利用側の JS（実装例は examples/catalog.js の Table filter）
  *
  *   見出し行（table header）— 表の上に、1 段目にタイトル、2 段目（data-table-toolbar）の左に表示件数・右に表全体への操作
- *   （検索・複数条件の絞り込み・書き出し・新規作成）を置く。Primer DataTable の Table.Title / Table.Actions にあたる:
+ *   （検索・複数条件の絞り込み・書き出し・新規作成）を置く:
  *
  *     <div class="data-table-header">
  *       <div class="data-table-heading">

@@ -1,5 +1,5 @@
 /*
- * Action Menu (アクションメニュー) — Figma に仕様が無いため Primer ActionMenu を参考に DS 規約から新規設計
+ * Action Menu (アクションメニュー) — Figma に仕様が無いため DS 規約から新規設計
  *
  *   ボタンを押すと開くポップアップに、そのボタンに関係する操作を縦に並べる。
  *   ネイティブ Popover API (popover 属性 + popovertarget) ベース。最前面 (top layer) に出るため、
