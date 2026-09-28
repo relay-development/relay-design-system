@@ -130,14 +130,14 @@
       <div class="card mb-8" id="alert-link-demo">
         <div class="card-header">
           <h3 class="card-title">テキストリンク</h3>
-          <p class="card-subtitle">本文の中のリンクは <code class="px-1 bg-neutral-100 rounded">.link</code> のまま置く。色はアラートと同系色で、背景に対して 7:1 以上（AAA）の濃さに自動で合う（緑にならない）。下線と太字でも本文と区別できる。<code class="px-1 bg-neutral-100 rounded">link-neutral</code> などの色の指定は要らない</p>
+          <p class="card-subtitle">本文の中のリンクは <code class="px-1 bg-neutral-100 rounded">.link</code> のまま置く。色はアラートと同系色で、背景に対して 7:1 以上（AAA）の濃さに自動で合う（緑にならない）。下線と太字でも本文と区別できる。<code class="px-1 bg-neutral-100 rounded">link-neutral</code> などの色の指定は要らない。リンクの文言だけで行き先・操作が分かるようにする（「詳しくはこちら」にしない）</p>
         </div>
         <div class="card-body space-y-3">
           <div class="alert alert-neutral">
             <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
             <div class="alert-content">
               <p class="alert-title">メンテナンスのお知らせ</p>
-              <p class="alert-body">10 月 5 日 2:00〜4:00 は一部の機能が使えません。<a class="link" href="#alert-link-demo"><span class="link-label">詳しい日程</span></a></p>
+              <p class="alert-body">10 月 5 日 2:00〜4:00 は一部の機能が使えません。<a class="link" href="#alert-link-demo"><span class="link-label">メンテナンスの日程</span></a></p>
             </div>
           </div>
           <div class="alert alert-success">
@@ -151,7 +151,7 @@
             <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg></span>
             <div class="alert-content">
               <p class="alert-title">入力内容を確認してください</p>
-              <p class="alert-body">メールアドレスの形式が正しくありません。<a class="link" href="#alert-link-demo"><span class="link-label">メールアドレス</span></a></p>
+              <p class="alert-body">メールアドレスの形式が正しくありません。<a class="link" href="#alert-link-demo"><span class="link-label">メールアドレスを直す</span></a></p>
             </div>
           </div>
           <div class="alert alert-warning">
@@ -165,13 +165,13 @@
             <span class="alert-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
             <div class="alert-content">
               <p class="alert-title">新しい機能が使えます</p>
-              <p class="alert-body">表の並べ替えと絞り込みに対応しました。<a class="link" href="#alert-link-demo"><span class="link-label">使い方を見る</span></a></p>
+              <p class="alert-body">表の並べ替えと絞り込みに対応しました。<a class="link" href="#alert-link-demo"><span class="link-label">並べ替えと絞り込みの使い方</span></a></p>
             </div>
           </div>
           <pre class="code-sample mt-3" data-code>
 &lt;div class="alert alert-negative"&gt;
   …
-  &lt;p class="alert-body"&gt;メールアドレスの形式が正しくありません。&lt;a class="[[link]]" href="#email"&gt;&lt;span class="link-label"&gt;メールアドレス&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
+  &lt;p class="alert-body"&gt;メールアドレスの形式が正しくありません。&lt;a class="[[link]]" href="#email"&gt;&lt;span class="link-label"&gt;メールアドレスを直す&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;</pre>
         </div>
       </div>
