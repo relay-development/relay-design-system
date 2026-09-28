@@ -382,4 +382,88 @@ export const CASES = [
       "「対応済み」への状態変化が行の表示（badge 等）で分かるなら、メッセージを出さない判断も許容する。ただし出す場合は上記の置き方に従っている",
     ],
   },
+  {
+    // 出典: 2026-09 カタログに Patterns（form / feedback）を追加し、MCP に list_patterns / get_pattern を足した。
+    // ここから下の 3 お題は、コンポーネント単体の仕様（get_component）からは導けず、パターンの本文を
+    // 読まないと再現できない組み立て方を測る。行動ログで get_pattern に到達したかも併せて確認する。
+    // signup-form はフォームのパターン: 1 列・必須/任意のバッジ・送信時の検証・エラー件数によるフォーカスの
+    // 移し先・送信ボタンを disabled にしない・控えめな初期値。
+    id: "signup-form",
+    kind: "capability",
+    prompt:
+      "サービスの会員登録画面を作ってください。入力項目は、氏名（必須）・メールアドレス（必須）・電話番号（任意）・パスワード（必須）・お知らせメールの受け取り（受け取る / 受け取らない から 1 つ）・利用規約への同意（必須）です。送信したときに入力の誤りがあれば、利用者が迷わず直せるようにしてください。",
+    mustClasses: ["label-control", "label-badge-required", "label-badge-optional", "input", "field-error-text", "btn-primary"],
+    mustPatterns: [
+      { pattern: "autocomplete=\"email\"", label: "メールアドレスに autocomplete=\"email\"（WCAG 1.3.5）" },
+      { pattern: "aria-invalid", label: "エラーの入力欄に aria-invalid を付けている" },
+      {
+        pattern: "<button[^>]*type=\"submit\"[^>]*\\sdisabled\\b|<button[^>]*\\sdisabled\\b[^>]*type=\"submit\"",
+        forbid: true,
+        label: "送信ボタンを最初から disabled にしていない（押せない理由が分からない）",
+      },
+      { pattern: "\\balert-negative\\b", label: "エラーが多いときのまとめをフォームの上に alert（negative）で出す" },
+    ],
+    rubric: [
+      "項目を縦に 1 列で積み、2 列に並べていない。ラベルは入力欄の上に常に見え、プレースホルダーをラベルの代わりにしていない（入力例は field-support-text）",
+      "必須は label-badge-required と required 属性、任意は label-badge-optional で示している。お知らせメールの受け取りは控えめな方（受け取らない）を初期値にしている",
+      "送信したとき（または入力を終えたとき）に検証し、入力の途中では検証しない。エラーは入力欄の真下の field-error-text に何が違うか・どう直すかを書き、aria-invalid と aria-describedby で入力欄と結んでいる",
+      "エラーが 1〜2 件なら最初のエラーの入力欄へ、3 件以上ならフォームの上の alert（negative）のまとめ（各項目へのリンク付き）へフォーカスを移している。まとめを出しても各入力欄の真下のエラーは残している",
+    ],
+  },
+  {
+    // feedback パターン（置き場所）: モーダルの中の操作の結果はモーダルの中に出す。閉じてページ側に出さず、
+    // 入力を消さない。成功で閉じて一覧に反映されるなら、結果は画面で分かるので追加の知らせは要らない。
+    id: "modal-save-error",
+    kind: "capability",
+    prompt:
+      "メンバー一覧の画面を作ってください。各行の「編集」を押すと、その場で氏名と役割を編集できるウィンドウが開きます。保存に成功したらウィンドウを閉じて一覧に反映してください。通信エラーで保存できなかったときは、それを利用者に伝えてやり直せるようにしてください。",
+    mustClasses: ["modal", "data-table", "btn-primary"],
+    mustPatterns: [
+      { pattern: "\\balert-negative\\b", label: "保存の失敗を alert（negative）で伝える" },
+      {
+        pattern: "class=\"[^\"]*\\b(?:toast|snackbar)\\b",
+        forbid: true,
+        label: "toast / snackbar クラスを自作していない",
+      },
+      {
+        pattern: "class=\"[^\"]*\\bfixed\\b[^\"]*\\b(?:bottom|top)-",
+        forbid: true,
+        label: "画面隅に固定表示する通知（fixed + bottom/top）を作っていない",
+      },
+    ],
+    rubric: [
+      "保存の失敗は、モーダルの本文（modal-body）の先頭に alert（negative）で出している。モーダルを閉じてページ側に出していない",
+      "失敗してもモーダルは開いたままで、入力した内容を消さずにその場でもう一度保存できる。失敗の文言に次の手（通信を確かめてもう一度 等）がある",
+      "失敗の知らせは role=\"alert\" で読み上げられる（フォーカスを奪わない）。閉じたらフォーカスを呼び出し元の「編集」ボタンへ戻している",
+      "成功したときは、モーダルを閉じて一覧の行が更新されることで結果を示し、画面隅のトーストなど余計な知らせを足していない（出す場合も時間で消さない）",
+    ],
+  },
+  {
+    // feedback パターン（種類・色・置き場所）: システムからのお知らせはページ上部、区画に関わる知らせは
+    // その区画の上部。色は内容で選ぶ — 期限・制限の予告 = warning、権限がない・見られない = neutral、
+    // 失敗 = negative、新しい機能の案内 = info。使えない・失敗の知らせには次の手を書く。
+    id: "dashboard-notices",
+    kind: "capability",
+    prompt:
+      "営業担当者向けのダッシュボード画面を作ってください。画面には「今月の売上」「担当案件の一覧」の 2 つの区画があります。次の 4 つの状況を利用者に伝えてください。(1) 10 月 5 日の深夜 2 時〜4 時にメンテナンスがあり、その間は一部の機能が使えない。(2) この利用者には売上を見る権限がないため「今月の売上」は表示できない（管理者に頼めば見られるようになる）。(3) 担当案件の一覧の読み込みに失敗した。(4) 案件の一覧で並べ替えができるようになった。",
+    mustClasses: ["alert", "alert-neutral", "alert-negative"],
+    mustPatterns: [
+      {
+        pattern: "class=\"[^\"]*\\b(?:toast|snackbar)\\b",
+        forbid: true,
+        label: "toast / snackbar クラスを自作していない",
+      },
+      {
+        pattern: "class=\"[^\"]*\\bfixed\\b[^\"]*\\b(?:bottom|top)-",
+        forbid: true,
+        label: "画面隅に固定表示する通知（fixed + bottom/top）を作っていない",
+      },
+    ],
+    rubric: [
+      "知らせを、関わる範囲の上部に置いている — メンテナンスはページの上部、権限がないことは「今月の売上」の区画、読み込みの失敗は「担当案件の一覧」の区画の上部。すべてをページの上部にまとめて並べていない",
+      "色が内容と一致している — メンテナンス = warning（info も可）、権限がない = neutral（negative にしない）、読み込みの失敗 = negative、並べ替えの案内 = info",
+      "使えない・失敗の知らせに次の手がある（管理者に頼む・もう一度読み込む）。読み込みに失敗した区画は空の表や 0 件の表示を出さず、理由を示している",
+      "どの知らせもアイコンと文言で意味が伝わり、リンクやボタンの文言だけで行き先・操作が分かる（「詳しくはこちら」にしない）",
+    ],
+  },
 ];

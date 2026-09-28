@@ -95,12 +95,13 @@ const jst = (iso) => (iso ?? "").replace("T", " ").slice(0, 16);
 const CAT_OF = (name) => {
   if (name === "get_component") return "comp";
   if (name === "get_accessibility") return "a11y";
+  if (name === "get_pattern" || name === "list_patterns") return "pattern";
   if (name === "list_assets" || name === "search") return "asset";
   if (name === "Write" || name === "Edit") return "write";
   if (/^get_|^list_/.test(name)) return "found";
   return "harness";
 };
-const CAT_LABEL = { harness: "ハーネス", found: "基盤知識", comp: "コンポーネント仕様", asset: "アセット・検索", a11y: "アクセシビリティ", write: "書き出し" };
+const CAT_LABEL = { harness: "ハーネス", found: "基盤知識", comp: "コンポーネント仕様", asset: "アセット・検索", a11y: "アクセシビリティ", pattern: "パターン", write: "書き出し" };
 
 /* ---- 集計 ---- */
 function tally(run) {
@@ -275,7 +276,7 @@ function trialHtml(r, label, prevResult, cmpResult, cmpLabel) {
   const gapMin = total ? Math.max(12, total * 0.12) : Infinity; // 呼び出し間の無言をギャップ行で示す
   let prevAt = null;
   const seqRows = seq.map((c) => {
-    const input = c.name === "get_component" ? c.input?.name
+    const input = c.name === "get_component" || c.name === "get_pattern" ? c.input?.name
       : c.input?.topic ? `topic: ${c.input.topic}`
       : c.input?.query ? `「${c.input.query}」`
       : c.input?.category ?? (Object.keys(c.input ?? {}).length ? JSON.stringify(c.input).slice(0, 48) : "—");
@@ -452,7 +453,7 @@ const html = `<!doctype html><html lang="ja"><head><meta charset="utf-8">
 :root{color-scheme:light;
 --paper:#fafcfb;--panel:#fff;--ink:#1d2723;--mid:#3c4a44;--muted:#5f6b65;--hair:#e3eae6;--hair-strong:#cbd6d0;
 --ok:#1b805e;--ok-bg:#eef9f4;--fail:#b91c1c;--fail-bg:#fef2f2;--err:#64748b;--warn:#b45309;--warn-bg:#fffbeb;
---c-found:#2563eb;--c-comp:#1b805e;--c-asset:#b45309;--c-a11y:#7c3aed;--c-harness:#6b7280;--c-write:#1d2723}
+--c-found:#2563eb;--c-comp:#1b805e;--c-asset:#b45309;--c-a11y:#7c3aed;--c-pattern:#0e7490;--c-harness:#6b7280;--c-write:#1d2723}
 *{box-sizing:border-box}
 body{margin:0;background:var(--paper);color:var(--mid);font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic",sans-serif;font-size:14px;line-height:1.75;font-feature-settings:"palt"}
 .mono{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
@@ -526,7 +527,7 @@ table{border-collapse:collapse;font-size:12.5px}
 .strip b{position:absolute;top:36px;transform:translateX(-50%);font-size:10.5px;color:var(--muted);font-weight:400}
 .legend{display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:12px;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
-.c-found{background:var(--c-found)}.c-comp{background:var(--c-comp)}.c-asset{background:var(--c-asset)}.c-a11y{background:var(--c-a11y)}.c-harness{background:var(--c-harness)}.c-write{background:var(--c-write)}
+.c-found{background:var(--c-found)}.c-comp{background:var(--c-comp)}.c-asset{background:var(--c-asset)}.c-a11y{background:var(--c-a11y)}.c-pattern{background:var(--c-pattern)}.c-harness{background:var(--c-harness)}.c-write{background:var(--c-write)}
 /* シーケンス（応答サイズをバー表示） */
 .log{border:1px solid var(--hair);border-radius:8px;background:var(--panel);overflow-x:auto}
 .log table{width:100%;min-width:560px}
