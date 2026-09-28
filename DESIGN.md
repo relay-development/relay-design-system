@@ -111,7 +111,7 @@ page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判�
 
 **`text-sm` / `text-base` を直接書かない。** 必ず `.typo-*` を経由。
 
-**`.typo-large` 以上は weight bold 以上必須。** large〜3xlarge はデフォルトが `font-bold`。`font-semibold` / `font-medium` 等で bold 未満に下げない。weight の上書きは medium 以下のサイズのみ（例: `typo-medium font-bold` で本文強調）。
+**`.typo-large` 以上は weight bold 以上必須。** large / xlarge はデフォルトが `font-bold`、2xlarge / 3xlarge は `font-black`。`font-semibold` / `font-medium` 等で bold 未満に下げず、2xlarge / 3xlarge を `font-bold` 等で black から下げない。weight の上書きは medium 以下のサイズのみ（例: `typo-medium font-bold` で本文強調）。
 
 **`.typo-article` は原則 `text-fg-high` とセットで使う。** 読み物本文は高コントラストを確保する（例: `<p class="typo-article text-fg-high">`）。
 
@@ -201,7 +201,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 新しい spacing トークンの追加（`--spacing-40` 等） | 祝福 9 段階に丸める |
 | `text-sm` / `text-base` 直書き | `.typo-small` / `.typo-medium` |
 | `bg-slate-700`（primitive 直参照） | semantic ロール（`bg-fg-middle` 等） |
-| `typo-large` 以上で weight を bold 未満に下げる | デフォルトの bold のまま使う |
+| `typo-large` 以上で weight を bold 未満に下げる / 2xlarge・3xlarge を black から下げる | デフォルトの weight のまま使う |
 | 理由なく `sm` / `lg` サイズを選ぶ | 例外を除き `md` をデフォルトに |
 | 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
 | `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
