@@ -394,7 +394,7 @@ function applyTableFilters(table) {
 }
 
 // 適用中の条件 — data-filter-conditions="<表の id>" の行に、検索のキーワード・見出し行の絞り込み・列フィルターを
-// トークン（token-input-item）で並べる。各条件は解除の関数を持ち、× で 1 つ、「すべて解除」で全部を解除する。
+// トークン（tag）で並べる。各条件は解除の関数を持ち、× で 1 つ、「すべて解除」で全部を解除する。
 function syncPanelTrigger(panel) {
   const count = [...panel.querySelectorAll("select[data-filter-col]")].filter((s) => s.dataset.applied).length;
   const trigger = filterTrigger(panel);
@@ -430,15 +430,15 @@ function renderTableConditions(table) {
   if (!row) return;
   const items = tableConditions(table);
   row.conditions = items;
-  row.querySelector(".token-input-list").replaceChildren(...items.map((item) => {
+  row.querySelector(".tag-list").replaceChildren(...items.map((item) => {
     const li = document.createElement("li");
-    li.className = "token-input-item";
+    li.className = "tag";
     const label = document.createElement("span");
-    label.className = "token-input-label";
+    label.className = "tag-label";
     label.textContent = item.label;
     const remove = document.createElement("button");
     remove.type = "button";
-    remove.className = "token-input-remove";
+    remove.className = "tag-remove";
     remove.setAttribute("aria-label", `『${item.label}』の絞り込みを解除`);
     remove.innerHTML = '<svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>';
     li.append(label, remove);
@@ -449,7 +449,7 @@ function renderTableConditions(table) {
 
 // × で 1 つ解除 → 次のトークン（無ければ前、1 つも無ければ検索の入力欄）へ。すべて解除 → 検索の入力欄へ
 document.addEventListener("click", (e) => {
-  const remove = e.target.closest("[data-filter-conditions] .token-input-remove");
+  const remove = e.target.closest("[data-filter-conditions] .tag-remove");
   const clearAll = e.target.closest("[data-filter-conditions] [data-filter-clear-all]");
   if (!remove && !clearAll) return;
   const row = (remove || clearAll).closest("[data-filter-conditions]");
@@ -465,7 +465,7 @@ document.addEventListener("click", (e) => {
     items.forEach((item) => item.clear());
   }
   applyTableFilters(table);
-  const buttons = row.querySelectorAll(".token-input-remove");
+  const buttons = row.querySelectorAll(".tag-remove");
   const search = document.querySelector(`[data-table-search="${table.id}"]`);
   (remove && buttons.length ? buttons[Math.min(index, buttons.length - 1)] : search)?.focus();
 });
@@ -718,7 +718,7 @@ document.addEventListener("click", async (e) => {
 function tokenInputParts(root) {
   return {
     input: root.querySelector(".token-input-field > .input"),
-    list: root.querySelector(".token-input-list"),
+    list: root.querySelector(".tag-list"),
     error: root.querySelector(".field-error-text"),
     live: root.querySelector("[aria-live]"),
   };
@@ -740,20 +740,20 @@ function setTokenError(root, message) {
 function addToken(root) {
   const { input, list, live } = tokenInputParts(root);
   const value = input.value.trim();
-  const values = [...list.querySelectorAll(".token-input-label")].map((el) => el.textContent);
+  const values = [...list.querySelectorAll(".tag-label")].map((el) => el.textContent);
   const max = Number(root.dataset.max) || Infinity;
   if (!value) return setTokenError(root, "値を入力してください");
   if (values.includes(value)) return setTokenError(root, `『${value}』はすでに追加されています`);
   if (values.length >= max) return setTokenError(root, `追加できるのは ${max} 件までです`);
   setTokenError(root, "");
   const li = document.createElement("li");
-  li.className = "token-input-item";
+  li.className = "tag";
   const label = document.createElement("span");
-  label.className = "token-input-label";
+  label.className = "tag-label";
   label.textContent = value;
   const remove = document.createElement("button");
   remove.type = "button";
-  remove.className = "token-input-remove";
+  remove.className = "tag-remove";
   remove.setAttribute("aria-label", `『${value}』を削除`);
   remove.innerHTML = '<svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>';
   li.append(label, remove);
@@ -770,15 +770,15 @@ document.addEventListener("click", (e) => {
     tokenInputParts(root).input.focus();
     return;
   }
-  const remove = e.target.closest("[data-token-input] .token-input-remove");
+  const remove = e.target.closest("[data-token-input] .tag-remove");
   if (!remove) return;
   const root = remove.closest("[data-token-input]");
   const { input, live } = tokenInputParts(root);
-  const token = remove.closest(".token-input-item");
-  const value = token.querySelector(".token-input-label").textContent;
+  const token = remove.closest(".tag");
+  const value = token.querySelector(".tag-label").textContent;
   const next = token.nextElementSibling || token.previousElementSibling;
   token.remove();
-  (next?.querySelector(".token-input-remove") || input).focus();
+  (next?.querySelector(".tag-remove") || input).focus();
   if (live) live.textContent = `『${value}』を削除しました`;
   // 上限のエラーは 1 つ消せば解消する
   if (root.querySelector(".field-error-text:not([hidden])")?.textContent.includes("件まで")) setTokenError(root, "");
@@ -856,4 +856,18 @@ document.addEventListener("focusout", (e) => {
     if (active === document.body) return; // 外側クリックは Popover API に任せる
     panel.hidePopover();
   });
+});
+
+// Tag — カタログの基本の見本 ([data-tag-demo])。× でタグを外し、次（無ければ前）の × へフォーカス、結果を告知する
+document.addEventListener("click", (e) => {
+  const remove = e.target.closest("[data-tag-demo] .tag-remove");
+  if (!remove) return;
+  const root = remove.closest("[data-tag-demo]");
+  const tag = remove.closest(".tag");
+  const value = tag.querySelector(".tag-label").textContent;
+  const next = tag.nextElementSibling || tag.previousElementSibling;
+  tag.remove();
+  next?.querySelector(".tag-remove")?.focus();
+  const live = root.querySelector("[aria-live]");
+  if (live) live.textContent = `『${value}』を削除しました`;
 });

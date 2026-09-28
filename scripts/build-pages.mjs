@@ -350,6 +350,7 @@ const PAGES = [
   { file: "label-control.html",group: "Components", label: "ラベルコントロール",title: "ラベルコントロール",desc: "フォーム項目ラベル + バッジ" },
   { file: "input.html",        group: "Components", label: "インプット",        title: "インプット",        desc: "単一行テキスト入力" },
   { file: "search-input.html", group: "Components", label: "サーチインプット", title: "サーチインプット", desc: "検索フィールド + クリア / 送信" },
+  { file: "tag.html",          group: "Components", label: "タグ",             title: "タグ",             desc: "追加・選択した値を 1 つずつ外せる小さな pill" },
   { file: "token-input.html",  group: "Components", label: "トークンインプット", title: "トークンインプット", desc: "複数の値を 1 つずつ追加・削除する入力欄" },
   { file: "selector.html",     group: "Components", label: "セレクター",     title: "セレクター",     desc: "セレクト / ドロップダウン" },
   { file: "multi-selector.html", group: "Components", label: "マルチセレクター", title: "マルチセレクター", desc: "決まった選択肢から複数を選ぶ折りたたみの入力欄" },
