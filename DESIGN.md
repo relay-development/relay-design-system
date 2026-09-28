@@ -100,6 +100,7 @@ page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判�
 .typo-3xlarge   : 32→40px / 40→48px ← ページタイトル
 .typo-article   : 16px / 32px  ← 記事・読み物用 (regular, 広め行間) の独立スケール
 フォントスタック : Noto Sans JP, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, sans-serif
+                   (Noto Sans JP は relay.css / tokens.css が Google Fonts から 100..900 の可変フォントで読み込む)
 ウェイト         : font-{thin,light,normal,medium,bold,black} (100..900)
 
 見出し (large 以上) はモバイルで 1 段小さくなり md 以上で規定サイズに戻る（クラス自体が
@@ -110,7 +111,7 @@ page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判�
 
 **`text-sm` / `text-base` を直接書かない。** 必ず `.typo-*` を経由。
 
-**`.typo-large` 以上は weight bold 以上必須。** large〜3xlarge はデフォルトが `font-bold`。`font-semibold` / `font-medium` 等で bold 未満に下げない。weight の上書きは medium 以下のサイズのみ（例: `typo-medium font-bold` で本文強調）。
+**`.typo-large` 以上は weight bold 以上必須。** large / xlarge はデフォルトが `font-bold`、2xlarge / 3xlarge は `font-black`。`font-semibold` / `font-medium` 等で bold 未満に下げず、2xlarge / 3xlarge を `font-bold` 等で black から下げない。weight の上書きは medium 以下のサイズのみ（例: `typo-medium font-bold` で本文強調）。
 
 **`.typo-article` は原則 `text-fg-high` とセットで使う。** 読み物本文は高コントラストを確保する（例: `<p class="typo-article text-fg-high">`）。
 
@@ -200,7 +201,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 | 新しい spacing トークンの追加（`--spacing-40` 等） | 祝福 9 段階に丸める |
 | `text-sm` / `text-base` 直書き | `.typo-small` / `.typo-medium` |
 | `bg-slate-700`（primitive 直参照） | semantic ロール（`bg-fg-middle` 等） |
-| `typo-large` 以上で weight を bold 未満に下げる | デフォルトの bold のまま使う |
+| `typo-large` 以上で weight を bold 未満に下げる / 2xlarge・3xlarge を black から下げる | デフォルトの weight のまま使う |
 | 理由なく `sm` / `lg` サイズを選ぶ | 例外を除き `md` をデフォルトに |
 | 独自ブランド色（青系等）の持ち込み | primary（緑）/ secondary（黄）+ ステータス色 |
 | `is-selected` 等の状態クラス | `aria-selected="true"` 等の ARIA 属性 |
@@ -232,7 +233,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 |---|---|
 | カラーモード | ライトのみ (ダークモード対応は将来検討) |
 | Primary | `#30b686` (brand-green-500) / hover `#1b805e` (600) |
-| Font | Noto Sans JP + system fallbacks |
+| Font | Noto Sans JP（Google Fonts・100..900）+ system fallbacks |
 | Icon | Lucide subset 58 icons (SVG sprite) |
 | Locale | ja (日本語) |
 | ベーススペーシング | 4px (`--spacing: 0.25rem`) |

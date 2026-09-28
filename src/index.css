@@ -1,3 +1,9 @@
+/* Noto Sans JP（--font-sans の先頭）を Google Fonts から読み込む。OS に入っていない環境では
+ * 日本語が OS のフォールバック（Mac ならヒラギノ角ゴ W3/W6）になり、font-extrabold / font-black
+ * が W6 止まりで効かなかった（2026-09 に判明）。100..900 の可変フォントで全ウェイトを出す。
+ * CSS の @import は他の規則より前にしか置けないので、tailwindcss より先に書く。 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+
 /* source(none): Tailwind v4 の自動ソース検出（.gitignore 外の全ファイル走査）を止める。
  * 自動検出のままだと docs / README / src/mcp のハンドラ文中に書いたクラス名（例: tabular-nums、
  * 禁止例として書いた p-[13px]）まで utility として dist に生まれ、「relay.css に存在する
