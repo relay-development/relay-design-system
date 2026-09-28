@@ -684,7 +684,7 @@ export const TOOLS = [
   {
     name: "list_assets",
     description:
-      "relay のブランドアセット（サービスロゴ・イラスト）一覧を直リンク URL 付きで返す。空状態・ヒーロー・案内・完了画面などイラストが合う場面では、独自の SVG イラストを描かずここから選ぶこと（独自ロゴ・独自イラストは禁止）。",
+      "relay のブランドアセット（プロダクトロゴ・イラスト）一覧を直リンク URL 付きで返す。空状態・ヒーロー・案内・完了画面などイラストが合う場面では、独自の SVG イラストを描かずここから選ぶこと（独自ロゴ・独自イラストは禁止）。",
     inputSchema: { type: "object", properties: {}, additionalProperties: false },
   },
   {
