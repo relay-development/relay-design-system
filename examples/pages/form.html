@@ -1,0 +1,258 @@
+  <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
+    <section id="form">
+      <div class="flex items-baseline justify-between mb-8">
+        <h2 class="typo-2xlarge">フォーム</h2>
+        <span class="badge badge-soft-neutral">pattern</span>
+      </div>
+      <p class="typo-article text-fg-high mb-10">会員登録・問い合わせ・設定の変更のように、利用者に情報を入力してもらう画面の組み立て方です。部品は <a class="link" href="./label-control.html"><span class="link-label">ラベルコントロール</span></a>・<a class="link" href="./input.html"><span class="link-label">インプット</span></a>・<a class="link" href="./selector.html"><span class="link-label">セレクター</span></a>・<a class="link" href="./checkbox.html"><span class="link-label">チェックボックス</span></a>・<a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>・<a class="link" href="./textarea.html"><span class="link-label">テキストエリア</span></a>などをそのまま使い、このページでは<strong>並べ方・書き方・エラーの伝え方</strong>を決めます。</p>
+
+      <!-- ===== 見本 ===== -->
+      <h3 class="typo-xlarge mb-4">見本</h3>
+      <p class="typo-article text-fg-high mb-6">何も入れずに「招待する」を押すと、エラーの出方を試せます（役割は安全な初期値「閲覧者」を選んであります）。エラーが 3 件以上のときは、フォームの上にまとめを出してそこへフォーカスを移します。</p>
+      <div class="card mb-12">
+        <div class="card-header">
+          <h4 class="card-title">メンバーを招待する</h4>
+        </div>
+        <form class="card-body" novalidate data-form-demo>
+          <div class="alert alert-negative mb-6" role="alert" tabindex="-1" data-form-summary hidden>
+            <svg class="alert-icon" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg>
+            <div class="alert-body">
+              <p class="alert-title" data-form-summary-title>入力内容を確認してください</p>
+              <ul class="list-disc ps-5" data-form-summary-list></ul>
+            </div>
+          </div>
+          <div class="flex flex-col gap-6 max-w-md">
+            <div>
+              <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fd-name">氏名</label><span class="label-badge label-badge-required">必須</span></div></div>
+              <input type="text" class="input input-md" id="fd-name" name="name" autocomplete="name" required data-label="氏名" />
+              <p class="field-error-text" id="fd-name-err" hidden></p>
+            </div>
+            <div>
+              <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fd-email">メールアドレス</label><span class="label-badge label-badge-required">必須</span></div></div>
+              <input type="email" class="input input-md" id="fd-email" name="email" autocomplete="email" inputmode="email" required aria-describedby="fd-email-help" data-label="メールアドレス" />
+              <p class="field-error-text" id="fd-email-err" hidden></p>
+              <p class="field-support-text" id="fd-email-help">招待メールをこのアドレスに送ります</p>
+            </div>
+            <div>
+              <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fd-dept">所属</label><span class="label-badge label-badge-required">必須</span></div></div>
+              <div class="selector selector-md">
+                <select class="select" id="fd-dept" name="dept" required data-label="所属">
+                  <option value="">選択してください</option>
+                  <option>営業部</option>
+                  <option>管理部</option>
+                  <option>開発部</option>
+                </select>
+              </div>
+              <p class="field-error-text" id="fd-dept-err" hidden></p>
+            </div>
+            <fieldset class="m-0 p-0 border-0" id="fd-role" aria-describedby="fd-role-err" data-label="役割" data-required-group="role">
+              <legend class="label-control mb-2"><span class="label-control-row"><span class="label-control-text">役割</span><span class="label-badge label-badge-required">必須</span></span></legend>
+              <div class="radio-group">
+                <label class="radio-label"><input type="radio" name="role" value="admin" class="radio" /> 管理者</label>
+                <label class="radio-label"><input type="radio" name="role" value="editor" class="radio" /> 編集者</label>
+                <label class="radio-label"><input type="radio" name="role" value="viewer" class="radio" checked /> 閲覧者</label>
+              </div>
+              <p class="field-error-text" id="fd-role-err" hidden></p>
+            </fieldset>
+            <div>
+              <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fd-memo">メッセージ</label><span class="label-badge label-badge-optional">任意</span></div></div>
+              <div class="textarea-control">
+                <textarea class="textarea textarea-md" id="fd-memo" name="memo" maxlength="200" aria-describedby="fd-memo-help"></textarea>
+              </div>
+              <p class="field-support-text" id="fd-memo-help">招待メールに添えて送ります（200 文字まで）</p>
+            </div>
+          </div>
+          <div class="flex flex-wrap items-center gap-4 mt-8">
+            <button type="submit" class="btn btn-md btn-primary btn-solid">招待する</button>
+            <p class="inline-message inline-message-success" role="status" data-form-done hidden>
+              <svg class="inline-message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+              <span class="inline-message-text">招待メールを送りました</span>
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- ===== 1. 構成 ===== -->
+      <h3 class="typo-xlarge mb-4">1 つの項目の構成</h3>
+      <p class="typo-article text-fg-high mb-6">1 つの項目は、上から「ラベル（＋必須／任意のバッジ）→ 入力欄 → エラー → 補足」の順に縦に積みます。エラーと補足は入力欄の<strong>真下</strong>に置き、<code class="px-1 bg-neutral-100 rounded">aria-describedby</code> で入力欄と結びます（エラーが先）。</p>
+      <div class="card mb-12">
+        <div class="card-body">
+          <div class="max-w-md">
+            <div class="label-control mb-2"><div class="label-control-row"><label class="label-control-text" for="fa-email">メールアドレス</label><span class="label-badge label-badge-required">必須</span></div></div>
+            <input type="email" class="input input-md input-error" id="fa-email" value="yamada@" aria-invalid="true" aria-describedby="fa-email-err fa-email-help" tabindex="-1" />
+            <p class="field-error-text" id="fa-email-err">＊メールアドレスの形式で入力してください（例: yamada@example.com）</p>
+            <p class="field-support-text" id="fa-email-help">招待メールをこのアドレスに送ります</p>
+          </div>
+          <pre class="code-sample mt-6" data-code>
+&lt;div class="[[label-control]]"&gt;
+  &lt;div class="label-control-row"&gt;
+    &lt;label class="label-control-text" [[for="email"]]&gt;メールアドレス&lt;/label&gt;
+    &lt;span class="label-badge [[label-badge-required]]"&gt;必須&lt;/span&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;input type="email" class="input input-md input-error" id="email" [[required]] autocomplete="email"
+       [[aria-invalid="true"]] [[aria-describedby="email-err email-help"]] /&gt;
+&lt;p class="[[field-error-text]]" id="email-err"&gt;＊メールアドレスの形式で入力してください&lt;/p&gt;
+&lt;p class="[[field-support-text]]" id="email-help"&gt;招待メールをこのアドレスに送ります&lt;/p&gt;</pre>
+        </div>
+      </div>
+
+      <!-- ===== 2. レイアウト ===== -->
+      <h3 class="typo-xlarge mb-4">レイアウト</h3>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-6">
+        <li><strong>項目は縦に 1 列で積む</strong>（項目の間は 24px）。高さを詰めるために 2 列に並べない。上から順に読み、入力し、見落とさない</li>
+        <li><strong>入力欄の幅は、入る値の長さに合わせる</strong>。郵便番号・数量のような短い値は短く、住所やメッセージは広く。全部を画面いっぱいにしない（長文の行は読みにくい）。フォーム全体の幅は 448px ほどまで</li>
+        <li><strong>関連する項目はまとめる</strong>。ラジオ・チェックボックスの組や「住所」のようなまとまりは <code class="px-1 bg-neutral-100 rounded">fieldset</code> ＋ <code class="px-1 bg-neutral-100 rounded">legend</code> で囲み、まとまりの名前を読み上げさせる</li>
+        <li><strong>選んだ内容で出る項目は、その選択肢の直下に出す</strong>（「その他」を選んだら、その下に入力欄）。離れた場所に出すと気づかれない</li>
+      </ul>
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h4 class="card-title">縦に 1 列で積む</h4>
+            <span class="typo-xsmall text-fg-low">読む順番</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
+            <div class="mb-4"><div class="flex flex-col gap-4"><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">氏名</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: 氏名" /></div><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス" /></div></div></div>
+            <p class="typo-medium text-fg-middle">上から下へ 1 本の流れで読める。拡大表示やスマホでも崩れない。</p>
+          </div>
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
+            <div class="mb-4"><div class="grid grid-cols-2 gap-4"><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">氏名</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: 氏名（2 列）" /></div><div><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス（2 列）" /></div></div></div>
+            <p class="typo-medium text-fg-middle">左右に並べると、どの順で入力するか迷い、右側の項目を見落としやすい。狭い画面では 1 列に崩れる前提が必要になる。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 3. ラベル・補足 ===== -->
+      <h3 class="typo-xlarge mb-4">ラベル・補足・必須／任意</h3>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-6">
+        <li><strong>ラベルは短い名詞</strong>（「メールアドレス」「役割」）。文章や「〜してください」にしない。説明が要るなら補足に書く</li>
+        <li><strong>プレースホルダーをラベルの代わりにしない</strong>。入力すると消え、色も薄くて読みにくい。入力例もプレースホルダーでなく補足に書く</li>
+        <li><strong>補足は新しい情報だけ</strong>（何に使うか・形式・上限）。ラベルの言い換えは書かない。エラーが出ても補足は消さない</li>
+        <li><strong>必須と任意はどちらもバッジで示す</strong>（<code class="px-1 bg-neutral-100 rounded">label-badge-required</code> / <code class="px-1 bg-neutral-100 rounded">label-badge-optional</code>）。必須の入力欄には <code class="px-1 bg-neutral-100 rounded">required</code> も付ける。色や「*」だけで示さない</li>
+      </ul>
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h4 class="card-title">ラベルは入力欄の上に常に見せる</h4>
+            <span class="typo-xsmall text-fg-low">ラベル又は説明</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
+            <div class="mb-4"><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md" tabindex="-1" aria-label="デモ: メールアドレス" /><p class="field-support-text">例: yamada@example.com</p></div>
+            <p class="typo-medium text-fg-middle">入力したあとも何の欄か分かる。入力例は補足に書く。</p>
+          </div>
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
+            <div class="mb-4"><input class="input input-md" placeholder="メールアドレス（必須）" tabindex="-1" aria-label="デモ: プレースホルダーだけ" /></div>
+            <p class="typo-medium text-fg-middle">プレースホルダーは入力すると消え、何の欄だったか分からなくなる。色が薄く、読み上げにも頼れない。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 4. 部品の選び方 ===== -->
+      <h3 class="typo-xlarge mb-4">部品の選び方</h3>
+      <p class="typo-article text-fg-high mb-6">何を入れてもらうかで部品を決めます。見た目の好みで選ばないでください。1 つ選ぶ項目は、<strong>安全な初期値を選んでおきます</strong>。迷ったら、取り返しがつき影響の小さい選択肢にします（権限なら最小の「閲覧者」、通知なら控えめな方）。初期値を決められない項目（所属など）だけ「選択してください」から始め、選ばずに送れないようにします。</p>
+      <div class="mb-12 overflow-x-auto">
+        <table class="simple-table">
+          <tbody>
+            <tr><th scope="row">1 行の文字</th><td><a class="link" href="./input.html"><span class="link-label">インプット</span></a>（<code class="typo-xsmall">type</code> と <code class="typo-xsmall">autocomplete</code> を値に合わせる: email / tel / postal-code 等）</td></tr>
+            <tr><th scope="row">複数行の文章</th><td><a class="link" href="./textarea.html"><span class="link-label">テキストエリア</span></a>（上限があれば文字数を出す）</td></tr>
+            <tr><th scope="row">1 つ選ぶ（数個）</th><td><a class="link" href="./radio.html"><span class="link-label">ラジオ</span></a>（選択肢が一目で見える。初期値を 1 つ選んでおく）</td></tr>
+            <tr><th scope="row">1 つ選ぶ（多い）</th><td><a class="link" href="./selector.html"><span class="link-label">セレクター</span></a>（都道府県など 8 個以上）</td></tr>
+            <tr><th scope="row">複数選ぶ</th><td><a class="link" href="./checkbox.html"><span class="link-label">チェックボックス</span></a>を並べる。並べる場所が無ければ <a class="link" href="./multi-selector.html"><span class="link-label">マルチセレクター</span></a></td></tr>
+            <tr><th scope="row">自由な値を複数</th><td><a class="link" href="./tag-input.html"><span class="link-label">タグインプット</span></a>（担当者・タグ・メールアドレス）</td></tr>
+            <tr><th scope="row">同意・1 つの ON/OFF</th><td>送信で確定するなら<a class="link" href="./checkbox.html"><span class="link-label">チェックボックス</span></a>、その場で反映する設定なら <a class="link" href="./switch.html"><span class="link-label">トグルスイッチ</span></a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== 5. ボタン ===== -->
+      <h3 class="typo-xlarge mb-4">ボタン</h3>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-12">
+        <li><strong>送信ボタンはフォームの最後に 1 つ</strong>（<code class="px-1 bg-neutral-100 rounded">btn-primary btn-solid</code>）。文言は「送信」でなく、何が起きるか（「招待する」「保存する」）にする</li>
+        <li><strong>ページのフォームは最後の項目の直下・左端にそろえる</strong>。入力を終えた視線の先に置く。カードやモーダルの中のフォームは、それぞれの footer（右寄せ）に置く</li>
+        <li><strong>取り消し</strong>（キャンセル・戻る）は主操作の隣に neutral の outline / ghost で置く。主操作を 2 つにしない</li>
+        <li><strong>未入力でも送信ボタンを disabled にしない</strong>。押せない理由が分からないため。押したときにエラーで理由を伝える。送信中は <code class="px-1 bg-neutral-100 rounded">data-loading</code> で二重送信を防ぐ</li>
+      </ul>
+
+      <!-- ===== 6. 検証とエラー ===== -->
+      <h3 class="typo-xlarge mb-4">検証とエラー</h3>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-6">
+        <li><strong>検証するのは「送信したとき」と「入力を終えたとき」</strong>（その欄からフォーカスが外れたとき）。入力している途中には検証しない（打ち終わる前にエラーが出る）。一度エラーが出た欄は、直したらその場で消す</li>
+        <li><strong>エラーは入力欄の真下に、何が違うか・どう直すかを書く</strong>（「メールアドレスの形式で入力してください（例: yamada@example.com）」）。「入力エラー」「不正な値です」だけにしない</li>
+        <li>入力欄には <code class="px-1 bg-neutral-100 rounded">input-error</code> と <code class="px-1 bg-neutral-100 rounded">aria-invalid="true"</code>、エラー文は <code class="px-1 bg-neutral-100 rounded">aria-describedby</code> で結ぶ。ラジオ・チェックボックスの組はまとまり（fieldset）に 1 つだけ出す</li>
+        <li><strong>送信してエラーが 1〜2 件</strong>なら、最初のエラーの入力欄へフォーカスを移す。<strong>3 件以上</strong>ならフォームの上に <a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（negative）でまとめを出し、各項目へのリンクを並べてまとめへフォーカスを移す</li>
+        <li><strong>送信の結果</strong>（送りました／送れませんでした）は送信ボタンのすぐ横に <a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a> で出す。時間で消えるトーストにしない（<a class="link" href="./feedback.html"><span class="link-label">システムフィードバック</span></a>）</li>
+      </ul>
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <div class="flex items-baseline justify-between">
+            <h4 class="card-title">エラー文で直し方を伝える</h4>
+            <span class="typo-xsmall text-fg-low">エラーの修正の提案</span>
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
+            <div class="mb-4"><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md input-error" value="yamada@" tabindex="-1" aria-label="デモ: メールアドレス（良いエラー）" /><p class="field-error-text">＊メールアドレスの形式で入力してください（例: yamada@example.com）</p></div>
+            <p class="typo-medium text-fg-middle">何が違い、どう直せばよいかが分かる。</p>
+          </div>
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
+            <div class="mb-4"><div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">メールアドレス</span><span class="label-badge label-badge-required">必須</span></div></div><input class="input input-md input-error" value="yamada@" tabindex="-1" aria-label="デモ: メールアドレス（悪いエラー）" /><p class="field-error-text">＊入力エラー</p></div>
+            <p class="typo-medium text-fg-middle">何が違うのか分からず、直せない。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 7. 使えない状態 ===== -->
+      <h3 class="typo-xlarge mb-4">使えない状態・読み込みに失敗したとき</h3>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-12">
+        <li><strong>変更できない値は disabled でなく、ふつうの文字で見せる</strong>（または <code class="px-1 bg-neutral-100 rounded">readonly</code>）。disabled は薄くて読みにくく、送信にも乗らない。変更できない理由があれば補足に書く（ラベルの <code class="px-1 bg-neutral-100 rounded">label-badge-disabled</code>「編集不可」）</li>
+        <li><strong>送信に失敗しても、入力した内容を消さない</strong>。フォームはそのまま使える状態で残し、送信ボタンの横に失敗と次の手（もう一度・時間をおく）を出す</li>
+        <li><strong>初期値の読み込みに失敗したら</strong>、空のフォームを出さずに理由を出す。一部の項目だけ読めないなら、その項目だけ使えない理由を示す</li>
+      </ul>
+
+      <!-- ===== 8. アクセシビリティ ===== -->
+      <h3 class="typo-xlarge mb-4">アクセシビリティ</h3>
+      <div class="card mb-4">
+        <div class="card-header">
+          <h4 class="card-title">実装時の必須対応</h4>
+          <p class="card-subtitle">フォームを作ったら確かめる</p>
+        </div>
+        <div class="card-body">
+          <ul class="typo-medium text-fg-middle space-y-2">
+            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>すべての入力欄に見えるラベルを付け、<code class="typo-xsmall">&lt;label for&gt;</code> で結ぶ。まとまりは <code class="typo-xsmall">fieldset</code> ＋ <code class="typo-xsmall">legend</code></span></li>
+            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>必須はバッジ（見た目）と <code class="typo-xsmall">required</code>（プログラム）の両方で示す</span></li>
+            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>名前・メール・電話・住所には <code class="typo-xsmall">autocomplete</code> を付け、自動入力を使えるようにする（同じ情報を何度も入れさせない）</span></li>
+            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>エラーは <code class="typo-xsmall">aria-invalid</code> ＋ <code class="typo-xsmall">aria-describedby</code>。送信時はエラーの入力欄（3 件以上ならまとめ）へフォーカスを移す</span></li>
+            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>送信の結果はボタンの横に <code class="typo-xsmall">role="status"</code>（失敗は <code class="typo-xsmall">role="alert"</code>）で出す</span></li>
+            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>入力の途中でページを移動・送信しない（選んだだけで送信されない）</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">関連する達成基準（WCAG 2.2）</h4>
+        </div>
+        <div class="card-body">
+          <p class="typo-small text-fg-low leading-7">
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#labels-or-instructions" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.2 ラベル又は説明</span></a> ・
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#error-identification" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.1 エラーの特定</span></a> ・
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#error-suggestion" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.3 エラー修正の提案</span></a> ・
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#redundant-entry" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.7 冗長な入力</span></a> ・
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#identify-input-purpose" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.5 入力目的の特定</span></a> ・
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#info-and-relationships" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.1 情報及び関係性</span></a> ・
+            <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#on-input" target="_blank" rel="noopener noreferrer"><span class="link-label">3.2.2 入力時</span></a>
+          </p>
+        </div>
+      </div>
+
+    </section>
+  </main>
