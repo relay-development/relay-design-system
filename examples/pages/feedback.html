@@ -1,44 +1,301 @@
   <main class="max-w-5xl mx-auto px-6 py-10 space-y-16">
     <section id="feedback">
       <div class="flex items-baseline justify-between mb-8">
-        <h2 class="typo-2xlarge">システムフィードバックのアクセシビリティ</h2>
-        <span class="badge badge-soft-neutral">guideline</span>
+        <h2 class="typo-2xlarge">フィードバック</h2>
+        <span class="badge badge-soft-neutral">pattern</span>
       </div>
-      <p class="typo-article text-fg-high mb-10">保存できた・送信に失敗した・削除してよいか、といった<strong>操作に対するシステムの返答</strong>を、誰にも同じように届ける方法をまとめたガイドです。relay では返答の置き場所を 4 つに決め、画面の隅に出て数秒で消える<strong>トースト／スナックバーは意図的に用意していません</strong>。その理由と、代わりに何を使うかを説明します。</p>
+      <p class="typo-article text-fg-high mb-10">保存できた・送れなかった・メンテナンスがある、といった<strong>システムから利用者への知らせ</strong>の出し方です。部品は <a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>・<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>・<a class="link" href="./modal.html"><span class="link-label">モーダル</span></a>・入力欄のエラー（<a class="link" href="./label-control.html"><span class="link-label">field-error-text</span></a>）をそのまま使い、このページでは<strong>どの知らせを・どこに・どの色で出すか</strong>を決めます。画面の隅に出て数秒で消える<strong>トースト／スナックバーは意図的に用意していません</strong>（<a class="link" href="#no-toast"><span class="link-label">トーストを用意しない理由</span></a>）。</p>
 
       <!-- ===== 1. 原則 ===== -->
       <h3 class="typo-xlarge mb-4">3 つの原則</h3>
-      <p class="typo-article text-fg-high mb-6">フィードバックが届かない典型は「見ていない場所に出た」「読む前に消えた」「読み上げられなかった」の 3 つです。原則はその裏返しです。</p>
+      <p class="typo-article text-fg-high mb-6">知らせが届かない典型は「見ていない場所に出た」「読む前に消えた」「読み上げられなかった」の 3 つです。原則はその裏返しです。</p>
       <div class="grid sm:grid-cols-3 gap-4 mb-12">
         <div class="card">
           <div class="card-body">
             <p class="typo-medium font-bold text-fg-high mb-2">1. 操作した場所に置く</p>
-            <p class="typo-small text-fg-middle">利用者の視線は押したボタンや入力欄にある。返答はその視野の中、DOM 上もその要素の直後に置く。拡大表示や読み上げでも「何の結果か」がつながる。</p>
+            <p class="typo-medium text-fg-middle">利用者の視線は押したボタンや入力欄にある。知らせはその視野の中、DOM 上もその要素の直後に置く。拡大表示や読み上げでも「何の結果か」がつながる。</p>
           </div>
         </div>
         <div class="card">
           <div class="card-body">
             <p class="typo-medium font-bold text-fg-high mb-2">2. 利用者のペースで消える</p>
-            <p class="typo-small text-fg-middle">時間で勝手に消さない。消えるのは次の操作をしたとき、または利用者が閉じたとき。読むのに時間がかかる人、画面から目を離していた人にも届く。</p>
+            <p class="typo-medium text-fg-middle">時間で勝手に消さない。消えるのは次の操作をしたとき、または利用者が閉じたとき。読むのに時間がかかる人、画面から目を離していた人にも届く。</p>
           </div>
         </div>
         <div class="card">
           <div class="card-body">
-            <p class="typo-medium font-bold text-fg-high mb-2">3. 色に頼らず、支援技術にも伝える</p>
-            <p class="typo-small text-fg-middle">アイコン＋文言で意味を運び、テーマと文言を一致させる。動的に出す返答は <code class="typo-xsmall">role="status"</code>／<code class="typo-xsmall">role="alert"</code> でフォーカスを奪わずに読み上げる。</p>
+            <p class="typo-medium font-bold text-fg-high mb-2">3. 色に頼らず、読み上げにも伝える</p>
+            <p class="typo-medium text-fg-middle">アイコン＋文言で意味を運び、色と文言を一致させる。あとから出す知らせは <code class="typo-xsmall">role="status"</code>／<code class="typo-xsmall">role="alert"</code> でフォーカスを奪わずに読み上げる。</p>
           </div>
         </div>
       </div>
 
-      <!-- ===== 2. 行き先 ===== -->
-      <h3 class="typo-xlarge mb-4">返答の置き場所は 4 つに決める</h3>
-      <p class="typo-article text-fg-high mb-6">「どこに置くか」と「どう消えるか」で選びます。見た目の好みで選ばず、状況から機械的に決められるようにしています。GitHub Primer が Toast を持たず Banner / InlineMessage / Dialog に振り分けているのと同じ整理です。</p>
+      <!-- ===== 2. 種類 ===== -->
+      <h3 class="typo-xlarge mb-4">知らせの種類</h3>
+      <p class="typo-article text-fg-high mb-6">知らせは、きっかけによって 3 種類に分かれます。まず種類を決めると、使う部品が決まります。</p>
+      <div class="mb-12 overflow-x-auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col" class="w-56">種類</th>
+              <th scope="col">例</th>
+              <th scope="col">使うもの</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-fg-high">システムからのお知らせ<br><span class="font-normal text-fg-middle">利用者の操作と関係なく出す</span></td>
+              <td>メンテナンスの予定 / 規約の変更 / アカウントの制限</td>
+              <td>ページ上部の <a class="link" href="./alert.html"><span class="link-label">アラート</span></a>。対応が済むまで閉じられないものもある</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">操作の結果<br><span class="font-normal text-fg-middle">保存・送信・削除などへの返答</span></td>
+              <td>保存しました / 送れませんでした / 5 MB を超えています</td>
+              <td>操作した場所の直近に <a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>。入力の誤りは入力欄の真下の field-error-text（3 件以上ならフォームの上に <a class="link" href="./alert.html"><span class="link-label">アラート</span></a> でまとめる）</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">案内<br><span class="font-normal text-fg-middle">操作と関係なく役立つこと</span></td>
+              <td>新しい機能が使えます / 下書きが残っています</td>
+              <td>次の行動を勧めるならページ上部の <a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（info）、ちょっとしたヒントなら該当箇所の <a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>（neutral）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== 3. 色 ===== -->
+      <h3 class="typo-xlarge mb-4">色（テーマ）の選び方</h3>
+      <p class="typo-article text-fg-high mb-6">色は知らせの内容で選びます。見た目の強さで選ばないでください。色だけでは意味が伝わらないため、どのテーマも専用のアイコンと文言がセットです。</p>
       <div class="card mb-12">
-        <div class="card-header">
-          <h4 class="card-title">状況別の行き先</h4>
-          <p class="card-subtitle">上から順に当てはめる。迷ったら「出さない」に寄せる</p>
+        <div class="card-body space-y-3">
+          <div class="alert alert-info">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">info — 今の画面に関わる大事な情報、次の行動の提案</p>
+              <p class="alert-body">新しい機能のお知らせ、仕様の変更、もっと便利な使い方。インラインメッセージでは neutral を使う。</p>
+            </div>
+          </div>
+          <div class="alert alert-success">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">success — 操作が終わった</p>
+              <p class="alert-body">控えめに使う。画面の変化で結果が分かるなら出さない（<a class="link" href="#success-flow"><span class="link-label">成功を知らせるかの決め方</span></a>）。</p>
+            </div>
+          </div>
+          <div class="alert alert-warning">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">warning — このままだと困ることが起きる</p>
+              <p class="alert-body">期限が近い、一部の機能が制限される、元に戻せない操作の前。何が起きるかと、避ける方法を書く。</p>
+            </div>
+          </div>
+          <div class="alert alert-negative">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">negative — 失敗した・直す必要がある</p>
+              <p class="alert-body">保存・送信の失敗、入力の誤り。何が起きたかと、次に何をすればよいかを書く。</p>
+            </div>
+          </div>
+          <div class="alert alert-neutral">
+            <span class="alert-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            </span>
+            <div class="alert-content">
+              <p class="alert-title">neutral — 使えない・見られない</p>
+              <p class="alert-body">権限がない、一部のデータを読み込めなかった、機能を一時的に止めている。使えない理由と、使えるようにする方法（誰に頼むか）を書く。</p>
+            </div>
+          </div>
         </div>
-        <div class="card-body">
+      </div>
+
+      <!-- ===== 4. 置き場所 ===== -->
+      <h3 class="typo-xlarge mb-4">置き場所</h3>
+      <p class="typo-article text-fg-high mb-6">置き場所は、知らせが<strong>何に関わるか</strong>で決まります。迷ったら、利用者が操作した場所に近い方を選びます。</p>
+      <div class="mb-6 overflow-x-auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col" class="w-56">置き場所</th>
+              <th scope="col">使うとき</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="font-bold text-fg-high">ページ・セクションの上部</td><td>ページ全体やセクション全体に関わる知らせ。いちばん多い置き場所。<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>は本文の幅に合わせ、ヘッダーの直下に画面の端から端まで貼り付けない</td></tr>
+            <tr><td class="font-bold text-fg-high">操作した場所の直近</td><td>1 つの操作・1 つの入力欄に関わる知らせ。ボタンの横・フォームの直下・表の行内に <a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>、入力欄の真下に field-error-text</td></tr>
+            <tr><td class="font-bold text-fg-high">モーダルの中</td><td>モーダルの中の操作の結果。本文（<code class="typo-xsmall">modal-body</code>）の先頭に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>を置く。モーダルを閉じてページ側に出さない</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card mb-8 overflow-hidden">
+        <div class="card-header">
+          <h4 class="card-title">操作した場所の近くに置く</h4>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
+            <div class="mb-4" inert>
+              <div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">表示名</span></div></div>
+              <input class="input input-md mb-4" value="山田 花子" aria-label="デモ: 表示名" />
+              <div class="flex flex-wrap items-center gap-3">
+                <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+                <p class="inline-message inline-message-success">
+                  <svg class="inline-message-icon" aria-hidden="true"><use href="./icons.svg#lucide-check-circle"></use></svg>
+                  <span class="inline-message-text">保存しました</span>
+                </p>
+              </div>
+            </div>
+            <p class="typo-medium text-fg-middle">押したボタンのすぐ横に出るので、視線を動かさずに結果が分かる。</p>
+          </div>
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
+            <div class="mb-4" inert>
+              <div class="alert alert-success mb-4">
+                <span class="alert-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                </span>
+                <div class="alert-content">
+                  <p class="alert-title">保存しました</p>
+                </div>
+              </div>
+              <div class="label-control mb-2"><div class="label-control-row"><span class="label-control-text">表示名</span></div></div>
+              <input class="input input-md mb-4" value="山田 花子" aria-label="デモ: 表示名（上部に結果）" />
+              <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
+            </div>
+            <p class="typo-medium text-fg-middle">1 つの操作の結果をページの上部に出すと、ボタンを見ている利用者は気づかない。長いページでは画面の外に出てしまう。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mb-12 overflow-hidden">
+        <div class="card-header">
+          <h4 class="card-title">モーダルの中の操作の結果は、モーダルの中に出す</h4>
+        </div>
+        <div class="grid sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-stroke-low">
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-success-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.71-9.29a1 1 0 00-1.42-1.42L9 10.59 7.71 9.29a1 1 0 10-1.42 1.42l2 2a1 1 0 001.42 0l4-4z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-success-700">Good</span></div>
+            <div class="mb-4" inert>
+              <div class="modal is-static-preview shadow-lg rounded-md">
+                <div class="modal-header">
+                  <p class="modal-title">メンバーを招待する</p>
+                </div>
+                <div class="modal-body">
+                  <div class="alert alert-negative">
+                    <span class="alert-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+                    </span>
+                    <div class="alert-content">
+                      <p class="alert-title">招待メールを送れませんでした</p>
+                      <p class="alert-body">通信を確かめて、もう一度送ってください。</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-md btn-neutral btn-subtle">キャンセル</button>
+                  <button type="button" class="btn btn-md btn-primary btn-solid">招待する</button>
+                </div>
+              </div>
+            </div>
+            <p class="typo-medium text-fg-middle">入力した内容を残したまま、その場でやり直せる。</p>
+          </div>
+          <div class="p-6 min-w-0">
+            <div class="flex items-center gap-2 mb-4"><span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-negative-500 text-white"><svg class="w-3 h-3" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z" clip-rule="evenodd"/></svg></span><span class="typo-medium font-bold text-negative-600">Don't</span></div>
+            <div class="mb-4" inert>
+              <div class="alert alert-negative">
+                <span class="alert-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>
+                </span>
+                <div class="alert-content">
+                  <p class="alert-title">招待メールを送れませんでした</p>
+                  <p class="alert-body">もう一度「メンバーを招待する」から送ってください。</p>
+                </div>
+              </div>
+            </div>
+            <p class="typo-medium text-fg-middle">モーダルを閉じてページの上部に出すと、入力した内容が消え、最初から入れ直すことになる。</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== 5. 成功の決め方 ===== -->
+      <h3 class="typo-xlarge mb-4" id="success-flow">成功を知らせるかの決め方</h3>
+      <p class="typo-article text-fg-high mb-6">成功の知らせは<strong>控えめに</strong>使います。結果が画面を見て分かるなら、メッセージを足しても騒がしくなるだけです。上から順に当てはめます。</p>
+      <div class="mb-12 overflow-x-auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col" class="w-56">問い</th>
+              <th scope="col">はい</th>
+              <th scope="col">いいえ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-fg-high">1. 結果が画面を見れば分かるか<br><span class="font-normal text-fg-middle">チェックが入った・行が増えた・並び順が変わった</span></td>
+              <td>メッセージは出さない。ただし変わった状態は読み上げにも伝える（<code class="typo-xsmall">aria-pressed</code>・件数の <code class="typo-xsmall">aria-live</code> など）</td>
+              <td>2 へ</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">2. 保存・送信ボタンの結果か</td>
+              <td>3 へ</td>
+              <td>結果が関わる場所に<a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>か<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>を出す。作ったものがあれば、そこへのリンクを添える</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">3. 押すと別のページへ移るか</td>
+              <td>移った先の上部に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（success）。移った先の内容で結果が分かる（作った案件の詳細が開く等）なら出さない</td>
+              <td>ボタンのすぐ横に<a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>（success）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== 6. 失敗の決め方 ===== -->
+      <h3 class="typo-xlarge mb-4">失敗の伝え方の決め方</h3>
+      <p class="typo-article text-fg-high mb-6">失敗は必ず伝えます。どの部品でも、<strong>何が起きたか</strong>と<strong>次に何をすればよいか</strong>（直す・もう一度・時間をおく・問い合わせる）を書きます。原因が分からない失敗でも、次の手は書けます。上から順に当てはめます。</p>
+      <div class="mb-12 overflow-x-auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th scope="col" class="w-56">問い</th>
+              <th scope="col">はい</th>
+              <th scope="col">いいえ</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="font-bold text-fg-high">1. 入力内容の誤りか</td>
+              <td><a class="link" href="./form.html"><span class="link-label">フォームのエラーの伝え方</span></a>に従う（入力欄の真下に field-error-text、3 件以上はフォームの上にまとめ）</td>
+              <td>2 へ</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">2. モーダルの中の操作か</td>
+              <td>モーダルの本文の先頭に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（negative）。モーダルは閉じず、入力も消さない</td>
+              <td>3 へ</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">3. このままでは作業を続けられないか<br><span class="font-normal text-fg-middle">ログインが切れた・ほかの人が先に更新した</span></td>
+              <td><a class="link" href="./modal.html"><span class="link-label">モーダル</span></a>で操作を止め、次の手（ログインし直す・最新を読み込む）を選んでもらう</td>
+              <td>4 へ</td>
+            </tr>
+            <tr>
+              <td class="font-bold text-fg-high">4. 1 つの操作の失敗か</td>
+              <td>操作した場所の直近に<a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>（negative）</td>
+              <td>ページやセクション全体に関わる失敗（一覧を読み込めない等）は、その上部に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（negative）</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ===== 7. 早見表 ===== -->
+      <h3 class="typo-xlarge mb-4">行き先の早見表</h3>
+      <p class="typo-article text-fg-high mb-6">ここまでをまとめると、知らせの行き先は次の 5 つです。迷ったら「出さない」と「操作した場所の直近」に寄せます。</p>
+      <div class="mb-12 overflow-x-auto">
         <table class="data-table">
           <thead>
             <tr>
@@ -50,53 +307,48 @@
           </thead>
           <tbody>
             <tr>
-              <td>結果が画面を見れば分かる単純な成功<br><span class="typo-xsmall text-fg-low">チェックが入った・行が増えた・並び順が変わった</span></td>
+              <td>結果が画面を見れば分かる単純な成功</td>
               <td class="data-table-fit"><span class="badge badge-soft-neutral">出さない</span></td>
-              <td>画面の変化そのものが返答。メッセージを足すと騒がしくなるだけで情報は増えない</td>
-              <td class="typo-small text-fg-middle">状態変化を <code class="typo-xsmall">aria-*</code> で</td>
+              <td>画面の変化そのものが知らせ</td>
+              <td>状態の変化を <code class="typo-xsmall">aria-*</code> で</td>
             </tr>
             <tr>
-              <td>操作した場所の直近で結果を短く伝える<br><span class="typo-xsmall text-fg-low">保存しました / 送信に失敗しました / 5 MB を超えています</span></td>
+              <td>1 つの操作の結果</td>
               <td class="data-table-fit"><a class="link" href="./inline-message.html"><span class="link-label">inline-message</span></a></td>
               <td>ボタンの横・フォームの直下・行内。次の操作まで残る</td>
-              <td class="typo-small text-fg-middle"><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
+              <td><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
             </tr>
             <tr>
-              <td>ページ全体に向けた常設のお知らせ・しばらく残す通知<br><span class="typo-xsmall text-fg-low">メンテナンス予定 / 審査結果 / ページ上部のエラー要約</span></td>
-              <td class="data-table-fit"><a class="link" href="./alert.html"><span class="link-label">alert</span></a></td>
-              <td>コンテンツ領域の上部。利用者が閉じるまで残る（閉じるボタンは任意）</td>
-              <td class="typo-small text-fg-middle"><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
-            </tr>
-            <tr>
-              <td>操作を止めて判断を求める確認・エラー<br><span class="typo-xsmall text-fg-low">削除してよいか / セッション切れで再読み込み / 保存せずに離れるか</span></td>
-              <td class="data-table-fit"><a class="link" href="./modal.html"><span class="link-label">modal</span></a></td>
-              <td>最前面。利用者が選択するまで閉じない。閉じたらフォーカスを呼び出し元へ戻す</td>
-              <td class="typo-small text-fg-middle"><code class="typo-xsmall">&lt;dialog&gt;</code> + <code class="typo-xsmall">aria-labelledby</code></td>
-            </tr>
-            <tr>
-              <td>入力項目 1 つの検証エラー<br><span class="typo-xsmall text-fg-low">メールアドレスの形式が正しくありません</span></td>
+              <td>1 つの入力欄の誤り</td>
               <td class="data-table-fit"><a class="link" href="./label-control.html"><span class="link-label">field-error-text</span></a></td>
-              <td>入力欄の真下。修正されるまで残る</td>
-              <td class="typo-small text-fg-middle"><code class="typo-xsmall">aria-describedby</code> + <code class="typo-xsmall">aria-invalid</code></td>
+              <td>入力欄の真下。直すまで残る</td>
+              <td><code class="typo-xsmall">aria-describedby</code> + <code class="typo-xsmall">aria-invalid</code></td>
+            </tr>
+            <tr>
+              <td>ページ・セクション・モーダル全体に関わる知らせ</td>
+              <td class="data-table-fit"><a class="link" href="./alert.html"><span class="link-label">alert</span></a></td>
+              <td>ページ・セクション・モーダル本文の上部。利用者が閉じるか、対応が済むまで残る</td>
+              <td><code class="typo-xsmall">role="status"</code> / <code class="typo-xsmall">role="alert"</code></td>
+            </tr>
+            <tr>
+              <td>操作を止めて判断を求める確認・失敗</td>
+              <td class="data-table-fit"><a class="link" href="./modal.html"><span class="link-label">modal</span></a></td>
+              <td>最前面。選ぶまで閉じない。閉じたらフォーカスを呼び出し元へ戻す</td>
+              <td><code class="typo-xsmall">&lt;dialog&gt;</code> + <code class="typo-xsmall">aria-labelledby</code></td>
             </tr>
           </tbody>
         </table>
-        </div>
       </div>
 
-      <!-- ===== 3. トーストを置かない理由 ===== -->
-      <h3 class="typo-xlarge mb-4">トースト／スナックバーを意図的に置いていない理由</h3>
-      <p class="typo-article text-fg-high mb-6">画面の隅に固定して数秒で消える通知は、Material Design ではスナックバー、Android ではトーストと呼ばれ、Web でも広く使われています。relay はこれを<strong>コンポーネントとして用意しません</strong>。便利に見えますが、仕様そのものが次の達成基準と衝突し、DS 側で作ると違反の入口を配ることになるからです。</p>
+      <!-- ===== 8. トーストを置かない理由 ===== -->
+      <h3 class="typo-xlarge mb-4" id="no-toast">トースト／スナックバーを用意しない理由</h3>
+      <p class="typo-article text-fg-high mb-6">画面の隅に固定して数秒で消える通知は、Material Design ではスナックバー、Android ではトーストと呼ばれ、Web でも広く使われています。relay はこれを<strong>コンポーネントとして用意しません</strong>。仕様そのものが次の達成基準とぶつかり、DS で作ると違反の入口を配ることになるからです。GitHub Primer も Toast を持たず、「Toasts pose significant accessibility concerns and are not recommended for use」としています（<a class="link" href="https://primer.style/accessibility/toasts" target="_blank" rel="noopener noreferrer"><span class="link-label">Primer: Toasts</span><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-external-link"></use></svg></a>）。</p>
 
-      <div class="card mb-6">
-        <div class="card-header">
-          <h4 class="card-title">衝突する達成基準（WCAG 2.2）</h4>
-        </div>
-        <div class="card-body">
+      <div class="mb-6 overflow-x-auto">
         <table class="data-table">
           <thead>
             <tr>
-              <th scope="col" class="data-table-fit">基準</th>
+              <th scope="col" class="data-table-fit">達成基準（WCAG 2.2）</th>
               <th scope="col">トーストで起きること</th>
               <th scope="col">relay の置き方で解けること</th>
             </tr>
@@ -104,104 +356,73 @@
           <tbody>
             <tr>
               <td class="data-table-fit"><a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#timing-adjustable" target="_blank" rel="noopener noreferrer"><span class="link-label">2.2.1 タイミング調整可能</span></a></td>
-              <td>数秒で消えるため、読むのに時間がかかる人・目を離していた人は内容を知れない。延長や停止の手段を全通知に付けるのは現実的でない</td>
-              <td>次の操作まで残す。時間制限そのものを作らない</td>
+              <td>数秒で消えるため、読むのに時間がかかる人・目を離していた人は内容を知れない</td>
+              <td>次の操作まで残す。時間制限を作らない</td>
             </tr>
             <tr>
               <td class="data-table-fit"><a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#meaningful-sequence" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.2 意味のある順序</span></a></td>
-              <td>DOM の末尾に挿入されるので、読み上げ順では「どの操作の結果か」が切れる</td>
-              <td>操作した要素の直後に挿入し、視覚と読み上げの順序を一致させる</td>
+              <td>DOM の末尾に入るので、読み上げの順では「どの操作の結果か」が切れる</td>
+              <td>操作した要素の直後に入れ、見た目と読み上げの順を一致させる</td>
             </tr>
             <tr>
               <td class="data-table-fit"><a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#focus-order" target="_blank" rel="noopener noreferrer"><span class="link-label">2.4.3 フォーカス順序</span></a> ・ <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#keyboard" target="_blank" rel="noopener noreferrer"><span class="link-label">2.1.1 キーボード</span></a></td>
-              <td>アクション付きトーストは、消える前にキーボードで到達するのが難しい。到達させるためにフォーカスを飛ばすと作業が中断される</td>
-              <td>操作直近にあるので Tab 1 回で届く。フォーカスは動かさない。判断が要るなら modal でフォーカスを預かり、閉じたら戻す</td>
+              <td>ボタン付きのトーストは、消える前にキーボードで届きにくい。届かせるためにフォーカスを飛ばすと作業が中断される</td>
+              <td>操作の直近にあるので Tab 1 回で届く。判断が要るならモーダルでフォーカスを預かり、閉じたら戻す</td>
             </tr>
             <tr>
               <td class="data-table-fit"><a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#status-messages" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.3 ステータスメッセージ</span></a></td>
-              <td>読み上げ自体は <code class="typo-xsmall">aria-live</code> で可能だが、消えた後に聞き返す手段がない</td>
+              <td>読み上げは <code class="typo-xsmall">aria-live</code> でできるが、消えたあとに聞き返せない</td>
               <td>残っているので、いつでも読み直せる</td>
             </tr>
             <tr>
               <td class="data-table-fit"><a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#reflow" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.10 リフロー</span></a> ・ <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#resize-text" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.4 テキストのサイズ変更</span></a></td>
-              <td>画面隅に固定されるため、400% ズームやスクリーン拡大鏡で操作対象を見ている利用者の視野に入らない。拡大するとコンテンツを覆う</td>
+              <td>画面の隅に固定されるため、拡大して操作対象を見ている利用者の視野に入らない。拡大すると本文を覆う</td>
               <td>操作対象と同じ視野に置くので、拡大しても一緒に見える</td>
             </tr>
           </tbody>
         </table>
-        </div>
       </div>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-8">
+        <li><strong>見逃される</strong> — 隅に出る小さな通知は、繰り返し見るうちに広告のように無視される。本当に伝えるべき失敗も同じように流れる</li>
+        <li><strong>誤って閉じる</strong> — スワイプや近くのタップで消える。「元に戻す」を載せると、消えた時点で取り消す機会もなくなる</li>
+        <li><strong>重さが混ざる</strong> — 成功も失敗も同じ位置・同じ見た目で流れ、重大な失敗が「いつもの通知」に埋もれる</li>
+        <li><strong>振る舞いがそろわない</strong> — 表示時間・重ね方・ボタン・閉じるの有無がプロダクトごとに揺れ、見た目をそろえても使い心地がそろわない</li>
+      </ul>
 
-      <div class="card mb-12">
-        <div class="card-header">
-          <h4 class="card-title">基準の外でも起きる問題</h4>
-          <p class="card-subtitle">達成基準に直接は当たらないが、フィードバックが届かなくなる要因</p>
-        </div>
-        <div class="card-body">
-          <ul class="typo-small text-fg-middle space-y-2">
-            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><strong>見逃し</strong> — 隅に出る小さな通知は、繰り返し見るうちに広告のように無視されるようになる（バナー盲）。本当に伝えるべき失敗も同じ扱いで流れる</span></li>
-            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><strong>誤って閉じる</strong> — スワイプや近くのタップで意図せず消える。「元に戻す」のようなアクションを載せると、消えた時点で取り消しの機会も失われる</span></li>
-            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><strong>重要度の混在</strong> — 成功も失敗も同じ位置・同じ見た目で流れるため、重大なエラーが「いつもの通知」に埋もれる</span></li>
-            <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><strong>実装の分岐</strong> — 表示時間・キュー・スタック・アクション・閉じるボタンの有無がプロダクトごとに揺れ、DS で見た目を揃えても振る舞いが揃わない</span></li>
-          </ul>
-          <p class="typo-small text-fg-middle mt-4">同じ理由で GitHub Primer は Toast を持たず、アクセシビリティガイドで「Toasts pose significant accessibility concerns and are not recommended for use」と明記しています（<a class="link link-neutral" href="https://primer.style/accessibility/toasts" target="_blank" rel="noopener noreferrer"><span class="link-label">Primer: Toasts</span><svg class="icon"><use href="./icons.svg#lucide-external-link"></use></svg></a>）。</p>
-        </div>
-      </div>
-
-      <!-- ===== 4. トーストが要ると思ったとき ===== -->
-      <h3 class="typo-xlarge mb-4">「それでもトーストが要る」と思ったときの読み替え</h3>
-      <p class="typo-article text-fg-high mb-6">トーストを使いたくなる場面は、たいてい次のどれかに置き換えられます。</p>
-      <div class="mb-12">
+      <h4 class="typo-large mb-4">「それでもトーストが要る」と思ったときの読み替え</h4>
+      <div class="mb-12 overflow-x-auto">
         <table class="data-table">
           <thead>
             <tr>
-              <th scope="col">やりたかったこと</th>
+              <th scope="col" class="w-72">やりたかったこと</th>
               <th scope="col">読み替え</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>保存・送信の成功を知らせたい</td>
-              <td>結果が画面で分かるなら出さない。分からないなら「保存する」の横に <a class="link" href="./inline-message.html"><span class="link-label">inline-message</span></a>（success）を残す</td>
-            </tr>
-            <tr>
-              <td>通信エラーを知らせたい</td>
-              <td>操作した場所に <a class="link" href="./inline-message.html"><span class="link-label">inline-message</span></a>（negative・<code class="typo-xsmall">role="alert"</code>）。再読み込みや再ログインが必要なら <a class="link" href="./modal.html"><span class="link-label">modal</span></a> で止める</td>
-            </tr>
-            <tr>
-              <td>「元に戻す」を数秒だけ出したい</td>
-              <td>取り消し導線を時間制限つきにしない。削除前に <a class="link" href="./modal.html"><span class="link-label">modal</span></a> で確認するか、削除後に <a class="link" href="./alert.html"><span class="link-label">alert</span></a> で「元に戻す」を残す</td>
-            </tr>
-            <tr>
-              <td>別画面に遷移した後に結果を知らせたい</td>
-              <td>遷移先の上部に <a class="link" href="./alert.html"><span class="link-label">alert</span></a>（success）を常設で置く。利用者が閉じるまで残す</td>
-            </tr>
-            <tr>
-              <td>時間のかかる処理の完了を知らせたい</td>
-              <td>処理中は操作した場所で進行を示し、完了は同じ場所に <a class="link" href="./inline-message.html"><span class="link-label">inline-message</span></a> か、一覧なら該当行の状態として表す。画面を離れる長さならメールなど画面外の手段も検討する</td>
-            </tr>
-            <tr>
-              <td>同時に複数の結果を知らせたい</td>
-              <td>スタックさせない。それぞれの操作直近に置くか、ページ上部の <a class="link" href="./alert.html"><span class="link-label">alert</span></a> に要約して箇条書きにする</td>
-            </tr>
+            <tr><td class="font-bold text-fg-high">保存・送信の成功を知らせたい</td><td>結果が画面で分かるなら出さない。分からないなら「保存する」の横に<a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>（success）を残す</td></tr>
+            <tr><td class="font-bold text-fg-high">通信の失敗を知らせたい</td><td>操作した場所に<a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>（negative・<code class="typo-xsmall">role="alert"</code>）。ログインし直す必要があるなら<a class="link" href="./modal.html"><span class="link-label">モーダル</span></a>で止める</td></tr>
+            <tr><td class="font-bold text-fg-high">「元に戻す」を数秒だけ出したい</td><td>取り消しを時間制限つきにしない。削除の前に<a class="link" href="./modal.html"><span class="link-label">モーダル</span></a>で確かめるか、削除の後に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>で「元に戻す」を残す</td></tr>
+            <tr><td class="font-bold text-fg-high">別のページへ移った後に結果を知らせたい</td><td>移った先の上部に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（success）を置き、利用者が閉じるまで残す</td></tr>
+            <tr><td class="font-bold text-fg-high">時間のかかる処理の完了を知らせたい</td><td>処理中は操作した場所で進み具合を示し、完了も同じ場所に<a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a>か、一覧なら該当の行の状態で示す。画面を離れるほど長いならメールなど画面の外の手段も考える</td></tr>
+            <tr><td class="font-bold text-fg-high">一度に複数の結果を知らせたい</td><td>重ねて出さない。それぞれの操作の直近に置くか、ページ上部の<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>にまとめて箇条書きにする</td></tr>
           </tbody>
         </table>
       </div>
 
-      <!-- ===== 5. 実装チェックリスト ===== -->
-      <h3 class="typo-xlarge mb-4">実装チェックリスト</h3>
-      <p class="typo-article text-fg-high mb-6">コンポーネントを選んだあと、プロダクト側で確認する項目です。各コンポーネントの「アクセシビリティ」タブと MCP <code class="typo-xsmall">get_component</code> の同名の節にも同じ内容があります。</p>
-      <div class="grid sm:grid-cols-2 gap-4 mb-12">
+      <!-- ===== 9. アクセシビリティ ===== -->
+      <h3 class="typo-xlarge mb-4">アクセシビリティ</h3>
+      <p class="typo-article text-fg-high mb-6">部品を選んだあと、プロダクト側で確かめる項目です。各コンポーネントの「アクセシビリティ」タブと MCP <code class="typo-xsmall">get_component</code> の同じ名前の節にも同じ内容があります。</p>
+      <div class="grid sm:grid-cols-2 gap-4 mb-4">
         <div class="card">
           <div class="card-header">
             <h4 class="card-title">置き場所と順序</h4>
           </div>
           <div class="card-body">
-            <ul class="typo-small text-fg-middle space-y-2">
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>操作した要素の直後に、視覚上も DOM 上も挿入している</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">position: fixed</code> で画面隅に固定していない</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>フォーカスを動かしていない（modal を除く。modal は閉じたら呼び出し元へ戻す）</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>400% ズームで操作対象とメッセージが同じ視野に入る</span></li>
+            <ul class="typo-medium text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>操作した要素の直後に、見た目の上でも DOM の上でも入れている</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">position: fixed</code> で画面の隅に固定していない</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>フォーカスを動かしていない（モーダルと、3 件以上のエラーのまとめを除く）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>400% に拡大しても、操作対象と知らせが同じ視野に入る</span></li>
             </ul>
           </div>
         </div>
@@ -210,24 +431,24 @@
             <h4 class="card-title">消え方</h4>
           </div>
           <div class="card-body">
-            <ul class="typo-small text-fg-middle space-y-2">
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">setTimeout</code> 等で自動消去していない</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>消えるのは次の操作か、利用者の明示的な操作（閉じる・修正・再送信）のとき</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>閉じるボタンがあるなら <code class="typo-xsmall">aria-label="閉じる"</code> があり、キーボードで到達できる</span></li>
+            <ul class="typo-medium text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span><code class="typo-xsmall">setTimeout</code> などで自動で消していない</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>消えるのは次の操作か、利用者の操作（閉じる・直す・送り直す）のとき</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>閉じるボタンには <code class="typo-xsmall">aria-label="閉じる"</code> があり、キーボードで届く</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>取り消し（元に戻す）に時間制限を付けていない</span></li>
             </ul>
           </div>
         </div>
         <div class="card">
           <div class="card-header">
-            <h4 class="card-title">支援技術への通知</h4>
+            <h4 class="card-title">読み上げ</h4>
           </div>
           <div class="card-body">
-            <ul class="typo-small text-fg-middle space-y-2">
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>動的に出す結果に <code class="typo-xsmall">role="status"</code>（成功・情報）／<code class="typo-xsmall">role="alert"</code>（失敗・注意）がある</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>ライブリージョンは空の状態で先に置くか、挿入と同時に <code class="typo-xsmall">role</code> を持つ要素として追加している（後から <code class="typo-xsmall">role</code> だけ付けると読み上げられない）</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>同じ内容を短時間に繰り返し挿入していない（読み上げが連続する）</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>modal は <code class="typo-xsmall">showModal()</code> で開き、<code class="typo-xsmall">aria-labelledby</code> でタイトルを名前にしている</span></li>
+            <ul class="typo-medium text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>あとから出す知らせに <code class="typo-xsmall">role="status"</code>（成功・情報）／<code class="typo-xsmall">role="alert"</code>（失敗・注意）がある</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>ライブリージョンは空の状態で先に置くか、<code class="typo-xsmall">role</code> を持つ要素として入れている（あとから <code class="typo-xsmall">role</code> だけ付けても読み上げられない）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>同じ内容を短い間に何度も入れていない（読み上げが続く）</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>知らせを出さない成功でも、変わった状態が読み上げで分かる</span></li>
             </ul>
           </div>
         </div>
@@ -236,25 +457,21 @@
             <h4 class="card-title">意味の伝え方</h4>
           </div>
           <div class="card-body">
-            <ul class="typo-small text-fg-middle space-y-2">
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>テーマ（success / negative / warning）と文言が一致している</span></li>
+            <ul class="typo-medium text-fg-middle space-y-2">
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>テーマ（success / negative / warning 等）と文言が一致している</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>アイコンは <code class="typo-xsmall">aria-hidden="true"</code>、意味は文言が運ぶ</span></li>
               <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>失敗の文言に「何が起きたか」と「次に何をすればよいか」がある</span></li>
-              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>グレースケール表示でもアイコンと文言で意味が分かる</span></li>
+              <li class="flex gap-2"><span class="text-negative-600 shrink-0 font-bold">!</span><span>リンクの文言だけで行き先が分かる（「詳しくはこちら」にしない）</span></li>
             </ul>
           </div>
         </div>
       </div>
-
-      <!-- ===== 6. 関連 ===== -->
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">関連ページ・達成基準</h4>
+          <h4 class="card-title">関連する達成基準（WCAG 2.2）</h4>
         </div>
         <div class="card-body space-y-3">
-          <p class="typo-small text-fg-middle">コンポーネント: <a class="link" href="./inline-message.html"><span class="link-label">インラインメッセージ</span></a> ・ <a class="link" href="./alert.html"><span class="link-label">アラート</span></a> ・ <a class="link" href="./modal.html"><span class="link-label">モーダル</span></a> ・ <a class="link" href="./label-control.html"><span class="link-label">ラベルコントロール（field-error-text）</span></a></p>
-          <p class="typo-small text-fg-middle">全 86 基準の対応表: <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティについての取り組み</span></a></p>
-          <p class="typo-small text-fg-low leading-7">
+          <p class="typo-medium text-fg-middle leading-7">
             <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#status-messages" target="_blank" rel="noopener noreferrer"><span class="link-label">4.1.3 ステータスメッセージ</span></a> ・
             <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#timing-adjustable" target="_blank" rel="noopener noreferrer"><span class="link-label">2.2.1 タイミング調整可能</span></a> ・
             <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#meaningful-sequence" target="_blank" rel="noopener noreferrer"><span class="link-label">1.3.2 意味のある順序</span></a> ・
@@ -264,6 +481,7 @@
             <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#error-identification" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.1 エラーの特定</span></a> ・
             <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#error-suggestion" target="_blank" rel="noopener noreferrer"><span class="link-label">3.3.3 エラー修正の提案</span></a>
           </p>
+          <p class="typo-medium text-fg-middle">WCAG 2.2 の全基準の対応表: <a class="link" href="./accessibility.html"><span class="link-label">アクセシビリティについての取り組み</span></a></p>
         </div>
       </div>
 

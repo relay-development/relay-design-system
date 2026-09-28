@@ -331,7 +331,6 @@ function injectReviewLog(content) {
 const PAGES = [
   { file: "mcp.html",           group: "イントロダクション", label: "MCP サーバー", title: "MCP サーバー", desc: "AI コーディングツールに relay の規約・トークン・コンポーネントを理解させる" },
   { file: "accessibility.html", group: "イントロダクション", label: "取り組み", title: "アクセシビリティについての取り組み", desc: "WCAG 2.2 AAA に向けたデザインシステムの担保とプロダクト側の責務" },
-  { file: "feedback.html",      group: "イントロダクション", label: "システムフィードバック", title: "システムフィードバックのアクセシビリティ", desc: "操作結果の伝え方 — 出さない / inline-message / alert / modal と、トーストを置かない理由" },
   { file: "evals.html",         group: "イントロダクション", label: "品質評価", title: "品質評価（evals）", desc: "AI が DS のルール通りに作れるかを測る定期健康診断とスコアの定点観測" },
   { file: "review-log.html",    group: "イントロダクション", label: "監査ログ", title: "審査員の監査ログ", desc: "品質評価の AI 審査員の判定を、人が抜き取り監査した記録" },
   { file: "releases.html",      group: "イントロダクション", label: "リリースログ", title: "リリースログ", desc: "各バージョンの変更点の要約と GitHub リリースノートへのリンク" },
@@ -378,6 +377,7 @@ const PAGES = [
   { file: "page-shell.html",   group: "Components", label: "ページシェル",     title: "ページシェル",     desc: "コンテンツ領域を標準幅に整えるラッパー" },
 
   { file: "form.html",         group: "Patterns", label: "フォーム",          title: "フォーム",          desc: "入力画面の並べ方・書き方・エラーの伝え方" },
+  { file: "feedback.html",     group: "Patterns", label: "フィードバック",    title: "フィードバック",    desc: "操作の結果やお知らせの出し方 — 種類・色・置き場所と、トーストを置かない理由" },
 
   // hidden: サイドバーに出さない（checkbox / radio ページ下部のカードリンクからのみ遷移）
   { file: "guidelines.html",   group: "ガイドライン", label: "チェックボックスとラジオボタン", title: "チェックボックスとラジオボタン", desc: "Don't / Good パターン集", hidden: true },
