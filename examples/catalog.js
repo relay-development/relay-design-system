@@ -394,7 +394,7 @@ function applyTableFilters(table) {
 }
 
 // 適用中の条件 — data-filter-conditions="<表の id>" の行に、検索のキーワード・見出し行の絞り込み・列フィルターを
-// トークン（tag）で並べる。各条件は解除の関数を持ち、× で 1 つ、「すべて解除」で全部を解除する。
+// タグ（tag）で並べる。各条件は解除の関数を持ち、× で 1 つ、「すべて解除」で全部を解除する。
 function syncPanelTrigger(panel) {
   const count = [...panel.querySelectorAll("select[data-filter-col]")].filter((s) => s.dataset.applied).length;
   const trigger = filterTrigger(panel);
@@ -447,7 +447,7 @@ function renderTableConditions(table) {
   row.hidden = items.length === 0;
 }
 
-// × で 1 つ解除 → 次のトークン（無ければ前、1 つも無ければ検索の入力欄）へ。すべて解除 → 検索の入力欄へ
+// × で 1 つ解除 → 次のタグ（無ければ前、1 つも無ければ検索の入力欄）へ。すべて解除 → 検索の入力欄へ
 document.addEventListener("click", (e) => {
   const remove = e.target.closest("[data-filter-conditions] .tag-remove");
   const clearAll = e.target.closest("[data-filter-conditions] [data-filter-clear-all]");
@@ -712,20 +712,20 @@ document.addEventListener("click", async (e) => {
   }, 1400);
 });
 
-// Token Input — [data-token-input] の入力欄の値を Enter か「追加」([data-token-add]) でトークンにする。
+// Tag Input — [data-tag-input] の入力欄の値を Enter か「追加」([data-tag-add]) でタグにする。
 // 空・重複・上限 (data-max) は受け付けず、入力欄の真下の field-error-text に理由を出す（input-error ＋ aria-invalid）。
 // 追加・削除は aria-live の領域で告知し、削除したらフォーカスを次の削除ボタン（無ければ前・入力欄）へ移す。
-function tokenInputParts(root) {
+function tagInputParts(root) {
   return {
-    input: root.querySelector(".token-input-field > .input"),
+    input: root.querySelector(".tag-input-field > .input"),
     list: root.querySelector(".tag-list"),
     error: root.querySelector(".field-error-text"),
     live: root.querySelector("[aria-live]"),
   };
 }
 
-function setTokenError(root, message) {
-  const { input, error } = tokenInputParts(root);
+function setTagInputError(root, message) {
+  const { input, error } = tagInputParts(root);
   if (!input || !error) return;
   const ids = (input.getAttribute("aria-describedby") || "").split(/\s+/).filter((id) => id && id !== error.id);
   if (message) ids.unshift(error.id);
@@ -737,15 +737,15 @@ function setTokenError(root, message) {
   error.hidden = !message;
 }
 
-function addToken(root) {
-  const { input, list, live } = tokenInputParts(root);
+function addTag(root) {
+  const { input, list, live } = tagInputParts(root);
   const value = input.value.trim();
   const values = [...list.querySelectorAll(".tag-label")].map((el) => el.textContent);
   const max = Number(root.dataset.max) || Infinity;
-  if (!value) return setTokenError(root, "値を入力してください");
-  if (values.includes(value)) return setTokenError(root, `『${value}』はすでに追加されています`);
-  if (values.length >= max) return setTokenError(root, `追加できるのは ${max} 件までです`);
-  setTokenError(root, "");
+  if (!value) return setTagInputError(root, "値を入力してください");
+  if (values.includes(value)) return setTagInputError(root, `『${value}』はすでに追加されています`);
+  if (values.length >= max) return setTagInputError(root, `追加できるのは ${max} 件までです`);
+  setTagInputError(root, "");
   const li = document.createElement("li");
   li.className = "tag";
   const label = document.createElement("span");
@@ -763,33 +763,33 @@ function addToken(root) {
 }
 
 document.addEventListener("click", (e) => {
-  const add = e.target.closest("[data-token-input] [data-token-add]");
+  const add = e.target.closest("[data-tag-input] [data-tag-add]");
   if (add) {
-    const root = add.closest("[data-token-input]");
-    addToken(root);
-    tokenInputParts(root).input.focus();
+    const root = add.closest("[data-tag-input]");
+    addTag(root);
+    tagInputParts(root).input.focus();
     return;
   }
-  const remove = e.target.closest("[data-token-input] .tag-remove");
+  const remove = e.target.closest("[data-tag-input] .tag-remove");
   if (!remove) return;
-  const root = remove.closest("[data-token-input]");
-  const { input, live } = tokenInputParts(root);
-  const token = remove.closest(".tag");
-  const value = token.querySelector(".tag-label").textContent;
-  const next = token.nextElementSibling || token.previousElementSibling;
-  token.remove();
+  const root = remove.closest("[data-tag-input]");
+  const { input, live } = tagInputParts(root);
+  const tag = remove.closest(".tag");
+  const value = tag.querySelector(".tag-label").textContent;
+  const next = tag.nextElementSibling || tag.previousElementSibling;
+  tag.remove();
   (next?.querySelector(".tag-remove") || input).focus();
   if (live) live.textContent = `『${value}』を削除しました`;
   // 上限のエラーは 1 つ消せば解消する
-  if (root.querySelector(".field-error-text:not([hidden])")?.textContent.includes("件まで")) setTokenError(root, "");
+  if (root.querySelector(".field-error-text:not([hidden])")?.textContent.includes("件まで")) setTagInputError(root, "");
 });
 
 document.addEventListener("keydown", (e) => {
   if (e.key !== "Enter" || e.isComposing) return;
-  const input = e.target.closest?.("[data-token-input] .token-input-field > .input");
+  const input = e.target.closest?.("[data-tag-input] .tag-input-field > .input");
   if (!input) return;
-  e.preventDefault(); // フォームの送信ではなく、トークンの追加にする
-  addToken(input.closest("[data-token-input]"));
+  e.preventDefault(); // フォームの送信ではなく、タグの追加にする
+  addTag(input.closest("[data-tag-input]"));
 });
 
 // Multi Selector — ボタン（multi-selector-trigger）から popover のパネルを開き、中の checkbox で複数を選ぶ。

@@ -80,7 +80,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 6 | Input          | `.input`, `.input-error`, `.input-{sm,md,lg}` |
 | 7 | Search Input   | `.search-input`, `.search-input-{field,clear,submit,submit-icon}`, `.search-input-{sm,md,lg}`（`<form role="search">` で包み、送信ボタン（sm は `.search-input-submit-icon`）か Enter で確定してから検索する。`.search-input-icon` は非推奨） |
 | 8 | Tag           | `.tag`, `.tag-label`, `.tag-remove`, `.tag-list`（利用者が追加・選択した値を 1 つずつ外せる小さな pill。× の aria-label に値を含める。状態の表示は badge、ON/OFF の絞り込みは filter-chip） |
-| 9 | Token Input   | `.token-input`, `.token-input-field`, `.tag-list`, `.tag`, `.tag-label`, `.tag-remove`（複数の値を 1 つずつ追加・削除する入力欄。入力欄 ＋「追加」ボタンの下にトークンを並べる。入力欄の中にトークンを入れない） |
+| 9 | Tag Input   | `.tag-input`, `.tag-input-field`, `.tag-list`, `.tag`, `.tag-label`, `.tag-remove`（複数の値を 1 つずつ追加・削除する入力欄。入力欄 ＋「追加」ボタンの下にトークンを並べる。入力欄の中にトークンを入れない） |
 | 10 | Selector       | `.selector`, `.selector-{icon,error}`, `.selector-{sm,md,lg}`（中の select は `.select`。`.selector-field` は非推奨エイリアス） |
 | 11 | Multi Selector | `.multi-selector`, `.multi-selector-{sm,md,lg}`, `.multi-selector-trigger`, `.multi-selector-value`, `.multi-selector-panel`, `.multi-selector-option`, `.multi-selector-all`, `.multi-selector-group`, `.multi-selector-group-title`, `.multi-selector-error`（決まった選択肢から複数を選ぶ折りたたみの入力欄。selector と同じ枠のボタン ＋ popover のパネルに普通の checkbox） |
 | 12 | Textarea       | `.textarea`, `.textarea-{sm,md}`, `.textarea-control`, `.textarea-footer`, `.textarea-counter` |

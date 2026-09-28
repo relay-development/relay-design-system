@@ -1,16 +1,16 @@
 /*
- * Token Input (トークンインプット) — Figma に仕様が無いため DS 規約から新規設計
+ * Tag Input (タグインプット) — Figma に仕様が無いため DS 規約から新規設計
  *
  *   担当者・タグ・メールアドレスのように、複数の値を 1 つずつ追加・削除して集める入力欄。
- *   追加した値は入力欄の下に、削除ボタン付きのトークンとして並べる。値の編集はしない（消して入れ直す）。
+ *   追加した値は入力欄の下に、削除ボタン付きのタグとして並べる。値の編集はしない（消して入れ直す）。
  *
- *   入力欄の中にトークンを入れない。トークンへ矢印キーでしか移れない・スクリーンリーダーの操作モードが切り替わる等、
+ *   入力欄の中にタグを入れない。タグへ矢印キーでしか移れない・スクリーンリーダーの操作モードが切り替わる等、
  *   支援技術の利用者に問題が多いため。
- *   入力欄は普通の input、トークンの削除ボタンはそれぞれ Tab で止まる普通のボタンにする。
+ *   入力欄は普通の input、タグの削除ボタンはそれぞれ Tab で止まる普通のボタンにする。
  *
  *   構造:
- *     <div class="token-input">
- *       <div class="token-input-field">
+ *     <div class="tag-input">
+ *       <div class="tag-input-field">
  *         <input type="text" class="input input-md" id="assignee" aria-describedby="assignee-help" />
  *         <button type="button" class="btn btn-md btn-neutral btn-outline">追加</button>
  *       </div>
@@ -28,20 +28,20 @@
  *
  *   props:
  *     field   : 入力欄 input-md ＋「追加」ボタン btn-md neutral outline（input の高さ 40 とそろえる）
- *     tokens  : ul.tag-list > li.tag（tag-label ＋ tag-remove）。追加した順に並べ、折り返す
+ *     tags    : ul.tag-list > li.tag（tag-label ＋ tag-remove）。追加した順に並べ、折り返す
  *     error   : 空・重複・上限超えは input に input-error ＋ aria-invalid、入力欄の真下に field-error-text
  *
  *   サイズ / 色:
  *     入力欄と追加ボタン : gap 8。入力欄が残りの幅に広がる
- *     トークンの並び     : 入力欄（と補足）の下 12、トークンの間 8、折り返す
- *     トークン           : tag（tag.css）。高さ 32 の pill ＋ 24×24 の削除ボタン
+ *     タグの並び     : 入力欄（と補足）の下 12、タグの間 8、折り返す
+ *     タグ               : tag（tag.css）。高さ 32 の pill ＋ 24×24 の削除ボタン
  *
  * 別名:
- *   トークンインプット / token input / タグ入力 / tag input / チップ入力 / chips input / 複数入力 /
+ *   タグインプット / tag input / tags input / タグ入力 / トークンインプット / token input / チップ入力 / chips input / 複数入力 /
  *   複数選択の入力 / text input with tokens / マルチ入力 / 宛先入力
  *
  * 機能:
- *   自由に入力する値（担当者・タグ・メールアドレス等）を複数集めるフォームの入力欄。追加した値はトークンで見せ、1 つずつ削除できる。
+ *   自由に入力する値（担当者・タグ・メールアドレス等）を複数集めるフォームの入力欄。追加した値はタグで見せ、1 つずつ削除できる。
  *   選択肢が決まっているなら checkbox（多ければ select 等の一覧から選ぶ）、値 1 つなら input。
  *   一覧の絞り込みのトグルは filter-chip、状態の表示は badge（どちらも tag ではない）。
  *
@@ -50,25 +50,25 @@
  *   OK: 追加した値は入力欄の下の ul.tag-list に、追加した順に tag で並べる。
  *   OK: 削除ボタンの aria-label に値を含める（例: 『山田』を削除）。「×」だけだと何を消すか分からない。
  *   OK: 追加・削除の結果は aria-live="polite" の領域で告知する（「『山田』を追加しました」）。
- *   OK: 削除したら、フォーカスを次のトークンの削除ボタンへ（無ければ前、1 つも無ければ入力欄へ）移す。
+ *   OK: 削除したら、フォーカスを次のタグの削除ボタンへ（無ければ前、1 つも無ければ入力欄へ）移す。
  *   OK: 空・重複・上限を超える追加は受け付けず、入力欄の真下に field-error-text で理由を出す（input-error ＋ aria-invalid）。
  *   OK: 上限があるなら補足（field-support-text）に書き、aria-describedby で入力欄と結ぶ（例: 最大 5 人）。
- *   NG: 入力欄の中（枠の内側）にトークンを並べない → 支援技術で扱いにくい。トークンは入力欄の下に置く。
- *   NG: トークンの間を矢印キーで移動する作りにしない → 削除ボタンはそれぞれ Tab で止まる普通のボタンにする。
+ *   NG: 入力欄の中（枠の内側）にタグを並べない → 支援技術で扱いにくい。タグは入力欄の下に置く。
+ *   NG: タグの間を矢印キーで移動する作りにしない → 削除ボタンはそれぞれ Tab で止まる普通のボタンにする。
  *   NG: 入力の途中（カンマ・スペース）で自動で追加しない → 意図しない値が増える。Enter か「追加」で確定する。
- *   NG: トークンの中で値を編集させない → 消して入れ直す。
+ *   NG: タグの中で値を編集させない → 消して入れ直す。
  *   NG: 選択肢が決まっている複数選択に使わない → checkbox。
  *   NG: 一覧の絞り込みに使わない → filter-chip / 見出し行の絞り込み。
- *   NG: トークンの色を値ごとに変えない → 色の意味が生まれ、badge（状態）と紛らわしい。
+ *   NG: タグの色を値ごとに変えない → 色の意味が生まれ、badge（状態）と紛らわしい。
  *
  * アクセシビリティ:
- *   入力欄に label（label-control の文字を <label for> にする）を付ける。トークンの一覧は ul に aria-label（「追加した担当者」）
+ *   入力欄に label（label-control の文字を <label for> にする）を付ける。タグの一覧は ul に aria-label（「追加した担当者」）
  *   削除ボタンは <button type="button"> で aria-label に値を含め（『山田』を削除）、アイコンは aria-hidden="true"。
  *     押せる範囲は 24×24（WCAG 2.5.8 の最低限。DS 担保）
- *   追加・削除は aria-live="polite" の領域で告知する（トークンが増えた・消えたことは画面を見ないと分からないため）
+ *   追加・削除は aria-live="polite" の領域で告知する（タグが増えた・消えたことは画面を見ないと分からないため）
  *   削除したら次（無ければ前）の削除ボタンへ、最後の 1 つを消したら入力欄へフォーカスを戻す（フォーカスを見失わない）
  *   エラーは input に aria-invalid="true" と aria-describedby で field-error-text を結ぶ
- *   強制カラーモードではトークンの背景が消えるため、輪郭線（CanvasText）でトークンの形を示す（DS 担保）
+ *   強制カラーモードではタグの背景が消えるため、輪郭線（CanvasText）でタグの形を示す（DS 担保）
  *
  * Usage:
  *   <div class="label-control">
@@ -77,8 +77,8 @@
  *       <span class="label-badge label-badge-optional">任意</span>
  *     </div>
  *   </div>
- *   <div class="token-input">
- *     <div class="token-input-field">
+ *   <div class="tag-input">
+ *     <div class="tag-input-field">
  *       <input type="text" class="input input-md" id="assignee" aria-describedby="assignee-help" />
  *       <button type="button" class="btn btn-md btn-neutral btn-outline">追加</button>
  *     </div>
@@ -99,26 +99,26 @@
   /* ============================================================
    * Container / field — 入力欄と「追加」ボタンを横に並べ、入力欄が残りの幅に広がる
    * ============================================================ */
-  .token-input {
+  .tag-input {
     @apply flex flex-col;
   }
 
-  .token-input-field {
+  .tag-input-field {
     @apply flex items-start gap-2;
   }
 
-  .token-input-field > .input {
+  .tag-input-field > .input {
     @apply flex-1 min-w-0;
   }
 
-  .token-input-field > .btn {
+  .tag-input-field > .btn {
     @apply shrink-0;
   }
 
   /* ============================================================
    * Tags — 追加した値は tag（tag.css）で、入力欄（と補足・エラー）の下 12 に並べる
    * ============================================================ */
-  .token-input > .tag-list {
+  .tag-input > .tag-list {
     @apply mt-3;
   }
 }

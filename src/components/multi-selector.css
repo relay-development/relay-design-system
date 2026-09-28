@@ -47,7 +47,7 @@
  *
  * 機能:
  *   決まった選択肢（数個〜15 個ほど）から複数を選ぶフォームの入力欄。選択肢を常に並べる場所が無いときに折りたたむ。
- *   場所があるなら checkbox を並べる（一覧性が高い）。1 つだけ選ぶなら selector / select、自由に入力した値を集めるなら token-input。
+ *   場所があるなら checkbox を並べる（一覧性が高い）。1 つだけ選ぶなら selector / select、自由に入力した値を集めるなら tag-input。
  *   一覧を今すぐ絞り込むトグルは filter-chip、表の見出し行の絞り込みは data-table-filter-panel。
  *
  * 使用法:
@@ -58,7 +58,7 @@
  *   OK: 選択肢に種類があるなら fieldset ＋ legend（multi-selector-group-title）でグループに分ける。
  *   NG: 1 つだけ選ぶ入力に使わない → selector / select。
  *   NG: 選択肢が 15 個を超えるなら使わない → 一覧から探しにくい。パネルに入力のたびに絞る検索も置かない
- *       （入力のたびに内容を変えない。search-input の規則）。自由入力で集めるなら token-input。
+ *       （入力のたびに内容を変えない。search-input の規則）。自由入力で集めるなら tag-input。
  *   NG: 場所があるのに折りたたまない → checkbox を並べる方が、何を選べるか・何を選んだかが一目で分かる。
  *   NG: パネルの中を矢印キーで動く独自の一覧（listbox）にしない → 普通の checkbox のまま（Tab / Space）。
  *   NG: ボタンに独自の枠・色を付けない → selector と同じ見た目（multi-selector-{sm,md,lg}）。

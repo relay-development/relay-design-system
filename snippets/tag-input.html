@@ -1,15 +1,15 @@
-<!-- トークンインプット: 担当者・タグ・メールアドレスのように、複数の値を 1 つずつ追加・削除する入力欄。
-     トークンは入力欄の下に並べる（入力欄の中に入れない）。追加は Enter か「追加」で確定し、空・重複・上限は field-error-text で伝える。
+<!-- タグインプット: 担当者・タグ・メールアドレスのように、複数の値を 1 つずつ追加・削除する入力欄。
+     タグは入力欄の下に並べる（入力欄の中に入れない）。追加は Enter か「追加」で確定し、空・重複・上限は field-error-text で伝える。
      追加・削除は aria-live で告知し、削除したらフォーカスを次の削除ボタン（無ければ前・入力欄）へ移す
-     （実装例はカタログ examples/catalog.js の Token Input） -->
+     （実装例はカタログ examples/catalog.js の Tag Input） -->
 <div class="label-control">
   <div class="label-control-row">
     <label class="label-control-text" for="assignee">担当者</label>
     <span class="label-badge label-badge-optional">任意</span>
   </div>
 </div>
-<div class="token-input">
-  <div class="token-input-field">
+<div class="tag-input">
+  <div class="tag-input-field">
     <input type="text" class="input input-md" id="assignee" aria-describedby="assignee-help" autocomplete="off" />
     <button type="button" class="btn btn-md btn-neutral btn-outline">追加</button>
   </div>
