@@ -3,7 +3,7 @@
  *
  *   操作の結果を、操作した場所のすぐ近く（ボタンの横・フォームの直下・
  *   テーブルの行内）で短く伝えるメッセージ。アイコン＋ 1 行の文言だけで、
- *   枠や背景を持たない。GitHub Primer の InlineMessage に相当する。
+ *   枠や背景を持たない。
  *
  *   構造:
  *     <p class="inline-message inline-message-success" role="status">

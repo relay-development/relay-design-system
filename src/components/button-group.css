@@ -1,5 +1,5 @@
 /*
- * Button Group (ボタングループ) — Figma に仕様が無いため Primer ButtonGroup / Astryx ButtonGroup を参考に DS 規約から新規設計
+ * Button Group (ボタングループ) — Figma に仕様が無いため Astryx ButtonGroup を参考に DS 規約から新規設計
  *
  *   関連する操作のボタンを横につなげ、1 つのまとまった操作部品に見せる。
  *   隣り合うボタンの境界線を 1 本に重ね、角丸はグループの両端だけに残す。
