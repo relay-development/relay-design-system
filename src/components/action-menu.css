@@ -113,6 +113,11 @@
     position: static;
   }
 
+  /* 右端揃え — 位置は JS（トリガーの右端に合わせる）。開く起点も右上にする */
+  .action-menu-end {
+    transform-origin: top right;
+  }
+
   .action-menu .menu-divider {
     @apply my-2;
   }

@@ -86,6 +86,7 @@
  *                                 絞り込み中は data-filtered を付ける → アイコン primary/700 ＋ 右上のドット（色だけに頼らない）
  *     .data-table-filter-panel    幅 288、padding 16、角丸 md、bg surface、border stroke-low、shadow-lg。
  *                                 トリガーの左端に揃えて下に 4 空けて開く（空きが無ければ上。位置は JS）
+ *     .data-table-filter-panel-end  トリガーの右端に揃えて開く。見出し行（右端に並ぶ操作）の絞り込み・並べ替えのパネルに付ける
  *     select                      selector-sm（h32 / 14px）で包む。パネルは表の上に重なる小さな部品で、ボタンも btn-sm のため
  *                                 高さを揃える。md（16px）だと OS の選択肢一覧も大きく開き、パネルに対して過大になる
  *     .data-table-filter-actions  リセット（左・ghost）と適用（右・solid）を両端に置く
@@ -132,7 +133,7 @@
  *       </div>
  *     </div>
  *     <div class="data-table-wrap" tabindex="0"><table class="data-table" aria-labelledby="transfers-title">…</table></div>
- *     <div class="data-table-filter-panel" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む">
+ *     <div class="data-table-filter-panel data-table-filter-panel-end" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む">
  *       <div class="data-table-filter-field">
  *         <label for="f-month">振込月</label>
  *         <div class="selector selector-sm"><select class="select" id="f-month">…</select></div>
@@ -225,6 +226,8 @@
  *       （入力の途中で表が動くのは予期しない変化でもある。WCAG 3.2.2）。
  *   OK: 見出し行の絞り込みは、複数の列を掛け合わせる条件や、列に無い条件（振込月など）をパネルにまとめるときに使う。
  *       パネルは data-table-filter-panel、条件ごとに data-table-filter-field（label ＋ selector-sm）。
+ *   OK: 見出し行の絞り込み・並べ替えのパネルには data-table-filter-panel-end を付け、トリガーの右端に揃えて開く
+ *       （操作は表の右端に並ぶため。左端揃えだとパネルが画面の外へはみ出し、トリガーから離れた位置に押し戻される）。
  *   OK: ページの見出しがそのまま表の名前なら、data-table-title をページの h1 にしてよい（同じ名前の見出しを 2 つ重ねない）。
  *   OK: 検索・絞り込みを適用したら、操作の行の下の data-table-conditions に条件をタグで並べる（「キーワード: 山田」
  *       「振込月: 2026 年 9 月」）。タグの × でその条件だけ、「すべて解除」で全部を解除できるようにする。
@@ -444,6 +447,11 @@
   /* カタログ用: 開いた状態をページ内に静的表示 (top layer に出さない) */
   .data-table-filter-panel.is-static-preview {
     position: static;
+  }
+
+  /* 右端揃え — 位置は JS（トリガーの右端に合わせる）。開く起点も右上にする */
+  .data-table-filter-panel-end {
+    transform-origin: top right;
   }
 
   /* 先頭の「すべて」(value="") は select では placeholder 色になるが、ここでは「絞り込みなし」を選んだ

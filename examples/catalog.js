@@ -263,7 +263,8 @@ function positionActionMenu(menu) {
   const h = menu.offsetHeight;
   const vw = document.documentElement.clientWidth;
   const vh = window.innerHeight;
-  let left = menu.classList.contains("action-menu-end") ? r.right - w : r.left;
+  const end = menu.classList.contains("action-menu-end") || menu.classList.contains("data-table-filter-panel-end");
+  let left = end ? r.right - w : r.left;
   left = Math.min(Math.max(left, ACTION_MENU_VIEWPORT), vw - w - ACTION_MENU_VIEWPORT);
   let top = r.bottom + ACTION_MENU_GAP;
   const above = r.top - ACTION_MENU_GAP - h;
