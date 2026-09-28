@@ -133,6 +133,12 @@
           </tbody>
         </table>
       </div>
+      <p class="typo-article text-fg-high mb-2"><strong>操作した場所から離れた所に出してよいのは、そこへフォーカスを移すときだけ</strong>です。視線も読み上げも知らせへ移るので、見逃されません。</p>
+      <ul class="typo-article text-fg-high list-disc ps-6 mb-6">
+        <li><strong>送信してエラーが 3 件以上</strong> — フォームの上に<a class="link" href="./alert.html"><span class="link-label">アラート</span></a>（negative）でまとめを出し、まとめへフォーカスを移す。各入力欄の真下のエラーもそのまま出す（まとめだけにしない）。1〜2 件なら、まとめは出さず最初のエラーの入力欄へフォーカスを移す（<a class="link" href="./form.html"><span class="link-label">フォームの検証とエラー</span></a>）</li>
+        <li><strong>作業を止めて判断を求めるとき</strong> — <a class="link" href="./modal.html"><span class="link-label">モーダル</span></a>でフォーカスを預かり、閉じたら呼び出し元へ戻す</li>
+      </ul>
+      <p class="typo-article text-fg-high mb-6">それ以外で、フォーカスを移さずに離れた所へ出すのはやめます（下の Don't）。</p>
 
       <div class="card mb-8 overflow-hidden">
         <div class="card-header">
@@ -169,7 +175,7 @@
               <input class="input input-md mb-4" value="山田 花子" aria-label="デモ: 表示名（上部に結果）" />
               <button type="button" class="btn btn-md btn-primary btn-solid">保存する</button>
             </div>
-            <p class="typo-medium text-fg-middle">1 つの操作の結果をページの上部に出すと、ボタンを見ている利用者は気づかない。長いページでは画面の外に出てしまう。</p>
+            <p class="typo-medium text-fg-middle">1 つの操作の結果を、フォーカスを移さずにページの上部に出すと、ボタンを見ている利用者は気づかない。長いページでは画面の外に出てしまう。</p>
           </div>
         </div>
       </div>
