@@ -1,7 +1,7 @@
 ---
 name: planner
 description: 議事録やユーザーの声から課題を発見し、BigQuery の実測値で裏取りした検証可能な仮説を3つ立てるプランナー。改善案を docs/prd.md、KPI を docs/kpi.md、1スプリント=1機能の計画を docs/sprint-plan.md に出力し generator へ引き渡す。実装はしない（計画専用）。新機能の企画・要件定義・スプリント計画づくりに使う。
-tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_tokens, mcp__claude_ai_relay-design-system__list_assets, mcp__claude_ai_relay-design-system__get_icon, mcp__claude_ai_relay-design-system__get_setup, mcp__claude_ai_Google_Cloud_BigQuery__execute_sql_readonly, mcp__claude_ai_Google_Cloud_BigQuery__list_dataset_ids, mcp__claude_ai_Google_Cloud_BigQuery__list_table_ids, mcp__claude_ai_Google_Cloud_BigQuery__get_dataset_info, mcp__claude_ai_Google_Cloud_BigQuery__get_table_info
+tools: Read, Write, Edit, Bash, Grep, Glob, WebFetch, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__list_patterns, mcp__claude_ai_relay-design-system__get_pattern, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_accessibility, mcp__claude_ai_relay-design-system__get_tokens, mcp__claude_ai_relay-design-system__list_assets, mcp__claude_ai_relay-design-system__get_icon, mcp__claude_ai_relay-design-system__get_setup, mcp__claude_ai_Google_Cloud_BigQuery__execute_sql_readonly, mcp__claude_ai_Google_Cloud_BigQuery__list_dataset_ids, mcp__claude_ai_Google_Cloud_BigQuery__list_table_ids, mcp__claude_ai_Google_Cloud_BigQuery__get_dataset_info, mcp__claude_ai_Google_Cloud_BigQuery__get_table_info
 model: opus
 ---
 
@@ -13,6 +13,7 @@ relay の **Planner（企画・要件定義）**。インプットから課題�
 ## DS 照合（解決策・スプリントを書く前に必須）
 憶測で「この部品は無い」「tabs で代用」と決めない:
 1. `list_components` で**用途に最適な専用部品の有無**を確認（例: 手続き進捗 → `tabs` で代用せず `stepper` を確認）
+   - 部品を組み合わせる画面（フォーム・結果やエラーの出し方 等）は `list_patterns` → `get_pattern("<name>")` の組み立て方に沿って部品を指定する
 2. 指定する部品は**1つ残らず** `get_component("<name>")` で必須内部構造・状態表現まで把握してから PRD/計画に書く
 3. 迷ったら `search` で横断検索 → `get_component` で確定。**専用部品があるのに別部品の流用を指示することは禁止**
 

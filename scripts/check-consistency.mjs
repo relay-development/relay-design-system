@@ -15,6 +15,10 @@
  *                        あること（MCP get_component の正本のため必須）
  *   4. index.css      — src/tokens/ と src/components/ の全ファイルが import され、
  *                        tokens → components の順序が守られていること
+ *   5. MCP ツール     — 正本: src/mcp/handlers.mjs の TOOLS 配列
+ *                        照合先: README / docs/INTRODUCTION.md / docs/MCP-TOOLS.md /
+ *                                examples/pages/mcp.html のツール数の表記と、
+ *                                MCP-TOOLS.md・mcp.html のツール一覧に全ツールが載っていること
  *
  * 実行: npm run check:consistency（依存パッケージ不要・ネットワーク不要）
  *
@@ -162,12 +166,54 @@ function checkIndexCss() {
 }
 
 // ---------------------------------------------------------------------------
+// 5. MCP ツール — handlers.mjs の TOOLS（正本）と、ツール数の表記・ツール一覧
+// ---------------------------------------------------------------------------
+
+function mcpToolNames() {
+  const src = read("src/mcp/handlers.mjs");
+  const m = src.match(/export const TOOLS = \[([\s\S]*?)\n\];/);
+  if (!m) throw new Error("src/mcp/handlers.mjs から TOOLS 配列を見つけられません");
+  return [...m[1].matchAll(/^ {4}name: "([a-z_]+)"/gm)].map((x) => x[1]);
+}
+
+// 各ドキュメントのツール数の表記。文言を変更したらここも更新する
+const TOOL_CLAIMS = [
+  { file: "README.md", pattern: /(\d+) のツールの仕様は/ },
+  { file: "docs/INTRODUCTION.md", pattern: /(\d+) のツールが AI から使えるように/ },
+  { file: "docs/MCP-TOOLS.md", pattern: /\*\*(\d+) のツール\*\*/ },
+  { file: "examples/pages/mcp.html", pattern: /AI から次の (\d+) のツールが使えるように/ },
+];
+
+// ツール名を 1 つずつ列挙している一覧（全ツールが載っていること）
+const TOOL_LISTS = ["docs/MCP-TOOLS.md", "docs/INTRODUCTION.md", "examples/pages/mcp.html"];
+
+function checkMcpTools() {
+  const names = mcpToolNames();
+  for (const { file, pattern } of TOOL_CLAIMS) {
+    const m = read(file).match(pattern);
+    if (!m) {
+      fail("mcp-tools", `${file}: ツール数の表記が見つかりません（期待パターン: ${pattern}）。文言を変えた場合は scripts/check-consistency.mjs の TOOL_CLAIMS を更新してください`);
+      continue;
+    }
+    if (Number(m[1]) !== names.length) {
+      fail("mcp-tools", `${file}: ツール数の表記が ${m[1]} ですが、正本（src/mcp/handlers.mjs の TOOLS）は ${names.length} です`);
+    }
+  }
+  for (const file of TOOL_LISTS) {
+    const text = read(file);
+    const missing = names.filter((n) => !new RegExp(`[\`>]${n}[\`<(]`).test(text));
+    if (missing.length) fail("mcp-tools", `${file}: ツール一覧に ${missing.join(", ")} がありません`);
+  }
+}
+
+// ---------------------------------------------------------------------------
 
 const CHECKS = [
   ["icon-count", checkIconCount],
   ["component-count", checkComponentCount],
   ["component-header", checkComponentHeaders],
   ["index-css", checkIndexCss],
+  ["mcp-tools", checkMcpTools],
 ];
 
 for (const [name, run] of CHECKS) {

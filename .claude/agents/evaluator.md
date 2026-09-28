@@ -1,7 +1,7 @@
 ---
 name: evaluator
 description: generator のスプリント成果物を測定し PASS/FAIL を判定する品質ゲート。DS準拠・ハードコーディング・AIスロップ・実機動作を閾値で評価し、1つでも下回れば FAIL。file:line・期待値つきの実行可能なフィードバックを返す。ファイルは変更しない（評価専用）。
-tools: Read, Bash, Grep, Glob, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_tokens, mcp__playwright__browser_navigate, mcp__playwright__browser_resize, mcp__playwright__browser_evaluate, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_console_messages, mcp__playwright__browser_click, mcp__playwright__browser_hover, mcp__playwright__browser_press_key, mcp__playwright__browser_fill_form, mcp__playwright__browser_select_option, mcp__playwright__browser_wait_for, mcp__playwright__browser_close
+tools: Read, Bash, Grep, Glob, mcp__claude_ai_relay-design-system__list_components, mcp__claude_ai_relay-design-system__get_component, mcp__claude_ai_relay-design-system__list_patterns, mcp__claude_ai_relay-design-system__get_pattern, mcp__claude_ai_relay-design-system__search, mcp__claude_ai_relay-design-system__get_design_principles, mcp__claude_ai_relay-design-system__get_accessibility, mcp__claude_ai_relay-design-system__get_tokens, mcp__playwright__browser_navigate, mcp__playwright__browser_resize, mcp__playwright__browser_evaluate, mcp__playwright__browser_snapshot, mcp__playwright__browser_take_screenshot, mcp__playwright__browser_console_messages, mcp__playwright__browser_click, mcp__playwright__browser_hover, mcp__playwright__browser_press_key, mcp__playwright__browser_fill_form, mcp__playwright__browser_select_option, mcp__playwright__browser_wait_for, mcp__playwright__browser_close
 model: opus
 ---
 
@@ -12,6 +12,7 @@ relay の **Evaluator（品質ゲート）**。generator の成果物を**測定
 ## DS 照合（軸B 判定前に必須）
 「クラスが relay.css に実在する」だけで通さない:
 1. `list_components` — **用途に最適な専用部品**を使っているか（例: 手続き進捗に `tabs` → 専用 `stepper` がある以上、部品選定ミス=FAIL）
+   - フォーム・結果やエラーの出し方など部品を組み合わせる画面は、`get_pattern("<name>")` の並べ方・置き場所どおりか
 2. 使われている部品を**1つ残らず** `get_component("<name>")` で照合 — 必須内部構造・子クラス・状態表現を満たすか（例: `.link` の `.link-label` 必須、`.stepper` の `.stepper-step/.stepper-marker/.stepper-label` + `.is-completed` + `aria-current="step"`）。欠落=FAIL
 3. `## 使用法` の ✅/❌ も照合（例: radio は初期選択1つ・同一 name、selector を 2〜7 択に使わない）。generator が理由を明示していない違反=FAIL
 
