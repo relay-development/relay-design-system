@@ -1,0 +1,127 @@
+/*
+ * Tag (タグ) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   利用者が追加・選択した値（担当者・キーワード・絞り込みの条件 等）を 1 つずつ見せる小さな pill。
+ *   削除ボタン（×）でその値だけを外せる。値の編集はしない（消して入れ直す）。
+ *   token-input（追加した値の一覧）と data-table の見出し行（適用中の条件）で使う。
+ *
+ *   構造:
+ *     <ul class="tag-list" aria-label="追加した担当者">
+ *       <li class="tag">
+ *         <span class="tag-label">山田</span>
+ *         <button type="button" class="tag-remove" aria-label="『山田』を削除">
+ *           <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
+ *         </button>
+ *       </li>
+ *     </ul>
+ *
+ *   props:
+ *     remove : tag-remove（任意）。確認画面など値を外せない場所では置かない
+ *     list   : 複数のタグは ul.tag-list > li.tag で並べる（間 8 で折り返す。空なら hidden）
+ *
+ *   サイズ / 色:
+ *     タグ       : 高さ 32、角丸 full、背景 neutral/100、文字 14 fg/high、左 12・右 4（削除ボタンが無ければ右 12）
+ *     削除ボタン : 24×24（押せる範囲の最低限）、角丸 full、アイコン x 16・fg/middle。hover で背景 neutral/200・fg/high
+ *     並べ方     : gap 8、折り返す
+ *
+ * 別名:
+ *   タグ / tag / チップ / chip / input chip / トークン / token / ピル / pill / 削除できるラベル /
+ *   dismissible tag / removable tag / 選択した値 / 適用中の条件
+ *
+ * 機能:
+ *   利用者が追加・選択した値を 1 つずつ見せ、× で外せるようにする。
+ *   ものの状態・分類を見せる表示だけのラベルは badge（押せない・外せない）。押して ON/OFF する絞り込みは filter-chip。
+ *   値を入力して集める入力欄は token-input（中でタグを使う）、表の適用中の条件は data-table-conditions（中でタグを使う）。
+ *
+ * 使用法:
+ *   OK: 利用者が追加・選択した値を、1 つずつ外せる形で見せる（追加した担当者、適用中の絞り込みの条件）。
+ *   OK: 複数のタグは ul.tag-list > li.tag で並べ、ul に aria-label で何の一覧かを付ける。
+ *   OK: 削除ボタンの aria-label に値を含める（『山田』を削除 / 『振込月: 2026 年 9 月』の絞り込みを解除）。
+ *   OK: 削除したら、次のタグの削除ボタン（無ければ前、1 つも無ければ元の入力欄など）へフォーカスを移し、結果を aria-live で告知する。
+ *   NG: ものの状態・分類（公開中・審査中 等）の表示に使わない → badge（外せる見た目にすると誤解される）。
+ *   NG: 押して ON/OFF する絞り込みに使わない → filter-chip（タグは押しても選択状態を持たない。押せるのは × だけ）。
+ *   NG: タグ自体をリンクやボタンにしない → 押せるのは削除ボタンだけ。行き先があるなら link。
+ *   NG: 値ごとに色を変えない → 色の意味が生まれ、badge と紛らわしい。
+ *   NG: 削除ボタンを aria-label なしの × だけにしない → 何を外すか分からない。
+ *
+ * アクセシビリティ:
+ *   複数のタグは ul.tag-list > li.tag にし、ul に aria-label（何の一覧か）を付ける（「追加した担当者、リスト、2 項目」と読まれる）
+ *   削除ボタンは <button type="button"> で aria-label に値を含め、アイコンは aria-hidden="true"。
+ *     押せる範囲は 24×24（WCAG 2.5.8 の最低限。DS 担保）
+ *   削除したら次（無ければ前）の削除ボタンへ、最後の 1 つを消したら元の入力欄などへフォーカスを移す（フォーカスを見失わない）
+ *   削除の結果は aria-live="polite" の領域で告知する（タグが消えたことは画面を見ないと分からないため）
+ *   長い値は 1 行で省略する。全文は削除ボタンの aria-label に含める
+ *   強制カラーモードではタグの背景が消えるため、輪郭線（CanvasText）でタグの形を示す（DS 担保）
+ *
+ * Usage:
+ *   <ul class="tag-list" aria-label="追加した担当者">
+ *     <li class="tag">
+ *       <span class="tag-label">山田</span>
+ *       <button type="button" class="tag-remove" aria-label="『山田』を削除">
+ *         <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
+ *       </button>
+ *     </li>
+ *     <li class="tag"><span class="tag-label">佐藤</span><button type="button" class="tag-remove" aria-label="『佐藤』を削除">…</button></li>
+ *   </ul>
+ */
+
+@layer components {
+  /* ============================================================
+   * List — 間 8 で折り返して並べる。空のときは余白を残さない
+   * ============================================================ */
+  .tag-list {
+    @apply flex flex-wrap gap-2 p-0 list-none;
+  }
+
+  .tag-list:empty {
+    @apply hidden;
+  }
+
+  /* ============================================================
+   * Tag — 高さ 32 の pill。左 12・右 4（削除ボタンの 24 を右端に収める）。削除ボタンが無ければ右も 12
+   * ============================================================ */
+  .tag {
+    @apply inline-flex items-center gap-1 h-8 ps-3 pe-1 max-w-full
+           rounded-full bg-neutral-100 text-sm text-fg-high;
+  }
+
+  .tag:not(:has(.tag-remove)) {
+    @apply pe-3;
+  }
+
+  /* 長い値は 1 行で省略する（全文は削除ボタンの aria-label に含める） */
+  .tag-label {
+    @apply min-w-0 truncate;
+  }
+
+  /* 削除ボタン — 24×24（押せる範囲の最低限）、アイコン 16 */
+  .tag-remove {
+    @apply shrink-0 inline-flex items-center justify-center w-6 h-6 p-0
+           rounded-full border-0 bg-transparent text-fg-middle cursor-pointer
+           transition-colors duration-150;
+  }
+  .tag-remove > svg {
+    @apply w-4 h-4;
+  }
+  .tag-remove:hover,
+  .tag-remove.is-hover-preview {
+    @apply bg-neutral-200 text-fg-high;
+  }
+  .tag-remove:focus-visible,
+  .tag-remove.is-focus-preview {
+    outline: 2px solid var(--color-info-600);
+    outline-offset: 2px;
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   タグの背景（neutral/100）は Canvas に置き換わり形が消えるため、輪郭線で示す。
+   *   フォーカスは全 focusable 共通の outline（CanvasText）。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .tag { border: 1px solid CanvasText; }
+    .tag-remove:focus-visible,
+    .tag-remove.is-focus-preview { outline-color: CanvasText; }
+  }
+}

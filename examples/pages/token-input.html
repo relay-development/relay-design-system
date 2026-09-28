@@ -36,14 +36,14 @@
               </div>
               <p class="field-error-text" id="ti-assignee-err" hidden></p>
               <p class="field-support-text" id="ti-assignee-help">Enter か「追加」で 1 人ずつ追加（最大 5 人）</p>
-              <ul class="token-input-list" aria-label="追加した担当者">
-                <li class="token-input-item">
-                  <span class="token-input-label">山田</span>
-                  <button type="button" class="token-input-remove" aria-label="『山田』を削除"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button>
+              <ul class="tag-list" aria-label="追加した担当者">
+                <li class="tag">
+                  <span class="tag-label">山田</span>
+                  <button type="button" class="tag-remove" aria-label="『山田』を削除"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button>
                 </li>
-                <li class="token-input-item">
-                  <span class="token-input-label">佐藤</span>
-                  <button type="button" class="token-input-remove" aria-label="『佐藤』を削除"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button>
+                <li class="tag">
+                  <span class="tag-label">佐藤</span>
+                  <button type="button" class="tag-remove" aria-label="『佐藤』を削除"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button>
                 </li>
               </ul>
               <p class="sr-only" aria-live="polite"></p>
@@ -57,10 +57,10 @@
     &lt;button type="button" class="btn btn-md btn-neutral btn-outline"&gt;追加&lt;/button&gt;
   &lt;/div&gt;
   &lt;p class="field-support-text" id="assignee-help"&gt;Enter か「追加」で 1 人ずつ追加（最大 5 人）&lt;/p&gt;
-  &lt;ul class="[[token-input-list]]" [[aria-label="追加した担当者"]]&gt;
+  &lt;ul class="[[tag-list]]" [[aria-label="追加した担当者"]]&gt;
     &lt;li class="[[token]]"&gt;
-      &lt;span class="token-input-label"&gt;山田&lt;/span&gt;
-      &lt;button type="button" class="[[token-input-remove]]" [[aria-label="『山田』を削除"]]&gt;
+      &lt;span class="tag-label"&gt;山田&lt;/span&gt;
+      &lt;button type="button" class="[[tag-remove]]" [[aria-label="『山田』を削除"]]&gt;
         &lt;svg class="icon" aria-hidden="true"&gt;&lt;use href="./icons.svg#lucide-x"&gt;&lt;/use&gt;&lt;/svg&gt;
       &lt;/button&gt;
     &lt;/li&gt;
@@ -85,18 +85,18 @@
                 <button type="button" class="btn btn-md btn-neutral btn-outline" tabindex="-1">追加</button>
               </div>
               <p class="field-error-text" id="ti-err-sample">＊『山田』はすでに追加されています</p>
-              <ul class="token-input-list" aria-label="追加した担当者（エラーの見本）">
-                <li class="token-input-item"><span class="token-input-label">山田</span><button type="button" class="token-input-remove" aria-label="『山田』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+              <ul class="tag-list" aria-label="追加した担当者（エラーの見本）">
+                <li class="tag"><span class="tag-label">山田</span><button type="button" class="tag-remove" aria-label="『山田』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
               </ul>
             </div>
           </div>
           <div>
             <p class="typo-small text-fg-low mb-2">削除ボタンの enable / hover / focus・長い値</p>
-            <ul class="token-input-list mt-0" aria-label="トークンの状態の見本">
-              <li class="token-input-item"><span class="token-input-label">enable</span><button type="button" class="token-input-remove" aria-label="『enable』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
-              <li class="token-input-item"><span class="token-input-label">hover</span><button type="button" class="token-input-remove is-hover-preview" aria-label="『hover』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
-              <li class="token-input-item"><span class="token-input-label">focus</span><button type="button" class="token-input-remove is-focus-preview" aria-label="『focus』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
-              <li class="token-input-item max-w-60"><span class="token-input-label">tanaka.taro.sales-department@example.co.jp</span><button type="button" class="token-input-remove" aria-label="『tanaka.taro.sales-department@example.co.jp』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+            <ul class="tag-list mt-0" aria-label="トークンの状態の見本">
+              <li class="tag"><span class="tag-label">enable</span><button type="button" class="tag-remove" aria-label="『enable』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+              <li class="tag"><span class="tag-label">hover</span><button type="button" class="tag-remove is-hover-preview" aria-label="『hover』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+              <li class="tag"><span class="tag-label">focus</span><button type="button" class="tag-remove is-focus-preview" aria-label="『focus』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+              <li class="tag max-w-60"><span class="tag-label">tanaka.taro.sales-department@example.co.jp</span><button type="button" class="tag-remove" aria-label="『tanaka.taro.sales-department@example.co.jp』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
             </ul>
           </div>
         </div>
@@ -130,9 +130,9 @@
                 <input type="text" class="input input-md" aria-label="デモ: 担当者" tabindex="-1" />
                 <button type="button" class="btn btn-md btn-neutral btn-outline" tabindex="-1">追加</button>
               </div>
-              <ul class="token-input-list" aria-label="デモ: 追加した担当者">
-                <li class="token-input-item"><span class="token-input-label">山田</span><button type="button" class="token-input-remove" aria-label="デモ:『山田』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
-                <li class="token-input-item"><span class="token-input-label">佐藤</span><button type="button" class="token-input-remove" aria-label="デモ:『佐藤』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+              <ul class="tag-list" aria-label="デモ: 追加した担当者">
+                <li class="tag"><span class="tag-label">山田</span><button type="button" class="tag-remove" aria-label="デモ:『山田』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
+                <li class="tag"><span class="tag-label">佐藤</span><button type="button" class="tag-remove" aria-label="デモ:『佐藤』を削除" tabindex="-1"><svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg></button></li>
               </ul>
             </div>
             <p class="typo-medium text-fg-middle">入力欄は普通の入力欄のまま。削除ボタンはそれぞれ Tab で止まり、「『山田』を削除」と読まれる。</p>
@@ -143,8 +143,8 @@
               <span class="typo-medium font-bold text-negative-600">Don't</span>
             </div>
             <div class="input input-md flex items-center gap-2 mb-4 py-0">
-              <span class="token-input-item"><span class="token-input-label">山田</span></span>
-              <span class="token-input-item"><span class="token-input-label">佐藤</span></span>
+              <span class="tag"><span class="tag-label">山田</span></span>
+              <span class="tag"><span class="tag-label">佐藤</span></span>
               <span class="text-fg-placeholder">名前を入力</span>
             </div>
             <p class="typo-medium text-fg-middle">入力欄の枠の中にトークンを入れると、トークンへは矢印キーでしか移れず、スクリーンリーダーの操作モードも切り替わる。</p>

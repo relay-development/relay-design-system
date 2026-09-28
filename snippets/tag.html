@@ -1,0 +1,23 @@
+<!-- タグ: 利用者が追加・選択した値を 1 つずつ見せ、× で外せる。押せるのは × だけ。
+     × の aria-label に値を含め、外したら次（無ければ前、元の入力欄など）へフォーカスを移し、aria-live で告知する。
+     状態の表示は badge、押して ON/OFF する絞り込みは filter-chip -->
+<ul class="tag-list" aria-label="追加した担当者">
+  <li class="tag">
+    <span class="tag-label">山田</span>
+    <button type="button" class="tag-remove" aria-label="『山田』を削除">
+      <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
+    </button>
+  </li>
+  <li class="tag">
+    <span class="tag-label">佐藤</span>
+    <button type="button" class="tag-remove" aria-label="『佐藤』を削除">
+      <svg class="icon" aria-hidden="true"><use href="./icons.svg#lucide-x"></use></svg>
+    </button>
+  </li>
+</ul>
+<p class="sr-only" aria-live="polite"></p>
+
+<!-- 外せない場所（確認画面など）は × を置かない -->
+<ul class="tag-list" aria-label="選んだ担当者">
+  <li class="tag"><span class="tag-label">山田</span></li>
+</ul>
