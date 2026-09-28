@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.32.0",
+      "date": "2026-09-28",
+      "title": "タグ・タグインプット・マルチセレクターの新設 + テーブルの見出し行 + MCP でパターンを引けるように",
+      "summary": "追加・選択した値を 1 つずつ外せる tag を部品として切り出し、自由な値を複数入れる tag-input と、決まった選択肢から複数を選ぶ multi-selector を新設しました。data-table には見出し行を追加し、タイトルの下の段に表示件数と表全体への操作（検索・絞り込み・並べ替え）を置き、適用中の条件をタグで表示します。search-input は送信ボタンか Enter で確定してから検索する仕様に変更。alert / inline-message の文字色は白・neutral/50 の上で 7:1 以上（AAA）にし、赤（negative）と黄（warning）は色みを保つため AA にとどめました。alert の中のリンクは本文と同じ色になります。MCP には list_patterns / get_pattern を追加し、フォームやフィードバック（結果・エラー・お知らせの出し方）など部品を組み合わせる画面の作り方を引けるようにしました（計 11 ツール）。カタログは Patterns を新設してフォームとフィードバックのページを置き、toggle-btn-group をセグメント型に、icon-btn の中のアイコンを 20px にしています。タグラインなしのプロダクトロゴを追加し、既存のロゴは relay_logo_tagline.svg に改名しました。"
+    },
+    {
       "version": "0.31.0",
       "date": "2026-09-25",
       "title": "トグルボタングループ・ボタングループ・クリッカブルカードの新設 + data-table の列フィルター / ソート",
