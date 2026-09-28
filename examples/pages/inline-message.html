@@ -317,7 +317,7 @@
             <p class="card-subtitle">Presentation / Adaptability / Interaction / Assistive Technology</p>
           </div>
           <div class="card-body space-y-3">
-            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">意味は色だけでなくアイコン＋文言で伝える。各テーマの文字色は白背景で本文コントラストを確保。</p></div>
+            <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">提示</span><p class="typo-small text-fg-middle">意味は色だけでなくアイコン＋文言で伝える。各テーマの文字色は、白の上でもページの地（neutral/50）の上でも 7:1 以上（AAA）。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">適応</span><p class="typo-small text-fg-middle">操作した要素の直近に置くため、拡大表示（ズーム・スクリーン拡大鏡）でも操作対象と一緒に視野へ入る。長文は折り返す。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">操作</span><p class="typo-small text-fg-middle">時間で消えない。読むのに時間がかかる利用者も、次の操作を自分のペースで選べる。</p></div>
             <div class="flex gap-3"><span class="badge badge-soft-neutral shrink-0">支援技術</span><p class="typo-small text-fg-middle">動的表示は <code class="typo-xsmall">role="status"</code>（成功・neutral）／<code class="typo-xsmall">role="alert"</code>（失敗・注意）でフォーカスを奪わずに読み上げ、DOM 上の位置も操作した要素の直後にする。</p></div>
@@ -332,7 +332,7 @@
           </div>
           <div class="card-body">
             <ul class="typo-small text-fg-middle space-y-2">
-              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>各テーマの文字色は白背景でコントラスト比 4.5:1 以上</span></li>
+              <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>各テーマの文字色は白・neutral/50 の上でコントラスト比 7:1 以上（AAA）</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>アイコンスロットが行高と揃い、拡大しても 1 行目とずれない</span></li>
               <li class="flex gap-2"><span class="text-success-700 shrink-0 font-bold">✓</span><span>背景・枠を持たないため、強制カラーモードでも追加対応なしで文字とアイコンが見える</span></li>
             </ul>
@@ -429,6 +429,7 @@ document.body.append(msg)  &lt;!-- [[操作した要素から離れた場所]] -
               <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#timing-adjustable" target="_blank" rel="noopener noreferrer"><span class="link-label">2.2.1 タイミング調整可能</span></a> ・
               <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#use-of-color" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.1 色の使用</span></a> ・
               <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#contrast-minimum" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.3 コントラスト（最低限）</span></a> ・
+              <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#contrast-enhanced" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.6 コントラスト（高度）</span></a> ・
               <a class="link link-neutral" href="https://www.w3.org/TR/WCAG22/#reflow" target="_blank" rel="noopener noreferrer"><span class="link-label">1.4.10 リフロー</span></a>
             </p>
           </div>
