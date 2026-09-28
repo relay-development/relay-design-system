@@ -228,7 +228,7 @@
             <button type="button" class="menu-item" role="menuitem" tabindex="-1">印刷する</button>
             <button type="button" class="menu-item" role="menuitem" tabindex="-1">表示する列を選ぶ</button>
           </div>
-          <div class="data-table-filter-panel" id="tx-filter" popover role="dialog" aria-label="振込一覧を絞り込む" data-filter-table="tx-table">
+          <div class="data-table-filter-panel data-table-filter-panel-end" id="tx-filter" popover role="dialog" aria-label="振込一覧を絞り込む" data-filter-table="tx-table">
             <div class="data-table-filter-field">
               <label for="tx-f-month">振込月</label>
               <div class="selector selector-sm">
@@ -255,7 +255,7 @@
               <button type="button" class="btn btn-sm btn-primary btn-solid" data-filter-apply>適用</button>
             </div>
           </div>
-          <div class="data-table-filter-panel" id="tx-sort" popover role="dialog" aria-label="振込一覧を並べ替える" data-sort-table="tx-table">
+          <div class="data-table-filter-panel data-table-filter-panel-end" id="tx-sort" popover role="dialog" aria-label="振込一覧を並べ替える" data-sort-table="tx-table">
             <div class="data-table-filter-field">
               <label for="tx-s-col">並べ替える列</label>
               <div class="selector selector-sm">
@@ -400,7 +400,7 @@
   &lt;/div&gt;
 &lt;/div&gt;
 &lt;table class="data-table" [[aria-labelledby="transfers-title"]]&gt;…&lt;/table&gt;
-&lt;div class="data-table-filter-panel" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む"&gt;
+&lt;div class="data-table-filter-panel [[data-table-filter-panel-end]]" id="transfers-filter" popover role="dialog" aria-label="振込一覧を絞り込む"&gt;
   &lt;div class="[[data-table-filter-field]]"&gt;&lt;label for="f-month"&gt;振込月&lt;/label&gt;&lt;div class="selector selector-sm"&gt;…&lt;/div&gt;&lt;/div&gt;
   …
 &lt;/div&gt;</pre>
