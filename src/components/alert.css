@@ -28,8 +28,8 @@
  * 使用法:
  *   OK: 内容に応じてテーマを選ぶ（成功=success / エラー=negative / 注意=warning / 情報=info）。
  *   OK: 閉じられるようにするなら alert-close を付ける。
- *   OK: 本文の中のテキストリンクは <a class="link"><span class="link-label">…</span></a> のまま置く。色はアラートの文字色に
- *       自動で合う（下線と bold で本文と区別できる）。link-neutral 等の色の指定は要らない。
+ *   OK: 本文の中のテキストリンクは <a class="link"><span class="link-label">…</span></a> のまま置く。色はアラートと同系色で
+ *       背景に対して 7:1 以上（AAA）の濃さに自動で合う（下線と bold でも本文と区別できる）。link-neutral 等の色の指定は要らない。
  *   NG: 一時表示のトースト代わりに使わない → alert はページ内常設メッセージ。時間で消える通知は DS に無く、操作直近の結果は inline-message で残す。
  *   NG: テーマを色の好みで選ばない → 意味（成功/エラー等）に合わせる。
  *   NG: アラートの中のリンクに text-* で色を付けない → アラートの文字色に合わせる既定を崩す。
@@ -119,6 +119,7 @@
     background-color: var(--color-neutral-50);
     border-color: var(--color-neutral-300);
     color: var(--color-fg-high);
+    --alert-link-color: var(--color-fg-middle);   /* 背景に対して 9.9:1（AAA） */
   }
   .alert-neutral .alert-body { color: var(--color-fg-low); }
 
@@ -126,6 +127,7 @@
     background-color: var(--color-success-50);
     border-color: var(--color-primary-300);
     color: var(--color-primary-600);
+    --alert-link-color: var(--color-primary-800);   /* 背景に対して 8.8:1（AAA） */
   }
 
   .alert-negative,
@@ -133,24 +135,28 @@
     background-color: var(--color-negative-50);
     border-color: var(--color-negative-300);
     color: var(--color-negative-600);
+    --alert-link-color: var(--color-negative-800);   /* 背景に対して 7.6:1（AAA） */
   }
 
   .alert-warning {
     background-color: var(--color-warning-50);
     border-color: var(--color-warning-300);
     color: var(--color-secondary-700);
+    --alert-link-color: var(--color-secondary-900);   /* 背景に対して 7.7:1（AAA） */
   }
 
   .alert-info {
     background-color: var(--color-info-50);
     border-color: var(--color-info-300);
     color: var(--color-info-600);
+    --alert-link-color: var(--color-info-800);   /* 背景に対して 8.0:1（AAA） */
   }
 
   /* ============================================================
-   * Link — アラートの中のテキストリンクは、アラートの文字色（本文の色）に合わせる。
+   * Link — アラートの中のテキストリンクは、アラートと同系色（テーマごとの --alert-link-color）にする。
    * 緑のリンクのままだと negative / warning / info の中で色が混ざり、テーマの意味がぶれるため。
-   * 本文と同じ色でも、下線（hover で 2px）と bold で本文と区別できる（色だけに頼らない）。
+   * 本文の色（600 番台）は背景に対して 4.2〜4.8:1 しかなく、14px のリンクでは AA に届かないテーマがあるため、
+   * 1〜2 段濃い色で背景に対して 7:1 以上（AAA）を確保する。本文とは下線（hover で 2px）と bold でも区別する。
    * alert.css は link.css より先に読み込むため、link の各状態（neutral / inverse / hover）より 1 段強い詳細度で上書きする
    * ============================================================ */
   .alert .link,
@@ -159,6 +165,6 @@
   .alert .link:is(.link-neutral, .link-inverse):hover:not([aria-disabled="true"]),
   .alert .link.is-hover-preview,
   .alert .link:is(.link-neutral, .link-inverse).is-hover-preview {
-    color: inherit;
+    color: var(--alert-link-color, currentColor);
   }
 }
