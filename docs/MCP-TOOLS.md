@@ -202,7 +202,7 @@ npm run deploy:mcp       # デプロイ（要 Cloudflare アカウント / wrang
 
 ## ツール以外の仕組み
 
-- **接続時の常駐ガイダンス（instructions）**: 旧プロトコル（〜2025-11-25）では `initialize`、新プロトコル（2026-07-28〜）では `server/discover` の結果として配布（リモートサーバーは両対応）。接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens）を明記し、セットアップ確認直後のツール選択を誘導している。
+- **接続時の常駐ガイダンス（instructions）**: 旧プロトコル（〜2025-11-25）では `initialize`、新プロトコル（2026-07-28〜）では `server/discover` の結果として配布（リモートサーバーは両対応）。接続時に「まず get_setup → get_design_principles / list_components で全体把握 → 部品を組み合わせる画面は list_patterns / get_pattern で組み立て方を確認 → 使うコンポーネントを get_component、機能/使用法の NG を必ず確認、ハードコード禁止」というルールがシステムコンテキストとして渡され、セッション中ずっと効く。一度ツールを呼んだあとハードコードに drift する失敗を防ぐ狙い。get_setup のレスポンス末尾にも同じ次ステップ（get_design_principles / list_components → get_component → get_tokens、アイコンは get_icon、組み合わせる画面は list_patterns / get_pattern）を明記し、セットアップ確認直後のツール選択を誘導している。
 - **事前知識で答えないルール（instructions 内）**: 実装を伴わない質問・レビュー・相談でも、relay の仕様に関する回答は必ずツールで確認してから行うことを instructions で強制。AI が記憶で答えて古い・存在しないクラスを案内するハルシネーションを防ぐ（SmartHR Design System の SKILL.md 方式）。
 - **バージョンずれ対策**: instructions・get_setup・get_component の 3 箇所で「この知識は v〇〇 基準。利用プロジェクトの導入バージョンが異なる場合は node_modules 内の実 CSS を正とする」を明示。MCP の知識と実 CSS のバージョン差で「クラスが効かない → ハードコードに逃げる」事故を防ぐ。
 - **resources**: ツールとは別に、一部データをリソースとしても公開（`resources/list` / `resources/read`）。DESIGN.md（`relay://design-constitution`）と各コンポーネント仕様（`relay://component/<name>`）、各パターン（`relay://pattern/<name>`）。
@@ -225,7 +225,11 @@ get_component(<name>) ← 使うコンポーネントごとに。機能・使用
   ↓
 get_tokens(<category?>) ← 具体値が要るとき
   ↓
+get_icon(<name?>)    ← アイコンを使うとき
+  ↓
 list_assets          ← ロゴ・イラストを埋め込むとき
+  ↓
+get_accessibility(<topic?>) ← スキップリンク・フォーカス等の実装ガイドが要るとき
 ```
 
 迷ったら `search` で当たりを付け、示されたツールを呼ぶ。

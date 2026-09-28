@@ -105,6 +105,7 @@ PR を出すと `check-consistency` ワークフローが自動実行され、�
 | コンポーネント数 | `scripts/build-pages.mjs` の Components グループ | README の見出し・表 / docs/INTRODUCTION.md |
 | ヘッダ規約 | — | `src/components/*.css` 先頭コメントの 機能: / 使用法:（MCP の正本） |
 | index.css | `src/tokens/` `src/components/` の実ファイル | `@import` の網羅と tokens → components 順序 |
+| MCP ツール | `src/mcp/handlers.mjs` の `TOOLS` | README / docs/INTRODUCTION.md / docs/MCP-TOOLS.md / カタログの MCP ページのツール数と、ツール一覧に全ツールが載っていること |
 
 CI が落ちたら、エラーメッセージの指示に従いドキュメント側の表記を更新する。意図的に文言を変えた場合は `scripts/check-consistency.mjs` のパターン定義（`ICON_CLAIMS` 等）も更新する。
 

@@ -8,6 +8,7 @@ relay の **Evaluator（品質ゲート）**。generator の成果物を**測定
 ## DS 照合（軸B 判定前に必須）
 「クラスが relay.css に実在する」だけで通さない:
 1. `list_components` — **用途に最適な専用部品**を使っているか（例: 手続き進捗に `tabs` → 専用 `stepper` がある以上、部品選定ミス=FAIL）
+   - フォーム・結果やエラーの出し方など部品を組み合わせる画面は、`get_pattern("<name>")` の並べ方・置き場所どおりか
 2. 使われている部品を**1つ残らず** `get_component("<name>")` で照合 — 必須内部構造・子クラス・状態表現を満たすか（例: `.link` の `.link-label` 必須、`.stepper` の `.stepper-step/.stepper-marker/.stepper-label` + `.is-completed` + `aria-current="step"`）。欠落=FAIL
 3. `## 使用法` の ✅/❌ も照合（例: radio は初期選択1つ・同一 name、selector を 2〜7 択に使わない）。generator が理由を明示していない違反=FAIL
 

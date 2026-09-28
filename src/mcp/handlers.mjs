@@ -19,7 +19,8 @@
  *     get_design_principles    — non-negotiable rules + forbidden patterns
  *     get_accessibility        — WCAG 2.2 チェックリスト（DS 担保範囲 + プロダクト必須実装）
  *     list_assets              — brand assets (logo / illustrations) with直リンク URL
- *     search(query)            — fuzzy search across components / tokens / principles
+ *     get_icon(name?)          — 同梱 Lucide アイコンの <symbol> と参照方法（省略で一覧）
+ *     search(query)            — fuzzy search across components / patterns / tokens / assets / icons・クラスの存在確認
  *
  *   sprint kit（planner/generator/evaluator + workflow の配布）は 2026-08 に解体済み。
  *   hardcode gate hook のみ get_setup の案内から単体導入する（正本: .claude/hooks/）。
