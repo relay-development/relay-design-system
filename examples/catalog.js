@@ -914,7 +914,8 @@ function showFormFieldError(field, message) {
   else field.removeAttribute("aria-describedby");
 }
 
-const formFields = (form) => [...form.querySelectorAll("input[required], select[required], fieldset[data-required-group]")];
+// ラジオは 1 つずつでなく組（fieldset）で検証する。required は組の各ラジオに付いているので除く
+const formFields = (form) => [...form.querySelectorAll("input[required]:not([type=radio]), select[required], fieldset[data-required-group]")];
 
 document.addEventListener("submit", (e) => {
   const form = e.target.closest?.("[data-form-demo]");
@@ -951,7 +952,7 @@ document.addEventListener("submit", (e) => {
 // 入力を終えたとき（フォーカスが外れたとき）に検証する。まだ触っていない欄は、フォーカスを通過しただけでは検証しない
 document.addEventListener("focusout", (e) => {
   const form = e.target.closest?.("[data-form-demo]");
-  if (!form || !e.target.matches("input[required], select[required]")) return;
+  if (!form || !e.target.matches("input[required]:not([type=radio]), select[required]")) return;
   if (!e.target.value && !e.target.dataset.touched) return;
   showFormFieldError(e.target, formFieldError(e.target));
 });
