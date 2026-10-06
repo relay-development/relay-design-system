@@ -12,7 +12,7 @@
  *     state    : default / hover / current  → :hover / aria-current="page"
  *     size     : md（既定、padding 12）/ sm（padding 8）→ .menu-item-sm
  *                ※ sm は項目数が多く密度を上げたいナビ（ドキュメントのサイドナビ等）専用
- *     icon     : 左アイコン 24px (Lucide、任意)
+ *     icon     : 左アイコン 20px (Lucide、任意)
  *     trailing : 末尾装飾アイコン 16px (menu-item-trailing。external-link 等、任意)
  *     label    : string
  *
@@ -24,7 +24,7 @@
  *              幅は親要素に従う（サイドナビ用途は w-70 = 280px 目安 = Figma 仕様）
  *   section  : 見出しと項目の間 gap 4。見出しは text-xs (12/16) bold tracking 5% fg/low、
  *              左右 padding は項目に揃える（12。sm 項目を含む section では 8）
- *   item     : padding 12 (sm は 8), アイコンとテキストの gap 16, 角丸 sm (8), text-sm (14/24) bold tracking 5%, アイコン 24px
+ *   item     : padding 12 (sm は 8), アイコンとテキストの gap 16, 角丸 sm (8), text-sm (14/24) bold tracking 5%, アイコン 20px
  *   colors   : default = fg/middle、hover = bg neutral/100 + fg/high、
  *              current = bg primary/50 + primary/600（太さは全状態 bold 共通）
  *              （primary は「現在地」の意味に予約し、hover はニュートラルで示す）
@@ -43,7 +43,7 @@
  *   OK: ナビ用途は nav 要素で包んで aria-label を付け、現在地に aria-current="page" を付ける。
  *   OK: 項目は遷移なら a、操作（ログアウト等）なら button を使う。どちらも下線なし（項目形状のため「常に下線」原則の例外）。
  *   OK: 左アイコンは任意。付けるなら同じグループ内では有無を揃える（テキストの頭が揃わなくなるため）。
- *   OK: 外部リンク等の末尾装飾アイコンは menu-item-trailing（16px・右端寄せ）。左アイコンの 24px と混同しない。
+ *   OK: 外部リンク等の末尾装飾アイコンは menu-item-trailing（16px・右端寄せ）。左アイコンの 20px と混同しない。
  *   OK: グループは menu-group、区切りは menu-divider。幅は親要素で決める（サイドナビは w-70 = 280px 目安）。
  *   OK: 項目が多く分類名があると探しやすいときは、menu-section で見出し（menu-group-title）と menu-group を
  *       まとめる。見出しは h2〜h6 の実際の見出し要素にし（レベルはページの見出し階層に合わせる）、
@@ -174,11 +174,11 @@
   }
 
   .menu-item .icon {
-    @apply w-6 h-6 shrink-0;   /* 24px */
+    @apply w-5 h-5 shrink-0;   /* 20px */
   }
 
-  /* 末尾の装飾アイコン (external-link 等) — 左アイコン (24px) と別扱いの 16px。
-   * ml-auto で項目の右端に寄せる。上の .icon 24px 指定より後に置いて上書き */
+  /* 末尾の装飾アイコン (external-link 等) — 左アイコン (20px) と別扱いの 16px。
+   * ml-auto で項目の右端に寄せる。上の .icon 20px 指定より後に置いて上書き */
   .menu-item .menu-item-trailing {
     @apply w-4 h-4 shrink-0 ml-auto;   /* 16px */
   }
