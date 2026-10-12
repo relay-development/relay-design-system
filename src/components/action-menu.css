@@ -15,7 +15,7 @@
  *
  *   props:
  *     align    : start（既定。トリガーの左端に揃える）/ end → .action-menu-end（右端に揃える。画面右寄りのトリガー・card-action 用）
- *     item     : menu-item（md、既定）/ menu-item-sm（項目が多いとき）。左アイコン 24px は任意
+ *     item     : menu-item（md、既定）/ menu-item-sm（項目が多いとき）。左アイコン 20px は任意
  *     danger   : 削除など取り消せない操作 → menu-item に .action-menu-item-danger
  *     disabled : 今は実行できない項目 → aria-disabled="true"（フォーカスは残す）
  *     divider  : 操作のまとまりを区切る → <hr class="menu-divider" />（role="separator" は hr が持つ）
