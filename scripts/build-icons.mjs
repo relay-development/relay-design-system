@@ -32,7 +32,7 @@ export const ICONS = [
   "home",
   // Object
   "file", "files", "folder", "folder-cog", "link", "external-link", "image",
-  "building",
+  "building", "database",
   // User
   "user", "users", "smile", "shield-check", "medal", "settings", "help-circle",
   "log-in", "log-out",
