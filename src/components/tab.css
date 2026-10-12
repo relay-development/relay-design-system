@@ -13,6 +13,8 @@
  *   container:
  *     solid: gap 16, tabs are individual chips
  *     line : gap 0,  tabs touch and share the bottom border
+ *     wrap : 幅が足りないときは横スクロールせず次の行へ段落ちする（両 variant 共通、flex-wrap）。
+ *            solid は行間も gap 16、line は行間 0 で各行がそれぞれ下線を持つ
  *
  *   item base (両 variant 共通):
  *     padding 8 / 48, min-width 64
@@ -41,6 +43,8 @@
  * 使用法:
  *   OK: role="tablist" / role="tab"、選択は aria-selected="true"。
  *   OK: variant は solid / line から選ぶ。
+ *   OK: 幅が足りないときは段落ちに任せる（.tabs が自動で折り返す）。
+ *   NG: tablist を overflow-x-auto 等で包んで横スクロールにしない → 隠れたタブに気付けないため段落ちさせる。
  *   OK: 単一選択の絞り込み切替では、切り替わる一覧の領域を tabpanel にし、件数は tab-count
  *       （line variant）で示す。
  *   NG: 複数同時に選べる絞り込みに使わない → filter-chip（aria-pressed の独立トグル）。
@@ -78,8 +82,10 @@
   /* ============================================================
    * Container
    * ============================================================ */
+  /* 幅が足りないときは横スクロールさせず次の行へ折り返す (flex-wrap)。
+   * solid は gap-4 が行間にも効き、line は行間 0 で各行の下線が重なる */
   .tabs {
-    @apply inline-flex items-center;
+    @apply inline-flex flex-wrap items-center;
   }
   .tabs-solid { @apply gap-4; }                /* 16px between chips */
   .tabs-line  { @apply gap-0; }                /* 0px — share baseline */
