@@ -32,6 +32,7 @@ export const ICONS = [
   "home",
   // Object
   "file", "files", "folder", "folder-cog", "link", "external-link", "image",
+  "building",
   // User
   "user", "users", "smile", "shield-check", "medal", "settings", "help-circle",
   "log-in", "log-out",
@@ -44,7 +45,7 @@ export const ICONS = [
   // Time / Date
   "calendar", "clock",
   // Communication
-  "mail", "bell", "phone",
+  "mail", "bell", "phone", "message-circle",
 ];
 
 const SOURCE_DIR = path.join(projectRoot, "node_modules", "lucide-static", "icons");
