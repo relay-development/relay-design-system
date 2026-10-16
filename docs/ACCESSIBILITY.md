@@ -78,7 +78,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 | ARIA 状態 | `aria-pressed` / `aria-selected` / `disabled` ✅ | 4.1.2 |
 | 名前・役割・値 | ネイティブ HTML 要素ベース ✅ | 4.1.2 |
 | ターゲット最小 44px | `.btn-lg` / `.icon-btn-lg` / `.input-lg` のみ ⚠️ | 2.5.5 |
-| `prefers-reduced-motion` | **未対応** 🔧 | 2.3.3 |
+| `prefers-reduced-motion` | スケルトンの点滅のみ対応、ボタンスピナー等は未対応 ⚠️ | 2.3.3 |
 | 見出し階層 | `.typo-*` で提供 ⚠️ | 2.4.6 / 2.4.10 |
 | ステータスメッセージ | `.alert` / `.inline-message` + `role` 推奨 ⚠️ | 4.1.3 |
 
@@ -678,7 +678,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 
 **達成基準**: 1 秒間に 3 回以下の閃光、または閾値以下の明滅。
 
-**DS 側の担保**: 閃光・点滅アニメーションは存在しない (スピナーは穏やかな回転のみ)
+**DS 側の担保**: 閃光アニメーションは存在しない (スピナーは穏やかな回転、スケルトンは 2 秒周期の穏やかな不透明度の変化のみ)
 
 **プロダクト側の責務**: 自作演出に閃光を含めない
 
@@ -701,6 +701,7 @@ Level A   (最低限)    →  Level AA  (標準・法規制ライン)  →  Leve
 
 **DS 側の現状**:
 - ✅ 多くのコンポーネントは `transition-colors duration-150` (色変化のみ)
+- ✅ スケルトンの点滅 (`skeleton-pulse 2s`) は `prefers-reduced-motion: reduce` で止まる
 - ⚠️ ボタンスピナー (`btn-spin 0.6s linear infinite`) は `prefers-reduced-motion` 非対応
 - ⚠️ アラート開閉の `transition-opacity` も同様
 

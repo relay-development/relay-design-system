@@ -372,6 +372,7 @@ const PAGES = [
   { file: "stepper.html",      group: "Components", label: "ステッパー",       title: "ステッパー",       desc: "複数ステップの進捗表示" },
   { file: "modal.html",        group: "Components", label: "モーダル",         title: "モーダル",         desc: "最前面に重ねる確認ダイアログ" },
   { file: "tooltip.html",      group: "Components", label: "ツールチップ",     title: "ツールチップ",     desc: "ホバー / フォーカスで出る補足の吹き出し" },
+  { file: "skeleton.html",     group: "Components", label: "スケルトン",       title: "スケルトン",       desc: "読み込み中に中身の形を先に見せる仮の表示" },
   { file: "switch.html",       group: "Components", label: "トグルスイッチ",   title: "トグルスイッチ",   desc: "ON/OFF を即時に切り替えるスイッチ" },
   { file: "accordion.html",    group: "Components", label: "アコーディオン",   title: "アコーディオン",   desc: "見出しの開閉で本文を出し入れする開示" },
   { file: "page-shell.html",   group: "Components", label: "ページシェル",     title: "ページシェル",     desc: "コンテンツ領域を標準幅に整えるラッパー" },
