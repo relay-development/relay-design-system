@@ -158,6 +158,7 @@ Badge              : <span class="badge badge-soft-primary">ラベル</span>
 Alert              : <div class="alert alert-info"><span class="alert-icon">...</span><div class="alert-content">...</div></div>  ← ページ全体に向けた常設のお知らせ（Banner）
 Inline Message     : <p class="inline-message inline-message-success" role="status"><svg class="inline-message-icon" aria-hidden="true">…</svg><span class="inline-message-text">保存しました</span></p>  ← 操作した場所の直近（ボタン横・フォーム直下・行内）に置く結果表示。theme は success / negative / warning / neutral、密な場所は .inline-message-sm
 Link (テキストリンク): <a class="link"><span class="link-label">リンクテキスト</span></a>  ← a 要素のテキストリンクは置き場所を問わずこれ（本文・フッター・表セル・フォーム脇）。font-size は本文を inherit。緑を抑えたい補助リンクは .link-neutral、暗い背景上は .link-inverse（白）
+Skeleton           : <div aria-busy="true"><span class="sr-only">読み込み中</span><div class="skeleton-lines" aria-hidden="true"><span class="skeleton skeleton-text typo-medium"></span>…</div></div>  ← データ読み込み中の仮の表示。中身と同じ形・大きさで置き（text は置き換え先と同じ typo-*、円は skeleton-circle、画像は skeleton-box）、見出しなど出せる文言はそのまま出す。ボタンの処理待ちは btn の data-loading
 Page Shell         : <div class="page-shell">…</div>  ← ページ幅の定型 (max-w-page + 中央寄せ + 左右 16px)。フォームや設定・詳細は <div class="page-shell page-shell-content"> で 900px に絞る
 ```
 

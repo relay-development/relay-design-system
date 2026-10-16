@@ -50,6 +50,7 @@
 @import "./components/stepper.css";
 @import "./components/modal.css";
 @import "./components/tooltip.css";
+@import "./components/skeleton.css";
 @import "./components/switch.css";
 @import "./components/accordion.css";
 @import "./components/page-shell.css";

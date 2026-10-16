@@ -1,0 +1,138 @@
+/*
+ * Skeleton (スケルトン) — Figma に仕様が無いため DS 規約から新規設計
+ *
+ *   データの読み込み中、表示される予定の中身と同じ形・大きさの淡いグレーの面を
+ *   置いておく仮の表示。読み込みが終わったら実物に差し替える。
+ *
+ *   構造:
+ *     .skeleton               : 土台（色・角丸・点滅）。形のクラスと組み合わせる
+ *     .skeleton-text          : 文字 1 行。高さは 1 行分（line-height）、面は文字の大きさ（1em）
+ *     .skeleton-lines         : skeleton-text を縦に重ねた段落。最後の行は自動で 60% に縮む
+ *     .skeleton-circle        : 円（アバター等）。既定 40px（w-10 h-10）
+ *     .skeleton-box           : 四角（画像・カード等）。既定は幅 100%・高さ 96px（h-24）
+ *
+ *   props:
+ *     typo     : skeleton-text に置き換え先と同じ typo-* を付けると、その文字の行と同じ高さになる
+ *                （付けなければ親の font-size / line-height を引き継ぐ）
+ *     size     : 幅・高さは w-* / h-* / aspect-* のユーティリティで実物に合わせて上書きする
+ *
+ *   サイズ / 色 (semantic tokens):
+ *     bg       : neutral/100
+ *     radius   : box = sm (8)、text の面 = xs (4)、circle = full
+ *     motion   : 2 秒周期で不透明度 1 → 0.5 → 1 にゆっくり変化（閃光ではない。1 秒に 3 回以下）
+ *
+ * 別名:
+ *   スケルトン / skeleton / スケルトンスクリーン / skeleton screen / プレースホルダー /
+ *   placeholder / ローディング / loading / 読み込み中 / ロード中
+ *
+ * 機能:
+ *   データを取得している間に、画面の骨組み（文字の行・画像・アバター）を先に見せて
+ *   「何がどこに出るか」を伝え、読み込み後にレイアウトがずれないようにする。
+ *   ボタンを押したあとの処理待ちは btn の data-loading、読み込みの失敗は alert / inline-message。
+ *
+ * 使用法:
+ *   OK: 読み込み後の中身と同じ形・大きさ・並びで置く（差し替えたときにレイアウトがずれない）。
+ *   OK: 文字の行は skeleton-text にし、置き換え先と同じ typo-* を付ける。複数行の本文は skeleton-lines で包む。
+ *   OK: 見出しやラベルなど、取得を待たずに出せる文言はそのまま出し、取得するデータの部分だけをスケルトンにする。
+ *   OK: 読み込み中の領域に aria-busy="true" を付け、スケルトン自体は aria-hidden="true" で読み上げから外す。
+ *       「読み込み中」であることは sr-only の文言で伝える。
+ *   NG: ボタンを押したあとの処理待ちに使わない → btn の data-loading（二重送信も防げる）。
+ *   NG: 読み込みに失敗したとき・結果が 0 件のときにスケルトンのまま残さない → 失敗は alert / inline-message、
+ *       0 件は空の状態の案内に差し替える。
+ *   NG: 中身と違う形（行数・大きさがまったく違うもの）を置かない → 差し替えたときに画面が大きく動く。
+ *   NG: 独自の点滅・光が流れるアニメーションを足さない → 既定のゆっくりした変化のまま使う（速い明滅は WCAG 2.3.1）。
+ *
+ * アクセシビリティ:
+ *   読み込み中の領域に aria-busy="true"、終わったら外す（支援技術に「まだ途中」と伝える）
+ *   スケルトン（.skeleton）は aria-hidden="true" にし、意味のない面を読み上げさせない
+ *   読み込み中であることは <span class="sr-only">読み込み中</span> 等の文言で伝える
+ *   動きを減らす設定（prefers-reduced-motion: reduce）では点滅を止める（DS 担保）
+ *   点滅は 2 秒周期のゆっくりした不透明度の変化で、閃光の基準（1 秒に 3 回）を超えない（DS 担保）
+ *   強制カラーモードでは背景色が消えるため、面を GrayText で塗って形を残す（DS 担保）
+ * Usage:
+ *   <div aria-busy="true">
+ *     <span class="sr-only">読み込み中</span>
+ *     <div class="flex items-center gap-4" aria-hidden="true">
+ *       <span class="skeleton skeleton-circle"></span>
+ *       <div class="skeleton-lines flex-1">
+ *         <span class="skeleton skeleton-text typo-medium"></span>
+ *         <span class="skeleton skeleton-text typo-medium"></span>
+ *       </div>
+ *     </div>
+ *   </div>
+ */
+
+@layer components {
+  /* ============================================================
+   * Base — 色・角丸・点滅
+   * ============================================================ */
+  .skeleton {
+    @apply block bg-neutral-100 rounded-sm;
+    animation: skeleton-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes skeleton-pulse {
+    50% { opacity: 0.5; }
+  }
+
+  /* ============================================================
+   * Text — 1 行分の高さ (1lh) の箱の中央に、文字の大きさ (1em) の面を置く。
+   *   typo-* を付けると font-size / line-height がその文字の行と同じになる。
+   *   面は ::before で描く（箱自身を塗ると行間まで塗られるため）。
+   * ============================================================ */
+  .skeleton-text {
+    @apply flex items-center w-full bg-transparent rounded-none;
+    height: 1lh;
+  }
+  .skeleton-text::before {
+    @apply block w-full bg-neutral-100 rounded-xs;
+    content: "";
+    height: 1em;
+  }
+
+  /* 段落 — 行は詰めて重ねる（行間は各行の line-height が持つ）。
+   * 最後の行を短くして「文章の終わり」に見せる */
+  .skeleton-lines {
+    @apply flex flex-col;
+  }
+  .skeleton-lines > .skeleton-text:last-child:not(:first-child) {
+    @apply w-3/5;
+  }
+
+  /* ============================================================
+   * Circle / Box
+   * ============================================================ */
+  .skeleton-circle {
+    @apply w-10 h-10 shrink-0 rounded-full;
+  }
+
+  .skeleton-box {
+    @apply w-full h-24;
+  }
+
+  /* ============================================================
+   * 動きを減らす設定 — 点滅を止めて面だけ残す
+   * ============================================================ */
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton {
+      animation: none;
+    }
+  }
+
+  /* ============================================================
+   * 強制カラーモード (Windows ハイコントラスト等) 対応
+   *   背景色は強制カラーで Canvas に置き換わり、面が見えなくなる。
+   *   forced-color-adjust:none で置き換えを止め、GrayText で塗って形を残す。
+   *   ※ システムカラーキーワードはハードコード禁止の例外 (DESIGN.md)。
+   * ============================================================ */
+  @media (forced-colors: active) {
+    .skeleton,
+    .skeleton-text::before {
+      forced-color-adjust: none;
+      background-color: GrayText;
+    }
+    .skeleton-text {
+      background-color: transparent;
+    }
+  }
+}

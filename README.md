@@ -72,7 +72,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 
 ---
 
-## コンポーネント一覧（33 個）
+## コンポーネント一覧（34 個）
 
 | # | コンポーネント | 主要クラス |
 |---|---|---|
@@ -109,6 +109,7 @@ bundler を使わない場合は `<link rel="stylesheet" href="node_modules/@lig
 | 31 | Toggle Switch | `.switch`, `.switch-sm`, `.switch-label`（`<input type="checkbox" role="switch">` ベース。ON/OFF は `:checked`） |
 | 32 | Accordion     | `.accordion`, `.accordion-item`, `.accordion-trigger`, `.accordion-icon`, `.accordion-label`, `.accordion-panel`（ネイティブ `<details>`/`<summary>` ベース。開閉アイコンは見出しの左） |
 | 33 | Page Shell    | `.page-shell`（コンテンツ領域を `--container-page` に中央寄せ）/ `.page-shell-content`（900px に絞る。フォーム / 設定 / 詳細）。長文本文は `max-w-article` |
+| 34 | Skeleton      | `.skeleton` + `.skeleton-{text,circle,box}`, `.skeleton-lines`（読み込み中の仮の表示。text は置き換え先と同じ `typo-*` を付けて行の高さを合わせる。領域に `aria-busy="true"`、面は `aria-hidden="true"`、「読み込み中」は `sr-only` の文言で伝える） |
 
 主要コンポーネントの完成形 HTML は `snippets/*.html` を（全コンポーネントのスニペットは MCP `get_component` またはプレビューサイト）、状態網羅は [プレビューサイト](https://relay-development.github.io/relay-design-system) を参照してください。
 
