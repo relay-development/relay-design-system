@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.34.0",
+      "date": "2026-10-16",
+      "title": "スケルトンを追加 + アイコン 3 種・タブの段落ち",
+      "summary": "データの読み込み中に、表示される予定の中身と同じ形の淡いグレーの面を置くスケルトン（skeleton）を追加しました。形は skeleton-text / skeleton-circle / skeleton-box、複数行は skeleton-lines で、skeleton-text に置き換え先と同じ typo-* を付けると文字の行と同じ高さになります。動きを減らす設定では点滅が止まります。アイコンには building（ビル）・message-circle（チャット）・database（データベース）を追加して 61 種になりました。タブは幅が足りないとき、横スクロールせず次の行へ段落ちします。メニュー項目の左アイコンは 24px から 20px に小さくしました。"
+    },
+    {
       "version": "0.33.0",
       "date": "2026-10-05",
       "title": "日本語フォント Noto Sans JP の読み込み + 大見出しを black に",
