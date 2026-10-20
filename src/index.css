@@ -122,5 +122,5 @@
 /* セマンティック色（@theme トークン由来。役割 × プロパティのみ。任意色/hex は対象外） */
 @source inline("{text,bg,border,fill,stroke}-fg-{high,middle,low,placeholder,disabled}");
 @source inline("{text,bg}-fg-{high,middle,low}-inverse");
-@source inline("border-stroke-{high,middle,low} bg-{surface,page,page-green} border-stroke-{high,middle,low}-inverse");
+@source inline("border-stroke-{high,middle,low} bg-{surface,page,page-neutral} border-stroke-{high,middle,low}-inverse");
 @source inline("{text,bg,border}-{primary,secondary,neutral,success,warning,negative,info}-{50,100,200,300,400,500,600,700,800,900,950}");

@@ -206,10 +206,10 @@
   --color-info-950: var(--color-blue-950);
 
   /* Surface */
-  --color-page:       var(--color-white);
-  --color-page-green: var(--color-brand-green-50);
-  --color-surface:    var(--color-white);
-  --color-overlay:    rgb(15 23 42 / 0.6);
+  --color-page:         var(--color-white);
+  --color-page-neutral: var(--color-neutral-50);
+  --color-surface:      var(--color-white);
+  --color-overlay:      rgb(15 23 42 / 0.6);
 
   /* Text */
   --color-fg-high:         var(--color-slate-900);
