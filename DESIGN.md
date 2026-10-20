@@ -58,7 +58,7 @@ import "@light-right/design-system/css";
 反転テキスト               : text-fg-high-inverse (white)
 ボーダー                   : border-stroke-{high,middle,low}
 ステータス                 : {success,warning,negative,info}-{50..950}
-背景ページ                 : bg-page (white) / bg-page-green (primary-50)
+背景ページ                 : bg-page (white) / bg-page-neutral (neutral-50)
 ```
 
 > raw CSS で書く時: `var(--color-primary-500)` / `var(--color-fg-high)` 等。
