@@ -9,9 +9,13 @@
  * the full token set as :root variables.
  */
 
-/* Noto Sans JP (first in --font-sans), variable 100..900. Without it, Japanese
- * falls back to OS fonts that lack 800/900 (e.g. Hiragino W3/W6 on macOS). */
-@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap");
+/* Gen Interface JP (first in --font-sans), weights 400..800 only — the ones the DS uses.
+ * Unloaded 100..300 render as 400; 900 (not in the typeface) renders as 800. */
+@import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/400.css");
+@import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/500.css");
+@import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/600.css");
+@import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/700.css");
+@import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/800.css");
 
 :root {
   /* ===== Primitive: Color ===== */
@@ -215,7 +219,7 @@
   --color-outline-focus: var(--color-blue-600);
 
   /* ===== Typography ===== */
-  --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-sans: "Gen Interface JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   --text-xs:   0.75rem;
   --text-sm:   0.875rem;

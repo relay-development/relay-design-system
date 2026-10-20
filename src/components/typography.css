@@ -6,7 +6,7 @@
  *   font-size / line-height / 推奨 weight をまとめて当てる。
  *   weight の上書きは medium 以下のサイズのみ可（`font-bold` 等）。
  *   large 以上は bold 以上が必須 — bold 未満（semibold / medium 等）に下げない。
- *   2xlarge / 3xlarge（ページタイトル・Display）は black が既定 — bold 等に下げない。
+ *   2xlarge / 3xlarge（ページタイトル・Display）は extrabold が既定 — bold 等に下げない。
  *
  *   8x8 ベースグリッドに合わせるため、line-height は常に 8 の倍数。
  *   ルール: height = Math.ceil((size * 1.3) / 8) * 8
@@ -16,17 +16,17 @@
  *   16px 基準を守るためモバイルでも縮めない。size 列は「モバイル→md 以上」表記
  *   (単一値は両者共通)。md+ の値は従来と同一なので既存のデスクトップ表示は不変。
  *
- *   ┌──────────┬────────────┬───────────┬─────────┬─────────────────────┐
- *   │ class    │ size (m→md)│ line(m→md)│ weight  │ 用途                │
- *   ├──────────┼────────────┼───────────┼─────────┼─────────────────────┤
- *   │ xsmall   │     12     │    16     │ medium  │ キャプション・注釈  │
- *   │ small    │     14     │    24     │ medium  │ 補助テキスト        │
- *   │ medium   │     16     │    24     │ medium  │ 本文 (base)         │
- *   │ large    │     20     │    32     │ bold    │ サブ見出し          │
- *   │ xlarge   │   20→24    │    32     │ bold    │ セクション見出し    │
- *   │ 2xlarge  │   24→32    │   32→40   │ black   │ ページタイトル      │
- *   │ 3xlarge  │   32→40    │   40→48   │ black   │ Display             │
- *   └──────────┴────────────┴───────────┴─────────┴─────────────────────┘
+ *   ┌──────────┬────────────┬───────────┬───────────┬─────────────────────┐
+ *   │ class    │ size (m→md)│ line(m→md)│ weight    │ 用途                │
+ *   ├──────────┼────────────┼───────────┼───────────┼─────────────────────┤
+ *   │ xsmall   │     12     │    16     │ medium    │ キャプション・注釈  │
+ *   │ small    │     14     │    24     │ medium    │ 補助テキスト        │
+ *   │ medium   │     16     │    24     │ medium    │ 本文 (base)         │
+ *   │ large    │     20     │    32     │ bold      │ サブ見出し          │
+ *   │ xlarge   │   20→24    │    32     │ bold      │ セクション見出し    │
+ *   │ 2xlarge  │   24→32    │   32→40   │ extrabold │ ページタイトル      │
+ *   │ 3xlarge  │   32→40    │   40→48   │ extrabold │ Display             │
+ *   └──────────┴────────────┴───────────┴───────────┴─────────────────────┘
  *
  *   別枠: .typo-article (16 / 32 / normal) — 案件詳細記事など「読み物」用の
  *   独立スケール。本文 16px に 1 段広い行間 (32) と regular weight を与え、
@@ -46,7 +46,7 @@
  *   OK: medium 以下のサイズは weight を font-bold 等で上書きできる。
  *   OK: 見出しのレスポンシブは .typo-xlarge/2xlarge/3xlarge が自前で持つ。md:text-* で手動調整しない。
  *   NG: typo-large 以上で weight を bold 未満に下げない (font-semibold / font-medium 等) → デフォルトの weight のまま使う。
- *   NG: typo-2xlarge / 3xlarge を font-bold 等で black から下げない → デフォルトの black のまま使う。
+ *   NG: typo-2xlarge / 3xlarge を font-bold 等で extrabold から下げない → デフォルトの extrabold のまま使う。
  *   NG: text-sm / font-size を直書きしない → .typo-* を使う。
  *   NG: 本文 (medium 以下・article) をモバイルで縮める指定を足さない → 16px 基準を守る。
  *
@@ -78,8 +78,8 @@
      8 の倍数を保つ。md+ の値は従来と同一のため、デスクトップ表示は不変。 */
   .typo-large   { @apply text-lg   leading-8  font-bold;   }                          /* 20/32（固定） */
   .typo-xlarge  { @apply text-lg   leading-8  font-bold  md:text-xl;   }              /* 20/32 → 24/32 */
-  .typo-2xlarge { @apply text-xl   leading-8  font-black md:text-2xl md:leading-10; } /* 24/32 → 32/40 */
-  .typo-3xlarge { @apply text-2xl  leading-10 font-black md:text-3xl md:leading-12; } /* 32/40 → 40/48 */
+  .typo-2xlarge { @apply text-xl   leading-8  font-extrabold md:text-2xl md:leading-10; } /* 24/32 → 32/40 */
+  .typo-3xlarge { @apply text-2xl  leading-10 font-extrabold md:text-3xl md:leading-12; } /* 32/40 → 40/48 */
 
   /* Long-form / article — 記事・読み物用の独立スケール (16 / 32 / normal)。
      長文の可読性のため body より広い行間。weight は font-* で上書き可。

@@ -9,7 +9,7 @@
 
 @theme {
   /* family */
-  --font-sans: "Noto Sans JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  --font-sans: "Gen Interface JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
   /* size (px → rem at 16px base) + paired line-heights from Figma */
@@ -38,7 +38,7 @@
   --font-weight-semibold:    600;
   --font-weight-bold:        700;
   --font-weight-extrabold:   800;
-  --font-weight-black:       900;
+  --font-weight-black:       900;   /* Gen Interface JP は 800 まで（900 は 800 で表示） */
 
   /* tracking (letter-spacing) */
   --tracking-tighter: -0.05em;
