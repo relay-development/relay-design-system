@@ -23,7 +23,7 @@
  *     container : border stroke/middle・rounded-md
  *     trigger   : px-4 py-4・text-base bold・hover bg neutral/50
  *     icon      : 20px・fg/middle・open で 90° 回転（右向き→下向き）
- *     panel     : px-4 pb-4・左は pl-11 で見出しラベルと揃える・16/32 本文
+ *     panel     : px-4 pb-4・左は pl-11 で見出しラベルと揃える・17/32 本文
  *
  * 機能:
  *   見出しの開閉で本文を出し入れする開示コンポーネント。長いページの情報を
