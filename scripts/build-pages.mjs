@@ -470,6 +470,8 @@ function render({ title, group, content, activeFile, desc }) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ライトテーマのみ。Safari の Adaptive Dark Mode 等の自動ダーク化を止める -->
+  <meta name="color-scheme" content="light only" />
   <title>${fullTitle}</title>
   <meta name="description" content="${desc}" />
   <!-- favicon は relay 本体サイト (relay.town) と同じもの -->

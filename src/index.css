@@ -60,6 +60,16 @@
 @import "./components/accordion.css";
 @import "./components/page-shell.css";
 
+/* relay はライトテーマのみ。color-scheme を宣言しないと、Safari 27.3 の Adaptive Dark Mode 等が
+ * 「ダークテーマを持たないサイト」として自動でダーク化し、ブランド色・ロゴ・コントラストが崩れる。
+ * light only でブラウザの自動ダーク化を止める（フォーム部品やスクロールバーもライトのまま）。
+ * base レイヤーに置くので、利用側が自前のダークテーマを持つなら素の CSS で上書きできる。 */
+@layer base {
+  :root {
+    color-scheme: light only;
+  }
+}
+
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";
 

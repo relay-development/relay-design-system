@@ -155,3 +155,10 @@ icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…i
 - **選ばなかった案**: パターンごとに Markdown の正本（docs/patterns/*.md）を別に持つ → カタログのページと二重管理になり、片方だけ直される。コンポーネントの「ヘッダが MCP の正本」と同じく、書く場所を 1 つにする
 - **原則**: 部品の仕様は get_component、組み合わせ方は get_pattern。instructions の実装フローに「部品を組み合わせる画面はまず list_patterns / get_pattern」を入れ、search でもパターン名の検索ではパターンを先に示す
 
+
+## ブラウザの自動ダーク化を止める — `color-scheme: light only` を DS 側で宣言（2026-11）
+
+- **背景**: Safari 27.3 beta（iOS / iPadOS / macOS）に Adaptive Dark Mode が入った。端末がダークモードのとき、`color-scheme` でダーク対応を宣言していない明るいサイトに「Try」を提案し、受け入れると背景の暗転・文字コントラストの変更・ロゴや画像の反転・SVG の再配色・影の調整を自動で行う（全サイト常時適用の設定もある）。relay はライトテーマのみで `color-scheme` をどこにも宣言しておらず、対象になっていた。Apple 自身が「コントラストが下がることがある」「色が違って見えることがある」と注意書きしており、DS が担保しているコントラスト比とブランド色がブラウザ側の変換で崩れる
+- **判断**: relay.css（src/index.css）と tokens.css の両方で `:root { color-scheme: light only; }` を `@layer base` に宣言する。CSS を読み込むだけで全プロダクトがオプトアウトされる。WebKit は HTML の `<head>` での宣言を勧めているので、get_setup・DESIGN.md で `<meta name="color-scheme" content="light only">` も案内し、カタログの各ページにも入れる。`only` を付けるのは、ブラウザに「ライト以外で描き直してよい」という余地を与えないため（Safari 27.3 beta 1 は `only` 未対応と WebKit が明記しており、正式版での対応を待つ）
+- **選ばなかった案**: ダークテーマを実装して `light dark` を宣言する → トークンの役割色を明暗 2 系統で定義し直す大きな作業で、自動ダーク化への対処として今やることではない（DESIGN.md の「ダークモード対応は将来検討」のまま）。何もしない → 「Try」を押した利用者に、DS が検品していない配色の画面が出る
+- **原則**: 見た目の最終形は DS が決める。ブラウザやOSが勝手に描き直す余地は宣言で閉じる。`@layer base` に置くので、自前のダークテーマを持つ利用側は素の CSS で `color-scheme` を上書きできる
