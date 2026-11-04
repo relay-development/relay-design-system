@@ -12,9 +12,11 @@
  *
  *   container:
  *     solid: gap 16, tabs are individual chips
- *     line : gap 0,  tabs touch and share the bottom border
+ *     line : gap 0,  tabs touch and share the bottom border。
+ *            コンテナは親の幅いっぱい（block の flex）で、タブの右の余りも下線 1px stroke/middle で埋める
+ *            （下線がタブの並びで途切れず、コンテンツエリアの幅で本文と区切る）
  *     wrap : 幅が足りないときは横スクロールせず次の行へ段落ちする（両 variant 共通、flex-wrap）。
- *            solid は行間も gap 16、line は行間 0 で各行がそれぞれ下線を持つ
+ *            solid は行間も gap 16、line は行間 0 で各行がそれぞれ下線を持つ（余りを埋めるのは最終行）
  *
  *   item base (両 variant 共通):
  *     padding 8 / 48, min-width 64
@@ -88,7 +90,17 @@
     @apply inline-flex flex-wrap items-center;
   }
   .tabs-solid { @apply gap-4; }                /* 16px between chips */
-  .tabs-line  { @apply gap-0; }                /* 0px — share baseline */
+  .tabs-line  { @apply flex gap-0; }           /* 0px — share baseline。親の幅いっぱいに広げる */
+
+  /* タブの右に残る幅を下線で埋める。タブ自身の下線（非選択 1px / 選択 4px）と同じ高さで
+   * 下端を揃えるため、行の高さいっぱいに伸ばして border-bottom を引く。
+   * 段落ちしたときは最終行の余りだけを埋める（満杯の行では幅 0 になる） */
+  .tabs-line::after {
+    content: "";
+    flex: 1 0 0;
+    align-self: stretch;
+    border-bottom: 1px solid var(--color-stroke-middle);
+  }
 
   /* ============================================================
    * Tab base (button reset + shared typography)
