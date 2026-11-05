@@ -20,7 +20,7 @@
  *
  *   サイズ / 色 (semantic tokens):
  *     bubble : bg fg/high (slate-900) / text fg/high-inverse (white) 反転配色
- *     text   : 16/24 regular (typo-medium 相当。可読性ファーストで small に下げない)
+ *     text   : 17/24 regular (typo-medium 相当。可読性ファーストで small に下げない)
  *     padding: 8px / 12px (py-2 px-3), rounded-sm (4px), shadow-md
  *     max-w  : 240px (spacing*60)。超えたら折り返し
  *     arrow  : 8px 正方形を 45° 回転（bubble と同色）

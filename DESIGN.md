@@ -13,7 +13,7 @@
 relay の UI が共通して持つべき 3 つの性格。トークンやコンポーネントの選択で迷ったら、この原則に照らして選ぶ。
 
 1. **ゆったりとした余白** — 要素を詰め込まず、画面に呼吸をさせる。密度で情報量を稼がない。迷ったら祝福値の**広い方**を選ぶ（`p-4` か `p-6` で迷えば `p-6`）。セクション間は `gap-8` 以上を基準にする
-2. **わかりやすい表現** — 可読性ファースト。本文は 16px（`.typo-medium`）基準を守り、補足・注記も反射的に `typo-small` へ下げず `typo-article` / `typo-medium` を第一候補にする。文言は平易な日本語で書き、専門用語・省略語・曖昧な言い回しを避ける
+2. **わかりやすい表現** — 可読性ファースト。本文は 17px（`.typo-medium`）基準を守り、補足・注記も反射的に `typo-small` へ下げず `typo-article` / `typo-medium` を第一候補にする。文言は平易な日本語で書き、専門用語・省略語・曖昧な言い回しを避ける
 3. **明瞭な色使い** — 色は意味を運ぶ手段であり、装飾のために増やさない。基調はブランド緑 primary（+ 黄 secondary）に絞り、テキストは `fg-{high,middle,low}` ロールでコントラストを確保する。ステータス色（success / warning / negative / info）を意味以外に流用しない。背景色とその上に置く surface の境界が曖昧なとき（例: `neutral-50` 上の `primary-50` / `surface`）は、情報のグルーピングが弱くなるため**必ずボーダーを入れて**輪郭を示す（`border-stroke-*`、同系色で縁取るなら primary 系）
 
 ---
@@ -25,7 +25,7 @@ relay の UI が共通して持つべき 3 つの性格。トークンやコン�
 3. **Blessed Spacing** — `p-{0,1,2,3,4,6,8,12,16}` のみ使う。5 / 7 / 9 / 10 などの倍数は使わない
 4. **Typography セマンティック層** — `.typo-{xsmall..3xlarge}` を使う。生の `text-sm` / `text-base` は禁止
 5. **ARIA 属性で状態を表現** — `[aria-pressed="true"]` / `[aria-selected="true"]` / `:disabled` を CSS selector に使う
-6. **デフォルトは medium** — コンポーネントサイズは例外を除き `md` を使う。タイポグラフィも基準は `.typo-medium` (16px)
+6. **デフォルトは medium** — コンポーネントサイズは例外を除き `md` を使う。タイポグラフィも基準は `.typo-medium` (17px)
 7. **テキストリンクは `.link` で、常に下線** — ナビゲーション可能なテキスト（a 要素）は、本文中に限らずフッター・表セル・フォーム脇の補助導線でも `.link` + `.link-label` で組む（独自クラスや `underline text-primary-700` の直付けで自作しない）。下線はデフォルトで付ける。下線の省略は、ボタン形状・アイコンボタン・メニュー項目（`.menu-item` のような角丸・背景付きの項目形状）など「テキストリンクに見えない見た目」を意図的に選んだ場合のみ許される。hover 時にのみ下線を出すパターンは禁止
 8. **フォーカスリングは info（青 `#2563eb`）＋ 絶対に見切れさせない** — キーボードフォーカスの可視化は `--shadow-focus-ring`（`0 0 0 3px #2563eb`）または `outline-info-600` のみ。色を変えない（primary 緑などにしない）。リングを祖先の `overflow-hidden` / `overflow: clip` でクリップしない — 角丸コンテナで囲む時は `overflow-hidden` に頼らず first/last の子側で角丸を作り、リングを全周見せる。`outline: none` の付けっぱなし・hover 時のみ表示も禁止
 9. **main 直 push 禁止** — すべて feature branch + PR + squash merge
@@ -91,24 +91,24 @@ page の値は旧サイト実測 1220px の暫定（丸めはデザイナー判�
 ### Typography
 
 ```
-.typo-xsmall    : 12px / 16px line-height
-.typo-small     : 14px / 24px
-.typo-medium    : 16px / 24px  ← 本文 default
+.typo-xsmall    : 13px / 16px line-height
+.typo-small     : 15px / 24px
+.typo-medium    : 17px / 24px  ← 本文 default
 .typo-large     : 20px / 32px  ← ここから weight bold 必須
 .typo-xlarge    : 20→24px / 32px   ← モバイル→md(768px)。以下同じ
 .typo-2xlarge   : 24→32px / 32→40px ← セクション見出し
 .typo-3xlarge   : 32→40px / 40→48px ← ページタイトル
-.typo-article   : 16px / 32px  ← 記事・読み物用 (regular, 広め行間) の独立スケール
+.typo-article   : 17px / 32px  ← 記事・読み物用 (regular, 広め行間) の独立スケール
 フォントスタック : Gen Interface JP, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica Neue, sans-serif
                    (Gen Interface JP は relay.css / tokens.css が jsDelivr から 400..800 を読み込む)
 ウェイト         : font-{normal,medium,semibold,bold,extrabold} (400..800)
                    (thin / light は 400、black は 800 で表示される — 使わない)
 
 見出し (large 以上) はモバイルで 1 段小さくなり md 以上で規定サイズに戻る（クラス自体が
-レスポンシブ。md:text-* を手で足さない）。本文 (medium 以下・article) は 16px 基準を守り縮めない。
+レスポンシブ。md:text-* を手で足さない）。本文 (medium 以下・article) は 17px 基準を守り縮めない。
 ```
 
-**ベースは `.typo-medium`（16px）。** 本文も各コンポーネント内のテキストも medium（16px）を基準サイズとして使う。補助・キャプションで下げる（small/xsmall）、見出しで上げる（large 以上）のは、この 16px ベースからの相対調整として選ぶ。
+**ベースは `.typo-medium`（17px）。** 本文も各コンポーネント内のテキストも medium（17px）を基準サイズとして使う。補助・キャプションで下げる（small/xsmall）、見出しで上げる（large 以上）のは、この 17px ベースからの相対調整として選ぶ。
 
 **`text-sm` / `text-base` を直接書かない。** 必ず `.typo-*` を経由。
 

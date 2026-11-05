@@ -230,9 +230,9 @@
   /* ===== Typography ===== */
   --font-sans: "Gen Interface JP", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  --text-xs:   0.75rem;
-  --text-sm:   0.875rem;
-  --text-base: 1rem;
+  --text-xs:   0.8125rem;
+  --text-sm:   0.9375rem;
+  --text-base: 1.0625rem;
   --text-lg:   1.25rem;
   --text-xl:   1.5rem;
   --text-2xl:  2rem;
