@@ -233,7 +233,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 
 | 設定 | 値 |
 |---|---|
-| カラーモード | ライトのみ (ダークモード対応は将来検討) |
+| カラーモード | ライトのみ (ダークモード対応は将来検討)。CSS で `color-scheme: light only` を宣言済み。HTML の `<head>` にも `<meta name="color-scheme" content="light only">` を置き、Safari の Adaptive Dark Mode 等の自動ダーク化を止める |
 | Primary | `#30b686` (brand-green-500) / hover `#1b805e` (600) |
 | Font | Gen Interface JP（jsDelivr・400..800）+ system fallbacks |
 | Icon | Lucide subset 61 icons (SVG sprite) |

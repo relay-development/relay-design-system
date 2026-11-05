@@ -17,6 +17,15 @@
 @import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/700.css");
 @import url("https://cdn.jsdelivr.net/npm/gen-interface-jp@0.8.0/cdn/800.css");
 
+/* Light theme only. Without a color-scheme declaration, Safari 27.3's Adaptive Dark Mode
+ * (and similar auto-darkening) treats the site as lacking a dark theme and recolors it.
+ * Same rule as src/index.css; in the base layer so a consumer's own dark theme can override it. */
+@layer base {
+  :root {
+    color-scheme: light only;
+  }
+}
+
 :root {
   /* ===== Primitive: Color ===== */
   --color-white: #ffffff;
