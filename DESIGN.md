@@ -235,7 +235,7 @@ currentColor を継承するので text-primary-500 等で着色可能
 |---|---|
 | カラーモード | ライトのみ (ダークモード対応は将来検討)。CSS で `color-scheme: light only` を宣言済み。HTML の `<head>` にも `<meta name="color-scheme" content="light only">` を置き、Safari の Adaptive Dark Mode 等の自動ダーク化を止める |
 | Primary | `#30b686` (brand-green-500) / hover `#1b805e` (600) |
-| Font | Gen Interface JP（jsDelivr・400..800）+ system fallbacks |
+| Font | Gen Interface JP（jsDelivr・400..800）+ system fallbacks。和文が約 7.5% 小さく見える書体なので、`:root` の `font-size-adjust: cap-height 0.79` で表示を約 1.08 倍に補正済み（font-size トークンは 12 / 14 / 16px のまま。等幅は補正しない） |
 | Icon | Lucide subset 61 icons (SVG sprite) |
 | Locale | ja (日本語) |
 | ベーススペーシング | 4px (`--spacing: 0.25rem`) |

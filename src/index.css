@@ -70,6 +70,24 @@
   }
 }
 
+/* Gen Interface JP は同じ font-size でも日本語が他の和文フォントより約 7.5% 小さく見える。
+ * トークン（12 / 14 / 16px…）は変えず、font-size-adjust で書体の表示倍率だけを補正する。
+ * - 基準は cap-height。ic-width は「水」の字形から測るため、jsDelivr 版の unicode-range 分割
+ *   ファイルごとに倍率がばらつく（水を含むファイルだけ拡大される）。cap-height は OS/2 の
+ *   値で全ファイル共通なので、和文・欧文とも同じ倍率になる
+ * - 0.79 は Gen Interface JP（cap-height ≈ 0.733）を約 1.08 倍にする値。読み込めなかったときの
+ *   代替フォントは 1〜3% 程度の拡大で収まる（ヒラギノ ≈ 0.777、Noto Sans JP ≈ 0.766）
+ * - 等幅フォントは cap-height が低く大きくなりすぎるので補正しない
+ * - font-size（rem）と line-height は変わらないので、行間・200% 拡大の基準はトークンのまま */
+@layer base {
+  :root {
+    font-size-adjust: cap-height 0.79;
+  }
+  code, kbd, samp, pre, .font-mono {
+    font-size-adjust: none;
+  }
+}
+
 @source "../examples/**/*.html";
 @source "../snippets/**/*.html";
 
