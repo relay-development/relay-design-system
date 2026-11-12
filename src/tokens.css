@@ -26,6 +26,22 @@
   }
 }
 
+/* Gen Interface JP renders Japanese ~7.5% smaller than other Japanese fonts at the same
+ * font-size. Keep the size tokens and scale the typeface with font-size-adjust instead.
+ * cap-height (not ic-width) because the jsDelivr build is split into unicode-range files and
+ * ic-width is measured per file; cap-height comes from OS/2 and is shared by all of them.
+ * 0.79 ≈ x1.08 for Gen Interface JP (cap-height ≈ 0.733); fallbacks grow only 1–3%.
+ * Monospace fonts have a lower cap-height and would grow too much, so they are left as is.
+ * Same rule as src/index.css. */
+@layer base {
+  :root {
+    font-size-adjust: cap-height 0.79;
+  }
+  code, kbd, samp, pre, .font-mono {
+    font-size-adjust: none;
+  }
+}
+
 :root {
   /* ===== Primitive: Color ===== */
   --color-white: #ffffff;

@@ -162,3 +162,12 @@ icon の仕様は Lucide スプライト（dist/icons.svg）を `<use href="…i
 - **判断**: relay.css（src/index.css）と tokens.css の両方で `:root { color-scheme: light only; }` を `@layer base` に宣言する。CSS を読み込むだけで全プロダクトがオプトアウトされる。WebKit は HTML の `<head>` での宣言を勧めているので、get_setup・DESIGN.md で `<meta name="color-scheme" content="light only">` も案内し、カタログの各ページにも入れる。`only` を付けるのは、ブラウザに「ライト以外で描き直してよい」という余地を与えないため（Safari 27.3 beta 1 は `only` 未対応と WebKit が明記しており、正式版での対応を待つ）
 - **選ばなかった案**: ダークテーマを実装して `light dark` を宣言する → トークンの役割色を明暗 2 系統で定義し直す大きな作業で、自動ダーク化への対処として今やることではない（DESIGN.md の「ダークモード対応は将来検討」のまま）。何もしない → 「Try」を押した利用者に、DS が検品していない配色の画面が出る
 - **原則**: 見た目の最終形は DS が決める。ブラウザやOSが勝手に描き直す余地は宣言で閉じる。`@layer base` に置くので、自前のダークテーマを持つ利用側は素の CSS で `color-scheme` を上書きできる
+
+## Gen Interface JP の小ささは font-size-adjust で補正する — サイズトークンは変えない（2026-11）
+
+- **背景**: Gen Interface JP（0.35.0 で導入）は、同じ font-size でも和文がヒラギノ等より約 7.5% 小さく見える（実測: 字面の高さで「あ」91.7%・「漢」93.9%、字幅 0.94〜0.95em）。PR #377 は `--text-xs` / `--text-sm` / `--text-base` を 13 / 15 / 17px に上げる案だったが、(1) `.typo-medium` 17/24 の行間比 1.41 が WCAG 1.4.8（AAA、行間 1.5 以上）を下回る、(2) 13px は行間ルール `ceil(size × 1.3 / 8) × 8` で 24 になり 13/16 と矛盾する、(3) 書体が読み込めなかったときの代替フォントまで 6% 大きくなる、(4) ヘッダ・カタログの数値を全面的に書き換える必要がある、という問題があった
+- **判断**: サイズトークンは 12 / 14 / 16px のまま、`:root { font-size-adjust: cap-height 0.79 }` で書体の表示倍率だけを補正する（Gen Interface JP の cap-height ≈ 0.733 → 約 1.078 倍）。relay.css と tokens.css の `@layer base` に置く。等幅フォント（`code` / `kbd` / `samp` / `pre` / `.font-mono`）は cap-height が低く大きくなりすぎるため `none` に戻す
+- **基準を cap-height にした理由**: ic-width（「水」の字幅）が和文向けの本命だが、jsDelivr 版の Gen Interface JP は unicode-range で 640 ファイルに分割されており、ブラウザは ic-width をファイルごとに測る。「水」を含むファイルの文字だけが拡大され、他の字は 1.0 倍のままになった。cap-height は OS/2 テーブルの値で全ファイルに共通なので、和文・欧文・記号とも同じ倍率になる（Chromium・WebKit 27.2 で実測）。ex-height は和文と欧文のファイルで倍率がずれた
+- **代替フォント**: 同じ指定でヒラギノは約 1.017 倍、Noto Sans JP は約 1.03 倍にとどまる（cap-height が 0.77 前後のため）
+- **選ばなかった案**: トークン値を上げる（PR #377）→ 上記の問題。`@font-face` の `size-adjust` → CDN の CSS を読む構成のままでは書けず、640 個の @font-face を自前で持つことになる
+- **注意**: font-size（rem）と line-height は変わらないので、WCAG の判定・200% 拡大の基準はトークンのまま。ただし字面は約 8% 大きくなるので、見た目の行間はその分詰まる。`font` の一括指定に値を書くと font-size-adjust が初期値に戻るので、DS 内では `font: inherit` 以外を使わない
