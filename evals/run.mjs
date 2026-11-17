@@ -174,8 +174,11 @@ function extractClassTokens(html) {
   }
   // JS で組み立てたクラスも拾う（動的に挿入するメッセージ等。実例: action-feedback で
   // p.className = "inline-message " + (ok ? "inline-message-success" : …) と書かれ、使っているのに不足と判定された）。
-  // className = / classList.add|toggle|replace( / setAttribute("class", の文の中の文字列リテラルをクラス列として読む
-  for (const m of html.matchAll(/(?:\.className\s*=|\.classList\.(?:add|toggle|replace)\s*\(|setAttribute\s*\(\s*["']class["']\s*,)([^;\n]*)/g)) {
+  // className = / classList.add|toggle|replace( / setAttribute("class", の文の中の文字列リテラルをクラス列として読む。
+  // 文は改行をまたいで「;」まで読む（実例: 2026-11-12 の toast-request が
+  // btn.className = done\n ? 'btn …'\n : 'btn …'; と三項演算子を複数行に書き、btn 不足と誤判定された）。
+  // 「;」を省いた書き方で後続の文まで読み過ぎないよう 300 文字で打ち切る
+  for (const m of html.matchAll(/(?:\.className\s*=|\.classList\.(?:add|toggle|replace)\s*\(|setAttribute\s*\(\s*["']class["']\s*,)([^;]{0,300})/g)) {
     for (const lit of m[1].matchAll(/["'`]([^"'`]*)["'`]/g)) {
       // "-" で終わる語は "inline-message-" + theme のようにつなげる途中の文字なので、クラスとして数えない
       // （実例: 2026-09-28 の action-feedback が「捏造 variant: inline-message-」と誤判定された）
