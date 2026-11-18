@@ -2,6 +2,12 @@
   "$comment": "リリースログの正本。build-pages.mjs が releases.html の <!-- releases:auto --> マーカーを本データから描画する。リリースごとに先頭へ 1 エントリ追加する（手順は docs/RELEASING.md）。date は YYYY-MM-DD、リンク先は GitHub Releases のタグページを version から自動生成。",
   "releases": [
     {
+      "version": "0.36.0",
+      "date": "2026-11-18",
+      "title": "自動ダーク化の停止 + Gen Interface JP の表示補正 + line タブの下線を全幅に",
+      "summary": "Safari の Adaptive Dark Mode などがページを自動でダーク化しないよう、relay.css / tokens.css で color-scheme: light only を宣言しました。HTML の head にも <meta name=\"color-scheme\" content=\"light only\"> を置いてください。Gen Interface JP の和文が他の日本語フォントより小さく見える問題は、font-size-adjust: cap-height 0.79 で表示を約 1.08 倍にして補正しています。サイズトークン（12 / 14 / 16px）と行間は変わりません。line タブ（tabs-line）は、下線をコンテンツエリアの幅いっぱいまで伸ばしました。タブが 1 行を占める要素になるため、タブの右に要素を並べている箇所は表示を確認してください。"
+    },
+    {
       "version": "0.35.0",
       "date": "2026-10-20",
       "title": "日本語フォントを Gen Interface JP に + page-green を page-neutral に置き換え",
